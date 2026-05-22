@@ -7320,7 +7320,7 @@
       "order": 138,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "26237164",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P102.5 aggregate founder live handoff validation is complete; P102.6 docs and roadmap closure is next.",
       "checksRun": [
@@ -7454,7 +7454,7 @@
       "order": 138.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "26237164",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added aggregate validation for P102 contract, manifest, work-order dry run, Command Center UX, route tests, reports, docs, phase status, and safety coverage.",
       "checksRun": [
