@@ -3593,7 +3593,7 @@
       "order": 138,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a1a9c4a8",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P102.1 founder live handoff contract is complete; P102.2 handoff manifest model is next.",
       "checksRun": [
@@ -3617,7 +3617,7 @@
       "order": 138.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a1a9c4a8",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Defined P102 founder live handoff contract, subphase split, safety baseline, expected data shapes, validation commands, and OS phase handoff.",
       "checksRun": [
