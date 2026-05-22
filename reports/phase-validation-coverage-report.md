@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-22T01:07:18.732Z
+- Generated at: 2026-05-22T01:11:25.816Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 27b9ce60
+- Validation HEAD: f6020c27
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -282,7 +282,7 @@
 | P99 validation coverage | PASS | 18 checkers, 14 reports |
 | P99.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P99.2 validation coverage | PASS | 4 checkers, 1 reports |
-| P99.3 validation coverage | PASS | 5 checkers, 1 reports |
+| P99.3 validation coverage | PASS | 6 checkers, 2 reports |
 | P99.4 validation coverage | PASS | 4 checkers, 1 reports |
 | P99.5 validation coverage | PASS | 5 checkers, 2 reports |
 | P99.6 validation coverage | PASS | 20 checkers, 17 reports |
@@ -311,10 +311,10 @@
 | P102.5 validation coverage | PASS | 7 checkers, 1 reports |
 | P102.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P102.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P103 validation coverage | PASS | 9 checkers, 5 reports |
+| P103 validation coverage | PASS | 11 checkers, 6 reports |
 | P103.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P103.2 validation coverage | PASS | 5 checkers, 1 reports |
-| P103.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P103.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P103.4 validation coverage | PASS | 1 checkers, 1 reports |
 | P103.5 validation coverage | PASS | dedicated_checker, validation_report |
 | P103.6 validation coverage | PASS | 15 checkers, 15 reports |
@@ -338,18 +338,13 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P103.2; next=P103.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P103.3; next=P103.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P103.3 Approval Evidence Envelope
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P103.5 Tests / Checkers / Aggregate Validation
   - status: planned
   - checkers: 0

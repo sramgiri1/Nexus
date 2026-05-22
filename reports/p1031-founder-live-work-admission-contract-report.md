@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P103.1
-- Generated at: 2026-05-22T01:07:15.903Z
+- Generated at: 2026-05-22T01:11:15.564Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 27b9ce60
+- Validation HEAD: f6020c27
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,7 +31,7 @@
 | P103.1 avoids forbidden file scope | PASS |  |
 | plan records P103.1 complete | PASS |  |
 | platform roadmap records P103.1 | PASS |  |
-| phase status advanced to P103.1 | PASS | P103.2/P103.1/P103.3 |
+| phase status advanced to P103.1 | PASS | P103.3/P103.2/P103.4 |
 | P103.2 remains planned or complete | PASS |  |
 | P104 handoff exists | PASS |  |
 | phase status checker accepts P103 subphases | PASS |  |

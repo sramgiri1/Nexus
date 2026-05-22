@@ -2278,6 +2278,11 @@ display-safe admission rows with evidence requirements and validation commands,
 keeps approval blocked, and leaves provider/model calls, dispatch, worker/tool
 execution, project/DB mutation, deploy, package, network, and spend disabled.
 P103.3 is next for a non-runnable approval evidence envelope.
+P103.3 is complete. It adds a local approval evidence envelope over P103.2
+work admission rows with approval gates, review questions, missing evidence,
+validation commands, blockers, evidence/activity, and cost posture. Approval
+and execution remain blocked. P103.4 is next for Command Center work admission
+UX.
 
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).

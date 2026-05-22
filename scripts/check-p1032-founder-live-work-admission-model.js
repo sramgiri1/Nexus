@@ -59,14 +59,14 @@ addCheck("admissions include evidence and validation commands", data.workAdmissi
 addCheck("all safety flags false", P103_WORK_ADMISSION_SAFETY_FLAGS.every((flag) => data[flag] === false && data.approvalBoundary?.[flag] === false && data.workAdmissions.every((row) => row[flag] === false)));
 addCheck("reuses P102 handoff helpers", source.includes("buildFounderLiveHandoffManifest") && source.includes("buildFounderLiveHandoffWorkOrders"));
 addCheck("contract marks P103.2 complete", p1032.status === "complete");
-addCheck("P103.3 remains planned", subphaseById.get("P103.3")?.status === "planned");
+addCheck("P103.3 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P103.3")?.status));
 addCheck("docs record P103.2", /P103\.2 Work Admission Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P103.2", /P103\.2 is\s+complete/.test(platformRoadmap) && /P103\.3 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P103.2"
-    && status.previousPhase === "P103.1"
-    && status.nextPhase === "P103.3"
+  ["P103.2", "P103.3", "P103.4", "P103.5"].includes(status.currentPhase)
+    && ["P103.1", "P103.2", "P103.3", "P103.4"].includes(status.previousPhase)
+    && ["P103.3", "P103.4", "P103.5", "P103.6"].includes(status.nextPhase)
     && statusById.get("P103")?.status === "in_progress"
     && statusById.get("P103.2")?.status === "complete"
     && roadmapById.get("P103.2")?.status === "complete",

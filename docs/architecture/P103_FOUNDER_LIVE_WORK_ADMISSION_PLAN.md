@@ -106,13 +106,45 @@ network, and spend flags blocked.
 
 ### P103.3 Approval Evidence Envelope
 
-Status: planned.
+Status: complete.
 
 Add a local approval/evidence envelope over P103.2 work admission records. The
 envelope can describe missing evidence, approval state, rollback expectations,
 and validation requirements, but cannot approve or execute work.
 
-Validation: `npm run check:p1033-founder-live-work-admission-approval-envelope`.
+- Narrow goal: create a non-runnable approval evidence envelope over P103.2
+  work admission rows with approval gates, review questions, missing evidence,
+  validation commands, blockers, and cost posture.
+- Allowed files: `live-ready/founderLiveWorkAdmissionApprovalEnvelope.js`,
+  `scripts/check-p1033-founder-live-work-admission-approval-envelope.js`,
+  forward-compatible P103.2 checker, P103 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected exports: `P103_FOUNDER_LIVE_WORK_ADMISSION_APPROVAL_PHASE`,
+  `P103_WORK_ADMISSION_APPROVAL_STATES`,
+  `buildFounderLiveWorkAdmissionApprovalEnvelope`, and
+  `validateFounderLiveWorkAdmissionApprovalEnvelope`.
+- Command Center UX requirements: no UI route change in P103.3. P103.4 must
+  render approval gates without raw JSON, raw logs, raw policy dumps, raw
+  private IDs, demo leakage, or approval/execution controls.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none in P103.3 because no UI files changed.
+- Checker updates:
+  `npm run check:p1033-founder-live-work-admission-approval-envelope`.
+- Docs/roadmap: this plan and platform roadmap record P103.3 complete and
+  P103.4 next.
+- OS phase status: P103 in progress, P103.3 complete, current P103.3, previous
+  P103.2, next P103.4.
+- Validation commands:
+  `npm run check:p1033-founder-live-work-admission-approval-envelope`,
+  `npm run check:p1032-founder-live-work-admission-model`,
+  `npm run check:p1031-founder-live-work-admission-contract`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: envelope is deterministic/local; approval and execution
+  remain blocked; no project files changed.
 
 ### P103.4 Command Center Work Admission UX
 

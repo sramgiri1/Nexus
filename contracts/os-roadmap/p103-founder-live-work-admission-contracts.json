@@ -207,14 +207,88 @@
     {
       "phaseId": "P103.3",
       "title": "Approval Evidence Envelope",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local approval and evidence envelope rows for admitted work while keeping approval non-runnable.",
       "validationCommands": [
         "npm run check:p1033-founder-live-work-admission-approval-envelope",
         "npm run check:p1032-founder-live-work-admission-model",
+        "npm run check:p1031-founder-live-work-admission-contract",
         "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "f6020c27",
+      "allowedFiles": [
+        "live-ready/founderLiveWorkAdmissionApprovalEnvelope.js",
+        "scripts/check-p1033-founder-live-work-admission-approval-envelope.js",
+        "scripts/check-p1032-founder-live-work-admission-model.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1033-founder-live-work-admission-approval-envelope-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveWorkAdmissionApprovalEnvelope.js",
+        "scripts/check-p1033-founder-live-work-admission-approval-envelope.js",
+        "scripts/check-p1032-founder-live-work-admission-model.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P103_FOUNDER_LIVE_WORK_ADMISSION_APPROVAL_PHASE",
+          "P103_WORK_ADMISSION_APPROVAL_STATES",
+          "buildFounderLiveWorkAdmissionApprovalEnvelope",
+          "validateFounderLiveWorkAdmissionApprovalEnvelope"
+        ],
+        "envelope": "schemaVersion, currentState, sourceWorkAdmissionPhase, founderContextSummary, approvalReadiness, approvalGates, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "No UI route change in P103.3. P103.4 must render approval gates without raw JSON, raw logs, raw policy dumps, raw private IDs, demo leakage, or approval/execution controls.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No Playwright update in P103.3 because no UI files change.",
+      "checkerUpdates": "Add check:p1033-founder-live-work-admission-approval-envelope and keep P103.2 checker forward-compatible.",
+      "docsRoadmap": "Record P103.3 complete and P103.4 next.",
+      "phaseStatusUpdate": "P103 in progress; P103.3 complete; current P103.3; previous P103.2; next P103.4.",
+      "finalSafetyChecks": [
+        "Confirm envelope is deterministic/local.",
+        "Confirm approvalAllowed and executionAllowed remain false.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.3 files>",
+        "git commit -m \"feat(nexus): add founder live work admission approval envelope\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Approval envelope",
+        "Checks",
+        "Safety",
+        "Next subphase"
       ]
     },
     {
