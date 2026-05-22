@@ -7515,7 +7515,7 @@
       "order": 137,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "12a352a2",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P101 founder live-use hardening is complete across contract, readiness model, review packet, Command Center UX, aggregate validation, docs, roadmap, final validation, and P102 handoff.",
       "checksRun": [
@@ -7702,7 +7702,7 @@
       "order": 137.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "12a352a2",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Closed P101 with final validation across P101 checks, founder live-use Command Center coverage, dashboard build, OS phase status, phase validation coverage, and P102 planned handoff.",
       "checksRun": [
