@@ -68,9 +68,9 @@ addCheck("docs record P103.5", /P103\.5 Tests \/ Checkers \/ Aggregate Validatio
 addCheck("platform roadmap records P103.5", /P103\.5 is\s+complete/.test(platformRoadmap) && /P103\.6 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P103.5"
-    && status.previousPhase === "P103.4"
-    && status.nextPhase === "P103.6"
+  ["P103.5", "P103.6", "P103.7"].includes(status.currentPhase)
+    && ["P103.4", "P103.5", "P103.6"].includes(status.previousPhase)
+    && ["P103.6", "P103.7", "P104"].includes(status.nextPhase)
     && statusById.get("P103")?.status === "in_progress"
     && statusById.get("P103.5")?.status === "complete"
     && roadmapById.get("P103.5")?.status === "complete",

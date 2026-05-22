@@ -465,9 +465,84 @@
     {
       "phaseId": "P103.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Document founder live work admission behavior, operator workflow, evidence locations, and remaining blocked execution boundaries."
+      "narrowGoal": "Document founder live work admission behavior, operator workflow, evidence locations, and remaining blocked execution boundaries.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "6f734502",
+      "allowedFiles": [
+        "README.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1036-founder-live-work-admission-docs-roadmap.js",
+        "scripts/check-p1035-founder-live-work-admission-validation.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1036-founder-live-work-admission-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "README.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1036-founder-live-work-admission-docs-roadmap.js",
+        "scripts/check-p1035-founder-live-work-admission-validation.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "docs": "README, Command Center guide, P103 plan, platform roadmap, phase status, and validation report documenting P103 work admission as local review only."
+      },
+      "commandCenterUxRequirements": "No UX source change in P103.6. Document the P103.4 Founder Live Work Admission UX and blocked controls.",
+      "themeRequirements": "Document that existing system, dark, and light themes remain unchanged.",
+      "playwrightTests": "No Playwright update in P103.6 because no UI source changes.",
+      "checkerUpdates": "Add check:p1036-founder-live-work-admission-docs-roadmap and keep P103.5 checker forward-compatible.",
+      "docsRoadmap": "Update README, Command Center guide, P103 plan, and platform roadmap.",
+      "phaseStatusUpdate": "P103 in progress; P103.6 complete; current P103.6; previous P103.5; next P103.7.",
+      "validationCommands": [
+        "npm run check:p1036-founder-live-work-admission-docs-roadmap",
+        "npm run check:p1035-founder-live-work-admission-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm docs describe blocked approval/execution.",
+        "Confirm no project files changed.",
+        "Confirm P103.7 remains planned."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.6 files>",
+        "git commit -m \"docs(nexus): document founder live work admission\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Docs/roadmap updates",
+        "Checks",
+        "Safety",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P103.7",

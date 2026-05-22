@@ -237,13 +237,43 @@ validation coverage, and blocked execution assertions.
 
 ### P103.6 Docs / Roadmap
 
-Status: planned.
+Status: complete.
 
 Update README, Command Center guide, this plan, platform roadmap, phase status,
 and generated reports with founder live work admission behavior and remaining
 safety boundaries.
 
-Validation: `npm run check:p1036-founder-live-work-admission-docs-roadmap`.
+- Narrow goal: update README, Command Center guide, this plan, platform
+  roadmap, OS phase status, and validation reports with P103 work admission
+  behavior, evidence locations, operator workflow, and blocked authority.
+- Allowed files: `README.md`, `docs/usage/COMMAND_CENTER_GUIDE.md`, this plan,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`,
+  `scripts/check-p1036-founder-live-work-admission-docs-roadmap.js`,
+  forward-compatible P103.5 checker, P103 contract, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected data shapes: docs and status records describing P103 as local work
+  admission/review only with approval and execution blocked.
+- Command Center UX requirements: no UI source change in P103.6. Document the
+  P103.4 Founder Live Work Admission UX and blocked controls.
+- Dark/light/system theme requirements: document that existing themes remain
+  unchanged.
+- Playwright tests: none in P103.6 because no UI files changed.
+- Checker updates:
+  `npm run check:p1036-founder-live-work-admission-docs-roadmap`.
+- Docs/roadmap: README, Command Center guide, this plan, and platform roadmap
+  record P103.6 complete and P103.7 next.
+- OS phase status: P103 in progress, P103.6 complete, current P103.6, previous
+  P103.5, next P103.7.
+- Validation commands:
+  `npm run check:p1036-founder-live-work-admission-docs-roadmap`,
+  `npm run check:p1035-founder-live-work-admission-validation`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: docs describe blocked approval/execution; no project
+  files changed; P103.7 remains planned.
 
 ### P103.7 Final Validation
 

@@ -529,7 +529,8 @@
     "check:p1032-founder-live-work-admission-model": "node scripts/check-p1032-founder-live-work-admission-model.js",
     "check:p1033-founder-live-work-admission-approval-envelope": "node scripts/check-p1033-founder-live-work-admission-approval-envelope.js",
     "check:p1034-command-center-founder-live-work-admission-ux": "node scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
-    "check:p1035-founder-live-work-admission-validation": "node scripts/check-p1035-founder-live-work-admission-validation.js"
+    "check:p1035-founder-live-work-admission-validation": "node scripts/check-p1035-founder-live-work-admission-validation.js",
+    "check:p1036-founder-live-work-admission-docs-roadmap": "node scripts/check-p1036-founder-live-work-admission-docs-roadmap.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -187,9 +187,8 @@ not enabled yet.
 - Purpose: show how NEXUS would put agents into action after founder review,
   without creating live work orders or dispatching agents.
 - Current P102 posture: local handoff manifest, dry-run work-order rows, and
-  Command Center Founder Live Handoff cards are complete through P102.6. Final
-  P102 closure is still pending P102.7. Executable and dispatchable work-order
-  counts remain `0`.
+  Command Center Founder Live Handoff cards are complete. Executable and
+  dispatchable work-order counts remain `0`.
 - Shown state: founder idea, PRD readiness, handoff lane count, dry-run row
   count, proposed agent, proposed work, blocker, validation command, owner
   capability, evidence/activity location, cost impact, disabled reason, and
@@ -209,6 +208,43 @@ not enabled yet.
   `Founder Live Handoff`, `Dry run only`, `Proposed agent`, and `Validation`;
   do not expose raw private IDs, raw table names, raw JSON/log dumps, policy
   dumps, demo app surfaces, or fake working actions.
+- Theme safety: the card uses existing Command Center surfaces and must keep
+  System, Dark, and Light theme behavior unchanged.
+
+## Founder Live Work Admission
+
+- Routes: `/command-center/lite`, `/command-center/business-build`,
+  `/command-center/agent-flow`, and `/command-center/live-readiness`.
+- Purpose: show which founder work rows are ready for local operator admission
+  review before any future phase can request execution authority.
+- Current P103 posture: local work admission model, approval evidence envelope,
+  Command Center Founder Live Work Admission cards, aggregate validation, and
+  docs/roadmap readiness are complete through P103.6. Approved, executable,
+  dispatchable, and project-mutation counts remain `0`.
+- Shown state: founder idea, admission state, work admission count, blocked
+  work count, approval gate count, proposed agent lane, proposed outcome,
+  missing evidence, validation command, blocker, disabled reason, owner
+  capability, evidence/activity location, cost impact, and blocked safety rows.
+- Operator workflow: use the card to review whether each proposed agent lane
+  has enough evidence for a later scoped execution request. Treat every
+  approval gate as blocked until a future phase explicitly grants authority.
+- Evidence: the work admission model is validated by
+  `reports/p1032-founder-live-work-admission-model-report.md`; the approval
+  evidence envelope is validated by
+  `reports/p1033-founder-live-work-admission-approval-envelope-report.md`; UX
+  wiring is validated by
+  `reports/p1034-command-center-founder-live-work-admission-ux-report.md`;
+  aggregate validation is recorded in
+  `reports/p1035-founder-live-work-admission-validation-report.md`.
+- Still blocked: approval controls, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, network calls,
+  deploy, release, export, package creation, live work-order creation, and
+  provider spend.
+- UX safety: primary cards should use founder/operator labels such as
+  `Founder Live Work Admission`, `Approval blocked`, `Work admissions`,
+  `Approval gates`, `Missing`, and `Validation`; do not expose raw private
+  IDs, raw table names, raw JSON/log dumps, policy dumps, demo app surfaces, or
+  fake working actions.
 - Theme safety: the card uses existing Command Center surfaces and must keep
   System, Dark, and Light theme behavior unchanged.
 

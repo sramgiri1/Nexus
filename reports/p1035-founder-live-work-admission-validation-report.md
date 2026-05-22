@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P103.5
-- Generated at: 2026-05-22T01:26:59.053Z
+- Generated at: 2026-05-22T01:31:07.383Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f91002c8
+- Validation HEAD: 6f734502
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,7 +30,7 @@
 | route safety coverage retained | PASS |  |
 | docs record P103.5 | PASS |  |
 | platform roadmap records P103.5 | PASS |  |
-| phase status advanced | PASS | P103.5/P103.4/P103.6 |
+| phase status advanced | PASS | P103.6/P103.5/P103.7 |
 | no raw private IDs in P103 UX state | PASS |  |
 | no unsafe runnable action text | PASS |  |
 | P103.5 avoids forbidden file scope | PASS |  |
