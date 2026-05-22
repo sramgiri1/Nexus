@@ -7533,19 +7533,183 @@
       "title": "Founder Live Work Admission",
       "track": "NEXUS_OS",
       "order": 139,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P103 is in progress with the founder live work admission contract, seven-subphase split, safety baseline, validation commands, and P104 handoff placeholder defined.",
+      "checksRun": [
+        "npm run check:p1031-founder-live-work-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P103.1 is contract-only and has no execution authority.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P103.2",
+      "commandCenterVisible": true,
+      "label": "Founder Live Work Admission",
+      "detail": "P103.1 contract complete; P103.2 work admission model next."
+    },
+    {
+      "phaseId": "P103.1",
+      "title": "Contract / Scope / Safety Baseline",
+      "track": "NEXUS_OS",
+      "order": 139.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-22T01:02:08.319Z",
+      "summary": "Defined P103 founder live work admission contract, subphase split, safety baseline, expected local data shapes, validation commands, OS phase handoff, and P104 planned placeholder.",
+      "checksRun": [
+        "npm run check:p1031-founder-live-work-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P103.1 is contract-only and has no execution authority.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P103.2",
+      "commandCenterVisible": true,
+      "label": "Contract / Scope / Safety Baseline",
+      "detail": "Founder live work admission contract complete; P103.2 is planned."
+    },
+    {
+      "phaseId": "P103.2",
+      "title": "Work Admission Model",
+      "track": "NEXUS_OS",
+      "order": 139.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned handoff after P102 final validation. Scope must be defined under a future NEXUS execution contract before coding.",
+      "summary": "Build deterministic local work admission model from P102 handoff artifacts.",
       "checksRun": [],
       "knownLimitations": [
-        "P103 is planned only and has no execution authority."
+        "P103.2 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P103.3",
+      "commandCenterVisible": false,
+      "label": "Work Admission Model",
+      "detail": "Planned P103 subphase."
+    },
+    {
+      "phaseId": "P103.3",
+      "title": "Approval Evidence Envelope",
+      "track": "NEXUS_OS",
+      "order": 139.29999999999998,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Add local approval and evidence envelope records for admitted work.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P103.3 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P103.4",
+      "commandCenterVisible": false,
+      "label": "Approval Evidence Envelope",
+      "detail": "Planned P103 subphase."
+    },
+    {
+      "phaseId": "P103.4",
+      "title": "Command Center Work Admission UX",
+      "track": "NEXUS_OS",
+      "order": 139.39999999999998,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Expose founder live work admission state in Command Center founder routes.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P103.4 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P103.5",
+      "commandCenterVisible": false,
+      "label": "Command Center Work Admission UX",
+      "detail": "Planned P103 subphase."
+    },
+    {
+      "phaseId": "P103.5",
+      "title": "Tests / Checkers / Aggregate Validation",
+      "track": "NEXUS_OS",
+      "order": 139.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Aggregate P103 contract, model, approval envelope, UX, and safety validation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P103.5 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P103.6",
+      "commandCenterVisible": false,
+      "label": "Tests / Checkers / Aggregate Validation",
+      "detail": "Planned P103 subphase."
+    },
+    {
+      "phaseId": "P103.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 139.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Document founder live work admission behavior, evidence, and safety boundaries.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P103.6 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P103.7",
+      "commandCenterVisible": false,
+      "label": "Docs / Roadmap",
+      "detail": "Planned P103 subphase."
+    },
+    {
+      "phaseId": "P103.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 139.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Close P103 with final validation and P104 handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P103.7 is planned only and has no execution authority."
       ],
       "nextPhase": "P104",
       "commandCenterVisible": false,
-      "label": "Founder Live Work Admission",
-      "detail": "Planned next phase after P102 closure."
+      "label": "Final Validation",
+      "detail": "Planned P103 subphase."
+    },
+    {
+      "phaseId": "P104",
+      "title": "Founder Live Execution Boundary",
+      "track": "NEXUS_OS",
+      "order": 140,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned handoff after P103 final validation. Scope must be defined under a future NEXUS execution contract before coding.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P104 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P105",
+      "commandCenterVisible": false,
+      "label": "Founder Live Execution Boundary",
+      "detail": "Planned next phase after P103 closure."
     },
     {
       "phaseId": "P83",
@@ -7959,8 +8123,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P102.7",
-  "previousPhase": "P102.6",
-  "nextPhase": "P103",
+  "currentPhase": "P103.1",
+  "previousPhase": "P102.7",
+  "nextPhase": "P103.2",
   "currentPhaseStatus": "complete"
 }

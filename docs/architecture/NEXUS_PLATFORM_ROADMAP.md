@@ -2260,11 +2260,30 @@ roadmap, reports, phase status, dashboard build, and focused route safety
 coverage. P102 is complete. P103 is next and must be planned under a separate
 NEXUS Execution Contract before coding.
 
+## P103 - Founder Live Work Admission
+
+P103 starts the governed work admission layer after P102 founder live handoff.
+It converts handoff artifacts into local admission records that can be reviewed
+by an operator before any future live work lane is considered. P103 does not
+enable provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, deploy, release, export, package creation,
+network calls, or provider spend.
+P103.1 is complete. It defines the P103 execution contract, seven-subphase
+split, safety baseline, expected local data shapes, validation commands, phase
+status handoff, and P104 planned placeholder. P103.2 is next for the local work
+admission model.
+
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
 
 The detailed plan lives in
 [`P102_FOUNDER_LIVE_HANDOFF_PLAN.md`](P102_FOUNDER_LIVE_HANDOFF_PLAN.md).
+
+Implementation follows
+[`p103-founder-live-work-admission-contracts.json`](../../contracts/os-roadmap/p103-founder-live-work-admission-contracts.json).
+
+The detailed plan lives in
+[`P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md`](P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md).
 
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).

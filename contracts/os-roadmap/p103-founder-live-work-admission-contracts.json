@@ -1,0 +1,212 @@
+{
+  "phaseId": "P103",
+  "title": "Founder Live Work Admission",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Convert P102 founder live handoff artifacts into governed local work-admission records for operator review without enabling unsafe execution.",
+  "safetyRules": [
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project source mutation.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No raw private project IDs in primary Command Center UX.",
+    "No fake runnable actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "live-ready/founderLiveHandoffManifest.js",
+    "live-ready/founderLiveHandoffWorkOrders.js",
+    "existing dashboard cards, tabs, badges, route matrix, evidence/audit/activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P103.1",
+      "title": "Contract / Scope / Safety Baseline",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define P103 founder live work admission scope, safety baseline, subphase split, expected local data shapes, validation requirements, and roadmap handoff before behavior changes.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "5411b099",
+      "allowedFiles": [
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1031-founder-live-work-admission-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1031-founder-live-work-admission-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1031-founder-live-work-admission-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "futureConstants": [
+          "P103_FOUNDER_LIVE_WORK_ADMISSION_PHASE",
+          "P103_WORK_ADMISSION_STATES",
+          "P103_WORK_ADMISSION_SAFETY_FLAGS"
+        ],
+        "futureEnvelope": "P103.2 must define a local result envelope with schemaVersion, currentState, sourceHandoffPhase, admittedWorkCount, blockedWorkCount, workAdmissions[], approvalBoundary, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+        "futureWorkAdmission": "Each work admission must include admissionId, displayLabel, sourceWorkOrderLabel, proposedAgentLane, proposedOutcome, requiredEvidence[], approvalState, blockers[], disabledReason, validationCommands[], evidenceRefs[], activityLocation, costImpact, and all execution flags false."
+      },
+      "commandCenterUxRequirements": "No UI source change in P103.1. Future P103 UX must show work admission state, current state, next action, blockers, disabled reason, owner capability, evidence/activity, cost impact, and validation commands without raw JSON, raw logs, raw policy dumps, raw private IDs, demo leakage, or runnable execution controls.",
+      "themeRequirements": "No theme source change in P103.1. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P103.1 because no UI files change. P103.4 must add focused route coverage.",
+      "checkerUpdates": [
+        "Add check:p1031-founder-live-work-admission-contract.",
+        "Update check:os-phase-status to accept P103.1-P103.7 and P104."
+      ],
+      "docsRoadmap": "Add P103 plan doc and platform roadmap section.",
+      "phaseStatusUpdate": "P103 in progress; P103.1 complete; current P103.1; previous P102.7; next P103.2; P104 planned placeholder.",
+      "validationCommands": [
+        "npm run check:p1031-founder-live-work-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P103.1 is contract-only.",
+        "Confirm no project files changed.",
+        "Confirm unsafe execution remains blocked.",
+        "Confirm P103.2 remains planned."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.1 files>",
+        "git commit -m \"feat(nexus): define founder live work admission contract\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Implementation",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Docs/roadmap",
+        "OS status",
+        "Safety",
+        "Forbidden paths",
+        "Known limitations",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P103.2",
+      "title": "Work Admission Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build a deterministic local work-admission model from P102 handoff manifest and work orders without executing agents or mutating projects.",
+      "allowedFiles": [
+        "live-ready/founderLiveWorkAdmission.js",
+        "scripts/check-p1032-founder-live-work-admission-model.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1032-founder-live-work-admission-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P103_FOUNDER_LIVE_WORK_ADMISSION_PHASE",
+          "P103_WORK_ADMISSION_STATES",
+          "P103_WORK_ADMISSION_SAFETY_FLAGS",
+          "buildFounderLiveWorkAdmission",
+          "validateFounderLiveWorkAdmission"
+        ]
+      },
+      "validationCommands": [
+        "npm run check:p1032-founder-live-work-admission-model",
+        "npm run check:p1031-founder-live-work-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P103.3",
+      "title": "Approval Evidence Envelope",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add local approval and evidence envelope rows for admitted work while keeping approval non-runnable.",
+      "validationCommands": [
+        "npm run check:p1033-founder-live-work-admission-approval-envelope",
+        "npm run check:p1032-founder-live-work-admission-model",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P103.4",
+      "title": "Command Center Work Admission UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Expose display-safe work admission state in Command Center founder routes without runnable controls.",
+      "playwrightTests": "Add focused route coverage for work admission visibility, no raw JSON/log dumps, no raw private IDs, no demo leakage, and disabled execution posture."
+    },
+    {
+      "phaseId": "P103.5",
+      "title": "Tests / Checkers / Aggregate Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P103 contract, model, approval envelope, UX, route tests, and safety checks."
+    },
+    {
+      "phaseId": "P103.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Document founder live work admission behavior, operator workflow, evidence locations, and remaining blocked execution boundaries."
+    },
+    {
+      "phaseId": "P103.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P103 validation, close parent phase, stamp commits, and hand off to P104 planned."
+    }
+  ]
+}
