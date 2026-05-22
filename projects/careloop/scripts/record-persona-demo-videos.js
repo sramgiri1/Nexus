@@ -3,13 +3,13 @@ import os from "node:os";
 import path from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { resolveCareLoopIosRoot } from "./careloop-paths.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(__filename), "..");
-const repoRoot = path.resolve(projectRoot, "..", "..");
-const iosRoot = path.join(repoRoot, "projects", "careloop-ios");
-const developerDir = "/Applications/Xcode.app/Contents/Developer";
-const apiBaseUrl = "http://127.0.0.1:3000";
+const iosRoot = resolveCareLoopIosRoot();
+const developerDir = process.env.DEVELOPER_DIR || "/Applications/Xcode.app/Contents/Developer";
+const apiBaseUrl = process.env.CARELOOP_API_BASE_URL || "http://127.0.0.1:3000";
 const outputDir = process.env.CARELOOP_RECORDING_OUTPUT_DIR
   || path.join(os.tmpdir(), "careloop-persona-recordings");
 const apiLogPath = path.join(os.tmpdir(), "careloop-recording-api.log");

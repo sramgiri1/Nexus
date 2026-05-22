@@ -1,16 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveCareLoopIosRoot } from "./careloop-paths.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(__filename), "..");
-const repoRoot = path.resolve(projectRoot, "..", "..");
+const iosRoot = resolveCareLoopIosRoot();
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(projectRoot, "package.json"), "utf8"));
 const seedPath = path.join(projectRoot, "scripts", "seed-demo-showcase.js");
-const launcherPath = path.join(repoRoot, "scripts", "careloop-demo-room-setup.js");
-const storeKitPath = path.join(repoRoot, "projects", "careloop-ios", "CareLoop", "Configuration", "CareLoop.storekit");
-const subscriptionManagerPath = path.join(repoRoot, "projects", "careloop-ios", "CareLoop", "App", "SubscriptionManager.swift");
+const launcherPath = path.join(projectRoot, "scripts", "careloop-demo-room-setup.js");
+const storeKitPath = path.join(iosRoot, "CareLoop", "Configuration", "CareLoop.storekit");
+const subscriptionManagerPath = path.join(iosRoot, "CareLoop", "App", "SubscriptionManager.swift");
 
 const seed = fs.readFileSync(seedPath, "utf8");
 const launcher = fs.readFileSync(launcherPath, "utf8");
@@ -41,12 +42,12 @@ const scenarios = [
   ["memory-care", "Memory care and home safety"],
 ];
 
-check(packageJson.scripts?.["careloop:demo"] === "node ../../scripts/careloop-demo-room-setup.js", "package.json must expose npm run careloop:demo from projects/careloop");
+check(packageJson.scripts?.["careloop:demo"] === "node scripts/careloop-demo-room-setup.js", "package.json must expose npm run careloop:demo from projects/careloop");
 check(packageJson.scripts?.["qa:seed:showcase"] === "node scripts/seed-demo-showcase.js", "package.json must expose qa:seed:showcase");
 check(packageJson.scripts?.["check:demo-showcase"] === "node scripts/check-demo-showcase-readiness.js", "package.json must expose check:demo-showcase");
 check(packageJson.scripts?.["check:careloop-demo-readiness"] === "node scripts/check-demo-showcase-readiness.js", "package.json must expose check:careloop-demo-readiness");
 check(fs.existsSync(launcherPath), "one-command launcher script must exist");
-check(launcher.includes("const apiBaseUrl = \"http://127.0.0.1:3000\""), "launcher must target the local CareLoop API");
+check(launcher.includes("CARELOOP_API_BASE_URL") && launcher.includes("http://127.0.0.1:3000"), "launcher must target the local CareLoop API by default and allow override");
 check(launcher.includes("ensureApiRunning()"), "launcher must start or reuse the local API");
 check(launcher.includes("seedManifest()"), "launcher must reseed showcase data before launch");
 check(launcher.includes("selectSimulatorDevices(profiles.length)"), "launcher must open one simulator per launch profile");

@@ -9,7 +9,7 @@
     "dev": "node scripts/dev.js",
     "prestart": "prisma migrate deploy && prisma generate",
     "start": "node src/index.js",
-    "careloop:demo": "node ../../scripts/careloop-demo-room-setup.js",
+    "careloop:demo": "node scripts/careloop-demo-room-setup.js",
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
     "generate": "prisma generate",

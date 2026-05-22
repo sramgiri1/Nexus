@@ -4,7 +4,7 @@ Date: 2026-05-22
 
 Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups existing backend, iOS unit, and iOS UI tests so agents can run the smallest useful suite instead of always running the full regression.
 
-CareLoop also exposes project-local iOS runners from `projects/careloop` for API-backed simulator validation. These runners verify or start the local API, seed showcase data when needed, and then run Xcode against `projects/careloop-ios`.
+CareLoop also exposes project-local iOS runners from the CareLoop API package for API-backed simulator validation. These runners verify or start the local API, seed showcase data when needed, and then run Xcode against `CARELOOP_IOS_ROOT`, `./ios`, `../careloop-ios`, or `../ios`.
 
 ## Gates
 
@@ -75,6 +75,7 @@ CareLoop also exposes project-local iOS runners from `projects/careloop` for API
 | App Store Server transaction verification readiness | Backend `app-store-server.test.js`; entitlement sync fail-closed route regression; live Apple calls remain external setup |
 | Receiver adherence, missed-trend, caregiver-load, escalation, and premium-state reporting | Backend insights aggregation tests for scheduled/completed/on-time/late/missed adherence fields, daily due/completed/missed trend data, organizer-only caregiver load, escalation history/response timing, and caregiver privacy; `xcodebuild build-for-testing`; focused iOS model `CareLoopTests/CompletionInsightModelTests`; focused iOS UI `test_insightsShowPremiumReportSections` and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 | Demo showcase readiness | `npm run check:demo-showcase` validates four scenarios, launch personas, task/reminder/premium state mix, StoreKit product parity, and launcher contract; `npm run test:ios:api` validates API-backed admin/persona journeys after reseeding; `npm run careloop:demo:check` validates the one-command launcher contract without opening simulator windows; `npm run careloop:record-personas` records organizer, caregiver, and care receiver journeys; direct `node scripts/seed-demo-showcase.js` verifies the manifest can be emitted |
+| Standalone build/test boundary | `npm run check:demo-showcase`, backend tests, and path resolver smoke validation verify CareLoop-local scripts can find the iOS app without Nexus-root launcher scripts |
 | Release hygiene | `npm run check:ios-release-hygiene` validates iOS target membership and Debug-only demo/UI-test launch hooks; `npm run check:ios-release-artifact` scans the built Release `.app` for bundled demo data, mock accounts, local StoreKit fixtures, demo env keys, and UI-test launch args; Release simulator build verifies the app starts from production `AppState()` outside Debug |
 
 ## Notes

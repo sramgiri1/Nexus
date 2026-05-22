@@ -24,7 +24,7 @@ Agents: ATLAS, PRISM, CORE, SWIFT, BEACON, CANVAS
 
 ## Focused Validation
 
-Use these CareLoop-local scripts from `/Users/sucheth/Downloads/nexus/projects/careloop`:
+Use these CareLoop-local scripts from the CareLoop API folder:
 
 ```bash
 npm run test:smoke
@@ -47,7 +47,7 @@ npm run check:ios-release-hygiene
 npm run check:ios-release-artifact
 ```
 
-The repo-root runner from `/Users/sucheth/Downloads/nexus` is still available when a broader Nexus workspace run is needed:
+The Nexus repo-root runner is still available only when a broader workspace run is needed:
 
 ```bash
 scripts/careloop-test-runner.sh smoke
@@ -56,7 +56,7 @@ scripts/careloop-test-runner.sh full
 
 ## Room Demo
 
-The single-command demo launcher is available from `/Users/sucheth/Downloads/nexus/projects/careloop`:
+The single-command demo launcher is available from the CareLoop API folder:
 
 ```bash
 npm run careloop:demo
@@ -95,7 +95,41 @@ The command seeds realistic reserved-domain users and care scenarios, starts/reu
 Local StoreKit products live at:
 
 ```text
-projects/careloop-ios/CareLoop/Configuration/CareLoop.storekit
+../careloop-ios/CareLoop/Configuration/CareLoop.storekit
+```
+
+## Standalone Build/Test Layout
+
+CareLoop can now run without Nexus-root scripts. The supported standalone layouts are:
+
+- Backend folder: this package, containing `package.json`, `src`, `prisma`, `scripts`, `test`, and `docs`.
+- iOS folder: set `CARELOOP_IOS_ROOT=/absolute/path/to/careloop-ios`, or place the iOS project at `./ios`, `../careloop-ios`, or `../ios`.
+
+Recommended extraction layout:
+
+```text
+careloop/
+  package.json
+  src/
+  prisma/
+  scripts/
+  test/
+  docs/
+  ios/
+    CareLoop.xcodeproj
+    CareLoop/
+    CareLoopTests/
+    CareLoopUITests/
+```
+
+Standalone commands:
+
+```bash
+npm install
+npm test
+npm run check:demo-showcase
+npm run test:ios:api
+CARELOOP_DEMO_FORCE_BUILD=1 CARELOOP_DEMO_FORCE_INSTALL=1 npm run careloop:demo
 ```
 
 The product IDs must stay aligned with `SubscriptionManager` and App Store Connect:

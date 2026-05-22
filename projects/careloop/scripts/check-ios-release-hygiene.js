@@ -1,11 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolveCareLoopIosRoot } from "./careloop-paths.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const projectRoot = path.resolve(path.dirname(__filename), "..");
-const repoRoot = path.resolve(projectRoot, "..", "..");
-const iosRoot = path.join(repoRoot, "projects", "careloop-ios");
+const iosRoot = resolveCareLoopIosRoot();
 
 const files = {
   pbxproj: path.join(iosRoot, "CareLoop.xcodeproj", "project.pbxproj"),

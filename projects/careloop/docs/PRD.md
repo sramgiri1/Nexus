@@ -1313,6 +1313,33 @@ After the receiver-scoped premium phase, implementation should continue in small
    - Establish backend latency budgets for dashboard, task board, activity, and insights endpoints.
    - Tests: telemetry contract tests and local performance smoke checks.
 
+#### Phase K — Standalone App Build And Test Separation
+
+**Goal:** separate CareLoop app build/test ownership from Nexus OS so the backend, iOS app, app tests, release checks, and demo tools can run from a standalone CareLoop repository.
+
+**Implementation status:** K1 is complete on the active CareLoop branch. CareLoop-local npm scripts no longer depend on a Nexus-root room-demo launcher, and shared script path resolution supports `CARELOOP_IOS_ROOT`, `./ios`, `../careloop-ios`, and `../ios`.
+
+**Subphases**
+
+1. **K1: CareLoop-local command boundary.**
+   - Move room-demo launching into the CareLoop package.
+   - Centralize iOS project path resolution for demo, recording, release-hygiene, and API-backed iOS test scripts.
+   - Keep current Nexus workspace layout working during migration.
+   - Tests: demo showcase readiness, backend regression, and path resolver smoke validation.
+   - Status: complete.
+2. **K2: Physical repository extraction.**
+   - Copy CareLoop backend package and iOS project into a new standalone repository layout.
+   - Exclude `node_modules`, `.tmp`, recordings, generated simulator artifacts, real `.env` values, Nexus OS roadmap, dashboard, and founder handoff files.
+   - Tests: `npm install`, `npm test`, demo readiness, and iOS build/test from the extracted repo.
+3. **K3: Standalone CI and release gates.**
+   - Add CI jobs for backend tests, Prisma validation, demo readiness, release hygiene, and Xcode build-for-testing.
+   - Keep App Store Connect, APNs, OAuth, and hosted database secrets outside source control.
+   - Tests: first CI run must pass without Nexus workspace files.
+4. **K4: Nexus archive/read-only integration.**
+   - After the standalone repo is authoritative, keep only optional status links or read-only references in Nexus.
+   - Do not let Nexus OS checks mutate CareLoop app source.
+   - Tests: no CareLoop app source changes required by Nexus OS checks.
+
 ---
 
 ## 12. Decisions Locked

@@ -2,7 +2,18 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IOS_DIR="$(cd "$PROJECT_DIR/../careloop-ios" && pwd)"
+if [[ -n "${CARELOOP_IOS_ROOT:-}" ]]; then
+  IOS_DIR="$(cd "$CARELOOP_IOS_ROOT" && pwd)"
+elif [[ -d "$PROJECT_DIR/ios/CareLoop.xcodeproj" ]]; then
+  IOS_DIR="$(cd "$PROJECT_DIR/ios" && pwd)"
+elif [[ -d "$PROJECT_DIR/../careloop-ios/CareLoop.xcodeproj" ]]; then
+  IOS_DIR="$(cd "$PROJECT_DIR/../careloop-ios" && pwd)"
+elif [[ -d "$PROJECT_DIR/../ios/CareLoop.xcodeproj" ]]; then
+  IOS_DIR="$(cd "$PROJECT_DIR/../ios" && pwd)"
+else
+  echo "CareLoop iOS project not found. Set CARELOOP_IOS_ROOT or place it at ./ios, ../careloop-ios, or ../ios." >&2
+  exit 66
+fi
 DESTINATION="${CARELOOP_XCODE_DESTINATION:-platform=iOS Simulator,name=iPhone 17 Pro}"
 DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 API_BASE_URL="${CARELOOP_API_BASE_URL:-http://127.0.0.1:3000}"

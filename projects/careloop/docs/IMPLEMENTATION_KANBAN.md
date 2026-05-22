@@ -16,7 +16,7 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-No CareLoop implementation card is actively in progress. Phase J1 scale hot-path hardening is complete. J2-J5 can continue locally, while H4/H5 and F5 remain blocked on external Apple/App Store/physical-device setup.
+No CareLoop implementation card is actively in progress. Phase K1 standalone command-boundary work is complete. K2 physical repo extraction can start once the target repository/path is chosen. J2-J5 can continue locally, while H4/H5 and F5 remain blocked on external Apple/App Store/physical-device setup.
 
 ## Ready
 
@@ -35,6 +35,9 @@ No CareLoop implementation card is actively in progress. Phase J1 scale hot-path
 | J3 | Postgres load testing and query-plan baselines. | Large seed profiles, Prisma query paths, index coverage. | Load-shape scripts and query-plan assertions for high-cardinality reads. | No direct demo change. | Planned |
 | J4 | PII retention, export/delete, and encryption review. | Event/invite/comment/reminder retention, export/delete routes, security checks. | PII redaction, export/delete, and scoped-access regressions. | Adds trust/privacy talking points after implemented. | Planned |
 | J5 | Observability and performance budgets. | API timing/error/job-lag telemetry without private care details. | Telemetry contract tests and local performance smoke checks. | No direct demo change. | Planned |
+| K2 | Physical standalone repository extraction. | CareLoop backend package, iOS app, app-only docs/tests/scripts. | `npm install`, backend tests, demo readiness, and Xcode build/test from extracted repo. | Demo command should run from standalone repo. | Planned |
+| K3 | Standalone CI and release gates. | CI config, secret placeholders, Prisma validation, Xcode build jobs. | First CI run must pass without Nexus workspace files. | No direct demo change. | Planned |
+| K4 | Nexus archive/read-only integration. | Nexus references only, no app source mutation. | Nexus checks must not require CareLoop app source writes. | No direct demo change. | Planned |
 
 ## Backlog
 
@@ -83,6 +86,7 @@ No CareLoop implementation card is actively in progress. Phase J1 scale hot-path
 | H3 | Inspect Release archive for demo data, mock accounts, StoreKit config, and launch args. | `npm run check:ios-release-artifact` scans the built Release `.app` and passes only when no demo seed files, mock emails, local StoreKit fixture, demo env keys, or UI-test launch args are bundled. |
 | I0 | Scenario reliability and API-backed test harness. | Fixed scheduler escalation for legacy unscoped tasks without querying null receiver access, added a CareLoop-local API-aware iOS runner, repaired admin demo/persona UI test contracts, reseeded API-backed journeys before launch, and removed medication-module claims from demo/onboarding/test fixtures while leaving prescription pickup as a generic care task. |
 | J1 | Hot-path indexes and cursor pagination. | Added PostgreSQL indexes for auth reset lookup, invitations, receiver access/order, task lists, comments, reminders, and activity events; added opt-in cursor pagination for tasks, task comments, invitations, and events while preserving legacy array responses; focused backend scale/pagination regression and Prisma schema validation passed. |
+| K1 | CareLoop-local command boundary. | Added CareLoop-local room demo launcher, centralized iOS path resolution for local/sibling/extracted layouts, updated demo/readiness/recording/release/test scripts, and documented standalone build/test layout. |
 
 ## Blocked / External Setup
 
