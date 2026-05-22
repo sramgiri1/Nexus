@@ -3593,7 +3593,7 @@
       "order": 138,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "843a3797",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P102.6 docs and roadmap closure is complete; P102.7 final validation and P103 handoff are next.",
       "checksRun": [
@@ -3752,7 +3752,7 @@
       "order": 138.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "843a3797",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Documented founder live handoff state, operator workflow, blocked execution boundary, evidence locations, and P102.7 handoff across README, Command Center guide, P102 plan, and platform roadmap.",
       "checksRun": [
