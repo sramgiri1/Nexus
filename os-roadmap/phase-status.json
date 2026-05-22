@@ -12322,7 +12322,7 @@
       "order": 137,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b0fce34a",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P101.5 aggregate founder live-use validation is complete; P101.6 docs and roadmap closure is next.",
       "checksRun": [
@@ -12456,7 +12456,7 @@
       "order": 137.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b0fce34a",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added aggregate validation for P101 contract, readiness model, review packet, Command Center UX, route tests, reports, docs, phase status, and safety coverage.",
       "checksRun": [
