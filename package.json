@@ -517,7 +517,8 @@
     "check:p1015-founder-live-use-validation": "node scripts/check-p1015-founder-live-use-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js",
     "check:p1016-founder-live-use-docs-roadmap": "node scripts/check-p1016-founder-live-use-docs-roadmap.js",
-    "check:p1017-founder-live-use-final": "node scripts/check-p1017-founder-live-use-final.js"
+    "check:p1017-founder-live-use-final": "node scripts/check-p1017-founder-live-use-final.js",
+    "check:p1021-founder-live-handoff-contract": "node scripts/check-p1021-founder-live-handoff-contract.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

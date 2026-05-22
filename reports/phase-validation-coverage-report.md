@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-22T00:19:11.966Z
+- Generated at: 2026-05-22T00:24:25.893Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a08cfdaf
+- Validation HEAD: 4d5cc905
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -239,22 +239,6 @@
 | P93.5 validation coverage | PASS | 11 checkers, 7 reports |
 | P93.6 validation coverage | PASS | 11 checkers, 4 reports |
 | P93.7 validation coverage | PASS | 49 checkers, 40 reports |
-| P83 validation coverage | PASS | 16 checkers, 8 reports |
-| P83.1 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.2 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.4 validation coverage | PASS | 8 checkers, 1 reports |
-| P83.5 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.6 validation coverage | PASS | 22 checkers, 16 reports |
-| P83.7 validation coverage | PASS | 48 checkers, 40 reports |
-| P84 validation coverage | PASS | 16 checkers, 8 reports |
-| P84.1 validation coverage | PASS | 6 checkers, 1 reports |
-| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
-| P84.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P84.4 validation coverage | PASS | 7 checkers, 2 reports |
-| P84.5 validation coverage | PASS | 7 checkers, 2 reports |
-| P84.6 validation coverage | PASS | 19 checkers, 14 reports |
-| P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P94 validation coverage | PASS | 16 checkers, 7 reports |
 | P94.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P94.2 validation coverage | PASS | 7 checkers, 2 reports |
@@ -319,21 +303,65 @@
 | P101.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P101.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P101.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P102 validation coverage | PASS | dedicated_checker, validation_report |
+| P102 validation coverage | PASS | 4 checkers, 1 reports |
+| P102.1 validation coverage | PASS | 3 checkers, 1 reports |
+| P102.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P102.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P102.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P102.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P102.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P102.7 validation coverage | PASS | 40 checkers, 40 reports |
+| P103 validation coverage | PASS | 3 checkers, 3 reports |
+| P83 validation coverage | PASS | 16 checkers, 8 reports |
+| P83.1 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.2 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.3 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.4 validation coverage | PASS | 8 checkers, 1 reports |
+| P83.5 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.6 validation coverage | PASS | 22 checkers, 16 reports |
+| P83.7 validation coverage | PASS | 48 checkers, 40 reports |
+| P84 validation coverage | PASS | 16 checkers, 8 reports |
+| P84.1 validation coverage | PASS | 6 checkers, 1 reports |
+| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
+| P84.3 validation coverage | PASS | 7 checkers, 1 reports |
+| P84.4 validation coverage | PASS | 7 checkers, 2 reports |
+| P84.5 validation coverage | PASS | 7 checkers, 2 reports |
+| P84.6 validation coverage | PASS | 19 checkers, 14 reports |
+| P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P101.7; next=P102; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P102.1; next=P102.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P102 Founder Live Handoff
+- P102.2 Founder Handoff Manifest Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P102.3 Governed Work Order Dry Run
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P102.4 Command Center Handoff UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P102.5 Aggregate Tests / Checkers
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P102.6 Docs / Roadmap / Operator Guide
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (307/307)
+PASS (315/315)

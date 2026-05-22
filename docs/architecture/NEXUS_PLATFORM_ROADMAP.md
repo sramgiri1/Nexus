@@ -2216,6 +2216,23 @@ Implementation follows
 The detailed plan lives in
 [`P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md`](P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md).
 
+## P102 - Founder Live Handoff
+
+P102 starts the governed local handoff from founder live-use readiness toward
+future agent work without enabling execution. P102.1 is complete. It defines
+the P102 contract, seven-subphase split, NEXUS OS-only scope, expected handoff
+envelope shape, safety baseline, validation commands, and OS phase handoff.
+Provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package, network calls, and
+provider spend remain blocked. P102.2 is next for the deterministic founder
+handoff manifest model.
+
+Implementation follows
+[`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
+
+The detailed plan lives in
+[`P102_FOUNDER_LIVE_HANDOFF_PLAN.md`](P102_FOUNDER_LIVE_HANDOFF_PLAN.md).
+
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).
 Implementation must follow
