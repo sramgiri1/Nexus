@@ -519,7 +519,8 @@
     "check:p1016-founder-live-use-docs-roadmap": "node scripts/check-p1016-founder-live-use-docs-roadmap.js",
     "check:p1017-founder-live-use-final": "node scripts/check-p1017-founder-live-use-final.js",
     "check:p1021-founder-live-handoff-contract": "node scripts/check-p1021-founder-live-handoff-contract.js",
-    "check:p1022-founder-live-handoff-manifest": "node scripts/check-p1022-founder-live-handoff-manifest.js"
+    "check:p1022-founder-live-handoff-manifest": "node scripts/check-p1022-founder-live-handoff-manifest.js",
+    "check:p1023-founder-live-handoff-work-orders": "node scripts/check-p1023-founder-live-handoff-work-orders.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

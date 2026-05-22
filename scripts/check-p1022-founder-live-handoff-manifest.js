@@ -57,14 +57,14 @@ addCheck("work order dry run not created early", data.handoffReadiness?.workOrde
 addCheck("all safety flags false", P102_HANDOFF_SAFETY_FLAGS.every((flag) => data[flag] === false && data.approvalBoundary?.[flag] === false && data.handoffLanes.every((lane) => lane[flag] === false)));
 addCheck("reuses P101 review packet", source.includes("buildFounderLiveUseReviewPacket") && source.includes("buildFounderLiveUseReadiness"));
 addCheck("contract marks P102.2 complete", p1022.status === "complete");
-addCheck("P102.3 remains planned", subphaseById.get("P102.3")?.status === "planned");
+addCheck("P102.3 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P102.3")?.status));
 addCheck("docs record P102.2", /P102\.2 Founder Handoff Manifest Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P102.2", /P102\.2 is\s+complete/.test(platformRoadmap) && /P102\.3 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P102.2"
-    && status.previousPhase === "P102.1"
-    && status.nextPhase === "P102.3"
+  ["P102.2", "P102.3"].includes(status.currentPhase)
+    && ["P102.1", "P102.2"].includes(status.previousPhase)
+    && ["P102.3", "P102.4"].includes(status.nextPhase)
     && statusById.get("P102")?.status === "in_progress"
     && statusById.get("P102.2")?.status === "complete"
     && roadmapById.get("P102.2")?.status === "complete",
