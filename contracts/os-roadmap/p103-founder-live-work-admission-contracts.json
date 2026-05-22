@@ -1,7 +1,7 @@
 {
   "phaseId": "P103",
   "title": "Founder Live Work Admission",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Convert P102 founder live handoff artifacts into governed local work-admission records for operator review without enabling unsafe execution.",
   "safetyRules": [
@@ -547,9 +547,90 @@
     {
       "phaseId": "P103.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Run final P103 validation, close parent phase, stamp commits, and hand off to P104 planned."
+      "narrowGoal": "Run final P103 validation, close parent phase, stamp commits, and hand off to P104 planned.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "fb7cef36",
+      "allowedFiles": [
+        "scripts/check-p1037-founder-live-work-admission-final.js",
+        "scripts/check-p1036-founder-live-work-admission-docs-roadmap.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1037-founder-live-work-admission-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
+        "scripts/check-p1035-founder-live-work-admission-validation.js",
+        "reports/p1034-command-center-founder-live-work-admission-ux-report.md",
+        "reports/p1035-founder-live-work-admission-validation-report.md",
+        "reports/p1036-founder-live-work-admission-docs-roadmap-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1037-founder-live-work-admission-final.js",
+        "scripts/check-p1036-founder-live-work-admission-docs-roadmap.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
+        "scripts/check-p1035-founder-live-work-admission-validation.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "finalReport": "P103.7 final validation report closing P103 and handing off to P104 planned."
+      },
+      "commandCenterUxRequirements": "No new UX in P103.7. Validate P103.4 Founder Live Work Admission UX remains visible and safe.",
+      "themeRequirements": "Validate existing system, dark, and light theme coverage remains retained.",
+      "playwrightTests": "Run focused Founder live work admission route coverage plus demo leakage safety coverage.",
+      "checkerUpdates": "Add check:p1037-founder-live-work-admission-final and keep P103.6 checker forward-compatible.",
+      "docsRoadmap": "Record P103.7 complete, P103 complete, and P104 next.",
+      "phaseStatusUpdate": "P103 complete; P103.7 complete; current P103.7; previous P103.6; next P104.",
+      "validationCommands": [
+        "npm run check:p1037-founder-live-work-admission-final",
+        "npm run check:p1036-founder-live-work-admission-docs-roadmap",
+        "npm run check:p1035-founder-live-work-admission-validation",
+        "npm run check:p1034-command-center-founder-live-work-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live work admission|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P103 parent complete.",
+        "Confirm P104 remains planned only.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.7 files>",
+        "git commit -m \"test(nexus): close founder live work admission\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Final validation results",
+        "Safety",
+        "Next phase"
+      ]
     }
   ]
 }

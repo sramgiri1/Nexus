@@ -277,10 +277,68 @@ safety boundaries.
 
 ### P103.7 Final Validation
 
-Status: planned.
+Status: complete.
 
 Run final P103 validation, close the parent phase, stamp real commits, confirm
 no forbidden paths changed, and hand off to P104 planned.
+
+- Narrow goal: run the final P103 validation wrapper, confirm all P103
+  subphases are complete, close the P103 parent phase, keep P104 planned only,
+  and document the remaining live-work boundary.
+- Starting branch and expected base commit:
+  `codex/nexus-e2e-phase-validation` from the P103.6 docs/status commit.
+- Allowed files: P103 contract, P103 plan, platform roadmap, OS roadmap/status
+  JSON, package script, P103.4/P103.5/P103.6 checker compatibility updates,
+  P103.7 checker, and generated reports.
+- Forbidden files: `projects/**`, `careloop/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, `.env*`, and unrelated Command Center source.
+- Exact files/modules to create or update:
+  `scripts/check-p1037-founder-live-work-admission-final.js`,
+  `scripts/check-p1034-command-center-founder-live-work-admission-ux.js`,
+  `scripts/check-p1035-founder-live-work-admission-validation.js`,
+  `scripts/check-p1036-founder-live-work-admission-docs-roadmap.js`,
+  `contracts/os-roadmap/p103-founder-live-work-admission-contracts.json`,
+  `docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `package.json`,
+  `os-roadmap/phase-status.json`, `os-roadmap/nexus-phases.json`, and
+  P103/OS phase validation reports.
+- Expected exports, schemas, and data shapes: no new runtime exports; the final
+  checker consumes the P103 work admission and approval envelope shapes already
+  defined in P103.2 and P103.3.
+- Command Center UX requirements: confirm existing Lite, Business Build, Agent
+  Flow, and Live Readiness work admission cards remain visible, useful,
+  display-safe, and non-runnable.
+- Dark/light/system theme requirements: no theme source changes; final
+  validation keeps route-wide theme safety coverage.
+- Playwright tests: rerun focused founder work admission coverage and full
+  Command Center demo leakage safety.
+- Checker updates: add
+  `npm run check:p1037-founder-live-work-admission-final` and keep the P103.6
+  docs checker forward-compatible after P103 closes.
+- Docs/README/roadmap: this plan and the platform roadmap record P103.7
+  complete, P103 complete, and P104 next.
+- OS phase status: P103 parent complete, P103.7 complete, current P103.7,
+  previous P103.6, next P104 planned.
+- Validation commands:
+  `npm run check:p1037-founder-live-work-admission-final`,
+  `npm run check:p1036-founder-live-work-admission-docs-roadmap`,
+  `npm run check:p1035-founder-live-work-admission-validation`,
+  `npm run check:p1034-command-center-founder-live-work-admission-ux`,
+  `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live work admission|full Command Center routes do not show DemoApp"`,
+  `cd dashboard && npm run build`, `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: no project files changed; no provider/model calls; no
+  dispatch; no worker/tool execution; no project mutation; no hosted DB
+  mutation; no deploy/release/export/package; no network calls; no spend; no
+  raw private IDs in primary UX; no runnable approval/action labels.
+- Git add/commit/push commands: stage only the allowed P103.7 OS files, commit
+  final validation, stamp the real commit hash, commit status stamp, and push
+  `codex/nexus-e2e-phase-validation`.
+- Final response checklist: branch, commit hashes, files changed, implemented
+  final validation, UX confirmation, tests/checkers/build results, docs/roadmap
+  updates, OS phase status, evidence reports, safety confirmations, forbidden
+  path confirmation, known limitations, and next phase.
 
 Validation: `npm run check:p1037-founder-live-work-admission-final`.
 

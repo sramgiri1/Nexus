@@ -43,15 +43,15 @@ addCheck("plan records P103.6", /P103\.6 Docs \/ Roadmap[\s\S]*Status:\s+complet
 addCheck("platform roadmap records P103.6", /P103\.6 is\s+complete/.test(platformRoadmap) && /P103\.7 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P103.6"
-    && status.previousPhase === "P103.5"
-    && status.nextPhase === "P103.7"
-    && statusById.get("P103")?.status === "in_progress"
+  ["P103.6", "P103.7"].includes(status.currentPhase)
+    && ["P103.5", "P103.6"].includes(status.previousPhase)
+    && ["P103.7", "P104"].includes(status.nextPhase)
+    && ["in_progress", "complete"].includes(statusById.get("P103")?.status)
     && statusById.get("P103.6")?.status === "complete"
     && roadmapById.get("P103.6")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P103.7 remains planned", subphaseById.get("P103.7")?.status === "planned");
+addCheck("P103.7 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P103.7")?.status));
 addCheck("docs avoid unsafe runnable action text", !/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i.test(readme + guide + plan + platformRoadmap));
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(readme + guide));
 addCheck("P103.6 avoids forbidden file scope", !(p1036.allowedFiles || []).some((file) => file.startsWith("projects/") || file.startsWith("careloop/") || file.startsWith("providers/") || file.startsWith("tools/") || file.startsWith("worker-runtime/")));
