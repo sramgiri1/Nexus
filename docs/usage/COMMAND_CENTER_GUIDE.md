@@ -180,6 +180,38 @@ not enabled yet.
 - Theme safety: the card uses existing Command Center surfaces and must keep
   System, Dark, and Light theme behavior unchanged.
 
+## Founder Live Handoff
+
+- Routes: `/command-center/lite`, `/command-center/business-build`,
+  `/command-center/agent-flow`, and `/command-center/live-readiness`.
+- Purpose: show how NEXUS would put agents into action after founder review,
+  without creating live work orders or dispatching agents.
+- Current P102 posture: local handoff manifest, dry-run work-order rows, and
+  Command Center Founder Live Handoff cards are complete through P102.6. Final
+  P102 closure is still pending P102.7. Executable and dispatchable work-order
+  counts remain `0`.
+- Shown state: founder idea, PRD readiness, handoff lane count, dry-run row
+  count, proposed agent, proposed work, blocker, validation command, owner
+  capability, evidence/activity location, cost impact, disabled reason, and
+  blocked safety rows.
+- Operator workflow: use the card to explain which agents would own work after
+  a later governed execution phase. Treat every row as dry-run planning until a
+  future phase explicitly scopes live authority.
+- Evidence: the manifest is validated by
+  `reports/p1022-founder-live-handoff-manifest-report.md`; dry-run rows are
+  validated by `reports/p1023-founder-live-handoff-work-orders-report.md`; UX
+  wiring is validated by
+  `reports/p1024-command-center-founder-live-handoff-ux-report.md`.
+- Still blocked: provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, network calls, deploy, release, export,
+  package creation, live work-order creation, and provider spend.
+- UX safety: primary cards should use founder/operator labels such as
+  `Founder Live Handoff`, `Dry run only`, `Proposed agent`, and `Validation`;
+  do not expose raw private IDs, raw table names, raw JSON/log dumps, policy
+  dumps, demo app surfaces, or fake working actions.
+- Theme safety: the card uses existing Command Center surfaces and must keep
+  System, Dark, and Light theme behavior unchanged.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

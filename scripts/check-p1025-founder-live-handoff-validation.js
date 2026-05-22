@@ -56,7 +56,7 @@ const workOrders = viewModel.founderLiveHandoffWorkOrders || {};
 
 addCheck("package scripts registered", p102Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("P102.1-P102.5 contract status", p102Subphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("P102.6 remains planned", subphaseById.get("P102.6")?.status === "planned");
+addCheck("P102.6 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P102.6")?.status));
 addCheck("P102 reports exist", p102Reports.every(exists));
 addCheck("P102.4 Playwright coverage exists", routeTests.includes("Founder live handoff appears across founder routes"));
 addCheck("route-wide safety tests retained", routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher"));
@@ -68,14 +68,14 @@ addCheck("docs record P102.5", /P102\.5 Aggregate Tests \/ Checkers[\s\S]*Status
 addCheck("platform roadmap records P102.5", /P102\.5 is\s+complete/.test(platformRoadmap) && /P102\.6 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P102.5"
-    && status.previousPhase === "P102.4"
-    && status.nextPhase === "P102.6"
+  ["P102.5", "P102.6"].includes(status.currentPhase)
+    && ["P102.4", "P102.5"].includes(status.previousPhase)
+    && ["P102.6", "P102.7"].includes(status.nextPhase)
     && statusById.get("P102.5")?.status === "complete"
     && roadmapById.get("P102.5")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P102.6 handoff remains planned", statusById.get("P102.6")?.status === "planned" && roadmapById.get("P102.6")?.status === "planned");
+addCheck("P102.6 handoff remains planned or complete", ["planned", "complete"].includes(statusById.get("P102.6")?.status) && ["planned", "complete"].includes(roadmapById.get("P102.6")?.status));
 addCheck("no unsafe runnable actions in P102 view", !/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now/i.test(JSON.stringify({ manifest, workOrders }) + pageSource));
 addCheck("P102.5 avoids forbidden file scope", !(subphaseById.get("P102.5")?.allowedFiles || []).some((file) => file.startsWith("projects/") || file.startsWith("careloop/") || file.startsWith("providers/") || file.startsWith("tools/") || file.startsWith("worker-runtime/")));
 

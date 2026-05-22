@@ -468,7 +468,7 @@
     {
       "phaseId": "P102.6",
       "title": "Docs / Roadmap / Operator Guide",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Document founder live handoff state, operator workflow, limitations, evidence, and final handoff.",
       "allowedFiles": [
@@ -481,7 +481,11 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1026-founder-live-handoff-docs-roadmap-report.md"
+        "reports/p1026-founder-live-handoff-docs-roadmap-report.md",
+        "scripts/check-p1025-founder-live-handoff-validation.js",
+        "reports/p1025-founder-live-handoff-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -500,6 +504,45 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "README.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "docs/architecture/P102_FOUNDER_LIVE_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1026-founder-live-handoff-docs-roadmap.js",
+        "scripts/check-p1025-founder-live-handoff-validation.js",
+        "contracts/os-roadmap/p102-founder-live-handoff-contracts.json",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reportShape": "Docs report confirming README, guide, plan, roadmap, status, and prior P102 validation evidence are aligned."
+      },
+      "commandCenterUxRequirements": "No UX source change; docs describe existing P102.4 UX and limitations.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No new Playwright tests; preserve prior P102.4/P102.5 coverage.",
+      "checkerUpdates": "Add check:p1026-founder-live-handoff-docs-roadmap.",
+      "docsRoadmap": "Record P102.6 complete and P102.7 next.",
+      "phaseStatusUpdate": "P102 in progress; P102.6 complete; current P102.6; previous P102.5; next P102.7.",
+      "finalSafetyChecks": [
+        "Confirm docs do not imply live execution is enabled.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P102.6 files>",
+        "git commit -m \"docs(nexus): document founder live handoff\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Docs",
+        "Checks",
+        "Safety",
+        "Next subphase"
       ]
     },
     {

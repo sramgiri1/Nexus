@@ -522,7 +522,8 @@
     "check:p1022-founder-live-handoff-manifest": "node scripts/check-p1022-founder-live-handoff-manifest.js",
     "check:p1023-founder-live-handoff-work-orders": "node scripts/check-p1023-founder-live-handoff-work-orders.js",
     "check:p1024-command-center-founder-live-handoff-ux": "node scripts/check-p1024-command-center-founder-live-handoff-ux.js",
-    "check:p1025-founder-live-handoff-validation": "node scripts/check-p1025-founder-live-handoff-validation.js"
+    "check:p1025-founder-live-handoff-validation": "node scripts/check-p1025-founder-live-handoff-validation.js",
+    "check:p1026-founder-live-handoff-docs-roadmap": "node scripts/check-p1026-founder-live-handoff-docs-roadmap.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

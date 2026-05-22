@@ -210,10 +210,40 @@ Playwright, status, and safety validation.
 
 ### P102.6 Docs / Roadmap / Operator Guide
 
-Status: planned.
+Status: complete.
 
 Document founder live handoff state, operator workflow, limitations, evidence,
 and final handoff.
+
+- Narrow goal: document founder live handoff state, operator workflow,
+  limitations, evidence, and final handoff.
+- Allowed files: `README.md`, `docs/usage/COMMAND_CENTER_GUIDE.md`,
+  this plan, `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`,
+  `scripts/check-p1026-founder-live-handoff-docs-roadmap.js`,
+  forward-compatible P102 checkers, P102 contract, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected report shape: confirms README, Command Center guide, this plan,
+  platform roadmap, OS status, P102.5 evidence, and P102.7 handoff are aligned.
+- Command Center UX requirements: no source UX change. Docs describe the
+  existing Lite, Business Build, Agent Flow, and Live Readiness handoff cards.
+- Dark/light/system theme requirements: no theme source change; docs confirm
+  existing theme behavior remains in scope.
+- Playwright tests: no new tests because no UI source changes in P102.6;
+  P102.4/P102.5 route coverage remains the active route evidence.
+- Checker updates: `npm run check:p1026-founder-live-handoff-docs-roadmap`.
+- Docs/roadmap: README, Command Center guide, this plan, and platform roadmap
+  record P102.6 complete and P102.7 next.
+- OS phase status: P102 in progress, P102.6 complete, current P102.6, previous
+  P102.5, next P102.7.
+- Validation commands: `npm run check:p1026-founder-live-handoff-docs-roadmap`,
+  `npm run check:p1025-founder-live-handoff-validation`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: docs do not imply execution is enabled; no project files
+  changed; unsafe execution remains blocked.
 
 ### P102.7 Final Validation
 
