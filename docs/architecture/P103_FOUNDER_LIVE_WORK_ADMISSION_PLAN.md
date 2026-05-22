@@ -196,13 +196,44 @@ JSON/log dumps, private raw IDs, demo leakage, or runnable controls.
 
 ### P103.5 Tests / Checkers / Aggregate Validation
 
-Status: planned.
+Status: complete.
 
 Aggregate P103.1 through P103.4 coverage, including contract, model, approval
 envelope, Command Center UX, Playwright route safety, OS phase status, phase
 validation coverage, and blocked execution assertions.
 
-Validation: `npm run check:p1035-founder-live-work-admission-validation`.
+- Narrow goal: validate P103 contract, work admission model, approval evidence
+  envelope, Command Center UX, focused Playwright coverage, dashboard build, OS
+  status, phase validation coverage, and blocked execution assertions.
+- Allowed files: `scripts/check-p1035-founder-live-work-admission-validation.js`,
+  forward-compatible P103.4 checker, P103 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected data shapes: aggregate report covering P103.1 through P103.4,
+  validation commands, safety checks, route coverage, build evidence, and
+  docs/status handoff.
+- Command Center UX requirements: no new UX in P103.5. Validate P103.4 founder
+  live work admission remains useful and display-safe.
+- Dark/light/system theme requirements: validate existing theme coverage
+  remains retained.
+- Playwright tests: focused Founder live work admission route coverage and demo
+  leakage safety coverage.
+- Checker updates:
+  `npm run check:p1035-founder-live-work-admission-validation`.
+- Docs/roadmap: this plan and platform roadmap record P103.5 complete and
+  P103.6 next.
+- OS phase status: P103 in progress, P103.5 complete, current P103.5, previous
+  P103.4, next P103.6.
+- Validation commands:
+  `npm run check:p1035-founder-live-work-admission-validation`,
+  `npm run check:p1034-command-center-founder-live-work-admission-ux`,
+  focused Playwright route coverage, `cd dashboard && npm run build`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: aggregate validation passes; route/build coverage
+  passes; no project files changed.
 
 ### P103.6 Docs / Roadmap
 

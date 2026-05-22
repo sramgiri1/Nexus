@@ -386,9 +386,81 @@
     {
       "phaseId": "P103.5",
       "title": "Tests / Checkers / Aggregate Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Aggregate P103 contract, model, approval envelope, UX, route tests, and safety checks."
+      "narrowGoal": "Aggregate P103 contract, model, approval envelope, UX, route tests, and safety checks.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "dac6f894",
+      "allowedFiles": [
+        "scripts/check-p1035-founder-live-work-admission-validation.js",
+        "scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1035-founder-live-work-admission-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1035-founder-live-work-admission-validation.js",
+        "scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "aggregateReport": "P103.5 report with contract, model, approval, UX, Playwright, build, OS status, validation coverage, and safety results."
+      },
+      "commandCenterUxRequirements": "No new UX in P103.5. Validate P103.4 Founder Live Work Admission UX remains useful and display-safe.",
+      "themeRequirements": "Validate existing system, dark, and light theme coverage remains retained.",
+      "playwrightTests": "Run focused Founder live work admission route coverage plus demo leakage safety coverage.",
+      "checkerUpdates": "Add check:p1035-founder-live-work-admission-validation and keep P103.4 checker forward-compatible.",
+      "docsRoadmap": "Record P103.5 complete and P103.6 next.",
+      "phaseStatusUpdate": "P103 in progress; P103.5 complete; current P103.5; previous P103.4; next P103.6.",
+      "validationCommands": [
+        "npm run check:p1035-founder-live-work-admission-validation",
+        "npm run check:p1034-command-center-founder-live-work-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live work admission|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm aggregate validation passes.",
+        "Confirm route/build coverage passes.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.5 files>",
+        "git commit -m \"test(nexus): validate founder live work admission\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P103.6",
