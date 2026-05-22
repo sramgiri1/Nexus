@@ -45,7 +45,7 @@ const validationCommands = [
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1026-founder-live-handoff-docs-roadmap"]));
 addCheck("contract marks P102.1-P102.6 complete", completedSubphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("contract keeps P102.7 planned", subphaseById.get("P102.7")?.status === "planned");
+addCheck("contract keeps P102.7 planned or complete", ["planned", "complete"].includes(subphaseById.get("P102.7")?.status));
 addCheck("README records P102.6 current status", readme.includes("Current Status Through P102.6") && readme.includes("P102 founder live handoff"));
 addCheck("Command Center guide includes founder live handoff", guide.includes("## Founder Live Handoff") && guide.includes("/command-center/live-readiness"));
 addCheck("Command Center guide records evidence", guide.includes("reports/p1022-founder-live-handoff-manifest-report.md") && guide.includes("reports/p1023-founder-live-handoff-work-orders-report.md"));
@@ -56,15 +56,15 @@ addCheck("platform roadmap records P102.6", /P102\.6 is\s+complete/.test(platfor
 addCheck("prior P102 validation report exists", exists("reports/p1025-founder-live-handoff-validation-report.md"));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P102.6"
-    && status.previousPhase === "P102.5"
-    && status.nextPhase === "P102.7"
-    && statusById.get("P102")?.status === "in_progress"
+  ["P102.6", "P102.7"].includes(status.currentPhase)
+    && ["P102.5", "P102.6"].includes(status.previousPhase)
+    && ["P102.7", "P103"].includes(status.nextPhase)
+    && ["in_progress", "complete"].includes(statusById.get("P102")?.status)
     && statusById.get("P102.6")?.status === "complete"
     && roadmapById.get("P102.6")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P102.7 handoff remains planned", statusById.get("P102.7")?.status === "planned" && roadmapById.get("P102.7")?.status === "planned");
+addCheck("P102.7 handoff remains planned or complete", ["planned", "complete"].includes(statusById.get("P102.7")?.status) && ["planned", "complete"].includes(roadmapById.get("P102.7")?.status));
 addCheck("docs do not claim unsafe execution", !/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now/i.test([readme, guide, plan, platformRoadmap].join("\n")));
 addCheck("docs do not expose raw private ids", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test([readme, guide, plan, platformRoadmap].join("\n")));
 

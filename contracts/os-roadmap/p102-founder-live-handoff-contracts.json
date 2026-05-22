@@ -548,7 +548,7 @@
     {
       "phaseId": "P102.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P102 validation, stamp real commits, close P102, and hand off to P103 planned.",
       "allowedFiles": [
@@ -559,7 +559,12 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1027-founder-live-handoff-final-report.md"
+        "reports/p1027-founder-live-handoff-final-report.md",
+        "scripts/check-p1026-founder-live-handoff-docs-roadmap.js",
+        "reports/p1026-founder-live-handoff-docs-roadmap-report.md",
+        "reports/p1025-founder-live-handoff-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -581,6 +586,44 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1027-founder-live-handoff-final.js",
+        "scripts/check-p1026-founder-live-handoff-docs-roadmap.js",
+        "contracts/os-roadmap/p102-founder-live-handoff-contracts.json",
+        "docs/architecture/P102_FOUNDER_LIVE_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reportShape": "Final report confirming P102.1-P102.6 complete, validation passed, P102 closed, and P103 planned."
+      },
+      "commandCenterUxRequirements": "No UX source change; preserve P102.4 UX.",
+      "themeRequirements": "Preserve existing theme behavior.",
+      "playwrightTests": "Run focused P102 route coverage and route-wide safety tests.",
+      "checkerUpdates": "Add check:p1027-founder-live-handoff-final.",
+      "docsRoadmap": "Record P102 and P102.7 complete with P103 next.",
+      "phaseStatusUpdate": "P102 complete; P102.7 complete; current P102.7; previous P102.6; next P103.",
+      "finalSafetyChecks": [
+        "Confirm P102 is closed.",
+        "Confirm P103 is only planned.",
+        "Confirm no project files changed.",
+        "Confirm unsafe execution remains blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P102.7 files>",
+        "git commit -m \"test(nexus): close founder live handoff\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Final validation",
+        "Safety",
+        "Next phase"
       ]
     }
   ]

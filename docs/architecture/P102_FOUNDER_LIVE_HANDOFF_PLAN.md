@@ -247,10 +247,39 @@ and final handoff.
 
 ### P102.7 Final Validation
 
-Status: planned.
+Status: complete.
 
 Run final P102 validation, stamp real commits, close P102, and hand off to
 P103 planned.
+
+- Narrow goal: run final P102 validation, stamp real commits, close P102, and
+  hand off to P103 planned.
+- Allowed files: `scripts/check-p1027-founder-live-handoff-final.js`,
+  forward-compatible P102 checkers, P102 contract, this plan, platform roadmap,
+  package script, OS roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected report shape: confirms P102.1-P102.6 are complete, final validation
+  passes, P102 is closed, and P103 is planned.
+- Command Center UX requirements: no source UX change; preserve P102.4 cards
+  and P102.5 route safety coverage.
+- Dark/light/system theme requirements: preserve existing theme behavior.
+- Playwright tests: focused founder live handoff route coverage and route-wide
+  full Command Center demo-leakage safety coverage.
+- Checker updates: `npm run check:p1027-founder-live-handoff-final`.
+- Docs/roadmap: this plan and platform roadmap record P102 and P102.7 complete
+  with P103 next.
+- OS phase status: P102 complete, P102.7 complete, current P102.7, previous
+  P102.6, next P103.
+- Validation commands: `npm run check:p1027-founder-live-handoff-final`,
+  `npm run check:p1026-founder-live-handoff-docs-roadmap`,
+  `npm run check:p1025-founder-live-handoff-validation`,
+  `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live handoff|full Command Center demo leakage safety"`,
+  `cd dashboard && npm run build`, `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: P102 is closed, P103 is only planned, no project files
+  changed, and unsafe execution remains blocked.
 
 ## Rollback Plan
 
