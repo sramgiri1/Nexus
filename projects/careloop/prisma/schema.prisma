@@ -65,6 +65,8 @@ model PasswordResetCode {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
+
+  @@index([userId, consumedAt, createdAt])
 }
 
 model CareCircle {
@@ -75,11 +77,11 @@ model CareCircle {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  members     CircleMember[]
-  invitations Invitation[]
-  recipients  CareRecipient[]
-  tasks       Task[]
-  events      Event[]
+  members                CircleMember[]
+  invitations            Invitation[]
+  recipients             CareRecipient[]
+  tasks                  Task[]
+  events                 Event[]
   premiumUpgradeRequests PremiumUpgradeRequest[]
 }
 
@@ -104,6 +106,10 @@ model Invitation {
 
   acceptedBy   User?   @relation("InvitationResponder", fields: [acceptedById], references: [id], onDelete: SetNull)
   acceptedById String?
+
+  @@index([circleId, status, createdAt])
+  @@index([email, status, createdAt])
+  @@index([recipientId])
 }
 
 model CareRecipient {
@@ -129,13 +135,14 @@ model CareRecipient {
   proxyAuthorizedBy   User?      @relation("CareRecipientProxyAuthorizer", fields: [proxyAuthorizedById], references: [id], onDelete: SetNull)
   proxyAuthorizedById String?
 
-  tasks        Task[]
-  accessGrants CareRecipientAccess[]
-  entitlement  CareRecipientEntitlement?
-  invitations  Invitation[]
+  tasks                  Task[]
+  accessGrants           CareRecipientAccess[]
+  entitlement            CareRecipientEntitlement?
+  invitations            Invitation[]
   premiumUpgradeRequests PremiumUpgradeRequest[]
 
   @@index([circleId, activationStatus])
+  @@index([circleId, isPrimary, sortOrder, createdAt])
   @@index([receiverUserId])
 }
 
@@ -152,6 +159,7 @@ model CircleMember {
   recipientAccesses CareRecipientAccess[]
 
   @@unique([userId, circleId])
+  @@index([circleId, role])
 }
 
 model CareRecipientAccess {
@@ -170,6 +178,7 @@ model CareRecipientAccess {
 
   @@unique([recipientId, memberId])
   @@index([memberId, revokedAt])
+  @@index([recipientId, revokedAt])
 }
 
 model CareRecipientEntitlement {
@@ -196,11 +205,11 @@ model PremiumUpgradeRequest {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  circle      CareCircle     @relation(fields: [circleId], references: [id], onDelete: Cascade)
-  circleId    String
-  recipient   CareRecipient  @relation(fields: [recipientId], references: [id], onDelete: Cascade)
-  recipientId String
-  requester   User           @relation("PremiumUpgradeRequestRequester", fields: [requesterUserId], references: [id], onDelete: Cascade)
+  circle          CareCircle    @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId        String
+  recipient       CareRecipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  recipientId     String
+  requester       User          @relation("PremiumUpgradeRequestRequester", fields: [requesterUserId], references: [id], onDelete: Cascade)
   requesterUserId String
 
   @@unique([recipientId, requesterUserId])
@@ -237,6 +246,13 @@ model Task {
 
   reminders Reminder[]
   comments  TaskComment[]
+
+  @@index([circleId, archivedAt, completedAt, dueAt, createdAt])
+  @@index([circleId, recipientId, archivedAt, status, dueAt])
+  @@index([circleId, status, completedAt])
+  @@index([assigneeId, status, dueAt])
+  @@index([creatorId, createdAt])
+  @@index([seriesId, dueAt])
 }
 
 model TaskComment {
@@ -249,21 +265,29 @@ model TaskComment {
   taskId   String
   author   User   @relation("TaskCommentAuthor", fields: [authorId], references: [id])
   authorId String
+
+  @@index([taskId, createdAt])
+  @@index([authorId, createdAt])
 }
 
 model Reminder {
-  id          String         @id @default(cuid())
-  scheduledAt DateTime
-  sentAt      DateTime?
-  snoozedUntil DateTime?
-  snoozeCount Int            @default(0)
+  id              String         @id @default(cuid())
+  scheduledAt     DateTime
+  sentAt          DateTime?
+  snoozedUntil    DateTime?
+  snoozeCount     Int            @default(0)
   escalationDueAt DateTime?
-  channel     Channel        @default(PUSH)
-  status      ReminderStatus @default(PENDING)
-  escalatedAt DateTime?
+  channel         Channel        @default(PUSH)
+  status          ReminderStatus @default(PENDING)
+  escalatedAt     DateTime?
 
   task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId String
+
+  @@index([taskId])
+  @@index([status, scheduledAt])
+  @@index([status, escalationDueAt])
+  @@index([status, escalatedAt])
 }
 
 model Event {
@@ -276,6 +300,9 @@ model Event {
   circleId String
   actor    User?      @relation(fields: [actorId], references: [id])
   actorId  String?
+
+  @@index([circleId, createdAt])
+  @@index([actorId, type, createdAt])
 }
 
 model DigestLog {

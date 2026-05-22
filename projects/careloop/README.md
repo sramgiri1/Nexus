@@ -4,7 +4,7 @@
 
 Stack: Node.js 20, Fastify 4, Prisma 5, PostgreSQL (Supabase), Resend, APNs, iOS 16+ SwiftUI
 
-Status: Field-gap reliability Phase I0 complete; shared care calendar and release setup remain next
+Status: Scale/data hardening Phase J1 complete; shared care calendar, release setup, and remaining data-readiness work remain next
 Agents: ATLAS, PRISM, CORE, SWIFT, BEACON, CANVAS
 
 ⚠️  COMPLIANCE: FTC Health Breach Notification Rule applies.
@@ -32,6 +32,12 @@ npm test
 npm run check:demo-showcase
 npm run test:ios:api
 npm run test:ios
+```
+
+For high-growth backend read-path validation:
+
+```bash
+node --test --test-name-pattern "cursor pagination|50 users|isolates one account" test/sprint2.test.js
 ```
 
 For release hygiene:

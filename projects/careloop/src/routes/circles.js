@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
+import { pageResponse, parseCursorPagination, prismaCursorWindow } from "../lib/pagination.js";
 import { activationForAcceptedReceiver, activationForProxyReceiver } from "../lib/receiver-state.js";
 import { AppStoreVerificationError, verifyAppStoreTransaction } from "../lib/app-store-server.js";
 import {
@@ -36,6 +37,9 @@ const INVITATION_EXPIRES_AFTER_DAYS = 14;
 const ENTITLEMENT_SOURCES = new Set(["APP_STORE", "MANUAL"]);
 const ACTIVE_ENTITLEMENT_STATUSES = new Set([RECEIVER_ENTITLEMENT_STATUS.ACTIVE]);
 const PREMIUM_REQUEST_VISIBLE_DAYS = 7;
+const eventOrder = [{ createdAt: "desc" }, { id: "desc" }];
+const invitationOrder = [{ createdAt: "desc" }, { id: "desc" }];
+const taskActivityOrder = [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }, { id: "desc" }];
 
 export default async function circles(app) {
   const db = app.db;
@@ -1240,12 +1244,15 @@ export default async function circles(app) {
     const status = ["PENDING", "ACCEPTED", "DECLINED", "REVOKED", "EXPIRED"].includes(requestedStatus)
       ? requestedStatus
       : "PENDING";
+    const pagination = parseCursorPagination(req.query);
 
-    return db.invitation.findMany({
+    const invitations = await db.invitation.findMany({
       where: { circleId: req.params.id, status },
       include: invitationInclude,
-      orderBy: { createdAt: "desc" },
+      orderBy: invitationOrder,
+      ...prismaCursorWindow(pagination),
     });
+    return pageResponse(invitations, pagination);
   });
 
   // POST /circles/:id/members/invite — admin invite by email, membership created on acceptance
@@ -1754,16 +1761,18 @@ export default async function circles(app) {
   app.get("/circles/:circleId/events", async (req, reply) => {
     const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
+    const pagination = parseCursorPagination(req.query);
+    const eventWindow = pagination.enabled ? prismaCursorWindow(pagination, isCareOrganizer(member) ? 1 : 4) : { take: 100 };
     const [events, tasks, accessContext] = await Promise.all([
       db.event.findMany({
         where:   { circleId: req.params.circleId },
-        orderBy: { createdAt: "desc" },
-        take:    100,
+        orderBy: eventOrder,
+        ...eventWindow,
         include: { actor: { select: { id: true, name: true } } },
       }),
       db.task.findMany({
         where: { circleId: req.params.circleId, archivedAt: null },
-        orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
+        orderBy: taskActivityOrder,
       }),
       loadReceiverAccessContext(db, {
         circleId: req.params.circleId,
@@ -1771,10 +1780,13 @@ export default async function circles(app) {
         userId: member.userId,
       }),
     ]);
-    if (isCareOrganizer(member)) return events;
+    if (isCareOrganizer(member)) return pageResponse(events, pagination);
     const visibleTaskIds = new Set(
       filterVisibleTasks(tasks, { member, userId: member.userId, accessContext }).map((task) => task.id),
     );
-    return events.filter((event) => eventVisibleToMember(event, member, accessContext, visibleTaskIds));
+    return pageResponse(
+      events.filter((event) => eventVisibleToMember(event, member, accessContext, visibleTaskIds)),
+      pagination,
+    );
   });
 }

@@ -9,10 +9,13 @@ import {
   recurrenceFields,
 } from "../lib/recurrence.js";
 import { canCreateTasksForReceiver } from "../lib/receiver-state.js";
+import { pageResponse, parseCursorPagination, prismaCursorWindow } from "../lib/pagination.js";
 import {
   canCreateTaskWithAccess,
   eligibleAssigneeUserIdsForReceiver,
   filterVisibleTasks,
+  isCareOrganizer,
+  isCareReceiver,
   loadReceiverAccessContext,
   taskCapabilities,
 } from "../lib/access.js";
@@ -26,6 +29,7 @@ const taskInclude = {
 };
 const SNOOZE_OPTIONS_MINUTES = new Set([15, 60, 1440]);
 const MAX_REMINDER_SNOOZES = 3;
+const taskListOrder = [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }, { id: "desc" }];
 
 function parseOptionalDate(value, fieldName) {
   if (!value) return null;
@@ -171,6 +175,36 @@ export default async function tasks(app) {
 
   async function accessContextForMember(circleId, member) {
     return assignmentContextForMember(db, circleId, member, member.userId);
+  }
+
+  function visibleTaskWhere(circleId, member, accessContext) {
+    const baseWhere = { circleId, archivedAt: null };
+    if (isCareOrganizer(member)) return baseWhere;
+
+    const recipientIds = [...accessContext.recipientIds];
+    if (recipientIds.length === 0) return null;
+
+    if (isCareReceiver(member)) {
+      return {
+        ...baseWhere,
+        recipientId: { in: recipientIds },
+        assigneeId: member.userId,
+      };
+    }
+
+    const receiverUserIds = accessContext.recipients
+      .map((recipient) => recipient.receiverUserId)
+      .filter(Boolean);
+
+    return {
+      ...baseWhere,
+      recipientId: { in: recipientIds },
+      OR: [
+        { creatorId: member.userId },
+        { assigneeId: member.userId },
+        ...(receiverUserIds.length > 0 ? [{ assigneeId: { in: receiverUserIds } }] : []),
+      ],
+    };
   }
 
   function assertAssigneeAllowed(assigneeId, receiver) {
@@ -384,19 +418,23 @@ export default async function tasks(app) {
   app.get("/circles/:circleId/tasks", async (req, reply) => {
     const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
-    const [tasks, accessContext] = await Promise.all([
-      db.task.findMany({
-        where: { circleId: req.params.circleId, archivedAt: null },
-        orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
-        include: taskInclude,
-      }),
-      accessContextForMember(req.params.circleId, member),
-    ]);
-    return filterVisibleTasks(tasks, {
+    const pagination = parseCursorPagination(req.query);
+    const accessContext = await accessContextForMember(req.params.circleId, member);
+    const where = visibleTaskWhere(req.params.circleId, member, accessContext);
+    if (!where) return pageResponse([], pagination);
+
+    const tasks = await db.task.findMany({
+      where,
+      orderBy: taskListOrder,
+      include: taskInclude,
+      ...prismaCursorWindow(pagination),
+    });
+    const visibleTasks = filterVisibleTasks(tasks, {
       member,
       userId: member.userId,
       accessContext,
     }).map((task) => decorateTaskForMember(task, member, accessContext));
+    return pageResponse(visibleTasks, pagination);
   });
 
   // PATCH /circles/:circleId/tasks/:taskId
@@ -774,11 +812,14 @@ export default async function tasks(app) {
     if (!member) return;
     const { task } = await findVisibleTask(req.params.circleId, req.params.taskId, member);
     if (!task) return reply.code(404).send({ error: "Task not found" });
-    return db.taskComment.findMany({
+    const pagination = parseCursorPagination(req.query);
+    const comments = await db.taskComment.findMany({
       where: { taskId: req.params.taskId },
-      orderBy: { createdAt: "asc" },
+      orderBy: [{ createdAt: "asc" }, { id: "asc" }],
       include: commentInclude,
+      ...prismaCursorWindow(pagination),
     });
+    return pageResponse(comments, pagination);
   });
 
   // POST /circles/:circleId/tasks/:taskId/comments

@@ -1,6 +1,6 @@
 # CareLoop Test Runbook
 
-Date: 2026-05-20
+Date: 2026-05-22
 
 Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups existing backend, iOS unit, and iOS UI tests so agents can run the smallest useful suite instead of always running the full regression.
 
@@ -29,7 +29,7 @@ CareLoop also exposes project-local iOS runners from `projects/careloop` for API
 | `backend:reminders` | Reminder creation, snooze, escalation, push/email/digest delivery simulation. |
 | `backend:security` | Scope isolation, cross-user mutation protection, blocked unauthorized flows. |
 | `backend:payments` | Premium entitlement sync, free limits, premium-gated capabilities. |
-| `backend:scale` | 50-user simulation and multi-circle/multi-role isolation. |
+| `backend:scale` | 50-user simulation, multi-circle/multi-role isolation, and high-growth read pagination contracts. |
 
 ## iOS Suites
 
@@ -66,6 +66,7 @@ CareLoop also exposes project-local iOS runners from `projects/careloop` for API
 | New task inactive receiver blocking | Backend inactive-receiver task-create rejection test; focused iOS UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` |
 | 50 dummy users / real-user simulation | `backend:scale` |
 | One user across multiple circles in different roles | `backend:scale`, `ios:personas` |
+| High-growth task/comment/invite/activity reads | Focused backend scale regression for opt-in cursor pagination and legacy array response compatibility |
 | Delete circle/member/receiver scenarios | `backend:circles`; receiver removal confirmation and blocked-delete UI coverage; circle/member UI delete coverage remains in `testability-matrix.md` backlog |
 | StoreKit product metadata | Backend entitlement metadata test; `xcodebuild build-for-testing`; focused iOS unit coverage in `CareLoopTests/SubscriptionManagerProductIdTests` for product IDs, fallback prices, and local StoreKit fixture parity |
 | Premium restore and entitlement refresh | `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanManagePremiumReceiverPlan` verifies the receiver-scoped restore CTA; purchase and restore reuse the shared receiver entitlement sync helper |
@@ -92,6 +93,7 @@ CareLoop also exposes project-local iOS runners from `projects/careloop` for API
 - Focused App Store Server verification readiness can be run with `node --test test/app-store-server.test.js` and backend route test `fails closed when App Store verification is enabled without server credentials`.
 - Focused demo showcase readiness can be run from `projects/careloop` with `npm run check:demo-showcase` and `node scripts/seed-demo-showcase.js > /tmp/careloop-demo-manifest-check.json`.
 - Focused API-backed admin/persona validation can be run from `projects/careloop` with `npm run test:ios:api`; use `npm run test:ios` for the full Xcode suite through the same API-aware runner.
+- Focused scale-read validation can be run from `projects/careloop` with `node --test --test-name-pattern "cursor pagination|50 users|isolates one account" test/sprint2.test.js`; it covers 50-user/multi-role isolation plus opt-in cursor pagination for tasks, comments, invitations, and events.
 - Focused one-command demo launcher validation can be run from `projects/careloop` with `npm run careloop:demo:check`; use `npm run careloop:demo` only when you intentionally want to seed data, start/reuse the API, and open simulator sessions.
 - Focused persona video recording can be run from `projects/careloop` with `npm run careloop:record-personas`. It seeds reserved-domain users, runs four Xcode UI journeys, and writes MP4 files under the printed `outputDir`.
 - Focused release-hygiene validation can be run from `projects/careloop-ios` with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild build -project CareLoop.xcodeproj -scheme CareLoop -configuration Release -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO`, then from `projects/careloop` with `npm run check:ios-release-artifact`.

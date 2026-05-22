@@ -1282,6 +1282,37 @@ After the receiver-scoped premium phase, implementation should continue in small
    - Product, legal, and liability approval is required before implementing medication-specific workflows.
    - Existing generic tasks may reference real-world care work such as prescription pickup, but the app must not claim medication-management functionality until approved.
 
+#### Phase J — Scale, Data Hardening, And Production Database Readiness
+
+**Goal:** keep the existing CareLoop architecture clean while preparing the database, API read paths, privacy controls, and operations model for larger families, multiple caregivers, and production traffic.
+
+**Implementation status:** J1 is complete on the active CareLoop branch. High-growth read paths now have hot-path PostgreSQL indexes, opt-in cursor pagination for tasks, task comments, invitations, and events, and backend regression coverage that preserves the existing legacy array response contract when clients do not request pagination.
+
+**Subphases**
+
+1. **J1: Hot-path indexes and cursor pagination.**
+   - Add database indexes for auth reset lookup, invitations, receiver ordering/access grants, task lists, comments, reminders, and activity events.
+   - Add opt-in cursor pagination for high-growth read endpoints without breaking existing iOS callers that expect arrays.
+   - Push task visibility predicates into database queries before applying defense-in-depth in-memory visibility filtering.
+   - Tests: Prisma schema validation plus backend regression for legacy array responses and paginated task/comment/invitation/event reads.
+   - Status: complete.
+2. **J2: Scheduler and queue readiness for multiple API instances.**
+   - Replace single-process assumptions in reminder, snooze, escalation, digest, and archive jobs with idempotent claiming semantics.
+   - Ensure duplicate workers cannot double-send reminders or escalation fanout.
+   - Tests: backend concurrent-claim simulation and idempotent retry coverage.
+3. **J3: Postgres load testing and query-plan baselines.**
+   - Add deterministic seed profiles for large circles, many receivers, many caregivers, and long task/event histories.
+   - Capture query-plan expectations for task lists, activity, invitations, reminders, and insights.
+   - Tests: local load-shape scripts that fail on unpaginated high-cardinality reads or missing indexes.
+4. **J4: PII retention, export/delete, and encryption review.**
+   - Define retention policy for events, invites, comments, reminders, push tokens, reset codes, and demo/test data.
+   - Ensure audit payloads stay non-PII where possible and raw provider payloads are not stored or surfaced.
+   - Tests: PII redaction checks, export/delete route coverage, and security regression for scoped data access.
+5. **J5: Observability and performance budgets.**
+   - Add request timing, error-rate, job-lag, and failed-delivery visibility without logging private care details.
+   - Establish backend latency budgets for dashboard, task board, activity, and insights endpoints.
+   - Tests: telemetry contract tests and local performance smoke checks.
+
 ---
 
 ## 12. Decisions Locked

@@ -99,6 +99,34 @@ function buildDb(seed = {}) {
     return match ? Math.max(max, Number(match[1])) : max;
   }, 0);
   const uid = (p) => `${p}${++seq}`;
+  const orderItems = (items, orderBy) => {
+    const orderings = Array.isArray(orderBy) ? orderBy : (orderBy ? [orderBy] : []);
+    if (orderings.length === 0) return [...items];
+    return [...items].sort((lhs, rhs) => {
+      for (const ordering of orderings) {
+        const [field, direction] = Object.entries(ordering)[0];
+        const left = lhs[field];
+        const right = rhs[field];
+        if (left === right) continue;
+        if (left === null || left === undefined) return 1;
+        if (right === null || right === undefined) return -1;
+        const comparison = left > right ? 1 : -1;
+        return direction === "desc" ? -comparison : comparison;
+      }
+      return 0;
+    });
+  };
+  const windowItems = (items, { cursor, skip, take } = {}) => {
+    let next = [...items];
+    if (cursor?.id) {
+      const index = next.findIndex((item) => item.id === cursor.id);
+      if (index >= 0) next = next.slice(index + (skip ?? 0));
+    } else if (skip) {
+      next = next.slice(skip);
+    }
+    if (typeof take === "number") next = next.slice(0, take);
+    return next;
+  };
 
   function userRepo(s) {
     return {
@@ -360,11 +388,10 @@ function buildDb(seed = {}) {
         includeInvitation(s.invitations.find((invitation) => invitation.id === where.id) ?? null, include),
       findFirst: async ({ where, include }) =>
         includeInvitation(s.invitations.find((invitation) => matchesInvitation(invitation, where)) ?? null, include),
-      findMany: async ({ where, include, orderBy } = {}) => {
+      findMany: async ({ where, include, orderBy, cursor, skip, take } = {}) => {
         let items = s.invitations.filter((invitation) => matchesInvitation(invitation, where));
-        if (orderBy?.createdAt === "desc") {
-          items = items.sort((lhs, rhs) => rhs.createdAt - lhs.createdAt);
-        }
+        items = orderItems(items, orderBy);
+        items = windowItems(items, { cursor, skip, take });
         return items.map((invitation) => includeInvitation(invitation, include));
       },
       update: async ({ where, data: d, include }) => {
@@ -672,10 +699,15 @@ function buildDb(seed = {}) {
 
   function taskRepo(s) {
     function matchesTaskWhere(task, where = {}) {
+      if (where.OR && !where.OR.some((branch) => matchesTaskWhere(task, branch))) return false;
       if (where.id && task.id !== where.id) return false;
       if (where.circleId && task.circleId !== where.circleId) return false;
-      if (where.recipientId && task.recipientId !== where.recipientId) return false;
+      if (where.recipientId && typeof where.recipientId === "string" && task.recipientId !== where.recipientId) return false;
+      if (where.recipientId?.in && !where.recipientId.in.includes(task.recipientId)) return false;
       if (where.seriesId && task.seriesId !== where.seriesId) return false;
+      if (where.assigneeId && typeof where.assigneeId === "string" && task.assigneeId !== where.assigneeId) return false;
+      if (where.assigneeId?.in && !where.assigneeId.in.includes(task.assigneeId)) return false;
+      if (where.creatorId && task.creatorId !== where.creatorId) return false;
       if (where.archivedAt === null && task.archivedAt !== null) return false;
       if (where.archivedAt?.not === null && task.archivedAt === null) return false;
       if (where.status && typeof where.status === "string" && task.status !== where.status) return false;
@@ -727,10 +759,14 @@ function buildDb(seed = {}) {
         s.tasks.push(t);
         return includeTask(t, include);
       },
-      findMany:  async ({ where, include } = {}) =>
-        s.tasks
-          .filter((task) => matchesTaskWhere(task, where))
-          .map((task) => includeTask(task, include)),
+      findMany:  async ({ where, include, orderBy, cursor, skip, take } = {}) =>
+        windowItems(
+          orderItems(
+            s.tasks.filter((task) => matchesTaskWhere(task, where)),
+            orderBy,
+          ),
+          { cursor, skip, take },
+        ).map((task) => includeTask(task, include)),
       findFirst: async ({ where, include }) =>
         includeTask(s.tasks.find((task) => matchesTaskWhere(task, where)) ?? null, include),
       count: async ({ where } = {}) =>
@@ -852,16 +888,20 @@ function buildDb(seed = {}) {
           author: s.users.find((user) => user.id === comment.authorId) ?? null,
         };
       },
-      findMany: async ({ where, include } = {}) =>
-        s.taskComments
-          .filter((comment) => {
-            if (where?.taskId && comment.taskId !== where.taskId) return false;
-            return true;
-          })
-          .map((comment) => ({
-            ...comment,
-            author: include?.author ? (s.users.find((user) => user.id === comment.authorId) ?? null) : undefined,
-          })),
+      findMany: async ({ where, include, orderBy, cursor, skip, take } = {}) =>
+        windowItems(
+          orderItems(
+            s.taskComments.filter((comment) => {
+              if (where?.taskId && comment.taskId !== where.taskId) return false;
+              return true;
+            }),
+            orderBy,
+          ),
+          { cursor, skip, take },
+        ).map((comment) => ({
+          ...comment,
+          author: include?.author ? (s.users.find((user) => user.id === comment.authorId) ?? null) : undefined,
+        })),
       findFirst: async ({ where, select } = {}) => {
         const comment = s.taskComments.find((item) => {
           if (where?.id && item.id !== where.id) return false;
@@ -883,15 +923,12 @@ function buildDb(seed = {}) {
   function eventRepo(s) {
     return {
       create:   async ({ data: d }) => { const e = { id: uid("e"), createdAt: new Date(), payload: {}, ...d }; s.events.push(e); return e; },
-      findMany: async ({ where, orderBy, take, include } = {}) => {
+      findMany: async ({ where, orderBy, take, include, cursor, skip } = {}) => {
         let items = s.events.filter((event) => {
           if (where?.circleId && event.circleId !== where.circleId) return false;
           return true;
         });
-        if (orderBy?.createdAt === "desc") {
-          items = [...items].sort((lhs, rhs) => rhs.createdAt - lhs.createdAt);
-        }
-        if (typeof take === "number") items = items.slice(0, take);
+        items = windowItems(orderItems(items, orderBy), { cursor, skip, take });
         return items.map((event) => ({
           ...event,
           actor: include?.actor ? (s.users.find((user) => user.id === event.actorId) ?? null) : undefined,
@@ -3884,6 +3921,78 @@ describe("receiver-scoped access control", () => {
     });
     assert.equal(res.statusCode, 200);
     assert.deepEqual(res.json().map((event) => event.id), ["e4", "e1"]);
+    await app.close();
+  });
+
+  test("high-growth reads support opt-in cursor pagination without changing legacy array responses", async () => {
+    const seed = scopedAccessSeed();
+    seed.invitations = [
+      { id: "i1", circleId: "c1", email: "one@test.com", name: "One", role: "MEMBER", status: "PENDING", acceptedAt: null, expiresAt: null, invitedById: "u1", acceptedById: null, createdAt: new Date("2026-04-30T12:00:00.000Z"), updatedAt: new Date("2026-04-30T12:00:00.000Z") },
+      { id: "i2", circleId: "c1", email: "two@test.com", name: "Two", role: "MEMBER", status: "PENDING", acceptedAt: null, expiresAt: null, invitedById: "u1", acceptedById: null, createdAt: new Date("2026-04-30T13:00:00.000Z"), updatedAt: new Date("2026-04-30T13:00:00.000Z") },
+      { id: "i3", circleId: "c1", email: "three@test.com", name: "Three", role: "MEMBER", status: "PENDING", acceptedAt: null, expiresAt: null, invitedById: "u1", acceptedById: null, createdAt: new Date("2026-04-30T14:00:00.000Z"), updatedAt: new Date("2026-04-30T14:00:00.000Z") },
+    ];
+    seed.taskComments = [
+      { id: "tc1", taskId: "t1", authorId: "u1", body: "First", createdAt: new Date("2026-04-30T12:00:00.000Z"), updatedAt: new Date("2026-04-30T12:00:00.000Z") },
+      { id: "tc2", taskId: "t1", authorId: "u2", body: "Second", createdAt: new Date("2026-04-30T13:00:00.000Z"), updatedAt: new Date("2026-04-30T13:00:00.000Z") },
+      { id: "tc3", taskId: "t1", authorId: "u1", body: "Third", createdAt: new Date("2026-04-30T14:00:00.000Z"), updatedAt: new Date("2026-04-30T14:00:00.000Z") },
+    ];
+    const app = await buildApp(buildDb(seed));
+    const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver-a@test.com", name: "Caregiver A" });
+
+    const legacyTasks = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks",
+      headers: caregiverHeaders,
+    });
+    assert.equal(legacyTasks.statusCode, 200);
+    assert.equal(Array.isArray(legacyTasks.json()), true);
+
+    const firstTaskPage = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks?limit=1",
+      headers: caregiverHeaders,
+    });
+    assert.equal(firstTaskPage.statusCode, 200);
+    assert.deepEqual(firstTaskPage.json().items.map((task) => task.id), ["t1"]);
+    assert.equal(firstTaskPage.json().hasMore, true);
+    assert.equal(firstTaskPage.json().nextCursor, "t1");
+
+    const secondTaskPage = await app.inject({
+      method: "GET",
+      url: `/circles/c1/tasks?limit=1&cursor=${firstTaskPage.json().nextCursor}`,
+      headers: caregiverHeaders,
+    });
+    assert.equal(secondTaskPage.statusCode, 200);
+    assert.deepEqual(secondTaskPage.json().items.map((task) => task.id), ["t2"]);
+
+    const commentPage = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks/t1/comments?limit=2",
+      headers: organizerHeaders,
+    });
+    assert.equal(commentPage.statusCode, 200);
+    assert.deepEqual(commentPage.json().items.map((comment) => comment.id), ["tc1", "tc2"]);
+    assert.equal(commentPage.json().nextCursor, "tc2");
+
+    const invitationPage = await app.inject({
+      method: "GET",
+      url: "/circles/c1/invitations?status=PENDING&limit=2",
+      headers: organizerHeaders,
+    });
+    assert.equal(invitationPage.statusCode, 200);
+    assert.deepEqual(invitationPage.json().items.map((invite) => invite.id), ["i3", "i2"]);
+    assert.equal(invitationPage.json().nextCursor, "i2");
+
+    const eventPage = await app.inject({
+      method: "GET",
+      url: "/circles/c1/events?limit=2",
+      headers: organizerHeaders,
+    });
+    assert.equal(eventPage.statusCode, 200);
+    assert.deepEqual(eventPage.json().items.map((event) => event.id), ["e4", "e3"]);
+    assert.equal(eventPage.json().nextCursor, "e3");
+
     await app.close();
   });
 

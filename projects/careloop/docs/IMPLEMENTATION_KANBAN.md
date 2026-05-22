@@ -1,6 +1,6 @@
 # CareLoop Implementation Kanban
 
-**Last updated:** 2026-05-20
+**Last updated:** 2026-05-22
 
 This board tracks CareLoop app work only. It mirrors the PRD implementation phases and must be updated whenever a subphase moves state.
 
@@ -16,7 +16,7 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-No CareLoop implementation card is actively in progress. Local Phase H release hygiene is complete through H3. H4/H5 and F5 remain blocked on external Apple/App Store/physical-device setup.
+No CareLoop implementation card is actively in progress. Phase J1 scale hot-path hardening is complete. J2-J5 can continue locally, while H4/H5 and F5 remain blocked on external Apple/App Store/physical-device setup.
 
 ## Ready
 
@@ -31,6 +31,10 @@ No CareLoop implementation card is actively in progress. Local Phase H release h
 | I4 | Care receiver profile and emergency information. | Receiver profile schema/UI; privacy/export/delete plumbing. | Authz, export/delete, and profile UI tests. | Adds real handoff context. | Planned |
 | I5 | Consent, privacy, and self-service controls. | Receiver settings, access grants, audit/export/delete routes. | Receiver revoke/export/delete tests and UI coverage. | Demonstrates trust controls. | Planned |
 | I6 | Calendar export and Apple ecosystem integrations. | Calendar/Reminders export, deep links, APNs/device validation. | Simulator deep-link tests plus physical-device validation. | Optional after care calendar stabilizes. | Planned |
+| J2 | Scheduler and queue readiness for multiple API instances. | Reminder, snooze, escalation, digest, and archive jobs. | Backend concurrent-claim and idempotent retry tests. | No demo change unless job state appears in seeded history. | Planned |
+| J3 | Postgres load testing and query-plan baselines. | Large seed profiles, Prisma query paths, index coverage. | Load-shape scripts and query-plan assertions for high-cardinality reads. | No direct demo change. | Planned |
+| J4 | PII retention, export/delete, and encryption review. | Event/invite/comment/reminder retention, export/delete routes, security checks. | PII redaction, export/delete, and scoped-access regressions. | Adds trust/privacy talking points after implemented. | Planned |
+| J5 | Observability and performance budgets. | API timing/error/job-lag telemetry without private care details. | Telemetry contract tests and local performance smoke checks. | No direct demo change. | Planned |
 
 ## Backlog
 
@@ -78,6 +82,7 @@ No CareLoop implementation card is actively in progress. Local Phase H release h
 | H2 | Debug-gate UI-test and demo launch hooks. | `UITestScenario.current`, UI-test fixture data, demo launch session parsing, and app launch activation are compile-time gated behind `DEBUG`; the Xcode Release simulator build passes with production `AppState()` fallback outside Debug. |
 | H3 | Inspect Release archive for demo data, mock accounts, StoreKit config, and launch args. | `npm run check:ios-release-artifact` scans the built Release `.app` and passes only when no demo seed files, mock emails, local StoreKit fixture, demo env keys, or UI-test launch args are bundled. |
 | I0 | Scenario reliability and API-backed test harness. | Fixed scheduler escalation for legacy unscoped tasks without querying null receiver access, added a CareLoop-local API-aware iOS runner, repaired admin demo/persona UI test contracts, reseeded API-backed journeys before launch, and removed medication-module claims from demo/onboarding/test fixtures while leaving prescription pickup as a generic care task. |
+| J1 | Hot-path indexes and cursor pagination. | Added PostgreSQL indexes for auth reset lookup, invitations, receiver access/order, task lists, comments, reminders, and activity events; added opt-in cursor pagination for tasks, task comments, invitations, and events while preserving legacy array responses; focused backend scale/pagination regression and Prisma schema validation passed. |
 
 ## Blocked / External Setup
 
