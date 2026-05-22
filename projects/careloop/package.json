@@ -23,6 +23,8 @@
     "check:ios-release-hygiene": "node scripts/check-ios-release-hygiene.js",
     "check:ios-release-artifact": "CARELOOP_REQUIRE_RELEASE_APP=1 node scripts/check-ios-release-hygiene.js",
     "careloop:record-personas": "node scripts/record-persona-demo-videos.js",
+    "standalone:export": "node scripts/export-standalone.js",
+    "check:standalone-export": "node scripts/export-standalone.js --dry-run",
     "test:ios": "bash scripts/careloop-ios-test-runner.sh ios",
     "test:ios:ui": "bash scripts/careloop-ios-test-runner.sh ios:ui",
     "test:ios:api": "bash scripts/careloop-ios-test-runner.sh ios:api",

@@ -44,9 +44,18 @@ Run from the CareLoop API package folder:
 npm install
 npm test
 npm run check:demo-showcase
+npm run check:standalone-export
 npm run check:ios-release-hygiene
 npm run test:ios:api
 ```
+
+Create a clean app-only export when a target folder or repository has been chosen:
+
+```bash
+npm run standalone:export -- --to /absolute/path/to/careloop --clean
+```
+
+The export includes backend source, Prisma schema/migrations, app scripts, tests, docs, and the iOS app under `ios/`. It excludes `.env`, `.env.prod`, `.tmp`, `node_modules`, `.DS_Store`, Nexus OS, dashboard, reports, roadmap, and generated simulator artifacts.
 
 The room demo no longer depends on a Nexus-root launcher:
 

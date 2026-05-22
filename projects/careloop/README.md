@@ -128,9 +128,18 @@ Standalone commands:
 npm install
 npm test
 npm run check:demo-showcase
+npm run check:standalone-export
 npm run test:ios:api
 CARELOOP_DEMO_FORCE_BUILD=1 CARELOOP_DEMO_FORCE_INSTALL=1 npm run careloop:demo
 ```
+
+Create a standalone app-only export after choosing a destination:
+
+```bash
+npm run standalone:export -- --to /absolute/path/to/careloop --clean
+```
+
+See `docs/STANDALONE_BUILD_TEST.md` and `docs/PRODUCTION_READINESS.md` before moving the export into a new repository.
 
 The product IDs must stay aligned with `SubscriptionManager` and App Store Connect:
 
