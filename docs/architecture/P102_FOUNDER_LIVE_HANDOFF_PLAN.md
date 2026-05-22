@@ -62,11 +62,42 @@ Status: complete.
 
 ### P102.2 Founder Handoff Manifest Model
 
-Status: planned.
+Status: complete.
 
 Build a deterministic local handoff manifest from P101 readiness, founder
 context, PRD readiness, workstream lanes, and admission boundary. Unsafe
 runtime flags remain false.
+
+- Narrow goal: create `buildFounderLiveHandoffManifest` as the local handoff
+  manifest for founder context, PRD readiness, handoff lanes, approval
+  boundary, blockers, evidence/activity, and cost posture.
+- Allowed files: `live-ready/founderLiveHandoffManifest.js`,
+  `scripts/check-p1022-founder-live-handoff-manifest.js`,
+  forward-compatible P102.1 checker, P102 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected exports: `P102_FOUNDER_LIVE_HANDOFF_PHASE`,
+  `P102_HANDOFF_STATES`, `P102_HANDOFF_SAFETY_FLAGS`,
+  `buildFounderLiveHandoffManifest`, and
+  `validateFounderLiveHandoffManifest`.
+- Command Center UX requirements: no UI route change in P102.2. P102.4 must
+  render this manifest without raw JSON, raw logs, raw policy dumps, raw
+  private IDs, demo leakage, or runnable execution controls.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none in P102.2 because no UI files changed.
+- Checker updates: `npm run check:p1022-founder-live-handoff-manifest`.
+- Docs/roadmap: this plan and platform roadmap record P102.2 complete and
+  P102.3 next.
+- OS phase status: P102 in progress, P102.2 complete, current P102.2, previous
+  P102.1, next P102.3.
+- Validation commands: `npm run check:p1022-founder-live-handoff-manifest`,
+  `npm run check:p1021-founder-live-handoff-contract`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: manifest is deterministic/local; all unsafe runtime
+  flags are false; no project files changed.
 
 ### P102.3 Governed Work Order Dry Run
 
