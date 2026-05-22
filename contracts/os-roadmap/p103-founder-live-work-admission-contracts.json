@@ -122,7 +122,7 @@
     {
       "phaseId": "P103.2",
       "title": "Work Admission Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build a deterministic local work-admission model from P102 handoff manifest and work orders without executing agents or mutating projects.",
       "allowedFiles": [
@@ -164,6 +164,44 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "27b9ce60",
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveWorkAdmission.js",
+        "scripts/check-p1032-founder-live-work-admission-model.js",
+        "scripts/check-p1031-founder-live-work-admission-contract.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "commandCenterUxRequirements": "No UI route change in P103.2. P103.4 must render this model without raw JSON, raw logs, raw policy dumps, raw private IDs, demo leakage, or runnable execution controls.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No Playwright update in P103.2 because no UI files change.",
+      "checkerUpdates": "Add check:p1032-founder-live-work-admission-model and keep P103.1 checker forward-compatible.",
+      "docsRoadmap": "Record P103.2 complete and P103.3 next.",
+      "phaseStatusUpdate": "P103 in progress; P103.2 complete; current P103.2; previous P103.1; next P103.3.",
+      "finalSafetyChecks": [
+        "Confirm work admission model is deterministic/local.",
+        "Confirm all unsafe runtime flags are false.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.2 files>",
+        "git commit -m \"feat(nexus): add founder live work admission model\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Work admission model",
+        "Checks",
+        "Safety",
+        "Next subphase"
       ]
     },
     {

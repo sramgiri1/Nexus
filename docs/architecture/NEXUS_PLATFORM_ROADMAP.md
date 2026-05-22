@@ -2272,6 +2272,12 @@ P103.1 is complete. It defines the P103 execution contract, seven-subphase
 split, safety baseline, expected local data shapes, validation commands, phase
 status handoff, and P104 planned placeholder. P103.2 is next for the local work
 admission model.
+P103.2 is complete. It adds a deterministic local work admission model that
+reuses P102 handoff manifest and work-order dry-run helpers, produces
+display-safe admission rows with evidence requirements and validation commands,
+keeps approval blocked, and leaves provider/model calls, dispatch, worker/tool
+execution, project/DB mutation, deploy, package, network, and spend disabled.
+P103.3 is next for a non-runnable approval evidence envelope.
 
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).

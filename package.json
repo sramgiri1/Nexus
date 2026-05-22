@@ -525,7 +525,8 @@
     "check:p1025-founder-live-handoff-validation": "node scripts/check-p1025-founder-live-handoff-validation.js",
     "check:p1026-founder-live-handoff-docs-roadmap": "node scripts/check-p1026-founder-live-handoff-docs-roadmap.js",
     "check:p1027-founder-live-handoff-final": "node scripts/check-p1027-founder-live-handoff-final.js",
-    "check:p1031-founder-live-work-admission-contract": "node scripts/check-p1031-founder-live-work-admission-contract.js"
+    "check:p1031-founder-live-work-admission-contract": "node scripts/check-p1031-founder-live-work-admission-contract.js",
+    "check:p1032-founder-live-work-admission-model": "node scripts/check-p1032-founder-live-work-admission-model.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

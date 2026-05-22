@@ -65,14 +65,44 @@ Status: complete.
 
 ### P103.2 Work Admission Model
 
-Status: planned.
+Status: complete.
 
 Build a deterministic local work-admission model from P102 handoff manifest and
 work-order rows. The model must produce display-safe admission records only and
 must keep all provider, dispatch, worker, tool, project, DB, deploy, package,
 network, and spend flags blocked.
 
-Validation: `npm run check:p1032-founder-live-work-admission-model`.
+- Narrow goal: create `buildFounderLiveWorkAdmission` as the local admission
+  model for source handoff state, work admission rows, evidence requirements,
+  validation commands, approval boundary, blockers, evidence/activity, and cost
+  posture.
+- Allowed files: `live-ready/founderLiveWorkAdmission.js`,
+  `scripts/check-p1032-founder-live-work-admission-model.js`,
+  forward-compatible P103.1 checker, P103 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected exports: `P103_FOUNDER_LIVE_WORK_ADMISSION_PHASE`,
+  `P103_WORK_ADMISSION_STATES`, `P103_WORK_ADMISSION_SAFETY_FLAGS`,
+  `buildFounderLiveWorkAdmission`, and
+  `validateFounderLiveWorkAdmission`.
+- Command Center UX requirements: no UI route change in P103.2. P103.4 must
+  render this model without raw JSON, raw logs, raw policy dumps, raw private
+  IDs, demo leakage, or runnable execution controls.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none in P103.2 because no UI files changed.
+- Checker updates: `npm run check:p1032-founder-live-work-admission-model`.
+- Docs/roadmap: this plan and platform roadmap record P103.2 complete and
+  P103.3 next.
+- OS phase status: P103 in progress, P103.2 complete, current P103.2, previous
+  P103.1, next P103.3.
+- Validation commands: `npm run check:p1032-founder-live-work-admission-model`,
+  `npm run check:p1031-founder-live-work-admission-contract`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: model is deterministic/local; all unsafe runtime flags
+  are false; no project files changed.
 
 ### P103.3 Approval Evidence Envelope
 

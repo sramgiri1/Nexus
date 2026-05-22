@@ -37,7 +37,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1031
 addCheck("contract phase identity", contract.phaseId === "P103" && contract.title === "Founder Live Work Admission");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p103Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P103.1 complete and later subphases planned", subphaseById.get("P103.1")?.status === "complete" && p103Subphases.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P103.1 complete and later subphases planned or complete", subphaseById.get("P103.1")?.status === "complete" && p103Subphases.slice(1).every((phaseId) => ["planned", "complete"].includes(subphaseById.get(phaseId)?.status)));
 addCheck("safety rules block unsafe execution", ["No provider/model calls.", "No agent dispatch.", "No worker/tool execution.", "No project source mutation."].every((rule) => contract.safetyRules?.includes(rule)));
 addCheck("reuse rules reference shared helpers", ["shared/reportWriter.js", "shared/resultEnvelope.js", "shared/redaction.js", "os-roadmap/updatePhaseStatus.js"].every((item) => contract.reuseRequired?.includes(item)));
 addCheck("reuse rules reference P102 handoff helpers", ["live-ready/founderLiveHandoffManifest.js", "live-ready/founderLiveHandoffWorkOrders.js"].every((item) => contract.reuseRequired?.includes(item)));
@@ -49,15 +49,15 @@ addCheck("plan records P103.1 complete", /P103\.1 Contract \/ Scope \/ Safety Ba
 addCheck("platform roadmap records P103.1", /P103 - Founder Live Work Admission/.test(platformRoadmap) && /P103\.1 is\s+complete/.test(platformRoadmap) && /P103\.2 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced to P103.1",
-  status.currentPhase === "P103.1"
-    && status.previousPhase === "P102.7"
-    && status.nextPhase === "P103.2"
+  ["P103.1", "P103.2", "P103.3", "P103.4", "P103.5"].includes(status.currentPhase)
+    && ["P102.7", "P103.1", "P103.2", "P103.3", "P103.4"].includes(status.previousPhase)
+    && ["P103.2", "P103.3", "P103.4", "P103.5", "P103.6"].includes(status.nextPhase)
     && statusById.get("P103")?.status === "in_progress"
     && statusById.get("P103.1")?.status === "complete"
     && roadmapById.get("P103.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P103.2 remains planned", statusById.get("P103.2")?.status === "planned" && roadmapById.get("P103.2")?.status === "planned");
+addCheck("P103.2 remains planned or complete", ["planned", "complete"].includes(statusById.get("P103.2")?.status) && ["planned", "complete"].includes(roadmapById.get("P103.2")?.status));
 addCheck("P104 handoff exists", statusById.get("P104")?.status === "planned" && roadmapById.get("P104")?.status === "planned");
 addCheck("phase status checker accepts P103 subphases", [...p103Subphases, "P104"].every((phaseId) => phaseStatusSource.includes(`"${phaseId}"`)));
 addCheck("docs do not claim unsafe execution", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now/i.test(plan + platformRoadmap));
