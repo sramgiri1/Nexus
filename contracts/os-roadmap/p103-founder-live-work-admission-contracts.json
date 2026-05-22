@@ -294,10 +294,94 @@
     {
       "phaseId": "P103.4",
       "title": "Command Center Work Admission UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Expose display-safe work admission state in Command Center founder routes without runnable controls.",
-      "playwrightTests": "Add focused route coverage for work admission visibility, no raw JSON/log dumps, no raw private IDs, no demo leakage, and disabled execution posture."
+      "playwrightTests": "Add focused route coverage for Founder live work admission and retain full Command Center no-demo-leakage route safety.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "c6c72a72",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
+        "scripts/check-p1033-founder-live-work-admission-approval-envelope.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1034-command-center-founder-live-work-admission-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1034-command-center-founder-live-work-admission-ux.js",
+        "scripts/check-p1033-founder-live-work-admission-approval-envelope.js",
+        "contracts/os-roadmap/p103-founder-live-work-admission-contracts.json",
+        "docs/architecture/P103_FOUNDER_LIVE_WORK_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dashboardProps": [
+          "founderLiveWorkAdmission",
+          "founderLiveWorkAdmissionApproval"
+        ],
+        "card": "FounderLiveWorkAdmissionCard renders admission and approval summaries with workAdmissions[], approvalGates[], blockers, evidence/activity, cost, and all actions blocked."
+      },
+      "commandCenterUxRequirements": "Render Founder Live Work Admission in Lite, Business Build, Agent Flow, and Live Readiness with state, next action, blockers, disabled reason, owner, evidence/activity, cost impact, validation commands, approval gates, and no runnable controls.",
+      "themeRequirements": "Preserve existing CSS variables and system/dark/light themes; no theme source changes.",
+      "checkerUpdates": "Add check:p1034-command-center-founder-live-work-admission-ux and keep P103.3 checker forward-compatible.",
+      "docsRoadmap": "Record P103.4 complete and P103.5 next.",
+      "phaseStatusUpdate": "P103 in progress; P103.4 complete; current P103.4; previous P103.3; next P103.5.",
+      "validationCommands": [
+        "npm run check:p1034-command-center-founder-live-work-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live work admission|full Command Center routes do not show DemoApp\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1033-founder-live-work-admission-approval-envelope",
+        "npm run check:p1032-founder-live-work-admission-model",
+        "npm run check:p1031-founder-live-work-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval or execution controls were added.",
+        "Confirm focused Playwright coverage passes.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P103.4 files>",
+        "git commit -m \"feat(nexus): show founder live work admission in command center\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Command Center UX",
+        "Playwright/build/checks",
+        "Safety",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P103.5",

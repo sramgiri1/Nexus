@@ -487,6 +487,122 @@ function buildFounderLiveHandoffDisplayModels({ founderIdea = "Founder idea capt
   };
 }
 
+function buildFounderLiveWorkAdmissionDisplayModels({ founderIdea = "Founder idea captured for governed review." } = {}) {
+  const agentRows = [
+    ["Founder Intake Lead", "Founder Q&A"],
+    ["Product Strategist", "Local PRD"],
+    ["Program Architect", "Agent Workstream Plan"],
+    ["Data Steward", "Local DB Readiness"],
+    ["Safety Governor", "Execution Admission Review"],
+    ["Launch Readiness Lead", "Live Readiness Gate"],
+  ];
+  const disabledReason =
+    "P103.4 displays local work admission evidence only. It does not approve work, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const workAdmissions = agentRows.map(([agent, lane]) => ({
+    label: `${agent}: ${lane}`,
+    proposedAgentLane: agent,
+    proposedOutcome: `Review evidence for ${lane} before any future phase can request live execution authority.`,
+    approvalState: "Operator Review Required Execution Blocked",
+    missingEvidence: [
+      "Founder intent confirmed",
+      "PRD/workstream acceptance criteria reviewed",
+      "Rollback expectation documented",
+      "Validation command reviewed",
+    ],
+    validationCommand: "npm run check:p1032-founder-live-work-admission-model",
+    nextAction: "Review admission evidence before any future phase can request live execution authority.",
+    blocker: "Operator approval is not granted.",
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Work Admission Governance",
+    evidenceLocation: "reports/p1032-founder-live-work-admission-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local work admission only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    executable: "Blocked",
+    dispatchable: "Blocked",
+    projectMutationAllowed: "Blocked",
+  }));
+  const approvalGates = workAdmissions.map((row) => ({
+    label: row.label,
+    gateState: "Review Required Approval Blocked",
+    reviewQuestion: "Does this work map to founder intent and PRD acceptance criteria?",
+    missingEvidence: row.missingEvidence,
+    validationCommand: "npm run check:p1033-founder-live-work-admission-approval-envelope",
+    blocker: "Operator approval is not granted.",
+    disabledReason,
+    ownerCapability: row.ownerCapability,
+    evidenceLocation: "reports/p1033-founder-live-work-admission-approval-envelope-report.md",
+    activityLocation: row.activityLocation,
+    costImpact: row.costImpact,
+    approvalAllowed: "Blocked",
+    executionAllowed: "Blocked",
+  }));
+
+  return {
+    admission: {
+      currentState: "Founder Live Work Admission Ready Execution Blocked",
+      sourceHandoffState: "Founder Live Handoff Work Orders Dry Run Ready Execution Blocked",
+      sourceWorkOrderState: "Founder Live Handoff Work Orders Dry Run Ready Execution Blocked",
+      founderIdea,
+      admittedWorkCount: workAdmissions.length,
+      blockedWorkCount: workAdmissions.length,
+      executableWorkCount: 0,
+      dispatchableWorkCount: 0,
+      projectMutationWorkCount: 0,
+      approvedWorkCount: 0,
+      nextAction: "Review approval evidence before any future phase can request live execution authority.",
+      blockers: [
+        "Operator approval remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project mutation remains blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider spend remains blocked.",
+      ],
+      disabledReason,
+      ownerCapability: "NEXUS Founder Live Work Admission Governance",
+      evidenceLocation: "reports/p1032-founder-live-work-admission-model-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic work admission only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      workAdmissions,
+      safetyRows: [
+        { label: "Approval", value: "Blocked" },
+        { label: "Execution", value: "Blocked" },
+        { label: "Agent dispatch", value: "Blocked" },
+        { label: "Worker/tool execution", value: "Blocked" },
+        { label: "Project mutation", value: "Blocked" },
+        { label: "Hosted DB", value: "Blocked" },
+        { label: "Provider spend", value: "Blocked" },
+      ],
+    },
+    approval: {
+      currentState: "Founder Live Work Admission Evidence Ready Approval Blocked",
+      approvalGateCount: approvalGates.length,
+      approvedGateCount: 0,
+      executableGateCount: 0,
+      dispatchableGateCount: 0,
+      projectMutationGateCount: 0,
+      hostedDbMutationGateCount: 0,
+      nextAction: "Render P103.4 Command Center work admission UX without approval or execution controls.",
+      blockers: [
+        "Operator approval remains blocked.",
+        "Approval controls remain blocked.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project mutation remains blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider spend remains blocked.",
+      ],
+      disabledReason,
+      ownerCapability: "NEXUS Founder Live Work Admission Governance",
+      evidenceLocation: "reports/p1033-founder-live-work-admission-approval-envelope-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local approval evidence only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      approvalGates,
+    },
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1183,6 +1299,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdea: prdFields.founderIdea,
     founderLiveUseReview: founderLiveUse.review,
   });
+  const founderLiveWorkAdmission = buildFounderLiveWorkAdmissionDisplayModels({
+    founderIdea: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1311,6 +1430,8 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveUseReview: founderLiveUse.review,
     founderLiveHandoffManifest: founderLiveHandoff.manifest,
     founderLiveHandoffWorkOrders: founderLiveHandoff.workOrders,
+    founderLiveWorkAdmission: founderLiveWorkAdmission.admission,
+    founderLiveWorkAdmissionApproval: founderLiveWorkAdmission.approval,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

@@ -56,14 +56,14 @@ addCheck("gates include review questions", data.approvalGates?.every((gate) => g
 addCheck("all safety flags false", P103_WORK_ADMISSION_SAFETY_FLAGS.every((flag) => data[flag] === false && data.approvalGates.every((gate) => gate[flag] === false)));
 addCheck("reuses P103.2 model", source.includes("buildFounderLiveWorkAdmission"));
 addCheck("contract marks P103.3 complete", p1033.status === "complete");
-addCheck("P103.4 remains planned", subphaseById.get("P103.4")?.status === "planned");
+addCheck("P103.4 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P103.4")?.status));
 addCheck("docs record P103.3", /P103\.3 Approval Evidence Envelope[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P103.3", /P103\.3 is\s+complete/.test(platformRoadmap) && /P103\.4 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P103.3"
-    && status.previousPhase === "P103.2"
-    && status.nextPhase === "P103.4"
+  ["P103.3", "P103.4", "P103.5"].includes(status.currentPhase)
+    && ["P103.2", "P103.3", "P103.4"].includes(status.previousPhase)
+    && ["P103.4", "P103.5", "P103.6"].includes(status.nextPhase)
     && statusById.get("P103")?.status === "in_progress"
     && statusById.get("P103.3")?.status === "complete"
     && roadmapById.get("P103.3")?.status === "complete",

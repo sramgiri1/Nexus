@@ -148,15 +148,51 @@ and validation requirements, but cannot approve or execute work.
 
 ### P103.4 Command Center Work Admission UX
 
-Status: planned.
+Status: complete.
 
 Expose P103 work admission in founder-facing Command Center routes. The UX must
 show useful founder/operator state, next action, blockers, owner lane, disabled
 reason, evidence/activity, validation command, and cost posture without raw
 JSON/log dumps, private raw IDs, demo leakage, or runnable controls.
 
-Validation: `npm run check:p1034-command-center-founder-live-work-admission-ux`
-and focused Playwright route coverage.
+- Narrow goal: render Founder Live Work Admission in Command Center Lite,
+  Business Build, Agent Flow, and Live Readiness using display-safe admission
+  and approval-envelope view models.
+- Allowed files: `dashboard/src/data/businessBuild.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+  `scripts/check-p1034-command-center-founder-live-work-admission-ux.js`,
+  forward-compatible P103.3 checker, P103 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected data shapes: `founderLiveWorkAdmission` and
+  `founderLiveWorkAdmissionApproval` view models with work admissions,
+  approval gates, blockers, disabled reason, owner capability, evidence,
+  activity, cost, validation commands, and all action counts blocked.
+- Command Center UX requirements: show state, next action, blockers, disabled
+  reason, owner, evidence/activity, cost impact, validation commands, and
+  approval gates without raw JSON, raw logs, raw policy dumps, raw private IDs,
+  demo leakage, approval controls, or execution controls.
+- Dark/light/system theme requirements: preserve existing theme variables; no
+  theme source changes.
+- Playwright tests: focused route coverage for Founder live work admission
+  across Lite, Business Build, Agent Flow, and Live Readiness; retain route-wide
+  demo leakage safety.
+- Checker updates:
+  `npm run check:p1034-command-center-founder-live-work-admission-ux`.
+- Docs/roadmap: this plan and platform roadmap record P103.4 complete and
+  P103.5 next.
+- OS phase status: P103 in progress, P103.4 complete, current P103.4, previous
+  P103.3, next P103.5.
+- Validation commands:
+  `npm run check:p1034-command-center-founder-live-work-admission-ux`,
+  focused Playwright route coverage, `cd dashboard && npm run build`,
+  `npm run check:p1033-founder-live-work-admission-approval-envelope`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: no approval/execution controls added; no project files
+  changed; no raw IDs, raw dumps, or unsafe runnable action text in primary UX.
 
 ### P103.5 Tests / Checkers / Aggregate Validation
 

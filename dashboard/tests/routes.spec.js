@@ -3838,6 +3838,44 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Founder live work admission appears across founder routes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const [path, label] of [
+      ["/command-center/lite", "Lite Founder Work Admission"],
+      ["/command-center/business-build", "Business Build Founder Work Admission"],
+      ["/command-center/agent-flow", "Agent Flow Founder Work Admission"],
+      ["/command-center/live-readiness", "Live Readiness Founder Work Admission"],
+    ]) {
+      await page.goto(path);
+      const card = page.getByLabel("Founder live work admission").filter({ hasText: label });
+      await expect(card).toContainText("Founder Live Work Admission");
+      await expect(card).toContainText("Approval blocked");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Work admissions");
+      await expect(card).toContainText("Approval gates");
+      await expect(card).toContainText("0 of 6 approved");
+      await expect(card).toContainText("Executable work");
+      await expect(card).toContainText("Product Strategist");
+      await expect(card).toContainText("Program Architect");
+      await expect(card).toContainText("Safety Governor");
+      await expect(card).toContainText("npm run check:p1032-founder-live-work-admission-model");
+      await expect(card).toContainText("reports/p1033-founder-live-work-admission-approval-envelope-report.md");
+      await expect(card).toContainText("No provider calls");
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

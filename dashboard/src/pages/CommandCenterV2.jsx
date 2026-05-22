@@ -3343,6 +3343,11 @@ function CommandCenterLitePage() {
             workOrders={liteBusinessBuild.founderLiveHandoffWorkOrders}
             surfaceLabel="Lite Founder Live Handoff"
           />
+          <FounderLiveWorkAdmissionCard
+            admission={liteBusinessBuild.founderLiveWorkAdmission}
+            approval={liteBusinessBuild.founderLiveWorkAdmissionApproval}
+            surfaceLabel="Lite Founder Work Admission"
+          />
           <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -3502,6 +3507,11 @@ function AgentFlowPage() {
         manifest={businessBuild.founderLiveHandoffManifest}
         workOrders={businessBuild.founderLiveHandoffWorkOrders}
         surfaceLabel="Agent Flow Founder Live Handoff"
+      />
+      <FounderLiveWorkAdmissionCard
+        admission={businessBuild.founderLiveWorkAdmission}
+        approval={businessBuild.founderLiveWorkAdmissionApproval}
+        surfaceLabel="Agent Flow Founder Work Admission"
       />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
@@ -9868,6 +9878,11 @@ function LiveReadinessPage() {
           workOrders={founderLiveUse.founderLiveHandoffWorkOrders}
           surfaceLabel="Live Readiness Founder Live Handoff"
         />
+        <FounderLiveWorkAdmissionCard
+          admission={founderLiveUse.founderLiveWorkAdmission}
+          approval={founderLiveUse.founderLiveWorkAdmissionApproval}
+          surfaceLabel="Live Readiness Founder Work Admission"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10190,6 +10205,11 @@ function BusinessBuildPage() {
           manifest={build.founderLiveHandoffManifest}
           workOrders={build.founderLiveHandoffWorkOrders}
           surfaceLabel="Business Build Founder Live Handoff"
+        />
+        <FounderLiveWorkAdmissionCard
+          admission={build.founderLiveWorkAdmission}
+          approval={build.founderLiveWorkAdmissionApproval}
+          surfaceLabel="Business Build Founder Work Admission"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10676,6 +10696,86 @@ function FounderLiveHandoffCard({ manifest, workOrders, surfaceLabel = "Founder 
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.disabledReason}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveWorkAdmissionCard({ admission, approval, surfaceLabel = "Founder Work Admission" }) {
+  if (!admission || !approval) return null;
+
+  const workRows = Array.isArray(admission.workAdmissions) ? admission.workAdmissions.slice(0, 6) : [];
+  const gates = Array.isArray(approval.approvalGates) ? approval.approvalGates.slice(0, 6) : [];
+  const blockers = Array.isArray(approval.blockers) ? approval.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(admission.safetyRows) ? admission.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live work admission">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Work Admission</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{admission.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Approval blocked</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{admission.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Work admissions</span><span className="ccv2-page-summary-value">{admission.admittedWorkCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked work</span><span className="ccv2-page-summary-value">{admission.blockedWorkCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval gates</span><span className="ccv2-page-summary-value">{approval.approvedGateCount} of {approval.approvalGateCount} approved</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable work</span><span className="ccv2-page-summary-value">{admission.executableWorkCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dispatchable work</span><span className="ccv2-page-summary-value">{admission.dispatchableWorkCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project mutation</span><span className="ccv2-page-summary-value">{admission.projectMutationWorkCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{admission.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{approval.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{approval.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{approval.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{approval.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {workRows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.label}`}
+            aria-label={`${row.proposedAgentLane} founder work admission row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.approvalState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing: {row.missingEvidence?.[0] || "Operator evidence review"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.disabledReason}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {gates.map((gate) => (
+          <div
+            key={`${gate.label}-${gate.gateState}`}
+            aria-label={`${gate.label} founder approval gate`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{gate.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{gate.gateState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{gate.reviewQuestion}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Approval: {gate.approvalAllowed}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Execution: {gate.executionAllowed}</div>
           </div>
         ))}
       </div>
