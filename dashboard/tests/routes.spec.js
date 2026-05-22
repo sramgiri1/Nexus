@@ -3801,6 +3801,43 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Founder live handoff appears across founder routes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const [path, label] of [
+      ["/command-center/lite", "Lite Founder Live Handoff"],
+      ["/command-center/business-build", "Business Build Founder Live Handoff"],
+      ["/command-center/agent-flow", "Agent Flow Founder Live Handoff"],
+      ["/command-center/live-readiness", "Live Readiness Founder Live Handoff"],
+    ]) {
+      await page.goto(path);
+      const card = page.getByLabel("Founder live handoff").filter({ hasText: label });
+      await expect(card).toContainText("Founder Live Handoff");
+      await expect(card).toContainText("Dry run only");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Dry-run rows");
+      await expect(card).toContainText("Executable rows");
+      await expect(card).toContainText("Dispatchable rows");
+      await expect(card).toContainText("Product Strategist");
+      await expect(card).toContainText("Program Architect");
+      await expect(card).toContainText("Safety Governor");
+      await expect(card).toContainText("npm run check:p1023-founder-live-handoff-work-orders");
+      await expect(card).toContainText("reports/p1023-founder-live-handoff-work-orders-report.md");
+      await expect(card).toContainText("No provider calls");
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

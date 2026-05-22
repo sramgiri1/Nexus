@@ -3338,6 +3338,11 @@ function CommandCenterLitePage() {
             review={liteBusinessBuild.founderLiveUseReview}
             surfaceLabel="Lite Founder Live Use"
           />
+          <FounderLiveHandoffCard
+            manifest={liteBusinessBuild.founderLiveHandoffManifest}
+            workOrders={liteBusinessBuild.founderLiveHandoffWorkOrders}
+            surfaceLabel="Lite Founder Live Handoff"
+          />
           <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -3492,6 +3497,11 @@ function AgentFlowPage() {
         readiness={businessBuild.founderLiveUseReadiness}
         review={businessBuild.founderLiveUseReview}
         surfaceLabel="Agent Flow Founder Live Use"
+      />
+      <FounderLiveHandoffCard
+        manifest={businessBuild.founderLiveHandoffManifest}
+        workOrders={businessBuild.founderLiveHandoffWorkOrders}
+        surfaceLabel="Agent Flow Founder Live Handoff"
       />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
@@ -9853,6 +9863,11 @@ function LiveReadinessPage() {
           review={founderLiveUse.founderLiveUseReview}
           surfaceLabel="Live Readiness Founder Live Use"
         />
+        <FounderLiveHandoffCard
+          manifest={founderLiveUse.founderLiveHandoffManifest}
+          workOrders={founderLiveUse.founderLiveHandoffWorkOrders}
+          surfaceLabel="Live Readiness Founder Live Handoff"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10170,6 +10185,11 @@ function BusinessBuildPage() {
           readiness={build.founderLiveUseReadiness}
           review={build.founderLiveUseReview}
           surfaceLabel="Business Build Founder Live Use"
+        />
+        <FounderLiveHandoffCard
+          manifest={build.founderLiveHandoffManifest}
+          workOrders={build.founderLiveHandoffWorkOrders}
+          surfaceLabel="Business Build Founder Live Handoff"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10576,6 +10596,86 @@ function FounderLiveUseReviewCard({ readiness, review, surfaceLabel = "Founder L
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveHandoffCard({ manifest, workOrders, surfaceLabel = "Founder Live Handoff" }) {
+  if (!manifest || !workOrders) return null;
+
+  const handoffLanes = Array.isArray(manifest.handoffLanes) ? manifest.handoffLanes.slice(0, 6) : [];
+  const rows = Array.isArray(workOrders.workOrderRows) ? workOrders.workOrderRows.slice(0, 6) : [];
+  const blockers = Array.isArray(workOrders.blockers) ? workOrders.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(workOrders.safetyRows) ? workOrders.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live handoff">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Handoff</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{workOrders.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Dry run only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{manifest.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">PRD readiness</span><span className="ccv2-page-summary-value">{manifest.prdReadiness}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Handoff lanes</span><span className="ccv2-page-summary-value">{manifest.readyLaneCount} of {manifest.totalLaneCount} ready</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dry-run rows</span><span className="ccv2-page-summary-value">{workOrders.dryRunRowCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable rows</span><span className="ccv2-page-summary-value">{workOrders.executableWorkOrderCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dispatchable rows</span><span className="ccv2-page-summary-value">{workOrders.dispatchableWorkOrderCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{workOrders.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{workOrders.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{workOrders.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{workOrders.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{workOrders.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{workOrders.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={row.label}
+            aria-label={`${row.proposedAgent} founder live handoff work row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.dryRunState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedWork}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {row.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {handoffLanes.map((lane) => (
+          <div
+            key={lane.label}
+            aria-label={`${lane.label} founder live handoff lane`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.label}</div>
+            <div className="ccv2-pill ccv2-pill--teal" style={{ marginTop: 8 }}>{lane.handoffState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.disabledReason}</div>
           </div>
         ))}
       </div>

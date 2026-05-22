@@ -2239,6 +2239,11 @@ validation command, owner capability, evidence/activity, and cost posture.
 Every row is non-executable and non-dispatchable; project mutation, provider,
 hosted DB, deploy, package, network, and spend paths remain blocked. P102.4 is
 next for Command Center handoff UX.
+P102.4 is complete. It adds the Founder Live Handoff card to Command Center
+Lite, Business Build, Agent Flow, and Live Readiness so founders can see the
+handoff manifest, dry-run agent work rows, owner capability, blockers,
+evidence/activity, cost posture, and disabled reason without runnable controls.
+P102.5 is next for aggregate validation.
 
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).

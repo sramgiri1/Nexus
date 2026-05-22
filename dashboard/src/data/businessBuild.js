@@ -380,6 +380,113 @@ function buildFounderLiveUseDisplayModels({ prdAuthoringEnvelope = {}, dryRunAdm
   };
 }
 
+function buildFounderLiveHandoffDisplayModels({ founderIdea = "Founder idea captured for governed review.", founderLiveUseReview = {} } = {}) {
+  const laneSource = Array.isArray(founderLiveUseReview.laneRows) ? founderLiveUseReview.laneRows : [];
+  const handoffLanes = laneSource.map((lane) => ({
+    label: lane.label,
+    currentState: lane.currentState,
+    handoffState: "Ready For Governed Handoff Review",
+    ownerCapability: lane.ownerCapability,
+    nextAction: `Prepare a governed dry-run work row for ${lane.label}.`,
+    blocker: lane.blocker || "Execution remains blocked by the P102 safety contract.",
+    disabledReason:
+      "Founder live handoff is local review only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+    evidenceLocation: lane.evidenceLocation || "reports/p1022-founder-live-handoff-manifest-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    agentWorkAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    toolExecutionAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+  }));
+
+  const workOrderRows = handoffLanes.map((lane, index) => {
+    const agentMap = ["Founder Intake Lead", "Product Strategist", "Program Architect", "Data Steward", "Safety Governor", "Launch Readiness Lead"];
+    const proposedAgent = agentMap[index] || "NEXUS Operator";
+    return {
+      label: `${proposedAgent}: ${lane.label}`,
+      proposedAgent,
+      proposedWork: `Prepare a governed implementation plan for ${lane.label} after a later execution phase grants authority.`,
+      dryRunState: "Dry Run Only Execution Blocked",
+      ownerCapability: lane.ownerCapability,
+      validationCommand: "npm run check:p1023-founder-live-handoff-work-orders",
+      nextAction: lane.nextAction,
+      blocker: lane.blocker,
+      disabledReason: lane.disabledReason,
+      evidenceLocation: lane.evidenceLocation,
+      activityLocation: lane.activityLocation,
+      costImpact: lane.costImpact,
+      executable: "Blocked",
+      dispatchable: "Blocked",
+      projectMutationAllowed: "Blocked",
+    };
+  });
+
+  const safetyRows = [
+    { label: "Work orders", value: "Dry run only" },
+    { label: "Agent dispatch", value: "Blocked" },
+    { label: "Worker/tool execution", value: "Blocked" },
+    { label: "Project mutation", value: "Blocked" },
+    { label: "Hosted DB", value: "Blocked" },
+    { label: "Deploy/package", value: "Blocked" },
+    { label: "Provider spend", value: "Blocked" },
+  ];
+
+  return {
+    manifest: {
+      currentState: "Founder Live Handoff Manifest Ready Execution Blocked",
+      founderIdea,
+      prdReadiness: "Local PRD reviewable",
+      readyLaneCount: handoffLanes.length,
+      totalLaneCount: handoffLanes.length,
+      executableLaneCount: 0,
+      dispatchableLaneCount: 0,
+      projectMutationLaneCount: 0,
+      nextAction: "Review dry-run work rows before any later execution phase.",
+      blockers: [
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider spend remains blocked.",
+      ],
+      disabledReason:
+        "P102.4 renders founder live handoff only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+      ownerCapability: "NEXUS Founder Live Handoff Governance",
+      evidenceLocation: "reports/p1022-founder-live-handoff-manifest-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Display-safe local handoff review only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      handoffLanes,
+      safetyRows,
+    },
+    workOrders: {
+      currentState: "Founder Live Handoff Work Orders Dry Run Ready Execution Blocked",
+      dryRunRowCount: workOrderRows.length,
+      executableWorkOrderCount: 0,
+      dispatchableWorkOrderCount: 0,
+      projectMutationWorkOrderCount: 0,
+      nextAction: "Use these rows to explain how agents would be put into action after a later approval phase.",
+      blockers: [
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider spend remains blocked.",
+      ],
+      disabledReason:
+        "P102.4 displays dry-run work rows only. It does not create live work orders, dispatch agents, execute workers/tools, mutate projects, call providers/models, deploy, release, export, package, use network calls, or spend.",
+      ownerCapability: "NEXUS Founder Live Handoff Work Order Governance",
+      evidenceLocation: "reports/p1023-founder-live-handoff-work-orders-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local dry-run work-order planning only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      workOrderRows,
+      safetyRows,
+    },
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1072,6 +1179,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     liveWorkstreamHandoff,
     executionAdmissionDryRun,
   });
+  const founderLiveHandoff = buildFounderLiveHandoffDisplayModels({
+    founderIdea: prdFields.founderIdea,
+    founderLiveUseReview: founderLiveUse.review,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1198,6 +1309,8 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderDbWorkflow,
     founderLiveUseReadiness: founderLiveUse.readiness,
     founderLiveUseReview: founderLiveUse.review,
+    founderLiveHandoffManifest: founderLiveHandoff.manifest,
+    founderLiveHandoffWorkOrders: founderLiveHandoff.workOrders,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,
