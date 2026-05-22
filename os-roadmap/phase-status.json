@@ -3593,7 +3593,7 @@
       "order": 138,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb4cfe72",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P102.3 governed work order dry run is complete; P102.4 Command Center handoff UX is next.",
       "checksRun": [
@@ -3668,7 +3668,7 @@
       "order": 138.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb4cfe72",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added display-safe local work-order dry-run rows with proposed agent, proposed work, blocker, validation command, owner capability, evidence/activity, cost posture, and all unsafe runtime flags false.",
       "checksRun": [
