@@ -12322,7 +12322,7 @@
       "order": 137,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "76330cfe",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P101.4 Command Center founder live-use UX is complete; P101.5 aggregate tests and checkers is next.",
       "checksRun": [
@@ -12426,7 +12426,7 @@
       "order": 137.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "76330cfe",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Rendered founder live-use readiness on Lite, Business Build, Agent Flow, and Live Readiness with checklist, lane rows, blockers, disabled reason, owner, evidence/activity, cost, and safety rows.",
       "checksRun": [
