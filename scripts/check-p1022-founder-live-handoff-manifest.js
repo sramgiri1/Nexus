@@ -62,9 +62,9 @@ addCheck("docs record P102.2", /P102\.2 Founder Handoff Manifest Model[\s\S]*Sta
 addCheck("platform roadmap records P102.2", /P102\.2 is\s+complete/.test(platformRoadmap) && /P102\.3 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  ["P102.2", "P102.3", "P102.4"].includes(status.currentPhase)
-    && ["P102.1", "P102.2", "P102.3"].includes(status.previousPhase)
-    && ["P102.3", "P102.4", "P102.5"].includes(status.nextPhase)
+  ["P102.2", "P102.3", "P102.4", "P102.5"].includes(status.currentPhase)
+    && ["P102.1", "P102.2", "P102.3", "P102.4"].includes(status.previousPhase)
+    && ["P102.3", "P102.4", "P102.5", "P102.6"].includes(status.nextPhase)
     && statusById.get("P102")?.status === "in_progress"
     && statusById.get("P102.2")?.status === "complete"
     && roadmapById.get("P102.2")?.status === "complete",

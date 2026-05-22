@@ -179,10 +179,34 @@ Business Build, Agent Flow, and Live Readiness without runnable actions.
 
 ### P102.5 Aggregate Tests / Checkers
 
-Status: planned.
+Status: complete.
 
 Aggregate P102 contract, model, work order dry run, Command Center UX, reports,
 Playwright, status, and safety validation.
+
+- Narrow goal: aggregate P102.1 through P102.4 evidence in one checker.
+- Allowed files: `scripts/check-p1025-founder-live-handoff-validation.js`,
+  forward-compatible P102 checkers, P102 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected report shape: confirms P102.1-P102.4 checks, reports, Playwright
+  coverage, docs, status, and safety are aligned.
+- Command Center UX requirements: no new UX; preserve P102.4.
+- Dark/light/system theme requirements: preserve existing theme behavior.
+- Playwright tests: focused founder live handoff route coverage and
+  route-wide safety tests.
+- Checker updates: `npm run check:p1025-founder-live-handoff-validation`.
+- Docs/roadmap: this plan and platform roadmap record P102.5 complete and
+  P102.6 next.
+- OS phase status: P102 in progress, P102.5 complete, current P102.5, previous
+  P102.4, next P102.6.
+- Validation commands: P102.5 aggregate checker, P102.1-P102.4 checkers,
+  focused Playwright, dashboard build, OS phase status, coverage, and
+  whitespace.
+- Final safety checks: all prior P102 checks pass; route-wide safety remains;
+  no project files changed.
 
 ### P102.6 Docs / Roadmap / Operator Guide
 

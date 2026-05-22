@@ -380,7 +380,7 @@
     {
       "phaseId": "P102.5",
       "title": "Aggregate Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Aggregate P102 contract, model, work order dry run, Command Center UX, reports, Playwright, status, and safety validation.",
       "allowedFiles": [
@@ -390,7 +390,18 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1025-founder-live-handoff-validation-report.md"
+        "reports/p1025-founder-live-handoff-validation-report.md",
+        "scripts/check-p1024-command-center-founder-live-handoff-ux.js",
+        "scripts/check-p1023-founder-live-handoff-work-orders.js",
+        "scripts/check-p1022-founder-live-handoff-manifest.js",
+        "scripts/check-p1021-founder-live-handoff-contract.js",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "reports/p1024-command-center-founder-live-handoff-ux-report.md",
+        "reports/p1023-founder-live-handoff-work-orders-report.md",
+        "reports/p1022-founder-live-handoff-manifest-report.md",
+        "reports/p1021-founder-live-handoff-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -412,6 +423,46 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1025-founder-live-handoff-validation.js",
+        "scripts/check-p1024-command-center-founder-live-handoff-ux.js",
+        "scripts/check-p1023-founder-live-handoff-work-orders.js",
+        "scripts/check-p1022-founder-live-handoff-manifest.js",
+        "scripts/check-p1021-founder-live-handoff-contract.js",
+        "contracts/os-roadmap/p102-founder-live-handoff-contracts.json",
+        "docs/architecture/P102_FOUNDER_LIVE_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reportShape": "Aggregate report confirming P102.1-P102.4 checks, reports, Playwright coverage, docs, status, and safety are aligned."
+      },
+      "commandCenterUxRequirements": "No new UX change; preserve P102.4 UX.",
+      "themeRequirements": "Preserve existing theme behavior.",
+      "playwrightTests": "Run focused founder live handoff route coverage and route-wide safety tests.",
+      "checkerUpdates": "Add check:p1025-founder-live-handoff-validation.",
+      "docsRoadmap": "Record P102.5 complete and P102.6 next.",
+      "phaseStatusUpdate": "P102 in progress; P102.5 complete; current P102.5; previous P102.4; next P102.6.",
+      "finalSafetyChecks": [
+        "Confirm all prior P102 checks pass.",
+        "Confirm route-wide safety tests pass.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P102.5 files>",
+        "git commit -m \"test(nexus): validate founder live handoff\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Aggregate checks",
+        "Safety",
+        "Next subphase"
       ]
     },
     {

@@ -47,9 +47,9 @@ addCheck("plan records P102.1 complete", /P102\.1 Contract \/ Scope \/ Safety Ba
 addCheck("platform roadmap records P102.1", /P102 - Founder Live Handoff/.test(platformRoadmap) && /P102\.1 is\s+complete/.test(platformRoadmap) && /P102\.2 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced to P102.1",
-  ["P102.1", "P102.2", "P102.3", "P102.4"].includes(status.currentPhase)
-    && ["P101.7", "P102.1", "P102.2", "P102.3"].includes(status.previousPhase)
-    && ["P102.2", "P102.3", "P102.4", "P102.5"].includes(status.nextPhase)
+  ["P102.1", "P102.2", "P102.3", "P102.4", "P102.5"].includes(status.currentPhase)
+    && ["P101.7", "P102.1", "P102.2", "P102.3", "P102.4"].includes(status.previousPhase)
+    && ["P102.2", "P102.3", "P102.4", "P102.5", "P102.6"].includes(status.nextPhase)
     && statusById.get("P102")?.status === "in_progress"
     && statusById.get("P102.1")?.status === "complete"
     && roadmapById.get("P102.1")?.status === "complete",

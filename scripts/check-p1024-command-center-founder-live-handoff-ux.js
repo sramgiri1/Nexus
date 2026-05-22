@@ -55,14 +55,14 @@ addCheck("Agent Flow surface renders card", pageSource.includes("Agent Flow Foun
 addCheck("Live Readiness surface renders card", pageSource.includes("Live Readiness Founder Live Handoff"));
 addCheck("Playwright coverage added", routeTests.includes("Founder live handoff appears across founder routes") && routeTests.includes("/command-center/live-readiness"));
 addCheck("contract marks P102.4 complete", p1024.status === "complete");
-addCheck("P102.5 remains planned", subphaseById.get("P102.5")?.status === "planned");
+addCheck("P102.5 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P102.5")?.status));
 addCheck("docs record P102.4", /P102\.4 Command Center Handoff UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P102.4", /P102\.4 is\s+complete/.test(platformRoadmap) && /P102\.5 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P102.4"
-    && status.previousPhase === "P102.3"
-    && status.nextPhase === "P102.5"
+  ["P102.4", "P102.5"].includes(status.currentPhase)
+    && ["P102.3", "P102.4"].includes(status.previousPhase)
+    && ["P102.5", "P102.6"].includes(status.nextPhase)
     && statusById.get("P102")?.status === "in_progress"
     && statusById.get("P102.4")?.status === "complete"
     && roadmapById.get("P102.4")?.status === "complete",
