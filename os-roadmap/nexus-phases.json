@@ -7320,7 +7320,7 @@
       "order": 138,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9e68b2bd",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P102.4 Command Center founder live handoff UX is complete; P102.5 aggregate validation is next.",
       "checksRun": [
@@ -7424,7 +7424,7 @@
       "order": 138.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9e68b2bd",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Rendered founder live handoff manifest and dry-run work-order rows across Lite, Business Build, Agent Flow, and Live Readiness without runnable execution controls.",
       "checksRun": [
