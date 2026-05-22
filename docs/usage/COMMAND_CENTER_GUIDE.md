@@ -150,6 +150,36 @@ not enabled yet.
   `Do Not Admit Execution`; do not expose raw private IDs, raw table names, raw
   JSON/log dumps, policy dumps, demo app surfaces, or fake working actions.
 
+## Founder Live-Use Readiness
+
+- Routes: `/command-center/lite`, `/command-center/business-build`,
+  `/command-center/agent-flow`, and `/command-center/live-readiness`.
+- Purpose: show whether a founder idea has enough local structure for NEXUS to
+  explain the next governed step before any execution authority exists.
+- Current P101 posture: local readiness and review only. The model and
+  Command Center cards are complete through P101.6, but final P101 closure is
+  still pending P101.7. Executable lane count and dispatchable lane count
+  remain `0`.
+- Shown state: founder workflow readiness, checklist completion, six live-use
+  lanes, current state, next action, blockers, disabled reason, owner
+  capability, evidence/activity location, and cost impact.
+- Operator workflow: use the card to confirm the founder idea, PRD readiness,
+  workstream handoff, Business Build state, admission posture, and Live
+  Readiness posture. Treat the result as a governed review packet, not
+  execution approval.
+- Evidence: the local review packet is validated by
+  `reports/p1013-founder-live-use-review-packet-report.md`; aggregate evidence
+  is validated by `reports/p1015-founder-live-use-validation-report.md`.
+- Still blocked: provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, network calls, deploy, release, export,
+  package creation, and provider spend.
+- UX safety: primary cards should use founder/operator language such as
+  `Founder Live Use`, `Execution blocked`, `Readiness review`, and
+  `Next governed step`; do not expose raw private IDs, raw table names, raw
+  JSON/log dumps, policy dumps, demo app surfaces, or fake working actions.
+- Theme safety: the card uses existing Command Center surfaces and must keep
+  System, Dark, and Light theme behavior unchanged.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

@@ -452,7 +452,7 @@
     {
       "phaseId": "P101.6",
       "title": "Docs / Roadmap / Operator Guide",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Document founder live-use hardening state, operator flow, limitations, and next handoff.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -463,6 +463,11 @@
         "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "scripts/check-p1016-founder-live-use-docs-roadmap.js",
+        "scripts/check-p1015-founder-live-use-validation.js",
+        "scripts/check-p1014-command-center-founder-live-use-ux.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1011-founder-live-use-contract.js",
         "contracts/os-roadmap/p101-execution-contracts.json",
         "package.json",
         "os-roadmap/phase-status.json",
@@ -485,7 +490,18 @@
       "exactFilesToCreateOrUpdate": [
         "README.md",
         "docs/usage/COMMAND_CENTER_GUIDE.md",
-        "scripts/check-p1016-founder-live-use-docs-roadmap.js"
+        "scripts/check-p1016-founder-live-use-docs-roadmap.js",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js",
+        "scripts/check-p1014-command-center-founder-live-use-ux.js",
+        "scripts/check-p1015-founder-live-use-validation.js",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
       ],
       "expectedExportsSchemasDataShapes": {
         "reportShape": "Docs report confirming README, guide, plan, roadmap, status, and prior P101 validation evidence are aligned."

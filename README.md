@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P99.6
+## Current Status Through P101.6
 
-P41.5 through P99.6 are complete. The current NEXUS OS focus has moved from
+P41.5 through P101.6 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
@@ -140,6 +140,20 @@ The Command Center and local operator surface have:
   provider/model calls, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, deploy, release, export, package creation, network calls,
   and provider spend remain blocked.
+- P100 full founder Command Center enablement: founder-safe navigation and
+  useful page summaries are present across full Command Center routes. The
+  primary shell shows founder purpose, current state, next action, blockers,
+  owner capability, evidence/activity, and cost posture without turning
+  blocked pages into fake live actions.
+- P101 founder live-use hardening: local readiness and review packets are now
+  modeled, validated, and shown on Command Center Lite, Business Build, Agent
+  Flow, and Live Readiness. The cards show six founder workflow lanes,
+  checklist state, blockers, disabled reason, owner capability,
+  evidence/activity, and cost impact. Executable and dispatchable lane counts
+  remain `0`; provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, deploy, release, export, package
+  creation, network calls, and provider spend remain blocked. P101.7 is the
+  next final validation and handoff to P102.
 
 ## CareLoop Project Progress
 

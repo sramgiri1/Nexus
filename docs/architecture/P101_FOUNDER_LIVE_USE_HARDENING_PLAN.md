@@ -210,10 +210,39 @@ focused route coverage, OS phase status, and phase validation coverage.
 
 ### P101.6 Docs / Roadmap
 
-Status: planned.
+Status: complete.
 
 Update founder-facing README/PRD/docs and roadmap entries so the live-use
 hardening state is accurate and no stale preview/live labels remain for P101.
+
+- Narrow goal: document founder live-use hardening state, operator flow,
+  limitations, and next handoff.
+- Allowed files: `README.md`, `docs/usage/COMMAND_CENTER_GUIDE.md`,
+  this plan, `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`,
+  P101 checker scripts, P101 contract, package script, OS roadmap/status files,
+  and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected report shape: confirms README, Command Center guide, this plan,
+  platform roadmap, OS status, P101.5 evidence, and P101.7 handoff are aligned.
+- Command Center UX requirements: no source UX change. Docs describe the
+  existing Lite, Business Build, Agent Flow, and Live Readiness readiness cards.
+- Dark/light/system theme requirements: no theme source change; docs confirm
+  existing theme behavior remains in scope.
+- Playwright tests: no new tests because no UI source changes in P101.6;
+  P101.4/P101.5 route coverage remains the active route evidence.
+- Checker updates: `npm run check:p1016-founder-live-use-docs-roadmap`.
+- Docs/roadmap: README, Command Center guide, this plan, and platform roadmap
+  record P101.6 complete and P101.7 next.
+- OS phase status: P101 in progress, P101.6 complete, current P101.6, previous
+  P101.5, next P101.7.
+- Validation commands: `npm run check:p1016-founder-live-use-docs-roadmap`,
+  `npm run check:p1015-founder-live-use-validation`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: docs do not imply execution is enabled; no project files
+  changed; unsafe execution remains blocked.
 
 ### P101.7 Final Validation
 

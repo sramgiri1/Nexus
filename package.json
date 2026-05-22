@@ -515,7 +515,8 @@
     "check:p1013-founder-live-use-review-packet": "node scripts/check-p1013-founder-live-use-review-packet.js",
     "check:p1014-command-center-founder-live-use-ux": "node scripts/check-p1014-command-center-founder-live-use-ux.js",
     "check:p1015-founder-live-use-validation": "node scripts/check-p1015-founder-live-use-validation.js",
-    "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
+    "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js",
+    "check:p1016-founder-live-use-docs-roadmap": "node scripts/check-p1016-founder-live-use-docs-roadmap.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

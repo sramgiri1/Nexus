@@ -66,9 +66,9 @@ addCheck("docs record P101.4", /P101\.4 Command Center Live-Use UX[\s\S]*Status:
 addCheck("platform roadmap records P101.4", /P101\.4 is\s+complete/.test(platformRoadmap) && /P101\.5 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced within P101",
-  ["P101.4", "P101.5"].includes(status.currentPhase)
-    && ["P101.3", "P101.4"].includes(status.previousPhase)
-    && ["P101.5", "P101.6"].includes(status.nextPhase)
+  ["P101.4", "P101.5", "P101.6"].includes(status.currentPhase)
+    && ["P101.3", "P101.4", "P101.5"].includes(status.previousPhase)
+    && ["P101.5", "P101.6", "P101.7"].includes(status.nextPhase)
     && statusById.get("P101.4")?.status === "complete"
     && roadmapById.get("P101.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,

@@ -54,7 +54,7 @@ const p101Reports = [
 
 addCheck("package scripts registered", p101Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("P101.1-P101.5 contract status", p101Subphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("P101.6 remains next planned", subphaseById.get("P101.6")?.status === "planned");
+addCheck("P101.6 remains next or complete", ["planned", "complete"].includes(subphaseById.get("P101.6")?.status));
 addCheck("P101 reports exist", p101Reports.every(exists));
 addCheck("P101.4 Playwright coverage exists", routeTests.includes("Founder live use readiness appears across founder routes"));
 addCheck("route-wide safety tests retained", routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher"));
@@ -66,14 +66,14 @@ addCheck("docs record P101.5", /P101\.5 Tests \/ Checkers[\s\S]*Status:\s+comple
 addCheck("platform roadmap records P101.5", /P101\.5 is\s+complete/.test(platformRoadmap) && /P101\.6 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P101.5"
-    && status.previousPhase === "P101.4"
-    && status.nextPhase === "P101.6"
+  ["P101.5", "P101.6"].includes(status.currentPhase)
+    && ["P101.4", "P101.5"].includes(status.previousPhase)
+    && ["P101.6", "P101.7"].includes(status.nextPhase)
     && statusById.get("P101.5")?.status === "complete"
     && roadmapById.get("P101.5")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P101.6 handoff remains planned", statusById.get("P101.6")?.status === "planned" && roadmapById.get("P101.6")?.status === "planned");
+addCheck("P101.6 handoff remains planned or complete", ["planned", "complete"].includes(statusById.get("P101.6")?.status) && ["planned", "complete"].includes(roadmapById.get("P101.6")?.status));
 addCheck("no DemoApp leakage in route test", routeTests.includes("DemoApp") && routeTests.includes("not.toContain(\"DemoApp\")"));
 addCheck("no unsafe runnable actions in P101 view", !/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now/i.test(JSON.stringify(viewModel.founderLiveUseReview || {})));
 addCheck("P101.5 avoids forbidden file scope", !subphaseById.get("P101.5")?.allowedFiles?.some((file) => file.startsWith("projects/") || file.startsWith("careloop/") || file.startsWith("providers/") || file.startsWith("tools/") || file.startsWith("worker-runtime/")));
