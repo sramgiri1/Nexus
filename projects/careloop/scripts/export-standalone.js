@@ -26,6 +26,8 @@ const excludedNames = new Set([
   "DerivedData",
   "build",
   "node_modules",
+  "videos",
+  "xcuserdata",
 ]);
 
 function parseArgs(argv) {
@@ -94,6 +96,8 @@ function assertSafeDestination(destination) {
 function shouldExclude(entryName) {
   if (excludedNames.has(entryName)) return true;
   if (entryName.startsWith("NEXUS_")) return true;
+  if (entryName.endsWith(".mov") || entryName.endsWith(".mp4")) return true;
+  if (entryName.endsWith(".xcuserstate")) return true;
   if (entryName.endsWith(".xcresult")) return true;
   return false;
 }
