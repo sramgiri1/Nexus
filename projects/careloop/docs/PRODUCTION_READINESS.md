@@ -14,7 +14,7 @@ This document tracks the concrete path from local app readiness to production la
 1. **K2A standalone export tooling.** Complete.
    - Command: `npm run standalone:export -- --to /path/to/careloop --clean`
    - Dry-run check: `npm run check:standalone-export`
-   - Excludes `.env`, `.env.prod`, `.tmp`, `node_modules`, `.DS_Store`, Nexus OS, dashboard, reports, and roadmap files.
+   - Excludes `.env`, `.env.prod`, `.tmp`, `node_modules`, `.DS_Store`, `NEXUS_*.md`, Nexus OS, dashboard, reports, and roadmap files.
 2. **K2B standalone repo extraction.**
    - Needs target GitHub repo or local destination from owner.
    - After export, run `npm install`, `npm test`, `npm run check:demo-showcase`, and iOS build/test from the extracted repo.

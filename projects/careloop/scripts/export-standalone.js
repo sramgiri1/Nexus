@@ -93,6 +93,7 @@ function assertSafeDestination(destination) {
 
 function shouldExclude(entryName) {
   if (excludedNames.has(entryName)) return true;
+  if (entryName.startsWith("NEXUS_")) return true;
   if (entryName.endsWith(".xcresult")) return true;
   return false;
 }

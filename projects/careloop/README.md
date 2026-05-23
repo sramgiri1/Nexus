@@ -47,13 +47,6 @@ npm run check:ios-release-hygiene
 npm run check:ios-release-artifact
 ```
 
-The Nexus repo-root runner is still available only when a broader workspace run is needed:
-
-```bash
-scripts/careloop-test-runner.sh smoke
-scripts/careloop-test-runner.sh full
-```
-
 ## Room Demo
 
 The single-command demo launcher is available from the CareLoop API folder:
@@ -95,7 +88,7 @@ The command seeds realistic reserved-domain users and care scenarios, starts/reu
 Local StoreKit products live at:
 
 ```text
-../careloop-ios/CareLoop/Configuration/CareLoop.storekit
+ios/CareLoop/Configuration/CareLoop.storekit
 ```
 
 ## Standalone Build/Test Layout

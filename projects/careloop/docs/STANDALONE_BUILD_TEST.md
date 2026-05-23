@@ -55,7 +55,7 @@ Create a clean app-only export when a target folder or repository has been chose
 npm run standalone:export -- --to /absolute/path/to/careloop --clean
 ```
 
-The export includes backend source, Prisma schema/migrations, app scripts, tests, docs, and the iOS app under `ios/`. It excludes `.env`, `.env.prod`, `.tmp`, `node_modules`, `.DS_Store`, Nexus OS, dashboard, reports, roadmap, and generated simulator artifacts.
+The export includes backend source, Prisma schema/migrations, app scripts, tests, docs, and the iOS app under `ios/`. It excludes `.env`, `.env.prod`, `.tmp`, `node_modules`, `.DS_Store`, `NEXUS_*.md`, Nexus OS, dashboard, reports, roadmap, and generated simulator artifacts.
 
 The room demo no longer depends on a Nexus-root launcher:
 
