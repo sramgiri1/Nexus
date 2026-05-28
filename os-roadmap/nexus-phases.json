@@ -8227,7 +8227,7 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "15bb6673",
       "completedAt": "",
       "summary": "P106 has completed the approval request boundary schema, deterministic local approval request model, and local queue preview. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
       "checksRun": [
@@ -8309,7 +8309,7 @@
       "order": 142.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "15bb6673",
       "completedAt": "2026-05-28T08:15:00.000Z",
       "summary": "Assembled a deterministic local approval request queue preview from P106.2 request records with display-safe queue rows, sections, evidence state, blockers, owner, next action, disabled reason, activity/evidence locations, and cost posture while approval writes and execution remain blocked.",
       "checksRun": [
@@ -8817,7 +8817,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T08:15:00.000Z",
+  "updatedAt": "2026-05-28T08:25:00.000Z",
   "currentPhase": "P106.3",
   "previousPhase": "P106.2",
   "nextPhase": "P106.4",
