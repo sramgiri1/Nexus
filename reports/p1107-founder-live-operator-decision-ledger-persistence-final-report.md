@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P110.7
-- Generated at: 2026-05-28T22:05:01.046Z
+- Generated at: 2026-05-28T22:05:52.991Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6dd6aaa0
+- Validation HEAD: c289eb9a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract marks all P110 subphases complete | PASS |  |
 | P110.7 records final validation commands | PASS |  |
 | P110.7 avoids forbidden file scope | PASS |  |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1105-founder-live-operator-decision-ledger-persistence-validation.js, scripts/check-p1106-founder-live-operator-decision-ledger-persistence-docs.js, scripts/check-p1107-founder-live-operator-decision-ledger-persistence-final.js |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | compatibility checkers accept final handoff | PASS |  |
 | P111 handoff placeholder is supported | PASS | P110.7/P110.6/P111 |
 | docs record P110.7 complete | PASS |  |

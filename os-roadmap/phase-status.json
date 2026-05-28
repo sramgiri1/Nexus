@@ -13917,7 +13917,7 @@
       "order": 146,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c289eb9a",
       "completedAt": "2026-05-28T22:04:11.619Z",
       "summary": "Completed founder live operator decision ledger persistence across contract, local SQLite schema, approval-gated local CRUD, Command Center persistence UX, aggregate validation, docs, and final validation while unsafe authority remains blocked.",
       "checksRun": [
@@ -14122,7 +14122,7 @@
       "order": 146.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c289eb9a",
       "completedAt": "2026-05-28T22:04:11.619Z",
       "summary": "Closed P110 final validation and handed off to the planned P111 founder live agent work order persistence phase.",
       "checksRun": [
