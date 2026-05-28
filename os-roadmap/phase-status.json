@@ -14151,7 +14151,7 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "56d74345",
       "completedAt": "",
       "summary": "P111 is in progress. P111.1 defines governed work order persistence contracts and P111.2 adds local SQLite schema definitions while unsafe authority remains blocked.",
       "checksRun": [
@@ -14204,7 +14204,7 @@
       "order": 147.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "56d74345",
       "completedAt": "2026-05-28T22:18:14.975Z",
       "summary": "Added local SQLite schema definitions for display-safe founder agent work orders, events, and evidence references with isolated SQLite validation.",
       "checksRun": [
