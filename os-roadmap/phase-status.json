@@ -14151,7 +14151,7 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5136ea29719daaa47b777431479515b1d5853a2d",
       "completedAt": "",
       "summary": "P111 is in progress. P111.1-P111.3 define contracts, local SQLite schema, and approval-gated local CRUD model for founder live agent work orders while unsafe authority remains blocked.",
       "checksRun": [
@@ -14231,7 +14231,7 @@
       "order": 147.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5136ea29719daaa47b777431479515b1d5853a2d",
       "completedAt": "2026-05-28T22:24:12.646Z",
       "summary": "Added approval-gated local CRUD helpers for allowlisted founder agent work order records with isolated SQLite create/read/update/upsert/list validation.",
       "checksRun": [
@@ -14809,7 +14809,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T21:22:13.000Z",
+  "updatedAt": "2026-05-28T22:27:44.131Z",
   "currentPhase": "P111.3",
   "previousPhase": "P111.2",
   "nextPhase": "P111.4",
