@@ -246,7 +246,15 @@ The Command Center and local operator surface have:
   persistence, execution unlock, runtime admission, provider/model calls, agent
   dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
   release, export, package, network calls, and provider spend remain blocked.
-  P106.3 is next.
+- P106.3 request queue preview: deterministic local approval request queue rows
+  and queue sections are now assembled from P106.2 request records for later
+  Command Center rendering. The preview shows display-safe state, evidence,
+  blockers, owner capability, next action, disabled reason, activity/evidence
+  location, and cost posture while approval request submission, approval
+  capture, approval persistence, approval writes, execution unlock, runtime
+  admission, provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, deploy, release, export, package,
+  network calls, and provider spend remain blocked. P106.4 is next.
 
 ## CareLoop Project Progress
 

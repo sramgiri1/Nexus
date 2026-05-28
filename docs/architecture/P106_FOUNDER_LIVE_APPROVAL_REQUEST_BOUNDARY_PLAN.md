@@ -76,16 +76,48 @@ Final safety checks:
 - Approval request submission, capture, persistence, and writes remain blocked.
 - Approval requests cannot unlock execution or runtime admission.
 - Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
-- P106.3 remains planned.
+- P106.3 remains planned at P106.2 closure.
 - No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.3 Request Queue Preview
 
-Status: planned
+Status: complete
 
 Narrow goal: assemble a local display-safe approval request queue preview without writable approvals or runtime actions.
 
-Validation commands: include preview checker, prior P106 checkers, OS phase status, phase validation coverage, and diff check.
+Allowed files: P106 contract, P106 plan, platform roadmap, README, P106 approval request queue preview module, P106.3 checker, P106.1/P106.2 checker handoff compatibility, package script, OS phase status files, and generated validation reports.
+
+Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
+
+Reuse check: reuse shared/resultEnvelope.js, shared/reportWriter.js, shared/checkResultFormatter.js, live-ready/founderLiveApprovalRequestBoundary.js, and live-ready/founderLiveApprovalRequestModel.js. Do not duplicate report writers, result envelopes, checker formatters, mode guards, redaction helpers, phase status updaters, approval boundary constants, or P106.2 request-record construction.
+
+Expected exports: P106_FOUNDER_LIVE_APPROVAL_REQUEST_QUEUE_PREVIEW_PHASE, P106_APPROVAL_REQUEST_QUEUE_PREVIEW_STATES, buildFounderLiveApprovalRequestQueuePreview, validateFounderLiveApprovalRequestQueuePreview.
+
+Command Center UX: no Command Center source change in P106.3. P106.4 may render the display-safe queue preview on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain chat-only.
+
+Theme requirements: no theme source change in P106.3. Future UX must preserve system, dark, and light themes.
+
+Tests/checkers: npm run check:p1063-founder-live-approval-request-queue-preview; update P106.1 and P106.2 checkers only to accept P106.3 handoff state.
+
+Docs/roadmap: update P106 plan, platform roadmap, README, and OS phase status with P106.3 complete and P106.4 next.
+
+OS phase status update: P106 in progress; P106.3 complete; current P106.3; previous P106.2; next P106.4.
+
+Validation commands:
+- npm run check:p1063-founder-live-approval-request-queue-preview
+- npm run check:p1062-founder-live-approval-request-model
+- npm run check:p1061-founder-live-approval-request-boundary-contract
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Final safety checks:
+- P106.3 is local queue preview only.
+- Approval request submission, capture, persistence, and writes remain blocked.
+- Queue rows cannot unlock execution or runtime admission.
+- Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
+- P106.4 remains planned.
+- No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.4 Command Center Approval Request UX
 

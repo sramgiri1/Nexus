@@ -2432,7 +2432,17 @@ locations, validation commands, and cost posture. Request submission, approval
 capture, approval persistence, execution unlock, runtime admission,
 provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
-provider spend remain blocked. P106.3 is next for the request queue preview.
+provider spend remain blocked.
+
+P106.3 is complete. It adds a deterministic local approval request queue preview
+with display-safe queue rows and sections, evidence state, blockers, owner,
+next action, disabled reason, evidence/activity locations, and cost posture for
+future non-chat Command Center rendering. Approval request submission, approval
+capture, approval persistence, approval writes, execution unlock, runtime
+admission, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, deploy, release, export, package action, network
+call, and provider spend remain blocked. P106.4 is next for Command Center
+approval request UX.
 
 Implementation follows
 [`p106-founder-live-approval-request-boundary-contracts.json`](../../contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json).

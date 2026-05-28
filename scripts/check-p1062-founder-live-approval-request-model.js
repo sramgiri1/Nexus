@@ -59,10 +59,10 @@ addCheck("records include evidence and validation", data.approvalRequestRecords?
 addCheck("all blocked flags false", P106_APPROVAL_REQUEST_BOUNDARY_BLOCKED_FLAGS.every((flag) => data[flag] === false && data.approvalRequestRecords.every((record) => record[flag] === false)));
 addCheck("reuses P105 review packet and P106 boundary", source.includes("buildFounderLiveExecutionApprovalReviewPacket") && source.includes("buildFounderLiveApprovalRequestBoundarySchema"));
 addCheck("contract marks P106.2 complete", p1062.status === "complete");
-addCheck("P106.3 remains planned", subphaseById.get("P106.3")?.status === "planned");
+addCheck("P106.3 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P106.3")?.status));
 addCheck("docs record P106.2", /P106\.2 Approval Request Model[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P106.2", /P106\.2 is\s+complete/.test(platformRoadmap) && /P106\.3 is\s+next/.test(platformRoadmap));
-addCheck("README records P106.2", /P106\.2 approval request model/.test(readme) && /P106\.3 is next/.test(readme));
+addCheck("platform roadmap records P106.2", /P106\.2 is\s+complete/.test(platformRoadmap) && (/P106\.3 is\s+next/.test(platformRoadmap) || /P106\.3 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P106.2", /P106\.2 approval request model/.test(readme) && (/P106\.3 is next/.test(readme) || /P106\.3 request queue preview/.test(readme)));
 addCheck(
   "phase status advanced",
   ["P106.2", "P106.3", "P106.4", "P106.5", "P106.6", "P106.7"].includes(status.currentPhase)
@@ -70,7 +70,7 @@ addCheck(
     && ["P106.3", "P106.4", "P106.5", "P106.6", "P106.7", "P107"].includes(status.nextPhase)
     && ["in_progress", "complete"].includes(statusById.get("P106")?.status)
     && statusById.get("P106.2")?.status === "complete"
-    && statusById.get("P106.3")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P106.3")?.status)
     && roadmapById.get("P106.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

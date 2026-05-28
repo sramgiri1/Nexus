@@ -256,13 +256,32 @@
     {
       "phaseId": "P106.3",
       "title": "Request Queue Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Assemble a local display-safe approval request queue preview without writable approvals or runtime actions.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json",
+        "docs/architecture/P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalRequestQueuePreview.js",
+        "scripts/check-p1063-founder-live-approval-request-queue-preview.js",
+        "scripts/check-p1062-founder-live-approval-request-model.js",
+        "scripts/check-p1061-founder-live-approval-request-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1063-founder-live-approval-request-queue-preview-report.md",
+        "reports/p1062-founder-live-approval-request-model-report.md",
+        "reports/p1061-founder-live-approval-request-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -272,9 +291,78 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": [],
+      "validationCommands": [
+        "npm run check:p1063-founder-live-approval-request-queue-preview",
+        "npm run check:p1062-founder-live-approval-request-model",
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm no request queue writes or runtime actions."
+        "Confirm P106.3 is local queue preview only.",
+        "Confirm approval request submission, capture, persistence, and writes remain blocked.",
+        "Confirm queue rows cannot unlock execution or runtime admission.",
+        "Confirm unsafe execution remains blocked.",
+        "Confirm P106.4 remains planned.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "86c33444",
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json",
+        "docs/architecture/P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalRequestQueuePreview.js",
+        "scripts/check-p1063-founder-live-approval-request-queue-preview.js",
+        "scripts/check-p1062-founder-live-approval-request-model.js",
+        "scripts/check-p1061-founder-live-approval-request-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P106_FOUNDER_LIVE_APPROVAL_REQUEST_QUEUE_PREVIEW_PHASE",
+          "P106_APPROVAL_REQUEST_QUEUE_PREVIEW_STATES",
+          "buildFounderLiveApprovalRequestQueuePreview",
+          "validateFounderLiveApprovalRequestQueuePreview"
+        ],
+        "approvalRequestQueueSummary": "Queue summary with queueReady, queuedRequestCount, blockedQueuedRequestCount, submittableQueuedRequestCount 0, capturableQueuedRequestCount 0, persistedQueuedRequestCount 0, writableQueuedRequestCount 0, executableQueuedRequestCount 0, dispatchableQueuedRequestCount 0, projectMutationQueuedRequestCount 0, hostedDbMutationQueuedRequestCount 0, and providerSpendQueuedRequestCount 0.",
+        "queueRows": "Array of display-safe queue rows with queueItemKey, displayLabel, sourceRequestLabel, sourceBoundaryLabel, proposedAgentLane, proposedOutcome, queuePosition, queueState, localReviewReady, evidenceStatus, requiredEvidence, missingEvidence, founderDecisionPrompt, operatorDecisionPrompt, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, and all submission/capture/persistence/runtime/execution flags false.",
+        "queueSections": "Display-safe queue sections with labels, queued counts, blocked counts, next action, and disabled reason for future UX rendering."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P106.3. Future P106.4 must render queue preview state on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "No theme source change in P106.3. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P106.3 because no UI files change. P106.4 must add focused Command Center route coverage.",
+      "checkerUpdates": [
+        "Add check:p1063-founder-live-approval-request-queue-preview.",
+        "Update P106.1 and P106.2 checkers to accept the P106.3 handoff state."
+      ],
+      "docsRoadmap": "Update P106 plan, platform roadmap, README, and OS phase tracking with P106.3 complete and P106.4 next.",
+      "phaseStatusUpdate": "P106 in progress; P106.3 complete; current P106.3; previous P106.2; next P106.4.",
+      "gitCommands": [
+        "git add <allowed P106.3 files>",
+        "git commit -m \"feat(nexus): preview founder approval request queue\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ]
     },
     {
@@ -383,7 +471,7 @@
     "P106.2-P106.7 remain planned."
   ],
   "knownRisks": [
-    "P106.1 and P106.2 are local-only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
-    "P106.3-P106.7 remain planned."
+    "P106.1-P106.3 are local-only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P106.4-P106.7 remain planned."
   ]
 }
