@@ -9414,7 +9414,7 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d11b91e36986c3811236a544d2826cc98f07ea7a",
       "completedAt": "",
       "summary": "P111 is in progress. P111.1-P111.4 define contracts, local SQLite schema, approval-gated local CRUD model, and display-safe Command Center UX for founder live agent work orders while unsafe authority remains blocked.",
       "checksRun": [
@@ -9522,7 +9522,7 @@
       "order": 147.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d11b91e36986c3811236a544d2826cc98f07ea7a",
       "completedAt": "2026-05-28T22:35:04.858Z",
       "summary": "Surfaced display-safe founder agent work order persistence state on Business Build and Durable State while keeping Chat/Lite clean and mutation controls unavailable.",
       "checksRun": [
@@ -10013,7 +10013,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T22:35:04.858Z",
+  "updatedAt": "2026-05-28T22:36:34.330Z",
   "currentPhase": "P111.4",
   "previousPhase": "P111.3",
   "nextPhase": "P111.5",

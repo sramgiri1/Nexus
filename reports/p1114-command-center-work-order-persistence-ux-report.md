@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P111.4
-- Generated at: 2026-05-28T22:36:13.142Z
+- Generated at: 2026-05-28T22:36:40.017Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 06d43086
+- Validation HEAD: d11b91e3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | docs record P111.4 | PASS |  |
 | README records P111.4 | PASS |  |
 | platform roadmap records P111.4 | PASS |  |
-| changed files stay in P111.4 allowed scope | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/data/dbRuntimeReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1113-founder-live-agent-work-order-crud-model-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1113-founder-live-agent-work-order-crud-model.js, reports/p1114-command-center-work-order-persistence-ux-report.md, scripts/check-p1114-command-center-work-order-persistence-ux.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/data/dbRuntimeReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1113-founder-live-agent-work-order-crud-model-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1113-founder-live-agent-work-order-crud-model.js, reports/p1114-command-center-work-order-persistence-ux-report.md, scripts/check-p1114-command-center-work-order-persistence-ux.js |
+| changed files stay in P111.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 ## Validation Commands
 
 - npm run check:p1114-command-center-work-order-persistence-ux
