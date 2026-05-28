@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P104.2
-- Generated at: 2026-05-28T01:00:36.909Z
+- Generated at: 2026-05-28T10:03:47.063Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ab055283
+- Validation HEAD: f8ad1712
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -35,7 +35,7 @@
 | docs record P104.2 | PASS |  |
 | platform roadmap records P104.2 | PASS |  |
 | README records P104.2 | PASS |  |
-| phase status advanced | PASS | P104.3/P104.2/P104.4 |
+| phase status advanced | PASS | P104.7/P104.6/P105 |
 | P104.2 avoids forbidden file scope | PASS |  |
 | schema avoids raw private IDs | PASS |  |
 | schema avoids unsafe runnable actions | PASS |  |

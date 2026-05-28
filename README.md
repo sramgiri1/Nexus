@@ -198,6 +198,9 @@ The Command Center and local operator surface have:
   P104 plan, OS phase status, and docs checker now align on the completed
   boundary work and final validation handoff. P104.7 is next for final
   validation.
+- P104.7 final validation: P104 is complete. Chat with NEXUS and Lite remain
+  chat-only; Business Build, Agent Flow, and Live Readiness retain the Founder
+  Live Execution Boundary. P105 is next.
 
 ## CareLoop Project Progress
 

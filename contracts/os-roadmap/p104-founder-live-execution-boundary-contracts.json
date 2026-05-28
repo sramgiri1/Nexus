@@ -1,7 +1,7 @@
 {
   "phaseId": "P104",
   "title": "Founder Live Execution Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Keep the founder chat surface clean while defining the next governed boundary between local founder planning and future live execution authority.",
   "safetyRules": [
@@ -486,14 +486,82 @@
     {
       "phaseId": "P104.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Run final P104 validation, close the parent phase, stamp commits, and hand off to P105 planned."
+      "narrowGoal": "Run final P104 validation, close the parent phase, stamp commits, and hand off to P105 planned.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "f8ad1712",
+      "allowedFiles": [
+        "scripts/check-p1047-founder-live-execution-boundary-final.js",
+        "scripts/check-p1046-founder-live-execution-boundary-docs.js",
+        "scripts/check-p1045-founder-live-execution-boundary-aggregate.js",
+        "scripts/check-p1044-founder-live-execution-boundary-ux.js",
+        "scripts/check-p1043-founder-live-execution-boundary-model.js",
+        "scripts/check-p1042-founder-live-execution-boundary-schema.js",
+        "scripts/check-p1041-chat-surface-consolidation.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1047-founder-live-execution-boundary-final-report.md",
+        "reports/p1046-founder-live-execution-boundary-docs-report.md",
+        "reports/p1045-founder-live-execution-boundary-aggregate-report.md",
+        "reports/p1044-founder-live-execution-boundary-ux-report.md",
+        "reports/p1043-founder-live-execution-boundary-model-report.md",
+        "reports/p1042-founder-live-execution-boundary-schema-report.md",
+        "reports/p1041-chat-surface-consolidation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "checker": "check:p1047-founder-live-execution-boundary-final validates P104 parent closure, all P104 subphase completion, reports, scripts, Command Center route safety, OS status, docs, and P105 handoff."
+      },
+      "commandCenterUxRequirements": "No UX source change. Confirm Chat/Lite stay chat-only and Business Build, Agent Flow, and Live Readiness retain execution-boundary cards.",
+      "themeRequirements": "No theme source change; retained P104 route tests cover Command Center behavior.",
+      "playwrightTests": "Run retained focused P104 route safety tests.",
+      "checkerUpdates": [
+        "Add check:p1047-founder-live-execution-boundary-final.",
+        "Keep check:p1046-founder-live-execution-boundary-docs forward-compatible."
+      ],
+      "docsRoadmap": "Record P104.7 complete, parent P104 complete, and P105 next.",
+      "phaseStatusUpdate": "P104 complete; P104.7 complete; current P104.7; previous P104.6; next P105.",
+      "validationCommands": [
+        "npm run check:p1047-founder-live-execution-boundary-final",
+        "npm run check:p1046-founder-live-execution-boundary-docs",
+        "npm run check:p1045-founder-live-execution-boundary-aggregate",
+        "npm run check:p1044-founder-live-execution-boundary-ux",
+        "npm run check:p1043-founder-live-execution-boundary-model",
+        "npm run check:p1042-founder-live-execution-boundary-schema",
+        "npm run check:p1041-chat-surface-consolidation",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"P104 execution boundary route safety stays coherent|Founder live execution boundary appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     }
   ],
   "knownLimitations": [
-    "P104.1 is UX consolidation only.",
-    "P104.1 does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, or provider spend.",
-    "P104.2-P104.7 remain planned."
+    "P104 is complete and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, or provider spend.",
+    "P105 is the next planned phase."
   ]
 }

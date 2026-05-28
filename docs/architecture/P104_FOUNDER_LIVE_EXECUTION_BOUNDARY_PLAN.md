@@ -372,10 +372,67 @@ Document the full P104 execution boundary and update status evidence.
 
 ## P104.7 Final Validation
 
-Status: planned.
+Status: complete.
 
 Run final P104 validation, close the parent phase, stamp commits, and hand off
 to P105 planned.
+
+- Narrow goal: close parent P104 after validating chat cleanup, schema, model,
+  non-chat UX, aggregate route safety, docs, status, reports, and P105 handoff.
+- Starting branch and expected base commit:
+  `codex/nexus-e2e-phase-validation` at `f8ad1712`.
+- Allowed files: final checker, P104.6 compatibility checker, P104 contract,
+  P104 plan, platform roadmap, README, package script, OS phase JSON, and
+  generated reports.
+- Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+  `dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+  `deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`.
+- Exact files/modules to create or update:
+  `scripts/check-p1047-founder-live-execution-boundary-final.js`,
+  `scripts/check-p1046-founder-live-execution-boundary-docs.js`,
+  `contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json`,
+  `docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `README.md`,
+  `package.json`, `os-roadmap/phase-status.json`, and
+  `os-roadmap/nexus-phases.json`.
+- Expected exports, schemas, and data shapes: no runtime exports. The final
+  checker validates parent P104 closure, all P104 subphase completion, scripts,
+  reports, Command Center route safety, OS status, docs, and P105 handoff.
+- Command Center UX requirements: no UX source change. Confirm Chat/Lite remain
+  chat-only and Business Build, Agent Flow, and Live Readiness retain the
+  execution-boundary cards.
+- Dark/light/system theme requirements: no theme source change; retained route
+  tests preserve existing theme coverage.
+- Playwright tests: run retained focused P104 route safety tests.
+- Checker updates:
+  `npm run check:p1047-founder-live-execution-boundary-final`; keep P104.6 docs
+  checker forward-compatible.
+- Docs/README/roadmap: record P104.7 complete, parent P104 complete, and P105
+  next.
+- OS phase status: P104 complete, P104.7 complete, current P104.7, previous
+  P104.6, next P105.
+- Validation commands:
+  `npm run check:p1047-founder-live-execution-boundary-final`,
+  `npm run check:p1046-founder-live-execution-boundary-docs`,
+  `npm run check:p1045-founder-live-execution-boundary-aggregate`,
+  `npm run check:p1044-founder-live-execution-boundary-ux`,
+  `npm run check:p1043-founder-live-execution-boundary-model`,
+  `npm run check:p1042-founder-live-execution-boundary-schema`,
+  `npm run check:p1041-chat-surface-consolidation`,
+  `cd dashboard && npx playwright test tests/routes.spec.js --grep "P104 execution boundary route safety stays coherent|Founder live execution boundary appears on non-chat founder routes|Command Center Lite route stays chat-only"`,
+  `cd dashboard && npm run build`, `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: final validation only; no project files changed; no
+  provider/model calls; no dispatch; no worker/tool execution; no project
+  mutation; no hosted DB mutation; no deploy/release/export/package; no network
+  calls; no spend; no raw IDs; no raw dumps; no fake runnable actions.
+- Git add/commit/push commands: stage only allowed P104.7 OS files, commit,
+  stamp the real commit hash in phase status, rerun checks, commit status
+  stamp, and push `codex/nexus-e2e-phase-validation`.
+- Final response checklist: branch, commit hash, files changed, final
+  validation results, Command Center UX confirmation, docs/roadmap updates, OS
+  phase status, safety confirmations, forbidden path confirmation, known
+  limitations, and next phase.
 
 ## Rollback Plan
 

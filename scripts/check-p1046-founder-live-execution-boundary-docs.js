@@ -35,7 +35,7 @@ const forbiddenPrefixes = ["projects/", "careloop/", "dashboard/src/", "dashboar
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1046-founder-live-execution-boundary-docs"]));
 addCheck("all P104 scripts registered", ["check:p1041-chat-surface-consolidation", "check:p1042-founder-live-execution-boundary-schema", "check:p1043-founder-live-execution-boundary-model", "check:p1044-founder-live-execution-boundary-ux", "check:p1045-founder-live-execution-boundary-aggregate"].every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P104.6 complete", p1046.status === "complete");
-addCheck("P104.7 remains planned", subphaseById.get("P104.7")?.status === "planned");
+addCheck("P104.7 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P104.7")?.status));
 addCheck("contract records validation commands", (p1046.validationCommands || []).includes("npm run check:p1046-founder-live-execution-boundary-docs") && (p1046.validationCommands || []).includes("npm run check:phase-validation-coverage"));
 addCheck("contract avoids forbidden file scope", !(p1046.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("plan records P104.6 complete", /P104\.6 Execution Boundary Docs \/ Roadmap[\s\S]*Status:\s+complete/.test(plan));
@@ -55,10 +55,10 @@ addCheck(
 );
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P104.6"
-    && status.previousPhase === "P104.5"
-    && status.nextPhase === "P104.7"
-    && statusById.get("P104")?.status === "in_progress"
+  ["P104.6", "P104.7"].includes(status.currentPhase)
+    && ["P104.5", "P104.6"].includes(status.previousPhase)
+    && ["P104.7", "P105"].includes(status.nextPhase)
+    && ["in_progress", "complete"].includes(statusById.get("P104")?.status)
     && statusById.get("P104.6")?.status === "complete"
     && roadmapById.get("P104.6")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
