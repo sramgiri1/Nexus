@@ -12964,25 +12964,25 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "550431c9",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P106 has started with the approval request boundary contract and schema. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+      "summary": "P106 has completed the approval request boundary schema and deterministic local approval request model. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
       "checksRun": [
+        "npm run check:p1062-founder-live-approval-request-model",
         "npm run check:p1061-founder-live-approval-request-boundary-contract",
-        "npm run check:p1057-founder-live-execution-approval-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P106.1 is schema and contract only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+        "P106.2 is a local model only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P106.2-P106.7 remain planned."
+        "P106.3-P106.7 remain planned."
       ],
-      "nextPhase": "P106.2",
+      "nextPhase": "P106.3",
       "commandCenterVisible": true,
       "label": "Approval Request Boundary",
-      "detail": "P106.1 complete; approval request records are next."
+      "detail": "P106.2 complete; approval request queue preview is next."
     },
     {
       "phaseId": "P106.1",
@@ -13016,19 +13016,27 @@
       "title": "Approval Request Model",
       "track": "NEXUS_OS",
       "order": 142.2,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned deterministic local approval request records from P105 review packets.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T07:45:00.000Z",
+      "summary": "Built deterministic local approval request records from P105 review packets and the P106.1 boundary with display-safe labels, prompts, evidence, blockers, validation commands, owner, activity, and cost posture while request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
+      "checksRun": [
+        "npm run check:p1062-founder-live-approval-request-model",
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval request submission, capture, persistence, or execution authority enabled."
+        "P106.2 is a local model only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P106.3-P106.7 remain planned."
       ],
       "nextPhase": "P106.3",
       "commandCenterVisible": true,
       "label": "Request Model",
-      "detail": "Planned approval request model."
+      "detail": "Local approval request records complete; no request submission or execution authority."
     },
     {
       "phaseId": "P106.3",
@@ -13607,9 +13615,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T07:30:00.000Z",
-  "currentPhase": "P106.1",
-  "previousPhase": "P105.7",
-  "nextPhase": "P106.2",
+  "updatedAt": "2026-05-28T07:45:00.000Z",
+  "currentPhase": "P106.2",
+  "previousPhase": "P106.1",
+  "nextPhase": "P106.3",
   "currentPhaseStatus": "complete"
 }

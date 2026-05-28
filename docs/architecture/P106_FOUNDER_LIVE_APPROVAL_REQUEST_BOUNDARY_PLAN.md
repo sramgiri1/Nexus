@@ -42,11 +42,42 @@ Final safety checks:
 
 ## P106.2 Approval Request Model
 
-Status: planned
+Status: complete
 
 Narrow goal: build deterministic local approval request records from P105 review packets without submitting, capturing, persisting, or unlocking execution.
 
-Validation commands: include model checker, P106.1 checker, OS phase status, phase validation coverage, and diff check.
+Allowed files: P106 contract, P106 plan, platform roadmap, README, P106 approval request model module, P106.2 checker, P106.1 checker handoff compatibility, package script, OS phase status files, and generated validation reports.
+
+Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
+
+Reuse check: reuse shared/resultEnvelope.js, shared/reportWriter.js, shared/checkResultFormatter.js, live-ready/founderLiveApprovalRequestBoundary.js, and live-ready/founderLiveExecutionApprovalReviewPacket.js. Do not duplicate report writers, result envelopes, checker formatters, mode guards, redaction helpers, phase status updaters, approval boundary constants, or P105 review-packet construction.
+
+Expected exports: P106_FOUNDER_LIVE_APPROVAL_REQUEST_MODEL_PHASE, P106_APPROVAL_REQUEST_MODEL_STATES, buildFounderLiveApprovalRequestModel, validateFounderLiveApprovalRequestModel.
+
+Command Center UX: no Command Center source change in P106.2. P106.4 may render the display-safe approval request state on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain chat-only.
+
+Theme requirements: no theme source change in P106.2. Future UX must preserve system, dark, and light themes.
+
+Tests/checkers: npm run check:p1062-founder-live-approval-request-model; update P106.1 checker only to accept P106.2 handoff state.
+
+Docs/roadmap: update P106 plan, platform roadmap, README, and OS phase status with P106.2 complete and P106.3 next.
+
+OS phase status update: P106 in progress; P106.2 complete; current P106.2; previous P106.1; next P106.3.
+
+Validation commands:
+- npm run check:p1062-founder-live-approval-request-model
+- npm run check:p1061-founder-live-approval-request-boundary-contract
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Final safety checks:
+- P106.2 is local model only.
+- Approval request submission, capture, persistence, and writes remain blocked.
+- Approval requests cannot unlock execution or runtime admission.
+- Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
+- P106.3 remains planned.
+- No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.3 Request Queue Preview
 

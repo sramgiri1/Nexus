@@ -46,13 +46,17 @@ const data = envelope.data || {};
 const p106Subphases = ["P106.1", "P106.2", "P106.3", "P106.4", "P106.5", "P106.6", "P106.7"];
 const forbiddenPrefixes = ["projects/", "careloop/", "dashboard/src/", "dashboard/tests/", "providers/", "tools/", "worker-runtime/", "deploy/", "release/", "exports/", "packages/"];
 const p1061 = subphaseById.get("P106.1") || {};
+const acceptedPhasePointers = [
+  { currentPhase: "P106.1", previousPhase: "P105.7", nextPhase: "P106.2" },
+  { currentPhase: "P106.2", previousPhase: "P106.1", nextPhase: "P106.3" },
+];
 const serialized = JSON.stringify({ data, contract, plan, platformRoadmap, readme });
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1061-founder-live-approval-request-boundary-contract"]));
 addCheck("contract phase identity", contract.phaseId === "P106" && contract.title === "Founder Live Approval Request Boundary");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p106Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P106.1 complete and later subphases planned", subphaseById.get("P106.1")?.status === "complete" && p106Subphases.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P106.1 complete and later subphases valid", subphaseById.get("P106.1")?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P106.2")?.status) && p106Subphases.slice(2).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
 addCheck("safety rules block unsafe execution", ["No approval request submission.", "No approval capture.", "No approval persistence.", "No provider/model calls.", "No agent dispatch.", "No worker/tool execution.", "No project source mutation."].every((rule) => contract.safetyRules?.includes(rule)));
 addCheck("reuse rules reference shared helpers and P105", ["shared/reportWriter.js", "shared/resultEnvelope.js", "shared/checkResultFormatter.js", "os-roadmap/updatePhaseStatus.js", "live-ready/founderLiveExecutionApprovalPlanning.js"].every((item) => contract.reuseRequired?.includes(item)));
 addCheck("module reuses P105 approval planning", moduleSource.includes("from \"./founderLiveExecutionApprovalPlanning.js\""));
@@ -69,16 +73,18 @@ addCheck("all blocked flags false", P106_APPROVAL_REQUEST_BOUNDARY_BLOCKED_FLAGS
 addCheck("contract records validation commands", ["npm run check:p1061-founder-live-approval-request-boundary-contract", "npm run check:p1057-founder-live-execution-approval-final", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1061.validationCommands?.includes(command)));
 addCheck("P106.1 avoids forbidden file scope", !(p1061.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("plan records P106.1 complete", /P106\.1 Approval Request Contract \/ Schema Baseline[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P106.1", /P106 - Founder Live Approval Request Boundary/.test(platformRoadmap) && /P106\.1 is\s+complete/.test(platformRoadmap) && /P106\.2 is\s+next/.test(platformRoadmap));
-addCheck("README records P106.1", /P106\.1 approval request boundary/.test(readme) && /P106\.2 is next/.test(readme));
+addCheck("platform roadmap records P106.1", /P106 - Founder Live Approval Request Boundary/.test(platformRoadmap) && /P106\.1 is\s+complete/.test(platformRoadmap) && (/P106\.2 is\s+next/.test(platformRoadmap) || /P106\.2 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P106.1", /P106\.1 approval request boundary/.test(readme) && (/P106\.2 is next/.test(readme) || /P106\.2 approval request model/.test(readme)));
 addCheck(
-  "phase status advanced to P106.1",
-  status.currentPhase === "P106.1"
-    && status.previousPhase === "P105.7"
-    && status.nextPhase === "P106.2"
+  "phase status advanced from P106.1",
+  acceptedPhasePointers.some((pointer) =>
+    status.currentPhase === pointer.currentPhase
+      && status.previousPhase === pointer.previousPhase
+      && status.nextPhase === pointer.nextPhase
+  )
     && statusById.get("P106")?.status === "in_progress"
     && statusById.get("P106.1")?.status === "complete"
-    && statusById.get("P106.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P106.2")?.status)
     && roadmapById.get("P106.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
