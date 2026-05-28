@@ -12494,7 +12494,7 @@
       "order": 140,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "766c40ba",
       "completedAt": "",
       "summary": "P104 is in progress. P104.2 defined the local founder live execution-boundary schema, required evidence, approval predicates, forbidden actions, and blocked execution flags.",
       "checksRun": [
@@ -12549,7 +12549,7 @@
       "order": 140.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "766c40ba",
       "completedAt": "2026-05-28T00:53:43.706Z",
       "summary": "Defined the local founder live execution-boundary schema, required evidence, approval predicates, forbidden actions, blocked flags, boundary record shape, and lane record shape without enabling execution.",
       "checksRun": [
