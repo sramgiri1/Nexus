@@ -133,9 +133,56 @@ Status: complete.
 
 ## P104.3 Execution Boundary Model
 
-Status: planned.
+Status: complete.
 
 Build deterministic local execution-boundary state from P103 work admissions.
+
+- Narrow goal: assemble local execution-boundary rows from P103 work admissions
+  and P104.2 schema without approval or execution authority.
+- Starting branch and expected base commit:
+  `codex/nexus-e2e-phase-validation` at `ab055283`.
+- Allowed files: boundary model module, P104.3 checker, P104.2 compatibility
+  checker, P104 contract, P104 plan, platform roadmap, README, package script,
+  OS phase JSON, and generated reports.
+- Forbidden files: `projects/**`, `careloop/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, `.env*`.
+- Exact files/modules to create or update:
+  `live-ready/founderLiveExecutionBoundaryModel.js`,
+  `scripts/check-p1043-founder-live-execution-boundary-model.js`,
+  `scripts/check-p1042-founder-live-execution-boundary-schema.js`,
+  `contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json`,
+  `docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `README.md`,
+  `package.json`, `os-roadmap/phase-status.json`, and
+  `os-roadmap/nexus-phases.json`.
+- Expected exports, schemas, and data shapes:
+  `P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_MODEL_PHASE`,
+  `P104_EXECUTION_BOUNDARY_MODEL_STATES`,
+  `buildFounderLiveExecutionBoundaryModel`, and
+  `validateFounderLiveExecutionBoundaryModel`. The envelope includes
+  source schema/work admission phases, founder context, readiness counts,
+  boundary rows, required evidence, next action, blockers, disabled reason,
+  owner, evidence/activity, cost impact, and all execution flags false.
+- Command Center UX requirements: no UI source change in P104.3. P104.4 must
+  render these rows on non-chat pages without runnable execution controls.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none in P104.3 because no UI files change.
+- Checker updates:
+  `npm run check:p1043-founder-live-execution-boundary-model`; keep P104.2
+  checker forward-compatible with later P104 subphases.
+- Docs/README/roadmap: record P104.3 complete and P104.4 next.
+- OS phase status: P104 in progress, P104.3 complete, current P104.3,
+  previous P104.2, next P104.4.
+- Validation commands:
+  `npm run check:p1043-founder-live-execution-boundary-model`,
+  `npm run check:p1042-founder-live-execution-boundary-schema`,
+  `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: model-only; all execution flags false; no provider/model
+  calls; no dispatch; no worker/tool execution; no project mutation; no hosted
+  DB mutation; no deploy/release/export/package; no network calls; no spend;
+  no project files changed; P104.4 remains planned.
 
 ## P104.4 Execution Boundary Command Center UX
 

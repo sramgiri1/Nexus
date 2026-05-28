@@ -180,8 +180,12 @@ The Command Center and local operator surface have:
 - P104.2 execution-boundary schema: local execution-boundary records, required
   evidence, approval predicates, forbidden actions, and blocked execution flags
   are defined for future non-chat execution-boundary UX. P104.2 is schema-only;
-  all live execution authority remains blocked. P104.3 is next for the local
-  execution-boundary model.
+  all live execution authority remains blocked.
+- P104.3 execution-boundary model: deterministic local boundary rows are built
+  from P103 work admissions and P104.2 schema. The model carries founder
+  context, evidence gaps, validation commands, blockers, owner capability,
+  evidence/activity, cost posture, and all execution flags remain false. P104.4
+  is next for non-chat Command Center UX.
 
 ## CareLoop Project Progress
 

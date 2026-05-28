@@ -2326,6 +2326,11 @@ execution flags, boundary record shape, and lane record shape. It is
 schema-only and keeps execution, dispatch, worker/tool execution, project
 mutation, hosted DB mutation, deploy, release, export, package, network calls,
 and spend blocked. P104.3 is next for deterministic local boundary records.
+P104.3 is complete. It builds deterministic local execution-boundary rows from
+P103 work admissions and the P104.2 schema, carrying founder context, evidence
+gaps, validation commands, blockers, owner capability, evidence/activity, and
+cost posture while all execution flags remain false. P104.4 is next for
+non-chat Command Center execution-boundary UX.
 
 Implementation follows
 [`p104-founder-live-execution-boundary-contracts.json`](../../contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json).

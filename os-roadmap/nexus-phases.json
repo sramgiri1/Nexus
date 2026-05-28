@@ -7757,25 +7757,25 @@
       "order": 140,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "766c40ba",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P104 is in progress. P104.2 defined the local founder live execution-boundary schema, required evidence, approval predicates, forbidden actions, and blocked execution flags.",
+      "summary": "P104 is in progress. P104.3 built deterministic local execution-boundary rows from P103 work admissions and the P104.2 schema.",
       "checksRun": [
+        "npm run check:p1043-founder-live-execution-boundary-model",
         "npm run check:p1042-founder-live-execution-boundary-schema",
-        "npm run check:p1041-chat-surface-consolidation",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P104.2 is schema-only.",
-        "P104.3 through P104.7 remain planned.",
+        "P104.3 is model-only.",
+        "P104.4 through P104.7 remain planned.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P104.3",
+      "nextPhase": "P104.4",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Boundary",
-      "detail": "P104 in progress; execution-boundary schema complete; local boundary model is next."
+      "detail": "P104 in progress; execution-boundary model complete; non-chat UX is next."
     },
     {
       "phaseId": "P104.1",
@@ -7837,19 +7837,27 @@
       "title": "Execution Boundary Model",
       "track": "NEXUS_OS",
       "order": 140.3,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Build deterministic local execution-boundary state from P103 work admissions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T00:58:37.510Z",
+      "summary": "Built deterministic local execution-boundary rows from P103 work admissions and P104.2 schema with evidence gaps, validation commands, blockers, owner, evidence/activity, cost posture, and all execution flags false.",
+      "checksRun": [
+        "npm run check:p1043-founder-live-execution-boundary-model",
+        "npm run check:p1042-founder-live-execution-boundary-schema",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P104.3 is planned only and has no execution authority."
+        "P104.3 does not enable live execution authority.",
+        "P104.4 remains planned.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P104.4",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Execution Boundary Model",
-      "detail": "Execution Boundary Model planned under P104."
+      "detail": "Local execution-boundary rows complete; non-chat Command Center UX is next."
     },
     {
       "phaseId": "P104.4",
@@ -8339,8 +8347,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P104.2",
-  "previousPhase": "P104.1",
-  "nextPhase": "P104.3",
+  "currentPhase": "P104.3",
+  "previousPhase": "P104.2",
+  "nextPhase": "P104.4",
   "currentPhaseStatus": "complete"
 }
