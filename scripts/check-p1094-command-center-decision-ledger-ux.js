@@ -73,8 +73,11 @@ addCheck(
       && status.nextPhase === "P109.6")
     || (status.currentPhase === "P109.6"
       && status.previousPhase === "P109.5"
-      && status.nextPhase === "P109.7"))
-    && statusById.get("P109")?.status === "in_progress"
+      && status.nextPhase === "P109.7")
+    || (status.currentPhase === "P109.7"
+      && status.previousPhase === "P109.6"
+      && status.nextPhase === "P110"))
+    && ["in_progress", "complete"].includes(statusById.get("P109")?.status)
     && statusById.get("P109.4")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P109.5")?.status)
     && roadmapById.get("P109.4")?.status === "complete",

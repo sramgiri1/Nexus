@@ -429,7 +429,99 @@ deploy, release, export, package, network calls, or spend.
 
 ## P109.7 Final Validation
 
-Status: planned
+Status: complete
 
-Narrow goal: run final P109 validation and hand off to the next planned phase
-without enabling writes or execution.
+Narrow goal: run final P109 validation, close parent P109, and hand off to P110
+as a planned placeholder without enabling writes or execution.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` from `6b55bdb6`.
+
+Scope classification: `NEXUS_OS_CHANGE`.
+
+Allowed files:
+`scripts/check-p1097-founder-live-operator-decision-ledger-final.js`,
+`scripts/check-p1094-command-center-decision-ledger-ux.js`,
+`scripts/check-p1095-founder-live-operator-decision-ledger-validation.js`,
+`scripts/check-p1096-founder-live-operator-decision-ledger-docs.js`,
+`scripts/check-os-phase-status.js`,
+`contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json`,
+this plan, `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `README.md`,
+`package.json`, `os-roadmap/phase-status.json`,
+`os-roadmap/nexus-phases.json`, and generated P109.7/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added
+`scripts/check-p1097-founder-live-operator-decision-ledger-final.js`, registered
+`check:p1097-founder-live-operator-decision-ledger-final`, updated P109.4 and OS
+status checkers for P109.7/P110 handoff state, updated P109.5 and P109.6
+checkers to accept the parent P109 complete state, updated P109
+contract/docs/README/roadmap/status, and generated the final P109.7 report.
+
+Expected exports/data shapes: P109.7 exports no runtime API. The checker reads
+the existing P109 contract subphase shape and OS phase status entries with
+`phaseId`, `title`, `status`, `branch`, `commit`, `completedAt`, `summary`,
+`checksRun`, `knownLimitations`, `nextPhase`, and `commandCenterVisible`.
+
+Reuse check: P109.7 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P109 model/view-model evidence, the
+P109.4 route test, and the existing OS phase status checker pattern. No report
+writer, status updater, mode guard, redaction, result envelope, route matrix,
+activity, evidence, or audit helper was duplicated.
+
+Command Center UX requirements: no Command Center source changes. Preserve
+P109.4 display-safe decision-ledger cards on Business Build, Agent Flow, and
+Live Readiness. Keep Chat with NEXUS and Lite clean, with no raw JSON, raw logs,
+raw policy dumps, raw private project IDs, raw packet keys, DemoApp leakage, or
+fake runnable actions.
+
+Dark/light/system theme requirements: no theme source change. Preserve existing
+route-wide theme behavior and validate through the focused Playwright route test
+and dashboard build.
+
+Safety rules: no operator decision capture, persistence, ledger writes, DB
+writes, replay, runtime admission, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+deploy, release, export, package creation, network calls, or provider spend.
+
+Tests/checkers:
+- `npm run check:p1097-founder-live-operator-decision-ledger-final`
+- `npm run check:p1096-founder-live-operator-decision-ledger-docs`
+- `npm run check:p1095-founder-live-operator-decision-ledger-validation`
+- `npm run check:p1094-command-center-decision-ledger-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live decision ledger appears on non-chat founder routes"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Checker updates: P109.7 adds a final checker for scripts, reports, contract
+completion, validation commands, forbidden scope, P110 handoff state, docs,
+Command Center route safety, blocked authority, raw ID/packet-key safety, and
+DemoApp leakage. P109.4 checker accepts P109.7 complete with P110 next. OS phase
+status accepts P110 as the next planned placeholder only. P109.5 and P109.6
+checkers accept the parent P109 complete state for final validation handoff.
+
+Docs/roadmap update: P109.7 final validation is recorded complete in this plan,
+the P109 contract, README, platform roadmap, OS phase status, and generated
+reports. P109 is complete. P110 is next and remains separately scoped.
+
+OS phase status update: P109 is complete; P109.7 is complete; current phase
+P109.7; previous P109.6; next P110.
+
+Final safety checks: validation/status/docs only; no project files; no
+Command Center source/test changes; no unsafe authorities; P110 is only a
+planned placeholder; final stamped status must not leave stale
+`pending-final-commit`.
+
+Rollback plan: revert the P109.7 checker, docs/status updates, and P110
+placeholder acceptance, then restore P109/P109.7 to the P109.6 handoff state.
+
+Final response checklist: branch, commit hash, files changed, implementation
+summary, Command Center UX changes, tests/checkers, dashboard build and page
+results, docs/README/roadmap updates, OS phase status, evidence/audit/activity
+records if applicable, safety confirmations, forbidden paths confirmation,
+known limitations, and next phase/subphase.

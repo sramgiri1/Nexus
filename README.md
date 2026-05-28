@@ -441,6 +441,14 @@ The Command Center and local operator surface have:
   admission, provider/model calls, dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy, release, export, package, network
   calls, and provider spend remain blocked.
+- P109.7 final validation: final checks now close P109 across scripts,
+  reports, contract status, docs, Command Center route safety, OS status, and
+  phase validation coverage. P109 is complete. P110 is next as a planned
+  placeholder only. Operator decision capture, persistence, ledger writes, DB
+  writes, replay, execution unlock, runtime admission, provider/model calls,
+  dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  deploy, release, export, package, network calls, and provider spend remain
+  blocked.
 
 ## CareLoop Project Progress
 

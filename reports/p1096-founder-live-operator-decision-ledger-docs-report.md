@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.6
-- Generated at: 2026-05-28T20:58:57.692Z
+- Generated at: 2026-05-28T21:06:47.010Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a99443cc
+- Validation HEAD: 6b55bdb6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,7 +28,7 @@
 | docs preserve blocked decision ledger language | PASS |  |
 | docs preserve Command Center placement | PASS |  |
 | docs point at P109 contract and plan | PASS |  |
-| phase status advanced | PASS | P109.6/P109.5/P109.7 |
+| phase status advanced | PASS | P109.7/P109.6/P110 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim ledger or execution live | PASS |  |

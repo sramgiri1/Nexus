@@ -1,7 +1,7 @@
 {
   "phaseId": "P109",
   "title": "Founder Live Operator Decision Ledger Readiness",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define a governed local operator-decision ledger readiness boundary for future approval decisions without granting approval capture, persistence, DB writes, runtime admission, execution unlock, mutation, deploy, network, or spend authority.",
   "safetyRules": [
@@ -690,14 +690,148 @@
     {
       "phaseId": "P109.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Run final P109 validation and hand off to the next planned phase without enabling writes or execution."
+      "narrowGoal": "Run final P109 validation, close parent P109, and hand off to P110 as a planned placeholder without enabling writes or execution.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "6b55bdb6",
+      "allowedFiles": [
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "scripts/check-p1096-founder-live-operator-decision-ledger-docs.js",
+        "scripts/check-p1095-founder-live-operator-decision-ledger-validation.js",
+        "scripts/check-p1094-command-center-decision-ledger-ux.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
+        "reports/p1096-founder-live-operator-decision-ledger-docs-report.md",
+        "reports/p1095-founder-live-operator-decision-ledger-validation-report.md",
+        "reports/p1094-command-center-decision-ledger-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "scripts/check-p1096-founder-live-operator-decision-ledger-docs.js",
+        "scripts/check-p1095-founder-live-operator-decision-ledger-validation.js",
+        "scripts/check-p1094-command-center-decision-ledger-ux.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1097-founder-live-operator-decision-ledger-final",
+        "P109.7 final validation report",
+        "P109 complete OS phase status entries",
+        "P110 planned handoff placeholder reference"
+      ],
+      "expectedSchemasAndDataShapes": [
+        "No runtime schema change.",
+        "P109.7 checker reads P109 contract subphase objects with phaseId, status, validationCommands, and allowedFiles.",
+        "OS phase status entries record phaseId, title, status, branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase, and commandCenterVisible."
+      ],
+      "commandCenterUx": "No Command Center source change in P109.7. Preserve P109.4 display-safe decision-ledger cards on Business Build, Agent Flow, and Live Readiness while keeping Chat with NEXUS and Lite clean.",
+      "themeRequirements": "No theme source change in P109.7. Validate existing dark/light/system route coverage through the focused route test and dashboard build.",
+      "safetyRules": [
+        "No operator decision capture.",
+        "No operator decision persistence.",
+        "No operator decision ledger writes.",
+        "No DB writes or hosted DB mutation.",
+        "No replay, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, or provider spend.",
+        "No raw private IDs or raw packet keys in primary UX.",
+        "No DemoApp exposure in full Command Center.",
+        "No fake runnable actions."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js for the final report.",
+        "Reuse shared/checkResultFormatter.js for terminal output.",
+        "Reuse existing P109 model/view-model evidence and P109.4 route coverage instead of duplicating helpers.",
+        "Reuse OS phase status structure and checker conventions."
+      ],
+      "playwrightTests": [
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live decision ledger appears on non-chat founder routes\""
+      ],
+      "checkerUpdates": [
+        "Add final P109.7 checker covering P109 scripts/reports, contract completion, P109.7 validation commands, forbidden scope, P110 placeholder status, docs, Command Center route safety, blocked authority, and DemoApp leakage.",
+        "Update P109.4 checker to accept P109.7 complete and P110 next placeholder state.",
+        "Update OS phase status checker to accept P110 as the next planned handoff placeholder.",
+        "Update P109.5 and P109.6 checkers to accept the parent P109 complete state during final validation closure."
+      ],
+      "docsRoadmap": "Update P109 plan, platform roadmap, README, and OS phase tracking with P109.7 complete, parent P109 complete, and P110 next placeholder only.",
+      "phaseStatusUpdate": "P109 complete; P109.7 complete; current P109.7; previous P109.6; next P110.",
+      "validationCommands": [
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:p1096-founder-live-operator-decision-ledger-docs",
+        "npm run check:p1095-founder-live-operator-decision-ledger-validation",
+        "npm run check:p1094-command-center-decision-ledger-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live decision ledger appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P109.7 is validation/status/docs only.",
+        "Confirm P109 and P109.7 entries are complete with real commits after stamping.",
+        "Confirm Chat with NEXUS and Lite remain clean of decision-ledger operational dumps.",
+        "Confirm no project files or forbidden paths changed.",
+        "Confirm all write, DB, runtime admission, execution, provider, agent, deploy, package, network, and spend authority remains blocked."
+      ],
+      "gitCommands": [
+        "git add scripts/check-p1097-founder-live-operator-decision-ledger-final.js scripts/check-p1094-command-center-decision-ledger-ux.js scripts/check-os-phase-status.js contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md package.json os-roadmap/phase-status.json os-roadmap/nexus-phases.json reports/p1097-founder-live-operator-decision-ledger-final-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
+        "git commit -m \"test(nexus): finalize p109 decision ledger phase\"",
+        "git commit -m \"chore(nexus): stamp p1097 decision ledger final\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ],
   "knownLimitations": [
-    "P109 is a decision-ledger readiness phase only until each subphase completes.",
-    "P109.1-P109.6 do not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
-    "P109.7 remains planned."
+    "P109 completes local decision-ledger readiness only and does not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
+    "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    "P110 is next and remains a planned placeholder only until separately scoped."
   ]
 }

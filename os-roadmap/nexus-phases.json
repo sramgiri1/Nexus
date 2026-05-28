@@ -8944,12 +8944,13 @@
       "title": "Founder Live Operator Decision Ledger Readiness",
       "track": "NEXUS_OS",
       "order": 145,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "a99443cc",
-      "completedAt": "",
-      "summary": "P109 is in progress. P109.1-P109.6 now cover local decision-ledger boundary/model/audit-preview state, display-safe non-chat Command Center UX, aggregate validation, and docs/status closure while all write/execution authority remains blocked.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T21:05:00.000Z",
+      "summary": "Closed P109 founder live operator decision-ledger readiness with final validation across P109.1-P109.7 scripts, reports, Command Center route safety, docs, OS status, and P110 planned handoff placeholder while all write/execution authority remains blocked.",
       "checksRun": [
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
         "npm run check:p1096-founder-live-operator-decision-ledger-docs",
         "npm run check:p1095-founder-live-operator-decision-ledger-validation",
         "npm run check:p1094-command-center-decision-ledger-ux",
@@ -8960,14 +8961,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P109.1-P109.6 are local boundary/model/audit-preview/display/validation/docs work only and do not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
+        "P109 completes local decision-ledger readiness only and does not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P109.7 remains planned."
+        "P110 is next and remains a planned placeholder only until separately scoped."
       ],
-      "nextPhase": "P109.7",
+      "nextPhase": "P110",
       "commandCenterVisible": true,
       "label": "Decision Ledger",
-      "detail": "P109.6 docs closure complete; P109.7 final validation next."
+      "detail": "P109 final validation complete; P110 planned placeholder next."
     },
     {
       "phaseId": "P109.1",
@@ -9146,19 +9147,31 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 145.7,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Run final P109 validation and hand off to the next planned phase without enabling writes or execution.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T21:05:00.000Z",
+      "summary": "Ran final P109 validation covering scripts, reports, contract closure, docs, OS status, Command Center route safety, blocked authority, and P110 planned handoff placeholder without changing runtime behavior.",
+      "checksRun": [
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:p1096-founder-live-operator-decision-ledger-docs",
+        "npm run check:p1095-founder-live-operator-decision-ledger-validation",
+        "npm run check:p1094-command-center-decision-ledger-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live decision ledger appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P109.7 is planned final validation only and must not enable capture, persistence, DB writes, runtime admission, execution, provider calls, project mutation, deploy, package, network calls, or spend."
+        "P109.7 is final validation only and does not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P110 is the next planned handoff placeholder only and has no implementation authority in P109.7."
       ],
       "nextPhase": "P110",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation and handoff."
+      "detail": "P109 final validation and P110 placeholder handoff complete."
     },
     {
       "phaseId": "P83",
@@ -9571,9 +9584,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T20:56:50.000Z",
-  "currentPhase": "P109.6",
-  "previousPhase": "P109.5",
-  "nextPhase": "P109.7",
+  "updatedAt": "2026-05-28T21:05:00.000Z",
+  "currentPhase": "P109.7",
+  "previousPhase": "P109.6",
+  "nextPhase": "P110",
   "currentPhaseStatus": "complete"
 }

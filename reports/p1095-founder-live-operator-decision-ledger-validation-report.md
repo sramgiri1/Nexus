@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.5
-- Generated at: 2026-05-28T20:58:57.917Z
+- Generated at: 2026-05-28T21:06:47.147Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a99443cc
+- Validation HEAD: 6b55bdb6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract keeps P109.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P109.5 avoids forbidden file scope | PASS |  |
-| working diff stays in P109.5 allowed scope | PASS | scope check relaxed for P109.6 |
+| working diff stays in P109.5 allowed scope | PASS | scope check relaxed for P109.7 |
 | decision ledger boundary schema validates | PASS |  |
 | decision ledger model schema validates | PASS |  |
 | decision ledger audit preview schema validates | PASS |  |
@@ -42,7 +42,7 @@
 | docs record P109.5 | PASS |  |
 | platform roadmap records P109.5 | PASS |  |
 | README records P109.5 | PASS |  |
-| phase status advanced | PASS | P109.6/P109.5/P109.7 |
+| phase status advanced | PASS | P109.7/P109.6/P110 |
 | aggregate UX avoids raw private IDs | PASS |  |
 | aggregate UX avoids raw packet keys | PASS |  |
 | aggregate audit preview remains hidden from primary UX | PASS |  |

@@ -154,7 +154,7 @@ addCheck(
   ["P109.5", "P109.6", "P109.7"].includes(status.currentPhase)
     && ["P109.4", "P109.5", "P109.6"].includes(status.previousPhase)
     && ["P109.6", "P109.7", "P110"].includes(status.nextPhase)
-    && statusById.get("P109")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P109")?.status)
     && statusById.get("P109.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P109.6")?.status)
     && roadmapById.get("P109.5")?.status === "complete",
