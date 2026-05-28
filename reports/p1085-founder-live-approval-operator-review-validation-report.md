@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P108.5
-- Generated at: 2026-05-28T19:56:12.562Z
+- Generated at: 2026-05-28T19:56:45.040Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ac1b853a
+- Validation HEAD: 822c70b5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract keeps P108.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P108.5 avoids forbidden file scope | PASS |  |
-| working diff stays in P108.5 allowed scope | PASS | README.md, contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1081-founder-live-approval-operator-review-contract-report.md, reports/p1082-founder-live-approval-operator-review-model-report.md, reports/p1083-founder-live-approval-operator-review-audit-preview-report.md, reports/p1084-command-center-operator-review-ux-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1081-founder-live-approval-operator-review-contract.js, scripts/check-p1082-founder-live-approval-operator-review-model.js, scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js, scripts/check-p1084-command-center-operator-review-ux.js, reports/p1085-founder-live-approval-operator-review-validation-report.md, scripts/check-p1085-founder-live-approval-operator-review-validation.js |
+| working diff stays in P108.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | operator review boundary schema validates | PASS |  |
 | operator review model schema validates | PASS |  |
 | operator review audit preview schema validates | PASS |  |

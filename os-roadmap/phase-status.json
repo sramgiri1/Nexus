@@ -13452,7 +13452,7 @@
       "order": 144,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "822c70b5",
       "completedAt": "",
       "summary": "P108 is in progress. P108.5 adds aggregate validation across the operator-review contract, boundary schema, local model, audit preview, Command Center UX placement, route safety, docs, reports, OS phase status, and forbidden scope while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
@@ -13596,7 +13596,7 @@
       "order": 144.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "822c70b5",
       "completedAt": "2026-05-28T19:53:31.000Z",
       "summary": "Added aggregate validation for P108.1-P108.4 across the operator-review contract, boundary schema, local model, audit preview, Command Center UX placement, route safety, docs, reports, OS phase status, and forbidden scope.",
       "checksRun": [
