@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.7
-- Generated at: 2026-05-28T23:49:03.041Z
+- Generated at: 2026-05-28T23:49:45.346Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e4bfc7db
+- Validation HEAD: 0079bd2c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,7 +25,7 @@
 | P112.7 records final validation commands | PASS |  |
 | P112.7 avoids forbidden file scope | PASS |  |
 | changed files stay in P112.7 allowed scope | PASS | scope check relaxed for P113.1 |
-| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1127-founder-live-agent-work-queue-admission-final.js, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, reports/p1131-founder-live-agent-work-assignment-contract-report.md, scripts/check-p1131-founder-live-agent-work-assignment-contract.js |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P112.6 checker accepts final handoff | PASS |  |
 | OS status checker accepts P113 handoff | PASS |  |
 | phase status closed | PASS | P113.1/P112.7/P113.2 |
