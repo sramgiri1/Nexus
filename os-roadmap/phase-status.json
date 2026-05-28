@@ -14368,7 +14368,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8472b7f0938adcccd2db8200fa92ee137a10b75b",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
       "detail": "P112.2 schema complete; P112.3 local queue CRUD is next.",
@@ -14418,7 +14418,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8472b7f0938adcccd2db8200fa92ee137a10b75b",
       "commandCenterVisible": true,
       "label": "Agent Work Queue SQLite Schema",
       "detail": "Local queue schema and isolated SQLite validation are complete; runtime dispatch remains blocked.",
@@ -15025,7 +15025,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T23:04:25.358Z",
+  "updatedAt": "2026-05-28T23:05:15.641Z",
   "currentPhase": "P112.2",
   "previousPhase": "P112.1",
   "nextPhase": "P112.3",
