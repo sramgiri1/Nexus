@@ -425,6 +425,14 @@ The Command Center and local operator surface have:
   execution unlock, runtime admission, provider/model calls, dispatch,
   worker/tool execution, project mutation, hosted DB mutation, deploy, release,
   export, package, network calls, and provider spend remain blocked.
+- P109.5 aggregate validation: checker coverage now validates P109.1-P109.4
+  boundary, model, audit preview, Command Center UX, route safety, reports,
+  docs, phase status, and forbidden scope without changing runtime behavior.
+  P109.6 is next. Operator decision capture, persistence, ledger writes, DB
+  writes, replay, execution unlock, runtime admission, provider/model calls,
+  dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  deploy, release, export, package, network calls, and provider spend remain
+  blocked.
 
 ## CareLoop Project Progress
 

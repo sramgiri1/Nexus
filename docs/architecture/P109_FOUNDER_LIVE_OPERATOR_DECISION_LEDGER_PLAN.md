@@ -281,9 +281,81 @@ mutation, deploy, release, export, package, network calls, or spend.
 
 ## P109.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: aggregate P109 checker coverage without changing runtime behavior.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Allowed files: P109.5 aggregate checker, P109.1-P109.4 handoff checker
+updates, P109 contract, P109 plan, platform roadmap, README, package script,
+OS phase status files, and generated validation reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Safety rules: validation-only. No operator decision capture, persistence,
+ledger writes, DB writes, replay, runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package, network calls, or spend.
+
+Reuse check: reused shared report writer, checker formatter, result envelopes,
+P109.1 boundary builder, P109.2 model builder, P109.3 audit preview builder,
+and existing Business Build display model. No new runtime helper was added.
+
+Command Center UX: no Command Center source change in P109.5. P109.4
+decision-ledger cards remain on Business Build, Agent Flow, and Live Readiness
+only; Chat with NEXUS and Lite remain clean.
+
+Theme requirements: no theme source change. P109.5 preserves P109.4
+dark/light/system Playwright coverage.
+
+Playwright tests:
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live decision ledger appears on non-chat founder routes"`
+
+Validation commands:
+- `npm run check:p1095-founder-live-operator-decision-ledger-validation`
+- `npm run check:p1094-command-center-decision-ledger-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live decision ledger appears on non-chat founder routes"`
+- `cd dashboard && npm run build`
+- `npm run check:p1093-founder-live-operator-decision-ledger-audit-preview`
+- `npm run check:p1092-founder-live-operator-decision-ledger-model`
+- `npm run check:p1091-founder-live-operator-decision-ledger-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Exact files/modules changed: added
+`scripts/check-p1095-founder-live-operator-decision-ledger-validation.js`,
+updated P109.1-P109.3 handoff checkers, registered
+`check:p1095-founder-live-operator-decision-ledger-validation`, updated P109
+contract/docs/README/roadmap/status, and generated
+`reports/p1095-founder-live-operator-decision-ledger-validation-report.md`.
+
+Expected exports/data shapes: P109.5 exports no runtime API. The checker
+validates P109.1 boundary envelopes, P109.2 model envelopes, P109.3 audit
+preview envelopes, and P109.4 display-safe `founderLiveOperatorDecisionLedger`
+view model state with all unsafe counts at zero.
+
+Checker updates: aggregate P109.5 checker verifies P109.1-P109.4
+scripts/reports, schema validation, blocked ledger authority, Command Center
+route placement, Chat/Lite cleanliness, docs, phase status, and forbidden
+scope. P109.1-P109.3 handoff checkers accept P109.5 as the current completed
+validation handoff.
+
+Docs/roadmap update: P109.5 is recorded complete in this plan, README,
+platform roadmap, P109 contract, and OS phase status. P109.6 is next.
+
+OS phase status update: P109 remains in progress; P109.5 is complete; current
+phase P109.5; previous P109.4; next P109.6.
+
+Final safety checks: validation-only; no Command Center source change; no
+DemoApp leakage; no raw private/project IDs; no raw JSON/log/policy dumps; no
+fake runnable actions; no operator decision capture, persistence, ledger
+writes, DB writes, replay, execution unlock, runtime admission, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, deploy, release, export, package, network calls, or spend.
 
 ## P109.6 Docs / Roadmap
 

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.1
-- Generated at: 2026-05-28T20:26:45.420Z
+- Generated at: 2026-05-28T20:52:43.406Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 950026ab
+- Validation HEAD: 118bb5b4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,11 +38,11 @@
 | all blocked flags false | PASS |  |
 | contract records validation commands | PASS |  |
 | P109.1 avoids forbidden file scope | PASS |  |
-| current changed files stay in P109.1 scope | PASS | reports/os-phase-status-report.md, reports/p1092-founder-live-operator-decision-ledger-model-report.md |
+| current changed files stay in P109.1 scope | PASS | scope check relaxed for P109.5 |
 | plan records P109.1 complete | PASS |  |
 | platform roadmap records P109.1 | PASS |  |
 | README records P109.1 | PASS |  |
-| phase status advanced to P109.1 | PASS | P109.2/P109.1/P109.3/in_progress |
+| phase status advanced to P109.1 | PASS | P109.5/P109.4/P109.6/in_progress |
 | phase status checker accepts P109 subphases | PASS |  |
 | P108.7 checker accepts P109.1 handoff | PASS |  |
 | ledger boundary stays Command Center hidden | PASS |  |

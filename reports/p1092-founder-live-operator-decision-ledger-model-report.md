@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.2
-- Generated at: 2026-05-28T20:32:46.765Z
+- Generated at: 2026-05-28T20:52:43.401Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9c44136d
+- Validation HEAD: 118bb5b4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,7 +38,7 @@
 | plan records P109.2 complete | PASS |  |
 | platform roadmap records P109.2 | PASS |  |
 | README records P109.2 | PASS |  |
-| phase status advanced to P109.2 | PASS | P109.3/P109.2/P109.4/in_progress |
+| phase status advanced to P109.2 | PASS | P109.5/P109.4/P109.6/in_progress |
 | P109.1 checker accepts P109.2 handoff | PASS |  |
 | decision-ledger model stays Command Center hidden | PASS |  |
 | schema avoids raw private IDs | PASS |  |

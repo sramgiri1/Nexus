@@ -79,6 +79,7 @@ const allowedChangedPrefixes = [
 const serialized = JSON.stringify({ data, contract, plan, platformRoadmap, readme });
 const serializedData = JSON.stringify(data);
 const changed = changedPaths();
+const enforceCurrentDiffScope = status.currentPhase === "P109.1";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1091-founder-live-operator-decision-ledger-contract"]));
 addCheck("contract phase identity", contract.phaseId === "P109" && contract.title === "Founder Live Operator Decision Ledger Readiness");
@@ -113,18 +114,19 @@ addCheck("ledger readiness is local and blocked", data.operatorDecisionLedgerRea
 addCheck("all blocked flags false", P109_OPERATOR_DECISION_LEDGER_BLOCKED_FLAGS.every((flag) => data[flag] === false && data.operatorDecisionLedgerShape?.[flag] === false));
 addCheck("contract records validation commands", ["npm run check:p1091-founder-live-operator-decision-ledger-contract", "npm run check:p1087-founder-live-approval-operator-review-final", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1091.validationCommands?.includes(command)));
 addCheck("P109.1 avoids forbidden file scope", !(p1091.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
-addCheck("current changed files stay in P109.1 scope", changed.every((file) => allowedChangedPrefixes.includes(file)), changed.join(", "));
+addCheck(
+  "current changed files stay in P109.1 scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedChangedPrefixes.includes(file)),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
 addCheck("plan records P109.1 complete", /P109\.1 Decision Ledger Contract \/ Schema Baseline[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P109.1", /P109 - Founder Live Operator Decision Ledger Readiness/.test(platformRoadmap) && /P109\.1 is\s+complete/.test(platformRoadmap) && /P109\.2 is\s+next/.test(platformRoadmap));
 addCheck("README records P109.1", /P109\.1 decision-ledger boundary/.test(readme) && /P109\.2 is next/.test(readme));
 addCheck(
   "phase status advanced to P109.1",
-  ((status.currentPhase === "P109.1"
-    && status.previousPhase === "P108.7"
-    && status.nextPhase === "P109.2")
-    || (status.currentPhase === "P109.2"
-      && status.previousPhase === "P109.1"
-      && status.nextPhase === "P109.3"))
+  ["P109.1", "P109.2", "P109.3", "P109.4", "P109.5"].includes(status.currentPhase)
+    && ["P108.7", "P109.1", "P109.2", "P109.3", "P109.4"].includes(status.previousPhase)
+    && ["P109.2", "P109.3", "P109.4", "P109.5", "P109.6"].includes(status.nextPhase)
     && statusById.get("P108")?.status === "complete"
     && statusById.get("P109")?.status === "in_progress"
     && statusById.get("P109.1")?.status === "complete"
