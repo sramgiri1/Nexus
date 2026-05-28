@@ -9631,7 +9631,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "43aa459498d918c42004dabc23908022fb650db7",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
       "detail": "P112.4 admission preview complete; P112.5 Command Center UX is next.",
@@ -9737,7 +9737,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "43aa459498d918c42004dabc23908022fb650db7",
       "commandCenterVisible": true,
       "label": "Queue Admission Preview / Safe Dry Run",
       "detail": "Local dry-run queue admission preview is ready and all live authority remains blocked.",
