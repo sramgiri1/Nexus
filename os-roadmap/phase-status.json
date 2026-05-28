@@ -12727,20 +12727,168 @@
       "title": "Founder Live Execution Approval Planning",
       "track": "NEXUS_OS",
       "order": 141,
-      "status": "planned",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P105 is in progress. P105.1 defines local founder live execution approval-planning schema, required gates, blocked runtime transitions, and safety rules without enabling approval capture or execution.",
+      "checksRun": [
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P105.1 is schema and contract only; approval capture and approval persistence remain blocked.",
+        "Approvals cannot unlock execution or runtime admission in P105.1.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P105.2-P105.7 remain planned."
+      ],
+      "nextPhase": "P105.2",
+      "commandCenterVisible": true,
+      "label": "Live Approval Planning",
+      "detail": "P105.1 complete; deterministic approval-plan records are next."
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T03:15:00.000Z",
+      "checksRun": [
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P105.1 is schema and contract only; approval capture and approval persistence remain blocked.",
+        "Approvals cannot unlock execution or runtime admission in P105.1.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P105.2-P105.7 remain planned."
+      ],
+      "commandCenterVisible": true,
+      "phaseId": "P105.1",
+      "title": "Approval Planning Contract / Schema Baseline",
+      "status": "complete",
+      "order": 141.1,
+      "summary": "Defined the P105 contract and local approval-planning schema with required gates, display-safe approval plan shape, approval gate shape, runtime transition shape, validation commands, evidence/activity, cost posture, and all approval/runtime/execution flags false.",
+      "nextPhase": "P105.2",
+      "label": "Approval Planning Contract",
+      "detail": "Local approval-planning contract and schema complete; approval cannot unlock execution."
+    },
+    {
+      "track": "NEXUS_OS",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned next NEXUS OS phase for defining governed founder approval gates before any live execution authority is introduced.",
       "checksRun": [],
       "knownLimitations": [
-        "P105 is planned only and does not enable live execution authority.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+        "Planned only; no execution authority enabled."
       ],
-      "nextPhase": "",
       "commandCenterVisible": true,
-      "label": "Live Approval Planning",
-      "detail": "Planned governed approval gates before any live execution unlock."
+      "phaseId": "P105.2",
+      "title": "Approval Plan Model",
+      "status": "planned",
+      "order": 141.2,
+      "summary": "Build deterministic local approval-plan records from P104 execution-boundary records without approval capture or execution.",
+      "nextPhase": "P105.3",
+      "label": "Approval Plan Model",
+      "detail": "Planned deterministic local approval-plan records."
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no execution authority enabled."
+      ],
+      "commandCenterVisible": true,
+      "phaseId": "P105.3",
+      "title": "Dry-Run Review Packet",
+      "status": "planned",
+      "order": 141.3,
+      "summary": "Create a display-safe review packet that summarizes approval gates and blocked runtime transitions without submitting approvals.",
+      "nextPhase": "P105.4",
+      "label": "Approval Review Packet",
+      "detail": "Planned dry-run approval review packet."
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no execution authority enabled."
+      ],
+      "commandCenterVisible": true,
+      "phaseId": "P105.4",
+      "title": "Command Center Approval Planning UX",
+      "status": "planned",
+      "order": 141.4,
+      "summary": "Render approval-planning state on relevant founder pages without approval or execution controls.",
+      "nextPhase": "P105.5",
+      "label": "Approval Planning UX",
+      "detail": "Planned non-runnable Command Center approval-planning UX."
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no execution authority enabled."
+      ],
+      "commandCenterVisible": true,
+      "phaseId": "P105.5",
+      "title": "Tests / Checkers",
+      "status": "planned",
+      "order": 141.5,
+      "summary": "Aggregate P105 checker and route-safety coverage without changing runtime behavior.",
+      "nextPhase": "P105.6",
+      "label": "Approval Tests",
+      "detail": "Planned aggregate tests and checkers."
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no execution authority enabled."
+      ],
+      "commandCenterVisible": true,
+      "phaseId": "P105.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "order": 141.6,
+      "summary": "Close P105 docs, README, platform roadmap, and phase status evidence without behavior changes.",
+      "nextPhase": "P105.7",
+      "label": "Approval Docs",
+      "detail": "Planned docs and roadmap closure."
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no execution authority enabled."
+      ],
+      "commandCenterVisible": true,
+      "phaseId": "P105.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "order": 141.7,
+      "summary": "Run final P105 validation, close the parent phase, stamp commits, and hand off to the next planned phase.",
+      "nextPhase": "P106",
+      "label": "Final Validation",
+      "detail": "Planned final P105 validation."
     },
     {
       "phaseId": "P83",
@@ -13224,9 +13372,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T02:30:00.000Z",
-  "currentPhase": "P104.7",
-  "previousPhase": "P104.6",
-  "nextPhase": "P105",
+  "updatedAt": "2026-05-28T03:15:00.000Z",
+  "currentPhase": "P105.1",
+  "previousPhase": "P104.7",
+  "nextPhase": "P105.2",
   "currentPhaseStatus": "complete"
 }

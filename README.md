@@ -201,6 +201,10 @@ The Command Center and local operator surface have:
 - P104.7 final validation: P104 is complete. Chat with NEXUS and Lite remain
   chat-only; Business Build, Agent Flow, and Live Readiness retain the Founder
   Live Execution Boundary. P105 is next.
+- P105.1 approval planning: P105 is in progress. The local approval-planning
+  schema and contract now define required gates, blocked runtime transitions,
+  validation commands, and safety rules without allowing approvals to unlock
+  execution. P105.2 is next.
 
 ## CareLoop Project Progress
 

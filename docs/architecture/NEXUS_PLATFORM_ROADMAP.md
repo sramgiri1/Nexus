@@ -2353,6 +2353,26 @@ Implementation follows
 The detailed plan lives in
 [`P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`](P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md).
 
+## P105 - Founder Live Execution Approval Planning
+
+P105 begins after P104 founder live execution boundary closure. It defines the
+local approval-planning gates required before any later phase can consider live
+execution authority. P105 does not enable provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+export, package creation, network calls, approval writes that unlock execution,
+runtime admission, live mode transition, or provider spend.
+P105.1 is complete. It adds the approval-planning contract and local schema
+with required gates, display-safe approval plan shape, approval gate shape,
+runtime transition shape, validation commands, owner capability, evidence refs,
+activity location, cost posture, and all approval/runtime/execution flags false.
+P105.2 is next for deterministic local approval-plan records.
+
+Implementation follows
+[`p105-founder-live-execution-approval-planning-contracts.json`](../../contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json).
+
+The detailed plan lives in
+[`P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md`](P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md).
+
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
 
