@@ -8715,7 +8715,7 @@
       "order": 144,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a34217f1",
       "completedAt": "",
       "summary": "P108 is in progress. P108.6 closes docs, README, platform roadmap, contract status, reports, and OS phase tracking for founder live approval operator review while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
@@ -8886,7 +8886,7 @@
       "order": 144.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a34217f1",
       "completedAt": "2026-05-28T19:59:57.000Z",
       "summary": "Closed P108 docs, README, platform roadmap, contract status, reports, and OS phase status for founder live approval operator review without changing runtime or Command Center source behavior.",
       "checksRun": [
