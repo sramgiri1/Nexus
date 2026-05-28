@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P113.2
-- Generated at: 2026-05-28T23:55:15.710Z
+- Generated at: 2026-05-28T23:55:50.181Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 50dcc888
+- Validation HEAD: e874935e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | README records P113.2 | PASS |  |
 | platform roadmap records P113.2 | PASS |  |
 | phase status advanced | PASS | P113.2/P113.1/P113.3 |
-| changed files stay in P113.2 allowed scope | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1131-founder-live-agent-work-assignment-contract-report.md, reports/phase-validation-coverage-report.md, reports/p1132-founder-live-agent-work-assignment-schema-report.md, scripts/check-p1132-founder-live-agent-work-assignment-schema.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1131-founder-live-agent-work-assignment-contract-report.md, reports/phase-validation-coverage-report.md, reports/p1132-founder-live-agent-work-assignment-schema-report.md, scripts/check-p1132-founder-live-agent-work-assignment-schema.js |
+| changed files stay in P113.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1131-founder-live-agent-work-assignment-contract-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1131-founder-live-agent-work-assignment-contract-report.md |
 | no unsafe runtime imports or URLs | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
 ## Validation Commands

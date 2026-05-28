@@ -9856,7 +9856,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e874935ea1b62ccedc163cdf580f1d64ca8c881d",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
       "detail": "P113.2 schema complete; P113.3 governed local assignment CRUD is next.",
@@ -9912,7 +9912,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e874935ea1b62ccedc163cdf580f1d64ca8c881d",
       "commandCenterVisible": true,
       "label": "Agent Work Assignment SQLite Schema",
       "detail": "P113.2 schema complete; P113.3 governed local assignment CRUD is next.",
