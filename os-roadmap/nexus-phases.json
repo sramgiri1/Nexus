@@ -9180,7 +9180,7 @@
       "order": 146,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f827544e",
       "completedAt": "",
       "summary": "P110 is in progress. P110.1-P110.2 now define the governed local SQLite persistence contract and schema for operator decision ledger records while leaving runtime CRUD admission, Command Center DB wiring, project files, and unsafe authority unchanged.",
       "checksRun": [
@@ -9235,7 +9235,7 @@
       "order": 146.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f827544e",
       "completedAt": "2026-05-28T21:22:13.000Z",
       "summary": "Added local SQLite schema definitions for display-safe operator decision ledger entries, events, and evidence references, with isolated temp DB validation and no runtime CRUD admission or unsafe authority changes.",
       "checksRun": [
