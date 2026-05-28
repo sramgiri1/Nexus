@@ -253,9 +253,109 @@
     {
       "phaseId": "P109.3",
       "title": "Decision Ledger Audit Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Create display-safe ledger audit preview rows without raw IDs, persistence, or execution controls."
+      "narrowGoal": "Create display-safe ledger audit preview rows without raw IDs, persistence, or execution controls.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js",
+        "scripts/check-p1093-founder-live-operator-decision-ledger-audit-preview.js",
+        "scripts/check-p1092-founder-live-operator-decision-ledger-model.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+        "reports/p1092-founder-live-operator-decision-ledger-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js",
+        "scripts/check-p1093-founder-live-operator-decision-ledger-audit-preview.js",
+        "scripts/check-p1092-founder-live-operator-decision-ledger-model.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+        "reports/p1092-founder-live-operator-decision-ledger-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_AUDIT_PREVIEW_PHASE",
+        "P109_OPERATOR_DECISION_LEDGER_AUDIT_PREVIEW_STATES",
+        "buildFounderLiveOperatorDecisionLedgerAuditPreview",
+        "validateFounderLiveOperatorDecisionLedgerAuditPreview"
+      ],
+      "expectedDataShape": {
+        "schemaVersion": "1.0",
+        "currentState": "string",
+        "sourceDecisionLedgerModelPhase": "string",
+        "operatorDecisionLedgerAuditSummary": "object",
+        "auditSections": "object[]",
+        "auditRows": "object[]",
+        "requiredEvidence": "string[]",
+        "forbiddenActions": "string[]",
+        "blockers": "string[]",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "evidenceRefs": "string[]",
+        "activityLocation": "string",
+        "costImpact": "string",
+        "commandCenterVisible": false
+      },
+      "commandCenterUx": "No Command Center source change in P109.3. Decision-ledger audit preview remains hidden from primary UX until P109.4.",
+      "themeRequirements": "No theme source change in P109.3. Preserve dark, light, and system behavior.",
+      "validationCommands": [
+        "npm run check:p1093-founder-live-operator-decision-ledger-audit-preview",
+        "npm run check:p1092-founder-live-operator-decision-ledger-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "checkerUpdates": [
+        "Add P109.3 local audit preview checker.",
+        "Update P109.2 checker to accept the P109.3 handoff state."
+      ],
+      "docsRoadmap": "Record P109.3 complete in P109 plan, README, platform roadmap, contract, and OS phase status. P109.4 is next.",
+      "phaseStatusUpdate": "P109 in progress; P109.1-P109.3 complete; current P109.3; previous P109.2; next P109.4.",
+      "finalSafetyChecks": [
+        "Confirm P109.3 is local audit preview only.",
+        "Confirm no Command Center source or test files changed.",
+        "Confirm no raw private/project IDs, raw logs, raw JSON, or raw policy dumps are introduced.",
+        "Confirm no approval/operator decision capture, persistence, ledger writes, DB writes, replay, runtime admission, execution, provider calls, project mutation, deploy, package, network, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Checker results",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
     },
     {
       "phaseId": "P109.4",

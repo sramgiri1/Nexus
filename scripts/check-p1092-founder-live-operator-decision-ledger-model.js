@@ -73,9 +73,12 @@ addCheck("platform roadmap records P109.2", /P109\.2 is\s+complete/.test(platfor
 addCheck("README records P109.2", /P109\.2 decision-ledger model/.test(readme) && /P109\.3\s+is next/.test(readme));
 addCheck(
   "phase status advanced to P109.2",
-  status.currentPhase === "P109.2"
+  ((status.currentPhase === "P109.2"
     && status.previousPhase === "P109.1"
-    && status.nextPhase === "P109.3"
+    && status.nextPhase === "P109.3")
+    || (status.currentPhase === "P109.3"
+      && status.previousPhase === "P109.2"
+      && status.nextPhase === "P109.4"))
     && statusById.get("P109")?.status === "in_progress"
     && statusById.get("P109.1")?.status === "complete"
     && statusById.get("P109.2")?.status === "complete"

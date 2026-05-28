@@ -147,10 +147,70 @@ mutation, deploy, release, export, package, network calls, or spend.
 
 ## P109.3 Decision Ledger Audit Preview
 
-Status: planned
+Status: complete
 
 Narrow goal: create display-safe ledger audit preview rows without raw IDs,
 persistence, or execution controls.
+
+Allowed files: P109 contract, P109 plan, local decision-ledger audit preview
+module, P109.3 checker, P109.2 handoff checker, package script, README,
+platform roadmap, OS phase status files, and generated validation reports.
+
+Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**,
+providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**,
+packages/**, .env*.
+
+Command Center UX: no Command Center source change in P109.3. Decision-ledger
+audit preview remains hidden from primary UX until P109.4.
+
+Theme requirements: no theme source change in P109.3.
+
+Reuse check: reuse `shared/resultEnvelope.js`, `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, P109.2 decision-ledger candidate records, and
+existing OS phase status structure.
+
+Validation commands:
+- npm run check:p1093-founder-live-operator-decision-ledger-audit-preview
+- npm run check:p1092-founder-live-operator-decision-ledger-model
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Exact files/modules changed: added
+`live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js`,
+`scripts/check-p1093-founder-live-operator-decision-ledger-audit-preview.js`,
+updated the P109 contract, this plan, P109.2 checker compatibility, package
+script, README/roadmap/status entries, and generated
+P109.3/P109.2/status/coverage reports.
+
+Expected exports/data shapes:
+- `P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_AUDIT_PREVIEW_PHASE`
+- `P109_OPERATOR_DECISION_LEDGER_AUDIT_PREVIEW_STATES`
+- `buildFounderLiveOperatorDecisionLedgerAuditPreview()`
+- `validateFounderLiveOperatorDecisionLedgerAuditPreview()`
+
+The envelope data includes schema version, current state, source P109.2 model
+phase/state, audit summary, display-safe audit sections/rows, required/missing
+evidence, forbidden actions, blockers, disabled reason, owner, evidence refs,
+activity location, cost impact, `commandCenterVisible: false`, and all unsafe
+flags false.
+
+Checker updates: P109.3 checker validates the preview exports, schema shape,
+display-safe rows, blocked counts, docs, reports, OS phase status, and
+forbidden scope. P109.2 checker accepts the P109.3 handoff state.
+
+Docs/roadmap update: P109.3 is recorded complete in this plan, README, platform
+roadmap, P109 contract, and OS phase status. P109.4 is next.
+
+OS phase status update: P109 in progress; P109.1-P109.3 complete; current phase
+P109.3; previous P109.2; next P109.4.
+
+Final safety checks: local audit preview only; no Command Center source/test
+changes; no project files; no raw private/project IDs, raw JSON, raw logs, raw
+policy dumps, approval/operator decision capture, persistence, ledger writes,
+DB writes, replay, execution unlock, runtime admission, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+deploy, release, export, package, network calls, or spend.
 
 ## P109.4 Command Center Decision Ledger UX
 
