@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P108.5
-- Generated at: 2026-05-28T19:56:45.040Z
+- Generated at: 2026-05-28T19:57:01.937Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 822c70b5
+- Validation HEAD: 037d28c5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract keeps P108.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P108.5 avoids forbidden file scope | PASS |  |
-| working diff stays in P108.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| working diff stays in P108.5 allowed scope | PASS |  |
 | operator review boundary schema validates | PASS |  |
 | operator review model schema validates | PASS |  |
 | operator review audit preview schema validates | PASS |  |
