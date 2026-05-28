@@ -203,16 +203,51 @@ Final safety checks:
 - P106.4 UX is preserved without new runtime behavior.
 - Approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.
 - Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
-- P106.6 remains planned.
+- P106.6 remains planned at P106.5 closure.
 - No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.6 Docs / Roadmap
 
-Status: planned
+Status: complete
 
 Narrow goal: close P106 docs, README, platform roadmap, and phase status evidence without behavior changes.
 
-Validation commands: include docs checker, OS phase status, phase validation coverage, and diff check.
+Allowed files: P106 contract, P106 plan, platform roadmap, README, P106.6 docs checker, P106.1/P106.5 checker handoff compatibility, package script, OS phase status files, and generated validation reports.
+
+Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
+
+Reuse check: reuse shared/reportWriter.js, shared/checkResultFormatter.js, existing P106 reports, README/platform roadmap wording, and OS phase status updates. Do not duplicate report writers, phase status updaters, route matrices, UI cards, or redaction helpers.
+
+Expected data: reports/p1066-founder-live-approval-request-docs-report.md with docs closure checks for P106 plan, contract, README, platform roadmap, blocked safety wording, Command Center placement, phase status, and forbidden file scope.
+
+Command Center UX: no Command Center source change in P106.6. Preserve P106.4 queue card placement and chat-only boundaries.
+
+Theme requirements: no theme source change in P106.6.
+
+Tests/checkers: npm run check:p1066-founder-live-approval-request-docs; rerun P106.5/P106.4/prior checkers, OS phase status, phase validation coverage, and diff check.
+
+Docs/roadmap: close P106 plan, platform roadmap, README, and OS phase status with P106.6 complete and P106.7 next.
+
+OS phase status update: P106 in progress; P106.6 complete; current P106.6; previous P106.5; next P106.7.
+
+Validation commands:
+- npm run check:p1066-founder-live-approval-request-docs
+- npm run check:p1065-founder-live-approval-request-validation
+- npm run check:p1064-command-center-approval-request-ux
+- npm run check:p1063-founder-live-approval-request-queue-preview
+- npm run check:p1062-founder-live-approval-request-model
+- npm run check:p1061-founder-live-approval-request-boundary-contract
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Final safety checks:
+- P106.6 is docs/checker only.
+- Docs do not overstate approval request submission/capture/persistence or execution readiness.
+- Approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.
+- Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
+- P106.7 remains planned.
+- No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.7 Final Validation
 

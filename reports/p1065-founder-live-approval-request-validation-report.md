@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P106.5
-- Generated at: 2026-05-28T18:13:55.917Z
+- Generated at: 2026-05-28T18:17:42.442Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bbd59a53
+- Validation HEAD: 68fae29a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | all P106 scripts registered | PASS |  |
 | all prior P106 reports exist | PASS |  |
 | contract marks P106.1-P106.5 complete | PASS |  |
-| contract keeps P106.6 planned | PASS |  |
+| contract keeps P106.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P106.5 avoids forbidden file scope | PASS |  |
 | dashboard data and page still expose queue UX | PASS |  |
@@ -33,7 +33,7 @@
 | docs record P106.5 | PASS |  |
 | platform roadmap records P106.5 | PASS |  |
 | README records P106.5 | PASS |  |
-| phase status advanced | PASS | P106.5/P106.4/P106.6 |
+| phase status advanced | PASS | P106.6/P106.5/P106.7 |
 | aggregate UX avoids raw private IDs | PASS |  |
 | aggregate UX avoids raw packet keys | PASS |  |
 | aggregate UX avoids fake unsafe runnable actions | PASS |  |

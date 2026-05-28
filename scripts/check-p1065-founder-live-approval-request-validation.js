@@ -56,7 +56,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1065
 addCheck("all P106 scripts registered", p106Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("all prior P106 reports exist", p106Reports.every((report) => readText(report).includes("Result")));
 addCheck("contract marks P106.1-P106.5 complete", ["P106.1", "P106.2", "P106.3", "P106.4", "P106.5"].every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("contract keeps P106.6 planned", subphaseById.get("P106.6")?.status === "planned");
+addCheck("contract keeps P106.6 planned or complete", ["planned", "complete"].includes(subphaseById.get("P106.6")?.status));
 addCheck("contract records aggregate validation commands", ["npm run check:p1065-founder-live-approval-request-validation", "cd dashboard && npm run build", "npm run check:phase-validation-coverage"].every((command) => p1065.validationCommands?.includes(command)));
 addCheck("P106.5 avoids forbidden file scope", !(p1065.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("dashboard data and page still expose queue UX", dataSource.includes("founderLiveApprovalRequestQueuePreview") && pageSource.includes("FounderLiveApprovalRequestQueuePreviewCard"));
@@ -66,8 +66,8 @@ addCheck("queue unsafe counts remain zero", queue.submittableQueuedRequestCount 
 addCheck("queue rows remain blocked", queue.queueRows?.every((row) => row.approvalRequestSubmitted === "Blocked" && row.approvalCaptured === "Blocked" && row.approvalPersisted === "Blocked" && row.executionUnlockAllowed === "Blocked" && row.runtimeAdmissionAllowed === "Blocked"));
 addCheck("chat and lite stay clean in source", !pageSource.includes("Chat Approval Request Queue") && !pageSource.includes("Lite Approval Request Queue"));
 addCheck("docs record P106.5", /P106\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P106.5", /P106\.5 is\s+complete/.test(platformRoadmap) && /P106\.6 is\s+next/.test(platformRoadmap));
-addCheck("README records P106.5", /P106\.5 aggregate validation/.test(readme) && /P106\.6 is\s+next/.test(readme));
+addCheck("platform roadmap records P106.5", /P106\.5 is\s+complete/.test(platformRoadmap) && (/P106\.6 is\s+next/.test(platformRoadmap) || /P106\.6 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P106.5", /P106\.5 aggregate validation/.test(readme) && (/P106\.6 is\s+next/.test(readme) || /P106\.6 docs closure/.test(readme)));
 addCheck(
   "phase status advanced",
   ["P106.5", "P106.6", "P106.7"].includes(status.currentPhase)
@@ -75,7 +75,7 @@ addCheck(
     && ["P106.6", "P106.7", "P107"].includes(status.nextPhase)
     && ["in_progress", "complete"].includes(statusById.get("P106")?.status)
     && statusById.get("P106.5")?.status === "complete"
-    && statusById.get("P106.6")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P106.6")?.status)
     && roadmapById.get("P106.5")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

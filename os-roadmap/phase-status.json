@@ -12964,14 +12964,13 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bbd59a53",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P106 has aggregate validation across the approval request boundary schema, request model, queue preview, Command Center UX, focused route test, dashboard build, docs, reports, status, and safety wording. Runtime authority remains blocked.",
+      "summary": "P106 docs and roadmap closure is complete across README, platform roadmap, P106 plan, contract, reports, and phase status while approval request and execution authority remain blocked.",
       "checksRun": [
+        "npm run check:p1066-founder-live-approval-request-docs",
         "npm run check:p1065-founder-live-approval-request-validation",
         "npm run check:p1064-command-center-approval-request-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval request queue appears on non-chat founder routes\"",
-        "cd dashboard && npm run build",
         "npm run check:p1063-founder-live-approval-request-queue-preview",
         "npm run check:p1062-founder-live-approval-request-model",
         "npm run check:p1061-founder-live-approval-request-boundary-contract",
@@ -12980,14 +12979,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P106.5 is validation only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
+        "P106.6 is docs/checker only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P106.6-P106.7 remain planned."
+        "P106.7 remains planned."
       ],
-      "nextPhase": "P106.6",
+      "nextPhase": "P106.7",
       "commandCenterVisible": true,
       "label": "Approval Request Boundary",
-      "detail": "P106.5 aggregate validation complete; docs closure is next."
+      "detail": "P106.6 docs closure complete; final validation is next."
     },
     {
       "phaseId": "P106.1",
@@ -13139,19 +13138,31 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 142.6,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned P106 docs and roadmap closure.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T09:35:00.000Z",
+      "summary": "Closed P106 docs, README, platform roadmap, contract, reports, and OS phase status evidence without behavior changes while preserving blocked approval request and execution authority.",
+      "checksRun": [
+        "npm run check:p1066-founder-live-approval-request-docs",
+        "npm run check:p1065-founder-live-approval-request-validation",
+        "npm run check:p1064-command-center-approval-request-ux",
+        "npm run check:p1063-founder-live-approval-request-queue-preview",
+        "npm run check:p1062-founder-live-approval-request-model",
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no runtime behavior enabled."
+        "P106.6 is docs/checker only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P106.7 remains planned."
       ],
       "nextPhase": "P106.7",
       "commandCenterVisible": true,
-      "label": "Docs",
-      "detail": "Planned docs closure."
+      "label": "Docs Closure",
+      "detail": "P106 docs closure complete; final validation remains."
     },
     {
       "phaseId": "P106.7",
@@ -13654,9 +13665,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T09:20:00.000Z",
-  "currentPhase": "P106.5",
-  "previousPhase": "P106.4",
-  "nextPhase": "P106.6",
+  "updatedAt": "2026-05-28T09:35:00.000Z",
+  "currentPhase": "P106.6",
+  "previousPhase": "P106.5",
+  "nextPhase": "P106.7",
   "currentPhaseStatus": "complete"
 }

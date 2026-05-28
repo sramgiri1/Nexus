@@ -583,13 +583,31 @@
     {
       "phaseId": "P106.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
-      "scopeClassification": "DOCS_CHANGE",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Close P106 docs, README, platform roadmap, and phase status evidence without behavior changes.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json",
+        "docs/architecture/P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1066-founder-live-approval-request-docs.js",
+        "scripts/check-p1065-founder-live-approval-request-validation.js",
+        "scripts/check-p1061-founder-live-approval-request-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1066-founder-live-approval-request-docs-report.md",
+        "reports/p1065-founder-live-approval-request-validation-report.md",
+        "reports/p1061-founder-live-approval-request-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -599,9 +617,72 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": [],
+      "validationCommands": [
+        "npm run check:p1066-founder-live-approval-request-docs",
+        "npm run check:p1065-founder-live-approval-request-validation",
+        "npm run check:p1064-command-center-approval-request-ux",
+        "npm run check:p1063-founder-live-approval-request-queue-preview",
+        "npm run check:p1062-founder-live-approval-request-model",
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm docs do not imply live execution is enabled."
+        "Confirm P106.6 is docs/checker only.",
+        "Confirm docs do not overstate approval request submission/capture/persistence or execution readiness.",
+        "Confirm unsafe execution remains blocked.",
+        "Confirm P106.7 remains planned.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "68fae29a",
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json",
+        "docs/architecture/P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1066-founder-live-approval-request-docs.js",
+        "scripts/check-p1065-founder-live-approval-request-validation.js",
+        "scripts/check-p1061-founder-live-approval-request-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "docsReport": "Markdown docs closure report covering P106 plan, contract, README, platform roadmap, blocked safety wording, Command Center placement, phase status, and forbidden file scope.",
+        "checker": "check:p1066-founder-live-approval-request-docs validates docs and roadmap closure without behavior changes."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P106.6. Preserve P106.4 queue card placement and chat-only boundaries.",
+      "themeRequirements": "No theme source change in P106.6.",
+      "playwrightTests": "No Playwright update in P106.6 because no UI files change. Retain P106.4 focused route coverage for final validation.",
+      "checkerUpdates": [
+        "Add check:p1066-founder-live-approval-request-docs.",
+        "Update P106.1 and P106.5 checkers to accept the P106.6 handoff state."
+      ],
+      "docsRoadmap": "Close P106 docs, README, platform roadmap, and OS phase status with P106.6 complete and P106.7 next.",
+      "phaseStatusUpdate": "P106 in progress; P106.6 complete; current P106.6; previous P106.5; next P106.7.",
+      "gitCommands": [
+        "git add <allowed P106.6 files>",
+        "git commit -m \"docs(nexus): close founder approval request docs\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ]
     },
     {
@@ -638,7 +719,7 @@
     "P106.2-P106.7 remain planned."
   ],
   "knownRisks": [
-    "P106.1-P106.5 are local/display/validation-only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
-    "P106.6-P106.7 remain planned."
+    "P106.1-P106.6 are local/display/validation/docs-only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P106.7 remains planned."
   ]
 }

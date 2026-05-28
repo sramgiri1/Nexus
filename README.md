@@ -274,6 +274,14 @@ The Command Center and local operator surface have:
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package, network calls, and provider spend remain
   blocked. P106.6 is next.
+- P106.6 docs closure: README, platform roadmap, P106 plan, contract, reports,
+  and phase status now record the approval request boundary, deterministic
+  request model, local queue preview, Command Center queue placement on Business
+  Build, Agent Flow, and Live Readiness, Chat with NEXUS and Lite chat-only
+  boundaries, blocked approval request submission/capture/persistence/writes,
+  blocked execution unlock, blocked runtime admission, and blocked provider,
+  dispatch, worker/tool, project, hosted DB, deploy, package, network, and spend
+  paths. P106.7 is next.
 
 ## CareLoop Project Progress
 
