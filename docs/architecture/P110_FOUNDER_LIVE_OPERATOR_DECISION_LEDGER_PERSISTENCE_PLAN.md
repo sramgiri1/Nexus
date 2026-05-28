@@ -570,9 +570,99 @@ and keep P110.1-P110.5 implementation unchanged.
 
 ## P110.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: run final P110 validation and hand off to the next planned phase
 without enabling non-scoped unsafe authority. Final validation must not leave
 stale phase status, stale pending commit placeholders, project file changes, or
 fake live claims.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `6dd6aaa0`.
+
+Allowed files: P110.7 final checker, P110.5/P110.6 compatibility checkers,
+OS phase checker, P110 contract, P110 plan, platform roadmap, README, package
+script registry, OS phase status files, and generated P110.7, P110.6, P110.5,
+OS status, and phase coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`, and
+`local-state/runtime/**`.
+
+Exact files/modules changed: added the P110.7 final validation checker,
+registered `check:p1107-founder-live-operator-decision-ledger-persistence-final`,
+updated P110.5/P110.6 handoff compatibility checks, updated the OS phase
+checker to accept the planned P111 placeholder, closed P110 contract/status
+tracking, and updated README/platform roadmap/P110 docs.
+
+Expected exports/data shapes: P110.7 exports no runtime API and adds no DB
+schema. It produces a markdown final validation report and records a planned
+P111 OS handoff placeholder with the standard phase fields: `phaseId`, `title`,
+`status`, `branch`, `commit`, `completedAt`, `summary`, `checksRun`,
+`knownLimitations`, `nextPhase`, and `commandCenterVisible`.
+
+Safety rules: P110.7 is checker/status/docs/report final validation only. It
+does not change Command Center source, call providers/models, dispatch agents,
+run workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy,
+release, export, package, call networks, or spend. Approved local SQLite CRUD
+remains limited to the P110 operator decision ledger persistence contract.
+
+Reuse check: P110.7 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P110 data/view models, existing OS
+phase status files, existing route evidence, and the existing dashboard build.
+No report writer, status updater, formatter, redaction helper, route matrix, UI
+component, or DB helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P110.7. The
+final checker preserves P110.4 persistence UX on Business Build, Agent Flow,
+Live Readiness, and DB Runtime while Chat with NEXUS and Lite stay clean.
+
+Dark/light/system theme requirements: no theme source change in P110.7. Theme
+coverage remains owned by existing P110.4/P110.5 route evidence and dashboard
+build validation.
+
+Playwright tests: no new Playwright test in P110.7 because no UI source changes
+are made. The final checker verifies the existing focused P110.4 Playwright
+route coverage remains present.
+
+Checker updates: P110.7 adds a dedicated final checker and updates P110.5 and
+P110.6 checkers to accept the final P110.7/P111 handoff state.
+
+Docs/README/roadmap updates: P110.7 is recorded in this plan, README, platform
+roadmap, P110 contract, OS roadmap/status, and generated reports. P110 is
+complete and P111 is next.
+
+OS phase status update: P110 is complete; P110.7 is complete; current phase
+P110.7; previous P110.6; next P111; P111 is a planned placeholder for founder
+live agent work order persistence.
+
+Validation commands:
+- `npm run check:p1107-founder-live-operator-decision-ledger-persistence-final`
+- `npm run check:p1106-founder-live-operator-decision-ledger-persistence-docs`
+- `npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden paths changed; no DemoApp exposure; no raw
+JSON/log/policy dumps; no raw private project IDs in primary UX; no fake
+runnable actions; no hosted DB mutation, raw SQL, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P110.7 files>`
+- `git commit -m "test(nexus): close decision ledger persistence final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: final closure can accidentally reference P111 without a status
+placeholder, or docs wording can imply unsafe live execution. The P110.7 final
+checker guards both risks.
+
+Rollback plan: remove the P110.7 checker/script/docs/status/report updates,
+restore P110 to in progress at P110.6 with P110.7 next, remove the P111
+placeholder, and keep P110.1-P110.6 implementation unchanged.

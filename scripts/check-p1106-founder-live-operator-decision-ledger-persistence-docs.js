@@ -87,24 +87,30 @@ addCheck("P110.1-P110.5 are complete", ["P110.1", "P110.2", "P110.3", "P110.4", 
 addCheck("P110.6 contract is complete", p1106.status === "complete" && ["planned", "complete"].includes(p1107.status));
 addCheck("P110.6 records validation commands", validationCommands.every((command) => p1106.validationCommands?.includes(command)));
 addCheck("prior reports exist and pass", reportPaths.every((report) => existsSync(join(ROOT, report)) && /Result[\s\S]*PASS/.test(readText(report))));
-addCheck("P110 plan records statuses", ["P110.1", "P110.2", "P110.3", "P110.4", "P110.5", "P110.6"].every((phaseId) => new RegExp(`${phaseId.replace(".", "\\.")}[\\s\\S]*Status:\\s+complete`).test(plan)) && /P110\.7 Final Validation[\s\S]*Status:\s+planned/.test(plan));
-addCheck("README records P110.6", /P110\.6 docs and roadmap closure/.test(readme) && /P110\.7\s+is next/.test(readme));
-addCheck("platform roadmap records P110.6", /P110\.6 is\s+complete/.test(platformRoadmap) && /P110\.7\s+is next/.test(platformRoadmap));
+addCheck("P110 plan records statuses", ["P110.1", "P110.2", "P110.3", "P110.4", "P110.5", "P110.6"].every((phaseId) => new RegExp(`${phaseId.replace(".", "\\.")}[\\s\\S]*Status:\\s+complete`).test(plan)) && /P110\.7 Final Validation[\s\S]*Status:\s+(planned|complete)/.test(plan));
+addCheck("README records P110.6", /P110\.6 docs and roadmap closure/.test(readme) && (/P110\.7\s+is next/.test(readme) || /P110\.7 final validation/.test(readme)));
+addCheck("platform roadmap records P110.6", /P110\.6 is\s+complete/.test(platformRoadmap) && (/P110\.7\s+is next/.test(platformRoadmap) || /P110\.7 is\s+complete/.test(platformRoadmap)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P110.6"
-    && status.previousPhase === "P110.5"
-    && status.nextPhase === "P110.7"
-    && statusById.get("P110")?.status === "in_progress"
+  ((status.currentPhase === "P110.6"
+      && status.previousPhase === "P110.5"
+      && status.nextPhase === "P110.7"
+      && roadmap.currentPhase === "P110.6"
+      && roadmap.previousPhase === "P110.5"
+      && roadmap.nextPhase === "P110.7")
+    || (status.currentPhase === "P110.7"
+      && status.previousPhase === "P110.6"
+      && status.nextPhase === "P111"
+      && roadmap.currentPhase === "P110.7"
+      && roadmap.previousPhase === "P110.6"
+      && roadmap.nextPhase === "P111"))
+    && ["in_progress", "complete"].includes(statusById.get("P110")?.status)
     && statusById.get("P110.6")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P110.7")?.status)
-    && roadmap.currentPhase === "P110.6"
-    && roadmap.previousPhase === "P110.5"
-    && roadmap.nextPhase === "P110.7"
     && roadmapById.get("P110.6")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P110.5 checker accepts P110.6 handoff", p1105Checker.includes("P110.6") && p1105Checker.includes("P110.7"));
+addCheck("P110.5 checker accepts P110.6 and final handoff", p1105Checker.includes("P110.6") && p1105Checker.includes("P110.7") && p1105Checker.includes("P111"));
 addCheck("changed files avoid forbidden scope", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 addCheck("docs avoid raw private IDs", !/(?:private|token|tenant|workspace|project|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid raw DB entity names in primary prose", !/operator_decision_ledger_entries|operator_decision_ledger_events|operator_decision_ledger_evidence_refs/.test(`${platformRoadmap}\n${readme}`));
@@ -121,7 +127,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates P110.6 docs and roadmap closure evidence.",
-        "- Confirms P110.1-P110.5 remain complete, P110.6 is complete, P110.7 is next, docs/status/report evidence is current, and unsafe authority claims remain blocked.",
+        "- Confirms P110.1-P110.5 remain complete, P110.6 is complete, P110.7 is next or complete, docs/status/report evidence is current, and unsafe authority claims remain blocked.",
         "- Does not change runtime behavior, Command Center source, project files, hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },

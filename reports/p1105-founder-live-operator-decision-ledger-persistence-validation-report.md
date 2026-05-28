@@ -3,15 +3,16 @@
 ## Metadata
 
 - Phase: P110.5
-- Generated at: 2026-05-28T21:57:22.698Z
+- Generated at: 2026-05-28T22:05:09.193Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e02e3291
+- Validation HEAD: 6dd6aaa0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Validates aggregate P110.1-P110.4 decision-ledger persistence evidence.
 - Confirms contract, schema, governed local CRUD model, Command Center persistence UX, route safety, docs/status, and reports are present.
+- Accepts the P110.5/P110.6, P110.6/P110.7, and P110.7/P111 status handoff states during final closure.
 - Does not add runtime behavior, mutation controls, hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, or spend.
 ## Checks
 
@@ -30,7 +31,7 @@
 | focused Playwright route test is present | PASS |  |
 | dashboard model stays browser safe | PASS |  |
 | compatibility checkers accept P110.5 | PASS |  |
-| phase status advanced | PASS | P110.6/P110.5/P110.7 |
+| phase status advanced | PASS | P110.7/P110.6/P111 |
 | docs record P110.5 | PASS |  |
 | README records P110.5 | PASS |  |
 | platform roadmap records P110.5 | PASS |  |

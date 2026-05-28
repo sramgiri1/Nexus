@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P110.6
-- Generated at: 2026-05-28T21:57:22.361Z
+- Generated at: 2026-05-28T22:05:08.900Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e02e3291
+- Validation HEAD: 6dd6aaa0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Validates P110.6 docs and roadmap closure evidence.
-- Confirms P110.1-P110.5 remain complete, P110.6 is complete, P110.7 is next, docs/status/report evidence is current, and unsafe authority claims remain blocked.
+- Confirms P110.1-P110.5 remain complete, P110.6 is complete, P110.7 is next or complete, docs/status/report evidence is current, and unsafe authority claims remain blocked.
 - Does not change runtime behavior, Command Center source, project files, hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, or spend.
 ## Checks
 
@@ -25,9 +25,9 @@
 | P110 plan records statuses | PASS |  |
 | README records P110.6 | PASS |  |
 | platform roadmap records P110.6 | PASS |  |
-| phase status advanced | PASS | P110.6/P110.5/P110.7 |
-| P110.5 checker accepts P110.6 handoff | PASS |  |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P110.7/P110.6/P111 |
+| P110.5 checker accepts P110.6 and final handoff | PASS |  |
+| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1105-founder-live-operator-decision-ledger-persistence-validation.js, scripts/check-p1106-founder-live-operator-decision-ledger-persistence-docs.js, reports/p1107-founder-live-operator-decision-ledger-persistence-final-report.md, scripts/check-p1107-founder-live-operator-decision-ledger-persistence-final.js |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw DB entity names in primary prose | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |

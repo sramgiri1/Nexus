@@ -125,10 +125,17 @@ addCheck(
       && status.nextPhase === "P110.7"
       && roadmap.currentPhase === "P110.6"
       && roadmap.previousPhase === "P110.5"
-      && roadmap.nextPhase === "P110.7"))
-    && statusById.get("P110")?.status === "in_progress"
+      && roadmap.nextPhase === "P110.7")
+    || (status.currentPhase === "P110.7"
+      && status.previousPhase === "P110.6"
+      && status.nextPhase === "P111"
+      && roadmap.currentPhase === "P110.7"
+      && roadmap.previousPhase === "P110.6"
+      && roadmap.nextPhase === "P111"))
+    && ["in_progress", "complete"].includes(statusById.get("P110")?.status)
     && statusById.get("P110.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P110.6")?.status)
+    && ["planned", "complete"].includes(statusById.get("P110.7")?.status)
     && roadmapById.get("P110.5")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
@@ -152,6 +159,7 @@ writeMarkdownReport(
       body: [
         "- Validates aggregate P110.1-P110.4 decision-ledger persistence evidence.",
         "- Confirms contract, schema, governed local CRUD model, Command Center persistence UX, route safety, docs/status, and reports are present.",
+        "- Accepts the P110.5/P110.6, P110.6/P110.7, and P110.7/P111 status handoff states during final closure.",
         "- Does not add runtime behavior, mutation controls, hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
