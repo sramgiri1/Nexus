@@ -12494,7 +12494,7 @@
       "order": 140,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c4857228",
       "completedAt": "",
       "summary": "P104 is in progress. P104.3 built deterministic local execution-boundary rows from P103 work admissions and the P104.2 schema.",
       "checksRun": [
@@ -12576,7 +12576,7 @@
       "order": 140.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c4857228",
       "completedAt": "2026-05-28T00:58:37.510Z",
       "summary": "Built deterministic local execution-boundary rows from P103 work admissions and P104.2 schema with evidence gaps, validation commands, blockers, owner, evidence/activity, cost posture, and all execution flags false.",
       "checksRun": [
