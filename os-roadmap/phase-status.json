@@ -13917,7 +13917,7 @@
       "order": 146,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f210def8",
       "completedAt": "",
       "summary": "P110 is in progress. P110.1-P110.4 now define governed local SQLite persistence contracts, schema, approval-gated local CRUD, and display-safe Command Center persistence UX for operator decision ledger records while unsafe authority remains blocked.",
       "checksRun": [
@@ -14033,7 +14033,7 @@
       "order": 146.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f210def8",
       "completedAt": "2026-05-28T21:41:56.000Z",
       "summary": "Rendered display-safe decision-ledger persistence state across Business Build, Agent Flow, Live Readiness, and Database DB Runtime while keeping Chat with NEXUS and Lite clean and avoiding browser imports of Node SQLite modules.",
       "checksRun": [
