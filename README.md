@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P103.6
+## Current Status Through P104.1
 
-P41.5 through P103.6 are complete. The current NEXUS OS focus has moved from
+P41.5 through P104.1 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
@@ -163,14 +163,21 @@ The Command Center and local operator surface have:
   remain blocked.
 - P103 founder live work admission: local work admission model, non-runnable
   approval evidence envelope, Command Center Founder Live Work Admission UX,
-  aggregate validation, and docs/roadmap readiness are complete through P103.6.
-  Command Center Lite, Business Build, Agent Flow, and Live Readiness show work
-  admission rows, approval gates, missing evidence, validation commands,
-  blockers, disabled reason, owner capability, evidence/activity, and cost
-  posture. Approval and executable counts remain `0`; provider/model calls,
-  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  aggregate validation, docs/roadmap readiness, and final validation are
+  complete. Business Build, Agent Flow, and Live Readiness show work admission
+  rows, approval gates, missing evidence, validation commands, blockers,
+  disabled reason, owner capability, evidence/activity, and cost posture.
+  Approval and executable counts remain `0`; provider/model calls, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package creation, network calls, and provider spend
-  remain blocked. P103.7 is next for final validation and handoff to P104.
+  remain blocked.
+- P104.1 founder chat surface consolidation: Chat with NEXUS is now focused on
+  the chat thread, founder message composer, Send/Reset controls, prompt
+  starters, answered/missing count, and a short planning-only safety note. PRD,
+  DB, persistence, live-use, handoff, work-admission, execution-admission, task
+  board, and agent detail now stay on their corresponding Business Build,
+  Agent Flow, Database, and Live Readiness pages. P104.2 is next for the
+  execution-boundary schema.
 
 ## CareLoop Project Progress
 

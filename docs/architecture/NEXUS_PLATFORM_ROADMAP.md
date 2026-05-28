@@ -2306,6 +2306,27 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 deploy, release, export, package creation, network calls, and provider spend.
 P104 is next and must receive its own NEXUS Execution Contract before coding.
 
+## P104 - Founder Live Execution Boundary
+
+P104 begins after P103 founder live work admission. It keeps Chat with NEXUS
+clean and founder-focused while the platform prepares a governed execution
+boundary for later phases. P104 does not enable provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
+release, export, package creation, network calls, or provider spend.
+P104.1 is complete. It consolidates `/command-center` and
+`/command-center/lite` into a chat-only surface with the founder thread,
+message composer, Send/Reset controls, prompt starters, answered/missing count,
+and a short planning-only note. PRD, DB, persistence, live-use, handoff,
+work-admission, execution-admission, task board, and agent-flow details remain
+on Business Build, Agent Flow, Database, Live Readiness, and the other
+corresponding pages. P104.2 is next for execution-boundary schema definition.
+
+Implementation follows
+[`p104-founder-live-execution-boundary-contracts.json`](../../contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json).
+
+The detailed plan lives in
+[`P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`](P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md).
+
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
 

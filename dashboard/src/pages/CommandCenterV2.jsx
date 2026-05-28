@@ -99,8 +99,6 @@ import {
   appendFounderQnaTurn,
   resetFounderQnaTurnState,
 } from "../../../live-ready/enterpriseFounderQnaTurnState.js";
-import { buildFounderPrdReviewGate } from "../../../live-ready/enterpriseFounderPrdReviewGate.js";
-import { buildFounderTaskBoardAdmission } from "../../../live-ready/enterpriseFounderTaskBoardAdmission.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -3154,12 +3152,6 @@ function FounderPersistenceControlsCard({ controls }) {
 function CommandCenterLitePage() {
   const [envelope, setEnvelope] = useState(getStoredLiteQnaState);
   const [draftMessage, setDraftMessage] = useState("");
-  const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
-  const prdReview = buildFounderPrdReviewGate({ qnaState: envelope }).data;
-  const taskBoard = buildFounderTaskBoardAdmission({ qnaState: envelope, prdReview }).data;
-  const liteFounderDbWorkflow = buildFounderRuntimeDbViewModel(envelope.founderIdeaSummary);
-  const liteFounderPersistenceControls = buildFounderPersistenceControlsViewModel(liteFounderDbWorkflow);
-  const liteBusinessBuild = buildBusinessBuildViewModel(envelope.founderIdeaSummary);
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
@@ -3189,38 +3181,18 @@ function CommandCenterLitePage() {
     <div className="ccv2-content ccv2-lite-page">
       <div className="ccv2-page-head">
         <div className="ccv2-page-head__title">Chat with NEXUS</div>
-        <div className="ccv2-page-head__sub">Describe the idea, send it to NEXUS, and review the PRD and agent plan it forms.</div>
-      </div>
-      <div className="ccv2-lite-hero">
-        <div>
-          <h1>Chat with NEXUS and watch the agent plan form.</h1>
-          <p>
-            NEXUS responds to the submitted idea, drafts a local PRD, and maps the work to agent lanes before any execution is allowed.
-          </p>
-        </div>
+        <div className="ccv2-page-head__sub">Describe the idea, answer NEXUS questions, and keep the conversation focused.</div>
       </div>
 
-      <section className="ccv2-card ccv2-lite-workflow" aria-label="Founder workflow summary">
-        <div>
-          <span>Chat</span>
-          <strong>{envelope.turns.length} messages captured</strong>
-        </div>
-        <div>
-          <span>PRD review</span>
-          <strong>{prdReview.reviewState}</strong>
-        </div>
-        <div>
-          <span>Agent work</span>
-          <strong>{taskBoard.boardState}</strong>
-        </div>
-        <div>
-          <span>Next</span>
-          <strong>{taskBoard.nextAction}</strong>
-        </div>
-      </section>
-
-      <div className="ccv2-lite-layout">
+      <div className="ccv2-lite-layout ccv2-lite-layout--chat-only">
         <section className="ccv2-card ccv2-lite-chat" aria-label="Chat with NEXUS">
+          <div className="ccv2-card-header-row">
+            <div>
+              <div className="ccv2-eyebrow">Founder Chat</div>
+              <h3>Talk to NEXUS</h3>
+            </div>
+            <span className="ccv2-pill ccv2-pill--teal">{envelope.answeredFields.length} answered</span>
+          </div>
           <div className="ccv2-lite-chat__thread">
             {envelope.turns.map((turn) => (
               <div className={`ccv2-lite-message ccv2-lite-message--${turn.speaker}`} key={`${turn.turnNumber}-${turn.speaker}`}>
@@ -3263,166 +3235,8 @@ function CommandCenterLitePage() {
             Planning only: NEXUS will not call providers, dispatch agents, write project files, use hosted DBs, deploy, package, or spend. Local SQLite founder records require explicit approval and write flags.
           </div>
         </section>
-
-        <aside className="ccv2-lite-side">
-          <section className="ccv2-card ccv2-lite-prd" aria-label="Local PRD readiness">
-            <div className="ccv2-card-header-row">
-              <div>
-                <div className="ccv2-eyebrow">What NEXUS Understands</div>
-                <h3>PRD draft</h3>
-              </div>
-            </div>
-            <div className="ccv2-lite-prd__fields">
-              {primaryFields.map(([field, value]) => (
-                <div key={field}>
-                  <span>{formatLiteFieldLabel(field)}</span>
-                  <strong>{value}</strong>
-                </div>
-              ))}
-            </div>
-            <div className="ccv2-lite-next">
-              <span>Next</span>
-              <strong>{envelope.prdDraft.nextAction}</strong>
-            </div>
-            <div className="ccv2-lite-next">
-              <span>Missing</span>
-              <strong>{envelope.missingFields.length ? envelope.missingFields.map(formatLiteFieldLabel).join(", ") : "Ready for PRD review"}</strong>
-            </div>
-          </section>
-          <section className="ccv2-card ccv2-lite-prd" aria-label="Founder DB workflow">
-            <div className="ccv2-card-header-row">
-              <div>
-                <div className="ccv2-eyebrow">Founder DB Workflow</div>
-                <h3>Saved local state</h3>
-              </div>
-              <span className="ccv2-pill ccv2-pill--teal">DB-ready</span>
-            </div>
-            <div className="ccv2-lite-prd__fields">
-              <div>
-                <span>Session</span>
-                <strong>{liteFounderDbWorkflow.savedSessionState}</strong>
-              </div>
-              <div>
-                <span>PRD</span>
-                <strong>{liteFounderDbWorkflow.prdReadiness} ready</strong>
-              </div>
-              <div>
-                <span>Workstreams</span>
-                <strong>{liteFounderDbWorkflow.lanes.length} local records</strong>
-              </div>
-            </div>
-            <div className="ccv2-lite-next">
-              <span>Next question</span>
-              <strong>{liteFounderDbWorkflow.nextQuestion}</strong>
-            </div>
-            <div className="ccv2-lite-next">
-              <span>Blocked</span>
-              <strong>{liteFounderDbWorkflow.blockers[0]}</strong>
-            </div>
-            <div className="ccv2-muted" style={{ marginTop: 10 }}>{liteFounderDbWorkflow.costImpact}</div>
-          </section>
-          <BusinessBuildDbCrudCard crud={liteBusinessBuild.businessBuildDbCrud} surfaceLabel="Lite Business Build DB workflow" />
-          <LiveWorkstreamHandoffCard
-            handoff={liteBusinessBuild.liveWorkstreamHandoff}
-            dryRun={liteBusinessBuild.liveWorkstreamHandoffDryRun}
-            surfaceLabel="Lite Live Workstream Handoff"
-          />
-          <ExecutionAdmissionCard
-            admission={liteBusinessBuild.executionAdmission}
-            envelope={liteBusinessBuild.executionAdmissionApprovalEnvelope}
-            dryRun={liteBusinessBuild.executionAdmissionDryRun}
-            surfaceLabel="Lite Execution Admission"
-          />
-          <FounderLiveUseReviewCard
-            readiness={liteBusinessBuild.founderLiveUseReadiness}
-            review={liteBusinessBuild.founderLiveUseReview}
-            surfaceLabel="Lite Founder Live Use"
-          />
-          <FounderLiveHandoffCard
-            manifest={liteBusinessBuild.founderLiveHandoffManifest}
-            workOrders={liteBusinessBuild.founderLiveHandoffWorkOrders}
-            surfaceLabel="Lite Founder Live Handoff"
-          />
-          <FounderLiveWorkAdmissionCard
-            admission={liteBusinessBuild.founderLiveWorkAdmission}
-            approval={liteBusinessBuild.founderLiveWorkAdmissionApproval}
-            surfaceLabel="Lite Founder Work Admission"
-          />
-          <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
-          <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
-            <div className="ccv2-card-header-row">
-              <div>
-                <div className="ccv2-eyebrow">PRD Review</div>
-                <h3>{prdReview.versionLabel}</h3>
-              </div>
-              <span className="ccv2-pill ccv2-pill--disabled">Local gate</span>
-            </div>
-            <div className="ccv2-lite-prd__fields">
-              <div>
-                <span>Review state</span>
-                <strong>{prdReview.reviewState}</strong>
-              </div>
-              <div>
-                <span>Founder decision</span>
-                <strong>{formatLiteFieldLabel(prdReview.founderDecision)}</strong>
-              </div>
-              <div>
-                <span>Blocked next</span>
-                <strong>{prdReview.downstreamPlanningAllowed ? "Ready for task-board admission" : prdReview.blockers[0]}</strong>
-              </div>
-            </div>
-            <div className="ccv2-lite-next">
-              <span>Next decision</span>
-              <strong>{prdReview.nextAction}</strong>
-            </div>
-          </section>
-        </aside>
       </div>
-
-      <AgentFlowPanel envelope={envelope} />
-      <LocalTaskBoardPanel taskBoard={taskBoard} />
     </div>
-  );
-}
-
-function LocalTaskBoardPanel({ taskBoard }) {
-  return (
-    <section className="ccv2-card ccv2-agent-flow" aria-label="Local agent task board">
-      <div className="ccv2-card-header-row">
-        <div>
-          <div className="ccv2-eyebrow">Local Task Board</div>
-          <h3>How NEXUS will assign the work</h3>
-          <div className="ccv2-muted" style={{ marginTop: 6 }}>
-            {taskBoard.boardState} · {taskBoard.taskCount} planned tasks
-          </div>
-        </div>
-        <span className="ccv2-pill ccv2-pill--disabled">Dispatch blocked</span>
-      </div>
-      <div className="ccv2-agent-flow__rail">
-        {taskBoard.tasks.map((task) => (
-          <div className="ccv2-agent-flow__node" key={task.title}>
-            <div className="ccv2-agent-flow__step">{task.taskNumber}</div>
-            <div className="ccv2-agent-flow__body">
-              <div className="ccv2-agent-flow__lane">{task.title}</div>
-              <div className="ccv2-agent-flow__owner">{task.ownerCapability}</div>
-              <div className="ccv2-agent-flow__state">{task.state}</div>
-              <div className="ccv2-agent-flow__next">{task.nextInput}</div>
-              <div className="ccv2-agent-flow__blocker">{task.blocker}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="ccv2-agent-flow__footer">
-        <div>
-          <span>Next</span>
-          <strong>{taskBoard.nextAction}</strong>
-        </div>
-        <div>
-          <span>Disabled</span>
-          <strong>{taskBoard.disabledReason}</strong>
-        </div>
-      </div>
-    </section>
   );
 }
 

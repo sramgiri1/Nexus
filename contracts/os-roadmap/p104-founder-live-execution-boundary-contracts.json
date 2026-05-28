@@ -1,0 +1,191 @@
+{
+  "phaseId": "P104",
+  "title": "Founder Live Execution Boundary",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Keep the founder chat surface clean while defining the next governed boundary between local founder planning and future live execution authority.",
+  "safetyRules": [
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project source mutation.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No raw private project IDs in primary Command Center UX.",
+    "No full Command Center demo leakage.",
+    "No fake runnable actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/checkResultFormatter.js",
+    "shared/resultEnvelope.js",
+    "shared/redaction.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "existing dashboard route matrix",
+    "existing dashboard cards, tabs, badges, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P104.1",
+      "title": "Chat Surface Consolidation",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Make Chat with NEXUS a clean chat-only route and move PRD, DB, live-use, handoff, work-admission, and agent-flow detail back to dedicated pages.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "8fa8fafe",
+      "allowedFiles": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1041-chat-surface-consolidation.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1041-chat-surface-consolidation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1041-chat-surface-consolidation.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "uiShape": "Chat route renders only Chat with NEXUS, founder message textarea, Send, Reset, prompt starters, answered/missing count, and a short planning-only safety note.",
+        "removedFromChat": [
+          "Local PRD readiness",
+          "Local PRD review gate",
+          "Local agent task board",
+          "Founder workflow summary",
+          "Founder DB workflow",
+          "Business Build DB CRUD",
+          "Live workstream handoff",
+          "Execution admission readiness",
+          "Founder live use readiness",
+          "Founder live handoff",
+          "Founder live work admission",
+          "Founder persistence controls",
+          "Agent action flow"
+        ]
+      },
+      "commandCenterUxRequirements": "The Chat with NEXUS route must stay focused on chat only. PRD, DB, work admission, live-use, handoff, execution admission, persistence, and agent detail must remain on Business Build, Agent Flow, Live Readiness, Database, or other corresponding pages.",
+      "themeRequirements": "Preserve existing dark, light, and system theme behavior. Do not introduce theme-specific layout forks.",
+      "playwrightTests": "Update route tests so Chat asserts non-chat panels are absent, while dedicated route tests continue covering the moved panels.",
+      "checkerUpdates": [
+        "Add check:p1041-chat-surface-consolidation.",
+        "Update check:os-phase-status to accept P104.1-P104.7."
+      ],
+      "docsRoadmap": "Document P104.1 complete, P104 in progress, and P104.2 next.",
+      "phaseStatusUpdate": "P104 in progress; P104.1 complete; current P104.1; previous P103.7; next P104.2.",
+      "validationCommands": [
+        "npm run check:p1041-chat-surface-consolidation",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders interactive founder chat|Command Center Lite route stays chat-only|Founder DB workflow appears in Business Build and DB Runtime|Business Build DB CRUD state appears in Business Build, Agent Flow, and DB Runtime|Founder live work admission appears across founder routes|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm Chat contains only chat-specific UI.",
+        "Confirm dedicated pages still expose PRD, DB, agent, and live-work detail.",
+        "Confirm no project files changed.",
+        "Confirm unsafe execution remains blocked.",
+        "Confirm no raw private IDs, raw JSON, raw logs, raw policy dumps, or full Command Center demo leakage."
+      ],
+      "gitCommands": [
+        "git add <allowed P104.1 files>",
+        "git commit -m \"feat(nexus): clean founder chat surface\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Chat UX cleanup",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Dashboard build",
+        "Docs/roadmap",
+        "OS status",
+        "Safety confirmations",
+        "Forbidden paths",
+        "Known limitations",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P104.2",
+      "title": "Execution Boundary Schema",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define local execution-boundary records and approval predicates without enabling execution."
+    },
+    {
+      "phaseId": "P104.3",
+      "title": "Execution Boundary Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build deterministic local execution-boundary state from P103 work admissions."
+    },
+    {
+      "phaseId": "P104.4",
+      "title": "Execution Boundary Command Center UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Render execution-boundary readiness on the appropriate non-chat pages without runnable controls."
+    },
+    {
+      "phaseId": "P104.5",
+      "title": "Execution Boundary Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add aggregate checker and Playwright coverage for execution-boundary behavior."
+    },
+    {
+      "phaseId": "P104.6",
+      "title": "Execution Boundary Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Document the P104 execution boundary and update roadmap/readme/status evidence."
+    },
+    {
+      "phaseId": "P104.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P104 validation, close the parent phase, stamp commits, and hand off to P105 planned."
+    }
+  ],
+  "knownLimitations": [
+    "P104.1 is UX consolidation only.",
+    "P104.1 does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, or provider spend.",
+    "P104.2-P104.7 remain planned."
+  ]
+}

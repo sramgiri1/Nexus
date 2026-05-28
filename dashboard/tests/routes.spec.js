@@ -140,11 +140,12 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Business Build/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Durable State/i })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Chat with NEXUS and watch the agent plan form/i })).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Chat with NEXUS");
+  await expect(page.locator(".ccv2-page-head__sub")).toContainText("keep the conversation focused");
   await expect(page.locator(".ccv2-topbar__founder-context")).toContainText("Founder use");
   await expect(page.locator(".ccv2-topbar__founder-context")).toContainText("Start here");
   await expect(page.getByLabel("Chat with NEXUS")).toContainText("NEXUS");
-  await expect(page.getByLabel("Agent action flow")).toContainText("Product");
+  await expect(page.getByLabel("Agent action flow")).toHaveCount(0);
   await expect(page.locator(".ccv2-topbar__breadcrumb")).toHaveCount(0);
   await expect(page.locator(".ccv2-topbar__scope-chip")).toHaveCount(0);
   await expect(page.locator(".nav-rail")).toHaveCount(0);
@@ -202,17 +203,16 @@ test("Full Command Center founder navigation exposes governed areas", async ({ p
   expect(body).not.toContain("DemoApp");
   expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/);
 
-  await expect(page.getByLabel("Local PRD readiness")).not.toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Local PRD readiness")).toHaveCount(0);
+  await expect(page.getByLabel("Agent action flow")).toHaveCount(0);
   await page.getByLabel("Founder message").fill("Build a simple iOS Snake game for the App Store");
-  await expect(page.getByLabel("Local PRD readiness")).not.toContainText("Build a simple iOS Snake game for the App Store");
   await page.getByRole("button", { name: "Send" }).click();
-  await expect(page.getByLabel("Local PRD readiness")).toContainText("Build a simple iOS Snake game for the App Store");
-  await expect(page.getByLabel("Local PRD readiness")).toContainText("Target Customer");
+  await expect(page.getByLabel("Chat with NEXUS")).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Local PRD readiness")).toHaveCount(0);
+  await page.getByRole("link", { name: /Agent Flow/i }).click();
   await expect(page.getByLabel("Agent action flow")).toContainText("Product");
   await expect(page.getByLabel("Agent action flow")).toContainText("Legal");
   await expect(page.getByLabel("Agent action flow")).toContainText("Support");
-  await page.getByRole("link", { name: /Agent Flow/i }).click();
-  await expect(page.getByLabel("Agent action flow")).toContainText("Product");
   expect(errors).toEqual([]);
 });
 
@@ -435,11 +435,14 @@ test("Command Center Lite route renders interactive founder chat", async ({ page
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByLabel("Chat with NEXUS")).toContainText("Captured Problem");
   await expect(page.locator("body")).toContainText("2 answered");
-  await expect(page.getByLabel("Local PRD readiness")).toContainText("casual iPhone players");
+  await expect(page.getByLabel("Local PRD readiness")).toHaveCount(0);
 
   const body = await page.locator("body").innerText();
   expect(body).not.toContain("founder_qna_collecting_answers");
   expect(body).not.toContain("founder_qna_ready_for_prd_review");
+  expect(body).not.toContain("Local PRD readiness");
+  expect(body).not.toContain("Founder DB Workflow");
+  expect(body).not.toContain("Founder Live Work Admission");
   expect(body).not.toContain("DemoApp");
   expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
   expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
@@ -447,7 +450,7 @@ test("Command Center Lite route renders interactive founder chat", async ({ page
   expect(errors).toEqual([]);
 });
 
-test("Command Center Lite route renders PRD review gate", async ({ page }) => {
+test("Command Center Lite route stays chat-only", async ({ page }) => {
   const errors = captureClientErrors(page);
 
   await page.addInitScript(() => {
@@ -456,99 +459,31 @@ test("Command Center Lite route renders PRD review gate", async ({ page }) => {
   });
   await page.goto("/command-center/lite");
 
-  const reviewGate = page.getByLabel("Local PRD review gate");
-  await expect(reviewGate).toContainText("PRD v1");
-  await expect(reviewGate).toContainText("Needs founder answers");
-  await expect(reviewGate).toContainText("Founder decision");
-  await expect(reviewGate).toContainText("Pending");
-  await expect(reviewGate).toContainText("Problem needs a founder answer.");
-  await expect(reviewGate).not.toContainText("founder_prd_review");
-  await expect(reviewGate).not.toContainText("raw JSON");
+  await expect(page.getByLabel("Chat with NEXUS")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Reset" })).toBeVisible();
+  await expect(page.getByLabel("Founder prompt starters")).toBeVisible();
+  await expect(page.getByLabel("Local PRD readiness")).toHaveCount(0);
+  await expect(page.getByLabel("Local PRD review gate")).toHaveCount(0);
+  await expect(page.getByLabel("Local agent task board")).toHaveCount(0);
+  await expect(page.getByLabel("Founder workflow summary")).toHaveCount(0);
+  await expect(page.getByLabel("Founder DB workflow")).toHaveCount(0);
+  await expect(page.getByLabel("Business Build DB CRUD")).toHaveCount(0);
+  await expect(page.getByLabel("Live workstream handoff")).toHaveCount(0);
+  await expect(page.getByLabel("Execution admission readiness")).toHaveCount(0);
+  await expect(page.getByLabel("Founder live use readiness")).toHaveCount(0);
+  await expect(page.getByLabel("Founder live handoff")).toHaveCount(0);
+  await expect(page.getByLabel("Founder live work admission")).toHaveCount(0);
+  await expect(page.getByLabel("Founder persistence controls")).toHaveCount(0);
+  await expect(page.getByLabel("Agent action flow")).toHaveCount(0);
 
   const body = await page.locator("body").innerText();
   expect(body).not.toContain("DemoApp");
-  expect(body).not.toMatch(/generate PRD now|run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
-  expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
-
-  expect(errors).toEqual([]);
-});
-
-test("Command Center Lite route renders local task board", async ({ page }) => {
-  const errors = captureClientErrors(page);
-
-  await page.addInitScript(() => {
-    window.localStorage.removeItem("nexus-lite-founder-qna-state");
-    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
-  });
-  await page.goto("/command-center/lite");
-
-  const taskBoard = page.getByLabel("Local agent task board");
-  await expect(taskBoard).toContainText("How NEXUS will assign the work");
-  await expect(taskBoard).toContainText("Blocked on PRD review");
-  await expect(taskBoard).toContainText("Product planning task");
-  await expect(taskBoard).toContainText("Engineering planning task");
-  await expect(taskBoard).toContainText("Dispatch blocked");
-  await expect(taskBoard).toContainText("Complete founder PRD review before admitting local task-board planning.");
-  await expect(taskBoard).not.toContainText("agent_dispatch");
-
-  const body = await page.locator("body").innerText();
-  expect(body).not.toContain("DemoApp");
-  expect(body).not.toMatch(/dispatch agent now|run worker now|execute now|deploy now|apply now|call provider now|create project now/i);
-  expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
-
-  expect(errors).toEqual([]);
-});
-
-test("Command Center Lite route renders founder workflow summary", async ({ page }) => {
-  const errors = captureClientErrors(page);
-
-  await page.addInitScript(() => {
-    window.localStorage.removeItem("nexus-lite-founder-qna-state");
-  });
-  await page.goto("/command-center/lite");
-
-  const workflow = page.getByLabel("Founder workflow summary");
-  await expect(workflow).toContainText("Chat");
-  await expect(workflow).toContainText("messages captured");
-  await expect(workflow).toContainText("PRD review");
-  await expect(workflow).toContainText("Agent work");
-  await expect(workflow).toContainText("Next");
-  await expect(workflow).toContainText("Complete founder PRD review before admitting local task-board planning.");
-  await expect(workflow).not.toContainText("P85");
-  await expect(workflow).not.toContainText("founder_qna");
-
-  const body = await page.locator("body").innerText();
-  expect(body).not.toContain("DemoApp");
-  expect(body).not.toMatch(/dispatch agent now|run worker now|execute now|deploy now|apply now|call provider now|create project now/i);
-
-  expect(errors).toEqual([]);
-});
-
-test("Command Center Lite route renders Founder DB workflow without raw IDs", async ({ page }) => {
-  const errors = captureClientErrors(page);
-
-  await page.addInitScript(() => {
-    window.localStorage.removeItem("nexus-lite-founder-qna-state");
-    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
-  });
-  await page.goto("/command-center/lite");
-
-  const founderDbWorkflow = page.getByLabel("Founder DB workflow");
-  await expect(founderDbWorkflow).toContainText("Saved local state");
-  await expect(founderDbWorkflow).toContainText("DB-ready");
-  await expect(founderDbWorkflow).toContainText("Captured Locally");
-  await expect(founderDbWorkflow).toContainText("65% ready");
-  await expect(founderDbWorkflow).toContainText("4 local records");
-  await expect(founderDbWorkflow).toContainText("Who is the target customer, launch constraint, and success metric?");
-  await expect(founderDbWorkflow).toContainText("Operator approval is required");
-  await expect(founderDbWorkflow).toContainText("No provider calls, model calls, network calls");
-
-  const body = await page.locator("body").innerText();
   expect(body).not.toContain("founder_sessions");
   expect(body).not.toContain("founder_qna_turns");
-  expect(body).not.toContain("p943-session");
-  expect(body).not.toContain("DemoApp");
-  expect(body).not.toMatch(/dispatch agent now|run worker now|write now|migrate now|execute now|deploy now|call provider now/i);
+  expect(body).not.toContain("reports/");
+  expect(body).not.toMatch(/generate PRD now|run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
 
   expect(errors).toEqual([]);
 });
@@ -2294,19 +2229,13 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Founder DB workflow appears in Lite, Business Build, and DB Runtime", async ({ page }) => {
+  test("Founder DB workflow appears in Business Build and DB Runtime", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
       window.localStorage.removeItem("nexus-lite-founder-qna-state");
       window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
     });
-
-    await page.goto("/command-center/lite");
-    await expect(page.getByLabel("Founder DB workflow")).toContainText("Saved local state");
-    await expect(page.getByLabel("Founder DB workflow")).toContainText("PRD");
-    await expect(page.getByLabel("Founder DB workflow")).toContainText("Workstreams");
-    await expect(page.getByLabel("Founder DB workflow")).toContainText("Next question");
 
     await page.goto("/command-center/business-build");
     const businessWorkflow = page.getByLabel("Founder DB workflow");
@@ -2339,24 +2268,13 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Founder persistence controls appear in Lite, Business Build, and DB Runtime", async ({ page }) => {
+  test("Founder persistence controls appear in Business Build and DB Runtime", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
       window.localStorage.removeItem("nexus-lite-founder-qna-state");
       window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
     });
-
-    await page.goto("/command-center/lite");
-    const liteControls = page.getByLabel("Founder persistence controls");
-    await expect(liteControls).toContainText("Local controls");
-    await expect(liteControls).toContainText("Needs approval evidence");
-    await expect(liteControls).toContainText("Local SQLite gated");
-    await expect(liteControls).toContainText("Rollback");
-    await expect(liteControls).toContainText("Audit");
-    await expect(liteControls).toContainText("Next action");
-    await expect(liteControls).toContainText("Disabled reason");
-    await expect(liteControls).toContainText("Save founder session locally");
 
     await page.goto("/command-center/business-build");
     const businessControls = page.getByLabel("Founder persistence controls");
@@ -3634,18 +3552,12 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Business Build DB CRUD state appears in Lite, Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
+  test("Business Build DB CRUD state appears in Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
       window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
     });
-
-    await page.goto("/command-center/lite");
-    const liteBusinessBuildDb = page.getByLabel("Business Build DB CRUD");
-    await expect(liteBusinessBuildDb).toContainText("Lite Business Build DB workflow");
-    await expect(liteBusinessBuildDb).toContainText("Business Build DB Workflow");
-    await expect(liteBusinessBuildDb).toContainText("Agent lanes");
 
     await page.goto("/command-center/business-build");
     const businessBuildDb = page.getByLabel("Business Build DB CRUD");
@@ -3677,20 +3589,12 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Live workstream handoff appears in Lite, Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
+  test("Live workstream handoff appears in Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
       window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
     });
-
-    await page.goto("/command-center/lite");
-    const liteHandoff = page.getByLabel("Live workstream handoff");
-    await expect(liteHandoff).toContainText("Lite Live Workstream Handoff");
-    await expect(liteHandoff).toContainText("Live Workstream Handoff");
-    await expect(liteHandoff).toContainText("Dry run only");
-    await expect(liteHandoff).toContainText("NEXUS Live Workstream Handoff Dry Run");
-    await expect(liteHandoff).toContainText("reports/p983-founder-live-workstream-handoff-dry-run-report.md");
 
     await page.goto("/command-center/business-build");
     const businessHandoff = page.getByLabel("Live workstream handoff");
@@ -3725,16 +3629,6 @@ test.describe("Command Center route-wide UX", () => {
     await page.addInitScript(() => {
       window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
     });
-
-    await page.goto("/command-center/lite");
-    const liteAdmission = page.getByLabel("Execution admission readiness");
-    await expect(liteAdmission).toContainText("Lite Execution Admission");
-    await expect(liteAdmission).toContainText("Execution Admission");
-    await expect(liteAdmission).toContainText("Execution blocked");
-    await expect(liteAdmission).toContainText("Approval gates");
-    await expect(liteAdmission).toContainText("0 of 5 accepted");
-    await expect(liteAdmission).toContainText("Executable lanes");
-    await expect(liteAdmission).toContainText("reports/p994-founder-execution-admission-dry-run-report.md");
 
     await page.goto("/command-center/business-build");
     const businessAdmission = page.getByLabel("Execution admission readiness");
@@ -3772,7 +3666,6 @@ test.describe("Command Center route-wide UX", () => {
     });
 
     for (const [path, label] of [
-      ["/command-center/lite", "Lite Founder Live Use"],
       ["/command-center/business-build", "Business Build Founder Live Use"],
       ["/command-center/agent-flow", "Agent Flow Founder Live Use"],
       ["/command-center/live-readiness", "Live Readiness Founder Live Use"],
@@ -3809,7 +3702,6 @@ test.describe("Command Center route-wide UX", () => {
     });
 
     for (const [path, label] of [
-      ["/command-center/lite", "Lite Founder Live Handoff"],
       ["/command-center/business-build", "Business Build Founder Live Handoff"],
       ["/command-center/agent-flow", "Agent Flow Founder Live Handoff"],
       ["/command-center/live-readiness", "Live Readiness Founder Live Handoff"],
@@ -3846,7 +3738,6 @@ test.describe("Command Center route-wide UX", () => {
     });
 
     for (const [path, label] of [
-      ["/command-center/lite", "Lite Founder Work Admission"],
       ["/command-center/business-build", "Business Build Founder Work Admission"],
       ["/command-center/agent-flow", "Agent Flow Founder Work Admission"],
       ["/command-center/live-readiness", "Live Readiness Founder Work Admission"],

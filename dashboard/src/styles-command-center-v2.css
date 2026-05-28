@@ -386,6 +386,11 @@
   align-items: start;
 }
 
+.ccv2-lite-layout--chat-only {
+  grid-template-columns: minmax(0, 920px);
+  justify-content: start;
+}
+
 .ccv2-lite-chat,
 .ccv2-lite-side {
   display: flex;

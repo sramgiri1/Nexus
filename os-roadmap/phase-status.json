@@ -12492,19 +12492,170 @@
       "title": "Founder Live Execution Boundary",
       "track": "NEXUS_OS",
       "order": 140,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P104 is in progress. P104.1 cleaned the Chat with NEXUS route so PRD, DB, persistence, live-use, handoff, work-admission, execution-admission, task board, and agent detail stay on corresponding pages.",
+      "checksRun": [
+        "npm run check:p1041-chat-surface-consolidation",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders interactive founder chat|Command Center Lite route stays chat-only|Founder DB workflow appears in Business Build and DB Runtime|Business Build DB CRUD state appears in Business Build, Agent Flow, and DB Runtime|Founder live work admission appears across founder routes|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P104.1 is Chat UX consolidation only.",
+        "P104.2 through P104.7 remain planned.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P104.2",
+      "commandCenterVisible": true,
+      "label": "Founder Live Execution Boundary",
+      "detail": "P104 in progress; Chat route consolidated; execution boundary schema is next."
+    },
+    {
+      "phaseId": "P104.1",
+      "title": "Chat Surface Consolidation",
+      "track": "NEXUS_OS",
+      "order": 140.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T00:01:42.283Z",
+      "summary": "Consolidated Chat with NEXUS into a chat-only founder surface and kept PRD, DB, persistence, live-use, handoff, work-admission, execution-admission, task board, and agent detail on corresponding pages.",
+      "checksRun": [
+        "npm run check:p1041-chat-surface-consolidation",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders interactive founder chat|Command Center Lite route stays chat-only|Founder DB workflow appears in Business Build and DB Runtime|Business Build DB CRUD state appears in Business Build, Agent Flow, and DB Runtime|Founder live work admission appears across founder routes|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P104.1 does not enable live execution authority.",
+        "P104.2 through P104.7 remain planned.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P104.2",
+      "commandCenterVisible": true,
+      "label": "Chat Surface Consolidation",
+      "detail": "Chat with NEXUS is chat-only; operational detail lives on corresponding pages."
+    },
+    {
+      "phaseId": "P104.2",
+      "title": "Execution Boundary Schema",
+      "track": "NEXUS_OS",
+      "order": 140.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned handoff after P103 final validation. Scope must be defined under a future NEXUS execution contract before coding.",
+      "summary": "Define local execution-boundary records and approval predicates without enabling execution.",
       "checksRun": [],
       "knownLimitations": [
-        "P104 is planned only and has no execution authority."
+        "P104.2 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P104.3",
+      "commandCenterVisible": false,
+      "label": "Execution Boundary Schema",
+      "detail": "Execution Boundary Schema planned under P104."
+    },
+    {
+      "phaseId": "P104.3",
+      "title": "Execution Boundary Model",
+      "track": "NEXUS_OS",
+      "order": 140.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Build deterministic local execution-boundary state from P103 work admissions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P104.3 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P104.4",
+      "commandCenterVisible": false,
+      "label": "Execution Boundary Model",
+      "detail": "Execution Boundary Model planned under P104."
+    },
+    {
+      "phaseId": "P104.4",
+      "title": "Execution Boundary Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 140.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Render execution-boundary readiness on appropriate non-chat pages without runnable controls.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P104.4 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P104.5",
+      "commandCenterVisible": false,
+      "label": "Execution Boundary Command Center UX",
+      "detail": "Execution Boundary Command Center UX planned under P104."
+    },
+    {
+      "phaseId": "P104.5",
+      "title": "Execution Boundary Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 140.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Add aggregate checker and Playwright coverage for execution-boundary behavior.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P104.5 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P104.6",
+      "commandCenterVisible": false,
+      "label": "Execution Boundary Tests / Checkers",
+      "detail": "Execution Boundary Tests / Checkers planned under P104."
+    },
+    {
+      "phaseId": "P104.6",
+      "title": "Execution Boundary Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 140.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Document the P104 execution boundary and update roadmap/readme/status evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P104.6 is planned only and has no execution authority."
+      ],
+      "nextPhase": "P104.7",
+      "commandCenterVisible": false,
+      "label": "Execution Boundary Docs / Roadmap",
+      "detail": "Execution Boundary Docs / Roadmap planned under P104."
+    },
+    {
+      "phaseId": "P104.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 140.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Run final P104 validation, close the parent phase, stamp commits, and hand off to P105 planned.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P104.7 is planned only and has no execution authority."
       ],
       "nextPhase": "P105",
       "commandCenterVisible": false,
-      "label": "Founder Live Execution Boundary",
-      "detail": "Planned next phase after P103 closure."
+      "label": "Final Validation",
+      "detail": "Final Validation planned under P104."
     },
     {
       "phaseId": "P83",
@@ -12989,8 +13140,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P103.7",
-  "previousPhase": "P103.6",
-  "nextPhase": "P104",
+  "currentPhase": "P104.1",
+  "previousPhase": "P103.7",
+  "nextPhase": "P104.2",
   "currentPhaseStatus": "complete"
 }
