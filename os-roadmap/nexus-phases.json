@@ -8946,30 +8946,28 @@
       "order": 145,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bca3fe4c",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P109 is in progress. P109.1-P109.5 now cover local decision-ledger boundary/model/audit-preview state, display-safe non-chat Command Center UX, and aggregate validation while all write/execution authority remains blocked.",
+      "summary": "P109 is in progress. P109.1-P109.6 now cover local decision-ledger boundary/model/audit-preview state, display-safe non-chat Command Center UX, aggregate validation, and docs/status closure while all write/execution authority remains blocked.",
       "checksRun": [
+        "npm run check:p1096-founder-live-operator-decision-ledger-docs",
         "npm run check:p1095-founder-live-operator-decision-ledger-validation",
         "npm run check:p1094-command-center-decision-ledger-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live decision ledger appears on non-chat founder routes\"",
         "cd dashboard && npm run build",
-        "npm run check:p1093-founder-live-operator-decision-ledger-audit-preview",
-        "npm run check:p1092-founder-live-operator-decision-ledger-model",
-        "npm run check:p1091-founder-live-operator-decision-ledger-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P109.1-P109.5 are local boundary/model/audit-preview/display/validation work only and do not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
+        "P109.1-P109.6 are local boundary/model/audit-preview/display/validation/docs work only and do not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P109.6-P109.7 remain planned."
+        "P109.7 remains planned."
       ],
-      "nextPhase": "P109.6",
+      "nextPhase": "P109.7",
       "commandCenterVisible": true,
       "label": "Decision Ledger",
-      "detail": "P109.5 validation complete; P109.6 docs closure next."
+      "detail": "P109.6 docs closure complete; P109.7 final validation next."
     },
     {
       "phaseId": "P109.1",
@@ -9118,19 +9116,30 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 145.6,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Close P109 docs, README, platform roadmap, and phase status evidence without behavior changes.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T20:56:50.000Z",
+      "summary": "Closed P109 docs, README, platform roadmap, contract, reports, and OS phase status evidence for P109.1-P109.6 without changing runtime or Command Center behavior.",
+      "checksRun": [
+        "npm run check:p1096-founder-live-operator-decision-ledger-docs",
+        "npm run check:p1095-founder-live-operator-decision-ledger-validation",
+        "npm run check:p1094-command-center-decision-ledger-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live decision ledger appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P109.6 is planned docs/status work only and must not change runtime, Command Center behavior, project files, or unsafe authorities."
+        "P109.6 is docs/status only and does not change runtime, Command Center behavior, project files, or unsafe authorities.",
+        "Operator decision capture, persistence, ledger writes, DB writes, replay, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P109.7 final validation remains planned."
       ],
       "nextPhase": "P109.7",
       "commandCenterVisible": true,
       "label": "Docs / Roadmap",
-      "detail": "Planned docs and roadmap closure."
+      "detail": "Docs and roadmap closure complete."
     },
     {
       "phaseId": "P109.7",
@@ -9562,9 +9571,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T20:51:25.000Z",
-  "currentPhase": "P109.5",
-  "previousPhase": "P109.4",
-  "nextPhase": "P109.6",
+  "updatedAt": "2026-05-28T20:56:50.000Z",
+  "currentPhase": "P109.6",
+  "previousPhase": "P109.5",
+  "nextPhase": "P109.7",
   "currentPhaseStatus": "complete"
 }

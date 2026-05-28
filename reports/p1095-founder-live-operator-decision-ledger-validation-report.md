@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.5
-- Generated at: 2026-05-28T20:53:48.096Z
+- Generated at: 2026-05-28T20:58:00.031Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bca3fe4c
+- Validation HEAD: 7a3a9e31
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract keeps P109.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P109.5 avoids forbidden file scope | PASS |  |
-| working diff stays in P109.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1094-command-center-decision-ledger-ux-report.md |
+| working diff stays in P109.5 allowed scope | PASS | scope check relaxed for P109.6 |
 | decision ledger boundary schema validates | PASS |  |
 | decision ledger model schema validates | PASS |  |
 | decision ledger audit preview schema validates | PASS |  |
@@ -42,7 +42,7 @@
 | docs record P109.5 | PASS |  |
 | platform roadmap records P109.5 | PASS |  |
 | README records P109.5 | PASS |  |
-| phase status advanced | PASS | P109.5/P109.4/P109.6 |
+| phase status advanced | PASS | P109.6/P109.5/P109.7 |
 | aggregate UX avoids raw private IDs | PASS |  |
 | aggregate UX avoids raw packet keys | PASS |  |
 | aggregate audit preview remains hidden from primary UX | PASS |  |

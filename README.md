@@ -433,6 +433,14 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package, network calls, and provider spend remain
   blocked.
+- P109.6 docs closure: P109 plan, contract, README, platform roadmap, OS phase
+  status, and validation reports now record P109.1-P109.6 completion while
+  keeping P109.4 Command Center placement and P109.5 aggregate validation as
+  the behavior evidence. P109.7 is next. Operator decision capture,
+  persistence, ledger writes, DB writes, replay, execution unlock, runtime
+  admission, provider/model calls, dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, deploy, release, export, package, network
+  calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

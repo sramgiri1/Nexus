@@ -2673,6 +2673,15 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P109.6 is complete. The P109 plan, contract, README, platform roadmap, OS
+phase status, and validation reports now close documentation for P109.1 through
+P109.6 while preserving P109.4 Command Center placement and P109.5 aggregate
+validation as the behavior evidence. P109.7 is next. Operator decision capture,
+persistence, ledger writes, DB writes, replay, execution unlock, runtime
+admission, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, deploy, release, export, package action, network
+call, and provider spend remain blocked.
+
 Implementation follows
 [`p109-founder-live-operator-decision-ledger-contracts.json`](../../contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json).
 
