@@ -8227,7 +8227,7 @@
       "order": 142,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "076c4c60",
       "completedAt": "2026-05-28T18:23:41.000Z",
       "summary": "P106 is complete across approval request boundary contracts, deterministic request records, local queue preview, Command Center queue UX, focused route coverage, dashboard build, aggregate validation, docs, reports, phase status, and final safety checks while approval request and execution authority remain blocked.",
       "checksRun": [
@@ -8437,7 +8437,7 @@
       "order": 142.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "076c4c60",
       "completedAt": "2026-05-28T18:23:41.000Z",
       "summary": "Completed final P106 validation across all P106 scripts, reports, docs, roadmap, phase status, focused Command Center route coverage, dashboard build, and blocked live authority checks.",
       "checksRun": [
