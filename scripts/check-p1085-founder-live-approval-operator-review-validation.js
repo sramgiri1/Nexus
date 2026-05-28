@@ -106,6 +106,7 @@ const operatorReview = build.founderLiveApprovalOperatorReview || {};
 const serializedOperatorReview = JSON.stringify(operatorReview);
 const serializedAuditPreview = JSON.stringify(auditPreviewEnvelope.data || {});
 const currentDiffFiles = currentChangedFiles();
+const enforceCurrentDiffScope = status.currentPhase === "P108.5";
 const p108AllowedFiles = new Set([
   ...(p1085.allowedFiles || []),
   "reports/os-phase-status-report.md",
@@ -120,7 +121,11 @@ addCheck("contract marks P108.1-P108.5 complete", ["P108.1", "P108.2", "P108.3",
 addCheck("contract keeps P108.6 planned or complete", ["planned", "complete"].includes(subphaseById.get("P108.6")?.status));
 addCheck("contract records aggregate validation commands", validationCommands.every((command) => p1085.validationCommands?.includes(command)));
 addCheck("P108.5 avoids forbidden file scope", !(p1085.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
-addCheck("working diff stays in P108.5 allowed scope", currentDiffFiles.every((file) => p108AllowedFiles.has(file)), currentDiffFiles.join(", "));
+addCheck(
+  "working diff stays in P108.5 allowed scope",
+  !enforceCurrentDiffScope || currentDiffFiles.every((file) => p108AllowedFiles.has(file)),
+  enforceCurrentDiffScope ? currentDiffFiles.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
 addCheck("operator review boundary schema validates", boundaryValidation.valid, boundaryValidation.errors.join("; "));
 addCheck("operator review model schema validates", modelValidation.valid, modelValidation.errors.join("; "));
 addCheck("operator review audit preview schema validates", auditValidation.valid, auditValidation.errors.join("; "));

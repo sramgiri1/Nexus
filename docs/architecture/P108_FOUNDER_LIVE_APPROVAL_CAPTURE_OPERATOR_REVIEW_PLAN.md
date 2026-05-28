@@ -177,11 +177,11 @@ Final safety checks: validation-only; no Command Center source/test changes; no 
 
 ## P108.6 Docs / Roadmap
 
-Status: planned
+Status: complete
 
 Narrow goal: close P108 docs, README, platform roadmap, and phase status evidence without behavior changes.
 
-Allowed files: P108.6 docs checker, P108 contract, P108 plan, platform roadmap, README, package script, OS phase status files, and generated validation reports.
+Allowed files: P108.6 docs checker, P108.5 handoff checker update, P108 contract, P108 plan, platform roadmap, README, package script, OS phase status files, and generated validation reports.
 
 Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
 
@@ -195,6 +195,18 @@ Validation commands:
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - git diff --check
+
+Exact files/modules changed: added `scripts/check-p1086-founder-live-approval-operator-review-docs.js`, updated the P108.5 handoff checker, registered `check:p1086-founder-live-approval-operator-review-docs`, updated P108 contract/docs/README/roadmap/status, and generated `reports/p1086-founder-live-approval-operator-review-docs-report.md`.
+
+Expected exports/data shapes: P108.6 exports no runtime API. The checker validates docs/status evidence only.
+
+Checker updates: docs closure checker verifies P108.1-P108.6 completion in the contract and plan, P108 README/roadmap entries, blocked safety language, OS phase status, P108 contract/plan links, and forbidden scope. P108.5 aggregate checker now relaxes its working-diff scope check after P108.5 so later P108 docs/final handoffs can run cleanly.
+
+Docs/roadmap update: P108.6 is recorded complete in this plan, README, platform roadmap, P108 contract, and OS phase status. P108.7 is next.
+
+OS phase status update: P108 remains in progress; P108.6 is complete; current phase P108.6; previous P108.5; next P108.7.
+
+Final safety checks: docs/status only; no Command Center source/test changes; no project files; no approval capture, operator decision persistence, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.
 
 ## P108.7 Final Validation
 

@@ -564,7 +564,8 @@
     "check:p1082-founder-live-approval-operator-review-model": "node scripts/check-p1082-founder-live-approval-operator-review-model.js",
     "check:p1083-founder-live-approval-operator-review-audit-preview": "node scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
     "check:p1084-command-center-operator-review-ux": "node scripts/check-p1084-command-center-operator-review-ux.js",
-    "check:p1085-founder-live-approval-operator-review-validation": "node scripts/check-p1085-founder-live-approval-operator-review-validation.js"
+    "check:p1085-founder-live-approval-operator-review-validation": "node scripts/check-p1085-founder-live-approval-operator-review-validation.js",
+    "check:p1086-founder-live-approval-operator-review-docs": "node scripts/check-p1086-founder-live-approval-operator-review-docs.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

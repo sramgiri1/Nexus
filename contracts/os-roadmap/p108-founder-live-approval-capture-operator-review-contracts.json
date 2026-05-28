@@ -519,11 +519,12 @@
     {
       "phaseId": "P108.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "DOCS_CHANGE",
       "narrowGoal": "Close P108 docs, README, platform roadmap, and phase status evidence without behavior changes.",
       "allowedFiles": [
         "scripts/check-p1086-founder-live-approval-operator-review-docs.js",
+        "scripts/check-p1085-founder-live-approval-operator-review-validation.js",
         "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
         "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -531,6 +532,9 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p1085-founder-live-approval-operator-review-validation-report.md",
         "reports/p1086-founder-live-approval-operator-review-docs-report.md"
       ],
       "forbiddenFiles": [
@@ -554,9 +558,34 @@
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
+      "exactFiles": [
+        "scripts/check-p1086-founder-live-approval-operator-review-docs.js",
+        "scripts/check-p1085-founder-live-approval-operator-review-validation.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1086-founder-live-approval-operator-review-docs-report.md",
+        "reports/p1085-founder-live-approval-operator-review-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1086-founder-live-approval-operator-review-docs",
+        "P108.6 docs report"
+      ],
+      "checkerUpdates": [
+        "Add docs closure checker covering P108.1-P108.6 plan status, README, platform roadmap, contract status, OS phase status, blocked safety language, and forbidden scope.",
+        "Update P108.5 aggregate checker diff-scope enforcement to allow later P108 docs/final subphase handoffs."
+      ],
+      "docsRoadmap": "Update P108 plan, platform roadmap, README, and OS phase tracking with P108.6 complete and P108.7 next.",
+      "phaseStatusUpdate": "P108 in progress; P108.6 complete; current P108.6; previous P108.5; next P108.7.",
       "finalSafetyChecks": [
         "Confirm P108.6 is docs/status only.",
-        "Confirm docs do not claim approval capture or execution is live.",
+        "Confirm docs keep approval capture and execution blocked.",
         "Confirm no forbidden paths changed."
       ],
       "finalResponseChecklist": [

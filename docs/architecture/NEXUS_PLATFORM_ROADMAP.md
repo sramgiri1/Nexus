@@ -2606,23 +2606,20 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
-Implementation follows
-[`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
-
-The detailed plan lives in
-[`P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md`](P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md).
+P108.6 is complete. P108 docs, README, platform roadmap, contract status,
+reports, and OS phase status now reflect the completed operator-review
+contract, local model, audit preview, Command Center UX, and aggregate
+validation. P108.7 is next. Operator decisions, approval capture, approval
+persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked.
 
 Implementation follows
 [`p108-founder-live-approval-capture-operator-review-contracts.json`](../../contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json).
 
 The detailed plan lives in
 [`P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md`](P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md).
-
-Implementation follows
-[`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
-
-The detailed plan lives in
-[`P102_FOUNDER_LIVE_HANDOFF_PLAN.md`](P102_FOUNDER_LIVE_HANDOFF_PLAN.md).
 
 Implementation follows
 [`p103-founder-live-work-admission-contracts.json`](../../contracts/os-roadmap/p103-founder-live-work-admission-contracts.json).

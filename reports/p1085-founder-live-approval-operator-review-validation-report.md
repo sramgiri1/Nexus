@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P108.5
-- Generated at: 2026-05-28T19:57:01.937Z
+- Generated at: 2026-05-28T20:01:23.762Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 037d28c5
+- Validation HEAD: 2e6d05fc
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract keeps P108.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P108.5 avoids forbidden file scope | PASS |  |
-| working diff stays in P108.5 allowed scope | PASS |  |
+| working diff stays in P108.5 allowed scope | PASS | scope check relaxed for P108.6 |
 | operator review boundary schema validates | PASS |  |
 | operator review model schema validates | PASS |  |
 | operator review audit preview schema validates | PASS |  |
@@ -41,7 +41,7 @@
 | docs record P108.5 | PASS |  |
 | platform roadmap records P108.5 | PASS |  |
 | README records P108.5 | PASS |  |
-| phase status advanced | PASS | P108.5/P108.4/P108.6 |
+| phase status advanced | PASS | P108.6/P108.5/P108.7 |
 | aggregate UX avoids raw private IDs | PASS |  |
 | aggregate UX avoids raw packet keys | PASS |  |
 | aggregate audit preview remains hidden from primary UX | PASS |  |
