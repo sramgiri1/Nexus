@@ -13452,7 +13452,7 @@
       "order": 144,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "196dac56",
       "completedAt": "",
       "summary": "P108 is in progress. P108.2 adds deterministic local operator-review records from the P108.1 boundary and P107 capture audit rows while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
@@ -13506,7 +13506,7 @@
       "order": 144.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "196dac56",
       "completedAt": "2026-05-28T19:42:00.000Z",
       "summary": "Built deterministic local founder approval operator-review records from the P108.1 boundary and P107 capture audit rows without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
       "checksRun": [
