@@ -209,6 +209,10 @@ The Command Center and local operator surface have:
   from P104 execution-boundary rows with review questions, missing gates,
   validation commands, blockers, owner/evidence/activity, and cost posture.
   Approval capture and execution remain blocked. P105.3 is next.
+- P105.3 dry-run review packet: local review packet rows now summarize approval
+  gates, unresolved evidence, blockers, validation commands, owner/evidence,
+  activity, and cost posture without approval submission or execution unlocks.
+  P105.4 is next.
 
 ## CareLoop Project Progress
 

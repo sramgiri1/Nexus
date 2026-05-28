@@ -238,10 +238,27 @@
     {
       "phaseId": "P105.3",
       "title": "Dry-Run Review Packet",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Create a display-safe review packet that summarizes approval gates and blocked runtime transitions without submitting approvals.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "live-ready/founderLiveExecutionApprovalReviewPacket.js",
+        "scripts/check-p1053-founder-live-execution-approval-review-packet.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1053-founder-live-execution-approval-review-packet-report.md",
+        "reports/p1052-founder-live-execution-approval-plan-model-report.md",
+        "reports/p1051-founder-live-execution-approval-planning-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -255,27 +272,71 @@
         ".env*"
       ],
       "expectedExportsSchemasDataShapes": {
-        "futurePacket": "Review packet with gate summary, missing evidence, blockers, validation commands, owner, evidence, activity, cost, and all runtime flags false."
+        "exports": [
+          "P105_FOUNDER_LIVE_EXECUTION_APPROVAL_REVIEW_PACKET_PHASE",
+          "P105_EXECUTION_APPROVAL_REVIEW_PACKET_STATES",
+          "buildFounderLiveExecutionApprovalReviewPacket",
+          "validateFounderLiveExecutionApprovalReviewPacket"
+        ],
+        "envelope": "Result envelope with schemaVersion, currentState, sourceApprovalPlanPhase, founderContextSummary, reviewPacketReadiness, reviewPacketRows, requiredGates, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible false, and all approval/runtime/execution flags false.",
+        "reviewPacketRows": "Each row includes display-safe review packet id, approval plan key, boundary key, work order label, proposed agent lane, proposed outcome, packet state, required gates, missing gates, gate summary, review questions, validation commands, blockers, disabled reason, owner, evidence/activity, cost impact, and all approval/runtime/execution flags false."
       },
-      "commandCenterUxRequirements": "No primary UX until P105.4.",
-      "themeRequirements": "Preserve system, dark, and light themes.",
-      "playwrightTests": "None unless UI changes.",
+      "commandCenterUxRequirements": "No Command Center source change in P105.3. P105.4 must render these dry-run review packets on Business Build, Agent Flow, and Live Readiness without approval or execution controls. Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "No theme source change in P105.3. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P105.3 because no UI files change. P105.4 must add focused route coverage.",
       "checkerUpdates": [
-        "Add P105.3 review packet checker."
+        "Add check:p1053-founder-live-execution-approval-review-packet.",
+        "Keep P105.1 and P105.2 checkers forward-compatible."
       ],
-      "docsRoadmap": "Record P105.3 when implemented.",
-      "phaseStatusUpdate": "P105.3 complete only when packet checker passes.",
-      "validationCommands": [],
+      "docsRoadmap": "Record P105.3 complete and P105.4 next.",
+      "phaseStatusUpdate": "P105 in progress; P105.3 complete; current P105.3; previous P105.2; next P105.4.",
+      "validationCommands": [
+        "npm run check:p1053-founder-live-execution-approval-review-packet",
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm dry-run only.",
-        "Confirm no approval writes."
+        "Confirm P105.3 is dry-run packet only.",
+        "Confirm approval submission cannot unlock execution.",
+        "Confirm no project files changed.",
+        "Confirm P105.4 remains planned."
       ],
-      "gitCommands": [],
+      "gitCommands": [
+        "git add <allowed P105.3 files>",
+        "git commit -m \"feat(nexus): add founder live approval review packet\"",
+        "git push"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
         "Known limitations",
-        "Next subphase"
+        "Next phase/subphase"
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "b5193f65",
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveExecutionApprovalReviewPacket.js",
+        "scripts/check-p1053-founder-live-execution-approval-review-packet.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
       ]
     },
     {
@@ -459,8 +520,8 @@
     }
   ],
   "knownLimitations": [
-    "P105.1-P105.2 define local approval-planning schema and model only.",
-    "Approval capture, approval persistence, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P105.3-P105.7 remain planned."
+    "P105.1-P105.3 define local approval-planning schema, model, and dry-run review packet only.",
+    "Approval submission, approval capture, approval persistence, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    "P105.4-P105.7 remain planned."
   ]
 }

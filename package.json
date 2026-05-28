@@ -540,7 +540,8 @@
     "check:p1046-founder-live-execution-boundary-docs": "node scripts/check-p1046-founder-live-execution-boundary-docs.js",
     "check:p1047-founder-live-execution-boundary-final": "node scripts/check-p1047-founder-live-execution-boundary-final.js",
     "check:p1051-founder-live-execution-approval-planning-contract": "node scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
-    "check:p1052-founder-live-execution-approval-plan-model": "node scripts/check-p1052-founder-live-execution-approval-plan-model.js"
+    "check:p1052-founder-live-execution-approval-plan-model": "node scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+    "check:p1053-founder-live-execution-approval-review-packet": "node scripts/check-p1053-founder-live-execution-approval-review-packet.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

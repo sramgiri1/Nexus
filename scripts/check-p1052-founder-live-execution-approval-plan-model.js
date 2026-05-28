@@ -59,18 +59,18 @@ addCheck("rows include gates and validation", data.approvalPlanRows?.every((row)
 addCheck("all blocked flags false", P105_EXECUTION_APPROVAL_BLOCKED_FLAGS.every((flag) => data[flag] === false && data.approvalPlanRows.every((row) => row[flag] === false)));
 addCheck("reuses P104 boundary model and P105 schema", source.includes("buildFounderLiveExecutionBoundaryModel") && source.includes("buildFounderLiveExecutionApprovalPlanningSchema"));
 addCheck("contract marks P105.2 complete", p1052.status === "complete");
-addCheck("P105.3 remains planned", subphaseById.get("P105.3")?.status === "planned");
+addCheck("P105.3 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P105.3")?.status));
 addCheck("docs record P105.2", /P105\.2 Approval Plan Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P105.2", /P105\.2 is\s+complete/.test(platformRoadmap) && /P105\.3 is\s+next/.test(platformRoadmap));
 addCheck("README records P105.2", /P105\.2 approval-plan model/.test(readme) && /P105\.3 is next/.test(readme));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P105.2"
-    && status.previousPhase === "P105.1"
-    && status.nextPhase === "P105.3"
+  ["P105.2", "P105.3"].includes(status.currentPhase)
+    && ["P105.1", "P105.2"].includes(status.previousPhase)
+    && ["P105.3", "P105.4"].includes(status.nextPhase)
     && statusById.get("P105")?.status === "in_progress"
     && statusById.get("P105.2")?.status === "complete"
-    && statusById.get("P105.3")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P105.3")?.status)
     && roadmapById.get("P105.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
