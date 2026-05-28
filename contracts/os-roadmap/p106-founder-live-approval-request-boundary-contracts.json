@@ -1,7 +1,7 @@
 {
   "phaseId": "P106",
   "title": "Founder Live Approval Request Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define governed local approval request boundaries for future founder/operator approval requests without granting approval submission, approval capture, approval persistence, runtime admission, execution, mutation, deploy, network, or spend authority.",
   "safetyRules": [
@@ -688,10 +688,33 @@
     {
       "phaseId": "P106.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P106 validation, close the parent phase, stamp commits, and hand off to the next planned phase.",
-      "allowedFiles": [],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "05fee00f",
+      "allowedFiles": [
+        "contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json",
+        "docs/architecture/P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1067-founder-live-approval-request-final.js",
+        "scripts/check-p1066-founder-live-approval-request-docs.js",
+        "scripts/check-p1061-founder-live-approval-request-boundary-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1067-founder-live-approval-request-final-report.md",
+        "reports/p1066-founder-live-approval-request-docs-report.md",
+        "reports/p1065-founder-live-approval-request-validation-report.md",
+        "reports/p1064-command-center-approval-request-ux-report.md",
+        "reports/p1063-founder-live-approval-request-queue-preview-report.md",
+        "reports/p1062-founder-live-approval-request-model-report.md",
+        "reports/p1061-founder-live-approval-request-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -706,20 +729,86 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": [],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json",
+        "docs/architecture/P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1067-founder-live-approval-request-final.js",
+        "scripts/check-p1066-founder-live-approval-request-docs.js",
+        "scripts/check-p1061-founder-live-approval-request-boundary-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "finalReport": "reports/p1067-founder-live-approval-request-final-report.md with final checks for P106 scripts, reports, parent status, subphase status, P107 handoff, Command Center queue UX retention, route safety, phase status closure, commit stamping, and blocked live authority.",
+        "checker": "check:p1067-founder-live-approval-request-final validates final P106 closure without changing runtime behavior or UI."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P106.7. Preserve P106.4 queue card placement on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain clean/chat-only.",
+      "themeRequirements": "No theme source change in P106.7. Retain focused P106.4 dark, light, and system route coverage.",
+      "playwrightTests": "Run retained focused route coverage for Founder live approval request queue appears on non-chat founder routes.",
+      "checkerUpdates": [
+        "Add check:p1067-founder-live-approval-request-final.",
+        "Update P106.1 and P106.6 checkers to accept the P106.7/P107 handoff.",
+        "Update check:os-phase-status to accept P107 as the next planned OS phase."
+      ],
+      "docsRoadmap": "Close P106 docs, README, platform roadmap, and OS phase status with P106 and P106.7 complete and P107 next.",
+      "phaseStatusUpdate": "P106 complete; P106.7 complete; current P106.7; previous P106.6; next P107.",
+      "validationCommands": [
+        "npm run check:p1067-founder-live-approval-request-final",
+        "npm run check:p1066-founder-live-approval-request-docs",
+        "npm run check:p1065-founder-live-approval-request-validation",
+        "npm run check:p1064-command-center-approval-request-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval request queue appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1063-founder-live-approval-request-queue-preview",
+        "npm run check:p1062-founder-live-approval-request-model",
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm no live execution authority was enabled.",
-        "Confirm no project files changed."
+        "Confirm P106.7 is validation/status/docs only.",
+        "Confirm no live approval request submission, capture, persistence, or write authority was enabled.",
+        "Confirm no execution unlock or runtime admission was enabled.",
+        "Confirm provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.",
+        "Confirm P107 is planned only.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P106.7 files>",
+        "git commit -m \"test(nexus): close founder approval request final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ]
     }
   ],
   "knownLimitations": [
-    "P106.1 is schema and contract only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P106 is complete through final validation, but approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P106.2-P106.7 remain planned."
+    "P107 is planned only; no approval capture or execution authority is enabled by the handoff."
   ],
   "knownRisks": [
-    "P106.1-P106.6 are local/display/validation/docs-only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
-    "P106.7 remains planned."
+    "P106 remains local/display/validation/docs-only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P107 may require a separate approval capture boundary before any runtime-adjacent approval state can be considered."
   ]
 }

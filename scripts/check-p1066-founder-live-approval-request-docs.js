@@ -35,7 +35,7 @@ const docsBundle = [contract, plan, platformRoadmap, readme].map((entry) => JSON
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1066-founder-live-approval-request-docs"]));
 addCheck("contract marks P106.1-P106.6 complete", ["P106.1", "P106.2", "P106.3", "P106.4", "P106.5", "P106.6"].every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("contract keeps P106.7 planned", subphaseById.get("P106.7")?.status === "planned");
+addCheck("contract keeps P106.7 planned or complete", ["planned", "complete"].includes(subphaseById.get("P106.7")?.status));
 addCheck("contract records docs validation commands", ["npm run check:p1066-founder-live-approval-request-docs", "npm run check:p1065-founder-live-approval-request-validation", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1066.validationCommands?.includes(command)));
 addCheck("P106.6 avoids forbidden file scope", !(p1066.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("plan records P106.1-P106.6 complete", [
@@ -47,7 +47,7 @@ addCheck("plan records P106.1-P106.6 complete", [
   /P106\.6 Docs \/ Roadmap[\s\S]*Status:\s+complete/,
 ].every((pattern) => pattern.test(plan)));
 addCheck("README records P106.6", /P106\.6 docs closure/.test(readme) && /P106\.7 is\s+next/.test(readme));
-addCheck("platform roadmap records P106.6", /P106\.6 is\s+complete/.test(platformRoadmap) && /P106\.7 is\s+next/.test(platformRoadmap));
+addCheck("platform roadmap records P106.6", /P106\.6 is\s+complete/.test(platformRoadmap) && (/P106\.7 is\s+next/.test(platformRoadmap) || /P106\.7 is\s+complete/.test(platformRoadmap)));
 addCheck("docs preserve blocked approval request language", /approval request submission[\s\S]*remain blocked/i.test(readme) && /approval capture[\s\S]*remain blocked/i.test(platformRoadmap));
 addCheck("docs preserve Command Center placement", /Business Build, Agent Flow, and Live Readiness/.test(readme) && /Chat with NEXUS and Lite/.test(platformRoadmap));
 addCheck(
@@ -57,7 +57,7 @@ addCheck(
     && ["P106.7", "P107"].includes(status.nextPhase)
     && ["in_progress", "complete"].includes(statusById.get("P106")?.status)
     && statusById.get("P106.6")?.status === "complete"
-    && statusById.get("P106.7")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P106.7")?.status)
     && roadmapById.get("P106.6")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

@@ -2470,7 +2470,15 @@ Agent Flow, and Live Readiness, Chat with NEXUS and Lite chat-only boundaries,
 blocked approval request submission/capture/persistence/writes, blocked
 execution unlock, blocked runtime admission, and blocked provider, dispatch,
 worker/tool, project, hosted DB, deploy, package, network, and spend paths.
-P106.7 is next for final validation and next-phase handoff.
+
+P106.7 is complete. P106 is complete across approval request boundary
+contracts, deterministic request records, local queue preview, Command Center
+queue UX, focused route coverage, dashboard build, aggregate validation, docs,
+reports, phase status, and final safety checks. Approval request submission,
+approval capture, approval persistence, approval writes, execution unlock,
+runtime admission, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package action,
+network call, and provider spend remain blocked. P107 is next and planned only.
 
 Implementation follows
 [`p106-founder-live-approval-request-boundary-contracts.json`](../../contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json).

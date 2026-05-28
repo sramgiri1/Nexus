@@ -551,7 +551,8 @@
     "check:p1063-founder-live-approval-request-queue-preview": "node scripts/check-p1063-founder-live-approval-request-queue-preview.js",
     "check:p1064-command-center-approval-request-ux": "node scripts/check-p1064-command-center-approval-request-ux.js",
     "check:p1065-founder-live-approval-request-validation": "node scripts/check-p1065-founder-live-approval-request-validation.js",
-    "check:p1066-founder-live-approval-request-docs": "node scripts/check-p1066-founder-live-approval-request-docs.js"
+    "check:p1066-founder-live-approval-request-docs": "node scripts/check-p1066-founder-live-approval-request-docs.js",
+    "check:p1067-founder-live-approval-request-final": "node scripts/check-p1067-founder-live-approval-request-final.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

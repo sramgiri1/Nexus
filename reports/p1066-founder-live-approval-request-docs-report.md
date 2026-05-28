@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P106.6
-- Generated at: 2026-05-28T18:18:16.248Z
+- Generated at: 2026-05-28T18:24:29.566Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ec571f59
+- Validation HEAD: 05fee00f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | package script registered | PASS |  |
 | contract marks P106.1-P106.6 complete | PASS |  |
-| contract keeps P106.7 planned | PASS |  |
+| contract keeps P106.7 planned or complete | PASS |  |
 | contract records docs validation commands | PASS |  |
 | P106.6 avoids forbidden file scope | PASS |  |
 | plan records P106.1-P106.6 complete | PASS |  |
@@ -27,7 +27,7 @@
 | platform roadmap records P106.6 | PASS |  |
 | docs preserve blocked approval request language | PASS |  |
 | docs preserve Command Center placement | PASS |  |
-| phase status advanced | PASS | P106.6/P106.5/P106.7 |
+| phase status advanced | PASS | P106.7/P106.6/P107 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim execution live | PASS |  |
