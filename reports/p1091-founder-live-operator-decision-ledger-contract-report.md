@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.1
-- Generated at: 2026-05-28T20:20:14.320Z
+- Generated at: 2026-05-28T20:25:38.417Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c19cbfae
+- Validation HEAD: 8ea9418a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | contract phase identity | PASS |  |
 | contract is NEXUS OS scoped | PASS |  |
 | subphase split exists | PASS |  |
-| P109.1 complete and later subphases planned | PASS |  |
+| P109.1 complete and later subphases valid | PASS |  |
 | P109.1 includes implementation-grade fields | PASS |  |
 | safety rules block ledger writes and unsafe execution | PASS |  |
 | reuse rules reference shared helpers and P108 audit preview | PASS |  |
@@ -38,11 +38,11 @@
 | all blocked flags false | PASS |  |
 | contract records validation commands | PASS |  |
 | P109.1 avoids forbidden file scope | PASS |  |
-| current changed files stay in P109.1 scope | PASS |  |
+| current changed files stay in P109.1 scope | PASS | README.md, contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1091-founder-live-operator-decision-ledger-contract-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1091-founder-live-operator-decision-ledger-contract.js, live-ready/founderLiveOperatorDecisionLedgerModel.js, reports/p1092-founder-live-operator-decision-ledger-model-report.md, scripts/check-p1092-founder-live-operator-decision-ledger-model.js |
 | plan records P109.1 complete | PASS |  |
 | platform roadmap records P109.1 | PASS |  |
 | README records P109.1 | PASS |  |
-| phase status advanced to P109.1 | PASS | P109.1/P108.7/P109.2/in_progress |
+| phase status advanced to P109.1 | PASS | P109.2/P109.1/P109.3/in_progress |
 | phase status checker accepts P109 subphases | PASS |  |
 | P108.7 checker accepts P109.1 handoff | PASS |  |
 | ledger boundary stays Command Center hidden | PASS |  |

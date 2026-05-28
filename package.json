@@ -567,7 +567,8 @@
     "check:p1085-founder-live-approval-operator-review-validation": "node scripts/check-p1085-founder-live-approval-operator-review-validation.js",
     "check:p1086-founder-live-approval-operator-review-docs": "node scripts/check-p1086-founder-live-approval-operator-review-docs.js",
     "check:p1087-founder-live-approval-operator-review-final": "node scripts/check-p1087-founder-live-approval-operator-review-final.js",
-    "check:p1091-founder-live-operator-decision-ledger-contract": "node scripts/check-p1091-founder-live-operator-decision-ledger-contract.js"
+    "check:p1091-founder-live-operator-decision-ledger-contract": "node scripts/check-p1091-founder-live-operator-decision-ledger-contract.js",
+    "check:p1092-founder-live-operator-decision-ledger-model": "node scripts/check-p1092-founder-live-operator-decision-ledger-model.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

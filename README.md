@@ -404,6 +404,13 @@ The Command Center and local operator surface have:
   provider/model calls, dispatch, worker/tool execution, project mutation,
   hosted DB mutation, deploy, release, export, package, network calls, and
   provider spend remain blocked.
+- P109.2 decision-ledger model: deterministic local decision-ledger candidate
+  records are assembled from the P109.1 boundary and P108 audit preview. P109.3
+  is next. Operator decision capture, approval capture, persistence, ledger
+  writes, DB writes, replay, execution unlock, runtime admission,
+  provider/model calls, dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, deploy, release, export, package, network calls, and
+  provider spend remain blocked.
 
 ## CareLoop Project Progress
 

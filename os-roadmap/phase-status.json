@@ -13683,25 +13683,25 @@
       "order": 145,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1287aebf",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P109 is in progress. P109.1 defines the local operator decision ledger readiness boundary from the P108 operator-review audit preview while capture, persistence, ledger writes, DB writes, runtime admission, execution, mutation, network, and spend authority remain blocked.",
+      "summary": "P109 is in progress. P109.1 defines the local decision-ledger boundary and P109.2 assembles deterministic local decision-ledger candidate records while capture, persistence, ledger writes, DB writes, runtime admission, execution, mutation, network, and spend authority remain blocked.",
       "checksRun": [
+        "npm run check:p1092-founder-live-operator-decision-ledger-model",
         "npm run check:p1091-founder-live-operator-decision-ledger-contract",
-        "npm run check:p1087-founder-live-approval-operator-review-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P109.1 is contract/schema only and does not capture operator decisions, persist approval state, write ledger records, write DB records, unlock execution, or admit runtime execution.",
+        "P109.1-P109.2 are local boundary/model work only and do not capture operator decisions, persist approval state, write ledger records, write DB records, unlock execution, or admit runtime execution.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P109.2-P109.7 remain planned."
+        "P109.3-P109.7 remain planned."
       ],
-      "nextPhase": "P109.2",
+      "nextPhase": "P109.3",
       "commandCenterVisible": true,
       "label": "Decision Ledger",
-      "detail": "P109.1 complete; P109.2 local ledger model next."
+      "detail": "P109.2 complete; P109.3 audit preview next."
     },
     {
       "phaseId": "P109.1",
@@ -13735,19 +13735,27 @@
       "title": "Decision Ledger Model",
       "track": "NEXUS_OS",
       "order": 145.2,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Build deterministic local ledger candidate records from P109.1 without persistence or DB writes.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T20:24:37.000Z",
+      "summary": "Assembled deterministic local operator decision-ledger candidate records from the P109.1 boundary and P108 operator-review audit preview without enabling capture, persistence, ledger writes, DB writes, replay, runtime admission, execution, mutation, network, or spend.",
+      "checksRun": [
+        "npm run check:p1092-founder-live-operator-decision-ledger-model",
+        "npm run check:p1091-founder-live-operator-decision-ledger-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P109.2 is planned and must not enable ledger writes, DB writes, runtime admission, execution, provider calls, project mutation, deploy, package, network calls, or spend."
+        "P109.2 is local model only and does not capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, or admit runtime execution.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P109.3 audit preview remains planned."
       ],
       "nextPhase": "P109.3",
       "commandCenterVisible": true,
       "label": "Ledger Model",
-      "detail": "Planned local model; no persistence authority."
+      "detail": "Local decision-ledger candidates complete; writes and execution blocked."
     },
     {
       "phaseId": "P109.3",
@@ -13758,7 +13766,7 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Create display-safe ledger audit preview rows without raw IDs, persistence, DB writes, or execution controls.",
+      "summary": "Create display-safe ledger audit preview rows without raw IDs, persistence, DB writes, replay, or execution controls.",
       "checksRun": [],
       "knownLimitations": [
         "P109.3 is planned and must remain display-safe, local, read-only, and blocked from writes, DB mutation, runtime admission, execution, provider calls, deploy, package, network calls, and spend."
@@ -14326,9 +14334,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T20:15:06.000Z",
-  "currentPhase": "P109.1",
-  "previousPhase": "P108.7",
-  "nextPhase": "P109.2",
+  "updatedAt": "2026-05-28T20:24:37.000Z",
+  "currentPhase": "P109.2",
+  "previousPhase": "P109.1",
+  "nextPhase": "P109.3",
   "currentPhaseStatus": "complete"
 }

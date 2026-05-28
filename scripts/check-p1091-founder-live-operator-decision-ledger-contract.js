@@ -60,7 +60,9 @@ const allowedChangedPrefixes = [
   "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
   "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
   "live-ready/founderLiveOperatorDecisionLedgerBoundary.js",
+  "live-ready/founderLiveOperatorDecisionLedgerModel.js",
   "scripts/check-p1091-founder-live-operator-decision-ledger-contract.js",
+  "scripts/check-p1092-founder-live-operator-decision-ledger-model.js",
   "scripts/check-p1087-founder-live-approval-operator-review-final.js",
   "scripts/check-os-phase-status.js",
   "package.json",
@@ -69,6 +71,7 @@ const allowedChangedPrefixes = [
   "os-roadmap/phase-status.json",
   "os-roadmap/nexus-phases.json",
   "reports/p1091-founder-live-operator-decision-ledger-contract-report.md",
+  "reports/p1092-founder-live-operator-decision-ledger-model-report.md",
   "reports/p1087-founder-live-approval-operator-review-final-report.md",
   "reports/os-phase-status-report.md",
   "reports/phase-validation-coverage-report.md",
@@ -81,7 +84,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1091
 addCheck("contract phase identity", contract.phaseId === "P109" && contract.title === "Founder Live Operator Decision Ledger Readiness");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p109Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P109.1 complete and later subphases planned", subphaseById.get("P109.1")?.status === "complete" && p109Subphases.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P109.1 complete and later subphases valid", subphaseById.get("P109.1")?.status === "complete" && p109Subphases.slice(1).every((phaseId) => ["planned", "complete"].includes(subphaseById.get(phaseId)?.status)));
 addCheck("P109.1 includes implementation-grade fields", Boolean(p1091.narrowGoal && p1091.allowedFiles && p1091.forbiddenFiles && p1091.exactFiles && p1091.validationCommands && p1091.finalSafetyChecks && p1091.finalResponseChecklist));
 addCheck("safety rules block ledger writes and unsafe execution", [
   "No approval capture.",
@@ -116,13 +119,16 @@ addCheck("platform roadmap records P109.1", /P109 - Founder Live Operator Decisi
 addCheck("README records P109.1", /P109\.1 decision-ledger boundary/.test(readme) && /P109\.2 is next/.test(readme));
 addCheck(
   "phase status advanced to P109.1",
-  status.currentPhase === "P109.1"
+  ((status.currentPhase === "P109.1"
     && status.previousPhase === "P108.7"
-    && status.nextPhase === "P109.2"
+    && status.nextPhase === "P109.2")
+    || (status.currentPhase === "P109.2"
+      && status.previousPhase === "P109.1"
+      && status.nextPhase === "P109.3"))
     && statusById.get("P108")?.status === "complete"
     && statusById.get("P109")?.status === "in_progress"
     && statusById.get("P109.1")?.status === "complete"
-    && statusById.get("P109.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P109.2")?.status)
     && roadmapById.get("P109")?.status === "in_progress"
     && roadmapById.get("P109.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}/${statusById.get("P109")?.status}`,

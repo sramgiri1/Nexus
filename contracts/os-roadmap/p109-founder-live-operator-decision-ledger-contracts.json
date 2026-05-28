@@ -147,9 +147,108 @@
     {
       "phaseId": "P109.2",
       "title": "Decision Ledger Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Build deterministic local ledger candidate records from P109.1 without persistence or DB writes."
+      "narrowGoal": "Build deterministic local ledger candidate records from P109.1 without persistence or DB writes.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "live-ready/founderLiveOperatorDecisionLedgerModel.js",
+        "scripts/check-p1092-founder-live-operator-decision-ledger-model.js",
+        "scripts/check-p1091-founder-live-operator-decision-ledger-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1092-founder-live-operator-decision-ledger-model-report.md",
+        "reports/p1091-founder-live-operator-decision-ledger-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "live-ready/founderLiveOperatorDecisionLedgerModel.js",
+        "scripts/check-p1092-founder-live-operator-decision-ledger-model.js",
+        "scripts/check-p1091-founder-live-operator-decision-ledger-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1092-founder-live-operator-decision-ledger-model-report.md",
+        "reports/p1091-founder-live-operator-decision-ledger-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_MODEL_PHASE",
+        "P109_OPERATOR_DECISION_LEDGER_MODEL_STATES",
+        "buildFounderLiveOperatorDecisionLedgerModel",
+        "validateFounderLiveOperatorDecisionLedgerModel"
+      ],
+      "expectedDataShape": {
+        "schemaVersion": "1.0",
+        "currentState": "string",
+        "sourceDecisionLedgerBoundaryPhase": "string",
+        "sourceOperatorReviewAuditPreviewPhase": "string",
+        "operatorDecisionLedgerModelSummary": "object",
+        "operatorDecisionLedgerCandidates": "object[]",
+        "requiredEvidence": "string[]",
+        "forbiddenActions": "string[]",
+        "blockers": "string[]",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "evidenceRefs": "string[]",
+        "activityLocation": "string",
+        "costImpact": "string",
+        "commandCenterVisible": false
+      },
+      "commandCenterUx": "No Command Center source change in P109.2. Decision-ledger candidates remain hidden from primary UX until P109.4.",
+      "themeRequirements": "No theme source change in P109.2. Preserve dark, light, and system behavior.",
+      "validationCommands": [
+        "npm run check:p1092-founder-live-operator-decision-ledger-model",
+        "npm run check:p1091-founder-live-operator-decision-ledger-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "checkerUpdates": [
+        "Add P109.2 local model checker.",
+        "Update P109.1 checker to accept the P109.2 handoff state."
+      ],
+      "docsRoadmap": "Record P109.2 complete in P109 plan, README, platform roadmap, contract, and OS phase status. P109.3 is next.",
+      "phaseStatusUpdate": "P109 in progress; P109.1 and P109.2 complete; current P109.2; previous P109.1; next P109.3.",
+      "finalSafetyChecks": [
+        "Confirm P109.2 is local model only.",
+        "Confirm no Command Center source or test files changed.",
+        "Confirm no approval/operator decision capture, persistence, ledger writes, DB writes, runtime admission, execution, provider calls, project mutation, deploy, package, network, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Checker results",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
     },
     {
       "phaseId": "P109.3",

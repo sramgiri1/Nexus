@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-28T20:20:22.446Z
+- Generated at: 2026-05-28T20:25:46.508Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c19cbfae
+- Validation HEAD: 8ea9418a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -359,9 +359,9 @@
 | P108.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P108.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P108.7 validation coverage | PASS | 46 checkers, 41 reports |
-| P109 validation coverage | PASS | 5 checkers, 1 reports |
+| P109 validation coverage | PASS | 6 checkers, 2 reports |
 | P109.1 validation coverage | PASS | 5 checkers, 1 reports |
-| P109.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P109.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P109.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P109.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P109.5 validation coverage | PASS | 18 checkers, 18 reports |
@@ -385,18 +385,13 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P109.1; next=P109.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P109.2; next=P109.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P109.2 Decision Ledger Model
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P109.3 Decision Ledger Audit Preview
   - status: planned
   - checkers: 0

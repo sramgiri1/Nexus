@@ -2640,6 +2640,14 @@ calls, agent dispatch, worker/tool execution, project mutation, hosted DB
 mutation, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P109.2 is complete. Deterministic local decision-ledger candidate records are
+assembled from the P109.1 boundary and P108 audit preview. P109.3 is next.
+Operator decision capture, approval capture, approval persistence, ledger
+writes, DB writes, replay, execution unlock, runtime admission, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p109-founder-live-operator-decision-ledger-contracts.json`](../../contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json).
 
