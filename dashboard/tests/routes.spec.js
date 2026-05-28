@@ -489,6 +489,52 @@ test("Command Center Lite route stays chat-only", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Work order persistence surfaces on founder DB pages and stays out of chat", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+
+  await page.goto("/command-center/business-build");
+  const businessBuildWorkOrders = page.getByLabel("Founder agent work order persistence").first();
+  await expect(businessBuildWorkOrders).toBeVisible();
+  await expect(businessBuildWorkOrders).toContainText("Work Order Persistence");
+  await expect(businessBuildWorkOrders).toContainText("Approved local only");
+  await expect(businessBuildWorkOrders).toContainText("Agent work order");
+  await expect(businessBuildWorkOrders).toContainText("Work order event");
+  await expect(businessBuildWorkOrders).toContainText("Evidence reference");
+  await expect(businessBuildWorkOrders).toContainText("Agent dispatch");
+  await expect(businessBuildWorkOrders).toContainText("Provider spend");
+
+  await page.goto("/command-center/database");
+  await commandTab(page, "DB Runtime").click();
+  const durableStateWorkOrders = page.getByLabel("Founder agent work order persistence").first();
+  await expect(durableStateWorkOrders).toBeVisible();
+  await expect(durableStateWorkOrders).toContainText("DB Runtime Agent Work Order Persistence");
+  await expect(durableStateWorkOrders).toContainText("Local SQLite founder agent work orders");
+  await expect(durableStateWorkOrders).toContainText("Approved local only");
+
+  await pickTheme(page, "dark");
+  await expect(durableStateWorkOrders).toBeVisible();
+  await pickTheme(page, "light");
+  await expect(durableStateWorkOrders).toBeVisible();
+
+  await page.goto("/command-center/lite");
+  await expect(page.getByLabel("Chat with NEXUS")).toBeVisible();
+  await expect(page.getByLabel("Founder agent work order persistence")).toHaveCount(0);
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("founder_agent_work_orders");
+  expect(body).not.toContain("founder_agent_work_order_events");
+  expect(body).not.toContain("founder_agent_work_order_evidence_refs");
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+  expect(errors).toEqual([]);
+});
+
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 

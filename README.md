@@ -530,6 +530,15 @@ The Command Center and local operator surface have:
   provider/model call, dispatch, worker/tool execution, project mutation,
   deploy, release, export, package, network call, and provider spend remain
   unavailable.
+- P111.4 Command Center work order persistence UX: Business Build and Durable
+  State now show display-safe founder agent work order persistence state with
+  current state, next action, blockers, disabled reason, owner, evidence,
+  activity, cost, local CRUD labels, record rows, and safety rows. Chat/Lite
+  remains chat-only. P111.5 is next for aggregate validation. Mutation
+  controls, hosted DB mutation, raw SQL, runtime admission, execution unlock,
+  provider/model call, dispatch, worker/tool execution, project mutation,
+  deploy, release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

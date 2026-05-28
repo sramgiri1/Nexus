@@ -1,4 +1,5 @@
 import {
+  buildFounderLiveAgentWorkOrderPersistenceDisplayModel,
   buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel,
   buildFounderRuntimeDbViewModel,
 } from "./businessBuild.js";
@@ -6,6 +7,7 @@ import {
 export function buildDbRuntimeReadinessViewModel() {
   const founderRuntime = buildFounderRuntimeDbViewModel();
   const operatorDecisionLedgerPersistence = buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(founderRuntime.founderIdea);
+  const agentWorkOrderPersistence = buildFounderLiveAgentWorkOrderPersistenceDisplayModel(founderRuntime.founderIdea);
   const enterpriseRuntime = {
     currentState: "Local CRUD admission ready",
     requestState: "Mutation request envelopes ready for operator review",
@@ -53,6 +55,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Enterprise runtime CRUD", value: "Admitted locally with explicit approval and write flags" },
       { label: "Founder workflow records", value: founderRuntime.savedSessionState },
       { label: "Operator decision ledger", value: operatorDecisionLedgerPersistence.currentState },
+      { label: "Agent work orders", value: agentWorkOrderPersistence.currentState },
       { label: "General mutation", value: "Blocked outside the OS runtime allowlist" },
       { label: "Owner capability", value: "NEXUS DB Runtime Governance" },
       { label: "Next action", value: enterpriseRuntime.nextAction },
@@ -65,6 +68,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Enterprise CRUD", value: "Admitted", tone: "teal" },
       { label: "Founder workflow", value: "DB-ready", tone: "teal" },
       { label: "Decision ledger", value: "Guarded local", tone: "amber" },
+      { label: "Agent work orders", value: "Approved local only", tone: "amber" },
       { label: "DB writes", value: "Approved local only", tone: "amber" },
       { label: "Hosted DB", value: "Blocked", tone: "red" },
       { label: "Project mutation", value: "Disabled", tone: "red" },
@@ -93,12 +97,14 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Local CRUD admission", value: enterpriseRuntime.evidenceLocation },
       { label: "Founder DB workflow", value: founderRuntime.evidenceLocation },
       { label: "Decision ledger DB", value: operatorDecisionLedgerPersistence.evidenceLocation },
+      { label: "Agent work order DB", value: agentWorkOrderPersistence.evidenceLocation },
       { label: "Cost impact", value: "No provider spend; local SQLite only." },
       { label: "Disabled reason", value: enterpriseRuntime.disabledReason },
     ],
     enterpriseRuntime,
     founderRuntime,
     operatorDecisionLedgerPersistence,
+    agentWorkOrderPersistence,
     safety: {
       dbWritesAllowed: "approved-os-runtime-entities-only",
       migrationsAllowed: false,

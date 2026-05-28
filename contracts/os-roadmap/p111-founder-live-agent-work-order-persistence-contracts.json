@@ -396,11 +396,11 @@
     {
       "phaseId": "P111.4",
       "title": "Command Center Work Order Persistence UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Surface display-safe founder agent work order persistence state on relevant Command Center pages while keeping Chat/Lite clean.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "06d43086",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/data/dbRuntimeReadiness.js",
@@ -457,24 +457,25 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [
-        "package script for P111.4"
+        "buildFounderLiveAgentWorkOrderPersistenceDisplayModel",
+        "package script check:p1114-command-center-work-order-persistence-ux"
       ],
-      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
-      "commandCenterUx": "Expose display-safe agent work order persistence on relevant founder pages without raw JSON, raw logs, raw policy dumps, raw private IDs, raw packet keys, DemoApp, or runnable dispatch/mutation controls.",
+      "dataShape": "Display-safe founder work order state with currentState, runtimeMode, dbMode, savedWorkOrderState, savedEventState, savedEvidenceState, allowedLocalCrudOperations, allowedRecords, readyRecordCount, totalRecordCount, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, commandCenterVisible, lanes, and safetyRows. No raw DB table names or private IDs are exposed in primary UX.",
+      "commandCenterUx": "Business Build and Durable State show work order persistence state, records, blockers, disabled reason, owner, evidence, activity, cost, and safety rows. Chat/Lite remains chat-only.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Add focused route coverage for work order persistence UX across relevant founder routes and themes."
+        "Added Work order persistence route coverage for Business Build, Durable State DB Runtime, Chat/Lite absence, and dark/light theme switching."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P111.4 checker.",
-        "Run previous subphase checker for P111.3."
+        "Added check:p1114-command-center-work-order-persistence-ux.",
+        "Updated P111.3 checker to accept P111.4/P111.5 handoff."
       ],
-      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.4.",
-      "phaseStatusUpdate": "P111 in progress; P111.4 complete when implemented; previous P111.3; next P111.5.",
+      "docsRoadmap": "Updated P111 plan, README, platform roadmap, OS status, and generated reports for P111.4.",
+      "phaseStatusUpdate": "P111 in progress; P111.4 complete; current P111.4; previous P111.3; next P111.5.",
       "validationCommands": [
         "npm run check:p1114-command-center-work-order-persistence-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Work order persistence\"",
@@ -845,7 +846,8 @@
     "P111.1 is contract-only; DB schema, runtime helpers, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P111.3",
-  "previousSubphase": "P111.2",
-  "nextSubphase": "P111.4"
+  "currentSubphase": "P111.4",
+  "previousSubphase": "P111.3",
+  "nextSubphase": "P111.5",
+  "summary": "P111 is in progress. P111.1-P111.4 define contracts, local SQLite schema, approval-gated local CRUD model, and display-safe Command Center UX for founder live agent work orders while unsafe authority remains blocked."
 }

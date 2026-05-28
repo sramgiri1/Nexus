@@ -2803,6 +2803,15 @@ mutation, provider/model calls, agent dispatch, worker/tool execution, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P111.4 is complete. Business Build and Durable State now show display-safe
+founder agent work order persistence state, including current state, next
+action, blockers, disabled reason, owner, evidence, activity, cost, local CRUD
+labels, record rows, and safety rows. Chat/Lite remains chat-only. P111.5 is
+next for aggregate validation. Mutation controls, hosted DB mutation, raw SQL,
+runtime admission, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, deploy, release, export, package
+action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json).
 

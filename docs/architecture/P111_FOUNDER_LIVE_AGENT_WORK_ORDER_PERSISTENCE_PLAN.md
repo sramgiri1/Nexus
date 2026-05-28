@@ -291,3 +291,102 @@ isolated create/read/update/upsert/list behavior.
 Rollback plan: remove the P111.3 live-ready module/checker/script/docs/status
 and report updates, restore P111 to P111.2 with P111.3 planned, and keep
 P111.1-P111.2 unchanged.
+
+## P111.4 Command Center Work Order Persistence UX
+
+Status: complete
+
+Narrow goal: surface display-safe founder agent work order persistence state on
+Business Build and Durable State while keeping Chat/Lite focused on founder
+conversation only.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `06d43086`.
+
+Allowed files: dashboard Business Build data, DB runtime readiness data,
+Command Center V2 page, route Playwright test, P111.4 checker, P111.3
+compatibility checker, P111 contract, P111 plan, README, platform roadmap,
+package script registry, OS phase status files, and generated P111.4/P111.3/
+status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `db/**`, `live-ready/**`,
+`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added a display-only founder agent work order
+persistence view model, surfaced it on Business Build and Durable State DB
+Runtime, added focused Playwright route/theme coverage, added the P111.4
+checker, updated P111.3 handoff compatibility, registered the package script,
+updated P111 contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes:
+`buildFounderLiveAgentWorkOrderPersistenceDisplayModel(founderIdeaSummary)`
+returns `currentState`, `runtimeMode`, `dbMode`, saved work order/event/evidence
+states, allowed local CRUD labels, allowed record labels, ready/total counts,
+next action, blockers, disabled reason, owner capability, evidence/activity
+locations, cost impact, command center visibility, lane rows, and safety rows.
+The model uses founder-readable labels and does not expose raw DB table names or
+private IDs.
+
+Safety rules: the UI is display-only and exposes no mutation controls. Hosted DB
+mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution,
+runtime admission, execution unlock, project mutation, deploy, release, export,
+package creation, network calls, and provider spend remain blocked.
+
+Reuse check: P111.4 reuses the existing Business Build display model pattern,
+DB runtime readiness model, Command Center card/status primitives, route matrix,
+theme controls, and Playwright route safety tests. It does not duplicate SQLite
+repository helpers or import the Node-side P111.3 CRUD executor into the browser
+bundle.
+
+Command Center UX requirements: Business Build and Durable State now show Work
+Order Persistence with current state, next action, blockers, disabled reason,
+owner capability, evidence, activity, cost, allowed local CRUD, record rows, and
+safety rows. Chat/Lite remains chat-only.
+
+Dark/light/system theme requirements: no theme API changes. The new card uses
+existing `ccv2-*` classes and is covered by dark/light route tests; system theme
+behavior remains inherited from the existing shell.
+
+Playwright tests: added the focused Work order persistence route test covering
+Business Build, Durable State DB Runtime, Chat/Lite absence, and dark/light
+theme switching.
+
+Checker updates: P111.4 adds a dedicated UX checker and updates P111.3 to accept
+the P111.4/P111.5 handoff state.
+
+Docs/README/roadmap updates: P111.4 is recorded in this plan, README, platform
+roadmap, P111 contract, OS roadmap/status, and generated reports. P111.5 is
+next.
+
+OS phase status update: P111 is in progress; P111.4 is complete; current phase
+P111.4; previous P111.3; next P111.5.
+
+Validation commands:
+- `npm run check:p1114-command-center-work-order-persistence-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Work order persistence"`
+- `cd dashboard && npm run build`
+- `npm run check:p1113-founder-live-agent-work-order-crud-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/live-ready/db/provider/deploy paths
+changed; no DemoApp exposure; no raw JSON/log/policy dumps; no raw private IDs
+or raw work order table names in primary UX; no fake runnable actions; no
+hosted DB mutation, raw SQL interface, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, deploy, release, export, package,
+network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P111.4 files>`
+- `git commit -m "feat(nexus): add p111 work order persistence ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: the UI could accidentally import Node-only DB helpers or leak raw
+SQLite entity names. The P111.4 checker blocks both cases.
+
+Rollback plan: remove the P111.4 dashboard/checker/test/docs/status/report
+updates, restore P111 to P111.3 with P111.4 planned, and keep P111.1-P111.3
+unchanged.

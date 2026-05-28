@@ -9414,25 +9414,26 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5136ea29719daaa47b777431479515b1d5853a2d",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P111 is in progress. P111.1-P111.3 define contracts, local SQLite schema, and approval-gated local CRUD model for founder live agent work orders while unsafe authority remains blocked.",
+      "summary": "P111 is in progress. P111.1-P111.4 define contracts, local SQLite schema, approval-gated local CRUD model, and display-safe Command Center UX for founder live agent work orders while unsafe authority remains blocked.",
       "checksRun": [
+        "npm run check:p1114-command-center-work-order-persistence-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Work order persistence\"",
+        "cd dashboard && npm run build",
         "npm run check:p1113-founder-live-agent-work-order-crud-model",
-        "npm run check:p1112-founder-live-agent-work-order-schema",
-        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P111.3 adds governed local CRUD helpers only and does not add Command Center source, persistent runtime data outside isolated checker validation, or execution authority.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+        "P111.4 adds Command Center UX only and does not expose browser mutation controls or direct DB writes.",
+        "Unsafe authority remains blocked unless a later explicit phase scopes it."
       ],
-      "nextPhase": "P111.4",
+      "nextPhase": "P111.5",
       "commandCenterVisible": true,
       "label": "Work Orders",
-      "detail": "P111.3 CRUD model complete; P111.4 Command Center UX next."
+      "detail": "P111.4 Command Center work order persistence UX complete; P111.5 aggregate validation next."
     },
     {
       "phaseId": "P111.1",
@@ -9519,19 +9520,29 @@
       "title": "Command Center Work Order Persistence UX",
       "track": "NEXUS_OS",
       "order": 147.4,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-safe Command Center UX for founder agent work order persistence.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T22:35:04.858Z",
+      "summary": "Surfaced display-safe founder agent work order persistence state on Business Build and Durable State while keeping Chat/Lite clean and mutation controls unavailable.",
+      "checksRun": [
+        "npm run check:p1114-command-center-work-order-persistence-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Work order persistence\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1113-founder-live-agent-work-order-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no Command Center source change is enabled yet."
+        "P111.4 is display-only and does not write DB records from the browser.",
+        "Mutation controls, hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P111.5 will aggregate P111.1-P111.4 validation before docs closure and final validation."
       ],
       "nextPhase": "P111.5",
       "commandCenterVisible": true,
       "label": "Work Order UX",
-      "detail": "Planned Command Center UX."
+      "detail": "Business Build and Durable State show display-safe work order persistence; Chat/Lite remains clean."
     },
     {
       "phaseId": "P111.5",
@@ -9550,7 +9561,8 @@
       "nextPhase": "P111.6",
       "commandCenterVisible": true,
       "label": "Work Order Validation",
-      "detail": "Planned aggregate validation."
+      "detail": "Planned aggregate validation.",
+      "previousPhase": "P111.4"
     },
     {
       "phaseId": "P111.6",
@@ -10001,9 +10013,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T22:27:44.128Z",
-  "currentPhase": "P111.3",
-  "previousPhase": "P111.2",
-  "nextPhase": "P111.4",
+  "updatedAt": "2026-05-28T22:35:04.858Z",
+  "currentPhase": "P111.4",
+  "previousPhase": "P111.3",
+  "nextPhase": "P111.5",
   "currentPhaseStatus": "complete"
 }

@@ -100,6 +100,30 @@ const OPERATOR_DECISION_LEDGER_PERSISTENCE_RECORDS = [
   },
 ];
 
+const AGENT_WORK_ORDER_PERSISTENCE_RECORDS = [
+  {
+    label: "Agent work order",
+    currentState: "Ready For Approved Local CRUD",
+    ownerCapability: "NEXUS Founder Agent Work Order DB",
+    nextAction: "Review approval evidence before saving the display-safe work order locally.",
+    blocker: "Operator approval is required before a local work order can be saved.",
+  },
+  {
+    label: "Work order event",
+    currentState: "Ready For Approved Local CRUD",
+    ownerCapability: "NEXUS Founder Agent Work Order DB",
+    nextAction: "Review audit and rollback evidence before saving the local work order event.",
+    blocker: "Audit and rollback acceptance are required before a local work order event can be saved.",
+  },
+  {
+    label: "Work order evidence reference",
+    currentState: "Ready For Approved Local CRUD",
+    ownerCapability: "NEXUS Evidence Governance",
+    nextAction: "Review validation evidence before saving the local evidence reference.",
+    blocker: "Validation command acceptance is required before local work order evidence can be saved.",
+  },
+];
+
 function buildFounderRuntimeDbWorkflowData(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   return {
     currentState: "founder_runtime_db_view_model_ready",
@@ -1252,6 +1276,66 @@ export function buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(fo
   };
 }
 
+export function buildFounderLiveAgentWorkOrderPersistenceDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const lanes = AGENT_WORK_ORDER_PERSISTENCE_RECORDS.map((record) => ({
+    ...record,
+    disabledReason: "Local agent work order persistence requires explicit operator approval, rollback acceptance, audit acceptance, validation command acceptance, sqlite-live mode, and local write flags. Hosted DB mutation, raw SQL, execution, dispatch, project mutation, deploy, package creation, network calls, and spend remain blocked.",
+    evidenceLocation: "reports/p1113-founder-live-agent-work-order-crud-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite CRUD only after approval. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    localCrudAllowed: "Guarded",
+    hostedDbMutationAllowed: "Blocked",
+    rawSqlAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Agent Work Order Persistence Ready For Approved Local Admission",
+    founderIdea: founderIdeaSummary,
+    runtimeMode: "Local SQLite founder agent work orders",
+    dbMode: "Guarded local SQLite only",
+    savedWorkOrderState: "Ready For Approved Local CRUD",
+    savedEventState: "Ready For Approved Local CRUD",
+    savedEvidenceState: "Ready For Approved Local CRUD",
+    readyRecordCount: lanes.length,
+    totalRecordCount: lanes.length,
+    allowedLocalCrudOperations: ["Create", "Read", "Update", "Upsert", "List"],
+    allowedRecords: AGENT_WORK_ORDER_PERSISTENCE_RECORDS.map((record) => record.label),
+    nextAction: "Review approval, rollback, audit, validation, sqlite-live, and local write evidence before admitting local agent work order records.",
+    blockers: [
+      "Operator approval is required before local work order persistence.",
+      "Rollback acceptance is required before local work order persistence.",
+      "Audit acceptance is required before local work order persistence.",
+      "Validation command acceptance is required before local work order persistence.",
+      "SQLite live mode and local write flags are required before local work order persistence.",
+      "Hosted DB mutation and raw SQL remain blocked.",
+      "Execution unlock, runtime admission, agent dispatch, worker/tool execution, and project mutation remain blocked.",
+    ],
+    disabledReason: "P111.4 renders display-safe agent work order persistence state only. It does not expose mutation controls, hosted DB mutation, raw SQL, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, network calls, deploy, release, export, package creation, or provider spend.",
+    ownerCapability: "NEXUS Founder Agent Work Order DB CRUD",
+    evidenceLocation: "reports/p1113-founder-live-agent-work-order-crud-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite CRUD only after explicit approval. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    commandCenterVisible: true,
+    lanes,
+    safetyRows: [
+      { label: "Local SQLite CRUD", value: "Guarded" },
+      { label: "Delete/raw SQL", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1975,6 +2059,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     operatorReviewDisplayModel: founderLiveApprovalOperatorReview,
   });
   const founderLiveOperatorDecisionLedgerPersistence = buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(prdFields.founderIdea);
+  const founderLiveAgentWorkOrderPersistence = buildFounderLiveAgentWorkOrderPersistenceDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2112,6 +2197,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveApprovalOperatorReview,
     founderLiveOperatorDecisionLedger,
     founderLiveOperatorDecisionLedgerPersistence,
+    founderLiveAgentWorkOrderPersistence,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

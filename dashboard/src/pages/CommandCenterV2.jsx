@@ -8359,6 +8359,10 @@ function DurableStatePage({ vm }) {
               persistence={dbRuntime.operatorDecisionLedgerPersistence}
               surfaceLabel="DB Runtime Decision Ledger Persistence"
             />
+            <FounderLiveAgentWorkOrderPersistenceCard
+              persistence={dbRuntime.agentWorkOrderPersistence}
+              surfaceLabel="DB Runtime Agent Work Order Persistence"
+            />
             <LiveWorkstreamHandoffCard
               handoff={businessBuildRuntimeView.liveWorkstreamHandoff}
               dryRun={businessBuildRuntimeView.liveWorkstreamHandoffDryRun}
@@ -10113,6 +10117,10 @@ function BusinessBuildPage() {
           persistence={build.founderLiveOperatorDecisionLedgerPersistence}
           surfaceLabel="Business Build Decision Ledger Persistence"
         />
+        <FounderLiveAgentWorkOrderPersistenceCard
+          persistence={build.founderLiveAgentWorkOrderPersistence}
+          surfaceLabel="Business Build Agent Work Order Persistence"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -11138,6 +11146,74 @@ function FounderLiveOperatorDecisionLedgerPersistenceCard({ persistence, surface
           <div
             key={lane.label}
             aria-label={`${lane.label} decision ledger persistence row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.label}</div>
+            <div className="ccv2-pill ccv2-pill--amber" style={{ marginTop: 8 }}>{lane.currentState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.blocker}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {lane.evidenceLocation}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className={row.value === "Guarded" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveAgentWorkOrderPersistenceCard({ persistence, surfaceLabel = "Agent Work Order Persistence" }) {
+  if (!persistence) return null;
+
+  const lanes = Array.isArray(persistence.lanes) ? persistence.lanes.slice(0, 3) : [];
+  const blockers = Array.isArray(persistence.blockers) ? persistence.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(persistence.safetyRows) ? persistence.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder agent work order persistence">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Work Order Persistence</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {persistence.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--amber">Approved local only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{persistence.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime mode</span><span className="ccv2-page-summary-value">{persistence.runtimeMode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB mode</span><span className="ccv2-page-summary-value">{persistence.dbMode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Work order</span><span className="ccv2-page-summary-value">{persistence.savedWorkOrderState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Work order event</span><span className="ccv2-page-summary-value">{persistence.savedEventState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence reference</span><span className="ccv2-page-summary-value">{persistence.savedEvidenceState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed local CRUD</span><span className="ccv2-page-summary-value">{persistence.allowedLocalCrudOperations.join(", ")} with explicit approval</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Records ready</span><span className="ccv2-page-summary-value">{persistence.readyRecordCount} of {persistence.totalRecordCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{persistence.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{persistence.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{persistence.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{persistence.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{persistence.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{persistence.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {lanes.map((lane) => (
+          <div
+            key={lane.label}
+            aria-label={`${lane.label} work order persistence row`}
             style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
           >
             <div className="ccv2-section-heading">{lane.label}</div>
