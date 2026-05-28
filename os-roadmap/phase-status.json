@@ -13208,7 +13208,7 @@
       "order": 143,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "15bd002c",
       "completedAt": "2026-05-28T19:12:51.860Z",
       "summary": "P107 is complete. Final validation closes the approval capture boundary contract, local model, audit preview, Command Center UX, aggregate validation, docs, reports, OS phase status, and P108 handoff while approval capture and execution authority remain blocked.",
       "checksRun": [
@@ -13418,7 +13418,7 @@
       "order": 143.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "15bd002c",
       "completedAt": "2026-05-28T19:12:51.860Z",
       "summary": "Closed P107 final validation across scripts, reports, docs, status, Command Center capture UX retention, focused route safety, blocked authority posture, and P108 planned handoff.",
       "checksRun": [
