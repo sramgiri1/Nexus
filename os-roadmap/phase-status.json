@@ -13206,15 +13206,18 @@
       "title": "Founder Live Approval Capture Boundary",
       "track": "NEXUS_OS",
       "order": 143,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "32a165fb",
-      "completedAt": "",
-      "summary": "P107 approval capture boundary is in progress. P107.6 closes docs, README, platform roadmap, and phase tracking for P107.1-P107.6 while approval capture and execution authority remain blocked.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T19:12:51.860Z",
+      "summary": "P107 is complete. Final validation closes the approval capture boundary contract, local model, audit preview, Command Center UX, aggregate validation, docs, reports, OS phase status, and P108 handoff while approval capture and execution authority remain blocked.",
       "checksRun": [
+        "npm run check:p1077-founder-live-approval-capture-final",
         "npm run check:p1076-founder-live-approval-capture-docs",
         "npm run check:p1075-founder-live-approval-capture-validation",
         "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
         "npm run check:p1073-founder-live-approval-capture-audit-preview",
         "npm run check:p1072-founder-live-approval-capture-model",
         "npm run check:p1071-founder-live-approval-capture-boundary-contract",
@@ -13223,14 +13226,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P107.6 is docs/checker only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "P107 is complete, but approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P107.7 remains planned."
+        "P108 is planned only."
       ],
-      "nextPhase": "P107.7",
+      "nextPhase": "P108",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P107.6 docs closure complete; P107.7 final validation is next."
+      "detail": "P107 final validation complete; P108 is planned only."
     },
     {
       "phaseId": "P107.1",
@@ -13413,19 +13416,54 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 143.7,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Final Validation is planned for P107. No approval capture, persistence, runtime admission, execution unlock, mutation, deploy, network, or spend authority is enabled.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T19:12:51.860Z",
+      "summary": "Closed P107 final validation across scripts, reports, docs, status, Command Center capture UX retention, focused route safety, blocked authority posture, and P108 planned handoff.",
+      "checksRun": [
+        "npm run check:p1077-founder-live-approval-capture-final",
+        "npm run check:p1076-founder-live-approval-capture-docs",
+        "npm run check:p1075-founder-live-approval-capture-validation",
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval capture or execution authority enabled."
+        "P107.7 is validation/status/docs only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P108 is planned only."
       ],
       "nextPhase": "P108",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation for approval capture boundary."
+      "detail": "P107 final validation complete; P108 is planned only."
+    },
+    {
+      "phaseId": "P108",
+      "title": "Founder Live Approval Capture Operator Review",
+      "track": "NEXUS_OS",
+      "order": 144,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned next phase for explicit operator-reviewed approval capture decision intake boundaries. No approval capture, persistence, writes, runtime admission, execution unlock, mutation, provider/model calls, network calls, or spend is enabled by the P107 handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P108 is planned only; no implementation has started.",
+        "Approval capture, persistence, writes, runtime admission, execution unlock, project mutation, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P108.1",
+      "commandCenterVisible": true,
+      "label": "Approval Capture Review",
+      "detail": "Planned only; P107 closes with all live approval capture authority still blocked."
     },
     {
       "phaseId": "P83",
@@ -13909,9 +13947,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T19:08:09.815Z",
-  "currentPhase": "P107.6",
-  "previousPhase": "P107.5",
-  "nextPhase": "P107.7",
+  "updatedAt": "2026-05-28T19:12:51.860Z",
+  "currentPhase": "P107.7",
+  "previousPhase": "P107.6",
+  "nextPhase": "P108",
   "currentPhaseStatus": "complete"
 }

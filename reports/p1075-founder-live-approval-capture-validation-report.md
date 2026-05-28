@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P107.5
-- Generated at: 2026-05-28T19:07:37.688Z
+- Generated at: 2026-05-28T19:13:29.124Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 25feb4bc
+- Validation HEAD: b4b2d60c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,7 +34,7 @@
 | docs record P107.5 | PASS |  |
 | platform roadmap records P107.5 | PASS |  |
 | README records P107.5 | PASS |  |
-| phase status advanced | PASS | P107.6/P107.5/P107.7 |
+| phase status advanced | PASS | P107.7/P107.6/P108 |
 | aggregate UX avoids raw private IDs | PASS |  |
 | aggregate UX avoids raw packet keys | PASS |  |
 | aggregate UX avoids fake unsafe runnable actions | PASS |  |

@@ -242,7 +242,7 @@ Final safety checks:
 
 ## P107.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: run final P107 validation, close the parent phase, stamp commits, and hand off to the next planned phase.
 

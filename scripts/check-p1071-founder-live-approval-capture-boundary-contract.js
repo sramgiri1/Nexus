@@ -113,11 +113,15 @@ addCheck(
     status.currentPhase === "P107.6"
       && status.previousPhase === "P107.5"
       && status.nextPhase === "P107.7"
+  ) || (
+    status.currentPhase === "P107.7"
+      && status.previousPhase === "P107.6"
+      && status.nextPhase === "P108"
   ))
-    && statusById.get("P107")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P107")?.status)
     && statusById.get("P107.1")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P107.2")?.status)
-    && roadmapById.get("P107")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(roadmapById.get("P107")?.status)
     && roadmapById.get("P107.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

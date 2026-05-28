@@ -342,6 +342,14 @@ The Command Center and local operator surface have:
   runtime admission, provider/model calls, dispatch, worker/tool execution,
   project mutation, hosted DB mutation, deploy, release, export, package,
   network calls, and provider spend blocked. P107.7 is next.
+- P107.7 final validation: P107 is complete. Final validation closes the
+  approval capture boundary contract, local model, audit preview, Command
+  Center capture boundary UX, aggregate validation, docs, reports, OS phase
+  status, focused route safety, and P108 handoff. P108 is next and remains
+  planned only. Approval capture, persistence, writes, execution unlock,
+  runtime admission, provider/model calls, dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, deploy, release, export, package,
+  network calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

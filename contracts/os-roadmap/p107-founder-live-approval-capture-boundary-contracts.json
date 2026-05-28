@@ -1,7 +1,7 @@
 {
   "phaseId": "P107",
   "title": "Founder Live Approval Capture Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define governed local approval capture boundaries for future founder/operator decisions without granting approval capture, approval persistence, approval writes, runtime admission, execution unlock, mutation, deploy, network, or spend authority.",
   "safetyRules": [
@@ -666,11 +666,11 @@
     {
       "phaseId": "P107.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P107 validation, close the parent phase, stamp commits, and hand off to the next planned phase.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-P107.6",
+      "expectedBaseCommit": "b4b2d60c",
       "allowedFiles": [
         "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
         "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
@@ -722,7 +722,7 @@
       "playwrightTests": "Run retained focused route coverage before final closure.",
       "checkerUpdates": [
         "Add check:p1077-founder-live-approval-capture-final.",
-        "Update P107.1 and P107.6 checkers to accept final closure."
+        "Update P107.1 checker and check-os-phase-status to accept P107.7 to P108 final handoff; P107.6 checker already accepts final closure."
       ],
       "docsRoadmap": "Close P107 docs, README, platform roadmap, and OS phase status with P107 and P107.7 complete and P108 next.",
       "phaseStatusUpdate": "P107 complete; P107.7 complete; current P107.7; previous P107.6; next P108.",
@@ -773,12 +773,13 @@
     }
   ],
   "knownLimitations": [
-    "P107.6 is docs/checker only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+    "P107 is complete, but approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P107.7 remains planned."
+    "P108 is planned only."
   ],
   "knownRisks": [
     "P107.1-P107.6 are local/display/validation/docs-only work; approval capture, persistence, execution unlock, and runtime admission remain blocked.",
     "P107.4 must not add capture buttons or fake runnable actions."
-  ]
+  ],
+  "expectedBaseCommit": "f73ac4c4"
 }
