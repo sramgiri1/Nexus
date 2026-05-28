@@ -159,16 +159,52 @@ Final safety checks:
 - Chat with NEXUS and Lite stay clean/chat-only.
 - No approval controls, execution controls, raw dumps, private IDs, DemoApp, or fake runnable actions are exposed.
 - Approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.
-- P106.5 remains planned.
+- P106.5 remains planned at P106.4 closure.
 - No project or CareLoop files changed.
 
 ## P106.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: aggregate P106 checker and route-safety coverage without changing runtime behavior.
 
-Validation commands: include aggregate checker, retained focused Playwright coverage, dashboard build, OS phase status, phase validation coverage, and diff check.
+Allowed files: P106 contract, P106 plan, platform roadmap, README, P106.5 aggregate checker, P106.1/P106.4 checker handoff compatibility, package script, OS phase status files, and generated validation reports.
+
+Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
+
+Reuse check: reuse shared/reportWriter.js, shared/checkResultFormatter.js, buildBusinessBuildViewModel, existing P106 reports, and focused routes.spec.js coverage. Do not duplicate report writers, route matrices, UI cards, redaction helpers, or checker formatters.
+
+Expected data: reports/p1065-founder-live-approval-request-validation-report.md with aggregate checks for P106.1-P106.4 scripts, reports, route coverage, Command Center queue UX, phase status, forbidden file scope, safety wording, and non-runnable posture.
+
+Command Center UX: no Command Center source change in P106.5. Preserve P106.4 queue card placement and chat-only boundaries.
+
+Theme requirements: no theme source change in P106.5. Retain P106.4 focused dark/light/system route coverage.
+
+Tests/checkers: npm run check:p1065-founder-live-approval-request-validation; rerun P106.4 checker, focused Playwright route coverage, dashboard build, prior P106 checkers, OS phase status, phase validation coverage, and diff check.
+
+Docs/roadmap: update P106 plan, platform roadmap, README, and OS phase status with P106.5 complete and P106.6 next.
+
+OS phase status update: P106 in progress; P106.5 complete; current P106.5; previous P106.4; next P106.6.
+
+Validation commands:
+- npm run check:p1065-founder-live-approval-request-validation
+- npm run check:p1064-command-center-approval-request-ux
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live approval request queue appears on non-chat founder routes"
+- cd dashboard && npm run build
+- npm run check:p1063-founder-live-approval-request-queue-preview
+- npm run check:p1062-founder-live-approval-request-model
+- npm run check:p1061-founder-live-approval-request-boundary-contract
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Final safety checks:
+- P106.5 is validation only.
+- P106.4 UX is preserved without new runtime behavior.
+- Approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.
+- Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
+- P106.6 remains planned.
+- No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.6 Docs / Roadmap
 

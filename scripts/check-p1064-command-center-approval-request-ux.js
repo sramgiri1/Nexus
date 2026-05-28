@@ -57,10 +57,10 @@ addCheck("queue rows display safe and blocked", queue.queueRows?.every((row) => 
 addCheck("queue rows include operator value", queue.queueRows?.every((row) => row.proposedAgentLane && row.founderDecisionPrompt && row.operatorDecisionPrompt && row.validationCommand === "npm run check:p1063-founder-live-approval-request-queue-preview"));
 addCheck("safety rows retained", queue.safetyRows?.some((row) => row.label === "Approval writes" && row.value === "Blocked") && queue.safetyRows?.some((row) => row.label === "Provider spend" && row.value === "Blocked"));
 addCheck("contract marks P106.4 complete", p1064.status === "complete");
-addCheck("P106.5 remains planned", subphaseById.get("P106.5")?.status === "planned");
+addCheck("P106.5 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P106.5")?.status));
 addCheck("docs record P106.4", /P106\.4 Command Center Approval Request UX[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P106.4", /P106\.4 is\s+complete/.test(platformRoadmap) && /P106\.5 is\s+next/.test(platformRoadmap));
-addCheck("README records P106.4", /P106\.4 Command Center approval request UX/.test(readme) && /P106\.5 is\s+next/.test(readme));
+addCheck("platform roadmap records P106.4", /P106\.4 is\s+complete/.test(platformRoadmap) && (/P106\.5 is\s+next/.test(platformRoadmap) || /P106\.5 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P106.4", /P106\.4 Command Center approval request UX/.test(readme) && (/P106\.5 is\s+next/.test(readme) || /P106\.5 aggregate validation/.test(readme)));
 addCheck(
   "phase status advanced",
   ["P106.4", "P106.5", "P106.6", "P106.7"].includes(status.currentPhase)
@@ -68,7 +68,7 @@ addCheck(
     && ["P106.5", "P106.6", "P106.7", "P107"].includes(status.nextPhase)
     && ["in_progress", "complete"].includes(statusById.get("P106")?.status)
     && statusById.get("P106.4")?.status === "complete"
-    && statusById.get("P106.5")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P106.5")?.status)
     && roadmapById.get("P106.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

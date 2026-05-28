@@ -2453,6 +2453,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked. P106.5 is next for aggregate validation.
 
+P106.5 is complete. It adds aggregate validation across the P106 boundary
+contract, deterministic request model, local queue preview, Command Center queue
+UX, focused route tests, dashboard build, docs, reports, phase status, and
+safety wording. No runtime behavior changes were added. Approval request
+submission, approval capture, approval persistence, approval writes, execution
+unlock, runtime admission, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, deploy, release, export,
+package action, network call, and provider spend remain blocked. P106.6 is next
+for docs and roadmap closure.
+
 Implementation follows
 [`p106-founder-live-approval-request-boundary-contracts.json`](../../contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json).
 

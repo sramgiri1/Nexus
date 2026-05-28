@@ -265,6 +265,15 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, deploy, release,
   export, package, network calls, and provider spend remain blocked. P106.5 is
   next.
+- P106.5 aggregate validation: P106 now has aggregate coverage across the
+  approval request boundary contract, deterministic request model, local queue
+  preview, Command Center queue UX, focused route tests, dashboard build,
+  reports, docs, status, and safety wording. No runtime behavior changes were
+  added; approval request submission, approval capture, approval persistence,
+  approval writes, execution unlock, runtime admission, provider/model calls,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  deploy, release, export, package, network calls, and provider spend remain
+  blocked. P106.6 is next.
 
 ## CareLoop Project Progress
 

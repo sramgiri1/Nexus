@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P106.4
-- Generated at: 2026-05-28T18:09:46.194Z
+- Generated at: 2026-05-28T18:13:13.086Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 00fc30df
+- Validation HEAD: aab60c4f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -27,11 +27,11 @@
 | queue rows include operator value | PASS |  |
 | safety rows retained | PASS |  |
 | contract marks P106.4 complete | PASS |  |
-| P106.5 remains planned | PASS |  |
+| P106.5 remains planned or complete | PASS |  |
 | docs record P106.4 | PASS |  |
 | platform roadmap records P106.4 | PASS |  |
 | README records P106.4 | PASS |  |
-| phase status advanced | PASS | P106.4/P106.3/P106.5 |
+| phase status advanced | PASS | P106.5/P106.4/P106.6 |
 | P106.4 avoids forbidden file scope | PASS |  |
 | primary UX avoids raw private IDs | PASS |  |
 | primary UX avoids raw packet keys | PASS |  |

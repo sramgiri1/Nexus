@@ -51,6 +51,7 @@ const acceptedPhasePointers = [
   { currentPhase: "P106.2", previousPhase: "P106.1", nextPhase: "P106.3" },
   { currentPhase: "P106.3", previousPhase: "P106.2", nextPhase: "P106.4" },
   { currentPhase: "P106.4", previousPhase: "P106.3", nextPhase: "P106.5" },
+  { currentPhase: "P106.5", previousPhase: "P106.4", nextPhase: "P106.6" },
 ];
 const serialized = JSON.stringify({ data, contract, plan, platformRoadmap, readme });
 const p1061Serialized = JSON.stringify({ data, p1061 });
@@ -59,7 +60,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1061
 addCheck("contract phase identity", contract.phaseId === "P106" && contract.title === "Founder Live Approval Request Boundary");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p106Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P106.1 complete and later subphases valid", subphaseById.get("P106.1")?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P106.2")?.status) && ["planned", "complete"].includes(subphaseById.get("P106.3")?.status) && ["planned", "complete"].includes(subphaseById.get("P106.4")?.status) && p106Subphases.slice(4).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P106.1 complete and later subphases valid", subphaseById.get("P106.1")?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P106.2")?.status) && ["planned", "complete"].includes(subphaseById.get("P106.3")?.status) && ["planned", "complete"].includes(subphaseById.get("P106.4")?.status) && ["planned", "complete"].includes(subphaseById.get("P106.5")?.status) && p106Subphases.slice(5).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
 addCheck("safety rules block unsafe execution", ["No approval request submission.", "No approval capture.", "No approval persistence.", "No provider/model calls.", "No agent dispatch.", "No worker/tool execution.", "No project source mutation."].every((rule) => contract.safetyRules?.includes(rule)));
 addCheck("reuse rules reference shared helpers and P105", ["shared/reportWriter.js", "shared/resultEnvelope.js", "shared/checkResultFormatter.js", "os-roadmap/updatePhaseStatus.js", "live-ready/founderLiveExecutionApprovalPlanning.js"].every((item) => contract.reuseRequired?.includes(item)));
 addCheck("module reuses P105 approval planning", moduleSource.includes("from \"./founderLiveExecutionApprovalPlanning.js\""));
