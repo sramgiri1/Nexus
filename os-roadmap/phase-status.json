@@ -13452,7 +13452,7 @@
       "order": 144,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "58fa1098",
       "completedAt": "",
       "summary": "P108 is in progress. P108.4 renders display-safe operator-review audit preview state on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain clean and all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
@@ -13565,7 +13565,7 @@
       "order": 144.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "58fa1098",
       "completedAt": "2026-05-28T20:08:00.000Z",
       "summary": "Rendered display-safe founder approval operator-review audit preview state on Business Build, Agent Flow, and Live Readiness without approval capture controls, execution controls, raw dumps, private IDs, demo leakage, or fake runnable actions.",
       "checksRun": [
