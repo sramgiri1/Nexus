@@ -195,3 +195,94 @@ admission preview remain planned.
 Rollback plan: remove the three queue schema entities/tables/indexes, remove
 the P112.2 checker/script/docs/status/report updates, restore P112 to P112.1
 with P112.2 planned, and keep P112.1 unchanged.
+
+## P112.3 Governed Local Queue CRUD Model
+
+Status: complete
+
+Narrow goal: add approval-gated local CRUD helpers for allowlisted queue
+admission records without delete, dispatch, worker execution, or project
+mutation.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `d9ec5fb6`.
+
+Allowed files: P112 queue admission helper, P112.3 CRUD checker, P112.2 schema
+checker compatibility update, P112 contract, P112 plan, README, platform
+roadmap, package script registry, OS phase status files, and generated P112.3/
+P112.2/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `dashboard/src/**`, `dashboard/tests/**`,
+`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added `live-ready/founderLiveAgentWorkQueueAdmission.js`,
+added the P112.3 CRUD checker, registered the package script, updated P112.2
+handoff compatibility, updated P112 contract/status/docs, and regenerated
+reports.
+
+Expected exports/data shapes:
+- `P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PHASE`
+- `P112_AGENT_WORK_QUEUE_DB_ENTITIES`
+- `buildFounderLiveAgentWorkQueueAdmissionContract`
+- `validateFounderLiveAgentWorkQueueAdmissionContract`
+- `buildSafeAgentWorkQueueDbRecord`
+- `executeApprovedAgentWorkQueueDbCrudRequest`
+
+Safety rules: local SQLite CRUD only for allowlisted queue OS records after
+explicit approval gates. Delete, hosted DB mutation, raw SQL interface,
+provider/model calls, agent dispatch, worker/tool execution, runtime admission,
+execution unlock, project mutation, deploy, release, export, package creation,
+network calls, and provider spend remain blocked.
+
+Reuse check: P112.3 reuses `db/sqliteRuntime.js`,
+`db/sqliteCrudRepository.js`, `shared/resultEnvelope.js`, the P111 work-order
+record builder, `shared/reportWriter.js`, and `shared/checkResultFormatter.js`.
+No SQLite runtime, CRUD repository, result envelope, report writer, checker
+formatter, UI component, or runtime helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P112.3.
+Queue admission UX remains planned for P112.5.
+
+Dark/light/system theme requirements: no theme source change in P112.3.
+
+Playwright tests: no new Playwright test in P112.3 because no UI source changes
+are made.
+
+Checker updates: P112.3 adds a dedicated CRUD checker and updates P112.2 to
+accept the P112.3/P112.4 handoff state.
+
+Docs/README/roadmap updates: P112.3 is recorded in this plan, README, platform
+roadmap, P112 contract, OS roadmap/status, and generated reports. P112.4 is
+next.
+
+OS phase status update: P112 is in progress; P112.3 is complete; current phase
+P112.3; previous P112.2; next P112.4.
+
+Validation commands:
+- `npm run check:p1123-founder-live-agent-work-queue-crud-model`
+- `npm run check:p1122-founder-live-agent-work-queue-schema`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/provider/deploy paths
+changed; isolated SQLite test DB is removed; no DemoApp exposure; no raw
+JSON/log/policy dumps; no raw private IDs in primary UX; no fake runnable
+actions; no hosted DB mutation, raw SQL interface, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P112.3 files>`
+- `git commit -m "feat(nexus): add p112 work queue crud model"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: local CRUD can be mistaken for live queue dispatch. P112.3 only
+admits local queue record CRUD after approval gates; queue admission preview and
+Command Center UX remain planned.
+
+Rollback plan: remove the P112.3 helper/checker/script/docs/status/report
+updates, restore P112 to P112.2 with P112.3 planned, and keep P112.1-P112.2
+unchanged.

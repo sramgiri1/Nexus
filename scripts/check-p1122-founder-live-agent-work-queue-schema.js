@@ -143,15 +143,22 @@ addCheck("README records P112.2", /P112\.2 work queue SQLite schema/.test(readme
 addCheck("platform roadmap records P112.2", /P112\.2 is complete/.test(platformRoadmap) && /P112\.3 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P112.2"
-    && status.previousPhase === "P112.1"
-    && status.nextPhase === "P112.3"
-    && roadmap.currentPhase === "P112.2"
-    && roadmap.previousPhase === "P112.1"
-    && roadmap.nextPhase === "P112.3"
+  ((status.currentPhase === "P112.2"
+      && status.previousPhase === "P112.1"
+      && status.nextPhase === "P112.3"
+      && roadmap.currentPhase === "P112.2"
+      && roadmap.previousPhase === "P112.1"
+      && roadmap.nextPhase === "P112.3")
+    || (status.currentPhase === "P112.3"
+      && status.previousPhase === "P112.2"
+      && status.nextPhase === "P112.4"
+      && roadmap.currentPhase === "P112.3"
+      && roadmap.previousPhase === "P112.2"
+      && roadmap.nextPhase === "P112.4"))
     && statusById.get("P112")?.status === "in_progress"
     && statusById.get("P112.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P112.3")?.status)
+    && ["planned", "complete"].includes(statusById.get("P112.4")?.status)
     && roadmapById.get("P112.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

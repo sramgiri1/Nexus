@@ -9631,22 +9631,22 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8472b7f0938adcccd2db8200fa92ee137a10b75b",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
-      "detail": "P112.2 schema complete; P112.3 local queue CRUD is next.",
+      "detail": "P112.3 CRUD model complete; P112.4 admission preview is next.",
       "phaseId": "P112",
       "title": "Founder Live Agent Work Queue Admission",
       "order": 148,
       "status": "in_progress",
-      "summary": "P112 is in progress. P112.1-P112.2 define the queue admission contract and local SQLite schema for persisted founder agent work orders while unsafe authority remains blocked.",
-      "nextPhase": "P112.3",
+      "summary": "P112 is in progress. P112.1-P112.3 define the queue admission contract, local SQLite schema, and approval-gated local CRUD model while unsafe authority remains blocked.",
+      "nextPhase": "P112.4",
       "previousPhase": "P111.7",
       "checksRun": [],
       "knownLimitations": [
-        "P112.2 is schema-only and does not add runtime CRUD helpers, dashboard source, runtime data writes, or project files.",
-        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P112.3 is next for the governed local queue CRUD model."
+        "P112.3 admits local SQLite CRUD only for allowlisted queue OS records after explicit local approval gates.",
+        "Delete, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.4 is next for queue admission preview and safe dry run."
       ],
       "completedAt": ""
     },
@@ -9708,23 +9708,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Governed Local Queue CRUD Model",
-      "detail": "Planned approval-gated local CRUD model for queue admission records.",
+      "detail": "Local queue CRUD model is approval-gated and dispatch remains blocked.",
       "phaseId": "P112.3",
       "title": "Governed Local Queue CRUD Model",
       "order": 148.3,
-      "status": "planned",
-      "summary": "Planned approval-gated local CRUD model for queue admission records.",
+      "status": "complete",
+      "summary": "Added approval-gated local SQLite CRUD helpers and isolated CRUD validation for founder agent work queue records.",
       "nextPhase": "P112.4",
       "previousPhase": "P112.2",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned CRUD subphase only."
+      "checksRun": [
+        "npm run check:p1123-founder-live-agent-work-queue-crud-model",
+        "npm run check:p1122-founder-live-agent-work-queue-schema",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112.3 admits local SQLite CRUD only for allowlisted queue OS records after explicit local approval gates.",
+        "Delete, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.4 is next for queue admission preview and safe dry run."
+      ],
+      "completedAt": "2026-05-28T23:10:17.407Z"
     },
     {
       "track": "NEXUS_OS",
@@ -10217,9 +10225,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T23:05:15.641Z",
-  "currentPhase": "P112.2",
-  "previousPhase": "P112.1",
-  "nextPhase": "P112.3",
+  "updatedAt": "2026-05-28T23:10:17.407Z",
+  "currentPhase": "P112.3",
+  "previousPhase": "P112.2",
+  "nextPhase": "P112.4",
   "currentPhaseStatus": "complete"
 }

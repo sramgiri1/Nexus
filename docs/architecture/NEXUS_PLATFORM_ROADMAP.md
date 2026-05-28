@@ -2855,6 +2855,14 @@ raw SQL interface, runtime admission, execution unlock, provider/model calls,
 deploy, release, export, package action, network call, and provider spend
 remain blocked.
 
+P112.3 is complete. P112 now has approval-gated local SQLite CRUD helpers for
+allowlisted founder agent work queue records, validated with isolated
+create/read/update/upsert/list checks. P112.4 is next for queue admission
+preview and safe dry run. Delete, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, runtime admission,
+execution unlock, provider/model calls, deploy, release, export, package
+action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
