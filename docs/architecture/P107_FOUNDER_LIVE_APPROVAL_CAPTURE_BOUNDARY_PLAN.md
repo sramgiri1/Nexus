@@ -159,7 +159,7 @@ Final safety checks:
 
 ## P107.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: aggregate P107 checker and route-safety coverage without changing runtime behavior.
 

@@ -325,6 +325,15 @@ The Command Center and local operator surface have:
   calls, dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package, network calls, and provider spend remain
   blocked. P107.5 is next.
+- P107.5 aggregate validation: P107.1-P107.4 now have aggregate checker
+  coverage across the approval capture boundary contract, local model, audit
+  preview, Command Center capture boundary UX, retained focused route coverage,
+  reports, docs, phase status, forbidden file scope, raw/private ID avoidance,
+  and non-runnable safety posture. This subphase is validation-only; approval
+  capture, persistence, writes, execution unlock, runtime admission,
+  provider/model calls, dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, deploy, release, export, package, network calls, and
+  provider spend remain blocked. P107.6 is next.
 
 ## CareLoop Project Progress
 

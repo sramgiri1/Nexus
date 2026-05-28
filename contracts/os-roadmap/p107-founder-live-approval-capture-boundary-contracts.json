@@ -461,11 +461,11 @@
     {
       "phaseId": "P107.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Aggregate P107 checker and route-safety coverage without changing runtime behavior.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-P107.4",
+      "expectedBaseCommit": "8b468101",
       "allowedFiles": [
         "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
         "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
@@ -515,7 +515,7 @@
       "playwrightTests": "Run retained focused route coverage for Founder live approval capture boundary appears on non-chat founder routes.",
       "checkerUpdates": [
         "Add check:p1075-founder-live-approval-capture-validation.",
-        "Update P107.1 and P107.4 checkers to accept P107.5 handoff."
+        "Update P107.1 checker to accept P107.5 handoff; P107.4 checker already accepts P107.5 handoff."
       ],
       "docsRoadmap": "Update P107 plan, platform roadmap, README, and OS phase tracking with P107.5 complete and P107.6 next.",
       "phaseStatusUpdate": "P107 in progress; P107.5 complete; current P107.5; previous P107.4; next P107.6.",
@@ -773,9 +773,9 @@
     }
   ],
   "knownLimitations": [
-    "P107.4 is display-only Command Center UX; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+    "P107.5 is validation only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P107.5-P107.7 remain planned."
+    "P107.6-P107.7 remain planned."
   ],
   "knownRisks": [
     "P107.1-P107.6 are local/display/validation/docs-only work; approval capture, persistence, execution unlock, and runtime admission remain blocked.",

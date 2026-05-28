@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-28T19:00:05.566Z
+- Generated at: 2026-05-28T19:03:55.709Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e10c6beb
+- Validation HEAD: 8b468101
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -335,7 +335,7 @@
 | P105.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P105.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P105.7 validation coverage | PASS | 49 checkers, 41 reports |
-| P106 validation coverage | PASS | 19 checkers, 10 reports |
+| P106 validation coverage | PASS | 20 checkers, 11 reports |
 | P106.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P106.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P106.3 validation coverage | PASS | 6 checkers, 1 reports |
@@ -343,12 +343,12 @@
 | P106.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P106.6 validation coverage | PASS | 24 checkers, 17 reports |
 | P106.7 validation coverage | PASS | 49 checkers, 41 reports |
-| P107 validation coverage | PASS | 16 checkers, 10 reports |
+| P107 validation coverage | PASS | 18 checkers, 11 reports |
 | P107.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P107.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P107.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P107.4 validation coverage | PASS | 6 checkers, 1 reports |
-| P107.5 validation coverage | PASS | 18 checkers, 18 reports |
+| P107.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P107.6 validation coverage | PASS | 16 checkers, 16 reports |
 | P107.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P83 validation coverage | PASS | 16 checkers, 8 reports |
@@ -369,7 +369,7 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P107.4; next=P107.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P107.5; next=P107.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

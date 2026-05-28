@@ -2534,6 +2534,16 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
 release, export, package action, network call, and provider spend remain
 blocked. P107.5 is next.
 
+P107.5 is complete. It adds aggregate validation for P107.1-P107.4 across the
+approval capture boundary contract, local model, audit preview, Command Center
+capture boundary UX, retained focused route coverage, reports, docs, phase
+status, forbidden file scope, raw/private ID avoidance, and non-runnable safety
+posture. This subphase is validation-only. Approval capture, approval
+persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked. P107.6 is next.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 
