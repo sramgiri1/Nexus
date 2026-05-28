@@ -390,3 +390,89 @@ SQLite entity names. The P111.4 checker blocks both cases.
 Rollback plan: remove the P111.4 dashboard/checker/test/docs/status/report
 updates, restore P111 to P111.3 with P111.4 planned, and keep P111.1-P111.3
 unchanged.
+
+## P111.5 Work Order Persistence Validation
+
+Status: complete
+
+Narrow goal: aggregate P111.1-P111.4 validation across contract, schema,
+governed local CRUD model, Command Center UX, route safety, docs, status, and
+reports without changing runtime behavior.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `553a7a7e`.
+
+Allowed files: P111.5 checker, P111.4 compatibility checker, P111 contract,
+P111 plan, README, platform roadmap, package script registry, OS phase status
+files, and generated P111.5/P111.4/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `db/**`, `live-ready/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: added the P111.5 aggregate checker, registered the
+package script, updated P111.4 handoff compatibility, updated P111
+contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes: no new runtime exports and no schema changes.
+The checker validates the existing P111.1 contract, P111.2 local SQLite schema,
+P111.3 CRUD contract, and P111.4 display-safe Command Center work order
+persistence model.
+
+Safety rules: aggregate validation only. Hosted DB mutation, raw SQL,
+provider/model calls, agent dispatch, worker/tool execution, runtime admission,
+execution unlock, project mutation, deploy, release, export, package creation,
+network calls, and provider spend remain blocked.
+
+Reuse check: P111.5 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P111.1-P111.4 reports, the P111.3
+contract validator, and the P111.4 display model. No checker formatter, report
+writer, SQLite repository, UI component, or status helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P111.5.
+P111.4 Business Build and Durable State UX is preserved; Chat/Lite remains
+clean.
+
+Dark/light/system theme requirements: no theme source change in P111.5.
+P111.5 validates that P111.4 Playwright route/theme coverage exists.
+
+Playwright tests: no new Playwright test in P111.5 because no UI source changes
+are made.
+
+Checker updates: P111.5 adds a dedicated aggregate checker and updates P111.4
+to accept the P111.5/P111.6 handoff state.
+
+Docs/README/roadmap updates: P111.5 is recorded in this plan, README, platform
+roadmap, P111 contract, OS roadmap/status, and generated reports. P111.6 is
+next.
+
+OS phase status update: P111 is in progress; P111.5 is complete; current phase
+P111.5; previous P111.4; next P111.6.
+
+Validation commands:
+- `npm run check:p1115-founder-live-agent-work-order-persistence`
+- `npm run check:p1114-command-center-work-order-persistence-ux`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/live-ready/db/provider/
+deploy paths changed; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw work order table names in primary UX; no fake runnable
+actions; no hosted DB mutation, raw SQL interface, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P111.5 files>`
+- `git commit -m "feat(nexus): add p111 work order persistence validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: aggregate validation can become stale if the prior UX checker only
+accepts one handoff state. P111.5 updates the P111.4 checker to accept P111.5
+and P111.6.
+
+Rollback plan: remove the P111.5 checker/script/docs/status/report updates,
+restore P111 to P111.4 with P111.5 planned, and keep P111.1-P111.4 unchanged.

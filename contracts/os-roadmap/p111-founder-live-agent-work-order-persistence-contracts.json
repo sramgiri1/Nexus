@@ -515,11 +515,11 @@
     {
       "phaseId": "P111.5",
       "title": "Work Order Persistence Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Aggregate P111.1-P111.4 contract, schema, CRUD model, UX, route safety, docs, and reports.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "553a7a7e",
       "allowedFiles": [
         "scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
         "scripts/check-p1114-command-center-work-order-persistence-ux.js",
@@ -570,26 +570,27 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [
-        "package script for P111.5"
+        "package script check:p1115-founder-live-agent-work-order-persistence"
       ],
-      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "Aggregate validation confirms P111.1 contract, P111.2 local SQLite schema, P111.3 CRUD model, P111.4 display-safe UX, prior reports, route safety, docs, and OS status. No new runtime data shape or schema is added.",
+      "commandCenterUx": "No Command Center source change in P111.5. P111.4 work order persistence UX is preserved and Chat/Lite remains clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "No new Playwright test in P111.5 because no UI source changes are made; aggregate checker validates P111.4 route coverage remains present."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P111.5 checker.",
-        "Run previous subphase checker for P111.4."
+        "Added check:p1115-founder-live-agent-work-order-persistence.",
+        "Updated P111.4 checker to accept P111.5/P111.6 handoff."
       ],
-      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.5.",
-      "phaseStatusUpdate": "P111 in progress; P111.5 complete when implemented; previous P111.4; next P111.6.",
+      "docsRoadmap": "Updated P111 plan, README, platform roadmap, OS status, and generated reports for P111.5.",
+      "phaseStatusUpdate": "P111 in progress; P111.5 complete; current P111.5; previous P111.4; next P111.6.",
       "validationCommands": [
         "npm run check:p1115-founder-live-agent-work-order-persistence",
+        "npm run check:p1114-command-center-work-order-persistence-ux",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -846,8 +847,8 @@
     "P111.1 is contract-only; DB schema, runtime helpers, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P111.4",
-  "previousSubphase": "P111.3",
-  "nextSubphase": "P111.5",
-  "summary": "P111 is in progress. P111.1-P111.4 define contracts, local SQLite schema, approval-gated local CRUD model, and display-safe Command Center UX for founder live agent work orders while unsafe authority remains blocked."
+  "currentSubphase": "P111.5",
+  "previousSubphase": "P111.4",
+  "nextSubphase": "P111.6",
+  "summary": "P111 is in progress. P111.1-P111.5 define contracts, local SQLite schema, approval-gated local CRUD model, display-safe Command Center UX, and aggregate validation for founder live agent work orders while unsafe authority remains blocked."
 }

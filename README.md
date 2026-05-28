@@ -539,6 +539,13 @@ The Command Center and local operator surface have:
   provider/model call, dispatch, worker/tool execution, project mutation,
   deploy, release, export, package, network call, and provider spend remain
   unavailable.
+- P111.5 aggregate validation: P111.1-P111.4 now have aggregate checker
+  coverage across the work order persistence contract, SQLite schema, governed
+  local CRUD model, Command Center UX, prior reports, route safety, docs, and
+  OS status. P111.6 is next for docs and roadmap closure. Runtime behavior,
+  DB schema, dashboard source, project files, provider/model calls, dispatch,
+  worker/tool execution, hosted DB mutation, raw SQL, deploy, release, export,
+  package, network call, and provider spend remain unchanged and unavailable.
 
 ## CareLoop Project Progress
 

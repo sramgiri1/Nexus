@@ -52,6 +52,7 @@ const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const changed = changedFiles();
 const allowedFiles = new Set(p1114.allowedFiles || []);
+const enforceCurrentDiffScope = status.currentPhase === "P111.4";
 const forbiddenPrefixes = [
   "projects/",
   "careloop/",
@@ -124,12 +125,18 @@ addCheck("display model avoids raw private IDs and table names", !/(?:project|pr
 addCheck("display model avoids fake runnable actions", !/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now|write work order now/i.test(serializedDisplay));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P111.4"
-    && status.previousPhase === "P111.3"
-    && status.nextPhase === "P111.5"
-    && roadmap.currentPhase === "P111.4"
-    && roadmap.previousPhase === "P111.3"
-    && roadmap.nextPhase === "P111.5"
+  ((status.currentPhase === "P111.4"
+      && status.previousPhase === "P111.3"
+      && status.nextPhase === "P111.5"
+      && roadmap.currentPhase === "P111.4"
+      && roadmap.previousPhase === "P111.3"
+      && roadmap.nextPhase === "P111.5")
+    || (status.currentPhase === "P111.5"
+      && status.previousPhase === "P111.4"
+      && status.nextPhase === "P111.6"
+      && roadmap.currentPhase === "P111.5"
+      && roadmap.previousPhase === "P111.4"
+      && roadmap.nextPhase === "P111.6"))
     && statusById.get("P111")?.status === "in_progress"
     && statusById.get("P111.4")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P111.5")?.status)
@@ -140,7 +147,11 @@ addCheck(
 addCheck("docs record P111.4", /P111\.4 Command Center Work Order Persistence UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P111.4", /P111\.4 Command Center work order persistence UX/.test(readme) && /P111\.5 is next/.test(readme));
 addCheck("platform roadmap records P111.4", /P111\.4 is complete/.test(platformRoadmap) && /P111\.5\s+is\s+next/.test(platformRoadmap));
-addCheck("changed files stay in P111.4 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
+addCheck(
+  "changed files stay in P111.4 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
 addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 
 const failed = checks.filter((check) => check.status === "FAIL");
