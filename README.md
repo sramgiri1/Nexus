@@ -350,6 +350,12 @@ The Command Center and local operator surface have:
   runtime admission, provider/model calls, dispatch, worker/tool execution,
   project mutation, hosted DB mutation, deploy, release, export, package,
   network calls, and provider spend remain blocked.
+- P108.1 operator review boundary: P108 is now in progress. P108.1 defines the
+  local operator-review boundary contract and schema from the P107 capture audit
+  preview. P108.2 is next. Operator decisions, approval capture, persistence,
+  writes, execution unlock, runtime admission, provider/model calls, dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+  export, package, network calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

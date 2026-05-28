@@ -2563,11 +2563,27 @@ admission, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, deploy, release, export, package action, network
 call, and provider spend remain blocked.
 
+## P108 - Founder Live Approval Capture Operator Review
+
+P108.1 is complete. P108 is in progress. The local operator-review boundary
+contract and schema are defined from the P107 capture audit preview. P108.2 is
+next. Operator decisions, approval capture, approval persistence, approval
+writes, execution unlock, runtime admission, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 
 The detailed plan lives in
 [`P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md`](P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md).
+
+Implementation follows
+[`p108-founder-live-approval-capture-operator-review-contracts.json`](../../contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json).
+
+The detailed plan lives in
+[`P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md`](P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md).
 
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).

@@ -13228,12 +13228,12 @@
       "knownLimitations": [
         "P107 is complete, but approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P108 is planned only."
+        "P108 is in progress with P108.1 complete and P108.2 next."
       ],
       "nextPhase": "P108",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P107 final validation complete; P108 is planned only."
+      "detail": "P107 final validation complete; P108.1 operator-review boundary is complete."
     },
     {
       "phaseId": "P107.1",
@@ -13438,32 +13438,186 @@
       "knownLimitations": [
         "P107.7 is validation/status/docs only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P108 is planned only."
+        "P108 is in progress with P108.1 complete and P108.2 next."
       ],
       "nextPhase": "P108",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "P107 final validation complete; P108 is planned only."
+      "detail": "P107 final validation complete; P108.1 operator-review boundary is complete."
     },
     {
       "phaseId": "P108",
       "title": "Founder Live Approval Capture Operator Review",
       "track": "NEXUS_OS",
       "order": 144,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P108 is in progress. P108.1 defines the local operator-review boundary contract and schema from P107 capture audit preview while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
+      "checksRun": [
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
+        "npm run check:p1077-founder-live-approval-capture-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P108.1 is contract/schema only; operator decisions, approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P108.2-P108.7 remain planned."
+      ],
+      "nextPhase": "P108.2",
+      "commandCenterVisible": true,
+      "label": "Approval Capture Review",
+      "detail": "P108.1 operator-review boundary complete; P108.2 local model is next."
+    },
+    {
+      "phaseId": "P108.1",
+      "title": "Operator Review Contract / Schema Baseline",
+      "track": "NEXUS_OS",
+      "order": 144.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T19:31:00.000Z",
+      "summary": "Defined the local founder approval operator-review boundary schema from the P107 capture audit preview without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
+      "checksRun": [
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
+        "npm run check:p1077-founder-live-approval-capture-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P108.1 is contract/schema only; operator decisions, approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P108.2-P108.7 remain planned."
+      ],
+      "nextPhase": "P108.2",
+      "commandCenterVisible": true,
+      "label": "Operator Review Contract",
+      "detail": "Schema/contract only; all approval capture and execution authority remains blocked."
+    },
+    {
+      "phaseId": "P108.2",
+      "title": "Operator Review Model",
+      "track": "NEXUS_OS",
+      "order": 144.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned next phase for explicit operator-reviewed approval capture decision intake boundaries. No approval capture, persistence, writes, runtime admission, execution unlock, mutation, provider/model calls, network calls, or spend is enabled by the P107 handoff.",
+      "summary": "Operator Review Model is planned for P108 and has not started.",
       "checksRun": [],
       "knownLimitations": [
-        "P108 is planned only; no implementation has started.",
-        "Approval capture, persistence, writes, runtime admission, execution unlock, project mutation, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+        "This subphase is planned only; no implementation has started.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
       ],
-      "nextPhase": "P108.1",
+      "nextPhase": "P108.3",
       "commandCenterVisible": true,
-      "label": "Approval Capture Review",
-      "detail": "Planned only; P107 closes with all live approval capture authority still blocked."
+      "label": "Model",
+      "detail": "Planned local operator-review model; no capture or execution authority."
+    },
+    {
+      "phaseId": "P108.3",
+      "title": "Operator Review Audit Preview",
+      "track": "NEXUS_OS",
+      "order": 144.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Operator Review Audit Preview is planned for P108 and has not started.",
+      "checksRun": [],
+      "knownLimitations": [
+        "This subphase is planned only; no implementation has started.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P108.4",
+      "commandCenterVisible": true,
+      "label": "Audit Preview",
+      "detail": "Planned local operator-review audit preview; no capture or execution authority."
+    },
+    {
+      "phaseId": "P108.4",
+      "title": "Command Center Operator Review UX",
+      "track": "NEXUS_OS",
+      "order": 144.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Command Center Operator Review UX is planned for P108 and has not started.",
+      "checksRun": [],
+      "knownLimitations": [
+        "This subphase is planned only; no implementation has started.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P108.5",
+      "commandCenterVisible": true,
+      "label": "Command Center UX",
+      "detail": "Planned display-only Command Center UX; no capture or execution authority."
+    },
+    {
+      "phaseId": "P108.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 144.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Tests / Checkers is planned for P108 and has not started.",
+      "checksRun": [],
+      "knownLimitations": [
+        "This subphase is planned only; no implementation has started.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P108.6",
+      "commandCenterVisible": true,
+      "label": "Validation",
+      "detail": "Planned aggregate validation only."
+    },
+    {
+      "phaseId": "P108.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 144.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Docs / Roadmap is planned for P108 and has not started.",
+      "checksRun": [],
+      "knownLimitations": [
+        "This subphase is planned only; no implementation has started.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P108.7",
+      "commandCenterVisible": true,
+      "label": "Docs",
+      "detail": "Planned docs and roadmap closure only."
+    },
+    {
+      "phaseId": "P108.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 144.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Final Validation is planned for P108 and has not started.",
+      "checksRun": [],
+      "knownLimitations": [
+        "This subphase is planned only; no implementation has started.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P109",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation and P109 handoff only."
     },
     {
       "phaseId": "P83",
@@ -13948,8 +14102,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T19:12:51.860Z",
-  "currentPhase": "P107.7",
-  "previousPhase": "P107.6",
-  "nextPhase": "P108",
+  "currentPhase": "P108.1",
+  "previousPhase": "P107.7",
+  "nextPhase": "P108.2",
   "currentPhaseStatus": "complete"
 }

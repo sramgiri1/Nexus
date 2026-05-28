@@ -1,0 +1,485 @@
+{
+  "phaseId": "P108",
+  "title": "Founder Live Approval Capture Operator Review",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Define governed local operator-review boundaries for future approval capture decisions without granting approval capture, approval persistence, approval writes, runtime admission, execution unlock, mutation, deploy, network, or spend authority.",
+  "safetyRules": [
+    "No approval capture.",
+    "No approval capture persistence.",
+    "No approval capture writes that unlock execution.",
+    "No operator review decision capture.",
+    "No operator review decision persistence.",
+    "No runtime admission or live mode transition.",
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project source mutation.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No raw private project IDs in primary Command Center UX.",
+    "No full Command Center demo leakage.",
+    "No fake runnable actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "live-ready/founderLiveApprovalCaptureAuditPreview.js",
+    "existing dashboard cards, tabs, badges, route matrix, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P108.1",
+      "title": "Operator Review Contract / Schema Baseline",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the P108 local operator-review boundary contract and schema without enabling approval capture, approval persistence, approval writes, execution unlock, runtime admission, or mutation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "c8da123a",
+      "allowedFiles": [
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalOperatorReviewBoundary.js",
+        "scripts/check-p1081-founder-live-approval-operator-review-contract.js",
+        "scripts/check-p1077-founder-live-approval-capture-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1081-founder-live-approval-operator-review-contract-report.md",
+        "reports/p1077-founder-live-approval-capture-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalOperatorReviewBoundary.js",
+        "scripts/check-p1081-founder-live-approval-operator-review-contract.js",
+        "scripts/check-p1077-founder-live-approval-capture-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P108_FOUNDER_LIVE_APPROVAL_OPERATOR_REVIEW_BOUNDARY_PHASE",
+          "P108_OPERATOR_REVIEW_BOUNDARY_STATES",
+          "P108_OPERATOR_REVIEW_BLOCKED_FLAGS",
+          "P108_OPERATOR_REVIEW_REQUIRED_EVIDENCE",
+          "P108_OPERATOR_REVIEW_FORBIDDEN_ACTIONS",
+          "buildFounderLiveApprovalOperatorReviewBoundary",
+          "validateFounderLiveApprovalOperatorReviewBoundary"
+        ],
+        "envelope": "Result envelope with schemaVersion, currentState, sourceCaptureAuditPreviewPhase, sourceCaptureAuditPreviewState, founderContextSummary, operatorReviewBoundaryShape, operatorReviewReadiness, requiredEvidence, forbiddenActions, requiredEvidenceCount, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible false, and all approval/operator/runtime/execution flags false.",
+        "operatorReviewBoundaryShape": "Display-safe local operator-review boundary with boundaryRef, displayLabel, sourceApprovalCapturePhase, currentState, auditPreviewCount, operatorReviewRecordCount, capturedOperatorDecisionCount 0, persistedOperatorDecisionCount 0, executionUnlockCount 0, runtimeAdmissionCount 0, requiredEvidence, missingEvidence, forbiddenActions, validationCommands, reviewQuestions, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, and all blocked flags false.",
+        "operatorReviewReadiness": "Local readiness summary with operatorReviewBoundaryReady, auditPreviewCount, operatorReviewRecordCount, blockedOperatorReviewRecordCount, captured/persisted/writable/operatorReviewWrite/operatorReviewUnlock/runtimeAdmission/executable/dispatchable/projectMutation/hostedDbMutation/providerSpend counts all zero except blocked counts."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P108.1. Future P108.4 may render operator-review boundary state on Business Build, Agent Flow, and Live Readiness without approval buttons, execution controls, raw data dumps, private IDs, demo leakage, or fake runnable actions. Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "No theme source change in P108.1. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P108.1 because no UI files change. P108.4 must add focused Command Center route coverage.",
+      "checkerUpdates": [
+        "Add check:p1081-founder-live-approval-operator-review-contract.",
+        "Update check:p1077-founder-live-approval-capture-final to accept the P108.1 handoff state.",
+        "Update check:os-phase-status to accept P108.1-P108.7."
+      ],
+      "docsRoadmap": "Add P108 plan doc and platform roadmap section. Update README with P108.1 status.",
+      "phaseStatusUpdate": "P108 in progress; P108.1 complete; current P108.1; previous P107.7; next P108.2.",
+      "validationCommands": [
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
+        "npm run check:p1077-founder-live-approval-capture-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P108.1 is schema and contract only.",
+        "Confirm operator decisions cannot be captured, persisted, written, or used to unlock execution.",
+        "Confirm runtime admission remains blocked.",
+        "Confirm provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.",
+        "Confirm P108.2 remains planned at P108.1 closure.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P108.1 files>",
+        "git commit -m \"feat(nexus): define founder approval operator review boundary\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P108.2",
+      "title": "Operator Review Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build deterministic local operator-review records from P108.1 schema and P107 audit rows without capturing, persisting, writing, or unlocking execution.",
+      "allowedFiles": [
+        "live-ready/founderLiveApprovalOperatorReviewModel.js",
+        "scripts/check-p1082-founder-live-approval-operator-review-model.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1082-founder-live-approval-operator-review-model-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1082-founder-live-approval-operator-review-model",
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P108.2 is local model only.",
+        "Confirm all approval/operator/runtime/execution/mutation/spend flags remain false.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation commands",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P108.3",
+      "title": "Operator Review Audit Preview",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Assemble display-safe operator-review audit preview rows without writable approval decisions, persistence, runtime actions, or mutations.",
+      "allowedFiles": [
+        "live-ready/founderLiveApprovalOperatorReviewAuditPreview.js",
+        "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1083-founder-live-approval-operator-review-audit-preview-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1083-founder-live-approval-operator-review-audit-preview",
+        "npm run check:p1082-founder-live-approval-operator-review-model",
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P108.3 is preview-only.",
+        "Confirm no approval/operator/runtime/execution control is available.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation commands",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P108.4",
+      "title": "Command Center Operator Review UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Render operator-review boundary state on Business Build, Agent Flow, and Live Readiness without capture controls, execution controls, raw dumps, private IDs, DemoApp leakage, or fake runnable actions.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1084-command-center-operator-review-ux.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1084-command-center-operator-review-ux-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1084-command-center-operator-review-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live operator review boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1083-founder-live-approval-operator-review-audit-preview",
+        "npm run check:p1082-founder-live-approval-operator-review-model",
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm Chat with NEXUS and Lite stay chat-only.",
+        "Confirm system/dark/light theme coverage passes.",
+        "Confirm no runnable approval, execution, provider, DB, deploy, or mutation action is exposed.",
+        "Confirm no project or CareLoop files changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Command Center UX changes",
+        "Playwright results",
+        "Dashboard build results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P108.5",
+      "title": "Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P108 checker and route-safety coverage without changing runtime behavior.",
+      "allowedFiles": [
+        "scripts/check-p1085-founder-live-approval-operator-review-validation.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1085-founder-live-approval-operator-review-validation-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1085-founder-live-approval-operator-review-validation",
+        "npm run check:p1084-command-center-operator-review-ux",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P108.5 is validation only.",
+        "Confirm no Command Center source or test files changed.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Checker results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P108.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "DOCS_CHANGE",
+      "narrowGoal": "Close P108 docs, README, platform roadmap, and phase status evidence without behavior changes.",
+      "allowedFiles": [
+        "scripts/check-p1086-founder-live-approval-operator-review-docs.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1086-founder-live-approval-operator-review-docs-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1086-founder-live-approval-operator-review-docs",
+        "npm run check:p1085-founder-live-approval-operator-review-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P108.6 is docs/status only.",
+        "Confirm docs do not claim approval capture or execution is live.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Docs/roadmap updates",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P108.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P108 validation, close parent phase, refresh reports, and hand off to P109 as planned only.",
+      "allowedFiles": [
+        "scripts/check-p1087-founder-live-approval-operator-review-final.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1087-founder-live-approval-operator-review-final-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1087-founder-live-approval-operator-review-final",
+        "npm run check:p1086-founder-live-approval-operator-review-docs",
+        "npm run check:p1085-founder-live-approval-operator-review-validation",
+        "npm run check:p1084-command-center-operator-review-ux",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P108 parent and all subphases are complete.",
+        "Confirm P109 is planned only.",
+        "Confirm approval capture, writes, runtime admission, and execution remain blocked unless a later explicit phase allows them.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Checker results",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    }
+  ],
+  "knownLimitations": [
+    "P108 is an operator-review boundary phase only until each subphase completes.",
+    "P108.1 does not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    "P108.2-P108.7 remain planned."
+  ]
+}
