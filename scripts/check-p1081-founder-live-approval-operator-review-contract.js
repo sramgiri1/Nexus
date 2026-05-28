@@ -54,7 +54,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1081
 addCheck("contract phase identity", contract.phaseId === "P108" && contract.title === "Founder Live Approval Capture Operator Review");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p108Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P108.1 complete and later subphases planned", subphaseById.get("P108.1")?.status === "complete" && p108Subphases.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P108.1 complete and later subphases valid", subphaseById.get("P108.1")?.status === "complete" && p108Subphases.slice(1).every((phaseId) => ["planned", "complete"].includes(subphaseById.get(phaseId)?.status)));
 addCheck("subphases include implementation-grade fields", p108Subphases.every((phaseId) => {
   const subphase = subphaseById.get(phaseId) || {};
   return subphase.narrowGoal && subphase.allowedFiles && subphase.forbiddenFiles && subphase.validationCommands && subphase.finalSafetyChecks && subphase.finalResponseChecklist;
@@ -87,16 +87,19 @@ addCheck("all blocked flags false", P108_OPERATOR_REVIEW_BLOCKED_FLAGS.every((fl
 addCheck("contract records validation commands", ["npm run check:p1081-founder-live-approval-operator-review-contract", "npm run check:p1077-founder-live-approval-capture-final", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1081.validationCommands?.includes(command)));
 addCheck("P108.1 avoids forbidden file scope", !(p1081.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("plan records P108.1 complete", /P108\.1 Operator Review Contract \/ Schema Baseline[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P108.1", /P108 - Founder Live Approval Capture Operator Review/.test(platformRoadmap) && /P108\.1 is\s+complete/.test(platformRoadmap) && /P108\.2 is\s+next/.test(platformRoadmap));
-addCheck("README records P108.1", /P108\.1 operator review boundary/.test(readme) && /P108\.2 is next/.test(readme));
+addCheck("platform roadmap records P108.1", /P108 - Founder Live Approval Capture Operator Review/.test(platformRoadmap) && /P108\.1 is\s+complete/.test(platformRoadmap) && (/P108\.2 is\s+next/.test(platformRoadmap) || /P108\.2 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P108.1", /P108\.1 operator review boundary/.test(readme) && (/P108\.2 is next/.test(readme) || /P108\.2 local operator-review model/.test(readme)));
 addCheck(
   "phase status advanced to P108.1",
-  status.currentPhase === "P108.1"
+  ((status.currentPhase === "P108.1"
     && status.previousPhase === "P107.7"
-    && status.nextPhase === "P108.2"
+    && status.nextPhase === "P108.2")
+    || (status.currentPhase === "P108.2"
+      && status.previousPhase === "P108.1"
+      && status.nextPhase === "P108.3"))
     && statusById.get("P108")?.status === "in_progress"
     && statusById.get("P108.1")?.status === "complete"
-    && statusById.get("P108.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P108.2")?.status)
     && roadmapById.get("P108")?.status === "in_progress"
     && roadmapById.get("P108.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}/${statusById.get("P108")?.status}`,

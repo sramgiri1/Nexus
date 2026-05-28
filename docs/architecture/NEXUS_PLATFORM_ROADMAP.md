@@ -2573,6 +2573,14 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P108.2 is complete. The local operator-review model now produces deterministic
+display-safe review records from the P108.1 boundary and P107 audit rows. P108.3
+is next. Operator decisions, approval capture, approval persistence, approval
+writes, execution unlock, runtime admission, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 

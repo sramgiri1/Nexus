@@ -356,6 +356,12 @@ The Command Center and local operator surface have:
   writes, execution unlock, runtime admission, provider/model calls, dispatch,
   worker/tool execution, project mutation, hosted DB mutation, deploy, release,
   export, package, network calls, and provider spend remain blocked.
+- P108.2 local operator-review model: deterministic local review records are
+  assembled from the P108.1 boundary and P107 audit rows. P108.3 is next.
+  Operator decisions, approval capture, persistence, writes, execution unlock,
+  runtime admission, provider/model calls, dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, deploy, release, export, package,
+  network calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 
