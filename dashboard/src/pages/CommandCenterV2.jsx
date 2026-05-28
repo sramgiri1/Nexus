@@ -3347,6 +3347,10 @@ function AgentFlowPage() {
         operatorReview={businessBuild.founderLiveApprovalOperatorReview}
         surfaceLabel="Agent Flow Operator Review"
       />
+      <FounderLiveOperatorDecisionLedgerCard
+        decisionLedger={businessBuild.founderLiveOperatorDecisionLedger}
+        surfaceLabel="Agent Flow Decision Ledger"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -9737,6 +9741,10 @@ function LiveReadinessPage() {
           operatorReview={founderLiveUse.founderLiveApprovalOperatorReview}
           surfaceLabel="Live Readiness Operator Review"
         />
+        <FounderLiveOperatorDecisionLedgerCard
+          decisionLedger={founderLiveUse.founderLiveOperatorDecisionLedger}
+          surfaceLabel="Live Readiness Decision Ledger"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10084,6 +10092,10 @@ function BusinessBuildPage() {
         <FounderLiveApprovalOperatorReviewCard
           operatorReview={build.founderLiveApprovalOperatorReview}
           surfaceLabel="Business Build Operator Review"
+        />
+        <FounderLiveOperatorDecisionLedgerCard
+          decisionLedger={build.founderLiveOperatorDecisionLedger}
+          surfaceLabel="Business Build Decision Ledger"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10980,6 +10992,74 @@ function FounderLiveApprovalOperatorReviewCard({ operatorReview, surfaceLabel = 
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Operator review evidence"}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Audit question: {row.auditQuestions?.[0] || "Operator evidence review required"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveOperatorDecisionLedgerCard({ decisionLedger, surfaceLabel = "Decision Ledger" }) {
+  if (!decisionLedger) return null;
+
+  const rows = Array.isArray(decisionLedger.auditRows) ? decisionLedger.auditRows.slice(0, 6) : [];
+  const blockers = Array.isArray(decisionLedger.blockers) ? decisionLedger.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(decisionLedger.safetyRows) ? decisionLedger.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live decision ledger audit preview">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Decision Ledger</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{decisionLedger.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Decision ledger read-only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{decisionLedger.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Ledger previews</span><span className="ccv2-page-summary-value">{decisionLedger.auditPreviewCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked previews</span><span className="ccv2-page-summary-value">{decisionLedger.blockedAuditPreviewCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Capturable decisions</span><span className="ccv2-page-summary-value">{decisionLedger.capturableOperatorDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persisted decisions</span><span className="ccv2-page-summary-value">{decisionLedger.persistedOperatorDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Writable ledger decisions</span><span className="ccv2-page-summary-value">{decisionLedger.writableLedgerDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">{decisionLedger.dbWriteCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Replayable decisions</span><span className="ccv2-page-summary-value">{decisionLedger.replayableLedgerDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable decisions</span><span className="ccv2-page-summary-value">{decisionLedger.executableLedgerDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{decisionLedger.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{decisionLedger.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{decisionLedger.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{decisionLedger.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{decisionLedger.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{decisionLedger.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.auditPosition}`}
+            aria-label={`${row.proposedAgentLane} decision ledger audit row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.auditState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Decision ledger evidence"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Audit question: {row.auditQuestions?.[0] || "Decision ledger evidence review required"}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
           </div>

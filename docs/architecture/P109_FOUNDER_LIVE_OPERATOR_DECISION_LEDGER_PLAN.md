@@ -214,10 +214,70 @@ deploy, release, export, package, network calls, or spend.
 
 ## P109.4 Command Center Decision Ledger UX
 
-Status: planned
+Status: complete
 
 Narrow goal: render decision-ledger readiness on non-chat founder pages without
 capture, write, DB, or execution controls.
+
+Allowed files: P109 contract, P109 plan, Business Build data model, Command
+Center page, Command Center route tests, P109.4 checker, P109.3 handoff
+checker, package script, README, platform roadmap, OS phase status files, and
+generated validation reports.
+
+Forbidden files: projects/**, careloop/**, providers/**, tools/**,
+worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
+
+Command Center UX: Business Build, Agent Flow, and Live Readiness render
+display-safe decision-ledger audit preview cards. Chat with NEXUS and Lite
+remain clean.
+
+Theme requirements: dark, light, and system themes render the decision-ledger
+card without layout overlap.
+
+Reuse check: reuse the existing dashboard card/status patterns, P109.3
+decision-ledger audit preview data, route matrix, Playwright route tests, and
+shared report/checker helpers.
+
+Validation commands:
+- npm run check:p1094-command-center-decision-ledger-ux
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live decision ledger appears on non-chat founder routes"
+- cd dashboard && npm run build
+- npm run check:p1093-founder-live-operator-decision-ledger-audit-preview
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Exact files/modules changed: updated `dashboard/src/data/businessBuild.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+added `scripts/check-p1094-command-center-decision-ledger-ux.js`, updated the
+P109 contract, this plan, P109.3 checker compatibility, package script,
+README/roadmap/status entries, and generated P109.4/P109.3/status/coverage
+reports.
+
+Expected exports/data shapes:
+- `buildFounderLiveOperatorDecisionLedgerDisplayModel()`
+- `founderLiveOperatorDecisionLedger`
+
+The display model includes current state, founder idea, preview counts, zero
+write/DB/replay/execution counts, display-safe audit rows, safety rows,
+disabled reason, owner, evidence/activity location, and cost impact.
+
+Checker updates: P109.4 checker validates the display model, Command Center
+placement, route test coverage, raw-ID safety, docs, reports, OS phase status,
+and forbidden scope. P109.3 checker accepts the P109.4 handoff state.
+
+Docs/roadmap update: P109.4 is recorded complete in this plan, README, platform
+roadmap, P109 contract, and OS phase status. P109.5 is next.
+
+OS phase status update: P109 in progress; P109.1-P109.4 complete; current phase
+P109.4; previous P109.3; next P109.5.
+
+Final safety checks: display-only; Chat and Lite remain clean; no DemoApp
+leakage; no raw private/project IDs; no raw JSON/log/policy dumps; no fake
+runnable actions; no approval/operator decision capture, persistence, ledger
+writes, DB writes, replay, execution unlock, runtime admission, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, deploy, release, export, package, network calls, or spend.
 
 ## P109.5 Tests / Checkers
 

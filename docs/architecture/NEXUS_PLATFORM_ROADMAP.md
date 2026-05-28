@@ -2656,6 +2656,14 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P109.4 is complete. Business Build, Agent Flow, and Live Readiness render
+display-safe decision-ledger audit preview cards while Chat with NEXUS and
+Lite remain clean. P109.5 is next. Operator decision capture, approval capture,
+approval persistence, ledger writes, DB writes, replay, execution unlock,
+runtime admission, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p109-founder-live-operator-decision-ledger-contracts.json`](../../contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json).
 

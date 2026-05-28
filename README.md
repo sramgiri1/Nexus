@@ -418,6 +418,13 @@ The Command Center and local operator surface have:
   provider/model calls, dispatch, worker/tool execution, project mutation,
   hosted DB mutation, deploy, release, export, package, network calls, and
   provider spend remain blocked.
+- P109.4 Command Center decision-ledger UX: Business Build, Agent Flow, and
+  Live Readiness render display-safe decision-ledger audit preview cards while
+  Chat with NEXUS and Lite remain clean. P109.5 is next. Operator decision
+  capture, approval capture, persistence, ledger writes, DB writes, replay,
+  execution unlock, runtime admission, provider/model calls, dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+  export, package, network calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

@@ -1057,6 +1057,117 @@ export function buildFounderLiveApprovalOperatorReviewDisplayModel({
   };
 }
 
+export function buildFounderLiveOperatorDecisionLedgerDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  auditPreviewEnvelope,
+  operatorReviewDisplayModel,
+} = {}) {
+  const data = auditPreviewEnvelope?.data || {};
+  const fallbackOperatorReview = operatorReviewDisplayModel || buildFounderLiveApprovalOperatorReviewDisplayModel({ founderIdeaSummary });
+  const sourceRows = Array.isArray(data.auditRows) && data.auditRows.length > 0
+    ? data.auditRows
+    : fallbackOperatorReview.auditRows || [];
+  const summary = data.operatorDecisionLedgerAuditSummary || {};
+  const disabledReason =
+    "P109.4 renders a local decision-ledger audit preview only. It cannot capture operator decisions, persist approval state, write ledger records, write DB records, replay decisions, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const auditRows = sourceRows.map((row, index) => ({
+    label: row.displayLabel || (row.label ? `${row.label} decision ledger candidate` : `Decision ledger audit ${index + 1}`),
+    proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+    proposedOutcome: row.proposedOutcome || "Review governed decision-ledger evidence before any future operator decision write.",
+    auditPosition: row.previewPosition || row.auditPosition || row.reviewPosition || index + 1,
+    auditState: "Founder Live Decision Ledger Audit Ready Writes Blocked",
+    missingEvidence: (row.missingEvidence || []).slice(0, 4).map((entry) => toTitle(entry)),
+    evidenceStatus: {
+      requiredEvidenceCount: row.evidenceStatus?.requiredEvidenceCount || 40,
+      missingEvidenceCount: row.evidenceStatus?.missingEvidenceCount || row.missingEvidence?.length || 0,
+      capturedDecisions: 0,
+      persistedDecisions: 0,
+      writableLedgerDecisions: 0,
+      dbWrites: 0,
+      replayableDecisions: 0,
+      executionUnlocks: 0,
+      runtimeAdmissions: 0,
+    },
+    auditQuestions: [
+      row.auditQuestions?.[0] || "Which founder decision would require future ledger evidence?",
+      row.auditQuestions?.[1] || "Which operator decision would require future evidence review?",
+      row.auditQuestions?.[2] || "Which rollback and revocation path must exist before any future ledger write?",
+      row.auditQuestions?.[3] || "What audit evidence must exist before any future operator decision ledger write can be considered?",
+    ],
+    validationCommand: "npm run check:p1093-founder-live-operator-decision-ledger-audit-preview",
+    nextAction: "Keep this decision-ledger audit preview local until a later explicit phase defines decision capture or ledger writes.",
+    blocker: row.blockers?.[0] || row.blocker || "Operator decision ledger writes are not available.",
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Operator Decision Ledger Boundary",
+    evidenceLocation: "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+    activityLocation: row.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: row.costImpact || "Local decision-ledger audit preview only. No provider calls, model calls, network calls, DB writes, deploy, package creation, or provider spend.",
+    operatorDecisionCaptured: "Blocked",
+    operatorDecisionPersisted: "Blocked",
+    operatorDecisionLedgerWriteAllowed: "Blocked",
+    operatorDecisionLedgerDbWriteAllowed: "Blocked",
+    replayAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    runtimeAdmissionAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    spendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Founder Live Decision Ledger Audit Preview Ready Writes Blocked",
+    founderIdea: founderIdeaSummary,
+    auditPreviewReady: auditRows.length > 0,
+    auditPreviewCount: auditRows.length,
+    blockedAuditPreviewCount: auditRows.length,
+    capturableOperatorDecisionCount: summary.capturableOperatorDecisionCount || 0,
+    persistedOperatorDecisionCount: summary.persistedOperatorDecisionCount || 0,
+    writableLedgerDecisionCount: summary.writableLedgerDecisionCount || 0,
+    dbWriteCount: summary.dbWriteCount || 0,
+    replayableLedgerDecisionCount: summary.replayableLedgerDecisionCount || 0,
+    executableLedgerDecisionCount: summary.executableLedgerDecisionCount || 0,
+    dispatchableLedgerDecisionCount: summary.dispatchableLedgerDecisionCount || 0,
+    projectMutationLedgerDecisionCount: summary.projectMutationLedgerDecisionCount || 0,
+    providerSpendLedgerDecisionCount: summary.providerSpendLedgerDecisionCount || 0,
+    nextAction: "Review decision-ledger audit preview state on non-chat pages while capture, writes, DB, replay, and execution remain blocked.",
+    blockers: [
+      "Operator decision capture remains blocked.",
+      "Operator decision persistence remains blocked.",
+      "Operator decision ledger writes remain blocked.",
+      "DB writes remain blocked.",
+      "Decision replay remains blocked.",
+      "Runtime admission remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Operator Decision Ledger Boundary",
+    evidenceLocation: "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic decision-ledger audit preview UX only. No provider calls, model calls, network calls, DB writes, deploy, package creation, or provider spend.",
+    auditRows,
+    safetyRows: [
+      { label: "Operator decision capture", value: "Blocked" },
+      { label: "Operator persistence", value: "Blocked" },
+      { label: "Ledger writes", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Decision replay", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1775,6 +1886,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdeaSummary: prdFields.founderIdea,
     approvalCaptureBoundary: founderLiveApprovalCaptureBoundary,
   });
+  const founderLiveOperatorDecisionLedger = buildFounderLiveOperatorDecisionLedgerDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+    operatorReviewDisplayModel: founderLiveApprovalOperatorReview,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1910,6 +2025,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveApprovalRequestQueuePreview,
     founderLiveApprovalCaptureBoundary,
     founderLiveApprovalOperatorReview,
+    founderLiveOperatorDecisionLedger,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

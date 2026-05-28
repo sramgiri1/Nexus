@@ -360,9 +360,115 @@
     {
       "phaseId": "P109.4",
       "title": "Command Center Decision Ledger UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Render decision-ledger readiness on non-chat founder pages without capture, write, DB, or execution controls."
+      "narrowGoal": "Render decision-ledger readiness on non-chat founder pages without capture, write, DB, or execution controls.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1094-command-center-decision-ledger-ux.js",
+        "scripts/check-p1093-founder-live-operator-decision-ledger-audit-preview.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1094-command-center-decision-ledger-ux-report.md",
+        "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1094-command-center-decision-ledger-ux.js",
+        "scripts/check-p1093-founder-live-operator-decision-ledger-audit-preview.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1094-command-center-decision-ledger-ux-report.md",
+        "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "buildFounderLiveOperatorDecisionLedgerDisplayModel",
+        "founderLiveOperatorDecisionLedger"
+      ],
+      "expectedDataShape": {
+        "currentState": "string",
+        "founderIdea": "string",
+        "auditPreviewCount": "number",
+        "blockedAuditPreviewCount": "number",
+        "writableLedgerDecisionCount": 0,
+        "dbWriteCount": 0,
+        "replayableLedgerDecisionCount": 0,
+        "executableLedgerDecisionCount": 0,
+        "auditRows": "object[]",
+        "safetyRows": "object[]",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "evidenceLocation": "string",
+        "activityLocation": "string",
+        "costImpact": "string"
+      },
+      "commandCenterUx": "Business Build, Agent Flow, and Live Readiness render display-safe decision-ledger audit preview cards. Chat with NEXUS and Lite remain clean.",
+      "themeRequirements": "Dark, light, and system themes must render the decision-ledger card without layout overlap.",
+      "validationCommands": [
+        "npm run check:p1094-command-center-decision-ledger-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live decision ledger appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1093-founder-live-operator-decision-ledger-audit-preview",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "checkerUpdates": [
+        "Add P109.4 Command Center UX checker.",
+        "Add Playwright route coverage for non-chat founder routes and Chat/Lite absence.",
+        "Update P109.3 checker to accept the P109.4 handoff state."
+      ],
+      "docsRoadmap": "Record P109.4 complete in P109 plan, README, platform roadmap, contract, and OS phase status. P109.5 is next.",
+      "phaseStatusUpdate": "P109 in progress; P109.1-P109.4 complete; current P109.4; previous P109.3; next P109.5.",
+      "finalSafetyChecks": [
+        "Confirm P109.4 is display-only.",
+        "Confirm Chat with NEXUS and Lite do not show decision-ledger cards.",
+        "Confirm no DemoApp leakage, raw private/project IDs, raw logs, raw JSON, raw policy dumps, or fake runnable actions.",
+        "Confirm no approval/operator decision capture, persistence, ledger writes, DB writes, replay, runtime admission, execution, provider calls, project mutation, deploy, package, network, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Command Center UX changes",
+        "Playwright results",
+        "Checker results",
+        "Dashboard build results",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
     },
     {
       "phaseId": "P109.5",

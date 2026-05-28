@@ -4065,6 +4065,63 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Founder live decision ledger appears on non-chat founder routes", async ({ page }) => {
+    test.setTimeout(90000);
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder live decision ledger audit preview").filter({ hasText: "Business Build Decision Ledger" });
+      await expect(themedCard).toContainText("Founder Live Decision Ledger");
+      await expect(themedCard).toContainText("Decision ledger read-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Decision Ledger"],
+      ["/command-center/agent-flow", "Agent Flow Decision Ledger"],
+      ["/command-center/live-readiness", "Live Readiness Decision Ledger"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder live decision ledger audit preview").filter({ hasText: label });
+      await expect(card).toContainText("Founder Live Decision Ledger");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Ledger previews");
+      await expect(card).toContainText("Blocked previews");
+      await expect(card).toContainText("Capturable decisions");
+      await expect(card).toContainText("Writable ledger decisions");
+      await expect(card).toContainText("DB writes");
+      await expect(card).toContainText("Replayable decisions");
+      await expect(card).toContainText("Executable decisions");
+      await expect(card).toContainText("NEXUS Founder Live Operator Decision Ledger Boundary");
+      await expect(card).toContainText("Product Strategist");
+      await expect(card).toContainText("Program Architect");
+      await expect(card).toContainText("Safety Governor");
+      await expect(card).toContainText("Missing evidence");
+      await expect(card).toContainText("Audit question");
+      await expect(card).toContainText("npm run check:p1093-founder-live-operator-decision-ledger-audit-preview");
+      await expect(card).toContainText("reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md");
+      await expect(card).toContainText("No provider calls");
+    }
+
+    await page.goto("/command-center/lite", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Founder live decision ledger audit preview")).toHaveCount(0);
+    await page.goto("/command-center", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Founder live decision ledger audit preview")).toHaveCount(0);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|operator-decision-ledger-audit-preview-/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write ledger now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 
