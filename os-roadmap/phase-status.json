@@ -13677,6 +13677,174 @@
       "detail": "P108 final validation complete; P109 handoff planned only."
     },
     {
+      "phaseId": "P109",
+      "title": "Founder Live Operator Decision Ledger Readiness",
+      "track": "NEXUS_OS",
+      "order": 145,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P109 is in progress. P109.1 defines the local operator decision ledger readiness boundary from the P108 operator-review audit preview while capture, persistence, ledger writes, DB writes, runtime admission, execution, mutation, network, and spend authority remain blocked.",
+      "checksRun": [
+        "npm run check:p1091-founder-live-operator-decision-ledger-contract",
+        "npm run check:p1087-founder-live-approval-operator-review-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P109.1 is contract/schema only and does not capture operator decisions, persist approval state, write ledger records, write DB records, unlock execution, or admit runtime execution.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P109.2-P109.7 remain planned."
+      ],
+      "nextPhase": "P109.2",
+      "commandCenterVisible": true,
+      "label": "Decision Ledger",
+      "detail": "P109.1 complete; P109.2 local ledger model next."
+    },
+    {
+      "phaseId": "P109.1",
+      "title": "Decision Ledger Contract / Schema Baseline",
+      "track": "NEXUS_OS",
+      "order": 145.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T20:15:06.000Z",
+      "summary": "Defined the local operator decision ledger readiness contract and schema boundary from the P108 operator-review audit preview without enabling capture, persistence, ledger writes, DB writes, runtime admission, execution, mutation, network, or spend.",
+      "checksRun": [
+        "npm run check:p1091-founder-live-operator-decision-ledger-contract",
+        "npm run check:p1087-founder-live-approval-operator-review-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P109.1 is contract/schema only and does not capture operator decisions, persist approval state, write ledger records, write DB records, unlock execution, or admit runtime execution.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P109.2-P109.7 remain planned."
+      ],
+      "nextPhase": "P109.2",
+      "commandCenterVisible": true,
+      "label": "Ledger Contract",
+      "detail": "Local decision-ledger boundary complete; writes and execution blocked."
+    },
+    {
+      "phaseId": "P109.2",
+      "title": "Decision Ledger Model",
+      "track": "NEXUS_OS",
+      "order": 145.2,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Build deterministic local ledger candidate records from P109.1 without persistence or DB writes.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P109.2 is planned and must not enable ledger writes, DB writes, runtime admission, execution, provider calls, project mutation, deploy, package, network calls, or spend."
+      ],
+      "nextPhase": "P109.3",
+      "commandCenterVisible": true,
+      "label": "Ledger Model",
+      "detail": "Planned local model; no persistence authority."
+    },
+    {
+      "phaseId": "P109.3",
+      "title": "Decision Ledger Audit Preview",
+      "track": "NEXUS_OS",
+      "order": 145.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Create display-safe ledger audit preview rows without raw IDs, persistence, DB writes, or execution controls.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P109.3 is planned and must remain display-safe, local, read-only, and blocked from writes, DB mutation, runtime admission, execution, provider calls, deploy, package, network calls, and spend."
+      ],
+      "nextPhase": "P109.4",
+      "commandCenterVisible": true,
+      "label": "Ledger Preview",
+      "detail": "Planned display-safe audit preview."
+    },
+    {
+      "phaseId": "P109.4",
+      "title": "Command Center Decision Ledger UX",
+      "track": "NEXUS_OS",
+      "order": 145.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Render decision-ledger readiness on non-chat founder pages without capture, write, DB, or execution controls.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P109.4 is planned and must preserve clean chat UX, theme behavior, route-wide safety tests, no demo application leakage, no raw IDs, and no unsafe actions."
+      ],
+      "nextPhase": "P109.5",
+      "commandCenterVisible": true,
+      "label": "Ledger UX",
+      "detail": "Planned non-chat founder UX placement."
+    },
+    {
+      "phaseId": "P109.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 145.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Aggregate P109 checker and route coverage without changing runtime behavior.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P109.5 is planned and must not enable capture, persistence, DB writes, runtime admission, execution, provider calls, project mutation, deploy, package, network calls, or spend."
+      ],
+      "nextPhase": "P109.6",
+      "commandCenterVisible": true,
+      "label": "Validation",
+      "detail": "Planned aggregate validation."
+    },
+    {
+      "phaseId": "P109.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 145.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Close P109 docs, README, platform roadmap, and phase status evidence without behavior changes.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P109.6 is planned docs/status work only and must not change runtime, Command Center behavior, project files, or unsafe authorities."
+      ],
+      "nextPhase": "P109.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "Planned docs and roadmap closure."
+    },
+    {
+      "phaseId": "P109.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 145.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Run final P109 validation and hand off to the next planned phase without enabling writes or execution.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P109.7 is planned final validation only and must not enable capture, persistence, DB writes, runtime admission, execution, provider calls, project mutation, deploy, package, network calls, or spend."
+      ],
+      "nextPhase": "P110",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation and handoff."
+    },
+    {
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
@@ -14158,9 +14326,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T20:06:47.000Z",
-  "currentPhase": "P108.7",
-  "previousPhase": "P108.6",
-  "nextPhase": "P109",
+  "updatedAt": "2026-05-28T20:15:06.000Z",
+  "currentPhase": "P109.1",
+  "previousPhase": "P108.7",
+  "nextPhase": "P109.2",
   "currentPhaseStatus": "complete"
 }

@@ -1,0 +1,195 @@
+{
+  "phaseId": "P109",
+  "title": "Founder Live Operator Decision Ledger Readiness",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Define a governed local operator-decision ledger readiness boundary for future approval decisions without granting approval capture, persistence, DB writes, runtime admission, execution unlock, mutation, deploy, network, or spend authority.",
+  "safetyRules": [
+    "No approval capture.",
+    "No operator decision capture.",
+    "No operator decision persistence.",
+    "No operator decision ledger writes.",
+    "No DB writes or hosted DB mutation.",
+    "No runtime admission or live mode transition.",
+    "No execution unlock.",
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project source mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No raw private project IDs in primary Command Center UX.",
+    "No full Command Center demo leakage.",
+    "No fake runnable actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "live-ready/founderLiveApprovalOperatorReviewAuditPreview.js",
+    "existing dashboard cards, tabs, badges, route matrix, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P109.1",
+      "title": "Decision Ledger Contract / Schema Baseline",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define a local operator-decision ledger readiness boundary without enabling approval capture, persistence, DB writes, or execution.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "live-ready/founderLiveOperatorDecisionLedgerBoundary.js",
+        "scripts/check-p1091-founder-live-operator-decision-ledger-contract.js",
+        "scripts/check-p1087-founder-live-approval-operator-review-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1091-founder-live-operator-decision-ledger-contract-report.md",
+        "reports/p1087-founder-live-approval-operator-review-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json",
+        "docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md",
+        "live-ready/founderLiveOperatorDecisionLedgerBoundary.js",
+        "scripts/check-p1091-founder-live-operator-decision-ledger-contract.js",
+        "scripts/check-p1087-founder-live-approval-operator-review-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1091-founder-live-operator-decision-ledger-contract-report.md",
+        "reports/p1087-founder-live-approval-operator-review-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_BOUNDARY_PHASE",
+        "P109_OPERATOR_DECISION_LEDGER_STATES",
+        "P109_OPERATOR_DECISION_LEDGER_BLOCKED_FLAGS",
+        "P109_OPERATOR_DECISION_LEDGER_REQUIRED_EVIDENCE",
+        "P109_OPERATOR_DECISION_LEDGER_FORBIDDEN_ACTIONS",
+        "buildFounderLiveOperatorDecisionLedgerBoundary",
+        "validateFounderLiveOperatorDecisionLedgerBoundary"
+      ],
+      "expectedDataShape": {
+        "schemaVersion": "1.0",
+        "currentState": "string",
+        "sourceOperatorReviewAuditPreviewPhase": "string",
+        "operatorDecisionLedgerShape": "object",
+        "operatorDecisionLedgerReadiness": "object",
+        "requiredEvidence": "string[]",
+        "forbiddenActions": "string[]",
+        "blockers": "string[]",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "evidenceRefs": "string[]",
+        "activityLocation": "string",
+        "costImpact": "string",
+        "commandCenterVisible": false
+      },
+      "commandCenterUx": "No Command Center source change in P109.1. Ledger readiness remains hidden from primary UX until a later explicit UX subphase.",
+      "themeRequirements": "No theme source change in P109.1. Preserve dark, light, and system behavior.",
+      "validationCommands": [
+        "npm run check:p1091-founder-live-operator-decision-ledger-contract",
+        "npm run check:p1087-founder-live-approval-operator-review-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "checkerUpdates": [
+        "Add P109.1 contract/schema checker.",
+        "Update P108.7 final checker to accept the P109.1 handoff state.",
+        "Update OS phase status checker to accept P109.1-P109.7."
+      ],
+      "docsRoadmap": "Add P109 plan, README entry, platform roadmap entry, and OS phase status entries with P109.1 complete and P109.2 next.",
+      "phaseStatusUpdate": "P109 in progress; P109.1 complete; current P109.1; previous P108.7; next P109.2.",
+      "finalSafetyChecks": [
+        "Confirm P109.1 is contract/schema only.",
+        "Confirm no Command Center source or test files changed.",
+        "Confirm no approval/operator decision capture, persistence, DB writes, execution, provider calls, project mutation, deploy, package, network, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Checker results",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P109.2",
+      "title": "Decision Ledger Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build deterministic local ledger candidate records from P109.1 without persistence or DB writes."
+    },
+    {
+      "phaseId": "P109.3",
+      "title": "Decision Ledger Audit Preview",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Create display-safe ledger audit preview rows without raw IDs, persistence, or execution controls."
+    },
+    {
+      "phaseId": "P109.4",
+      "title": "Command Center Decision Ledger UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Render decision-ledger readiness on non-chat founder pages without capture, write, DB, or execution controls."
+    },
+    {
+      "phaseId": "P109.5",
+      "title": "Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P109 checker coverage without changing runtime behavior."
+    },
+    {
+      "phaseId": "P109.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "DOCS_CHANGE",
+      "narrowGoal": "Close P109 docs, README, platform roadmap, and phase status evidence without behavior changes."
+    },
+    {
+      "phaseId": "P109.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P109 validation and hand off to the next planned phase without enabling writes or execution."
+    }
+  ],
+  "knownLimitations": [
+    "P109 is a decision-ledger readiness phase only until each subphase completes.",
+    "P109.1 does not capture operator decisions, persist approval state, write ledger records, write DB records, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    "P109.2-P109.7 remain planned."
+  ]
+}

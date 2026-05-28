@@ -56,6 +56,27 @@ const p108Reports = [
 ];
 const serializedOperatorReview = JSON.stringify(operatorReview);
 const docsBundle = [contract, plan, platformRoadmap, readme].map((entry) => JSON.stringify(entry)).join(" ");
+const p109PlaceholderState =
+  status.currentPhase === "P108.7"
+    && status.previousPhase === "P108.6"
+    && status.nextPhase === "P109"
+    && roadmap.currentPhase === "P108.7"
+    && roadmap.previousPhase === "P108.6"
+    && roadmap.nextPhase === "P109"
+    && osStatusChecker.includes('"P109"');
+const p109ActiveState =
+  status.currentPhase === "P109.1"
+    && status.previousPhase === "P108.7"
+    && status.nextPhase === "P109.2"
+    && roadmap.currentPhase === "P109.1"
+    && roadmap.previousPhase === "P108.7"
+    && roadmap.nextPhase === "P109.2"
+    && statusById.get("P109")?.status === "in_progress"
+    && statusById.get("P109.1")?.status === "complete"
+    && roadmapById.get("P109")?.status === "in_progress"
+    && roadmapById.get("P109.1")?.status === "complete"
+    && osStatusChecker.includes('"P109.1"')
+    && osStatusChecker.includes('"P109.2"');
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1087-founder-live-approval-operator-review-final"]));
 addCheck("all P108 scripts registered", p108Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
@@ -64,7 +85,7 @@ addCheck("contract marks parent complete", contract.status === "complete");
 addCheck("contract marks all P108 subphases complete", (contract.subphases || []).every((entry) => entry.status === "complete"));
 addCheck("contract records final validation commands", ["npm run check:p1087-founder-live-approval-operator-review-final", "npm run check:p1086-founder-live-approval-operator-review-docs", "npm run check:p1085-founder-live-approval-operator-review-validation", "npm run check:p1084-command-center-operator-review-ux", "cd dashboard && npm run build", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1087.validationCommands?.includes(command)));
 addCheck("P108.7 avoids forbidden file scope", !(p1087.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
-addCheck("P109 handoff placeholder is supported", status.nextPhase === "P109" && roadmap.nextPhase === "P109" && osStatusChecker.includes('"P109"') && osStatusChecker.includes('phaseStatus.nextPhase === "P109"'));
+addCheck("P109 handoff is supported", p109PlaceholderState || p109ActiveState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("docs record P108.7", /P108\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P108 complete", /P108\.7 is\s+complete/.test(platformRoadmap) && /P108 is\s+complete/.test(platformRoadmap) && /P109 is\s+next/.test(platformRoadmap));
 addCheck("README records P108 complete", /P108\.7 final validation/.test(readme) && /P108 is complete/.test(readme) && /P109 is next/.test(readme));
@@ -72,13 +93,18 @@ addCheck("Command Center operator-review UX retained", operatorReview.auditPrevi
 addCheck("route safety coverage retained", routeTests.includes("Founder live operator review appears on non-chat founder routes") && routeTests.includes("/command-center/lite") && routeTests.includes("/command-center/live-readiness"));
 addCheck(
   "phase status closed",
-  status.currentPhase === "P108.7"
+  (status.currentPhase === "P108.7"
     && status.previousPhase === "P108.6"
     && status.nextPhase === "P109"
     && statusById.get("P108")?.status === "complete"
     && statusById.get("P108.7")?.status === "complete"
     && roadmapById.get("P108")?.status === "complete"
-    && roadmapById.get("P108.7")?.status === "complete",
+    && roadmapById.get("P108.7")?.status === "complete")
+    || (p109ActiveState
+      && statusById.get("P108")?.status === "complete"
+      && statusById.get("P108.7")?.status === "complete"
+      && roadmapById.get("P108")?.status === "complete"
+      && roadmapById.get("P108.7")?.status === "complete"),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}/${statusById.get("P108")?.status}`,
 );
 addCheck("phase commits recorded", [statusById.get("P108")?.commit, statusById.get("P108.7")?.commit, roadmapById.get("P108")?.commit, roadmapById.get("P108.7")?.commit].every((commit) => commit && commit !== "planned"));

@@ -2630,6 +2630,22 @@ Implementation follows
 The detailed plan lives in
 [`P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md`](P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md).
 
+## P109 - Founder Live Operator Decision Ledger Readiness
+
+P109.1 is complete. The local operator decision ledger readiness contract and
+schema are defined from the P108 operator-review audit preview. P109.2 is
+next. Operator decision capture, approval capture, approval persistence,
+ledger writes, DB writes, execution unlock, runtime admission, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
+Implementation follows
+[`p109-founder-live-operator-decision-ledger-contracts.json`](../../contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json).
+
+The detailed plan lives in
+[`P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md`](P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md).
+
 Implementation follows
 [`p103-founder-live-work-admission-contracts.json`](../../contracts/os-roadmap/p103-founder-live-work-admission-contracts.json).
 

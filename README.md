@@ -397,6 +397,13 @@ The Command Center and local operator surface have:
   calls, dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package, network calls, and provider spend remain
   blocked.
+- P109.1 decision-ledger boundary: the local operator decision ledger readiness
+  contract and schema are defined from the P108 operator-review audit preview.
+  P109.2 is next. Operator decision capture, approval capture, persistence,
+  ledger writes, DB writes, execution unlock, runtime admission,
+  provider/model calls, dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, deploy, release, export, package, network calls, and
+  provider spend remain blocked.
 
 ## CareLoop Project Progress
 
