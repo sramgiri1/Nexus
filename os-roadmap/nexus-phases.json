@@ -8227,7 +8227,7 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec571f59",
       "completedAt": "",
       "summary": "P106 docs and roadmap closure is complete across README, platform roadmap, P106 plan, contract, reports, and phase status while approval request and execution authority remain blocked.",
       "checksRun": [
@@ -8403,7 +8403,7 @@
       "order": 142.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec571f59",
       "completedAt": "2026-05-28T09:35:00.000Z",
       "summary": "Closed P106 docs, README, platform roadmap, contract, reports, and OS phase status evidence without behavior changes while preserving blocked approval request and execution authority.",
       "checksRun": [
@@ -8857,7 +8857,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T09:35:00.000Z",
+  "updatedAt": "2026-05-28T09:45:00.000Z",
   "currentPhase": "P106.6",
   "previousPhase": "P106.5",
   "nextPhase": "P106.7",
