@@ -389,6 +389,14 @@ The Command Center and local operator surface have:
   execution unlock, runtime admission, provider/model calls, dispatch,
   worker/tool execution, project mutation, hosted DB mutation, deploy, release,
   export, package, network calls, and provider spend remain blocked.
+- P108.7 final validation: P108 is complete across the operator-review
+  contract, local model, audit preview, Command Center UX, aggregate validation,
+  docs, reports, OS phase status, and final safety checks. P109 is next as a
+  planned handoff placeholder only. Operator decisions, approval capture,
+  persistence, writes, execution unlock, runtime admission, provider/model
+  calls, dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  deploy, release, export, package, network calls, and provider spend remain
+  blocked.
 
 ## CareLoop Project Progress
 

@@ -210,7 +210,7 @@ Final safety checks: docs/status only; no Command Center source/test changes; no
 
 ## P108.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: run final P108 validation, close parent P108, refresh reports, and hand off to P109 as planned only.
 
@@ -231,3 +231,15 @@ Validation commands:
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - git diff --check
+
+Exact files/modules changed: added `scripts/check-p1087-founder-live-approval-operator-review-final.js`, updated P108.4 and OS phase status handoff checkers, registered `check:p1087-founder-live-approval-operator-review-final`, updated P108 contract/docs/README/roadmap/status, and generated `reports/p1087-founder-live-approval-operator-review-final-report.md`.
+
+Expected exports/data shapes: P108.7 exports no runtime API. The checker validates parent P108 closure, all P108 subphase reports/scripts, Command Center operator-review display model retention, route safety, docs, OS phase status, and P109 handoff placeholder support.
+
+Checker updates: final checker verifies P108 parent and all subphases complete, blocked operator-review authority, Command Center UX retention, no raw IDs/dumps, and P109 planned-only handoff. P108.4 checker accepts later P108.6/P108.7 status. OS phase status checker accepts P109 as a handoff placeholder.
+
+Docs/roadmap update: P108.7 and parent P108 are recorded complete in this plan, README, platform roadmap, P108 contract, and OS phase status. P109 is next as a planned handoff placeholder.
+
+OS phase status update: P108 is complete; P108.7 is complete; current phase P108.7; previous P108.6; next P109.
+
+Final safety checks: final validation only; no Command Center source/test changes except checker handoff validation; no project files; no approval capture, operator decision persistence, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.

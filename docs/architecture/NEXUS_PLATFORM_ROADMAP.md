@@ -2615,6 +2615,15 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P108.7 is complete. P108 is complete across the operator-review contract,
+local model, audit preview, Command Center UX, aggregate validation, docs,
+reports, OS phase status, final validation, and P109 planned handoff. P109 is
+next as a planned handoff placeholder only. Operator decisions, approval
+capture, approval persistence, approval writes, execution unlock, runtime
+admission, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, deploy, release, export, package action, network
+call, and provider spend remain blocked.
+
 Implementation follows
 [`p108-founder-live-approval-capture-operator-review-contracts.json`](../../contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json).
 

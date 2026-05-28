@@ -1,7 +1,7 @@
 {
   "phaseId": "P108",
   "title": "Founder Live Approval Capture Operator Review",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define governed local operator-review boundaries for future approval capture decisions without granting approval capture, approval persistence, approval writes, runtime admission, execution unlock, mutation, deploy, network, or spend authority.",
   "safetyRules": [
@@ -600,11 +600,13 @@
     {
       "phaseId": "P108.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P108 validation, close parent phase, refresh reports, and hand off to P109 as planned only.",
       "allowedFiles": [
         "scripts/check-p1087-founder-live-approval-operator-review-final.js",
+        "scripts/check-p1084-command-center-operator-review-ux.js",
+        "scripts/check-os-phase-status.js",
         "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
         "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -612,6 +614,11 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p1084-command-center-operator-review-ux-report.md",
+        "reports/p1085-founder-live-approval-operator-review-validation-report.md",
+        "reports/p1086-founder-live-approval-operator-review-docs-report.md",
         "reports/p1087-founder-live-approval-operator-review-final-report.md"
       ],
       "forbiddenFiles": [
@@ -638,6 +645,36 @@
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
+      "exactFiles": [
+        "scripts/check-p1087-founder-live-approval-operator-review-final.js",
+        "scripts/check-p1084-command-center-operator-review-ux.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1087-founder-live-approval-operator-review-final-report.md",
+        "reports/p1086-founder-live-approval-operator-review-docs-report.md",
+        "reports/p1085-founder-live-approval-operator-review-validation-report.md",
+        "reports/p1084-command-center-operator-review-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1087-founder-live-approval-operator-review-final",
+        "P108.7 final report",
+        "P109 handoff placeholder support in check:os-phase-status"
+      ],
+      "checkerUpdates": [
+        "Add final P108 checker covering parent closure, all subphase reports/scripts, Command Center operator-review retention, route safety, OS status, docs, and blocked authority.",
+        "Update P108.4 checker to accept P108.6/P108.7 handoff status.",
+        "Update OS phase status checker to accept P109 as a planned handoff placeholder."
+      ],
+      "docsRoadmap": "Update P108 plan, platform roadmap, README, and OS phase tracking with P108.7 and P108 complete and P109 next as a planned handoff placeholder.",
+      "phaseStatusUpdate": "P108 complete; P108.7 complete; current P108.7; previous P108.6; next P109.",
       "finalSafetyChecks": [
         "Confirm P108 parent and all subphases are complete.",
         "Confirm P109 is planned only.",
@@ -656,8 +693,8 @@
     }
   ],
   "knownLimitations": [
-    "P108 is an operator-review boundary phase only until each subphase completes.",
-    "P108.1-P108.4 do not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
-    "P108.5-P108.7 remain planned."
+    "P108 is complete as a governed local operator-review boundary, model, audit preview, Command Center UX, validation, docs, and final closure phase.",
+    "P108 does not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    "P109 is a planned handoff placeholder only."
   ]
 }

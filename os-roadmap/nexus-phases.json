@@ -8713,27 +8713,30 @@
       "title": "Founder Live Approval Capture Operator Review",
       "track": "NEXUS_OS",
       "order": 144,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "a34217f1",
-      "completedAt": "",
-      "summary": "P108 is in progress. P108.6 closes docs, README, platform roadmap, contract status, reports, and OS phase tracking for founder live approval operator review while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T20:06:47.000Z",
+      "summary": "P108 is complete across the founder live approval operator-review contract, local model, audit preview, Command Center UX, aggregate validation, docs, reports, OS phase status, final validation, and P109 planned handoff while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
+        "npm run check:p1087-founder-live-approval-operator-review-final",
         "npm run check:p1086-founder-live-approval-operator-review-docs",
         "npm run check:p1085-founder-live-approval-operator-review-validation",
+        "npm run check:p1084-command-center-operator-review-ux",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P108.6 is docs/status only; operator decisions, approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "P108 is a completed local operator-review boundary phase; operator decisions, approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P108.7 final validation remains planned."
+        "P109 is a planned handoff placeholder only."
       ],
-      "nextPhase": "P108.7",
+      "nextPhase": "P109",
       "commandCenterVisible": true,
       "label": "Operator Review",
-      "detail": "P108.6 docs closure complete; final validation is next."
+      "detail": "P108 complete; P109 handoff is planned only."
     },
     {
       "phaseId": "P108.1",
@@ -8899,7 +8902,7 @@
       "knownLimitations": [
         "P108.6 is docs/status only and does not change runtime, Command Center source, or tests.",
         "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked.",
-        "P108.7 final validation remains planned."
+        "P108.7 is complete; P109 is a planned handoff placeholder only."
       ],
       "nextPhase": "P108.7",
       "commandCenterVisible": true,
@@ -8911,20 +8914,30 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 144.7,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Final Validation is planned for P108 and has not started.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T20:06:47.000Z",
+      "summary": "Closed P108 final validation across parent/subphase status, scripts, reports, Command Center operator-review UX retention, route safety, dashboard build, docs, roadmap, OS phase status, and P109 planned handoff.",
+      "checksRun": [
+        "npm run check:p1087-founder-live-approval-operator-review-final",
+        "npm run check:p1086-founder-live-approval-operator-review-docs",
+        "npm run check:p1085-founder-live-approval-operator-review-validation",
+        "npm run check:p1084-command-center-operator-review-ux",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "This subphase is planned only; no implementation has started.",
-        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked."
+        "P108.7 is final validation only and does not change runtime, Command Center source, or tests.",
+        "Operator decisions, approval capture, persistence, writes, execution unlock, runtime admission, provider/model calls, network calls, deploy, package creation, and provider spend remain blocked.",
+        "P109 is planned only and has no implementation in P108.7."
       ],
       "nextPhase": "P109",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation and P109 handoff only."
+      "detail": "P108 final validation complete; P109 handoff planned only."
     },
     {
       "phaseId": "P83",
@@ -9337,9 +9350,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T19:59:57.000Z",
-  "currentPhase": "P108.6",
-  "previousPhase": "P108.5",
-  "nextPhase": "P108.7",
+  "updatedAt": "2026-05-28T20:06:47.000Z",
+  "currentPhase": "P108.7",
+  "previousPhase": "P108.6",
+  "nextPhase": "P109",
   "currentPhaseStatus": "complete"
 }
