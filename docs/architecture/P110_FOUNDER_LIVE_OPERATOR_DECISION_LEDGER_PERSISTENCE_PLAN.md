@@ -409,11 +409,89 @@ planned, and restore current phase to P110.3 with P110.4 next.
 
 ## P110.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: aggregate P110.1-P110.4 validation, route safety, forbidden scope,
 local SQLite CRUD safety, report coverage, and stale status prevention. It must
 not change runtime behavior except checker/report evidence.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `acdb1b81`.
+
+Allowed files: `scripts/check-p1105-founder-live-operator-decision-ledger-persistence-validation.js`,
+P110.4/P110.3/P110.2/P110.1/P109.7 checker compatibility, P110 contract, this
+plan, README, platform roadmap, package script registry, OS phase status files,
+and generated P110.5, P110.4, P110.3, P110.2, P110.1, P109.7, OS status, and
+phase coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`, and
+persistent `local-state/runtime/**` artifacts.
+
+Exact files/modules changed: added the P110.5 aggregate checker, registered
+`check:p1105-founder-live-operator-decision-ledger-persistence-validation`,
+updated P110.4/P110.3/P110.2/P110.1/P109.7 checker handoff compatibility,
+updated P110 contract/docs/README/roadmap/status, and generated reports.
+
+Expected exports/data shapes: P110.5 exports no runtime API. It adds a package
+script and a markdown report with aggregate checks, validation commands, known
+limitations, and PASS/FAIL result.
+
+Safety rules: P110.5 is checker/report/status/docs only. It does not change
+Command Center source, write DB records, expose mutation controls, unlock
+execution, admit runtime execution, call providers/models, dispatch agents, run
+workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release,
+export, package, use network calls, or spend.
+
+Reuse check: P110.5 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P110.1-P110.4 checkers/reports,
+`live-ready/founderLiveOperatorDecisionLedgerPersistence.js`, and the existing
+dashboard display model for validation. No duplicate report writer, result
+envelope, checker formatter, redaction helper, mode guard, phase status
+updater, route matrix, or activity/evidence helper was added.
+
+Command Center UX requirements: no Command Center source change in P110.5.
+The checker preserves P110.4 non-chat route coverage, Chat/Lite cleanliness,
+and primary UX safety.
+
+Dark/light/system theme requirements: no theme source change in P110.5.
+Focused Playwright coverage from P110.4 is rerun as validation.
+
+Playwright tests: rerun focused route coverage for “Decision ledger persistence
+appears on non-chat founder routes.”
+
+Checker updates: P110.5 adds a dedicated aggregate validation checker and
+updates P110.4, P110.3, P110.2, P110.1, and P109.7 checkers to accept the
+P110.5/P110.6 handoff state.
+
+Docs/README/roadmap updates: P110.5 is recorded in this plan, README, platform
+roadmap, P110 contract, OS roadmap/status, and generated reports. P110.6 is
+next.
+
+OS phase status update: P110 remains in progress; P110.5 is complete; current
+phase P110.5; previous P110.4; next P110.6.
+
+Validation commands:
+- `npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation`
+- `npm run check:p1104-command-center-decision-ledger-persistence-ux`
+- `npm run check:p1103-founder-live-operator-decision-ledger-crud-model`
+- `npm run check:p1102-founder-live-operator-decision-ledger-schema`
+- `npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract`
+- `npm run check:p1097-founder-live-operator-decision-ledger-final`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Decision ledger persistence appears on non-chat founder routes"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known risks: aggregate validation can become too broad. P110.5 intentionally
+limits itself to P110 evidence, Command Center persistence route safety, docs,
+status, reports, and unsafe authority checks.
+
+Rollback plan: remove the P110.5 checker/script/docs/status/report updates,
+restore P110.5 to planned, restore current phase to P110.4 with P110.5 next,
+and keep P110.1-P110.4 implementation unchanged.
 
 ## P110.6 Docs / Roadmap
 

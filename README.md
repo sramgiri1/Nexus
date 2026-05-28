@@ -483,6 +483,14 @@ The Command Center and local operator surface have:
   admission, execution unlock, project mutation, provider/model call, dispatch,
   worker/tool execution, deploy, release, export, package, network call, or
   provider spend path is available.
+- P110.5 aggregate persistence validation: P110.1-P110.4 are now covered by a
+  single aggregate checker for contract, schema, governed local CRUD,
+  Command Center persistence UX, route safety, reports, docs, and phase status.
+  P110.6 is next. This is checker/report/status/docs only; no Command Center
+  source, project mutation, hosted DB mutation, raw SQL, runtime admission,
+  execution unlock, provider/model call, dispatch, worker/tool execution,
+  deploy, release, export, package, network call, or provider spend path is
+  available.
 
 ## CareLoop Project Progress
 

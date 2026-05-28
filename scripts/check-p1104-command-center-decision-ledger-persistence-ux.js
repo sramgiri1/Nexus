@@ -75,15 +75,21 @@ addCheck("README records P110.4", /P110\.4 Command Center decision-ledger persis
 addCheck("platform roadmap records P110.4", /P110\.4 is\s+complete/.test(platformRoadmap) && /P110\.5\s+is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P110.4"
-    && status.previousPhase === "P110.3"
-    && status.nextPhase === "P110.5"
+  ((status.currentPhase === "P110.4"
+      && status.previousPhase === "P110.3"
+      && status.nextPhase === "P110.5"
+      && roadmap.currentPhase === "P110.4"
+      && roadmap.previousPhase === "P110.3"
+      && roadmap.nextPhase === "P110.5")
+    || (status.currentPhase === "P110.5"
+      && status.previousPhase === "P110.4"
+      && status.nextPhase === "P110.6"
+      && roadmap.currentPhase === "P110.5"
+      && roadmap.previousPhase === "P110.4"
+      && roadmap.nextPhase === "P110.6"))
     && statusById.get("P110")?.status === "in_progress"
     && statusById.get("P110.4")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P110.5")?.status)
-    && roadmap.currentPhase === "P110.4"
-    && roadmap.previousPhase === "P110.3"
-    && roadmap.nextPhase === "P110.5"
     && roadmapById.get("P110.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
