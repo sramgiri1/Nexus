@@ -14368,24 +14368,30 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "dcb119f0a0ccde0a10757afd58a52b82bc910f56",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
-      "detail": "P112.6 validation/docs complete; P112.7 final validation is next.",
+      "detail": "P112.7 final validation complete; P112 is complete and P113 is next.",
       "phaseId": "P112",
       "title": "Founder Live Agent Work Queue Admission",
       "order": 148,
-      "status": "in_progress",
-      "summary": "P112 is in progress. P112.1-P112.6 define, validate, and document queue admission through Command Center visibility while unsafe authority remains blocked.",
-      "nextPhase": "P112.7",
+      "status": "complete",
+      "summary": "P112 is complete. Founder live agent work queue admission now has contract closure, local queue schema, approval-gated local CRUD, queue admission preview, Command Center Business Build and Agent Flow visibility, aggregate validation, docs, and final validation while unsafe authority remains blocked.",
+      "nextPhase": "P113",
       "previousPhase": "P111.7",
-      "checksRun": [],
-      "knownLimitations": [
-        "P112.6 is validation/docs closure only and does not write queue records.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P112.7 is next for final validation."
+      "checksRun": [
+        "npm run check:p1127-founder-live-agent-work-queue-admission-final",
+        "npm run check:p1126-founder-live-agent-work-queue-admission-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112 closes queue admission preparation only and does not write queue records into active runtime queues.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P113 is a handoff placeholder until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-28T23:40:37.658Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14558,23 +14564,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation and handoff for P112.",
+      "detail": "P112.7 final validation complete; P112 is complete and P113 is next.",
       "phaseId": "P112.7",
       "title": "Final Validation",
       "order": 148.7,
-      "status": "planned",
-      "summary": "Planned final validation and handoff for P112.",
+      "status": "complete",
+      "summary": "P112.7 final validation closes P112, verifies prior reports/scripts/docs/status, confirms Command Center queue admission remains scoped to Business Build and Agent Flow, and records the P113 handoff placeholder.",
       "nextPhase": "P113",
       "previousPhase": "P112.6",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned final validation only."
+      "checksRun": [
+        "npm run check:p1127-founder-live-agent-work-queue-admission-final",
+        "npm run check:p1126-founder-live-agent-work-queue-admission-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112.7 is final validation only and does not change Command Center source or runtime behavior.",
+        "Queue writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P113 is a handoff placeholder until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-28T23:40:37.658Z"
     },
     {
       "phaseId": "P83",
@@ -15059,8 +15073,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P112.6",
-  "previousPhase": "P112.5",
-  "nextPhase": "P112.7",
+  "currentPhase": "P112.7",
+  "previousPhase": "P112.6",
+  "nextPhase": "P113",
   "currentPhaseStatus": "complete"
 }

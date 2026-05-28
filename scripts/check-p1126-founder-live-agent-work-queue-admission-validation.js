@@ -130,8 +130,16 @@ addCheck("P112 plan records all completed subphases", [
   /P112\.5 Command Center Queue Admission UX[\s\S]*Status:\s+complete/,
   /P112\.6 Work Queue Admission Validation \/ Docs[\s\S]*Status:\s+complete/,
 ].every((pattern) => pattern.test(plan)));
-addCheck("README records P112.6", /P112\.6 validation and docs closure/.test(readme) && /P112\.7\s+is\s+next/.test(readme));
-addCheck("platform roadmap records P112.6", /P112\.6 is complete/.test(platformRoadmap) && /P112\.7 is next/.test(platformRoadmap));
+addCheck(
+  "README records P112.6",
+  /P112\.6 validation and docs closure/.test(readme)
+    && (/P112\.7\s+is\s+next/.test(readme) || /P112\.7 final validation/.test(readme)),
+);
+addCheck(
+  "platform roadmap records P112.6",
+  /P112\.6 is complete/.test(platformRoadmap)
+    && (/P112\.7 is next/.test(platformRoadmap) || /P112\.7 is complete/.test(platformRoadmap)),
+);
 addCheck(
   "contract handoff points to final validation",
   (contract.currentSubphase === "P112.6" && contract.previousSubphase === "P112.5" && contract.nextSubphase === "P112.7")

@@ -568,6 +568,7 @@ const CURRENT_PHASE_IDS = new Set([
   "P112.5",
   "P112.6",
   "P112.7",
+  "P113",
 ]);
 
 const sections = {
@@ -647,6 +648,7 @@ check(
   phaseStatus.nextPhase === "P106"
     || phaseStatus.nextPhase === "P110"
     || phaseStatus.nextPhase === "P112"
+    || phaseStatus.nextPhase === "P113"
     || statusById.has(phaseStatus.nextPhase),
   "nextPhase",
   "nextPhase entry must exist unless it is a handoff placeholder",

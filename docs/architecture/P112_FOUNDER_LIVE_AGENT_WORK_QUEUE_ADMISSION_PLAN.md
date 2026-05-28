@@ -576,3 +576,94 @@ handoff.
 Rollback plan: remove the P112.6 checker/script/docs/status/report updates,
 restore P112 to P112.5 complete with P112.6 planned, and keep P112.1-P112.5
 unchanged.
+
+## P112.7 Final Validation
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Narrow goal: close P112 with final validation evidence, status alignment, and
+a P113 handoff placeholder without enabling queue writes or runtime execution.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `d7fae7f5cb7c3c8695df14fccbab9da6486375d4`.
+
+Allowed files: P112.7 final checker, P112.6 checker compatibility update, OS
+phase status checker handoff update, P112 contract, P112 plan, README, platform
+roadmap, package script registry, OS phase status files, and generated
+P112.7/P112.6/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `db/**`, `live-ready/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: added the P112.7 final validation checker, updated
+P112.6 checker handoff compatibility, registered the package script, allowed
+the P113 handoff placeholder in the OS status checker, updated P112
+contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes: no runtime exports, DB schemas, queue record
+shapes, or Command Center data modules are changed in P112.7.
+
+Safety rules: P112.7 is final validation only. It does not write queue records,
+unlock execution, admit runtime execution, call providers/models, dispatch
+agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL,
+deploy, release, export, package, use network calls, or spend.
+
+Reuse check: P112.7 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P112 reports, existing OS status
+files, and the existing phase validation coverage checker. No report writer,
+result envelope, checker formatter, phase status updater, route matrix,
+dashboard component, DB helper, or queue helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P112.7.
+The final checker verifies the P112.5 queue admission card remains scoped to
+Business Build and Agent Flow and stays out of Chat with NEXUS, Lite, and Live
+Readiness.
+
+Dark/light/system theme requirements: no theme source change in P112.7.
+
+Playwright tests: no new Playwright test in P112.7 because no UI source changes
+are made. The P112.5 focused Playwright coverage remains required and is
+verified by source inspection in the final checker.
+
+Checker updates: P112.7 adds a final validation checker, updates P112.6 to
+accept the P112.7/P113 handoff state, and updates the OS status checker to
+accept P113 as the next handoff placeholder.
+
+Docs/README/roadmap updates: P112.7 is recorded in this plan, README, platform
+roadmap, P112 contract, OS roadmap/status, and generated reports. P112 is
+complete. P113 is next.
+
+OS phase status update: P112 is complete; P112.7 is complete; current phase
+P112.7; previous P112.6; next P113.
+
+Validation commands:
+- `npm run check:p1127-founder-live-agent-work-queue-admission-final`
+- `npm run check:p1126-founder-live-agent-work-queue-admission-validation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/runtime/provider/deploy
+paths changed; no local runtime DB artifact is retained; no DemoApp exposure;
+no raw private IDs, queue record keys, raw DB table names, or fake runnable
+actions are introduced; no provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL, deploy, release,
+export, package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P112.7 files>`
+- `git commit -m "feat(nexus): close p112 work queue admission validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: P113 is a handoff placeholder until its own implementation-grade
+contract is written. P112.7 documents this limitation instead of implying that
+future runtime execution is already available.
+
+Rollback plan: remove the P112.7 checker/script/docs/status/report updates,
+restore P112 to P112.6 complete with P112.7 planned, and keep P112.1-P112.6
+unchanged.

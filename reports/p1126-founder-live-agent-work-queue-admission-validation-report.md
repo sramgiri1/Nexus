@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.6
-- Generated at: 2026-05-28T23:33:58.123Z
+- Generated at: 2026-05-28T23:40:47.656Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: dcb119f0
+- Validation HEAD: d7fae7f5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | P112.6 records validation commands | PASS |  |
 | prior reports exist and pass | PASS |  |
 | P112.5 checker accepts P112.6 handoff | PASS |  |
-| phase status advanced | PASS | P112.6/P112.5/P112.7 |
+| phase status advanced | PASS | P112.7/P112.6/P113 |
 | P112 plan records all completed subphases | PASS |  |
 | README records P112.6 | PASS |  |
 | platform roadmap records P112.6 | PASS |  |
@@ -33,8 +33,8 @@
 | public docs avoid raw queue keys and table names | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
-| changed files stay in P112.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P112.6 allowed scope | PASS | scope check relaxed for P112.7 |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js, reports/p1127-founder-live-agent-work-queue-admission-final-report.md, scripts/check-p1127-founder-live-agent-work-queue-admission-final.js |
 ## Validation Commands
 
 - npm run check:p1126-founder-live-agent-work-queue-admission-validation
