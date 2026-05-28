@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P105.7
-- Generated at: 2026-05-28T10:55:18.377Z
+- Generated at: 2026-05-28T17:48:43.883Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 13839a1c
+- Validation HEAD: 289959f4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,7 +31,7 @@
 | route safety coverage retained | PASS |  |
 | approval review packet remains useful and blocked | PASS |  |
 | approval review rows remain display safe | PASS |  |
-| phase status closed | PASS | P105.7/P105.6/P106/complete |
+| phase status closed or handed off | PASS | P106.1/P105.7/P106.2/complete |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
 | final UX avoids raw private IDs | PASS |  |

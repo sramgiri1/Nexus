@@ -36,6 +36,10 @@ const viewModel = buildBusinessBuildViewModel("Build a simple iOS Snake game for
 const packet = viewModel.founderLiveExecutionApprovalReviewPacket || {};
 const p105 = statusById.get("P105") || {};
 const p1057 = subphaseById.get("P105.7") || {};
+const acceptedPhaseClosures = [
+  { currentPhase: "P105.7", previousPhase: "P105.6", nextPhase: "P106" },
+  { currentPhase: "P106.1", previousPhase: "P105.7", nextPhase: "P106.2" },
+];
 const forbiddenPrefixes = ["projects/", "careloop/", "dashboard/src/", "dashboard/tests/", "providers/", "tools/", "worker-runtime/", "deploy/", "release/", "exports/", "packages/"];
 const p105Scripts = [
   "check:p1051-founder-live-execution-approval-planning-contract",
@@ -71,10 +75,12 @@ addCheck("route safety coverage retained", routeTests.includes("Founder live app
 addCheck("approval review packet remains useful and blocked", packet.reviewPacketRows?.length === 6 && packet.blockedReviewPacketCount === 6 && packet.executableReviewPacketCount === 0 && packet.dispatchableReviewPacketCount === 0);
 addCheck("approval review rows remain display safe", packet.reviewPacketRows?.every((row) => row.approvalSubmitted === "Blocked" && row.executionUnlockAllowed === "Blocked" && !("reviewPacketId" in row) && !("sourceApprovalPlanKey" in row)));
 addCheck(
-  "phase status closed",
-  status.currentPhase === "P105.7"
-    && status.previousPhase === "P105.6"
-    && status.nextPhase === "P106"
+  "phase status closed or handed off",
+  acceptedPhaseClosures.some((closure) =>
+    status.currentPhase === closure.currentPhase
+      && status.previousPhase === closure.previousPhase
+      && status.nextPhase === closure.nextPhase
+  )
     && p105.status === "complete"
     && statusById.get("P105.7")?.status === "complete"
     && roadmapById.get("P105")?.status === "complete"

@@ -8221,6 +8221,174 @@
       "detail": "Planned final P105 validation."
     },
     {
+      "phaseId": "P106",
+      "title": "Founder Live Approval Request Boundary",
+      "track": "NEXUS_OS",
+      "order": 142,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P106 has started with the approval request boundary contract and schema. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+      "checksRun": [
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:p1057-founder-live-execution-approval-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P106.1 is schema and contract only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P106.2-P106.7 remain planned."
+      ],
+      "nextPhase": "P106.2",
+      "commandCenterVisible": true,
+      "label": "Approval Request Boundary",
+      "detail": "P106.1 complete; approval request records are next."
+    },
+    {
+      "phaseId": "P106.1",
+      "title": "Approval Request Contract / Schema Baseline",
+      "track": "NEXUS_OS",
+      "order": 142.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T07:20:00.000Z",
+      "summary": "Defined the P106 approval request boundary contract and local schema with display-safe request envelope and decision-boundary shapes, required evidence, forbidden actions, validation commands, and all approval request/runtime/execution flags false.",
+      "checksRun": [
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:p1057-founder-live-execution-approval-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P106.1 is schema and contract only; approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P106.2-P106.7 remain planned."
+      ],
+      "nextPhase": "P106.2",
+      "commandCenterVisible": true,
+      "label": "Request Contract",
+      "detail": "Approval request boundary schema complete; no request submission or execution authority."
+    },
+    {
+      "phaseId": "P106.2",
+      "title": "Approval Request Model",
+      "track": "NEXUS_OS",
+      "order": 142.2,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned deterministic local approval request records from P105 review packets.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no approval request submission, capture, persistence, or execution authority enabled."
+      ],
+      "nextPhase": "P106.3",
+      "commandCenterVisible": true,
+      "label": "Request Model",
+      "detail": "Planned approval request model."
+    },
+    {
+      "phaseId": "P106.3",
+      "title": "Request Queue Preview",
+      "track": "NEXUS_OS",
+      "order": 142.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-safe approval request queue preview.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no request queue writes or runtime actions enabled."
+      ],
+      "nextPhase": "P106.4",
+      "commandCenterVisible": true,
+      "label": "Queue Preview",
+      "detail": "Planned request queue preview."
+    },
+    {
+      "phaseId": "P106.4",
+      "title": "Command Center Approval Request UX",
+      "track": "NEXUS_OS",
+      "order": 142.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned non-runnable Command Center approval request boundary UX.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no approval controls or execution controls enabled."
+      ],
+      "nextPhase": "P106.5",
+      "commandCenterVisible": true,
+      "label": "Request UX",
+      "detail": "Planned approval request UX."
+    },
+    {
+      "phaseId": "P106.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 142.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned aggregate P106 validation coverage.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no runtime behavior enabled."
+      ],
+      "nextPhase": "P106.6",
+      "commandCenterVisible": true,
+      "label": "Validation",
+      "detail": "Planned aggregate validation."
+    },
+    {
+      "phaseId": "P106.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 142.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned P106 docs and roadmap closure.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no runtime behavior enabled."
+      ],
+      "nextPhase": "P106.7",
+      "commandCenterVisible": true,
+      "label": "Docs",
+      "detail": "Planned docs closure."
+    },
+    {
+      "phaseId": "P106.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 142.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final P106 validation and next phase handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no runtime behavior enabled."
+      ],
+      "nextPhase": "P107",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation."
+    },
+    {
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
@@ -8631,9 +8799,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T06:55:00.000Z",
-  "currentPhase": "P105.7",
-  "previousPhase": "P105.6",
-  "nextPhase": "P106",
+  "updatedAt": "2026-05-28T07:20:00.000Z",
+  "currentPhase": "P106.1",
+  "previousPhase": "P105.7",
+  "nextPhase": "P106.2",
   "currentPhaseStatus": "complete"
 }

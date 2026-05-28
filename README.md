@@ -231,6 +231,13 @@ The Command Center and local operator surface have:
   approval-plan model, dry-run review packet, Command Center approval review UX,
   aggregate validation, docs closure, final route checks, dashboard build,
   reports, and phase status. P106 is next.
+- P106.1 approval request boundary: P106 is in progress. The local approval
+  request boundary schema now defines request-envelope and decision-boundary
+  shapes for future founder/operator approval requests without allowing request
+  submission, approval capture, approval persistence, execution unlock, runtime
+  admission, provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, deploy, release, export, package,
+  network calls, or provider spend. P106.2 is next.
 
 ## CareLoop Project Progress
 

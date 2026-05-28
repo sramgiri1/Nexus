@@ -2411,6 +2411,28 @@ Implementation follows
 The detailed plan lives in
 [`P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md`](P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md).
 
+## P106 - Founder Live Approval Request Boundary
+
+P106 begins after P105 founder live execution approval planning closure. It
+defines the governed local approval request boundary needed before any future
+approval capture or execution unlock can be considered. P106 does not enable
+approval request submission, approval capture, approval persistence, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, deploy, release, export, package action, network call, or provider
+spend.
+
+P106.1 is complete. It adds the approval request boundary contract and local
+schema with display-safe approval request envelope and decision-boundary shapes,
+required evidence, forbidden actions, validation commands, owner/evidence,
+activity, cost posture, and all approval request/runtime/execution flags false.
+P106.2 is next for deterministic local approval request records.
+
+Implementation follows
+[`p106-founder-live-approval-request-boundary-contracts.json`](../../contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json).
+
+The detailed plan lives in
+[`P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md`](P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md).
+
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
 
