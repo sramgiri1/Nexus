@@ -254,7 +254,17 @@ The Command Center and local operator surface have:
   capture, approval persistence, approval writes, execution unlock, runtime
   admission, provider/model calls, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, deploy, release, export, package,
-  network calls, and provider spend remain blocked. P106.4 is next.
+  network calls, and provider spend remain blocked.
+- P106.4 Command Center approval request UX: Business Build, Agent Flow, and
+  Live Readiness now show the display-safe approval request queue with current
+  state, queue counts, next action, blockers, disabled reason, owner capability,
+  evidence/activity location, cost posture, queue rows, and blocked safety
+  rows. Chat with NEXUS and Lite stay clean/chat-only. Approval request
+  submission, approval capture, approval persistence, approval writes,
+  execution unlock, runtime admission, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+  export, package, network calls, and provider spend remain blocked. P106.5 is
+  next.
 
 ## CareLoop Project Progress
 

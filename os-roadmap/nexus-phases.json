@@ -8227,10 +8227,13 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "15bb6673",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P106 has completed the approval request boundary schema, deterministic local approval request model, and local queue preview. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+      "summary": "P106 has completed the approval request boundary schema, deterministic request model, queue preview, and Command Center approval request UX. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
       "checksRun": [
+        "npm run check:p1064-command-center-approval-request-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval request queue appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
         "npm run check:p1063-founder-live-approval-request-queue-preview",
         "npm run check:p1062-founder-live-approval-request-model",
         "npm run check:p1061-founder-live-approval-request-boundary-contract",
@@ -8239,14 +8242,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P106.3 is a local queue preview only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
+        "P106.4 is display-only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P106.4-P106.7 remain planned."
+        "P106.5-P106.7 remain planned."
       ],
-      "nextPhase": "P106.4",
+      "nextPhase": "P106.5",
       "commandCenterVisible": true,
       "label": "Approval Request Boundary",
-      "detail": "P106.3 complete; Command Center approval request UX is next."
+      "detail": "P106.4 complete; aggregate validation is next."
     },
     {
       "phaseId": "P106.1",
@@ -8335,19 +8338,31 @@
       "title": "Command Center Approval Request UX",
       "track": "NEXUS_OS",
       "order": 142.4,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned non-runnable Command Center approval request boundary UX.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T08:45:00.000Z",
+      "summary": "Rendered the display-safe approval request queue on Business Build, Agent Flow, and Live Readiness with current state, queue counts, next action, blockers, disabled reason, owner, evidence/activity location, cost posture, queue rows, and blocked safety rows while Chat with NEXUS and Lite remain clean.",
+      "checksRun": [
+        "npm run check:p1064-command-center-approval-request-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval request queue appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1063-founder-live-approval-request-queue-preview",
+        "npm run check:p1062-founder-live-approval-request-model",
+        "npm run check:p1061-founder-live-approval-request-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval controls or execution controls enabled."
+        "P106.4 is display-only; approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P106.5-P106.7 remain planned."
       ],
       "nextPhase": "P106.5",
       "commandCenterVisible": true,
-      "label": "Request UX",
-      "detail": "Planned approval request UX."
+      "label": "Approval Request UX",
+      "detail": "Command Center approval request queue visible on non-chat founder pages; no approval or execution controls."
     },
     {
       "phaseId": "P106.5",
@@ -8817,9 +8832,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T08:25:00.000Z",
-  "currentPhase": "P106.3",
-  "previousPhase": "P106.2",
-  "nextPhase": "P106.4",
+  "updatedAt": "2026-05-28T08:45:00.000Z",
+  "currentPhase": "P106.4",
+  "previousPhase": "P106.3",
+  "nextPhase": "P106.5",
   "currentPhaseStatus": "complete"
 }

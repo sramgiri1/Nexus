@@ -2441,8 +2441,17 @@ future non-chat Command Center rendering. Approval request submission, approval
 capture, approval persistence, approval writes, execution unlock, runtime
 admission, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, deploy, release, export, package action, network
-call, and provider spend remain blocked. P106.4 is next for Command Center
-approval request UX.
+call, and provider spend remain blocked.
+
+P106.4 is complete. Business Build, Agent Flow, and Live Readiness now render a
+display-safe approval request queue card with queue counts, current state, next
+action, blockers, disabled reason, owner capability, evidence/activity
+location, cost posture, queue rows, and blocked safety rows. Chat with NEXUS
+and Lite remain chat-only/clean. Approval request submission, approval capture,
+approval persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked. P106.5 is next for aggregate validation.
 
 Implementation follows
 [`p106-founder-live-approval-request-boundary-contracts.json`](../../contracts/os-roadmap/p106-founder-live-approval-request-boundary-contracts.json).

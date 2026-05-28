@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P106.1
-- Generated at: 2026-05-28T18:01:04.131Z
+- Generated at: 2026-05-28T18:08:57.043Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 15bb6673
+- Validation HEAD: 1ae21ee8
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,12 +40,12 @@
 | plan records P106.1 complete | PASS |  |
 | platform roadmap records P106.1 | PASS |  |
 | README records P106.1 | PASS |  |
-| phase status advanced from P106.1 | PASS | P106.3/P106.2/P106.4 |
+| phase status advanced from P106.1 | PASS | P106.4/P106.3/P106.5 |
 | phase status checker accepts P106 subphases | PASS |  |
 | primary data stays Command Center hidden | PASS |  |
 | docs and schema avoid raw private IDs | PASS |  |
 | docs and schema avoid unsafe runnable action text | PASS |  |
-| P106 docs and schema avoid raw dumps | PASS |  |
+| P106.1 data avoids raw dumps | PASS |  |
 ## Validation Commands
 
 - npm run check:p1061-founder-live-approval-request-boundary-contract

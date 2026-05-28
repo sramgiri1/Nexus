@@ -772,6 +772,101 @@ export function buildFounderLiveExecutionApprovalReviewPacketDisplayModel({
   };
 }
 
+export function buildFounderLiveApprovalRequestQueuePreviewDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  reviewPacket,
+} = {}) {
+  const approvalReview = reviewPacket || buildFounderLiveExecutionApprovalReviewPacketDisplayModel({ founderIdeaSummary });
+  const disabledReason =
+    "P106.4 renders a local approval request queue preview only. It cannot submit approval requests, capture approvals, persist approval state, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const queueRows = (approvalReview.reviewPacketRows || []).map((row, index) => ({
+    label: row.label || `${row.proposedAgentLane}: Approval request queue item`,
+    proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+    proposedOutcome: row.proposedOutcome || "Review governed approval request evidence before any future approval capture phase.",
+    queuePosition: index + 1,
+    queueState: "Founder Live Approval Request Queue Ready Execution Blocked",
+    missingEvidence: row.missingGates || [],
+    evidenceStatus: {
+      requiredEvidenceCount: 19,
+      missingEvidenceCount: row.missingGates?.length || 0,
+      submittedRequests: 0,
+      capturedApprovals: 0,
+      persistedApprovals: 0,
+      executionUnlocks: 0,
+      runtimeAdmissions: 0,
+    },
+    founderDecisionPrompt: "Review scope, blockers, evidence, rollback, and cost posture before any later approval capture phase.",
+    operatorDecisionPrompt: "Confirm this request is local, display-safe, non-persistent, and unable to unlock runtime execution.",
+    validationCommand: "npm run check:p1063-founder-live-approval-request-queue-preview",
+    nextAction: "Keep this request in the local queue preview until a later explicit phase defines approval capture.",
+    blocker: row.blocker || "Approval request submission is not available.",
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Approval Request Boundary",
+    evidenceLocation: "reports/p1063-founder-live-approval-request-queue-preview-report.md",
+    activityLocation: row.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: row.costImpact || "Local approval request queue preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalRequestSubmitted: "Blocked",
+    approvalCaptured: "Blocked",
+    approvalPersisted: "Blocked",
+    approvalWriteAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    runtimeAdmissionAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    spendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Founder Live Approval Request Queue Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    queueReady: queueRows.length > 0,
+    queuedRequestCount: queueRows.length,
+    blockedQueuedRequestCount: queueRows.length,
+    submittableQueuedRequestCount: 0,
+    capturableQueuedRequestCount: 0,
+    persistedQueuedRequestCount: 0,
+    writableQueuedRequestCount: 0,
+    executableQueuedRequestCount: 0,
+    dispatchableQueuedRequestCount: 0,
+    projectMutationQueuedRequestCount: 0,
+    hostedDbMutationQueuedRequestCount: 0,
+    nextAction: "Review approval request queue state on non-chat pages while approval submission and execution remain blocked.",
+    blockers: [
+      "Approval request submission remains blocked.",
+      "Approval capture remains blocked.",
+      "Approval persistence remains blocked.",
+      "Approval writes cannot unlock execution.",
+      "Runtime admission remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Approval Request Boundary",
+    evidenceLocation: "reports/p1063-founder-live-approval-request-queue-preview-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic approval request queue UX only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    queueRows,
+    safetyRows: [
+      { label: "Request submission", value: "Blocked" },
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Approval persistence", value: "Blocked" },
+      { label: "Approval writes", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1478,6 +1573,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdeaSummary: prdFields.founderIdea,
     boundary: founderLiveExecutionBoundary,
   });
+  const founderLiveApprovalRequestQueuePreview = buildFounderLiveApprovalRequestQueuePreviewDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+    reviewPacket: founderLiveExecutionApprovalReviewPacket,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1610,6 +1709,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveWorkAdmissionApproval: founderLiveWorkAdmission.approval,
     founderLiveExecutionBoundary,
     founderLiveExecutionApprovalReviewPacket,
+    founderLiveApprovalRequestQueuePreview,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

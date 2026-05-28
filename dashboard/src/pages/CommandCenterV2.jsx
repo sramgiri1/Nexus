@@ -3335,6 +3335,10 @@ function AgentFlowPage() {
         packet={businessBuild.founderLiveExecutionApprovalReviewPacket}
         surfaceLabel="Agent Flow Approval Review"
       />
+      <FounderLiveApprovalRequestQueuePreviewCard
+        queue={businessBuild.founderLiveApprovalRequestQueuePreview}
+        surfaceLabel="Agent Flow Approval Request Queue"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -9713,6 +9717,10 @@ function LiveReadinessPage() {
           packet={founderLiveUse.founderLiveExecutionApprovalReviewPacket}
           surfaceLabel="Live Readiness Approval Review"
         />
+        <FounderLiveApprovalRequestQueuePreviewCard
+          queue={founderLiveUse.founderLiveApprovalRequestQueuePreview}
+          surfaceLabel="Live Readiness Approval Request Queue"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10048,6 +10056,10 @@ function BusinessBuildPage() {
         <FounderLiveExecutionApprovalReviewPacketCard
           packet={build.founderLiveExecutionApprovalReviewPacket}
           surfaceLabel="Business Build Approval Review"
+        />
+        <FounderLiveApprovalRequestQueuePreviewCard
+          queue={build.founderLiveApprovalRequestQueuePreview}
+          surfaceLabel="Business Build Approval Request Queue"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10745,6 +10757,73 @@ function FounderLiveExecutionApprovalReviewPacketCard({ packet, surfaceLabel = "
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing gates: {row.missingGates?.[0] || "Operator approval evidence"}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Review: {row.reviewQuestions?.[0] || "Confirm scope and success criteria."}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveApprovalRequestQueuePreviewCard({ queue, surfaceLabel = "Approval Request Queue" }) {
+  if (!queue) return null;
+
+  const rows = Array.isArray(queue.queueRows) ? queue.queueRows.slice(0, 6) : [];
+  const blockers = Array.isArray(queue.blockers) ? queue.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(queue.safetyRows) ? queue.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live approval request queue preview">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Approval Request Queue</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{queue.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Queue read-only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{queue.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Queued requests</span><span className="ccv2-page-summary-value">{queue.queuedRequestCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked queued requests</span><span className="ccv2-page-summary-value">{queue.blockedQueuedRequestCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Submittable requests</span><span className="ccv2-page-summary-value">{queue.submittableQueuedRequestCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Capturable requests</span><span className="ccv2-page-summary-value">{queue.capturableQueuedRequestCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persisted approvals</span><span className="ccv2-page-summary-value">{queue.persistedQueuedRequestCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable requests</span><span className="ccv2-page-summary-value">{queue.executableQueuedRequestCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{queue.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{queue.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{queue.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{queue.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{queue.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{queue.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.queuePosition}`}
+            aria-label={`${row.proposedAgentLane} approval request queue row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.queueState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Operator approval evidence"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Founder prompt: {row.founderDecisionPrompt}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Operator prompt: {row.operatorDecisionPrompt}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
           </div>

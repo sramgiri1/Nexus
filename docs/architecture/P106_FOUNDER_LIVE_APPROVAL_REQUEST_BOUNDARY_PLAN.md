@@ -116,16 +116,51 @@ Final safety checks:
 - Approval request submission, capture, persistence, and writes remain blocked.
 - Queue rows cannot unlock execution or runtime admission.
 - Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.
-- P106.4 remains planned.
+- P106.4 remains planned at P106.3 closure.
 - No project, CareLoop, dashboard source, or dashboard test files changed.
 
 ## P106.4 Command Center Approval Request UX
 
-Status: planned
+Status: complete
 
 Narrow goal: render approval request boundary state on Business Build, Agent Flow, and Live Readiness without approval controls, execution controls, raw data dumps, private IDs, DemoApp leakage, or fake runnable actions.
 
-Validation commands: include focused Playwright route coverage, dashboard build, prior P106 checkers, OS phase status, phase validation coverage, and diff check.
+Allowed files: P106 contract, P106 plan, platform roadmap, README, dashboard Business Build data model, Command Center page, focused route tests, P106.4 checker, P106.3 checker handoff compatibility, package script, OS phase status files, and generated validation reports.
+
+Forbidden files: projects/**, careloop/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
+
+Reuse check: reuse existing dashboard card/page-summary/grid/safety-row patterns, buildBusinessBuildViewModel, focused routes.spec.js safety tests, shared/reportWriter.js, shared/checkResultFormatter.js, and P106.3 queue preview semantics. Do not duplicate report writers, route matrices, mode guards, redaction helpers, or unrelated UI card systems.
+
+Expected exports/data: buildFounderLiveApprovalRequestQueuePreviewDisplayModel on dashboard data; founderLiveApprovalRequestQueuePreview inside buildBusinessBuildViewModel; FounderLiveApprovalRequestQueuePreviewCard in CommandCenterV2.
+
+Command Center UX: render the approval request queue card on Business Build, Agent Flow, and Live Readiness only. The card must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, cost impact, queue rows, and blocked safety rows. Chat with NEXUS and Lite remain chat-only/clean.
+
+Theme requirements: focused Playwright coverage verifies the card in dark, light, and system themes on Business Build; existing route-wide theme behavior remains unchanged.
+
+Tests/checkers: npm run check:p1064-command-center-approval-request-ux; focused Playwright route coverage; dashboard build; prior P106 checkers.
+
+Docs/roadmap: update P106 plan, platform roadmap, README, and OS phase status with P106.4 complete and P106.5 next.
+
+OS phase status update: P106 in progress; P106.4 complete; current P106.4; previous P106.3; next P106.5.
+
+Validation commands:
+- npm run check:p1064-command-center-approval-request-ux
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live approval request queue appears on non-chat founder routes"
+- cd dashboard && npm run build
+- npm run check:p1063-founder-live-approval-request-queue-preview
+- npm run check:p1062-founder-live-approval-request-model
+- npm run check:p1061-founder-live-approval-request-boundary-contract
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Final safety checks:
+- P106.4 is display-only.
+- Chat with NEXUS and Lite stay clean/chat-only.
+- No approval controls, execution controls, raw dumps, private IDs, DemoApp, or fake runnable actions are exposed.
+- Approval request submission, capture, persistence, writes, execution unlock, and runtime admission remain blocked.
+- P106.5 remains planned.
+- No project or CareLoop files changed.
 
 ## P106.5 Tests / Checkers
 

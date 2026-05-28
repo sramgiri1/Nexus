@@ -59,10 +59,10 @@ addCheck("queue rows include evidence and blockers", data.queueRows?.every((row)
 addCheck("all blocked flags false", P106_APPROVAL_REQUEST_BOUNDARY_BLOCKED_FLAGS.every((flag) => data[flag] === false && data.queueRows.every((row) => row[flag] === false)));
 addCheck("reuses P106 approval request model", source.includes("buildFounderLiveApprovalRequestModel"));
 addCheck("contract marks P106.3 complete", p1063.status === "complete");
-addCheck("P106.4 remains planned", subphaseById.get("P106.4")?.status === "planned");
+addCheck("P106.4 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P106.4")?.status));
 addCheck("docs record P106.3", /P106\.3 Request Queue Preview[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P106.3", /P106\.3 is\s+complete/.test(platformRoadmap) && /P106\.4 is\s+next/.test(platformRoadmap));
-addCheck("README records P106.3", /P106\.3 request queue preview/.test(readme) && /P106\.4 is next/.test(readme));
+addCheck("platform roadmap records P106.3", /P106\.3 is\s+complete/.test(platformRoadmap) && (/P106\.4 is\s+next/.test(platformRoadmap) || /P106\.4 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P106.3", /P106\.3 request queue preview/.test(readme) && (/P106\.4 is next/.test(readme) || /P106\.4 Command Center approval request UX/.test(readme)));
 addCheck(
   "phase status advanced",
   ["P106.3", "P106.4", "P106.5", "P106.6", "P106.7"].includes(status.currentPhase)
@@ -70,7 +70,7 @@ addCheck(
     && ["P106.4", "P106.5", "P106.6", "P106.7", "P107"].includes(status.nextPhase)
     && ["in_progress", "complete"].includes(statusById.get("P106")?.status)
     && statusById.get("P106.3")?.status === "complete"
-    && statusById.get("P106.4")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P106.4")?.status)
     && roadmapById.get("P106.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
