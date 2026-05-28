@@ -114,15 +114,21 @@ addCheck("dashboard model stays browser safe", !dashboardData.includes("sqliteRu
 addCheck("compatibility checkers accept P110.5", checkerSources.includes("P110.5") && checkerSources.includes("P110.6"));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P110.5"
-    && status.previousPhase === "P110.4"
-    && status.nextPhase === "P110.6"
+  ((status.currentPhase === "P110.5"
+      && status.previousPhase === "P110.4"
+      && status.nextPhase === "P110.6"
+      && roadmap.currentPhase === "P110.5"
+      && roadmap.previousPhase === "P110.4"
+      && roadmap.nextPhase === "P110.6")
+    || (status.currentPhase === "P110.6"
+      && status.previousPhase === "P110.5"
+      && status.nextPhase === "P110.7"
+      && roadmap.currentPhase === "P110.6"
+      && roadmap.previousPhase === "P110.5"
+      && roadmap.nextPhase === "P110.7"))
     && statusById.get("P110")?.status === "in_progress"
     && statusById.get("P110.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P110.6")?.status)
-    && roadmap.currentPhase === "P110.5"
-    && roadmap.previousPhase === "P110.4"
-    && roadmap.nextPhase === "P110.6"
     && roadmapById.get("P110.5")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

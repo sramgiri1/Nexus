@@ -733,15 +733,111 @@
     {
       "phaseId": "P110.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "DOCS_CHANGE",
-      "narrowGoal": "Close P110 docs, README, platform roadmap, contract, reports, and OS status evidence without changing runtime behavior.",
+      "narrowGoal": "Close P110 docs, README, platform roadmap, contract, reports, and OS status evidence without changing runtime behavior or Command Center source.",
       "validationCommands": [
         "npm run check:p1106-founder-live-operator-decision-ledger-persistence-docs",
         "npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "c84323b3",
+      "allowedFiles": [
+        "scripts/check-p1106-founder-live-operator-decision-ledger-persistence-docs.js",
+        "scripts/check-p1105-founder-live-operator-decision-ledger-persistence-validation.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1106-founder-live-operator-decision-ledger-persistence-docs-report.md",
+        "reports/p1105-founder-live-operator-decision-ledger-persistence-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1106-founder-live-operator-decision-ledger-persistence-docs.js",
+        "scripts/check-p1105-founder-live-operator-decision-ledger-persistence-validation.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1106-founder-live-operator-decision-ledger-persistence-docs-report.md",
+        "reports/p1105-founder-live-operator-decision-ledger-persistence-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1106-founder-live-operator-decision-ledger-persistence-docs",
+        "P110.6 docs report"
+      ],
+      "dataShape": {
+        "report": "Markdown docs closure report with status/doc/report checks, validation commands, known limitations, and PASS/FAIL result.",
+        "checker": "Node checker that reads P110 contract/status/docs/reports, verifies P110.1-P110.6 docs closure, P110.7 handoff, forbidden scope, and unsafe wording."
+      },
+      "commandCenterUx": "No Command Center source change in P110.6. Preserve P110.4 persistence UX and P110.5 aggregate validation evidence.",
+      "themeRequirements": [
+        "No theme source change in P110.6.",
+        "Theme coverage remains owned by P110.4/P110.5 validation evidence."
+      ],
+      "playwrightTests": [
+        "No new Playwright test in P110.6 because no UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add docs closure checker.",
+        "Update P110.5 checker to accept the concrete P110.6/P110.7 handoff state."
+      ],
+      "docsRoadmap": "Update P110 plan, platform roadmap, README, and OS phase tracking with P110.6 complete and P110.7 next.",
+      "phaseStatusUpdate": "P110 in progress; P110.6 complete; current P110.6; previous P110.5; next P110.7.",
+      "finalSafetyChecks": [
+        "Confirm P110.6 is docs/checker/status/report only and does not change Command Center source.",
+        "Confirm no projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*, or persistent local-state/runtime/** files changed.",
+        "Confirm P110.7 remains the next final validation handoff.",
+        "Confirm hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, network calls, deploy, release, export, package creation, and provider spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P110.6 files>",
+        "git commit -m \"docs(nexus): close decision ledger persistence docs\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ]
     },
     {
@@ -762,8 +858,8 @@
     }
   ],
   "knownLimitations": [
-    "P110.5 is aggregate validation only and does not change runtime behavior or Command Center UX.",
-    "P110.5 validates P110.1-P110.4 evidence, route safety, browser-safe dashboard wiring, docs/status, and blocked unsafe authority.",
+    "P110.6 is docs/roadmap closure only and does not change runtime behavior or Command Center UX.",
+    "P110.6 records P110.1-P110.5 completion and keeps P110.7 as final validation handoff.",
     "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
   ]
 }

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P110.5
-- Generated at: 2026-05-28T21:52:15.972Z
+- Generated at: 2026-05-28T21:56:44.703Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3f9fa37d
+- Validation HEAD: c84323b3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,7 +30,7 @@
 | focused Playwright route test is present | PASS |  |
 | dashboard model stays browser safe | PASS |  |
 | compatibility checkers accept P110.5 | PASS |  |
-| phase status advanced | PASS | P110.5/P110.4/P110.6 |
+| phase status advanced | PASS | P110.6/P110.5/P110.7 |
 | docs record P110.5 | PASS |  |
 | README records P110.5 | PASS |  |
 | platform roadmap records P110.5 | PASS |  |

@@ -2750,6 +2750,14 @@ SQL, runtime admission, execution unlock, project mutation, provider/model
 calls, agent dispatch, worker/tool execution, deploy, release, export, package
 action, network call, and provider spend remain blocked.
 
+P110.6 is complete. P110 docs, README, platform roadmap, contract, reports, and
+OS phase status now agree that P110.1-P110.6 are complete and P110.7 is next
+for final validation. This subphase is docs/checker/status/report closure only;
+Command Center source, hosted DB mutation, raw SQL, runtime admission,
+execution unlock, project mutation, provider/model calls, agent dispatch,
+worker/tool execution, deploy, release, export, package action, network call,
+and provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

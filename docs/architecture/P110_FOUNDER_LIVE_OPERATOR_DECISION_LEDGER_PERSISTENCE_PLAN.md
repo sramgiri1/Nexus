@@ -495,10 +495,78 @@ and keep P110.1-P110.4 implementation unchanged.
 
 ## P110.6 Docs / Roadmap
 
-Status: planned
+Status: complete
 
 Narrow goal: close P110 docs, README, platform roadmap, contract, reports, and
 OS status evidence without changing runtime behavior or Command Center source.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `c84323b3`.
+
+Allowed files: `scripts/check-p1106-founder-live-operator-decision-ledger-persistence-docs.js`,
+P110.5 checker compatibility, P110 contract, this plan, README, platform
+roadmap, package script registry, OS phase status files, and generated P110.6,
+P110.5, OS status, and phase coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`, and
+persistent `local-state/runtime/**` artifacts.
+
+Exact files/modules changed: added the P110.6 docs checker, registered
+`check:p1106-founder-live-operator-decision-ledger-persistence-docs`, updated
+P110.5 checker handoff compatibility, updated P110 contract/docs/README/
+roadmap/status, and generated reports.
+
+Expected exports/data shapes: P110.6 exports no runtime API. It adds a package
+script and a markdown docs closure report with doc/status/report checks,
+validation commands, known limitations, and PASS/FAIL result.
+
+Safety rules: P110.6 is docs/checker/status/report only. It does not change
+Command Center source, write DB records, expose mutation controls, unlock
+execution, admit runtime execution, call providers/models, dispatch agents, run
+workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release,
+export, package, use network calls, or spend.
+
+Reuse check: P110.6 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P110.1-P110.5 reports, and existing
+OS phase status data. No duplicate report writer, result envelope, checker
+formatter, redaction helper, mode guard, phase status updater, route matrix, or
+activity/evidence helper was added.
+
+Command Center UX requirements: no Command Center source change in P110.6.
+P110.4 persistence UX and P110.5 aggregate validation evidence are preserved.
+
+Dark/light/system theme requirements: no theme source change in P110.6. Theme
+coverage remains evidenced by P110.4/P110.5 validation.
+
+Playwright tests: no new Playwright test in P110.6 because no UI source
+changed.
+
+Checker updates: P110.6 adds a dedicated docs closure checker and updates the
+P110.5 checker to accept the P110.6/P110.7 handoff state.
+
+Docs/README/roadmap updates: P110.6 is recorded in this plan, README, platform
+roadmap, P110 contract, OS roadmap/status, and generated reports. P110.7 is
+next.
+
+OS phase status update: P110 remains in progress; P110.6 is complete; current
+phase P110.6; previous P110.5; next P110.7.
+
+Validation commands:
+- `npm run check:p1106-founder-live-operator-decision-ledger-persistence-docs`
+- `npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known risks: docs wording can accidentally imply unsafe authority. The P110.6
+checker rejects known unsafe live-claim phrases and fake runnable action
+phrases.
+
+Rollback plan: remove the P110.6 checker/script/docs/status/report updates,
+restore P110.6 to planned, restore current phase to P110.5 with P110.6 next,
+and keep P110.1-P110.5 implementation unchanged.
 
 ## P110.7 Final Validation
 

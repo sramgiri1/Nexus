@@ -491,6 +491,13 @@ The Command Center and local operator surface have:
   execution unlock, provider/model call, dispatch, worker/tool execution,
   deploy, release, export, package, network call, or provider spend path is
   available.
+- P110.6 docs and roadmap closure: P110 docs, README, platform roadmap,
+  contract, reports, and OS phase status now agree that P110.1-P110.6 are
+  complete and P110.7 is next for final validation. This is docs/checker/status
+  closure only; Command Center source, project mutation, hosted DB mutation,
+  raw SQL, runtime admission, execution unlock, provider/model call, dispatch,
+  worker/tool execution, deploy, release, export, package, network call, and
+  provider spend path remain unavailable.
 
 ## CareLoop Project Progress
 
