@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-28T21:35:33.741Z
+- Generated at: 2026-05-28T21:45:01.577Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2fbd72b9
+- Validation HEAD: 9fff08aa
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -363,15 +363,15 @@
 | P109.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P109.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P109.3 validation coverage | PASS | 5 checkers, 1 reports |
-| P109.4 validation coverage | PASS | 5 checkers, 1 reports |
+| P109.4 validation coverage | PASS | 6 checkers, 2 reports |
 | P109.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P109.6 validation coverage | PASS | 21 checkers, 17 reports |
 | P109.7 validation coverage | PASS | 46 checkers, 41 reports |
-| P110 validation coverage | PASS | 15 checkers, 9 reports |
+| P110 validation coverage | PASS | 17 checkers, 10 reports |
 | P110.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P110.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P110.3 validation coverage | PASS | 6 checkers, 1 reports |
-| P110.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P110.4 validation coverage | PASS | 7 checkers, 1 reports |
 | P110.5 validation coverage | PASS | 18 checkers, 18 reports |
 | P110.6 validation coverage | PASS | 16 checkers, 16 reports |
 | P110.7 validation coverage | PASS | 40 checkers, 40 reports |
@@ -393,18 +393,14 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P110.3; next=P110.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P110.4; next=P110.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P110.4 Command Center Ledger Persistence UX
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (378/378)

@@ -305,7 +305,7 @@ of the rollback because the checker removes its temp DB.
 
 ## P110.4 Command Center Ledger Persistence UX
 
-Status: planned
+Status: complete
 
 Narrow goal: render display-safe decision-ledger persistence state on relevant
 non-chat Command Center pages while keeping Chat with NEXUS and Lite focused on
@@ -314,6 +314,98 @@ owner capability, evidence/activity location, and cost impact. It must not show
 raw JSON, raw logs, raw policy dumps, raw private IDs, raw packet keys, DemoApp,
 or fake runnable actions. Dark/light/system route coverage and focused
 Playwright checks are required.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `9fff08aa`.
+
+Allowed files: `dashboard/src/data/businessBuild.js`,
+`dashboard/src/data/dbRuntimeReadiness.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+`scripts/check-p1104-command-center-decision-ledger-persistence-ux.js`, P110.3
+checker compatibility, P110 contract, this plan, README, platform roadmap,
+package script registry, OS phase status files, and generated P110.4, P110.3,
+P110.2, P110.1, P109.7, OS status, and phase coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+`.env*`, and persistent `local-state/runtime/**` artifacts.
+
+Exact files/modules changed: added a browser-safe
+`buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel`, surfaced it
+through Business Build and DB Runtime data, added
+`FounderLiveOperatorDecisionLedgerPersistenceCard`, rendered it on Business
+Build, Agent Flow, Live Readiness, and Database DB Runtime, added focused
+Playwright coverage, added the P110.4 checker, registered the package script,
+updated P110 contract/docs/README/roadmap/status, updated P110.3 checker
+handoff compatibility, and generated reports.
+
+Expected exports/data shapes:
+`buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel`,
+`dbRuntimeReadinessViewModel.operatorDecisionLedgerPersistence`, and
+`FounderLiveOperatorDecisionLedgerPersistenceCard`. The display model includes
+current state, founder idea, runtime mode, DB mode, saved ledger states,
+allowed local CRUD operations, ready/total record counts, next action,
+blockers, disabled reason, owner capability, evidence/activity locations, cost
+impact, lane rows, and safety rows.
+
+Safety rules: P110.4 is display-only. It does not expose mutation buttons or
+write DB records. Hosted DB mutation, raw SQL, execution unlock, runtime
+admission, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, network calls, deploy, release, export, package creation,
+and provider spend remain blocked.
+
+Reuse check: P110.4 reuses existing Business Build data builders, DB Runtime
+view model wiring, Command Center cards, tabs, grids, badges, and route tests.
+It intentionally does not import `live-ready/founderLiveOperatorDecisionLedgerPersistence.js`
+into dashboard code because that module depends on Node SQLite runtime helpers
+and would break the browser build. No report writer, result envelope, checker
+formatter, redaction helper, mode guard, phase status updater, route matrix, or
+activity/evidence helper was duplicated.
+
+Command Center UX requirements: Business Build, Agent Flow, Live Readiness,
+and Database DB Runtime show display-safe decision-ledger persistence state,
+including what changed, current state, next action, blockers, disabled reason,
+owner capability, evidence/activity location, and cost impact. Chat with NEXUS
+and Lite remain chat-only.
+
+Dark/light/system theme requirements: focused Playwright coverage verifies the
+new card in dark, light, and system themes without removing route-wide
+navigation or theme switching.
+
+Playwright tests: added focused route coverage for “Decision ledger
+persistence appears on non-chat founder routes,” including absence checks on
+Chat with NEXUS and Lite.
+
+Checker updates: P110.4 adds a dedicated UX checker covering display model
+shape, browser-safe source, route placement, Playwright coverage, docs/status,
+and primary UX safety. P110.3 checker now accepts the P110.4/P110.5 handoff.
+
+Docs/README/roadmap updates: P110.4 is recorded in this plan, README, platform
+roadmap, P110 contract, OS roadmap/status, and generated reports. P110.5 is
+next.
+
+OS phase status update: P110 remains in progress; P110.4 is complete; current
+phase P110.4; previous P110.3; next P110.5.
+
+Validation commands:
+- `npm run check:p1104-command-center-decision-ledger-persistence-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Decision ledger persistence appears on non-chat founder routes"`
+- `cd dashboard && npm run build`
+- `npm run check:p1103-founder-live-operator-decision-ledger-crud-model`
+- `npm run check:p1102-founder-live-operator-decision-ledger-schema`
+- `npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract`
+- `npm run check:p1097-founder-live-operator-decision-ledger-final`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known risks: P110.4 intentionally uses a browser-safe display model rather than
+the Node-only SQLite CRUD module. It does not prove runtime DB writes from the
+browser, because mutation controls remain out of scope.
+
+Rollback plan: remove the display model, card, route placements, focused
+Playwright test, P110.4 checker/docs/status/report updates, restore P110.4 to
+planned, and restore current phase to P110.3 with P110.4 next.
 
 ## P110.5 Tests / Checkers
 

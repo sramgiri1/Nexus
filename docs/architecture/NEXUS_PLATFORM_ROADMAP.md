@@ -2730,6 +2730,17 @@ admission, execution unlock, project mutation, provider/model calls, agent
 dispatch, worker/tool execution, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P110.4 is complete. Business Build, Agent Flow, Live Readiness, and Database
+DB Runtime now render display-safe decision-ledger persistence state with
+current state, next action, blockers, disabled reason, owner capability,
+evidence/activity location, and cost impact. Chat with NEXUS and Lite remain
+chat-only, and the dashboard uses a browser-safe display model instead of
+importing Node SQLite runtime modules. P110.5 is next. Mutation controls,
+hosted DB mutation, raw SQL, runtime admission, execution unlock, project
+mutation, provider/model calls, agent dispatch, worker/tool execution, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

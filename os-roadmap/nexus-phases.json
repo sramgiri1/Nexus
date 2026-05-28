@@ -9180,10 +9180,13 @@
       "order": 146,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2fbd72b9",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P110 is in progress. P110.1-P110.3 now define the governed local SQLite persistence contract, schema, and approval-gated local CRUD model for operator decision ledger records while leaving Command Center DB wiring, project files, and unsafe authority unchanged.",
+      "summary": "P110 is in progress. P110.1-P110.4 now define governed local SQLite persistence contracts, schema, approval-gated local CRUD, and display-safe Command Center persistence UX for operator decision ledger records while unsafe authority remains blocked.",
       "checksRun": [
+        "npm run check:p1104-command-center-decision-ledger-persistence-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Decision ledger persistence appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
         "npm run check:p1103-founder-live-operator-decision-ledger-crud-model",
         "npm run check:p1102-founder-live-operator-decision-ledger-schema",
         "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
@@ -9193,14 +9196,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P110.3 admits local SQLite CRUD only for allowlisted operator decision ledger OS records after explicit local approval gates; it does not wire Command Center to DB records.",
-        "P110.3 does not capture founder chat content as an operator decision, unlock execution, admit runtime execution, dispatch agents, run tools/workers, create or mutate projects, or write hosted databases.",
-        "Hosted DB mutation, raw SQL, provider/model calls, network calls, deploy, release, export, package creation, and provider spend remain blocked."
+        "P110.4 is display-only and does not expose mutation controls or write DB records from Command Center.",
+        "P110.4 renders local decision-ledger persistence state on non-chat founder routes; Chat with NEXUS and Lite remain chat-only.",
+        "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P110.4",
+      "nextPhase": "P110.5",
       "commandCenterVisible": true,
       "label": "Ledger Persistence",
-      "detail": "P110.3 CRUD model complete; P110.4 Command Center persistence UX next."
+      "detail": "P110.4 Command Center persistence UX complete; P110.5 aggregate validation next."
     },
     {
       "phaseId": "P110.1",
@@ -9291,20 +9294,32 @@
       "title": "Command Center Ledger Persistence UX",
       "track": "NEXUS_OS",
       "order": 146.4,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-safe Command Center persistence UX on non-chat founder pages.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T21:41:56.000Z",
+      "summary": "Rendered display-safe decision-ledger persistence state across Business Build, Agent Flow, Live Readiness, and Database DB Runtime while keeping Chat with NEXUS and Lite clean and avoiding browser imports of Node SQLite modules.",
+      "checksRun": [
+        "npm run check:p1104-command-center-decision-ledger-persistence-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Decision ledger persistence appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1103-founder-live-operator-decision-ledger-crud-model",
+        "npm run check:p1102-founder-live-operator-decision-ledger-schema",
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no implementation authority until separately scoped and validated.",
-        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+        "P110.4 is display-only and does not expose mutation controls or write DB records from Command Center.",
+        "P110.4 renders local decision-ledger persistence state on non-chat founder routes; Chat with NEXUS and Lite remain chat-only.",
+        "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P110.5",
       "commandCenterVisible": true,
       "label": "Ledger DB UX",
-      "detail": "Planned display-safe Command Center persistence UX on non-chat founder pages."
+      "detail": "Command Center decision-ledger persistence UX complete; aggregate validation next."
     },
     {
       "phaseId": "P110.5",
@@ -9778,8 +9793,8 @@
     }
   ],
   "updatedAt": "2026-05-28T21:22:13.000Z",
-  "currentPhase": "P110.3",
-  "previousPhase": "P110.2",
-  "nextPhase": "P110.4",
+  "currentPhase": "P110.4",
+  "previousPhase": "P110.3",
+  "nextPhase": "P110.5",
   "currentPhaseStatus": "complete"
 }

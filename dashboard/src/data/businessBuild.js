@@ -76,6 +76,30 @@ const BUSINESS_BUILD_DB_RECORD_LABELS = {
   business_build_prd_snapshots: "PRD snapshots",
 };
 
+const OPERATOR_DECISION_LEDGER_PERSISTENCE_RECORDS = [
+  {
+    label: "Ledger entry",
+    currentState: "Ready For Approved Local CRUD",
+    ownerCapability: "NEXUS Operator Decision Ledger DB",
+    nextAction: "Review approval evidence before saving the display-safe ledger entry locally.",
+    blocker: "Operator approval is required before a local ledger entry can be saved.",
+  },
+  {
+    label: "Ledger event",
+    currentState: "Ready For Approved Local CRUD",
+    ownerCapability: "NEXUS Operator Decision Ledger DB",
+    nextAction: "Review audit and rollback evidence before saving the local event.",
+    blocker: "Audit and rollback acceptance are required before a local ledger event can be saved.",
+  },
+  {
+    label: "Evidence reference",
+    currentState: "Ready For Approved Local CRUD",
+    ownerCapability: "NEXUS Evidence Governance",
+    nextAction: "Review validation evidence before saving the local evidence reference.",
+    blocker: "Validation command acceptance is required before local evidence can be saved.",
+  },
+];
+
 function buildFounderRuntimeDbWorkflowData(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   return {
     currentState: "founder_runtime_db_view_model_ready",
@@ -1168,6 +1192,66 @@ export function buildFounderLiveOperatorDecisionLedgerDisplayModel({
   };
 }
 
+export function buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const lanes = OPERATOR_DECISION_LEDGER_PERSISTENCE_RECORDS.map((record) => ({
+    ...record,
+    disabledReason: "Local decision-ledger persistence requires explicit operator approval, rollback acceptance, audit acceptance, validation command acceptance, sqlite-live mode, and local write flags. Hosted DB mutation, raw SQL, execution, dispatch, project mutation, deploy, package creation, network calls, and spend remain blocked.",
+    evidenceLocation: "reports/p1103-founder-live-operator-decision-ledger-crud-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite CRUD only after approval. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    localCrudAllowed: "Guarded",
+    hostedDbMutationAllowed: "Blocked",
+    rawSqlAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Operator Decision Ledger Persistence Ready For Approved Local Admission",
+    founderIdea: founderIdeaSummary,
+    runtimeMode: "Local SQLite operator decision ledger",
+    dbMode: "Guarded local SQLite only",
+    savedLedgerEntryState: "Ready For Approved Local CRUD",
+    savedLedgerEventState: "Ready For Approved Local CRUD",
+    savedEvidenceState: "Ready For Approved Local CRUD",
+    readyRecordCount: lanes.length,
+    totalRecordCount: lanes.length,
+    allowedLocalCrudOperations: ["Create", "Read", "Update", "Upsert", "List"],
+    allowedRecords: OPERATOR_DECISION_LEDGER_PERSISTENCE_RECORDS.map((record) => record.label),
+    nextAction: "Review approval, rollback, audit, validation, sqlite-live, and local write evidence before admitting local decision-ledger records.",
+    blockers: [
+      "Operator approval is required before local ledger persistence.",
+      "Rollback acceptance is required before local ledger persistence.",
+      "Audit acceptance is required before local ledger persistence.",
+      "Validation command acceptance is required before local ledger persistence.",
+      "SQLite live mode and local write flags are required before local ledger persistence.",
+      "Hosted DB mutation and raw SQL remain blocked.",
+      "Execution unlock, runtime admission, agent dispatch, worker/tool execution, and project mutation remain blocked.",
+    ],
+    disabledReason: "P110.4 renders display-safe decision-ledger persistence state only. It does not expose mutation controls, hosted DB mutation, raw SQL, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, network calls, deploy, release, export, package creation, or provider spend.",
+    ownerCapability: "NEXUS Operator Decision Ledger DB CRUD",
+    evidenceLocation: "reports/p1103-founder-live-operator-decision-ledger-crud-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite CRUD only after explicit approval. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    commandCenterVisible: true,
+    lanes,
+    safetyRows: [
+      { label: "Local SQLite CRUD", value: "Guarded" },
+      { label: "Delete/raw SQL", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1890,6 +1974,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdeaSummary: prdFields.founderIdea,
     operatorReviewDisplayModel: founderLiveApprovalOperatorReview,
   });
+  const founderLiveOperatorDecisionLedgerPersistence = buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2026,6 +2111,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveApprovalCaptureBoundary,
     founderLiveApprovalOperatorReview,
     founderLiveOperatorDecisionLedger,
+    founderLiveOperatorDecisionLedgerPersistence,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

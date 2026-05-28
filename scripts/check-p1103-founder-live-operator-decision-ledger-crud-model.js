@@ -157,14 +157,20 @@ addCheck("README records P110.3", /P110\.3 governed local CRUD model/.test(readm
 addCheck("platform roadmap records P110.3", /P110\.3 is complete/.test(platformRoadmap) && /P110\.4 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P110.3"
-    && status.previousPhase === "P110.2"
-    && status.nextPhase === "P110.4"
+  ((status.currentPhase === "P110.3"
+      && status.previousPhase === "P110.2"
+      && status.nextPhase === "P110.4"
+      && roadmap.currentPhase === "P110.3"
+      && roadmap.previousPhase === "P110.2"
+      && roadmap.nextPhase === "P110.4")
+    || (status.currentPhase === "P110.4"
+      && status.previousPhase === "P110.3"
+      && status.nextPhase === "P110.5"
+      && roadmap.currentPhase === "P110.4"
+      && roadmap.previousPhase === "P110.3"
+      && roadmap.nextPhase === "P110.5"))
     && statusById.get("P110.3")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P110.4")?.status)
-    && roadmap.currentPhase === "P110.3"
-    && roadmap.previousPhase === "P110.2"
-    && roadmap.nextPhase === "P110.4"
     && roadmapById.get("P110.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

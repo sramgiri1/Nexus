@@ -4122,6 +4122,64 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Decision ledger persistence appears on non-chat founder routes", async ({ page }) => {
+    test.setTimeout(90000);
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder live decision ledger persistence").filter({ hasText: "Business Build Decision Ledger Persistence" });
+      await expect(themedCard).toContainText("Decision Ledger Persistence");
+      await expect(themedCard).toContainText("Local CRUD guarded");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Decision Ledger Persistence"],
+      ["/command-center/agent-flow", "Agent Flow Decision Ledger Persistence"],
+      ["/command-center/live-readiness", "Live Readiness Decision Ledger Persistence"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder live decision ledger persistence").filter({ hasText: label });
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Ledger entry");
+      await expect(card).toContainText("Ledger event");
+      await expect(card).toContainText("Evidence reference");
+      await expect(card).toContainText("Create, Read, Update, Upsert, List with explicit approval");
+      await expect(card).toContainText("NEXUS Operator Decision Ledger DB CRUD");
+      await expect(card).toContainText("reports/p1103-founder-live-operator-decision-ledger-crud-model-report.md");
+      await expect(card).toContainText("Local SQLite CRUD");
+      await expect(card).toContainText("Delete/raw SQL");
+      await expect(card).toContainText("Hosted DB");
+      await expect(card).toContainText("Provider spend");
+    }
+
+    await page.goto("/command-center/database", { waitUntil: "domcontentloaded" });
+    await commandTab(page, "DB Runtime").click();
+    const dbPanel = activeCommandTabPanel(page);
+    const dbCard = dbPanel.getByLabel("Founder live decision ledger persistence").filter({ hasText: "DB Runtime Decision Ledger Persistence" });
+    await expect(dbCard).toContainText("Decision Ledger Persistence");
+    await expect(dbCard).toContainText("Guarded local SQLite only");
+
+    await page.goto("/command-center/lite", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Founder live decision ledger persistence")).toHaveCount(0);
+    await page.goto("/command-center", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Founder live decision ledger persistence")).toHaveCount(0);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/operator_decision_ledger_entries|operator_decision_ledger_events|operator_decision_ledger_evidence_refs/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|p1103-ledger-/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write ledger now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

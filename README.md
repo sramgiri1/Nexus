@@ -474,6 +474,15 @@ The Command Center and local operator surface have:
   admission, execution unlock, project mutation, provider/model call, dispatch,
   worker/tool execution, deploy, release, export, package, network call, and
   provider spend remain blocked.
+- P110.4 Command Center decision-ledger persistence UX: Business Build, Agent
+  Flow, Live Readiness, and Database DB Runtime now show display-safe local
+  decision-ledger persistence state with current state, next action, blockers,
+  disabled reason, owner capability, evidence/activity location, and cost
+  impact. Chat with NEXUS and Lite remain chat-only. P110.5 is next. This is
+  display-only; no mutation buttons, hosted DB mutation, raw SQL, runtime
+  admission, execution unlock, project mutation, provider/model call, dispatch,
+  worker/tool execution, deploy, release, export, package, network call, or
+  provider spend path is available.
 
 ## CareLoop Project Progress
 
