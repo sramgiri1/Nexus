@@ -108,16 +108,16 @@ addCheck("queue rows include evidence and blockers", data.queueRows?.every((row)
 addCheck("reuses P112.3 admission contract", source.includes("buildFounderLiveAgentWorkQueueAdmissionContract(input)") && source.includes("buildSafeAgentWorkQueueDbRecord(\"founder_agent_work_queue_items\""));
 addCheck("contract marks P112.4 complete", p1124.status === "complete" && ["planned", "complete"].includes(p1125.status));
 addCheck("docs record P112.4", /P112\.4 Queue Admission Preview \/ Safe Dry Run[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P112.4", /P112\.4 is complete/.test(platformRoadmap) && /P112\.5 is next/.test(platformRoadmap));
-addCheck("README records P112.4", /P112\.4 queue admission preview/.test(readme) && /P112\.5 is next/.test(readme));
+addCheck("platform roadmap records P112.4", /P112\.4 is complete/.test(platformRoadmap) && (/P112\.5 is next/.test(platformRoadmap) || /P112\.5 is complete/.test(platformRoadmap)));
+addCheck("README records P112.4", /P112\.4 queue admission preview/.test(readme) && (/P112\.5 is next/.test(readme) || /P112\.5 Command Center queue admission UX/.test(readme)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P112.4"
-    && status.previousPhase === "P112.3"
-    && status.nextPhase === "P112.5"
-    && roadmap.currentPhase === "P112.4"
-    && roadmap.previousPhase === "P112.3"
-    && roadmap.nextPhase === "P112.5"
+  ["P112.4", "P112.5"].includes(status.currentPhase)
+    && ["P112.3", "P112.4"].includes(status.previousPhase)
+    && ["P112.5", "P112.6"].includes(status.nextPhase)
+    && ["P112.4", "P112.5"].includes(roadmap.currentPhase)
+    && ["P112.3", "P112.4"].includes(roadmap.previousPhase)
+    && ["P112.5", "P112.6"].includes(roadmap.nextPhase)
     && statusById.get("P112")?.status === "in_progress"
     && statusById.get("P112.4")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P112.5")?.status)

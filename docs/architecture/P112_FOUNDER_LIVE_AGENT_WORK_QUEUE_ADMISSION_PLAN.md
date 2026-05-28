@@ -385,3 +385,108 @@ the scoped P112.5 UX renders them with disabled reasons.
 Rollback plan: remove the P112.4 preview helper/checker/script/docs/status/
 report updates, restore P112 to P112.3 complete with P112.4 planned, and keep
 P112.1-P112.3 unchanged.
+
+## P112.5 Command Center Queue Admission UX
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Narrow goal: surface the P112.4 local queue admission preview on Business Build
+and Agent Flow only, with display-safe queue candidates, blockers, owners,
+evidence, activity, and cost impact.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `2c9de221d5a0def651ed723cf08fe60f64855c93`.
+
+Allowed files: Business Build dashboard data, DB runtime readiness data,
+Command Center V2 page, route Playwright tests, P112.5 UX checker, P112.4
+checker compatibility update, P112 contract, P112 plan, README, platform
+roadmap, package script registry, OS phase status files, and generated P112.5/
+P112.4/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `local-state/runtime/**`, `providers/**`,
+`tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+`packages/**`, and `.env*`.
+
+Exact files/modules changed: updated `dashboard/src/data/businessBuild.js`,
+`dashboard/src/data/dbRuntimeReadiness.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+added the P112.5 checker, updated the P112.4 checker handoff compatibility,
+registered the package script, updated P112 contract/status/docs, and
+regenerated reports.
+
+Expected exports/data shapes:
+- `buildFounderLiveAgentWorkQueueAdmissionDisplayModel`
+- Display model with `currentState`, `founderIdea`, `previewMode`,
+  `candidateCount`, blocked/write/persist/dispatch/execute counts,
+  `queueSections`, `queueRows`, `safetyRows`, `nextAction`, `blockers`,
+  `disabledReason`, `ownerCapability`, `evidenceLocation`, `activityLocation`,
+  and `costImpact`.
+
+Safety rules: the Command Center card is read-only and does not expose queue
+write buttons, local CRUD controls, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy,
+release, export, package, network calls, or spend.
+
+Reuse check: P112.5 uses a browser-safe display projection of the P112.4
+preview contract and report evidence because the P112 runtime helper owns
+SQLite admission and imports Node-only modules. It reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing Command Center cards/grid/status
+styles, existing route tests, and existing dashboard view-model patterns. No
+report writer, result envelope, redaction helper, checker formatter, route
+matrix, UI status component, SQLite runtime, CRUD repository, or queue runtime
+helper is duplicated.
+
+Command Center UX requirements: Business Build and Agent Flow render the
+display-safe `Agent Work Queue Admission` card. Chat with NEXUS, Lite, and Live
+Readiness do not render this card. Primary UX shows labels and counts, not raw
+queue IDs, DB table names, raw JSON/logs, raw policy dumps, or fake runnable
+actions.
+
+Dark/light/system theme requirements: route Playwright coverage checks the card
+on Business Build in Dark, Light, and System themes using existing theme
+controls and styles.
+
+Playwright tests: added focused route coverage for `Agent work queue admission`
+across Business Build, Agent Flow, Lite absence, full Command Center absence,
+and Live Readiness absence.
+
+Checker updates: P112.5 adds a dedicated Command Center UX checker and updates
+P112.4 to accept the P112.5/P112.6 handoff state.
+
+Docs/README/roadmap updates: P112.5 is recorded in this plan, README, platform
+roadmap, P112 contract, OS roadmap/status, and generated reports. P112.6 is
+next.
+
+OS phase status update: P112 is in progress; P112.5 is complete; current phase
+P112.5; previous P112.4; next P112.6.
+
+Validation commands:
+- `npm run check:p1125-command-center-work-queue-admission-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Agent work queue admission"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/provider/deploy paths changed; no
+local runtime DB artifact is retained; no DemoApp exposure; no raw JSON/log/
+policy dumps; no raw private IDs, queue record keys, raw DB table names, or
+fake runnable actions are introduced; no provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy,
+release, export, package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P112.5 files>`
+- `git commit -m "feat(nexus): add p112 work queue admission ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: another card can add founder-page noise. P112.5 keeps the card
+limited to Business Build and Agent Flow and renders concise queue candidates,
+counts, blockers, and safety rows.
+
+Rollback plan: remove the P112.5 card/data/test/checker/script/docs/status/
+report updates, restore P112 to P112.4 complete with P112.5 planned, and keep
+P112.1-P112.4 unchanged.

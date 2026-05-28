@@ -3355,6 +3355,10 @@ function AgentFlowPage() {
         persistence={businessBuild.founderLiveOperatorDecisionLedgerPersistence}
         surfaceLabel="Agent Flow Decision Ledger Persistence"
       />
+      <FounderLiveAgentWorkQueueAdmissionCard
+        queue={businessBuild.founderLiveAgentWorkQueueAdmission}
+        surfaceLabel="Agent Flow Agent Work Queue Admission"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10121,6 +10125,10 @@ function BusinessBuildPage() {
           persistence={build.founderLiveAgentWorkOrderPersistence}
           surfaceLabel="Business Build Agent Work Order Persistence"
         />
+        <FounderLiveAgentWorkQueueAdmissionCard
+          queue={build.founderLiveAgentWorkQueueAdmission}
+          surfaceLabel="Business Build Agent Work Queue Admission"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -11230,6 +11238,83 @@ function FounderLiveAgentWorkOrderPersistenceCard({ persistence, surfaceLabel = 
           <div className="ccv2-safety-row" key={row.label}>
             <span className="ccv2-safety-row__label">{row.label}</span>
             <span className={row.value === "Guarded" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveAgentWorkQueueAdmissionCard({ queue, surfaceLabel = "Agent Work Queue Admission" }) {
+  if (!queue) return null;
+
+  const rows = Array.isArray(queue.queueRows) ? queue.queueRows.slice(0, 3) : [];
+  const sections = Array.isArray(queue.queueSections) ? queue.queueSections.slice(0, 3) : [];
+  const blockers = Array.isArray(queue.blockers) ? queue.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(queue.safetyRows) ? queue.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder agent work queue admission">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Agent Work Queue Admission</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {queue.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{queue.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview mode</span><span className="ccv2-page-summary-value">{queue.previewMode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Queue candidates</span><span className="ccv2-page-summary-value">{queue.candidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked candidates</span><span className="ccv2-page-summary-value">{queue.blockedCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Writable candidates</span><span className="ccv2-page-summary-value">{queue.writableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persisted candidates</span><span className="ccv2-page-summary-value">{queue.persistedCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dispatchable candidates</span><span className="ccv2-page-summary-value">{queue.dispatchableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable candidates</span><span className="ccv2-page-summary-value">{queue.executableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{queue.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{queue.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{queue.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{queue.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{queue.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{queue.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.queuePosition}`}
+            aria-label={`${row.proposedAgentLane} work queue admission row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.queueState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {row.evidenceLocation}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {sections.map((section) => (
+          <div className="ccv2-safety-row" key={section.label}>
+            <span className="ccv2-safety-row__label">{section.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{section.blockedCount} blocked</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
           </div>
         ))}
       </div>

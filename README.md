@@ -594,6 +594,14 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, runtime
   admission, execution unlock, provider/model call, deploy, release, export,
   package, network call, and provider spend remain unavailable.
+- P112.5 Command Center queue admission UX: Business Build and Agent Flow now
+  show display-safe agent work queue admission candidates with lane owners,
+  blockers, evidence, activity, cost impact, and blocked write/dispatch/
+  execution counts. Chat with NEXUS and Lite remain clean. P112.6 is next for
+  validation and docs closure. Local queue writes, provider/model call, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, runtime admission, deploy, release, export, package, network
+  call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

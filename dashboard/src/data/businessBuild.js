@@ -915,6 +915,108 @@ export function buildFounderLiveApprovalRequestQueuePreviewDisplayModel({
   };
 }
 
+export function buildFounderLiveAgentWorkQueueAdmissionDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  // Keep this browser-safe: the P112 runtime helper owns SQLite admission and is validated separately.
+  const rows = [
+    {
+      label: "Business validation queue candidate",
+      proposedAgentLane: "Product Strategy",
+      proposedOutcome: "Clarify founder problem, target user, value promise, and PRD readiness.",
+      ownerCapability: "NEXUS Founder Strategy Agent",
+    },
+    {
+      label: "Technical scope queue candidate",
+      proposedAgentLane: "Technical Planning",
+      proposedOutcome: "Map architecture, data needs, platform constraints, and build risks.",
+      ownerCapability: "NEXUS Technical Planning Agent",
+    },
+    {
+      label: "Launch planning queue candidate",
+      proposedAgentLane: "Go-to-Market",
+      proposedOutcome: "Outline positioning, validation experiments, pricing questions, and launch blockers.",
+      ownerCapability: "NEXUS Go-to-Market Agent",
+    },
+  ];
+  const sections = [
+    { label: "Queue candidates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Admission gates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Blocked authority", candidateCount: rows.length, blockedCount: rows.length },
+  ];
+  const disabledReason =
+    "P112.5 renders local queue admission preview state only. It cannot write queue records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+
+  return {
+    currentState: "Founder Agent Work Queue Admission Preview Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Local Only Dry Run",
+    sourceWorkOrderLabel: "Founder agent work order",
+    candidateCount: rows.length,
+    blockedCandidateCount: rows.length,
+    writableCandidateCount: 0,
+    persistedCandidateCount: 0,
+    dispatchableCandidateCount: 0,
+    executableCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    hostedDbMutationCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    nextAction: "Review queue admission candidates before any approved local queue CRUD.",
+    blockers: [
+      "Queue admission preview is local and read-only.",
+      "Local queue writes require explicit operator approval gates in a separate CRUD request.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Agent Work Queue Admission Preview",
+    evidenceLocation: "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic queue admission preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    queueSections: sections.map((section) => ({
+      ...section,
+      nextAction: "Keep this section read-only.",
+      disabledReason: "Queue admission preview cannot write or execute.",
+    })),
+    queueRows: rows.map((row, index) => ({
+      label: row.label,
+      proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+      proposedOutcome: row.proposedOutcome || "Prepare governed work for later queue review.",
+      queuePosition: index + 1,
+      queueState: "Local Preview Ready Execution Blocked",
+      previewMode: "Local Only Dry Run",
+      nextAction: "Review this local queue candidate before approved local queue CRUD.",
+      blocker: "Queue admission preview is local and read-only.",
+      disabledReason,
+      ownerCapability: row.ownerCapability || "NEXUS Founder Agent Work Queue Admission Preview",
+      evidenceLocation: "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic queue admission preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      queueWriteAllowed: "Blocked",
+      localCrudAllowed: "Blocked",
+      executionAllowed: "Blocked",
+      dispatchAllowed: "Blocked",
+      projectMutationAllowed: "Blocked",
+      hostedDbMutationAllowed: "Blocked",
+      providerSpendAllowed: "Blocked",
+    })),
+    safetyRows: [
+      { label: "Queue writes", value: "Blocked" },
+      { label: "Local CRUD admission", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -2060,6 +2162,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   });
   const founderLiveOperatorDecisionLedgerPersistence = buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(prdFields.founderIdea);
   const founderLiveAgentWorkOrderPersistence = buildFounderLiveAgentWorkOrderPersistenceDisplayModel(prdFields.founderIdea);
+  const founderLiveAgentWorkQueueAdmission = buildFounderLiveAgentWorkQueueAdmissionDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2198,6 +2301,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveOperatorDecisionLedger,
     founderLiveOperatorDecisionLedgerPersistence,
     founderLiveAgentWorkOrderPersistence,
+    founderLiveAgentWorkQueueAdmission,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

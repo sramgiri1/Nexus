@@ -522,11 +522,11 @@
     {
       "phaseId": "P112.5",
       "title": "Command Center Queue Admission UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Surface display-safe queue admission state on founder Agent Flow/Business Build pages while keeping Chat/Lite clean and avoiding raw IDs or fake actions.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "2c9de221d5a0def651ed723cf08fe60f64855c93",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/data/dbRuntimeReadiness.js",
@@ -587,9 +587,11 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "expectedExports": [
+        "buildFounderLiveAgentWorkQueueAdmissionDisplayModel"
+      ],
+      "dataShape": "Display-safe Command Center view model with currentState, founderIdea, previewMode, queue candidate counts, queueSections, queueRows, safetyRows, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, and costImpact.",
+      "commandCenterUx": "Business Build and Agent Flow render Agent Work Queue Admission. Chat with NEXUS, Lite, and Live Readiness do not render the card. Primary UX avoids raw IDs, raw DB table names, raw dumps, and fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -600,10 +602,11 @@
         "Preserve route-wide DemoApp, raw dump, theme switcher, sidebar, OS Roadmap, and project milestone safety tests."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P112.5 checker."
+        "Added the dedicated P112.5 Command Center work queue admission UX checker.",
+        "Updated P112.4 checker to accept P112.5/P112.6 handoff."
       ],
-      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.5.",
-      "phaseStatusUpdate": "P112 in progress; P112.5 complete when implemented.",
+      "docsRoadmap": "Updated P112 plan, README, platform roadmap, OS status, and generated reports for P112.5.",
+      "phaseStatusUpdate": "P112 in progress; P112.5 complete; current P112.5; previous P112.4; next P112.6.",
       "validationCommands": [
         "npm run check:p1125-command-center-work-queue-admission-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent work queue admission\"",
@@ -860,8 +863,8 @@
     "P112.1 is contract-only; DB schema, runtime helpers, admission preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P112.4",
-  "previousSubphase": "P112.3",
-  "nextSubphase": "P112.5",
-  "summary": "P112 is in progress. P112.1-P112.4 define the governed local queue admission contract, schema, local CRUD model, and local dry-run preview while unsafe authority remains blocked."
+  "currentSubphase": "P112.5",
+  "previousSubphase": "P112.4",
+  "nextSubphase": "P112.6",
+  "summary": "P112 is in progress. P112.1-P112.5 define governed local queue admission contracts, schema, local CRUD, dry-run preview, and Command Center visibility while unsafe authority remains blocked."
 }

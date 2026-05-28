@@ -9631,22 +9631,22 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "43aa459498d918c42004dabc23908022fb650db7",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
-      "detail": "P112.4 admission preview complete; P112.5 Command Center UX is next.",
+      "detail": "P112.5 Command Center queue admission UX complete; P112.6 validation/docs is next.",
       "phaseId": "P112",
       "title": "Founder Live Agent Work Queue Admission",
       "order": 148,
       "status": "in_progress",
-      "summary": "P112 is in progress. P112.1-P112.4 define the queue admission contract, local SQLite schema, approval-gated local CRUD model, and local dry-run admission preview while unsafe authority remains blocked.",
-      "nextPhase": "P112.5",
+      "summary": "P112 is in progress. P112.1-P112.5 define the queue admission contract, local SQLite schema, approval-gated CRUD model, local dry-run preview, and Command Center visibility while unsafe authority remains blocked.",
+      "nextPhase": "P112.6",
       "previousPhase": "P111.7",
       "checksRun": [],
       "knownLimitations": [
-        "P112.4 is a local dry-run preview only and does not write queue records.",
-        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P112.5 is next for display-safe Command Center queue admission UX."
+        "P112.5 renders display-safe queue admission preview state only and does not write queue records.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.6 is next for aggregate validation and docs closure."
       ],
       "completedAt": ""
     },
@@ -9764,23 +9764,32 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Command Center Queue Admission UX",
-      "detail": "Planned display-safe Command Center queue admission UX.",
+      "detail": "Business Build and Agent Flow show display-safe work queue admission; Chat/Lite remain clean.",
       "phaseId": "P112.5",
       "title": "Command Center Queue Admission UX",
       "order": 148.5,
-      "status": "planned",
-      "summary": "Planned display-safe Command Center queue admission UX.",
+      "status": "complete",
+      "summary": "Rendered display-safe agent work queue admission candidates on Business Build and Agent Flow with focused Playwright coverage and no runnable actions.",
       "nextPhase": "P112.6",
       "previousPhase": "P112.4",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned UX subphase only."
+      "checksRun": [
+        "npm run check:p1125-command-center-work-queue-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent work queue admission\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112.5 renders display-safe queue admission preview state only and does not write queue records.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.6 is next for aggregate validation and docs closure."
+      ],
+      "completedAt": "2026-05-28T23:25:22.900Z"
     },
     {
       "track": "NEXUS_OS",
@@ -10233,9 +10242,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T23:18:24.739Z",
-  "currentPhase": "P112.4",
-  "previousPhase": "P112.3",
-  "nextPhase": "P112.5",
+  "updatedAt": "2026-05-28T23:25:22.900Z",
+  "currentPhase": "P112.5",
+  "previousPhase": "P112.4",
+  "nextPhase": "P112.6",
   "currentPhaseStatus": "complete"
 }

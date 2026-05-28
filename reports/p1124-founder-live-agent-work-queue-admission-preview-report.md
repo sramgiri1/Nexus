@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.4
-- Generated at: 2026-05-28T23:19:28.225Z
+- Generated at: 2026-05-28T23:25:44.471Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 43aa4594
+- Validation HEAD: 2c9de221
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,7 +36,7 @@
 | docs record P112.4 | PASS |  |
 | platform roadmap records P112.4 | PASS |  |
 | README records P112.4 | PASS |  |
-| phase status advanced | PASS | P112.4/P112.3/P112.5 |
+| phase status advanced | PASS | P112.5/P112.4/P112.6 |
 | P112.4 avoids forbidden file scope | PASS |  |
 | queue preview stays Command Center hidden | PASS |  |
 | queue preview avoids raw private IDs | PASS |  |

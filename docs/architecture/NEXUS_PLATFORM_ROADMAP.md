@@ -2872,6 +2872,15 @@ project mutation, hosted DB mutation, raw SQL interface, runtime admission,
 execution unlock, provider/model calls, deploy, release, export, package
 action, network call, and provider spend remain blocked.
 
+P112.5 is complete. Business Build and Agent Flow now show display-safe agent
+work queue admission candidates with lane owners, blockers, evidence, activity,
+cost impact, and blocked write/dispatch/execution counts. Chat with NEXUS,
+Lite, and Live Readiness stay free of the queue admission card. P112.6 is next
+for validation and docs closure. Local queue writes, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, runtime admission, deploy, release, export, package action, network
+call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

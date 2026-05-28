@@ -1,4 +1,5 @@
 import {
+  buildFounderLiveAgentWorkQueueAdmissionDisplayModel,
   buildFounderLiveAgentWorkOrderPersistenceDisplayModel,
   buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel,
   buildFounderRuntimeDbViewModel,
@@ -8,6 +9,7 @@ export function buildDbRuntimeReadinessViewModel() {
   const founderRuntime = buildFounderRuntimeDbViewModel();
   const operatorDecisionLedgerPersistence = buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(founderRuntime.founderIdea);
   const agentWorkOrderPersistence = buildFounderLiveAgentWorkOrderPersistenceDisplayModel(founderRuntime.founderIdea);
+  const agentWorkQueueAdmission = buildFounderLiveAgentWorkQueueAdmissionDisplayModel(founderRuntime.founderIdea);
   const enterpriseRuntime = {
     currentState: "Local CRUD admission ready",
     requestState: "Mutation request envelopes ready for operator review",
@@ -56,6 +58,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Founder workflow records", value: founderRuntime.savedSessionState },
       { label: "Operator decision ledger", value: operatorDecisionLedgerPersistence.currentState },
       { label: "Agent work orders", value: agentWorkOrderPersistence.currentState },
+      { label: "Agent work queue admission", value: agentWorkQueueAdmission.currentState },
       { label: "General mutation", value: "Blocked outside the OS runtime allowlist" },
       { label: "Owner capability", value: "NEXUS DB Runtime Governance" },
       { label: "Next action", value: enterpriseRuntime.nextAction },
@@ -69,6 +72,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Founder workflow", value: "DB-ready", tone: "teal" },
       { label: "Decision ledger", value: "Guarded local", tone: "amber" },
       { label: "Agent work orders", value: "Approved local only", tone: "amber" },
+      { label: "Work queue", value: "Preview only", tone: "amber" },
       { label: "DB writes", value: "Approved local only", tone: "amber" },
       { label: "Hosted DB", value: "Blocked", tone: "red" },
       { label: "Project mutation", value: "Disabled", tone: "red" },
@@ -98,6 +102,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Founder DB workflow", value: founderRuntime.evidenceLocation },
       { label: "Decision ledger DB", value: operatorDecisionLedgerPersistence.evidenceLocation },
       { label: "Agent work order DB", value: agentWorkOrderPersistence.evidenceLocation },
+      { label: "Agent work queue admission", value: agentWorkQueueAdmission.evidenceLocation },
       { label: "Cost impact", value: "No provider spend; local SQLite only." },
       { label: "Disabled reason", value: enterpriseRuntime.disabledReason },
     ],
@@ -105,6 +110,7 @@ export function buildDbRuntimeReadinessViewModel() {
     founderRuntime,
     operatorDecisionLedgerPersistence,
     agentWorkOrderPersistence,
+    agentWorkQueueAdmission,
     safety: {
       dbWritesAllowed: "approved-os-runtime-entities-only",
       migrationsAllowed: false,
