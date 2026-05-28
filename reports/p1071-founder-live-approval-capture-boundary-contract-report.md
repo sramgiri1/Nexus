@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P107.1
-- Generated at: 2026-05-28T18:38:42.731Z
+- Generated at: 2026-05-28T18:43:57.572Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 58937b21
+- Validation HEAD: f73ac4c4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | contract phase identity | PASS |  |
 | contract is NEXUS OS scoped | PASS |  |
 | subphase split exists | PASS |  |
-| P107.1 complete and later subphases planned | PASS |  |
+| P107.1 complete and later subphases valid | PASS |  |
 | subphases include implementation-grade fields | PASS |  |
 | safety rules block capture and unsafe execution | PASS |  |
 | reuse rules reference shared helpers and P106 queue preview | PASS |  |
@@ -42,7 +42,7 @@
 | plan records P107.1 complete | PASS |  |
 | platform roadmap records P107.1 | PASS |  |
 | README records P107.1 | PASS |  |
-| phase status advanced to P107.1 | PASS | P107.1/P106.7/P107.2 |
+| phase status advanced to P107.1 | PASS | P107.2/P107.1/P107.3 |
 | phase status checker accepts P107 subphases | PASS |  |
 | P106.7 checker accepts P107.1 handoff | PASS |  |
 | capture boundary stays Command Center hidden | PASS |  |

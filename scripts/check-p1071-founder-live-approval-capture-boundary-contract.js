@@ -54,7 +54,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1071
 addCheck("contract phase identity", contract.phaseId === "P107" && contract.title === "Founder Live Approval Capture Boundary");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p107Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P107.1 complete and later subphases planned", subphaseById.get("P107.1")?.status === "complete" && p107Subphases.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P107.1 complete and later subphases valid", subphaseById.get("P107.1")?.status === "complete" && p107Subphases.slice(1).every((phaseId) => ["planned", "complete"].includes(subphaseById.get(phaseId)?.status)));
 addCheck("subphases include implementation-grade fields", p107Subphases.every((phaseId) => {
   const subphase = subphaseById.get(phaseId) || {};
   return subphase.narrowGoal && subphase.allowedFiles && subphase.forbiddenFiles && subphase.validationCommands && subphase.finalSafetyChecks && subphase.finalResponseChecklist;
@@ -85,16 +85,22 @@ addCheck("all blocked flags false", P107_APPROVAL_CAPTURE_BLOCKED_FLAGS.every((f
 addCheck("contract records validation commands", ["npm run check:p1071-founder-live-approval-capture-boundary-contract", "npm run check:p1067-founder-live-approval-request-final", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1071.validationCommands?.includes(command)));
 addCheck("P107.1 avoids forbidden file scope", !(p1071.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("plan records P107.1 complete", /P107\.1 Approval Capture Contract \/ Schema Baseline[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P107.1", /P107 - Founder Live Approval Capture Boundary/.test(platformRoadmap) && /P107\.1 is\s+complete/.test(platformRoadmap) && /P107\.2 is\s+next/.test(platformRoadmap));
+addCheck("platform roadmap records P107.1", /P107 - Founder Live Approval Capture Boundary/.test(platformRoadmap) && /P107\.1 is\s+complete/.test(platformRoadmap) && (/P107\.2 is\s+next/.test(platformRoadmap) || /P107\.2 is\s+complete/.test(platformRoadmap)));
 addCheck("README records P107.1", /P107\.1 approval capture boundary/.test(readme) && /P107\.2 is next/.test(readme));
 addCheck(
   "phase status advanced to P107.1",
-  status.currentPhase === "P107.1"
-    && status.previousPhase === "P106.7"
-    && status.nextPhase === "P107.2"
+  ((
+    status.currentPhase === "P107.1"
+      && status.previousPhase === "P106.7"
+      && status.nextPhase === "P107.2"
+  ) || (
+    status.currentPhase === "P107.2"
+      && status.previousPhase === "P107.1"
+      && status.nextPhase === "P107.3"
+  ))
     && statusById.get("P107")?.status === "in_progress"
     && statusById.get("P107.1")?.status === "complete"
-    && statusById.get("P107.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P107.2")?.status)
     && roadmapById.get("P107")?.status === "in_progress"
     && roadmapById.get("P107.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,

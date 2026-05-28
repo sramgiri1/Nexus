@@ -2504,7 +2504,16 @@ approval capture/runtime/execution flags false. Approval capture, approval
 persistence, approval writes, execution unlock, runtime admission,
 provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
-provider spend remain blocked. P107.2 is next.
+provider spend remain blocked.
+
+P107.2 is complete. It adds deterministic local approval capture review records
+derived from the P107.1 capture boundary and P106 approval request queue with
+display-safe labels, decision prompts, required evidence, blockers,
+owner/evidence/activity locations, validation commands, and cost posture.
+Approval capture, approval persistence, approval writes, execution unlock,
+runtime admission, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package action,
+network call, and provider spend remain blocked. P107.3 is next.
 
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).

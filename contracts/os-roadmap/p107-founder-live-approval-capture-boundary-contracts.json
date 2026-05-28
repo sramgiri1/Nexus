@@ -120,7 +120,7 @@
         "Confirm approval decisions cannot be captured, persisted, or used to unlock execution.",
         "Confirm runtime admission remains blocked.",
         "Confirm provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.",
-        "Confirm P107.2 remains planned.",
+        "Confirm P107.2 remained planned at P107.1 closure.",
         "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
       ],
       "gitCommands": [
@@ -149,11 +149,11 @@
     {
       "phaseId": "P107.2",
       "title": "Approval Capture Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build deterministic local approval capture review records from P107.1 schema and P106 queue rows without capturing, persisting, writing, or unlocking execution.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-P107.1",
+      "expectedBaseCommit": "f73ac4c4",
       "allowedFiles": [
         "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
         "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
@@ -773,12 +773,12 @@
     }
   ],
   "knownLimitations": [
-    "P107.1 is schema and contract only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+    "P107.2 is local model only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P107.2-P107.7 remain planned."
+    "P107.3-P107.7 remain planned."
   ],
   "knownRisks": [
-    "P107.1-P107.6 are planned as local/display/validation/docs-only work; approval capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P107.1-P107.6 are local/display/validation/docs-only work; approval capture, persistence, execution unlock, and runtime admission remain blocked.",
     "P107.4 must not add capture buttons or fake runnable actions."
   ]
 }

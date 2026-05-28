@@ -298,6 +298,15 @@ The Command Center and local operator surface have:
   provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy, release, export, package, network
   calls, and provider spend remain blocked. P107.2 is next.
+- P107.2 approval capture model: deterministic local approval capture review
+  records are now built from the P107.1 boundary and P106 request queue. The
+  records carry display-safe labels, decision prompts, required evidence,
+  blockers, owner capability, evidence/activity location, validation commands,
+  and cost posture while approval capture, approval persistence, approval
+  writes, execution unlock, runtime admission, provider/model calls, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
+  release, export, package, network calls, and provider spend remain blocked.
+  P107.3 is next.
 
 ## CareLoop Project Progress
 

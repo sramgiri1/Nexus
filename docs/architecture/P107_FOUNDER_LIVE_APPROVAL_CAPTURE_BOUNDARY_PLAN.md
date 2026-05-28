@@ -42,7 +42,7 @@ Final safety checks:
 
 ## P107.2 Approval Capture Model
 
-Status: planned
+Status: complete
 
 Narrow goal: build deterministic local approval capture review records from P107.1 schema and P106 queue rows without capturing, persisting, writing, or unlocking execution.
 

@@ -79,6 +79,10 @@ addCheck(
     status.currentPhase === "P107.1"
       && status.previousPhase === "P106.7"
       && status.nextPhase === "P107.2"
+  ) || (
+    status.currentPhase === "P107.2"
+      && status.previousPhase === "P107.1"
+      && status.nextPhase === "P107.3"
   ))
     && statusById.get("P106")?.status === "complete"
     && statusById.get("P106.7")?.status === "complete"

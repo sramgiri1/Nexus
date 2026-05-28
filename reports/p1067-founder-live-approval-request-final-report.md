@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P106.7
-- Generated at: 2026-05-28T18:38:10.235Z
+- Generated at: 2026-05-28T18:43:39.792Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ed6def48
+- Validation HEAD: f73ac4c4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,7 +30,7 @@
 | README records P106 complete | PASS |  |
 | Command Center queue UX retained | PASS |  |
 | route safety coverage retained | PASS |  |
-| phase status closed | PASS | P107.1/P106.7/P107.2/complete |
+| phase status closed | PASS | P107.2/P107.1/P107.3/complete |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
 | final UX avoids raw private IDs | PASS |  |

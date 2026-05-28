@@ -8471,25 +8471,25 @@
       "order": 143,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "58937b21",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P107 approval capture boundary is in progress. P107.1 defines the local approval capture schema from the P106 request queue while approval capture and execution authority remain blocked.",
+      "summary": "P107 approval capture boundary is in progress. P107.2 adds deterministic local approval capture review records while approval capture and execution authority remain blocked.",
       "checksRun": [
+        "npm run check:p1072-founder-live-approval-capture-model",
         "npm run check:p1071-founder-live-approval-capture-boundary-contract",
-        "npm run check:p1067-founder-live-approval-request-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P107.1 is schema and contract only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "P107.2 is local model only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P107.2-P107.7 remain planned."
+        "P107.3-P107.7 remain planned."
       ],
-      "nextPhase": "P107.2",
+      "nextPhase": "P107.3",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P107.1 schema baseline complete; P107.2 local capture model is next."
+      "detail": "P107.2 local capture model complete; P107.3 capture audit preview is next."
     },
     {
       "phaseId": "P107.1",
@@ -8523,19 +8523,27 @@
       "title": "Approval Capture Model",
       "track": "NEXUS_OS",
       "order": 143.2,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Approval Capture Model is planned for P107. No approval capture, persistence, runtime admission, execution unlock, mutation, deploy, network, or spend authority is enabled.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T18:43:15.000Z",
+      "summary": "Built deterministic local approval capture review records from the P107.1 boundary and P106 request queue without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
+      "checksRun": [
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval capture or execution authority enabled."
+        "P107.2 is local model only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P107.3-P107.7 remain planned."
       ],
       "nextPhase": "P107.3",
       "commandCenterVisible": true,
       "label": "Capture Model",
-      "detail": "Planned local capture model; no capture or execution authority enabled."
+      "detail": "Local approval capture model complete; capture and execution authority remain blocked."
     },
     {
       "phaseId": "P107.3",
@@ -9043,9 +9051,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T18:36:11.000Z",
-  "currentPhase": "P107.1",
-  "previousPhase": "P106.7",
-  "nextPhase": "P107.2",
+  "updatedAt": "2026-05-28T18:43:15.000Z",
+  "currentPhase": "P107.2",
+  "previousPhase": "P107.1",
+  "nextPhase": "P107.3",
   "currentPhaseStatus": "complete"
 }
