@@ -474,6 +474,7 @@ test("Command Center Lite route stays chat-only", async ({ page }) => {
   await expect(page.getByLabel("Founder live use readiness")).toHaveCount(0);
   await expect(page.getByLabel("Founder live handoff")).toHaveCount(0);
   await expect(page.getByLabel("Founder live work admission")).toHaveCount(0);
+  await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(0);
   await expect(page.getByLabel("Founder persistence controls")).toHaveCount(0);
   await expect(page.getByLabel("Agent action flow")).toHaveCount(0);
 
@@ -3763,6 +3764,59 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
     expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
+  test("Founder live execution boundary appears on non-chat founder routes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build");
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder live execution boundary").filter({ hasText: "Business Build Execution Boundary" });
+      await expect(themedCard).toContainText("Founder Live Execution Boundary");
+      await expect(themedCard).toContainText("Execution blocked");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Execution Boundary"],
+      ["/command-center/agent-flow", "Agent Flow Execution Boundary"],
+      ["/command-center/live-readiness", "Live Readiness Execution Boundary"],
+    ]) {
+      await page.goto(path);
+      const card = page.getByLabel("Founder live execution boundary").filter({ hasText: label });
+      await expect(card).toContainText("Founder Live Execution Boundary");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Boundary rows");
+      await expect(card).toContainText("Blocked rows");
+      await expect(card).toContainText("Approved rows");
+      await expect(card).toContainText("Executable rows");
+      await expect(card).toContainText("Dispatchable rows");
+      await expect(card).toContainText("Hosted DB mutation");
+      await expect(card).toContainText("NEXUS Founder Live Execution Boundary");
+      await expect(card).toContainText("Product Strategist");
+      await expect(card).toContainText("Program Architect");
+      await expect(card).toContainText("Safety Governor");
+      await expect(card).toContainText("Missing evidence");
+      await expect(card).toContainText("npm run check:p1043-founder-live-execution-boundary-model");
+      await expect(card).toContainText("reports/p1043-founder-live-execution-boundary-model-report.md");
+      await expect(card).toContainText("No provider calls");
+    }
+
+    await page.goto("/command-center/lite");
+    await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(0);
+    await page.goto("/command-center");
+    await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(0);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|execution-boundary-/i);
     expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
     expect(errors).toEqual([]);
   });

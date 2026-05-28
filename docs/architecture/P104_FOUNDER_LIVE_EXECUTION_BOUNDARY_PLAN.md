@@ -186,10 +186,72 @@ Build deterministic local execution-boundary state from P103 work admissions.
 
 ## P104.4 Execution Boundary Command Center UX
 
-Status: planned.
+Status: complete.
 
 Render execution-boundary readiness on appropriate non-chat pages without
 runnable controls.
+
+- Narrow goal: render the P104.3 execution-boundary model on Business Build,
+  Agent Flow, and Live Readiness while keeping Chat with NEXUS and Lite
+  chat-only.
+- Starting branch and expected base commit:
+  `codex/nexus-e2e-phase-validation` at `22a0ad6f`.
+- Allowed files: Business Build dashboard data, Command Center page, route
+  tests, P104.4 checker, P104.3 compatibility checker, P104 contract, P104
+  plan, platform roadmap, README, package script, OS phase JSON, and generated
+  reports.
+- Forbidden files: `projects/**`, `careloop/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, `.env*`.
+- Exact files/modules to create or update:
+  `dashboard/src/data/businessBuild.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+  `scripts/check-p1044-founder-live-execution-boundary-ux.js`,
+  `scripts/check-p1043-founder-live-execution-boundary-model.js`,
+  `contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json`,
+  `docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `README.md`,
+  `package.json`, `os-roadmap/phase-status.json`, and
+  `os-roadmap/nexus-phases.json`.
+- Expected exports, schemas, and data shapes:
+  `buildFounderLiveExecutionBoundaryDisplayModel`. The Business Build view
+  model exposes `founderLiveExecutionBoundary` with display-safe state,
+  founder idea, boundary counts, next action, blockers, disabled reason,
+  owner, evidence, activity, cost, boundary rows, and safety rows. The display
+  shape intentionally omits raw boundary IDs and source admission IDs.
+- Command Center UX requirements: add `FounderLiveExecutionBoundaryCard` to
+  Business Build, Agent Flow, and Live Readiness. It shows what changed, current
+  state, next action, blockers, disabled reason, owner capability, evidence,
+  activity, cost impact, validation command, and blocked safety posture. It
+  must not render on Chat with NEXUS or Lite.
+- Dark/light/system theme requirements: preserve existing theme behavior and
+  verify the card under dark, light, and system modes.
+- Playwright tests: add focused route coverage for Business Build, Agent Flow,
+  and Live Readiness plus absence on Chat/Lite.
+- Checker updates:
+  `npm run check:p1044-founder-live-execution-boundary-ux`; keep P104.3 checker
+  forward-compatible with later P104 subphases.
+- Docs/README/roadmap: record P104.4 complete and P104.5 next.
+- OS phase status: P104 in progress, P104.4 complete, current P104.4, previous
+  P104.3, next P104.5.
+- Validation commands:
+  `npm run check:p1044-founder-live-execution-boundary-ux`,
+  `npm run check:p1043-founder-live-execution-boundary-model`,
+  `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live execution boundary appears on non-chat founder routes|Command Center Lite route stays chat-only"`,
+  `cd dashboard && npm run build`, `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: no project files changed; no provider/model calls; no
+  dispatch; no worker/tool execution; no project mutation; no hosted DB
+  mutation; no deploy/release/export/package; no network calls; no spend; no
+  raw private IDs; no raw boundary IDs in primary UX; no raw JSON/log/policy
+  dumps; no fake runnable actions.
+- Git add/commit/push commands: stage only allowed P104.4 OS files, commit,
+  stamp the real commit hash in phase status, rerun checks, commit status
+  stamp, and push `codex/nexus-e2e-phase-validation`.
+- Final response checklist: branch, commit hash, files changed, Command Center
+  UX impact, tests/checkers/build results, docs/roadmap updates, OS phase
+  status, safety confirmations, forbidden path confirmation, known limitations,
+  and next subphase.
 
 ## P104.5 Tests / Checkers
 

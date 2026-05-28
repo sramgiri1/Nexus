@@ -57,15 +57,15 @@ addCheck("rows include evidence and validation", data.boundaryRows?.every((row) 
 addCheck("all blocked flags false", P104_EXECUTION_BOUNDARY_BLOCKED_FLAGS.every((flag) => data[flag] === false && data.boundaryRows.every((row) => row[flag] === false)));
 addCheck("reuses schema and P103 work admission", source.includes("buildFounderLiveExecutionBoundarySchema") && source.includes("buildFounderLiveWorkAdmission"));
 addCheck("contract marks P104.3 complete", p1043.status === "complete");
-addCheck("P104.4 remains planned", subphaseById.get("P104.4")?.status === "planned");
+addCheck("P104.4 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P104.4")?.status));
 addCheck("docs record P104.3", /P104\.3 Execution Boundary Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P104.3", /P104\.3 is\s+complete/.test(platformRoadmap) && /P104\.4 is\s+next/.test(platformRoadmap));
 addCheck("README records P104.3", /P104\.3 execution-boundary model/.test(readme) && /P104\.4\s+is next/.test(readme));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P104.3"
-    && status.previousPhase === "P104.2"
-    && status.nextPhase === "P104.4"
+  ["P104.3", "P104.4", "P104.5", "P104.6", "P104.7"].includes(status.currentPhase)
+    && ["P104.2", "P104.3", "P104.4", "P104.5", "P104.6"].includes(status.previousPhase)
+    && ["P104.4", "P104.5", "P104.6", "P104.7", "P105"].includes(status.nextPhase)
     && statusById.get("P104")?.status === "in_progress"
     && statusById.get("P104.3")?.status === "complete"
     && roadmapById.get("P104.3")?.status === "complete",

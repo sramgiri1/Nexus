@@ -3327,6 +3327,10 @@ function AgentFlowPage() {
         approval={businessBuild.founderLiveWorkAdmissionApproval}
         surfaceLabel="Agent Flow Founder Work Admission"
       />
+      <FounderLiveExecutionBoundaryCard
+        boundary={businessBuild.founderLiveExecutionBoundary}
+        surfaceLabel="Agent Flow Execution Boundary"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -9697,6 +9701,10 @@ function LiveReadinessPage() {
           approval={founderLiveUse.founderLiveWorkAdmissionApproval}
           surfaceLabel="Live Readiness Founder Work Admission"
         />
+        <FounderLiveExecutionBoundaryCard
+          boundary={founderLiveUse.founderLiveExecutionBoundary}
+          surfaceLabel="Live Readiness Execution Boundary"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10024,6 +10032,10 @@ function BusinessBuildPage() {
           admission={build.founderLiveWorkAdmission}
           approval={build.founderLiveWorkAdmissionApproval}
           surfaceLabel="Business Build Founder Work Admission"
+        />
+        <FounderLiveExecutionBoundaryCard
+          boundary={build.founderLiveExecutionBoundary}
+          surfaceLabel="Business Build Execution Boundary"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10590,6 +10602,72 @@ function FounderLiveWorkAdmissionCard({ admission, approval, surfaceLabel = "Fou
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{gate.reviewQuestion}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Approval: {gate.approvalAllowed}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Execution: {gate.executionAllowed}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveExecutionBoundaryCard({ boundary, surfaceLabel = "Execution Boundary" }) {
+  if (!boundary) return null;
+
+  const rows = Array.isArray(boundary.boundaryRows) ? boundary.boundaryRows.slice(0, 6) : [];
+  const blockers = Array.isArray(boundary.blockers) ? boundary.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(boundary.safetyRows) ? boundary.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live execution boundary">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Execution Boundary</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{boundary.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Execution blocked</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{boundary.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Boundary rows</span><span className="ccv2-page-summary-value">{boundary.boundaryRowCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{boundary.blockedBoundaryCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approved rows</span><span className="ccv2-page-summary-value">{boundary.approvedBoundaryCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable rows</span><span className="ccv2-page-summary-value">{boundary.executableBoundaryCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dispatchable rows</span><span className="ccv2-page-summary-value">{boundary.dispatchableBoundaryCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project mutation</span><span className="ccv2-page-summary-value">{boundary.projectMutationBoundaryCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Hosted DB mutation</span><span className="ccv2-page-summary-value">{boundary.hostedDbMutationBoundaryCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{boundary.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{boundary.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{boundary.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{boundary.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{boundary.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{boundary.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.label}`}
+            aria-label={`${row.proposedAgentLane} execution boundary row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.boundaryState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Operator approval evidence"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
           </div>
         ))}
       </div>

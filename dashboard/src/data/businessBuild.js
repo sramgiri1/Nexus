@@ -603,6 +603,82 @@ function buildFounderLiveWorkAdmissionDisplayModels({ founderIdea = "Founder ide
   };
 }
 
+export function buildFounderLiveExecutionBoundaryDisplayModel({ founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA } = {}) {
+  const workAdmission = buildFounderLiveWorkAdmissionDisplayModels({ founderIdea: founderIdeaSummary }).admission;
+  const disabledReason =
+    "P104.4 renders local execution-boundary readiness only. It cannot approve execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const boundaryRows = (workAdmission.workAdmissions || []).map((row) => ({
+    label: row.label || `${row.proposedAgentLane}: Execution boundary`,
+    proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+    proposedOutcome: row.proposedOutcome || "Review governed work before later execution-boundary approval.",
+    boundaryState: "Founder Live Execution Boundary Model Ready Execution Blocked",
+    missingEvidence: row.missingEvidence || [],
+    approvalPredicates: [
+      "Work admission approval evidence is complete.",
+      "Operator explicitly accepts execution boundary.",
+      "Rollback and audit evidence are accepted.",
+      "Cost and validation gates are accepted.",
+      "Scope boundary permits the requested lane in a later phase.",
+    ],
+    validationCommand: "npm run check:p1043-founder-live-execution-boundary-model",
+    nextAction: "Review missing evidence before any later phase can request execution approval.",
+    blocker: row.blocker || "Execution approval is not granted.",
+    disabledReason,
+    ownerCapability: row.ownerCapability || "NEXUS Founder Live Execution Boundary",
+    evidenceLocation: "reports/p1043-founder-live-execution-boundary-model-report.md",
+    activityLocation: row.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: row.costImpact || "Local boundary row only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    workerExecutionAllowed: "Blocked",
+    toolExecutionAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    deployAllowed: "Blocked",
+    packageAllowed: "Blocked",
+    spendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Founder Live Execution Boundary Model Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    boundaryReady: boundaryRows.length > 0,
+    boundaryRowCount: boundaryRows.length,
+    blockedBoundaryCount: boundaryRows.length,
+    approvedBoundaryCount: 0,
+    executableBoundaryCount: 0,
+    dispatchableBoundaryCount: 0,
+    projectMutationBoundaryCount: 0,
+    hostedDbMutationBoundaryCount: 0,
+    nextAction: "Review execution-boundary evidence on non-chat pages while execution remains blocked.",
+    blockers: [
+      "Execution approval remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Execution Boundary",
+    evidenceLocation: "reports/p1043-founder-live-execution-boundary-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic execution-boundary UX only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    boundaryRows,
+    safetyRows: [
+      { label: "Approval", value: "Blocked" },
+      { label: "Execution", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1302,6 +1378,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderLiveWorkAdmission = buildFounderLiveWorkAdmissionDisplayModels({
     founderIdea: prdFields.founderIdea,
   });
+  const founderLiveExecutionBoundary = buildFounderLiveExecutionBoundaryDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1432,6 +1511,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveHandoffWorkOrders: founderLiveHandoff.workOrders,
     founderLiveWorkAdmission: founderLiveWorkAdmission.admission,
     founderLiveWorkAdmissionApproval: founderLiveWorkAdmission.approval,
+    founderLiveExecutionBoundary,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

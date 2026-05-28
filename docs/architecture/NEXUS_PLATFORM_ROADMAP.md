@@ -2331,6 +2331,11 @@ P103 work admissions and the P104.2 schema, carrying founder context, evidence
 gaps, validation commands, blockers, owner capability, evidence/activity, and
 cost posture while all execution flags remain false. P104.4 is next for
 non-chat Command Center execution-boundary UX.
+P104.4 is complete. Business Build, Agent Flow, and Live Readiness render the
+Founder Live Execution Boundary with blocked counts, missing evidence,
+validation command, owner capability, evidence/activity, disabled reason, and
+cost posture. Chat with NEXUS and Lite remain chat-only. P104.5 is next for
+aggregate tests and checkers.
 
 Implementation follows
 [`p104-founder-live-execution-boundary-contracts.json`](../../contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json).

@@ -186,6 +186,11 @@ The Command Center and local operator surface have:
   context, evidence gaps, validation commands, blockers, owner capability,
   evidence/activity, cost posture, and all execution flags remain false. P104.4
   is next for non-chat Command Center UX.
+- P104.4 execution-boundary UX: Business Build, Agent Flow, and Live Readiness
+  now show Founder Live Execution Boundary rows, blocked counts, owner
+  capability, evidence/activity, cost posture, missing evidence, validation
+  commands, and disabled reasons. Chat with NEXUS and Lite remain chat-only.
+  P104.5 is next for aggregate tests and checkers.
 
 ## CareLoop Project Progress
 
