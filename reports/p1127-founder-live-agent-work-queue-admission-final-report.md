@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.7
-- Generated at: 2026-05-28T23:41:11.085Z
+- Generated at: 2026-05-28T23:41:44.011Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d7fae7f5
+- Validation HEAD: 6cd54725
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,8 +24,8 @@
 | contract marks all P112 subphases complete | PASS |  |
 | P112.7 records final validation commands | PASS |  |
 | P112.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P112.7 allowed scope | PASS | README.md, contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1126-founder-live-agent-work-queue-admission-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js, reports/p1127-founder-live-agent-work-queue-admission-final-report.md, scripts/check-p1127-founder-live-agent-work-queue-admission-final.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1126-founder-live-agent-work-queue-admission-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js, reports/p1127-founder-live-agent-work-queue-admission-final-report.md, scripts/check-p1127-founder-live-agent-work-queue-admission-final.js |
+| changed files stay in P112.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P112.6 checker accepts final handoff | PASS |  |
 | OS status checker accepts P113 handoff | PASS |  |
 | phase status closed | PASS | P112.7/P112.6/P113 |
