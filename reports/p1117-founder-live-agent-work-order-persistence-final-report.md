@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P111.7
-- Generated at: 2026-05-28T22:52:24.266Z
+- Generated at: 2026-05-28T22:53:07.127Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 023ee117
+- Validation HEAD: 412d582d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,8 +24,8 @@
 | contract marks all P111 subphases complete | PASS |  |
 | P111.7 records final validation commands | PASS |  |
 | P111.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P111.7 allowed scope | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1116-founder-live-agent-work-order-persistence-docs-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, scripts/check-p1117-founder-live-agent-work-order-persistence-final.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1116-founder-live-agent-work-order-persistence-docs-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, scripts/check-p1117-founder-live-agent-work-order-persistence-final.js |
+| changed files stay in P111.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1116-founder-live-agent-work-order-persistence-docs-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/phase-validation-coverage-report.md |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1116-founder-live-agent-work-order-persistence-docs-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/phase-validation-coverage-report.md |
 | compatibility checkers accept final handoff | PASS |  |
 | P112 handoff is supported | PASS | P111.7/P111.6/P112 |
 | docs record P111.7 complete | PASS |  |
