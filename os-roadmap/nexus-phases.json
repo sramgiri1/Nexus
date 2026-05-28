@@ -8471,7 +8471,7 @@
       "order": 143,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3ae95560",
       "completedAt": "",
       "summary": "P107 approval capture boundary is in progress. P107.3 adds a local approval capture audit preview while approval capture and execution authority remain blocked.",
       "checksRun": [
@@ -8553,7 +8553,7 @@
       "order": 143.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3ae95560",
       "completedAt": "2026-05-28T18:47:23.000Z",
       "summary": "Built deterministic local approval capture audit rows and sections from P107.2 capture records without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
       "checksRun": [
