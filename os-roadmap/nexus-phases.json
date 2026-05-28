@@ -7992,7 +7992,7 @@
       "order": 141,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "11127e53",
       "completedAt": "",
       "summary": "P105 is in progress. P105.1 defines local founder live execution approval-planning schema, required gates, blocked runtime transitions, and safety rules without enabling approval capture or execution.",
       "checksRun": [
@@ -8015,7 +8015,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "11127e53",
       "completedAt": "2026-05-28T03:15:00.000Z",
       "checksRun": [
         "npm run check:p1051-founder-live-execution-approval-planning-contract",
