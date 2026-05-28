@@ -9174,6 +9174,180 @@
       "detail": "P109 final validation and P110 placeholder handoff complete."
     },
     {
+      "phaseId": "P110",
+      "title": "Founder Live Operator Decision Ledger Persistence",
+      "track": "NEXUS_OS",
+      "order": 146,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P110 is in progress. P110.1 defines the governed local SQLite persistence contract for operator decision ledger records while leaving DB schema, runtime models, Command Center source, project files, runtime data, and unsafe authority unchanged.",
+      "checksRun": [
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P110.1 is contract/docs/status/checker only and does not change DB schema, live runtime models, Command Center source, project files, or runtime data.",
+        "Local SQLite CRUD for operator decision ledger records remains planned until later P110 subphases and must use explicit local approval gates.",
+        "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P110.2",
+      "commandCenterVisible": true,
+      "label": "Ledger Persistence",
+      "detail": "P110.1 contract complete; P110.2 schema next."
+    },
+    {
+      "phaseId": "P110.1",
+      "title": "Persistence Contract / Policy / Schema Plan",
+      "track": "NEXUS_OS",
+      "order": 146.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T21:15:09.000Z",
+      "summary": "Defined the P110 governed local SQLite operator decision ledger persistence contract and subphase plan without changing DB schema, runtime models, Command Center source, project files, runtime data, or unsafe authority.",
+      "checksRun": [
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P110.1 is contract-only and does not add DB schema, write ledger records, capture operator decisions, admit runtime execution, or unlock execution.",
+        "Hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P110.2 schema work remains planned."
+      ],
+      "nextPhase": "P110.2",
+      "commandCenterVisible": true,
+      "label": "Persistence Contract",
+      "detail": "Decision-ledger persistence contract complete; schema next."
+    },
+    {
+      "phaseId": "P110.2",
+      "title": "Decision Ledger SQLite Schema",
+      "track": "NEXUS_OS",
+      "order": 146.2,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned local SQLite schema for decision-ledger entries, events, and evidence refs.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no implementation authority until separately scoped and validated.",
+        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+      ],
+      "nextPhase": "P110.3",
+      "commandCenterVisible": true,
+      "label": "Schema",
+      "detail": "Planned local SQLite schema for decision-ledger entries, events, and evidence refs."
+    },
+    {
+      "phaseId": "P110.3",
+      "title": "Governed Local CRUD Model",
+      "track": "NEXUS_OS",
+      "order": 146.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned governed local CRUD adapter for allowlisted decision-ledger records.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no implementation authority until separately scoped and validated.",
+        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+      ],
+      "nextPhase": "P110.4",
+      "commandCenterVisible": true,
+      "label": "CRUD Model",
+      "detail": "Planned governed local CRUD adapter for allowlisted decision-ledger records."
+    },
+    {
+      "phaseId": "P110.4",
+      "title": "Command Center Ledger Persistence UX",
+      "track": "NEXUS_OS",
+      "order": 146.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-safe Command Center persistence UX on non-chat founder pages.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no implementation authority until separately scoped and validated.",
+        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+      ],
+      "nextPhase": "P110.5",
+      "commandCenterVisible": true,
+      "label": "Ledger DB UX",
+      "detail": "Planned display-safe Command Center persistence UX on non-chat founder pages."
+    },
+    {
+      "phaseId": "P110.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 146.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned aggregate validation for P110.1-P110.4.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no implementation authority until separately scoped and validated.",
+        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+      ],
+      "nextPhase": "P110.6",
+      "commandCenterVisible": true,
+      "label": "Validation",
+      "detail": "Planned aggregate validation for P110.1-P110.4."
+    },
+    {
+      "phaseId": "P110.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 146.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned docs, README, roadmap, and status closure.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no implementation authority until separately scoped and validated.",
+        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+      ],
+      "nextPhase": "P110.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "Planned docs, README, roadmap, and status closure."
+    },
+    {
+      "phaseId": "P110.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 146.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final validation and handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no implementation authority until separately scoped and validated.",
+        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+      ],
+      "nextPhase": "P111",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation and handoff."
+    },
+    {
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
@@ -9584,9 +9758,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T21:05:00.000Z",
-  "currentPhase": "P109.7",
-  "previousPhase": "P109.6",
-  "nextPhase": "P110",
+  "updatedAt": "2026-05-28T21:15:09.000Z",
+  "currentPhase": "P110.1",
+  "previousPhase": "P109.7",
+  "nextPhase": "P110.2",
   "currentPhaseStatus": "complete"
 }

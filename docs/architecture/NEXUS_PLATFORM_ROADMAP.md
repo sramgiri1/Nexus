@@ -2697,6 +2697,24 @@ Implementation follows
 The detailed plan lives in
 [`P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md`](P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md).
 
+## P110 - Founder Live Operator Decision Ledger Persistence
+
+P110.1 is complete. The P110 contract now splits governed local SQLite
+operator decision ledger persistence into implementation-grade subphases:
+contract, schema, governed CRUD model, Command Center UX, aggregate validation,
+docs, and final validation. P110.1 is contract/docs/status/checker only and
+does not change DB schema, live runtime models, Command Center source, project
+files, runtime data, or unsafe authority. P110.2 is next. Hosted DB mutation,
+raw SQL, runtime admission, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
+Implementation follows
+[`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
+
+The detailed plan lives in
+[`P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md`](P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md).
+
 Implementation follows
 [`p103-founder-live-work-admission-contracts.json`](../../contracts/os-roadmap/p103-founder-live-work-admission-contracts.json).
 

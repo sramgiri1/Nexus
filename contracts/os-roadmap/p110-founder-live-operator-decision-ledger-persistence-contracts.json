@@ -1,0 +1,352 @@
+{
+  "phaseId": "P110",
+  "title": "Founder Live Operator Decision Ledger Persistence",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Move the P109 display-safe operator decision ledger toward governed local SQLite persistence for future operator decisions without enabling hosted DB mutation, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, network, or spend.",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "b91ac690",
+  "safetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated project sources/tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P110.1 is contract-only and must not modify db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, or runtime data.",
+    "Later P110 subphases may only add governed local SQLite CRUD for allowlisted NEXUS OS operator decision ledger records where explicitly scoped.",
+    "Do not enable hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, runtime admission, execution unlock, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "db/sqliteRuntime.js",
+    "db/sqliteCrudRepository.js",
+    "live-ready/founderLiveOperatorDecisionLedgerBoundary.js",
+    "live-ready/founderLiveOperatorDecisionLedgerModel.js",
+    "live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js",
+    "existing Command Center route matrix, tabs, cards, badges, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P110.1",
+      "title": "Persistence Contract / Policy / Schema Plan",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the governed local SQLite persistence contract for operator decision ledger records without changing DB schema, runtime models, Command Center source, or runtime data.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "b91ac690",
+      "allowedFiles": [
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js",
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
+        "reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js",
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
+        "reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "P110.1 persistence contract report"
+      ],
+      "futureExports": [
+        "P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PHASE",
+        "P110_OPERATOR_DECISION_LEDGER_DB_ENTITIES",
+        "buildFounderLiveOperatorDecisionLedgerPersistenceContract",
+        "validateFounderLiveOperatorDecisionLedgerPersistenceContract",
+        "buildSafeOperatorDecisionLedgerDbRecord",
+        "executeApprovedOperatorDecisionLedgerDbCrudRequest",
+        "buildOperatorDecisionLedgerDbViewModel"
+      ],
+      "futureSchemas": [
+        "operator_decision_ledger_entries",
+        "operator_decision_ledger_events",
+        "operator_decision_ledger_evidence_refs"
+      ],
+      "futureDataShape": "Result envelope with schemaVersion, runtimeMode, dbMode, ledgerSessionSummary, operatorDecisionLedgerEntries[], ledgerEvents[], localCrudRequests[], allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, requiredEvidence[], missingEvidence[], evidenceRefs[], auditRefs[], activityRefs[], nextAction, blockers[], disabledReason, ownerCapability, activityLocation, costImpact, commandCenterVisible, and all non-scoped unsafe runtime flags false.",
+      "commandCenterUx": "Preserve current Command Center UX. Later P110 UX must show local decision-ledger DB state, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact on relevant non-chat pages without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, raw packet keys, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P110.1 because no UI files change.",
+        "P110.4 must add focused route coverage for Business Build, Agent Flow, Live Readiness, and Database if the DB view is surfaced there."
+      ],
+      "checkerUpdates": [
+        "Add check:p1101-founder-live-operator-decision-ledger-persistence-contract.",
+        "Update check:os-phase-status to accept P110.1-P110.7.",
+        "Preserve P109.7 final validation as the previous-phase evidence.",
+        "Update the P109.7 final checker to accept the concrete P110.1/P110.2 handoff state after P110 starts."
+      ],
+      "docsRoadmap": "Add P110 plan, README and platform roadmap entries, and OS phase tracking with P110.1 complete and P110.2 next.",
+      "phaseStatusUpdate": "P110 in progress; P110.1 complete; current P110.1; previous P109.7; next P110.2.",
+      "validationCommands": [
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P110.1 is contract/docs/status/checker only.",
+        "Confirm no db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, projects/**, or careloop/** files changed.",
+        "Confirm hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P110.1 files>",
+        "git commit -m \"feat(nexus): define p110 decision ledger persistence contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P110.2",
+      "title": "Decision Ledger SQLite Schema",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add local SQLite schema definitions for display-safe operator decision ledger entries, events, and evidence references.",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1102-founder-live-operator-decision-ledger-schema.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1102-founder-live-operator-decision-ledger-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1102-founder-live-operator-decision-ledger-schema",
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P110.3",
+      "title": "Governed Local CRUD Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add a governed local CRUD adapter for allowlisted operator decision ledger records using the P110.2 schema and existing SQLite repository.",
+      "allowedFiles": [
+        "live-ready/founderLiveOperatorDecisionLedgerPersistence.js",
+        "scripts/check-p1103-founder-live-operator-decision-ledger-crud-model.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1103-founder-live-operator-decision-ledger-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1103-founder-live-operator-decision-ledger-crud-model",
+        "npm run check:p1102-founder-live-operator-decision-ledger-schema",
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P110.4",
+      "title": "Command Center Ledger Persistence UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Render display-safe local decision-ledger persistence state on relevant non-chat Command Center pages while keeping Chat and Lite clean.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1104-command-center-decision-ledger-persistence-ux.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1104-command-center-decision-ledger-persistence-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1104-command-center-decision-ledger-persistence-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Decision ledger persistence appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1103-founder-live-operator-decision-ledger-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P110.5",
+      "title": "Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P110.1-P110.4 validation, route safety, forbidden-scope coverage, and local SQLite CRUD safety.",
+      "validationCommands": [
+        "npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation",
+        "npm run check:p1104-command-center-decision-ledger-persistence-ux",
+        "npm run check:p1103-founder-live-operator-decision-ledger-crud-model",
+        "npm run check:p1102-founder-live-operator-decision-ledger-schema",
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P110.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "DOCS_CHANGE",
+      "narrowGoal": "Close P110 docs, README, platform roadmap, contract, reports, and OS status evidence without changing runtime behavior.",
+      "validationCommands": [
+        "npm run check:p1106-founder-live-operator-decision-ledger-persistence-docs",
+        "npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P110.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P110 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
+      "validationCommands": [
+        "npm run check:p1107-founder-live-operator-decision-ledger-persistence-final",
+        "npm run check:p1106-founder-live-operator-decision-ledger-persistence-docs",
+        "npm run check:p1105-founder-live-operator-decision-ledger-persistence-validation",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    }
+  ],
+  "knownLimitations": [
+    "P110.1 is contract/docs/status/checker only and does not change DB schema, runtime models, Command Center source, project files, or runtime data.",
+    "Local SQLite CRUD for operator decision ledger records remains planned until P110.2-P110.3 and must use explicit local approval gates.",
+    "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+  ]
+}

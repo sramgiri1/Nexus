@@ -573,7 +573,8 @@
     "check:p1094-command-center-decision-ledger-ux": "node scripts/check-p1094-command-center-decision-ledger-ux.js",
     "check:p1095-founder-live-operator-decision-ledger-validation": "node scripts/check-p1095-founder-live-operator-decision-ledger-validation.js",
     "check:p1096-founder-live-operator-decision-ledger-docs": "node scripts/check-p1096-founder-live-operator-decision-ledger-docs.js",
-    "check:p1097-founder-live-operator-decision-ledger-final": "node scripts/check-p1097-founder-live-operator-decision-ledger-final.js"
+    "check:p1097-founder-live-operator-decision-ledger-final": "node scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+    "check:p1101-founder-live-operator-decision-ledger-persistence-contract": "node scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

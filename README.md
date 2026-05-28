@@ -449,6 +449,14 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package, network calls, and provider spend remain
   blocked.
+- P110.1 decision-ledger persistence contract: P110 is now split into
+  implementation-grade subphases for governed local SQLite decision-ledger
+  persistence. P110.1 is contract/docs/status/checker only; it does not change
+  DB schema, live runtime models, Command Center source, project files, or
+  runtime data. P110.2 is next. Hosted DB mutation, raw SQL, runtime admission,
+  execution unlock, provider/model calls, dispatch, worker/tool execution,
+  project mutation, deploy, release, export, package, network calls, and
+  provider spend remain blocked.
 
 ## CareLoop Project Progress
 

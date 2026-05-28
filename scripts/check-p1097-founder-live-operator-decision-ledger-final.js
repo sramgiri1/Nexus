@@ -57,13 +57,21 @@ const p109Reports = [
 const serializedDecisionLedger = JSON.stringify(decisionLedger);
 const docsBundle = [contract, plan, platformRoadmap, readme].map((entry) => JSON.stringify(entry)).join(" ");
 const p110PlaceholderState =
-  status.currentPhase === "P109.7"
+  ((status.currentPhase === "P109.7"
     && status.previousPhase === "P109.6"
     && status.nextPhase === "P110"
     && roadmap.currentPhase === "P109.7"
     && roadmap.previousPhase === "P109.6"
-    && roadmap.nextPhase === "P110"
-    && osStatusChecker.includes('"P110"');
+    && roadmap.nextPhase === "P110")
+    || (status.currentPhase === "P110.1"
+      && status.previousPhase === "P109.7"
+      && status.nextPhase === "P110.2"
+      && roadmap.currentPhase === "P110.1"
+      && roadmap.previousPhase === "P109.7"
+      && roadmap.nextPhase === "P110.2"))
+    && osStatusChecker.includes('"P110"')
+    && osStatusChecker.includes('"P110.1"')
+    && osStatusChecker.includes('"P110.2"');
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1097-founder-live-operator-decision-ledger-final"]));
 addCheck("all P109 scripts registered", p109Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
