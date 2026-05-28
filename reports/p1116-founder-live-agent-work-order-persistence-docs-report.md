@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P111.6
-- Generated at: 2026-05-28T22:44:51.309Z
+- Generated at: 2026-05-28T22:45:28.903Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: cf5104f5
+- Validation HEAD: f0b1d1a2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,8 +32,8 @@
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
-| changed files stay in P111.6 allowed scope | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js, scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js, scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js |
+| changed files stay in P111.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 ## Validation Commands
 
 - npm run check:p1116-founder-live-agent-work-order-persistence
