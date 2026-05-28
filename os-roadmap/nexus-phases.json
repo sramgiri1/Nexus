@@ -9631,7 +9631,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "dcb119f0a0ccde0a10757afd58a52b82bc910f56",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
       "detail": "P112.6 validation/docs complete; P112.7 final validation is next.",
@@ -9794,7 +9794,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "dcb119f0a0ccde0a10757afd58a52b82bc910f56",
       "commandCenterVisible": true,
       "label": "Work Queue Admission Validation / Docs",
       "detail": "Aggregate validation and docs closure are complete for P112.1-P112.5.",
