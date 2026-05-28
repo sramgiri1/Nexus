@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P110.1
-- Generated at: 2026-05-28T21:16:19.299Z
+- Generated at: 2026-05-28T21:17:01.988Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b91ac690
+- Validation HEAD: 5ddca897
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | docs record P110.1 | PASS |  |
 | README records P110.1 | PASS |  |
 | platform roadmap records P110.1 | PASS |  |
-| changed files stay in P110.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1097-founder-live-operator-decision-ledger-final-report.md, scripts/check-os-phase-status.js, scripts/check-p1097-founder-live-operator-decision-ledger-final.js, contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json, docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md, reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md, scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1097-founder-live-operator-decision-ledger-final-report.md, scripts/check-os-phase-status.js, scripts/check-p1097-founder-live-operator-decision-ledger-final.js, contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json, docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md, reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md, scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js |
+| changed files stay in P110.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
