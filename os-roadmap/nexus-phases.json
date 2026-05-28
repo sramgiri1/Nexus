@@ -7757,7 +7757,7 @@
       "order": 140,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6ba63f0e",
       "completedAt": "",
       "summary": "P104 is in progress. P104.5 adds aggregate validation and route safety coverage for the founder live execution boundary.",
       "checksRun": [
@@ -7897,7 +7897,7 @@
       "order": 140.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6ba63f0e",
       "completedAt": "2026-05-28T01:45:00.000Z",
       "summary": "Added aggregate P104 checker and route safety coverage for chat-only routes, non-chat execution-boundary UX, browser-safe display data, reports, status, docs, and safety wording.",
       "checksRun": [
