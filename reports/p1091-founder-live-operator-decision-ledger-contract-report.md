@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.1
-- Generated at: 2026-05-28T20:19:43.560Z
+- Generated at: 2026-05-28T20:20:14.320Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1287aebf
+- Validation HEAD: c19cbfae
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,7 +38,7 @@
 | all blocked flags false | PASS |  |
 | contract records validation commands | PASS |  |
 | P109.1 avoids forbidden file scope | PASS |  |
-| current changed files stay in P109.1 scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| current changed files stay in P109.1 scope | PASS |  |
 | plan records P109.1 complete | PASS |  |
 | platform roadmap records P109.1 | PASS |  |
 | README records P109.1 | PASS |  |
