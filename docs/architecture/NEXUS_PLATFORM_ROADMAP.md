@@ -2544,6 +2544,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked. P107.6 is next.
 
+P107.6 is complete. It closes the P107 docs, README, platform roadmap,
+contract status, and OS phase tracking for P107.1-P107.6 and keeps P107.7 as
+the final validation step. The docs preserve the Command Center placement on
+Business Build, Agent Flow, and Live Readiness, keep Chat with NEXUS and Lite
+clean, and keep approval capture, approval persistence, approval writes,
+execution unlock, runtime admission, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+export, package action, network call, and provider spend blocked. P107.7 is
+next.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 

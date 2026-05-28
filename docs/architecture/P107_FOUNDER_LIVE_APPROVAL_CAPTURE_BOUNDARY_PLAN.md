@@ -201,7 +201,7 @@ Final safety checks:
 
 ## P107.6 Docs / Roadmap
 
-Status: planned
+Status: complete
 
 Narrow goal: close P107 docs, README, platform roadmap, and phase status evidence without behavior changes.
 

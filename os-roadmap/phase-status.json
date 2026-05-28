@@ -13208,14 +13208,13 @@
       "order": 143,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8abfca56",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P107 approval capture boundary is in progress. P107.5 adds aggregate validation for P107.1-P107.4 while approval capture and execution authority remain blocked.",
+      "summary": "P107 approval capture boundary is in progress. P107.6 closes docs, README, platform roadmap, and phase tracking for P107.1-P107.6 while approval capture and execution authority remain blocked.",
       "checksRun": [
+        "npm run check:p1076-founder-live-approval-capture-docs",
         "npm run check:p1075-founder-live-approval-capture-validation",
         "npm run check:p1074-command-center-approval-capture-boundary-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
-        "cd dashboard && npm run build",
         "npm run check:p1073-founder-live-approval-capture-audit-preview",
         "npm run check:p1072-founder-live-approval-capture-model",
         "npm run check:p1071-founder-live-approval-capture-boundary-contract",
@@ -13224,14 +13223,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P107.5 is validation only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "P107.6 is docs/checker only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P107.6-P107.7 remain planned."
+        "P107.7 remains planned."
       ],
-      "nextPhase": "P107.6",
+      "nextPhase": "P107.7",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P107.5 aggregate validation complete; P107.6 docs and roadmap closure is next."
+      "detail": "P107.6 docs closure complete; P107.7 final validation is next."
     },
     {
       "phaseId": "P107.1",
@@ -13383,19 +13382,31 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 143.6,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Docs / Roadmap is planned for P107. No approval capture, persistence, runtime admission, execution unlock, mutation, deploy, network, or spend authority is enabled.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T19:07:23.606Z",
+      "summary": "Closed P107 docs, README, platform roadmap, contract status, and OS phase tracking for P107.1-P107.6 while preserving blocked approval capture and execution language.",
+      "checksRun": [
+        "npm run check:p1076-founder-live-approval-capture-docs",
+        "npm run check:p1075-founder-live-approval-capture-validation",
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval capture or execution authority enabled."
+        "P107.6 is docs/checker only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P107.7 final validation remains planned."
       ],
       "nextPhase": "P107.7",
       "commandCenterVisible": true,
-      "label": "Docs Closure",
-      "detail": "Planned docs and roadmap closure for approval capture boundary."
+      "label": "Capture Docs",
+      "detail": "P107 docs closure complete; final validation remains next."
     },
     {
       "phaseId": "P107.7",
@@ -13898,9 +13909,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T19:04:21.794Z",
-  "currentPhase": "P107.5",
-  "previousPhase": "P107.4",
-  "nextPhase": "P107.6",
+  "updatedAt": "2026-05-28T19:07:23.606Z",
+  "currentPhase": "P107.6",
+  "previousPhase": "P107.5",
+  "nextPhase": "P107.7",
   "currentPhaseStatus": "complete"
 }

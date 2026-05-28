@@ -334,6 +334,14 @@ The Command Center and local operator surface have:
   provider/model calls, dispatch, worker/tool execution, project mutation,
   hosted DB mutation, deploy, release, export, package, network calls, and
   provider spend remain blocked. P107.6 is next.
+- P107.6 docs closure: P107 docs, README, platform roadmap, contract status,
+  and OS phase tracking now record P107.1-P107.6 as complete and P107.7 as the
+  final validation step. The docs preserve the Command Center placement on
+  Business Build, Agent Flow, and Live Readiness, keep Chat with NEXUS and Lite
+  clean, and keep approval capture, persistence, writes, execution unlock,
+  runtime admission, provider/model calls, dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, deploy, release, export, package,
+  network calls, and provider spend blocked. P107.7 is next.
 
 ## CareLoop Project Progress
 

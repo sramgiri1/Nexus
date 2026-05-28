@@ -564,11 +564,11 @@
     {
       "phaseId": "P107.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Close P107 docs, README, platform roadmap, and phase status evidence without behavior changes.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-P107.5",
+      "expectedBaseCommit": "25feb4bc",
       "allowedFiles": [
         "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
         "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
@@ -618,7 +618,7 @@
       "playwrightTests": "No Playwright update in P107.6 because no UI files change. Retain P107.4 focused route coverage for final validation.",
       "checkerUpdates": [
         "Add check:p1076-founder-live-approval-capture-docs.",
-        "Update P107.1 and P107.5 checkers to accept P107.6 handoff."
+        "Update P107.1 checker to accept P107.6 handoff; P107.5 checker already accepts P107.6 handoff."
       ],
       "docsRoadmap": "Close P107 docs, README, platform roadmap, and OS phase status with P107.6 complete and P107.7 next.",
       "phaseStatusUpdate": "P107 in progress; P107.6 complete; current P107.6; previous P107.5; next P107.7.",
@@ -773,9 +773,9 @@
     }
   ],
   "knownLimitations": [
-    "P107.5 is validation only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+    "P107.6 is docs/checker only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P107.6-P107.7 remain planned."
+    "P107.7 remains planned."
   ],
   "knownRisks": [
     "P107.1-P107.6 are local/display/validation/docs-only work; approval capture, persistence, execution unlock, and runtime admission remain blocked.",
