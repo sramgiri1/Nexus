@@ -2336,6 +2336,9 @@ Founder Live Execution Boundary with blocked counts, missing evidence,
 validation command, owner capability, evidence/activity, disabled reason, and
 cost posture. Chat with NEXUS and Lite remain chat-only. P104.5 is next for
 aggregate tests and checkers.
+P104.5 is complete. It adds aggregate validation and route safety coverage for
+the P104 path from chat cleanup through non-chat execution-boundary UX. P104.6
+is next for docs and roadmap closure.
 
 Implementation follows
 [`p104-founder-live-execution-boundary-contracts.json`](../../contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json).

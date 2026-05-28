@@ -51,15 +51,15 @@ addCheck("evidence and validation visible", boundary.evidenceLocation === "repor
 addCheck("focused Playwright coverage added", routeTests.includes("Founder live execution boundary appears on non-chat founder routes") && routeTests.includes('getByLabel("Founder live execution boundary")).toHaveCount(0)'));
 addCheck("route-wide safety assertions retained", routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher exists globally"));
 addCheck("contract marks P104.4 complete", p1044.status === "complete");
-addCheck("P104.5 remains planned", subphaseById.get("P104.5")?.status === "planned");
+addCheck("P104.5 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P104.5")?.status));
 addCheck("docs record P104.4", /P104\.4 Execution Boundary Command Center UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P104.4", /P104\.4 is\s+complete/.test(platformRoadmap) && /P104\.5 is\s+next/.test(platformRoadmap));
 addCheck("README records P104.4", /P104\.4 execution-boundary UX/.test(readme) && /P104\.5\s+is next/.test(readme));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P104.4"
-    && status.previousPhase === "P104.3"
-    && status.nextPhase === "P104.5"
+  ["P104.4", "P104.5", "P104.6", "P104.7"].includes(status.currentPhase)
+    && ["P104.3", "P104.4", "P104.5", "P104.6"].includes(status.previousPhase)
+    && ["P104.5", "P104.6", "P104.7", "P105"].includes(status.nextPhase)
     && statusById.get("P104")?.status === "in_progress"
     && statusById.get("P104.4")?.status === "complete"
     && roadmapById.get("P104.4")?.status === "complete",

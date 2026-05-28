@@ -3776,7 +3776,7 @@ test.describe("Command Center route-wide UX", () => {
     });
 
     for (const theme of ["dark", "light", "system"]) {
-      await page.goto("/command-center/business-build");
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
       await pickTheme(page, theme);
       const themedCard = page.getByLabel("Founder live execution boundary").filter({ hasText: "Business Build Execution Boundary" });
       await expect(themedCard).toContainText("Founder Live Execution Boundary");
@@ -3788,7 +3788,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/agent-flow", "Agent Flow Execution Boundary"],
       ["/command-center/live-readiness", "Live Readiness Execution Boundary"],
     ]) {
-      await page.goto(path);
+      await page.goto(path, { waitUntil: "domcontentloaded" });
       const card = page.getByLabel("Founder live execution boundary").filter({ hasText: label });
       await expect(card).toContainText("Founder Live Execution Boundary");
       await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
@@ -3808,9 +3808,9 @@ test.describe("Command Center route-wide UX", () => {
       await expect(card).toContainText("No provider calls");
     }
 
-    await page.goto("/command-center/lite");
+    await page.goto("/command-center/lite", { waitUntil: "domcontentloaded" });
     await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(0);
-    await page.goto("/command-center");
+    await page.goto("/command-center", { waitUntil: "domcontentloaded" });
     await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(0);
 
     const body = await page.locator("body").innerText();
@@ -3818,6 +3818,34 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
     expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|execution-boundary-/i);
     expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
+  test("P104 execution boundary route safety stays coherent", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const path of ["/command-center", "/command-center/lite"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Chat with NEXUS")).toBeVisible();
+      await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(0);
+      await expect(page.getByLabel("Founder live work admission")).toHaveCount(0);
+    }
+
+    for (const path of ["/command-center/business-build", "/command-center/agent-flow", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Founder live execution boundary")).toHaveCount(1);
+      await expect(page.getByLabel("Founder live execution boundary")).toContainText("Execution blocked");
+      const body = await page.locator("body").innerText();
+      expect(body).not.toContain("DemoApp");
+      expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+      expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+      expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    }
+
     expect(errors).toEqual([]);
   });
 

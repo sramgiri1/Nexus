@@ -369,9 +369,61 @@
     {
       "phaseId": "P104.5",
       "title": "Execution Boundary Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Add aggregate checker and Playwright coverage for execution-boundary behavior."
+      "narrowGoal": "Add aggregate checker and Playwright coverage for execution-boundary behavior.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "b3d55342",
+      "allowedFiles": [
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1045-founder-live-execution-boundary-aggregate.js",
+        "scripts/check-p1044-founder-live-execution-boundary-ux.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1045-founder-live-execution-boundary-aggregate-report.md",
+        "reports/p1044-founder-live-execution-boundary-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "checker": "check:p1045-founder-live-execution-boundary-aggregate validates P104.1-P104.5 scripts, reports, route tests, browser-safe display data, Command Center route placement, OS status, docs, and safety wording."
+      },
+      "commandCenterUxRequirements": "No new UX. Preserve chat-only Chat/Lite and execution-boundary cards on Business Build, Agent Flow, and Live Readiness.",
+      "themeRequirements": "No theme source change; P104.4 route test continues covering dark/light/system behavior.",
+      "playwrightTests": "Add P104 route safety test covering Chat/Lite absence and Business Build, Agent Flow, Live Readiness presence.",
+      "checkerUpdates": [
+        "Add check:p1045-founder-live-execution-boundary-aggregate.",
+        "Keep check:p1044-founder-live-execution-boundary-ux forward-compatible."
+      ],
+      "docsRoadmap": "Record P104.5 complete and P104.6 next.",
+      "phaseStatusUpdate": "P104 in progress; P104.5 complete; current P104.5; previous P104.4; next P104.6.",
+      "validationCommands": [
+        "npm run check:p1045-founder-live-execution-boundary-aggregate",
+        "npm run check:p1044-founder-live-execution-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"P104 execution boundary route safety stays coherent|Founder live execution boundary appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P104.6",

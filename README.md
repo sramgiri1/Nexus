@@ -191,6 +191,9 @@ The Command Center and local operator surface have:
   capability, evidence/activity, cost posture, missing evidence, validation
   commands, and disabled reasons. Chat with NEXUS and Lite remain chat-only.
   P104.5 is next for aggregate tests and checkers.
+- P104.5 execution-boundary aggregate validation: route tests and aggregate
+  checker now cover the full P104 path from chat cleanup through non-chat
+  execution-boundary UX. P104.6 is next for docs and roadmap closure.
 
 ## CareLoop Project Progress
 
