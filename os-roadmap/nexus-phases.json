@@ -8227,7 +8227,7 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "550431c9",
       "completedAt": "",
       "summary": "P106 has started with the approval request boundary contract and schema. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
       "checksRun": [
@@ -8254,7 +8254,7 @@
       "order": 142.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "550431c9",
       "completedAt": "2026-05-28T07:20:00.000Z",
       "summary": "Defined the P106 approval request boundary contract and local schema with display-safe request envelope and decision-boundary shapes, required evidence, forbidden actions, validation commands, and all approval request/runtime/execution flags false.",
       "checksRun": [
@@ -8799,7 +8799,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T07:20:00.000Z",
+  "updatedAt": "2026-05-28T07:30:00.000Z",
   "currentPhase": "P106.1",
   "previousPhase": "P105.7",
   "nextPhase": "P106.2",
