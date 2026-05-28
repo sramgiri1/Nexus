@@ -240,12 +240,15 @@
     {
       "phaseId": "P108.3",
       "title": "Operator Review Audit Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Assemble display-safe operator-review audit preview rows without writable approval decisions, persistence, runtime actions, or mutations.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "8189f909",
       "allowedFiles": [
         "live-ready/founderLiveApprovalOperatorReviewAuditPreview.js",
         "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
+        "scripts/check-p1082-founder-live-approval-operator-review-model.js",
         "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
         "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -253,7 +256,10 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1083-founder-live-approval-operator-review-audit-preview-report.md"
+        "reports/p1083-founder-live-approval-operator-review-audit-preview-report.md",
+        "reports/p1082-founder-live-approval-operator-review-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -269,6 +275,37 @@
         "packages/**",
         ".env*"
       ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveApprovalOperatorReviewAuditPreview.js",
+        "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
+        "scripts/check-p1082-founder-live-approval-operator-review-model.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P108_FOUNDER_LIVE_APPROVAL_OPERATOR_REVIEW_AUDIT_PREVIEW_PHASE",
+          "P108_OPERATOR_REVIEW_AUDIT_PREVIEW_STATES",
+          "buildFounderLiveApprovalOperatorReviewAuditPreview",
+          "validateFounderLiveApprovalOperatorReviewAuditPreview"
+        ],
+        "envelope": "Result envelope with schemaVersion, currentState, sourceOperatorReviewModelPhase, sourceOperatorReviewModelState, founderContextSummary, operatorReviewAuditSummary, auditSections, auditRows, requiredEvidence, forbiddenActions, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible false, and all approval/operator/runtime/execution flags false.",
+        "auditRows": "Display-safe local operator-review audit preview rows with auditPreviewRef, displayLabel, sourceReviewLabel, sourceAuditLabel, sourceQueueLabel, proposedAgentLane, proposedOutcome, auditState, auditQuestions, evidenceStatus, requiredEvidence, missingEvidence, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, and all blocked flags false."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P108.3. Future P108.4 may render display-safe operator-review audit preview state on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "No theme source change in P108.3.",
+      "playwrightTests": "No Playwright update in P108.3 because no UI files change.",
+      "checkerUpdates": [
+        "Add check:p1083-founder-live-approval-operator-review-audit-preview.",
+        "Update P108.2 checker to accept P108.3 handoff."
+      ],
+      "docsRoadmap": "Update P108 plan, platform roadmap, README, and OS phase tracking with P108.3 complete and P108.4 next.",
+      "phaseStatusUpdate": "P108 in progress; P108.3 complete; current P108.3; previous P108.2; next P108.4.",
       "validationCommands": [
         "npm run check:p1083-founder-live-approval-operator-review-audit-preview",
         "npm run check:p1082-founder-live-approval-operator-review-model",
@@ -516,7 +553,7 @@
   ],
   "knownLimitations": [
     "P108 is an operator-review boundary phase only until each subphase completes.",
-    "P108.1-P108.2 do not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
-    "P108.3-P108.7 remain planned."
+    "P108.1-P108.3 do not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    "P108.4-P108.7 remain planned."
   ]
 }

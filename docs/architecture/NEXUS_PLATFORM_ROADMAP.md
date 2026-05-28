@@ -2581,6 +2581,14 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P108.3 is complete. The local operator-review audit preview now assembles
+display-safe audit rows and sections from the P108.2 records for later Command
+Center display. P108.4 is next. Operator decisions, approval capture, approval
+persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 

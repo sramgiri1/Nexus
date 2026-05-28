@@ -51,7 +51,7 @@ const serialized = JSON.stringify({ data, contract, plan, platformRoadmap, readm
 const serializedData = JSON.stringify(data);
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1082-founder-live-approval-operator-review-model"]));
-addCheck("contract marks P108.2 complete", contract.status === "in_progress" && p1082.status === "complete" && subphaseById.get("P108.1")?.status === "complete" && subphaseById.get("P108.3")?.status === "planned");
+addCheck("contract marks P108.2 complete", contract.status === "in_progress" && p1082.status === "complete" && subphaseById.get("P108.1")?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P108.3")?.status));
 addCheck("P108.2 is NEXUS OS scoped", p1082.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("P108.2 records exact implementation files", (p1082.allowedFiles || []).includes("live-ready/founderLiveApprovalOperatorReviewModel.js") && (p1082.allowedFiles || []).includes("scripts/check-p1082-founder-live-approval-operator-review-model.js"));
 addCheck("P108.2 avoids forbidden file scope", !(p1082.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
@@ -69,16 +69,19 @@ addCheck("all blocked flags false", P108_OPERATOR_REVIEW_BLOCKED_FLAGS.every((fl
 addCheck("operator review cannot unlock execution", data.operatorReviewCanUnlockExecution === false && data.operatorReviewModelSummary?.operatorReviewUnlockCount === 0 && data.operatorReviewRecords?.every((record) => record.operatorReviewCanUnlockExecution === false));
 addCheck("contract records validation commands", ["npm run check:p1082-founder-live-approval-operator-review-model", "npm run check:p1081-founder-live-approval-operator-review-contract", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1082.validationCommands?.includes(command)));
 addCheck("plan records P108.2 complete", /P108\.2 Operator Review Model[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P108.2", /P108\.2 is\s+complete/.test(platformRoadmap) && /P108\.3\s+is\s+next/.test(platformRoadmap));
-addCheck("README records P108.2", /P108\.2 local operator-review model/.test(readme) && /P108\.3 is next/.test(readme));
+addCheck("platform roadmap records P108.2", /P108\.2 is\s+complete/.test(platformRoadmap) && (/P108\.3\s+is\s+next/.test(platformRoadmap) || /P108\.3 is\s+complete/.test(platformRoadmap)));
+addCheck("README records P108.2", /P108\.2 local operator-review model/.test(readme) && (/P108\.3 is next/.test(readme) || /P108\.3 operator-review audit preview/.test(readme)));
 addCheck(
   "phase status advanced to P108.2",
-  status.currentPhase === "P108.2"
+  ((status.currentPhase === "P108.2"
     && status.previousPhase === "P108.1"
-    && status.nextPhase === "P108.3"
+    && status.nextPhase === "P108.3")
+    || (status.currentPhase === "P108.3"
+      && status.previousPhase === "P108.2"
+      && status.nextPhase === "P108.4"))
     && statusById.get("P108")?.status === "in_progress"
     && statusById.get("P108.2")?.status === "complete"
-    && statusById.get("P108.3")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P108.3")?.status)
     && roadmapById.get("P108")?.status === "in_progress"
     && roadmapById.get("P108.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}/${statusById.get("P108")?.status}`,

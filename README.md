@@ -362,6 +362,12 @@ The Command Center and local operator surface have:
   runtime admission, provider/model calls, dispatch, worker/tool execution,
   project mutation, hosted DB mutation, deploy, release, export, package,
   network calls, and provider spend remain blocked.
+- P108.3 operator-review audit preview: display-safe local audit preview rows
+  are assembled from the P108.2 records for later Command Center display.
+  P108.4 is next. Operator decisions, approval capture, persistence, writes,
+  execution unlock, runtime admission, provider/model calls, dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+  export, package, network calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 
