@@ -14368,7 +14368,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e118ec8a2a886ad2cfa20bac0fa1a4b6180cc142",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
       "detail": "P112.3 CRUD model complete; P112.4 admission preview is next.",
@@ -14446,7 +14446,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e118ec8a2a886ad2cfa20bac0fa1a4b6180cc142",
       "commandCenterVisible": true,
       "label": "Governed Local Queue CRUD Model",
       "detail": "Local queue CRUD model is approval-gated and dispatch remains blocked.",
@@ -15033,7 +15033,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T23:10:17.407Z",
+  "updatedAt": "2026-05-28T23:11:05.821Z",
   "currentPhase": "P112.3",
   "previousPhase": "P112.2",
   "nextPhase": "P112.4",
