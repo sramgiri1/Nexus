@@ -3331,6 +3331,10 @@ function AgentFlowPage() {
         boundary={businessBuild.founderLiveExecutionBoundary}
         surfaceLabel="Agent Flow Execution Boundary"
       />
+      <FounderLiveExecutionApprovalReviewPacketCard
+        packet={businessBuild.founderLiveExecutionApprovalReviewPacket}
+        surfaceLabel="Agent Flow Approval Review"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -9705,6 +9709,10 @@ function LiveReadinessPage() {
           boundary={founderLiveUse.founderLiveExecutionBoundary}
           surfaceLabel="Live Readiness Execution Boundary"
         />
+        <FounderLiveExecutionApprovalReviewPacketCard
+          packet={founderLiveUse.founderLiveExecutionApprovalReviewPacket}
+          surfaceLabel="Live Readiness Approval Review"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10036,6 +10044,10 @@ function BusinessBuildPage() {
         <FounderLiveExecutionBoundaryCard
           boundary={build.founderLiveExecutionBoundary}
           surfaceLabel="Business Build Execution Boundary"
+        />
+        <FounderLiveExecutionApprovalReviewPacketCard
+          packet={build.founderLiveExecutionApprovalReviewPacket}
+          surfaceLabel="Business Build Approval Review"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10666,6 +10678,73 @@ function FounderLiveExecutionBoundaryCard({ boundary, surfaceLabel = "Execution 
             <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.boundaryState}</div>
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Operator approval evidence"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveExecutionApprovalReviewPacketCard({ packet, surfaceLabel = "Approval Review" }) {
+  if (!packet) return null;
+
+  const rows = Array.isArray(packet.reviewPacketRows) ? packet.reviewPacketRows.slice(0, 6) : [];
+  const blockers = Array.isArray(packet.blockers) ? packet.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(packet.safetyRows) ? packet.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live approval review packet">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Approval Review Packet</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{packet.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Approval blocked</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{packet.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Review packets</span><span className="ccv2-page-summary-value">{packet.reviewPacketRowCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked packets</span><span className="ccv2-page-summary-value">{packet.blockedReviewPacketCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Submitted approvals</span><span className="ccv2-page-summary-value">{packet.submittedApprovalCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Captured approvals</span><span className="ccv2-page-summary-value">{packet.capturedApprovalCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Execution unlocks</span><span className="ccv2-page-summary-value">{packet.approvalUnlockCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime admissions</span><span className="ccv2-page-summary-value">{packet.runtimeAdmissionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable packets</span><span className="ccv2-page-summary-value">{packet.executableReviewPacketCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{packet.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{packet.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{packet.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{packet.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{packet.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{packet.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.label}`}
+            aria-label={`${row.proposedAgentLane} approval review packet row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.packetState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing gates: {row.missingGates?.[0] || "Operator approval evidence"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Review: {row.reviewQuestions?.[0] || "Confirm scope and success criteria."}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
           </div>

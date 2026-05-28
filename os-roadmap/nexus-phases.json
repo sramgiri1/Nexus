@@ -7992,10 +7992,13 @@
       "order": 141,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "94d5b2fb",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P105 is in progress. P105.3 assembles local dry-run approval review packets from P105.2 approval-plan rows without approval submission, runtime admission, or execution authority.",
+      "summary": "P105.1-P105.4 are complete. The approval-planning contract, deterministic approval-plan model, dry-run review packet, and non-chat Command Center approval review UX are in place while execution remains blocked.",
       "checksRun": [
+        "npm run check:p1054-command-center-approval-review-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
         "npm run check:p1053-founder-live-execution-approval-review-packet",
         "npm run check:p1052-founder-live-execution-approval-plan-model",
         "npm run check:p1051-founder-live-execution-approval-planning-contract",
@@ -8004,12 +8007,11 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P105.1-P105.3 are schema/model/dry-run packet only; approval submission, capture, and persistence remain blocked.",
-        "Approvals cannot unlock execution or runtime admission in P105.3.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P105.4-P105.7 remain planned."
+        "P105.4 is display-only Command Center UX; approval submission, capture, persistence, and execution unlock remain blocked.",
+        "Runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P105.5-P105.7 remain planned."
       ],
-      "nextPhase": "P105.4",
+      "nextPhase": "P105.5",
       "commandCenterVisible": true,
       "label": "Live Approval Planning",
       "detail": "P105.3 complete; non-runnable Command Center approval-planning UX is next."
@@ -8081,10 +8083,8 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P105.1-P105.3 are schema/model/dry-run packet only; approval submission, capture, and persistence remain blocked.",
-        "Approvals cannot unlock execution or runtime admission in P105.3.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P105.4-P105.7 remain planned."
+        "P105.3 is complete and now rendered by P105.4 on non-chat founder routes.",
+        "Approval submission, capture, persistence, execution unlock, and runtime admission remain blocked."
       ],
       "commandCenterVisible": true,
       "phaseId": "P105.3",
@@ -8098,19 +8098,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "checksRun": [],
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T05:05:00.000Z",
+      "checksRun": [
+        "npm run check:p1054-command-center-approval-review-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1053-founder-live-execution-approval-review-packet",
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no execution authority enabled."
+        "P105.4 is display-only Command Center UX; approval submission, capture, persistence, and execution unlock remain blocked.",
+        "Runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P105.5-P105.7 remain planned."
       ],
       "commandCenterVisible": true,
       "phaseId": "P105.4",
       "title": "Command Center Approval Planning UX",
-      "status": "planned",
+      "status": "complete",
       "order": 141.4,
-      "summary": "Render approval-planning state on relevant founder pages without approval or execution controls.",
+      "summary": "Business Build, Agent Flow, and Live Readiness render a display-safe approval review packet with current state, blockers, disabled reason, next action, owner, evidence/activity, validation command, and cost impact. Chat with NEXUS and Lite remain chat-only.",
       "nextPhase": "P105.5",
       "label": "Approval Planning UX",
       "detail": "Planned non-runnable Command Center approval-planning UX."
@@ -8583,9 +8595,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T04:20:00.000Z",
-  "currentPhase": "P105.3",
-  "previousPhase": "P105.2",
-  "nextPhase": "P105.4",
+  "updatedAt": "2026-05-28T05:05:00.000Z",
+  "currentPhase": "P105.4",
+  "previousPhase": "P105.3",
+  "nextPhase": "P105.5",
   "currentPhaseStatus": "complete"
 }

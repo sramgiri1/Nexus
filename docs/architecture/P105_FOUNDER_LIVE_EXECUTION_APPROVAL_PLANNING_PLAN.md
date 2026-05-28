@@ -177,13 +177,21 @@ Validation commands:
 
 ## P105.4 Command Center Approval Planning UX
 
-Status: planned
+Status: complete
 
 Narrow goal: render approval-planning state on the relevant founder pages without approval or execution controls.
 
-Expected UX: Business Build, Agent Flow, and Live Readiness show current state, next action, blockers, disabled reason, owner capability, evidence/activity, validation commands, and cost impact. Chat with NEXUS and Lite remain chat-only.
+Expected UX: Business Build, Agent Flow, and Live Readiness show the display-safe approval review packet current state, next action, blockers, disabled reason, owner capability, evidence/activity, validation command, and cost impact. Chat with NEXUS and Lite remain chat-only.
 
-Validation commands: include focused Playwright route coverage and dashboard build.
+Validation commands:
+- npm run check:p1054-command-center-approval-review-ux
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only"
+- cd dashboard && npm run build
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Safety result: display-only. No approval submission, approval capture, approval persistence, execution unlock, runtime admission, provider/model call, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, or spend is enabled.
 
 ## P105.5 Tests / Checkers
 

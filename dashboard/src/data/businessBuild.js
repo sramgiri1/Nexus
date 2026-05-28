@@ -679,6 +679,99 @@ export function buildFounderLiveExecutionBoundaryDisplayModel({ founderIdeaSumma
   };
 }
 
+export function buildFounderLiveExecutionApprovalReviewPacketDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  boundary,
+} = {}) {
+  const executionBoundary = boundary || buildFounderLiveExecutionBoundaryDisplayModel({ founderIdeaSummary });
+  const disabledReason =
+    "P105.4 renders local dry-run approval review packets only. It cannot submit approvals, write approval state, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const reviewPacketRows = (executionBoundary.boundaryRows || []).map((row) => ({
+    label: row.label || `${row.proposedAgentLane}: Approval review`,
+    proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+    proposedOutcome: row.proposedOutcome || "Review governed approval evidence before later runtime admission planning.",
+    packetState: "Founder Live Execution Approval Review Packet Ready Execution Blocked",
+    missingGates: row.missingEvidence || [],
+    gateSummary: {
+      requiredGateCount: 13,
+      missingGateCount: row.missingEvidence?.length || 0,
+      submittedApprovals: 0,
+      capturedApprovals: 0,
+      executionUnlocks: 0,
+      runtimeAdmissions: 0,
+    },
+    reviewQuestions: [
+      "Has the founder accepted the exact scope and success criteria?",
+      "Has the operator reviewed the execution boundary and rollback path?",
+      "Are project, hosted DB, provider/tool, deploy, and spend boundaries explicit?",
+      "Are validation commands local, repeatable, and attached to evidence?",
+    ],
+    validationCommand: "npm run check:p1053-founder-live-execution-approval-review-packet",
+    nextAction: "Review unresolved gates locally before any later phase can add approval-planning visibility.",
+    blocker: row.blocker || "Approval submission is not available.",
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Execution Approval Planning",
+    evidenceLocation: "reports/p1053-founder-live-execution-approval-review-packet-report.md",
+    activityLocation: row.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: row.costImpact || "Local dry-run review packet only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalSubmitted: "Blocked",
+    approvalCaptured: "Blocked",
+    approvalWriteAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    runtimeAdmissionAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    spendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Founder Live Execution Approval Review Packet Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    reviewPacketReady: reviewPacketRows.length > 0,
+    reviewPacketRowCount: reviewPacketRows.length,
+    blockedReviewPacketCount: reviewPacketRows.length,
+    submittedApprovalCount: 0,
+    capturedApprovalCount: 0,
+    approvalUnlockCount: 0,
+    runtimeAdmissionCount: 0,
+    executableReviewPacketCount: 0,
+    dispatchableReviewPacketCount: 0,
+    projectMutationReviewPacketCount: 0,
+    hostedDbMutationReviewPacketCount: 0,
+    nextAction: "Review approval packets on non-chat pages while approval submission and execution remain blocked.",
+    blockers: [
+      "Approval submission remains blocked.",
+      "Approval capture remains blocked.",
+      "Approval writes cannot unlock execution.",
+      "Runtime admission remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Execution Approval Planning",
+    evidenceLocation: "reports/p1053-founder-live-execution-approval-review-packet-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic approval review UX only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    reviewPacketRows,
+    safetyRows: [
+      { label: "Approval submission", value: "Blocked" },
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1381,6 +1474,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderLiveExecutionBoundary = buildFounderLiveExecutionBoundaryDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderLiveExecutionApprovalReviewPacket = buildFounderLiveExecutionApprovalReviewPacketDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+    boundary: founderLiveExecutionBoundary,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1512,6 +1609,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveWorkAdmission: founderLiveWorkAdmission.admission,
     founderLiveWorkAdmissionApproval: founderLiveWorkAdmission.approval,
     founderLiveExecutionBoundary,
+    founderLiveExecutionApprovalReviewPacket,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

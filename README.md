@@ -212,7 +212,11 @@ The Command Center and local operator surface have:
 - P105.3 dry-run review packet: local review packet rows now summarize approval
   gates, unresolved evidence, blockers, validation commands, owner/evidence,
   activity, and cost posture without approval submission or execution unlocks.
-  P105.4 is next.
+- P105.4 approval review UX: Business Build, Agent Flow, and Live Readiness now
+  show the display-safe approval review packet with state, blockers, disabled
+  reason, next action, owner, evidence/activity, validation command, and cost
+  impact. Chat with NEXUS and Lite remain chat-only, and approval/execution
+  controls remain absent. P105.5 is next.
 
 ## CareLoop Project Progress
 

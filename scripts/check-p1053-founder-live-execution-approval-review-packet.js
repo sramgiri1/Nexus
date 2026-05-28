@@ -59,18 +59,18 @@ addCheck("rows include summaries and validation", data.reviewPacketRows?.every((
 addCheck("all blocked flags false", P105_EXECUTION_APPROVAL_BLOCKED_FLAGS.every((flag) => data[flag] === false && data.reviewPacketRows.every((row) => row[flag] === false)));
 addCheck("reuses P105 approval plan model", source.includes("buildFounderLiveExecutionApprovalPlanModel"));
 addCheck("contract marks P105.3 complete", p1053.status === "complete");
-addCheck("P105.4 remains planned", subphaseById.get("P105.4")?.status === "planned");
+addCheck("P105.4 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P105.4")?.status));
 addCheck("docs record P105.3", /P105\.3 Dry-Run Review Packet[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P105.3", /P105\.3 is\s+complete/.test(platformRoadmap) && /P105\.4 is\s+next/.test(platformRoadmap));
-addCheck("README records P105.3", /P105\.3 dry-run review packet/.test(readme) && /P105\.4 is next/.test(readme));
+addCheck("README records P105.3", /P105\.3 dry-run review packet/.test(readme) && (/P105\.4 is next/.test(readme) || /P105\.5 is next/.test(readme)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P105.3"
-    && status.previousPhase === "P105.2"
-    && status.nextPhase === "P105.4"
+  ["P105.3", "P105.4"].includes(status.currentPhase)
+    && ["P105.2", "P105.3"].includes(status.previousPhase)
+    && ["P105.4", "P105.5"].includes(status.nextPhase)
     && statusById.get("P105")?.status === "in_progress"
     && statusById.get("P105.3")?.status === "complete"
-    && statusById.get("P105.4")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P105.4")?.status)
     && roadmapById.get("P105.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

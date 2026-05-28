@@ -342,10 +342,31 @@
     {
       "phaseId": "P105.4",
       "title": "Command Center Approval Planning UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Render approval-planning state on the relevant founder pages without adding approval or execution controls.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1054-command-center-approval-review-ux.js",
+        "scripts/check-p1053-founder-live-execution-approval-review-packet.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1054-command-center-approval-review-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/p1051-founder-live-execution-approval-planning-contract-report.md",
+        "reports/p1052-founder-live-execution-approval-plan-model-report.md",
+        "reports/p1053-founder-live-execution-approval-review-packet-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -359,28 +380,58 @@
         ".env*"
       ],
       "expectedExportsSchemasDataShapes": {
-        "futureUx": "Business Build, Agent Flow, and Live Readiness display approval plan state, next action, blockers, disabled reason, owner, evidence/activity, validation commands, and cost impact. Chat/Lite remain chat-only."
+        "displayModel": "founderLiveExecutionApprovalReviewPacket display model with reviewPacketRowCount, blockedReviewPacketCount, submittedApprovalCount, capturedApprovalCount, approvalUnlockCount, runtimeAdmissionCount, executableReviewPacketCount, dispatchableReviewPacketCount, ownerCapability, evidenceLocation, activityLocation, costImpact, nextAction, disabledReason, and display-safe reviewPacketRows.",
+        "commandCenterCard": "FounderLiveExecutionApprovalReviewPacketCard renders display-safe packet rows on Business Build, Agent Flow, and Live Readiness only.",
+        "noRawIds": "Primary UX omits reviewPacketId, approvalPlanId, project/private raw IDs, unprocessed payloads, unprocessed logs, and unprocessed policy dumps."
       },
-      "commandCenterUxRequirements": "No unprocessed data dumps, private IDs, demo leakage, approval buttons, execution controls, or fake runnable actions.",
-      "themeRequirements": "Preserve system, dark, and light themes.",
-      "playwrightTests": "Add focused route coverage for approval-planning card placement and Chat/Lite absence.",
+      "commandCenterUxRequirements": "Business Build, Agent Flow, and Live Readiness show current state, next action, blockers, disabled reason, owner capability, evidence/activity, validation command, and cost impact. Chat with NEXUS and Lite remain chat-only. No approval controls, execution controls, raw data dumps, private IDs, DemoApp leakage, or fake runnable actions.",
+      "themeRequirements": "Preserve system, dark, and light themes; focused Playwright route coverage checks Business Build in dark, light, and system modes.",
+      "playwrightTests": "dashboard/tests/routes.spec.js adds focused coverage for approval review packet placement on Business Build, Agent Flow, and Live Readiness plus absence on Chat/Lite.",
       "checkerUpdates": [
-        "Add P105.4 UX checker."
+        "Add check:p1054-command-center-approval-review-ux.",
+        "Forward-compat P105.1-P105.3 checkers for P105.4 status advancement."
       ],
-      "docsRoadmap": "Record P105.4 when implemented.",
-      "phaseStatusUpdate": "P105.4 complete only when checker and Playwright pass.",
-      "validationCommands": [],
+      "docsRoadmap": "README and platform roadmap record P105.4 complete and P105.5 next.",
+      "phaseStatusUpdate": "P105 in progress; P105.4 complete; current P105.4; previous P105.3; next P105.5.",
+      "validationCommands": [
+        "npm run check:p1054-command-center-approval-review-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1053-founder-live-execution-approval-review-packet",
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm no approval controls.",
-        "Confirm Chat/Lite remain clean."
+        "Confirm no approval submission or capture control is rendered.",
+        "Confirm no execution, dispatch, worker/tool, project mutation, hosted DB, deploy, release, export, package, network, provider, or spend action is enabled.",
+        "Confirm Chat with NEXUS and Lite remain chat-only.",
+        "Confirm no DemoApp, unprocessed payload/log/policy dump, or raw private/project/review packet IDs appear in primary UX.",
+        "Confirm projects/** and CareLoop files are untouched."
       ],
-      "gitCommands": [],
+      "gitCommands": [
+        "git add README.md contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json dashboard/src/data/businessBuild.js dashboard/src/pages/CommandCenterV2.jsx dashboard/tests/routes.spec.js docs/architecture/NEXUS_PLATFORM_ROADMAP.md docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json package.json reports/os-phase-status-report.md reports/p1051-founder-live-execution-approval-planning-contract-report.md reports/p1052-founder-live-execution-approval-plan-model-report.md reports/p1053-founder-live-execution-approval-review-packet-report.md reports/p1054-command-center-approval-review-ux-report.md reports/phase-validation-coverage-report.md scripts/check-p1051-founder-live-execution-approval-planning-contract.js scripts/check-p1052-founder-live-execution-approval-plan-model.js scripts/check-p1053-founder-live-execution-approval-review-packet.js scripts/check-p1054-command-center-approval-review-ux.js",
+        "git commit -m \"feat(nexus): show founder live approval review\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
+        "Files changed",
+        "What was implemented",
         "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
         "Known limitations",
-        "Next subphase"
+        "Next phase/subphase"
       ]
     },
     {
@@ -520,8 +571,8 @@
     }
   ],
   "knownLimitations": [
-    "P105.1-P105.3 define local approval-planning schema, model, and dry-run review packet only.",
-    "Approval submission, approval capture, approval persistence, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P105.4-P105.7 remain planned."
+    "P105.4 is display-only Command Center UX; approval submission, capture, persistence, and execution unlock remain blocked.",
+    "Runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    "P105.5-P105.7 remain planned."
   ]
 }

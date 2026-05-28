@@ -2376,6 +2376,13 @@ P105.2 approval-plan rows with gate summaries, unresolved evidence, blockers,
 validation commands, owner capability, evidence/activity, and cost posture while
 approval submission, approval capture, runtime admission, and execution remain
 blocked. P105.4 is next for non-runnable Command Center approval-planning UX.
+P105.4 is complete. Business Build, Agent Flow, and Live Readiness now render the
+display-safe approval review packet with current state, blockers, disabled
+reason, next action, owner, evidence/activity, validation command, and cost
+impact. Chat with NEXUS and Lite remain chat-only, with no approval controls,
+execution controls, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package action,
+network call, or spend. P105.5 is next for aggregate checker coverage.
 
 Implementation follows
 [`p105-founder-live-execution-approval-planning-contracts.json`](../../contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json).

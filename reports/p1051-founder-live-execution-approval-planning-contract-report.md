@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P105.1
-- Generated at: 2026-05-28T10:27:38.088Z
+- Generated at: 2026-05-28T10:35:31.561Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 94d5b2fb
+- Validation HEAD: bc532ec0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,7 +40,7 @@
 | plan records P105.1 complete | PASS |  |
 | platform roadmap records P105.1 | PASS |  |
 | README records P105.1 | PASS |  |
-| phase status advanced to P105.1 | PASS | P105.3/P105.2/P105.4 |
+| phase status advanced to P105.1 | PASS | P105.4/P105.3/P105.5 |
 | phase status checker accepts P105 subphases | PASS |  |
 | primary data stays Command Center hidden | PASS |  |
 | docs and schema avoid raw private IDs | PASS |  |
