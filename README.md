@@ -307,6 +307,15 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
   release, export, package, network calls, and provider spend remain blocked.
   P107.3 is next.
+- P107.3 capture audit preview: deterministic local approval capture audit rows
+  and audit sections are now assembled from P107.2 capture records for later
+  Command Center rendering. The preview shows display-safe state, evidence,
+  blockers, owner capability, next action, disabled reason, activity/evidence
+  location, and cost posture while approval capture, approval persistence,
+  approval writes, execution unlock, runtime admission, provider/model calls,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  deploy, release, export, package, network calls, and provider spend remain
+  blocked. P107.4 is next.
 
 ## CareLoop Project Progress
 

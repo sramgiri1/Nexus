@@ -79,7 +79,7 @@ Final safety checks:
 
 ## P107.3 Capture Audit Preview
 
-Status: planned
+Status: complete
 
 Narrow goal: assemble a local display-safe approval capture audit preview without writable approvals, persistence, runtime actions, or mutations.
 

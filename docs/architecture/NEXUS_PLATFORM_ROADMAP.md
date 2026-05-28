@@ -2513,7 +2513,16 @@ owner/evidence/activity locations, validation commands, and cost posture.
 Approval capture, approval persistence, approval writes, execution unlock,
 runtime admission, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, deploy, release, export, package action,
-network call, and provider spend remain blocked. P107.3 is next.
+network call, and provider spend remain blocked.
+
+P107.3 is complete. It adds a deterministic local approval capture audit
+preview with display-safe audit rows and sections, evidence state, blockers,
+owner, next action, disabled reason, evidence/activity locations, and cost
+posture for future non-chat Command Center rendering. Approval capture,
+approval persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked. P107.4 is next.
 
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).

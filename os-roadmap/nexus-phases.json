@@ -8471,10 +8471,11 @@
       "order": 143,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "68e5ecd3",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P107 approval capture boundary is in progress. P107.2 adds deterministic local approval capture review records while approval capture and execution authority remain blocked.",
+      "summary": "P107 approval capture boundary is in progress. P107.3 adds a local approval capture audit preview while approval capture and execution authority remain blocked.",
       "checksRun": [
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
         "npm run check:p1072-founder-live-approval-capture-model",
         "npm run check:p1071-founder-live-approval-capture-boundary-contract",
         "npm run check:os-phase-status",
@@ -8482,14 +8483,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P107.2 is local model only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "P107.3 is local audit preview only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P107.3-P107.7 remain planned."
+        "P107.4-P107.7 remain planned."
       ],
-      "nextPhase": "P107.3",
+      "nextPhase": "P107.4",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P107.2 local capture model complete; P107.3 capture audit preview is next."
+      "detail": "P107.3 capture audit preview complete; P107.4 Command Center UX is next."
     },
     {
       "phaseId": "P107.1",
@@ -8550,19 +8551,28 @@
       "title": "Capture Audit Preview",
       "track": "NEXUS_OS",
       "order": 143.3,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Capture Audit Preview is planned for P107. No approval capture, persistence, runtime admission, execution unlock, mutation, deploy, network, or spend authority is enabled.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T18:47:23.000Z",
+      "summary": "Built deterministic local approval capture audit rows and sections from P107.2 capture records without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
+      "checksRun": [
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval capture or execution authority enabled."
+        "P107.3 is local audit preview only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P107.4-P107.7 remain planned."
       ],
       "nextPhase": "P107.4",
       "commandCenterVisible": true,
       "label": "Capture Audit Preview",
-      "detail": "Planned local capture audit preview; no capture or execution authority enabled."
+      "detail": "Local capture audit preview complete; capture and execution authority remain blocked."
     },
     {
       "phaseId": "P107.4",
@@ -9051,9 +9061,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T18:43:15.000Z",
-  "currentPhase": "P107.2",
-  "previousPhase": "P107.1",
-  "nextPhase": "P107.3",
+  "updatedAt": "2026-05-28T18:47:23.000Z",
+  "currentPhase": "P107.3",
+  "previousPhase": "P107.2",
+  "nextPhase": "P107.4",
   "currentPhaseStatus": "complete"
 }
