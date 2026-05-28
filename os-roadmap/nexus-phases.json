@@ -8946,7 +8946,7 @@
       "order": 145,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "89ce467c",
       "completedAt": "2026-05-28T21:05:00.000Z",
       "summary": "Closed P109 founder live operator decision-ledger readiness with final validation across P109.1-P109.7 scripts, reports, Command Center route safety, docs, OS status, and P110 planned handoff placeholder while all write/execution authority remains blocked.",
       "checksRun": [
@@ -9149,7 +9149,7 @@
       "order": 145.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "89ce467c",
       "completedAt": "2026-05-28T21:05:00.000Z",
       "summary": "Ran final P109 validation covering scripts, reports, contract closure, docs, OS status, Command Center route safety, blocked authority, and P110 planned handoff placeholder without changing runtime behavior.",
       "checksRun": [
