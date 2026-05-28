@@ -12964,7 +12964,7 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bbd59a53",
       "completedAt": "",
       "summary": "P106 has aggregate validation across the approval request boundary schema, request model, queue preview, Command Center UX, focused route test, dashboard build, docs, reports, status, and safety wording. Runtime authority remains blocked.",
       "checksRun": [
@@ -13109,7 +13109,7 @@
       "order": 142.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bbd59a53",
       "completedAt": "2026-05-28T09:10:00.000Z",
       "summary": "Added aggregate P106 validation across scripts, reports, contract status, route coverage, Command Center queue UX, phase status, forbidden file scope, safety wording, and non-runnable posture without changing runtime behavior.",
       "checksRun": [
@@ -13654,7 +13654,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T09:10:00.000Z",
+  "updatedAt": "2026-05-28T09:20:00.000Z",
   "currentPhase": "P106.5",
   "previousPhase": "P106.4",
   "nextPhase": "P106.6",
