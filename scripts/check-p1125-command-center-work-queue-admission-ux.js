@@ -54,16 +54,16 @@ addCheck("card renders founder-useful state", pageSource.includes("Queue candida
 addCheck("Playwright coverage added", routeTests.includes("Agent work queue admission appears only on Business Build and Agent Flow") && routeTests.includes("Founder agent work queue admission") && routeTests.includes("/command-center/lite") && routeTests.includes("/command-center/live-readiness"));
 addCheck("contract marks P112.5 complete", p1125.status === "complete" && ["planned", "complete"].includes(p1126.status));
 addCheck("docs record P112.5", /P112\.5 Command Center Queue Admission UX[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P112.5", /P112\.5 is complete/.test(platformRoadmap) && /P112\.6 is next/.test(platformRoadmap));
-addCheck("README records P112.5", /P112\.5 Command Center queue admission UX/.test(readme) && /P112\.6 is next/.test(readme));
+addCheck("platform roadmap records P112.5", /P112\.5 is complete/.test(platformRoadmap) && (/P112\.6 is next/.test(platformRoadmap) || /P112\.6 is complete/.test(platformRoadmap)));
+addCheck("README records P112.5", /P112\.5 Command Center queue admission UX/.test(readme) && (/P112\.6 is next/.test(readme) || /P112\.6 validation and docs closure/.test(readme)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P112.5"
-    && status.previousPhase === "P112.4"
-    && status.nextPhase === "P112.6"
-    && roadmap.currentPhase === "P112.5"
-    && roadmap.previousPhase === "P112.4"
-    && roadmap.nextPhase === "P112.6"
+  ["P112.5", "P112.6"].includes(status.currentPhase)
+    && ["P112.4", "P112.5"].includes(status.previousPhase)
+    && ["P112.6", "P112.7"].includes(status.nextPhase)
+    && ["P112.5", "P112.6"].includes(roadmap.currentPhase)
+    && ["P112.4", "P112.5"].includes(roadmap.previousPhase)
+    && ["P112.6", "P112.7"].includes(roadmap.nextPhase)
     && statusById.get("P112")?.status === "in_progress"
     && statusById.get("P112.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P112.6")?.status)

@@ -14368,22 +14368,22 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fd8e0fb05254b7ed6f2f82e5fd5082e067a19d29",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
-      "detail": "P112.5 Command Center queue admission UX complete; P112.6 validation/docs is next.",
+      "detail": "P112.6 validation/docs complete; P112.7 final validation is next.",
       "phaseId": "P112",
       "title": "Founder Live Agent Work Queue Admission",
       "order": 148,
       "status": "in_progress",
-      "summary": "P112 is in progress. P112.1-P112.5 define the queue admission contract, local SQLite schema, approval-gated CRUD model, local dry-run preview, and Command Center visibility while unsafe authority remains blocked.",
-      "nextPhase": "P112.6",
+      "summary": "P112 is in progress. P112.1-P112.6 define, validate, and document queue admission through Command Center visibility while unsafe authority remains blocked.",
+      "nextPhase": "P112.7",
       "previousPhase": "P111.7",
       "checksRun": [],
       "knownLimitations": [
-        "P112.5 renders display-safe queue admission preview state only and does not write queue records.",
+        "P112.6 is validation/docs closure only and does not write queue records.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P112.6 is next for aggregate validation and docs closure."
+        "P112.7 is next for final validation."
       ],
       "completedAt": ""
     },
@@ -14530,23 +14530,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Work Queue Admission Validation / Docs",
-      "detail": "Planned aggregate validation and docs closure for P112.",
+      "detail": "Aggregate validation and docs closure are complete for P112.1-P112.5.",
       "phaseId": "P112.6",
       "title": "Work Queue Admission Validation / Docs",
       "order": 148.6,
-      "status": "planned",
-      "summary": "Planned aggregate validation and docs closure for P112.",
+      "status": "complete",
+      "summary": "Validated P112.1-P112.5 together and aligned docs, README, platform roadmap, OS status, and final validation handoff.",
       "nextPhase": "P112.7",
       "previousPhase": "P112.5",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned validation/docs subphase only."
+      "checksRun": [
+        "npm run check:p1126-founder-live-agent-work-queue-admission-validation",
+        "npm run check:p1125-command-center-work-queue-admission-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112.6 is validation/docs closure only and does not write queue records.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.7 is next for final validation."
+      ],
+      "completedAt": "2026-05-28T23:32:51.847Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15050,9 +15058,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T23:25:22.900Z",
-  "currentPhase": "P112.5",
-  "previousPhase": "P112.4",
-  "nextPhase": "P112.6",
+  "updatedAt": "2026-05-28T23:32:51.847Z",
+  "currentPhase": "P112.6",
+  "previousPhase": "P112.5",
+  "nextPhase": "P112.7",
   "currentPhaseStatus": "complete"
 }

@@ -645,11 +645,11 @@
     {
       "phaseId": "P112.6",
       "title": "Work Queue Admission Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Validate P112.1-P112.5 together and close docs, README, roadmap, reports, and OS status before final validation.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "6bcc273dde9a14ba93482ba56b44c29632f5eb34",
       "allowedFiles": [
         "scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js",
         "scripts/check-p1125-command-center-work-queue-admission-ux.js",
@@ -711,10 +711,11 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P112.6 checker."
+        "Added the dedicated P112.6 aggregate validation checker.",
+        "Updated P112.5 checker to accept P112.6/P112.7 handoff."
       ],
-      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.6.",
-      "phaseStatusUpdate": "P112 in progress; P112.6 complete when implemented.",
+      "docsRoadmap": "Updated P112 plan, README, platform roadmap, OS status, and generated reports for P112.6.",
+      "phaseStatusUpdate": "P112 in progress; P112.6 complete; current P112.6; previous P112.5; next P112.7.",
       "validationCommands": [
         "npm run check:p1126-founder-live-agent-work-queue-admission-validation",
         "npm run check:p1125-command-center-work-queue-admission-ux",
@@ -863,8 +864,8 @@
     "P112.1 is contract-only; DB schema, runtime helpers, admission preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P112.5",
-  "previousSubphase": "P112.4",
-  "nextSubphase": "P112.6",
-  "summary": "P112 is in progress. P112.1-P112.5 define governed local queue admission contracts, schema, local CRUD, dry-run preview, and Command Center visibility while unsafe authority remains blocked."
+  "currentSubphase": "P112.6",
+  "previousSubphase": "P112.5",
+  "nextSubphase": "P112.7",
+  "summary": "P112 is in progress. P112.1-P112.6 define, validate, and document governed local queue admission through Command Center visibility while unsafe authority remains blocked."
 }

@@ -490,3 +490,89 @@ counts, blockers, and safety rows.
 Rollback plan: remove the P112.5 card/data/test/checker/script/docs/status/
 report updates, restore P112 to P112.4 complete with P112.5 planned, and keep
 P112.1-P112.4 unchanged.
+
+## P112.6 Work Queue Admission Validation / Docs
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Narrow goal: validate P112.1-P112.5 together, close docs/README/roadmap/status
+alignment, and hand off to P112.7 final validation.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `6bcc273dde9a14ba93482ba56b44c29632f5eb34`.
+
+Allowed files: P112.6 aggregate checker, P112.5 checker compatibility update,
+P112 contract, P112 plan, README, platform roadmap, package script registry, OS
+phase status files, and generated P112.6/P112.5/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `db/**`, `live-ready/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: added the P112.6 aggregate validation checker,
+updated the P112.5 checker handoff compatibility, registered the package
+script, updated P112 contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes: no runtime exports or data shapes are introduced
+in P112.6.
+
+Safety rules: P112.6 is validation/docs closure only. It does not write queue
+records, unlock execution, admit runtime execution, call providers/models,
+dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run
+raw SQL, deploy, release, export, package, use network calls, or spend.
+
+Reuse check: P112.6 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P112 reports, existing OS status
+files, and the existing phase validation coverage checker. No report writer,
+result envelope, checker formatter, phase status updater, route matrix,
+dashboard component, DB helper, or queue helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P112.6.
+P112.5 Business Build and Agent Flow queue admission UX is preserved.
+
+Dark/light/system theme requirements: no theme source change in P112.6.
+
+Playwright tests: no new Playwright test in P112.6 because no UI source changes
+are made. P112.5 focused Playwright coverage remains required.
+
+Checker updates: P112.6 adds an aggregate validation checker and updates P112.5
+to accept the P112.6/P112.7 handoff state.
+
+Docs/README/roadmap updates: P112.6 is recorded in this plan, README, platform
+roadmap, P112 contract, OS roadmap/status, and generated reports. P112.7 is
+next.
+
+OS phase status update: P112 is in progress; P112.6 is complete; current phase
+P112.6; previous P112.5; next P112.7.
+
+Validation commands:
+- `npm run check:p1126-founder-live-agent-work-queue-admission-validation`
+- `npm run check:p1125-command-center-work-queue-admission-ux`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/runtime/provider/deploy
+paths changed; no local runtime DB artifact is retained; no DemoApp exposure;
+no raw JSON/log/policy dumps; no raw private IDs, queue record keys, raw DB
+table names, or fake runnable actions are introduced; no provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL, deploy, release, export, package, network, or provider spend authority
+is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P112.6 files>`
+- `git commit -m "feat(nexus): add p112 work queue admission validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: docs/status closure can drift from prior subphase reports. P112.6
+checks every prior P112 report, script registration, docs entry, and P112.7
+handoff.
+
+Rollback plan: remove the P112.6 checker/script/docs/status/report updates,
+restore P112 to P112.5 complete with P112.6 planned, and keep P112.1-P112.5
+unchanged.
