@@ -63,7 +63,7 @@ addCheck("contract marks parent complete", contract.status === "complete");
 addCheck("contract marks all P106 subphases complete", (contract.subphases || []).every((entry) => entry.status === "complete"));
 addCheck("contract records final validation commands", ["npm run check:p1067-founder-live-approval-request-final", "cd dashboard && npm run build", "npm run check:phase-validation-coverage", "git diff --check"].every((command) => p1067.validationCommands?.includes(command)));
 addCheck("P106.7 avoids forbidden file scope", !(p1067.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
-addCheck("P107 handoff exists and is planned", statusById.get("P107")?.status === "planned" && roadmapById.get("P107")?.status === "planned" && osStatusChecker.includes('"P107"'));
+addCheck("P107 handoff exists and is planned or active", ["planned", "in_progress"].includes(statusById.get("P107")?.status) && ["planned", "in_progress"].includes(roadmapById.get("P107")?.status) && osStatusChecker.includes('"P107"') && osStatusChecker.includes('"P107.1"'));
 addCheck("docs record P106.7", /P106\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P106 complete", /P106\.7 is\s+complete/.test(platformRoadmap) && /P106 is\s+complete/.test(platformRoadmap) && /P107 is\s+next/.test(platformRoadmap));
 addCheck("README records P106 complete", /P106\.7 final validation/.test(readme) && /P106 is complete/.test(readme) && /P107 is next/.test(readme));
@@ -71,9 +71,15 @@ addCheck("Command Center queue UX retained", queue.queuedRequestCount === 6 && q
 addCheck("route safety coverage retained", routeTests.includes("Founder live approval request queue appears on non-chat founder routes") && routeTests.includes("/command-center/lite"));
 addCheck(
   "phase status closed",
-  status.currentPhase === "P106.7"
-    && status.previousPhase === "P106.6"
-    && status.nextPhase === "P107"
+  ((
+    status.currentPhase === "P106.7"
+      && status.previousPhase === "P106.6"
+      && status.nextPhase === "P107"
+  ) || (
+    status.currentPhase === "P107.1"
+      && status.previousPhase === "P106.7"
+      && status.nextPhase === "P107.2"
+  ))
     && statusById.get("P106")?.status === "complete"
     && statusById.get("P106.7")?.status === "complete"
     && roadmapById.get("P106")?.status === "complete"

@@ -2486,6 +2486,32 @@ Implementation follows
 The detailed plan lives in
 [`P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md`](P106_FOUNDER_LIVE_APPROVAL_REQUEST_BOUNDARY_PLAN.md).
 
+## P107 - Founder Live Approval Capture Boundary
+
+P107 begins after P106 founder live approval request boundary closure. It
+defines the governed local approval capture boundary needed before any future
+approval decision capture, persistence, or execution unlock can be considered.
+P107 does not enable approval capture, approval persistence, approval writes,
+runtime admission, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package action,
+network call, or provider spend.
+
+P107.1 is complete. It adds the approval capture boundary contract and local
+schema with display-safe capture-boundary and decision-boundary shapes derived
+from the P106 approval request queue, required evidence, forbidden actions,
+validation commands, owner/evidence/activity references, cost posture, and all
+approval capture/runtime/execution flags false. Approval capture, approval
+persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked. P107.2 is next.
+
+Implementation follows
+[`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
+
+The detailed plan lives in
+[`P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md`](P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md).
+
 Implementation follows
 [`p102-founder-live-handoff-contracts.json`](../../contracts/os-roadmap/p102-founder-live-handoff-contracts.json).
 

@@ -291,6 +291,13 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, deploy, release, export,
   package, network calls, and provider spend remain blocked. P107 is next and
   planned only.
+- P107.1 approval capture boundary: P107 is in progress. The local approval
+  capture boundary schema now defines display-safe capture-boundary and
+  decision-boundary shapes from the P106 request queue. Approval capture,
+  approval persistence, approval writes, execution unlock, runtime admission,
+  provider/model calls, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, deploy, release, export, package, network
+  calls, and provider spend remain blocked. P107.2 is next.
 
 ## CareLoop Project Progress
 

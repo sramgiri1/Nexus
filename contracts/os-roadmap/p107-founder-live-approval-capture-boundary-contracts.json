@@ -1,0 +1,784 @@
+{
+  "phaseId": "P107",
+  "title": "Founder Live Approval Capture Boundary",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Define governed local approval capture boundaries for future founder/operator decisions without granting approval capture, approval persistence, approval writes, runtime admission, execution unlock, mutation, deploy, network, or spend authority.",
+  "safetyRules": [
+    "No approval capture.",
+    "No approval capture persistence.",
+    "No approval capture writes that unlock execution.",
+    "No approval capture runtime admission.",
+    "No runtime admission or live mode transition.",
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project source mutation.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No raw private project IDs in primary Command Center UX.",
+    "No full Command Center demo leakage.",
+    "No fake runnable actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "live-ready/founderLiveApprovalRequestQueuePreview.js",
+    "existing dashboard cards, tabs, badges, route matrix, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P107.1",
+      "title": "Approval Capture Contract / Schema Baseline",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the P107 approval capture boundary contract and local schema without enabling approval capture, approval persistence, approval writes, execution unlock, runtime admission, or mutation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "ed6def48",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalCaptureBoundary.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "scripts/check-p1067-founder-live-approval-request-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1071-founder-live-approval-capture-boundary-contract-report.md",
+        "reports/p1067-founder-live-approval-request-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalCaptureBoundary.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "scripts/check-p1067-founder-live-approval-request-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PHASE",
+          "P107_APPROVAL_CAPTURE_BOUNDARY_STATES",
+          "P107_APPROVAL_CAPTURE_BLOCKED_FLAGS",
+          "P107_APPROVAL_CAPTURE_REQUIRED_EVIDENCE",
+          "P107_APPROVAL_CAPTURE_FORBIDDEN_ACTIONS",
+          "buildFounderLiveApprovalCaptureBoundarySchema",
+          "validateFounderLiveApprovalCaptureBoundarySchema"
+        ],
+        "envelope": "Result envelope with schemaVersion, currentState, sourceApprovalRequestQueuePhase, sourceApprovalRequestQueueState, founderContextSummary, approvalCaptureBoundaryShape, approvalCaptureDecisionShape, approvalCaptureReadiness, requiredEvidence, forbiddenActions, requiredEvidenceCount, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible false, and all approval capture/runtime/execution flags false.",
+        "approvalCaptureBoundaryShape": "Display-safe approval capture boundary with captureBoundaryKey, displayLabel, sourceApprovalRequestPhase, currentState, queuedRequestCount, capturedDecisionCount 0, persistedDecisionCount 0, executionUnlockCount 0, runtimeAdmissionCount 0, requiredEvidence, missingEvidence, forbiddenActions, validationCommands, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, and all blocked flags false.",
+        "approvalCaptureDecisionShape": "Display-safe approval capture decision boundary with decisionBoundaryKey, displayLabel, currentState, decisionOptions, decisionCaptureAllowed false, decisionPersistenceAllowed false, decisionCanUnlockExecution false, runtimeTransitionAllowed false, validationCommands, disabledReason, and all blocked flags false."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P107.1. Future P107.4 must render approval capture boundary state on Business Build, Agent Flow, and Live Readiness without approval capture buttons, execution controls, raw data dumps, private IDs, demo leakage, or fake runnable actions. Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "No theme source change in P107.1. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P107.1 because no UI files change. P107.4 must add focused Command Center route coverage.",
+      "checkerUpdates": [
+        "Add check:p1071-founder-live-approval-capture-boundary-contract.",
+        "Update check:p1067-founder-live-approval-request-final to accept the P107.1 handoff state.",
+        "Update check:os-phase-status to accept P107.1-P107.7."
+      ],
+      "docsRoadmap": "Add P107 plan doc and platform roadmap section. Update README with P107.1 status.",
+      "phaseStatusUpdate": "P107 in progress; P107.1 complete; current P107.1; previous P106.7; next P107.2.",
+      "validationCommands": [
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:p1067-founder-live-approval-request-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.1 is schema and contract only.",
+        "Confirm approval decisions cannot be captured, persisted, or used to unlock execution.",
+        "Confirm runtime admission remains blocked.",
+        "Confirm provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.",
+        "Confirm P107.2 remains planned.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.1 files>",
+        "git commit -m \"feat(nexus): define founder approval capture boundary\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P107.2",
+      "title": "Approval Capture Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build deterministic local approval capture review records from P107.1 schema and P106 queue rows without capturing, persisting, writing, or unlocking execution.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-P107.1",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalCaptureModel.js",
+        "scripts/check-p1072-founder-live-approval-capture-model.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1072-founder-live-approval-capture-model-report.md",
+        "reports/p1071-founder-live-approval-capture-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveApprovalCaptureModel.js",
+        "scripts/check-p1072-founder-live-approval-capture-model.js",
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P107_FOUNDER_LIVE_APPROVAL_CAPTURE_MODEL_PHASE",
+          "P107_APPROVAL_CAPTURE_MODEL_STATES",
+          "buildFounderLiveApprovalCaptureModel",
+          "validateFounderLiveApprovalCaptureModel"
+        ],
+        "captureRecords": "Display-safe local approval capture review records with labels, source queue labels, decision prompts, required evidence, blockers, disabled reason, owner capability, activity/evidence refs, cost impact, and all capture/persistence/runtime/execution flags false."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P107.2. Future P107.4 must render display-safe capture review state outside Chat/Lite only.",
+      "themeRequirements": "No theme source change in P107.2.",
+      "playwrightTests": "No Playwright update in P107.2 because no UI files change.",
+      "checkerUpdates": [
+        "Add check:p1072-founder-live-approval-capture-model.",
+        "Update P107.1 checker to accept P107.2 handoff."
+      ],
+      "docsRoadmap": "Update P107 plan, platform roadmap, README, and OS phase tracking with P107.2 complete and P107.3 next.",
+      "phaseStatusUpdate": "P107 in progress; P107.2 complete; current P107.2; previous P107.1; next P107.3.",
+      "validationCommands": [
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.2 is local model only.",
+        "Confirm approval capture, persistence, writes, runtime admission, and execution unlock remain blocked.",
+        "Confirm provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, package, network call, and spend remain blocked.",
+        "Confirm P107.3 remains planned.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.2 files>",
+        "git commit -m \"feat(nexus): model founder approval capture records\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P107.3",
+      "title": "Capture Audit Preview",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Assemble a local display-safe approval capture audit preview without writable approvals, persistence, runtime actions, or mutations.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-P107.2",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "live-ready/founderLiveApprovalCaptureAuditPreview.js",
+        "scripts/check-p1073-founder-live-approval-capture-audit-preview.js",
+        "scripts/check-p1072-founder-live-approval-capture-model.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1073-founder-live-approval-capture-audit-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveApprovalCaptureAuditPreview.js",
+        "scripts/check-p1073-founder-live-approval-capture-audit-preview.js",
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P107_FOUNDER_LIVE_APPROVAL_CAPTURE_AUDIT_PREVIEW_PHASE",
+          "P107_APPROVAL_CAPTURE_AUDIT_PREVIEW_STATES",
+          "buildFounderLiveApprovalCaptureAuditPreview",
+          "validateFounderLiveApprovalCaptureAuditPreview"
+        ],
+        "auditPreview": "Display-safe audit preview sections with capture counts, blocked counts, evidence posture, owner capability, next action, disabled reason, and zero writable/runtime/execution counts."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P107.3. Future P107.4 must render audit preview safely on non-chat founder routes.",
+      "themeRequirements": "No theme source change in P107.3.",
+      "playwrightTests": "No Playwright update in P107.3 because no UI files change.",
+      "checkerUpdates": [
+        "Add check:p1073-founder-live-approval-capture-audit-preview.",
+        "Update P107.1 and P107.2 checkers to accept P107.3 handoff."
+      ],
+      "docsRoadmap": "Update P107 plan, platform roadmap, README, and OS phase tracking with P107.3 complete and P107.4 next.",
+      "phaseStatusUpdate": "P107 in progress; P107.3 complete; current P107.3; previous P107.2; next P107.4.",
+      "validationCommands": [
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.3 is local audit preview only.",
+        "Confirm approval capture, persistence, writes, runtime admission, and execution unlock remain blocked.",
+        "Confirm unsafe execution and mutation paths remain blocked.",
+        "Confirm P107.4 remains planned.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.3 files>",
+        "git commit -m \"feat(nexus): preview founder approval capture audit\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P107.4",
+      "title": "Command Center Capture Boundary UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Render approval capture boundary state on Business Build, Agent Flow, and Live Readiness without capture controls, execution controls, raw dumps, private IDs, DemoApp leakage, or fake runnable actions.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-P107.3",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1074-command-center-approval-capture-boundary-ux.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1074-command-center-approval-capture-boundary-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1074-command-center-approval-capture-boundary-ux.js",
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dashboardData": "Display-safe approval capture boundary view model with capture readiness, blocked counts, owner capability, evidence/activity location, cost impact, next action, blockers, disabled reason, and zero unsafe counts.",
+        "pageComponent": "FounderLiveApprovalCaptureBoundaryCard renders only on Business Build, Agent Flow, and Live Readiness."
+      },
+      "commandCenterUxRequirements": "Render display-safe capture boundary state on Business Build, Agent Flow, and Live Readiness. Chat with NEXUS and Lite remain clean/chat-only. Do not expose raw JSON, raw logs, policy dumps, private IDs, DemoApp, capture buttons, execution controls, or fake runnable actions.",
+      "themeRequirements": "Focused Playwright coverage must verify dark, light, and system themes for the capture boundary card.",
+      "playwrightTests": "Add focused routes.spec.js coverage for Founder live approval capture boundary appears on non-chat founder routes.",
+      "checkerUpdates": [
+        "Add check:p1074-command-center-approval-capture-boundary-ux.",
+        "Update P107.3 checker to accept P107.4 handoff."
+      ],
+      "docsRoadmap": "Update P107 plan, platform roadmap, README, and OS phase tracking with P107.4 complete and P107.5 next.",
+      "phaseStatusUpdate": "P107 in progress; P107.4 complete; current P107.4; previous P107.3; next P107.5.",
+      "validationCommands": [
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.4 is display-only.",
+        "Confirm Chat with NEXUS and Lite stay clean/chat-only.",
+        "Confirm no capture controls, execution controls, raw dumps, private IDs, DemoApp, or fake runnable actions are exposed.",
+        "Confirm capture, persistence, writes, runtime admission, and execution unlock remain blocked.",
+        "Confirm no project or CareLoop files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.4 files>",
+        "git commit -m \"feat(nexus): show approval capture boundary in command center\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P107.5",
+      "title": "Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P107 checker and route-safety coverage without changing runtime behavior.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-P107.4",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1075-founder-live-approval-capture-validation.js",
+        "scripts/check-p1074-command-center-approval-capture-boundary-ux.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1075-founder-live-approval-capture-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1075-founder-live-approval-capture-validation.js",
+        "scripts/check-p1074-command-center-approval-capture-boundary-ux.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "aggregateReport": "Markdown validation report covering P107.1-P107.4 scripts/reports, contract status, Command Center capture UX, route tests, phase status, forbidden file scope, raw/private ID avoidance, and non-runnable safety posture."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P107.5. Preserve P107.4 capture boundary placement and chat-only boundaries.",
+      "themeRequirements": "No theme source change in P107.5. Retain P107.4 focused dark/light/system route coverage.",
+      "playwrightTests": "Run retained focused route coverage for Founder live approval capture boundary appears on non-chat founder routes.",
+      "checkerUpdates": [
+        "Add check:p1075-founder-live-approval-capture-validation.",
+        "Update P107.1 and P107.4 checkers to accept P107.5 handoff."
+      ],
+      "docsRoadmap": "Update P107 plan, platform roadmap, README, and OS phase tracking with P107.5 complete and P107.6 next.",
+      "phaseStatusUpdate": "P107 in progress; P107.5 complete; current P107.5; previous P107.4; next P107.6.",
+      "validationCommands": [
+        "npm run check:p1075-founder-live-approval-capture-validation",
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.5 is validation only.",
+        "Confirm P107.4 UX is preserved without new runtime behavior.",
+        "Confirm capture, persistence, writes, runtime admission, and execution unlock remain blocked.",
+        "Confirm unsafe execution remains blocked.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.5 files>",
+        "git commit -m \"test(nexus): aggregate founder approval capture validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P107.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Close P107 docs, README, platform roadmap, and phase status evidence without behavior changes.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-P107.5",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1076-founder-live-approval-capture-docs.js",
+        "scripts/check-p1075-founder-live-approval-capture-validation.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1076-founder-live-approval-capture-docs-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1076-founder-live-approval-capture-docs.js",
+        "scripts/check-p1075-founder-live-approval-capture-validation.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "docsReport": "Markdown docs closure report covering P107 plan, contract, README, platform roadmap, blocked safety wording, Command Center placement, phase status, and forbidden file scope."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P107.6. Preserve P107.4 capture boundary placement and chat-only boundaries.",
+      "themeRequirements": "No theme source change in P107.6.",
+      "playwrightTests": "No Playwright update in P107.6 because no UI files change. Retain P107.4 focused route coverage for final validation.",
+      "checkerUpdates": [
+        "Add check:p1076-founder-live-approval-capture-docs.",
+        "Update P107.1 and P107.5 checkers to accept P107.6 handoff."
+      ],
+      "docsRoadmap": "Close P107 docs, README, platform roadmap, and OS phase status with P107.6 complete and P107.7 next.",
+      "phaseStatusUpdate": "P107 in progress; P107.6 complete; current P107.6; previous P107.5; next P107.7.",
+      "validationCommands": [
+        "npm run check:p1076-founder-live-approval-capture-docs",
+        "npm run check:p1075-founder-live-approval-capture-validation",
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.6 is docs/checker only.",
+        "Confirm docs do not overstate approval capture/persistence or execution readiness.",
+        "Confirm unsafe execution remains blocked.",
+        "Confirm P107.7 remains planned.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.6 files>",
+        "git commit -m \"docs(nexus): close founder approval capture docs\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P107.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P107 validation, close the parent phase, stamp commits, and hand off to the next planned phase.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-P107.6",
+      "allowedFiles": [
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1077-founder-live-approval-capture-final.js",
+        "scripts/check-p1076-founder-live-approval-capture-docs.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1077-founder-live-approval-capture-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1077-founder-live-approval-capture-final.js",
+        "scripts/check-p1076-founder-live-approval-capture-docs.js",
+        "scripts/check-p1071-founder-live-approval-capture-boundary-contract.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json",
+        "docs/architecture/P107_FOUNDER_LIVE_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "finalReport": "Markdown final validation report covering P107 scripts, reports, docs, status, Command Center UX, route safety, blocked safety posture, and next phase handoff."
+      },
+      "commandCenterUxRequirements": "No Command Center source change in P107.7. Preserve capture boundary UX and chat-only boundaries.",
+      "themeRequirements": "No theme source change in P107.7. Retain P107.4 focused route coverage.",
+      "playwrightTests": "Run retained focused route coverage before final closure.",
+      "checkerUpdates": [
+        "Add check:p1077-founder-live-approval-capture-final.",
+        "Update P107.1 and P107.6 checkers to accept final closure."
+      ],
+      "docsRoadmap": "Close P107 docs, README, platform roadmap, and OS phase status with P107 and P107.7 complete and P108 next.",
+      "phaseStatusUpdate": "P107 complete; P107.7 complete; current P107.7; previous P107.6; next P108.",
+      "validationCommands": [
+        "npm run check:p1077-founder-live-approval-capture-final",
+        "npm run check:p1076-founder-live-approval-capture-docs",
+        "npm run check:p1075-founder-live-approval-capture-validation",
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P107.7 is validation/status/docs only.",
+        "Confirm no live approval capture, persistence, or write authority was enabled.",
+        "Confirm no execution unlock or runtime admission was enabled.",
+        "Confirm provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.",
+        "Confirm P108 is planned only.",
+        "Confirm no project, CareLoop, dashboard source, or dashboard test files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P107.7 files>",
+        "git commit -m \"test(nexus): close founder approval capture final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ],
+  "knownLimitations": [
+    "P107.1 is schema and contract only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+    "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    "P107.2-P107.7 remain planned."
+  ],
+  "knownRisks": [
+    "P107.1-P107.6 are planned as local/display/validation/docs-only work; approval capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P107.4 must not add capture buttons or fake runnable actions."
+  ]
+}
