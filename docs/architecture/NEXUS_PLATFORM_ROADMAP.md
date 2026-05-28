@@ -2597,6 +2597,15 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P108.5 is complete. Aggregate validation now covers P108.1 through P108.4
+across the contract, boundary schema, local model, audit preview, Command
+Center UX placement, route safety, docs, reports, OS phase status, and
+forbidden scope. P108.6 is next. Operator decisions, approval capture, approval
+persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 

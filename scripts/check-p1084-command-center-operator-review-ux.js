@@ -58,18 +58,21 @@ addCheck("operator review rows display safe and blocked", operatorReview.auditRo
 addCheck("operator review rows include useful value", operatorReview.auditRows?.every((row) => row.proposedAgentLane && row.proposedOutcome && row.auditQuestions?.length >= 4 && row.validationCommand === "npm run check:p1083-founder-live-approval-operator-review-audit-preview"));
 addCheck("safety rows retained", operatorReview.safetyRows?.some((row) => row.label === "Operator review writes" && row.value === "Blocked") && operatorReview.safetyRows?.some((row) => row.label === "Provider spend" && row.value === "Blocked"));
 addCheck("contract marks P108.4 complete", p1084.status === "complete");
-addCheck("P108.5 remains planned", subphaseById.get("P108.5")?.status === "planned");
+addCheck("P108.5 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P108.5")?.status));
 addCheck("docs record P108.4", /P108\.4 Command Center Operator Review UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P108.4", /P108\.4 is\s+complete/.test(platformRoadmap) && /P108\.5\s+is\s+next/.test(platformRoadmap));
 addCheck("README records P108.4", /P108\.4 Command Center operator-review UX/.test(readme) && /P108\.5 is next/.test(readme));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P108.4"
+  ((status.currentPhase === "P108.4"
     && status.previousPhase === "P108.3"
-    && status.nextPhase === "P108.5"
+    && status.nextPhase === "P108.5")
+    || (status.currentPhase === "P108.5"
+      && status.previousPhase === "P108.4"
+      && status.nextPhase === "P108.6"))
     && statusById.get("P108")?.status === "in_progress"
     && statusById.get("P108.4")?.status === "complete"
-    && statusById.get("P108.5")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P108.5")?.status)
     && roadmapById.get("P108.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

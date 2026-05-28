@@ -375,6 +375,13 @@ The Command Center and local operator surface have:
   provider/model calls, dispatch, worker/tool execution, project mutation,
   hosted DB mutation, deploy, release, export, package, network calls, and
   provider spend remain blocked.
+- P108.5 aggregate validation: P108.1-P108.4 now have aggregate coverage across
+  the contract, boundary schema, local model, audit preview, Command Center UX,
+  route safety, docs, reports, OS phase status, and forbidden scope. P108.6 is
+  next. Operator decisions, approval capture, persistence, writes, execution
+  unlock, runtime admission, provider/model calls, dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, deploy, release, export,
+  package, network calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

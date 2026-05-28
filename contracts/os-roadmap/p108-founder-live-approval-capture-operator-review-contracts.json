@@ -429,11 +429,15 @@
     {
       "phaseId": "P108.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Aggregate P108 checker and route-safety coverage without changing runtime behavior.",
       "allowedFiles": [
         "scripts/check-p1085-founder-live-approval-operator-review-validation.js",
+        "scripts/check-p1084-command-center-operator-review-ux.js",
+        "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
+        "scripts/check-p1082-founder-live-approval-operator-review-model.js",
+        "scripts/check-p1081-founder-live-approval-operator-review-contract.js",
         "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
         "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -441,6 +445,8 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
         "reports/p1085-founder-live-approval-operator-review-validation-report.md"
       ],
       "forbiddenFiles": [
@@ -460,11 +466,42 @@
       "validationCommands": [
         "npm run check:p1085-founder-live-approval-operator-review-validation",
         "npm run check:p1084-command-center-operator-review-ux",
+        "npm run check:p1083-founder-live-approval-operator-review-audit-preview",
+        "npm run check:p1082-founder-live-approval-operator-review-model",
+        "npm run check:p1081-founder-live-approval-operator-review-contract",
         "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
+      "exactFiles": [
+        "scripts/check-p1085-founder-live-approval-operator-review-validation.js",
+        "scripts/check-p1084-command-center-operator-review-ux.js",
+        "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
+        "scripts/check-p1082-founder-live-approval-operator-review-model.js",
+        "scripts/check-p1081-founder-live-approval-operator-review-contract.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1085-founder-live-approval-operator-review-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1085-founder-live-approval-operator-review-validation",
+        "P108.5 validation report"
+      ],
+      "checkerUpdates": [
+        "Add aggregate P108.5 checker covering P108.1-P108.4 scripts, reports, contract status, display-safe UX signals, blocked counts, route coverage, docs, OS phase status, and forbidden scope.",
+        "Update P108.1-P108.4 handoff checkers to accept P108.5 as the current completed aggregate-validation handoff.",
+        "Do not modify Command Center source or tests in P108.5."
+      ],
+      "docsRoadmap": "Update P108 plan, platform roadmap, README, and OS phase tracking with P108.5 complete and P108.6 next.",
+      "phaseStatusUpdate": "P108 in progress; P108.5 complete; current P108.5; previous P108.4; next P108.6.",
       "finalSafetyChecks": [
         "Confirm P108.5 is validation only.",
         "Confirm no Command Center source or test files changed.",

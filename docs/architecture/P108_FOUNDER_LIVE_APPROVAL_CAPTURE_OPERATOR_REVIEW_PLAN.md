@@ -140,11 +140,11 @@ Final safety checks:
 
 ## P108.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: aggregate P108 checker and route-safety coverage without changing runtime behavior.
 
-Allowed files: P108.5 aggregate checker, P108 contract, P108 plan, platform roadmap, README, package script, OS phase status files, and generated validation reports.
+Allowed files: P108.5 aggregate checker, P108.1-P108.4 handoff checker updates, P108 contract, P108 plan, platform roadmap, README, package script, OS phase status files, and generated validation reports.
 
 Forbidden files: projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, .env*.
 
@@ -155,10 +155,25 @@ Theme requirements: no theme source change in P108.5. Retain P108.4 focused them
 Validation commands:
 - npm run check:p1085-founder-live-approval-operator-review-validation
 - npm run check:p1084-command-center-operator-review-ux
+- npm run check:p1083-founder-live-approval-operator-review-audit-preview
+- npm run check:p1082-founder-live-approval-operator-review-model
+- npm run check:p1081-founder-live-approval-operator-review-contract
 - cd dashboard && npm run build
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - git diff --check
+
+Exact files/modules changed: added `scripts/check-p1085-founder-live-approval-operator-review-validation.js`, updated P108.1-P108.4 handoff checkers, registered `check:p1085-founder-live-approval-operator-review-validation`, updated P108 contract/docs/README/roadmap/status, and generated `reports/p1085-founder-live-approval-operator-review-validation-report.md`.
+
+Expected exports/data shapes: P108.5 exports no runtime API. The checker validates P108.1 boundary envelopes, P108.2 model envelopes, P108.3 audit preview envelopes, and P108.4 display-safe `founderLiveApprovalOperatorReview` view model state with all unsafe counts at zero.
+
+Checker updates: aggregate P108.5 checker verifies P108.1-P108.4 scripts/reports, schema validation, blocked operator-review authority, Command Center route placement, Chat/Lite cleanliness, docs, phase status, and forbidden scope. P108.1-P108.4 handoff checkers accept P108.5 as the current completed validation handoff.
+
+Docs/roadmap update: P108.5 is recorded complete in this plan, README, platform roadmap, P108 contract, and OS phase status. P108.6 is next.
+
+OS phase status update: P108 remains in progress; P108.5 is complete; current phase P108.5; previous P108.4; next P108.6.
+
+Final safety checks: validation-only; no Command Center source/test changes; no project files; no approval capture, operator decision persistence, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.
 
 ## P108.6 Docs / Roadmap
 
