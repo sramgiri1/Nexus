@@ -13452,7 +13452,7 @@
       "order": 144,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f6980a17",
       "completedAt": "",
       "summary": "P108 is in progress. P108.3 adds display-safe local operator-review audit preview rows from P108.2 records while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
@@ -13534,7 +13534,7 @@
       "order": 144.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f6980a17",
       "completedAt": "2026-05-28T19:54:00.000Z",
       "summary": "Built display-safe local founder approval operator-review audit preview rows from P108.2 records without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
       "checksRun": [
