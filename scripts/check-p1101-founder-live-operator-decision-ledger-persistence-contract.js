@@ -135,7 +135,15 @@ addCheck(
       && roadmap.currentPhase === "P110.2"
       && roadmap.previousPhase === "P110.1"
       && roadmap.nextPhase === "P110.3"
-      && statusById.get("P110.2")?.status === "complete"))
+      && statusById.get("P110.2")?.status === "complete")
+    || (status.currentPhase === "P110.3"
+      && status.previousPhase === "P110.2"
+      && status.nextPhase === "P110.4"
+      && roadmap.currentPhase === "P110.3"
+      && roadmap.previousPhase === "P110.2"
+      && roadmap.nextPhase === "P110.4"
+      && statusById.get("P110.2")?.status === "complete"
+      && statusById.get("P110.3")?.status === "complete"))
     && statusById.get("P110")?.status === "in_progress"
     && statusById.get("P110.1")?.status === "complete"
     && roadmapById.get("P110")?.status === "in_progress"

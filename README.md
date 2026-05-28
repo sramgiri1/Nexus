@@ -465,6 +465,15 @@ The Command Center and local operator surface have:
   admission, Command Center DB wiring, operator decision capture, project
   mutation, provider/model call, dispatch, worker/tool execution, deploy,
   release, export, package, network call, and provider spend remain blocked.
+- P110.3 governed local CRUD model: NEXUS now has an approval-gated local
+  SQLite CRUD adapter for allowlisted operator decision ledger entries, events,
+  and evidence references. It reuses the existing SQLite runtime and repository
+  and only admits create/read/update/upsert/list after explicit operator,
+  rollback, audit, validation, `sqlite-live`, and write-enable evidence. P110.4
+  is next. Command Center DB wiring, hosted DB mutation, raw SQL, runtime
+  admission, execution unlock, project mutation, provider/model call, dispatch,
+  worker/tool execution, deploy, release, export, package, network call, and
+  provider spend remain blocked.
 
 ## CareLoop Project Progress
 

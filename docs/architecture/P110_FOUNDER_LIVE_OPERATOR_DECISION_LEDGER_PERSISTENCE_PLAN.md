@@ -203,16 +203,105 @@ release, export, package creation, network calls, or provider spend.
 
 ## P110.3 Governed Local CRUD Model
 
-Status: planned
+Status: complete
 
 Narrow goal: add a governed local CRUD adapter for allowlisted operator
 decision ledger records using P110.2 schema and `db/sqliteCrudRepository.js`.
-The model must require explicit local operator approval, rollback acceptance,
-audit acceptance, validation command acceptance, `sqlite-live` mode, and write
-enablement before test-only local SQLite writes can occur. Delete, raw SQL,
-hosted DB mutation, project mutation, providers, agents, workers, runtime
-admission, execution unlock, deploy/release/export/package, network, and spend
-must remain blocked.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `46e54520`.
+
+Allowed files: `live-ready/founderLiveOperatorDecisionLedgerPersistence.js`,
+`scripts/check-p1103-founder-live-operator-decision-ledger-crud-model.js`,
+P110/P109 compatibility checkers, P110 contract, this plan, README, platform
+roadmap, package script registry, OS phase status files, and generated P110.3,
+P110.2, P110.1, P109.7, OS status, and phase coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`, and
+persistent `local-state/runtime/**` artifacts.
+
+Exact files/modules changed: added
+`live-ready/founderLiveOperatorDecisionLedgerPersistence.js`, added
+`scripts/check-p1103-founder-live-operator-decision-ledger-crud-model.js`,
+registered `check:p1103-founder-live-operator-decision-ledger-crud-model`,
+updated P110 contract/docs/README/roadmap/status, updated P110.2/P110.1/P109.7
+checker compatibility, and generated P110.3/P110.2/P110.1/P109.7/status/
+coverage reports.
+
+Expected exports/data shapes:
+`P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PHASE`,
+`P110_OPERATOR_DECISION_LEDGER_DB_ENTITIES`,
+`buildFounderLiveOperatorDecisionLedgerPersistenceContract`,
+`validateFounderLiveOperatorDecisionLedgerPersistenceContract`,
+`buildSafeOperatorDecisionLedgerDbRecord`, and
+`executeApprovedOperatorDecisionLedgerDbCrudRequest`. The contract envelope
+contains display-safe local CRUD requests, allowed operations, forbidden
+operations, approval evidence, blockers, disabled reason, owner capability,
+evidence/activity locations, cost impact, and unsafe runtime flags. CRUD
+results contain admitted/written/read state, record data, disabled reason,
+errors, scoped local DB flags, and blocked hosted/runtime/project/provider
+flags.
+
+Safety rules: local SQLite CRUD is admitted only for
+`operator_decision_ledger_entries`, `operator_decision_ledger_events`, and
+`operator_decision_ledger_evidence_refs` after `execute=true`, operator
+approval, rollback acceptance, audit acceptance, validation command acceptance,
+`sqlite-live` mode, and write enablement. Delete, raw SQL, hosted DB mutation,
+runtime admission, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, network calls, deploy, release,
+export, package creation, and provider spend remain blocked.
+
+Reuse check: P110.3 reuses `shared/resultEnvelope.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+`db/sqliteRuntime.js`, `db/sqliteCrudRepository.js`, and
+`live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js`. No duplicate
+report writer, result envelope, checker formatter, redaction helper, mode
+guard, phase status updater, route matrix, or activity/evidence helper was
+added.
+
+Command Center UX requirements: no Command Center source change in P110.3.
+Chat with NEXUS and Lite stay clean. P110.4 is responsible for rendering
+display-safe persistence state on non-chat founder routes.
+
+Dark/light/system theme requirements: no theme source change in P110.3. P110.4
+must preserve System, Dark, and Light themes when the UI is updated.
+
+Playwright tests: no Playwright update in P110.3 because no UI files changed.
+P110.4 must add focused route coverage for display-safe decision-ledger
+persistence UX.
+
+Checker updates: P110.3 adds a dedicated CRUD model checker covering exports,
+approval gates, default/unapproved/delete/outside-allowlist blocking, isolated
+SQLite create/read/update/upsert/list, docs/status, and unsafe authority
+wording. P110.2, P110.1, and P109.7 checkers are updated to accept the
+P110.3/P110.4 handoff state.
+
+Docs/README/roadmap updates: P110.3 is recorded in this plan, README, platform
+roadmap, P110 contract, OS roadmap/status, and generated reports. P110.4 is
+next.
+
+OS phase status update: P110 remains in progress; P110.3 is complete; current
+phase P110.3; previous P110.2; next P110.4.
+
+Validation commands:
+- `npm run check:p1103-founder-live-operator-decision-ledger-crud-model`
+- `npm run check:p1102-founder-live-operator-decision-ledger-schema`
+- `npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract`
+- `npm run check:p1097-founder-live-operator-decision-ledger-final`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known risks: P110.3 intentionally permits only approval-gated local SQLite
+metadata writes for NEXUS OS ledger records. Command Center does not consume
+those DB records until P110.4.
+
+Rollback plan: remove the P110.3 module/checker/docs/status/report updates,
+restore P110.3 to planned, restore current phase to P110.2 with P110.3 next,
+and remove any generated P110.3 report. No persistent SQLite artifact is part
+of the rollback because the checker removes its temp DB.
 
 ## P110.4 Command Center Ledger Persistence UX
 

@@ -145,15 +145,21 @@ addCheck("README records P110.2", /P110\.2 decision-ledger SQLite schema/.test(r
 addCheck("platform roadmap records P110.2", /P110\.2 is complete/.test(platformRoadmap) && /P110\.3 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P110.2"
-    && status.previousPhase === "P110.1"
-    && status.nextPhase === "P110.3"
+  ((status.currentPhase === "P110.2"
+      && status.previousPhase === "P110.1"
+      && status.nextPhase === "P110.3"
+      && roadmap.currentPhase === "P110.2"
+      && roadmap.previousPhase === "P110.1"
+      && roadmap.nextPhase === "P110.3")
+    || (status.currentPhase === "P110.3"
+      && status.previousPhase === "P110.2"
+      && status.nextPhase === "P110.4"
+      && roadmap.currentPhase === "P110.3"
+      && roadmap.previousPhase === "P110.2"
+      && roadmap.nextPhase === "P110.4"))
     && statusById.get("P110")?.status === "in_progress"
     && statusById.get("P110.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P110.3")?.status)
-    && roadmap.currentPhase === "P110.2"
-    && roadmap.previousPhase === "P110.1"
-    && roadmap.nextPhase === "P110.3"
     && roadmapById.get("P110.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

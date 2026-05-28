@@ -2719,6 +2719,17 @@ SQL, project mutation, provider/model calls, agent dispatch, worker/tool
 execution, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P110.3 is complete. The NEXUS OS now has a governed local SQLite CRUD adapter
+for allowlisted operator decision ledger entries, events, and evidence
+references. It reuses the existing SQLite runtime and repository, blocks
+delete and outside-allowlist entities, and admits create/read/update/upsert/list
+only after explicit operator approval, rollback acceptance, audit acceptance,
+validation command acceptance, `sqlite-live` mode, and local write enablement.
+P110.4 is next. Command Center DB wiring, hosted DB mutation, raw SQL, runtime
+admission, execution unlock, project mutation, provider/model calls, agent
+dispatch, worker/tool execution, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P110.1
-- Generated at: 2026-05-28T21:25:01.131Z
+- Generated at: 2026-05-28T21:34:35.131Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f827544e
+- Validation HEAD: 46e54520
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,17 +24,17 @@
 | P110.1 is complete and P110.2 next | PASS |  |
 | P110.1 is contract only | PASS |  |
 | P110.1 records validation commands | PASS |  |
-| future schemas are documented only | PASS | schema implementation allowed for P110.2 |
+| future schemas are documented only | PASS | schema implementation allowed for P110.3 |
 | future exports are documented only | PASS |  |
 | reuse requirements are explicit | PASS |  |
 | OS checker accepts P110 subphases | PASS |  |
 | P109.7 remains complete | PASS |  |
-| phase status advanced | PASS | P110.2/P110.1/P110.3 |
+| phase status advanced | PASS | P110.3/P110.2/P110.4 |
 | docs record P110.1 | PASS |  |
 | README records P110.1 | PASS |  |
 | platform roadmap records P110.1 | PASS |  |
-| changed files stay in P110.1 allowed scope | PASS | scope check relaxed for P110.2 |
-| forbidden paths unchanged | PASS | P110.1 forbidden path check relaxed for P110.2 |
+| changed files stay in P110.1 allowed scope | PASS | scope check relaxed for P110.3 |
+| forbidden paths unchanged | PASS | P110.1 forbidden path check relaxed for P110.3 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

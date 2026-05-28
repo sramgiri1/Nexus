@@ -333,12 +333,15 @@
     {
       "phaseId": "P110.3",
       "title": "Governed Local CRUD Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add a governed local CRUD adapter for allowlisted operator decision ledger records using the P110.2 schema and existing SQLite repository.",
       "allowedFiles": [
         "live-ready/founderLiveOperatorDecisionLedgerPersistence.js",
         "scripts/check-p1103-founder-live-operator-decision-ledger-crud-model.js",
+        "scripts/check-p1102-founder-live-operator-decision-ledger-schema.js",
+        "scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js",
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
         "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
         "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -347,6 +350,9 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/p1103-founder-live-operator-decision-ledger-crud-model-report.md",
+        "reports/p1102-founder-live-operator-decision-ledger-schema-report.md",
+        "reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -368,9 +374,95 @@
         "npm run check:p1103-founder-live-operator-decision-ledger-crud-model",
         "npm run check:p1102-founder-live-operator-decision-ledger-schema",
         "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "46e54520",
+      "exactFiles": [
+        "live-ready/founderLiveOperatorDecisionLedgerPersistence.js",
+        "scripts/check-p1103-founder-live-operator-decision-ledger-crud-model.js",
+        "scripts/check-p1102-founder-live-operator-decision-ledger-schema.js",
+        "scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js",
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1103-founder-live-operator-decision-ledger-crud-model-report.md",
+        "reports/p1102-founder-live-operator-decision-ledger-schema-report.md",
+        "reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PHASE",
+        "P110_OPERATOR_DECISION_LEDGER_DB_ENTITIES",
+        "buildFounderLiveOperatorDecisionLedgerPersistenceContract",
+        "validateFounderLiveOperatorDecisionLedgerPersistenceContract",
+        "buildSafeOperatorDecisionLedgerDbRecord",
+        "executeApprovedOperatorDecisionLedgerDbCrudRequest",
+        "package script check:p1103-founder-live-operator-decision-ledger-crud-model",
+        "P110.3 CRUD model report"
+      ],
+      "schemas": [
+        "operator_decision_ledger_entries",
+        "operator_decision_ledger_events",
+        "operator_decision_ledger_evidence_refs"
+      ],
+      "dataShape": {
+        "contractEnvelope": "Result envelope with schemaVersion, currentState, runtimeMode, dbMode, ledgerEntry, ledgerEvents[], evidenceRefs[], localCrudRequests[], allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, runtimeFlags, nextAction, blockers[], disabledReason, ownerCapability, auditRefs[], activityRefs[], activityLocation, costImpact, and commandCenterVisible.",
+        "crudResult": "Display-safe local CRUD result with phase, requestKey, entity, operation, admitted, written, read, record/records, disabledReason, errors, dbWritesAllowed, sqliteWriteAllowed, hostedDbWritesAllowed, projectMutationAllowed, providerSpendAllowed, and all non-scoped unsafe runtime flags false.",
+        "approvalGate": "execute=true, operatorApproval=true, rollbackAccepted=true, auditAccepted=true, validationCommandsAccepted=true, mode=sqlite-live, enableWrites=true."
+      },
+      "commandCenterUx": "No Command Center source change in P110.3. Preserve Chat with NEXUS and Lite cleanliness; P110.4 will surface display-safe local DB state on non-chat founder routes.",
+      "themeRequirements": [
+        "No theme source change in P110.3.",
+        "P110.4 must preserve System, Dark, and Light themes when Command Center UI is updated."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P110.3 because no UI files change.",
+        "P110.4 must add focused Playwright coverage for display-safe ledger persistence on non-chat founder routes."
+      ],
+      "checkerUpdates": [
+        "Add check:p1103-founder-live-operator-decision-ledger-crud-model covering exports, approval gates, blocked default/unapproved/delete/outside-allowlist paths, isolated SQLite create/read/update/upsert/list, docs/status, and unsafe authority wording.",
+        "Update P110.2, P110.1, and P109.7 checkers to accept the concrete P110.3/P110.4 handoff state.",
+        "Run OS phase status and phase validation coverage reports after P110.3 closes."
+      ],
+      "docsRoadmap": "Update P110 plan, platform roadmap, README, and OS phase tracking with P110.3 complete and P110.4 next.",
+      "phaseStatusUpdate": "P110 in progress; P110.3 complete; current P110.3; previous P110.2; next P110.4.",
+      "finalSafetyChecks": [
+        "Confirm P110.3 only admits local SQLite CRUD for allowlisted operator decision ledger OS records after explicit local approval gates.",
+        "Confirm no dashboard/src/**, dashboard/tests/**, projects/**, careloop/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env* files changed.",
+        "Confirm isolated local-state/runtime/check-p1103.sqlite is removed after validation.",
+        "Confirm hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, network calls, deploy, release, export, package creation, and provider spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P110.3 files>",
+        "git commit -m \"feat(nexus): add decision ledger crud model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ]
     },
     {
@@ -468,8 +560,8 @@
     }
   ],
   "knownLimitations": [
-    "P110.1-P110.2 define the contract and local SQLite schema only. They do not add runtime CRUD admission, capture operator decisions, wire Command Center to DB records, or mutate project files.",
-    "Local SQLite CRUD for operator decision ledger records remains planned until P110.3 and must use explicit local approval gates.",
-    "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+    "P110.3 admits local SQLite CRUD only for allowlisted operator decision ledger OS records after explicit local approval gates; it does not wire Command Center to DB records.",
+    "P110.3 does not capture founder chat content as an operator decision, unlock execution, admit runtime execution, dispatch agents, run tools/workers, create or mutate projects, or write hosted databases.",
+    "Hosted DB mutation, raw SQL, provider/model calls, network calls, deploy, release, export, package creation, and provider spend remain blocked."
   ]
 }

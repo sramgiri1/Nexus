@@ -74,11 +74,18 @@ const p110PlaceholderState =
       && status.nextPhase === "P110.3"
       && roadmap.currentPhase === "P110.2"
       && roadmap.previousPhase === "P110.1"
-      && roadmap.nextPhase === "P110.3"))
+      && roadmap.nextPhase === "P110.3")
+    || (status.currentPhase === "P110.3"
+      && status.previousPhase === "P110.2"
+      && status.nextPhase === "P110.4"
+      && roadmap.currentPhase === "P110.3"
+      && roadmap.previousPhase === "P110.2"
+      && roadmap.nextPhase === "P110.4"))
     && osStatusChecker.includes('"P110"')
     && osStatusChecker.includes('"P110.1"')
     && osStatusChecker.includes('"P110.2"')
-    && osStatusChecker.includes('"P110.3"');
+    && osStatusChecker.includes('"P110.3"')
+    && osStatusChecker.includes('"P110.4"');
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1097-founder-live-operator-decision-ledger-final"]));
 addCheck("all P109 scripts registered", p109Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
