@@ -71,10 +71,65 @@ Status: complete.
 
 ## P104.2 Execution Boundary Schema
 
-Status: planned.
+Status: complete.
 
-Define the local execution-boundary records and approval predicates that future
-phases can validate without granting live execution authority.
+- Narrow goal: define local execution-boundary records, required evidence,
+  approval predicates, forbidden actions, and blocked execution flags without
+  enabling execution.
+- Starting branch and expected base commit:
+  `codex/nexus-e2e-phase-validation` at `57797990`.
+- Allowed files: schema module, P104.2 checker, P104.1 compatibility checker,
+  P104 contract, P104 plan, platform roadmap, README, package script, OS phase
+  JSON, and generated reports.
+- Forbidden files: `projects/**`, `careloop/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, `.env*`.
+- Exact files/modules to create or update:
+  `live-ready/founderLiveExecutionBoundarySchema.js`,
+  `scripts/check-p1042-founder-live-execution-boundary-schema.js`,
+  `scripts/check-p1041-chat-surface-consolidation.js`,
+  `contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json`,
+  `docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `README.md`,
+  `package.json`, `os-roadmap/phase-status.json`, and
+  `os-roadmap/nexus-phases.json`.
+- Expected exports, schemas, and data shapes:
+  `P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_SCHEMA_PHASE`,
+  `P104_EXECUTION_BOUNDARY_STATES`,
+  `P104_EXECUTION_BOUNDARY_BLOCKED_FLAGS`,
+  `P104_EXECUTION_BOUNDARY_REQUIRED_EVIDENCE`,
+  `P104_EXECUTION_BOUNDARY_FORBIDDEN_ACTIONS`,
+  `buildFounderLiveExecutionBoundarySchema`, and
+  `validateFounderLiveExecutionBoundarySchema`. The envelope includes
+  boundary and lane record shapes, required evidence, approval predicates,
+  forbidden actions, blocked flags, next action, blockers, disabled reason,
+  owner, evidence/activity, cost impact, and `commandCenterVisible: false`.
+- Command Center UX requirements: no UI source change in P104.2. P104.4 must
+  use this schema on non-chat pages without raw dumps, private IDs, or runnable
+  execution controls.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none in P104.2 because no UI files change.
+- Checker updates:
+  `npm run check:p1042-founder-live-execution-boundary-schema`; keep P104.1
+  checker forward-compatible with later P104 subphases.
+- Docs/README/roadmap: record P104.2 complete and P104.3 next.
+- OS phase status: P104 in progress, P104.2 complete, current P104.2,
+  previous P104.1, next P104.3.
+- Validation commands:
+  `npm run check:p1042-founder-live-execution-boundary-schema`,
+  `npm run check:p1041-chat-surface-consolidation`,
+  `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: schema-only; all execution flags false; no provider/model
+  calls; no dispatch; no worker/tool execution; no project mutation; no hosted
+  DB mutation; no deploy/release/export/package; no network calls; no spend;
+  no project files changed; P104.3 remains planned.
+- Git add/commit/push commands: stage only allowed P104.2 OS files, commit,
+  stamp the real commit hash in phase status, rerun checks, commit status
+  stamp, and push `codex/nexus-e2e-phase-validation`.
+- Final response checklist: branch, commit hash, files changed, schema exports,
+  tests/checkers, docs/roadmap, OS status, safety confirmations, forbidden path
+  confirmation, known limitations, and next subphase.
 
 ## P104.3 Execution Boundary Model
 

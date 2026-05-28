@@ -2320,6 +2320,12 @@ and a short planning-only note. PRD, DB, persistence, live-use, handoff,
 work-admission, execution-admission, task board, and agent-flow details remain
 on Business Build, Agent Flow, Database, Live Readiness, and the other
 corresponding pages. P104.2 is next for execution-boundary schema definition.
+P104.2 is complete. It defines the local founder live execution-boundary
+schema, required evidence, approval predicates, forbidden actions, blocked
+execution flags, boundary record shape, and lane record shape. It is
+schema-only and keeps execution, dispatch, worker/tool execution, project
+mutation, hosted DB mutation, deploy, release, export, package, network calls,
+and spend blocked. P104.3 is next for deterministic local boundary records.
 
 Implementation follows
 [`p104-founder-live-execution-boundary-contracts.json`](../../contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json).

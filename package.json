@@ -532,7 +532,8 @@
     "check:p1035-founder-live-work-admission-validation": "node scripts/check-p1035-founder-live-work-admission-validation.js",
     "check:p1036-founder-live-work-admission-docs-roadmap": "node scripts/check-p1036-founder-live-work-admission-docs-roadmap.js",
     "check:p1037-founder-live-work-admission-final": "node scripts/check-p1037-founder-live-work-admission-final.js",
-    "check:p1041-chat-surface-consolidation": "node scripts/check-p1041-chat-surface-consolidation.js"
+    "check:p1041-chat-surface-consolidation": "node scripts/check-p1041-chat-surface-consolidation.js",
+    "check:p1042-founder-live-execution-boundary-schema": "node scripts/check-p1042-founder-live-execution-boundary-schema.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

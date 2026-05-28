@@ -55,7 +55,7 @@ const nonChatLabels = [
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1041-chat-surface-consolidation"]));
 addCheck("contract phase identity", contract.phaseId === "P104" && contract.title === "Founder Live Execution Boundary");
-addCheck("P104.1 complete and later subphases planned", p1041.status === "complete" && ["P104.2", "P104.3", "P104.4", "P104.5", "P104.6", "P104.7"].every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P104.1 complete and later subphases planned or complete", p1041.status === "complete" && ["P104.2", "P104.3", "P104.4", "P104.5", "P104.6", "P104.7"].every((phaseId) => ["planned", "complete"].includes(subphaseById.get(phaseId)?.status)));
 addCheck(
   "Chat route keeps chat controls",
   chatSource.includes('aria-label="Chat with NEXUS"')
@@ -74,9 +74,9 @@ addCheck("platform roadmap records P104.1", /P104 - Founder Live Execution Bound
 addCheck("README records P104 current status", /Current Status Through P104\.1/.test(readme) && /P104\.1 founder chat surface consolidation/.test(readme));
 addCheck(
   "phase status advanced to P104.1",
-  status.currentPhase === "P104.1"
-    && status.previousPhase === "P103.7"
-    && status.nextPhase === "P104.2"
+  ["P104.1", "P104.2", "P104.3", "P104.4", "P104.5", "P104.6", "P104.7"].includes(status.currentPhase)
+    && ["P103.7", "P104.1", "P104.2", "P104.3", "P104.4", "P104.5", "P104.6"].includes(status.previousPhase)
+    && ["P104.2", "P104.3", "P104.4", "P104.5", "P104.6", "P104.7", "P105"].includes(status.nextPhase)
     && statusById.get("P104")?.status === "in_progress"
     && statusById.get("P104.1")?.status === "complete"
     && roadmapById.get("P104.1")?.status === "complete",

@@ -12494,26 +12494,25 @@
       "order": 140,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "76bacdb0",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P104 is in progress. P104.1 cleaned the Chat with NEXUS route so PRD, DB, persistence, live-use, handoff, work-admission, execution-admission, task board, and agent detail stay on corresponding pages.",
+      "summary": "P104 is in progress. P104.2 defined the local founder live execution-boundary schema, required evidence, approval predicates, forbidden actions, and blocked execution flags.",
       "checksRun": [
+        "npm run check:p1042-founder-live-execution-boundary-schema",
         "npm run check:p1041-chat-surface-consolidation",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders interactive founder chat|Command Center Lite route stays chat-only|Founder DB workflow appears in Business Build and DB Runtime|Business Build DB CRUD state appears in Business Build, Agent Flow, and DB Runtime|Founder live work admission appears across founder routes|full Command Center demo leakage safety\"",
-        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P104.1 is Chat UX consolidation only.",
-        "P104.2 through P104.7 remain planned.",
+        "P104.2 is schema-only.",
+        "P104.3 through P104.7 remain planned.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P104.2",
+      "nextPhase": "P104.3",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Boundary",
-      "detail": "P104 in progress; Chat route consolidated; execution boundary schema is next."
+      "detail": "P104 in progress; execution-boundary schema complete; local boundary model is next."
     },
     {
       "phaseId": "P104.1",
@@ -12548,19 +12547,27 @@
       "title": "Execution Boundary Schema",
       "track": "NEXUS_OS",
       "order": 140.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Define local execution-boundary records and approval predicates without enabling execution.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T00:53:43.706Z",
+      "summary": "Defined the local founder live execution-boundary schema, required evidence, approval predicates, forbidden actions, blocked flags, boundary record shape, and lane record shape without enabling execution.",
+      "checksRun": [
+        "npm run check:p1042-founder-live-execution-boundary-schema",
+        "npm run check:p1041-chat-surface-consolidation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P104.2 is planned only and has no execution authority."
+        "P104.2 does not enable live execution authority.",
+        "P104.3 remains planned.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P104.3",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Execution Boundary Schema",
-      "detail": "Execution Boundary Schema planned under P104."
+      "detail": "Schema-only execution boundary complete; local boundary model is next."
     },
     {
       "phaseId": "P104.3",
@@ -13140,8 +13147,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P104.1",
-  "previousPhase": "P103.7",
-  "nextPhase": "P104.2",
+  "currentPhase": "P104.2",
+  "previousPhase": "P104.1",
+  "nextPhase": "P104.3",
   "currentPhaseStatus": "complete"
 }

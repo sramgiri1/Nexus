@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P104.1
-- Generated at: 2026-05-28T00:02:32.869Z
+- Generated at: 2026-05-28T00:54:32.710Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 76bacdb0
+- Validation HEAD: 57797990
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | package script registered | PASS |  |
 | contract phase identity | PASS |  |
-| P104.1 complete and later subphases planned | PASS |  |
+| P104.1 complete and later subphases planned or complete | PASS |  |
 | Chat route keeps chat controls | PASS |  |
 | Chat route removes non-chat cards | PASS |  |
 | Chat route uses chat-only layout | PASS |  |
@@ -29,7 +29,7 @@
 | plan records P104.1 complete | PASS |  |
 | platform roadmap records P104.1 | PASS |  |
 | README records P104 current status | PASS |  |
-| phase status advanced to P104.1 | PASS | P104.1/P103.7/P104.2 |
+| phase status advanced to P104.1 | PASS | P104.2/P104.1/P104.3 |
 | phase status checker accepts P104 subphases | PASS |  |
 | P104.1 avoids forbidden file scope | PASS |  |
 | primary UX avoids raw private IDs | PASS |  |

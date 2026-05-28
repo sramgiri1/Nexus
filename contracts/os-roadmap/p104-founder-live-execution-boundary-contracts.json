@@ -143,9 +143,103 @@
     {
       "phaseId": "P104.2",
       "title": "Execution Boundary Schema",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Define local execution-boundary records and approval predicates without enabling execution."
+      "narrowGoal": "Define local execution-boundary records, required evidence, approval predicates, forbidden actions, and blocked execution flags without enabling execution.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "57797990",
+      "allowedFiles": [
+        "live-ready/founderLiveExecutionBoundarySchema.js",
+        "scripts/check-p1042-founder-live-execution-boundary-schema.js",
+        "scripts/check-p1041-chat-surface-consolidation.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1042-founder-live-execution-boundary-schema-report.md",
+        "reports/p1041-chat-surface-consolidation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveExecutionBoundarySchema.js",
+        "scripts/check-p1042-founder-live-execution-boundary-schema.js",
+        "scripts/check-p1041-chat-surface-consolidation.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_SCHEMA_PHASE",
+          "P104_EXECUTION_BOUNDARY_STATES",
+          "P104_EXECUTION_BOUNDARY_BLOCKED_FLAGS",
+          "P104_EXECUTION_BOUNDARY_REQUIRED_EVIDENCE",
+          "P104_EXECUTION_BOUNDARY_FORBIDDEN_ACTIONS",
+          "buildFounderLiveExecutionBoundarySchema",
+          "validateFounderLiveExecutionBoundarySchema"
+        ],
+        "envelope": "Result envelope with schemaVersion, currentState, source P103 phases, boundaryRecordShape, laneRecordShape, requiredEvidence, forbiddenActions, approvalPredicateCount, blocked execution flags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, and commandCenterVisible false."
+      },
+      "commandCenterUxRequirements": "No UI source change in P104.2. Future P104.4 UX must render execution-boundary readiness on non-chat pages without raw dumps, private IDs, or runnable execution controls.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No Playwright update in P104.2 because no UI files change.",
+      "checkerUpdates": [
+        "Add check:p1042-founder-live-execution-boundary-schema.",
+        "Keep check:p1041-chat-surface-consolidation forward-compatible with later P104 subphases."
+      ],
+      "docsRoadmap": "Record P104.2 complete and P104.3 next.",
+      "phaseStatusUpdate": "P104 in progress; P104.2 complete; current P104.2; previous P104.1; next P104.3.",
+      "validationCommands": [
+        "npm run check:p1042-founder-live-execution-boundary-schema",
+        "npm run check:p1041-chat-surface-consolidation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm schema-only scope.",
+        "Confirm all execution flags are false.",
+        "Confirm no project files changed.",
+        "Confirm P104.3 remains planned."
+      ],
+      "gitCommands": [
+        "git add <allowed P104.2 files>",
+        "git commit -m \"feat(nexus): define founder live execution boundary schema\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Schema exports",
+        "Tests/checkers",
+        "Docs/roadmap",
+        "OS status",
+        "Safety",
+        "Forbidden paths",
+        "Known limitations",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P104.3",

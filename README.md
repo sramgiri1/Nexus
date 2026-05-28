@@ -176,8 +176,12 @@ The Command Center and local operator surface have:
   starters, answered/missing count, and a short planning-only safety note. PRD,
   DB, persistence, live-use, handoff, work-admission, execution-admission, task
   board, and agent detail now stay on their corresponding Business Build,
-  Agent Flow, Database, and Live Readiness pages. P104.2 is next for the
-  execution-boundary schema.
+  Agent Flow, Database, and Live Readiness pages.
+- P104.2 execution-boundary schema: local execution-boundary records, required
+  evidence, approval predicates, forbidden actions, and blocked execution flags
+  are defined for future non-chat execution-boundary UX. P104.2 is schema-only;
+  all live execution authority remains blocked. P104.3 is next for the local
+  execution-boundary model.
 
 ## CareLoop Project Progress
 
