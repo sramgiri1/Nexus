@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P105.1
-- Generated at: 2026-05-28T10:14:07.486Z
+- Generated at: 2026-05-28T10:18:15.560Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 11127e53
+- Validation HEAD: 7270fb70
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | contract phase identity | PASS |  |
 | contract is NEXUS OS scoped | PASS |  |
 | subphase split exists | PASS |  |
-| P105.1 complete and later subphases planned | PASS |  |
+| P105.1 complete and later subphases planned or complete | PASS |  |
 | safety rules block unsafe execution | PASS |  |
 | reuse rules reference shared helpers | PASS |  |
 | reuse rules reference P104 schema | PASS |  |
@@ -40,7 +40,7 @@
 | plan records P105.1 complete | PASS |  |
 | platform roadmap records P105.1 | PASS |  |
 | README records P105.1 | PASS |  |
-| phase status advanced to P105.1 | PASS | P105.1/P104.7/P105.2 |
+| phase status advanced to P105.1 | PASS | P105.2/P105.1/P105.3 |
 | phase status checker accepts P105 subphases | PASS |  |
 | primary data stays Command Center hidden | PASS |  |
 | docs and schema avoid raw private IDs | PASS |  |

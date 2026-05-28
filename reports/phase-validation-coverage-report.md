@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-28T10:14:10.463Z
+- Generated at: 2026-05-28T10:18:18.495Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 11127e53
+- Validation HEAD: 7270fb70
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -319,7 +319,7 @@
 | P103.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P103.6 validation coverage | PASS | 20 checkers, 16 reports |
 | P103.7 validation coverage | PASS | 46 checkers, 41 reports |
-| P104 validation coverage | PASS | 17 checkers, 8 reports |
+| P104 validation coverage | PASS | 18 checkers, 9 reports |
 | P104.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P104.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P104.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -327,9 +327,9 @@
 | P104.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P104.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P104.7 validation coverage | PASS | 49 checkers, 41 reports |
-| P105 validation coverage | PASS | 10 checkers, 7 reports |
+| P105 validation coverage | PASS | 12 checkers, 8 reports |
 | P105.1 validation coverage | PASS | 4 checkers, 1 reports |
-| P105.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P105.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P105.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P105.4 validation coverage | PASS | 1 checkers, 1 reports |
 | P105.5 validation coverage | PASS | 18 checkers, 18 reports |
@@ -353,18 +353,13 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P105.1; next=P105.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P105.2; next=P105.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P105.2 Approval Plan Model
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P105.3 Dry-Run Review Packet
   - status: planned
   - checkers: 0

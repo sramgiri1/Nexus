@@ -12729,25 +12729,26 @@
       "order": 141,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "11127e53",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P105 is in progress. P105.1 defines local founder live execution approval-planning schema, required gates, blocked runtime transitions, and safety rules without enabling approval capture or execution.",
+      "summary": "P105 is in progress. P105.2 builds deterministic local approval-plan rows from P104 execution-boundary rows without approval capture or execution authority.",
       "checksRun": [
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
         "npm run check:p1051-founder-live-execution-approval-planning-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P105.1 is schema and contract only; approval capture and approval persistence remain blocked.",
-        "Approvals cannot unlock execution or runtime admission in P105.1.",
+        "P105.1-P105.2 are schema/model only; approval capture and approval persistence remain blocked.",
+        "Approvals cannot unlock execution or runtime admission in P105.2.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P105.2-P105.7 remain planned."
+        "P105.3-P105.7 remain planned."
       ],
-      "nextPhase": "P105.2",
+      "nextPhase": "P105.3",
       "commandCenterVisible": true,
       "label": "Live Approval Planning",
-      "detail": "P105.1 complete; deterministic approval-plan records are next."
+      "detail": "P105.2 complete; dry-run approval review packet is next."
     },
     {
       "track": "NEXUS_OS",
@@ -12762,9 +12763,8 @@
       ],
       "knownLimitations": [
         "P105.1 is schema and contract only; approval capture and approval persistence remain blocked.",
-        "Approvals cannot unlock execution or runtime admission in P105.1.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P105.2-P105.7 remain planned."
+        "P105.2 is complete.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "commandCenterVisible": true,
       "phaseId": "P105.1",
@@ -12778,22 +12778,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "checksRun": [],
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T03:45:00.000Z",
+      "checksRun": [
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no execution authority enabled."
+        "P105.1-P105.2 are schema/model only; approval capture and approval persistence remain blocked.",
+        "Approvals cannot unlock execution or runtime admission in P105.2.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P105.3-P105.7 remain planned."
       ],
       "commandCenterVisible": true,
       "phaseId": "P105.2",
       "title": "Approval Plan Model",
-      "status": "planned",
+      "status": "complete",
       "order": 141.2,
-      "summary": "Build deterministic local approval-plan records from P104 execution-boundary records without approval capture or execution.",
+      "summary": "Built deterministic local approval-plan rows from P104 execution-boundary rows with review questions, missing gates, validation commands, blockers, owner/evidence/activity, cost posture, and all approval/runtime/execution flags false.",
       "nextPhase": "P105.3",
       "label": "Approval Plan Model",
-      "detail": "Planned deterministic local approval-plan records."
+      "detail": "Local approval-plan model complete; dry-run review packet is next."
     },
     {
       "track": "NEXUS_OS",
@@ -13372,9 +13381,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T03:15:00.000Z",
-  "currentPhase": "P105.1",
-  "previousPhase": "P104.7",
-  "nextPhase": "P105.2",
+  "updatedAt": "2026-05-28T03:45:00.000Z",
+  "currentPhase": "P105.2",
+  "previousPhase": "P105.1",
+  "nextPhase": "P105.3",
   "currentPhaseStatus": "complete"
 }

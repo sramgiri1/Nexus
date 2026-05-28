@@ -2366,6 +2366,11 @@ with required gates, display-safe approval plan shape, approval gate shape,
 runtime transition shape, validation commands, owner capability, evidence refs,
 activity location, cost posture, and all approval/runtime/execution flags false.
 P105.2 is next for deterministic local approval-plan records.
+P105.2 is complete. It builds deterministic local approval-plan rows from P104
+execution-boundary rows with review questions, missing gates, validation
+commands, blockers, disabled reasons, owner capability, evidence/activity, cost
+posture, and all approval/runtime/execution flags false. P105.3 is next for the
+dry-run review packet.
 
 Implementation follows
 [`p105-founder-live-execution-approval-planning-contracts.json`](../../contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json).

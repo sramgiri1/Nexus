@@ -138,13 +138,22 @@ Final response checklist:
 
 ## P105.2 Approval Plan Model
 
-Status: planned
+Status: complete
 
 Narrow goal: build deterministic local approval-plan records from P104 execution-boundary records without approval capture or execution.
 
-Expected scope: local model, model checker, contract/status/docs updates, and reports only.
+Expected scope: local model, model checker, P105.1 checker compatibility, contract/status/docs updates, and reports only.
 
-Validation commands: to be defined in the P105.2 subphase plan before implementation.
+Command Center impact: no UI source change in P105.2. P105.4 must render the approval-plan rows on Business Build, Agent Flow, and Live Readiness while Chat with NEXUS and Lite remain chat-only.
+
+Safety rules: approval capture, approval writes, runtime admission, execution, dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.
+
+Validation commands:
+- `npm run check:p1052-founder-live-execution-approval-plan-model`
+- `npm run check:p1051-founder-live-execution-approval-planning-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P105.3 Dry-Run Review Packet
 

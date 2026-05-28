@@ -53,7 +53,7 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1051
 addCheck("contract phase identity", contract.phaseId === "P105" && contract.title === "Founder Live Execution Approval Planning");
 addCheck("contract is NEXUS OS scoped", contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("subphase split exists", p105Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P105.1 complete and later subphases planned", subphaseById.get("P105.1")?.status === "complete" && p105Subphases.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("P105.1 complete and later subphases planned or complete", subphaseById.get("P105.1")?.status === "complete" && p105Subphases.slice(1).every((phaseId) => ["planned", "complete"].includes(subphaseById.get(phaseId)?.status)));
 addCheck("safety rules block unsafe execution", ["No provider/model calls.", "No agent dispatch.", "No worker/tool execution.", "No project source mutation.", "No approval writes that unlock execution."].every((rule) => contract.safetyRules?.includes(rule)));
 addCheck("reuse rules reference shared helpers", ["shared/reportWriter.js", "shared/reportMetadata.js", "shared/resultEnvelope.js", "shared/redaction.js", "shared/checkResultFormatter.js", "os-roadmap/updatePhaseStatus.js"].every((item) => contract.reuseRequired?.includes(item)));
 addCheck("reuse rules reference P104 schema", contract.reuseRequired?.includes("live-ready/founderLiveExecutionBoundarySchema.js") && moduleSource.includes("from \"./founderLiveExecutionBoundarySchema.js\""));
@@ -74,12 +74,12 @@ addCheck("platform roadmap records P105.1", /P105 - Founder Live Execution Appro
 addCheck("README records P105.1", /P105\.1 approval planning/.test(readme) && /P105\.2 is next/.test(readme));
 addCheck(
   "phase status advanced to P105.1",
-  status.currentPhase === "P105.1"
-    && status.previousPhase === "P104.7"
-    && status.nextPhase === "P105.2"
+  ["P105.1", "P105.2"].includes(status.currentPhase)
+    && ["P104.7", "P105.1"].includes(status.previousPhase)
+    && ["P105.2", "P105.3"].includes(status.nextPhase)
     && statusById.get("P105")?.status === "in_progress"
     && statusById.get("P105.1")?.status === "complete"
-    && statusById.get("P105.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P105.2")?.status)
     && roadmapById.get("P105.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

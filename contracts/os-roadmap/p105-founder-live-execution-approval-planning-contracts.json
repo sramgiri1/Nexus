@@ -138,24 +138,102 @@
     {
       "phaseId": "P105.2",
       "title": "Approval Plan Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build deterministic local approval-plan records from P104 execution-boundary records without approval capture or execution.",
-      "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
+      "allowedFiles": [
+        "live-ready/founderLiveExecutionApprovalPlanModel.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1052-founder-live-execution-approval-plan-model-report.md",
+        "reports/p1051-founder-live-execution-approval-planning-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
       "expectedExportsSchemasDataShapes": {
-        "futureModel": "Local approval-plan records with display-safe gate rows, missing evidence, validation commands, blockers, owner capability, cost posture, and all execution flags false."
+        "exports": [
+          "P105_FOUNDER_LIVE_EXECUTION_APPROVAL_MODEL_PHASE",
+          "P105_EXECUTION_APPROVAL_MODEL_STATES",
+          "buildFounderLiveExecutionApprovalPlanModel",
+          "validateFounderLiveExecutionApprovalPlanModel"
+        ],
+        "envelope": "Result envelope with schemaVersion, currentState, sourceSchemaPhase, sourceBoundaryPhase, founderContextSummary, approvalPlanReadiness, approvalPlanRows, requiredGates, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible false, and all approval/runtime/execution flags false.",
+        "approvalPlanRows": "Each row includes display-safe plan id, label, source boundary key, work order label, proposed agent lane, proposed outcome, approval state, required gates, missing gates, review questions, validation commands, blockers, disabled reason, owner, evidence/activity, cost impact, and all approval/runtime/execution flags false."
       },
-      "commandCenterUxRequirements": "No UI unless explicitly scoped in P105.4.",
-      "themeRequirements": "Preserve system, dark, and light themes.",
-      "playwrightTests": "None unless UI changes.",
-      "checkerUpdates": ["Add P105.2 model checker."],
-      "docsRoadmap": "Record P105.2 when implemented.",
-      "phaseStatusUpdate": "P105.2 complete only when model checker passes.",
-      "validationCommands": [],
-      "finalSafetyChecks": ["Confirm model-only scope.", "Confirm approvals do not unlock execution."],
-      "gitCommands": [],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Known limitations", "Next subphase"]
+      "commandCenterUxRequirements": "No Command Center source change in P105.2. P105.4 must render these approval-plan rows on Business Build, Agent Flow, and Live Readiness without approval or execution controls. Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "No theme source change in P105.2. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P105.2 because no UI files change. P105.4 must add focused route coverage.",
+      "checkerUpdates": [
+        "Add check:p1052-founder-live-execution-approval-plan-model.",
+        "Keep check:p1051-founder-live-execution-approval-planning-contract forward-compatible."
+      ],
+      "docsRoadmap": "Record P105.2 complete and P105.3 next.",
+      "phaseStatusUpdate": "P105 in progress; P105.2 complete; current P105.2; previous P105.1; next P105.3.",
+      "validationCommands": [
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P105.2 is model-only.",
+        "Confirm approvals cannot unlock execution.",
+        "Confirm no project files changed.",
+        "Confirm P105.3 remains planned."
+      ],
+      "gitCommands": [
+        "git add <allowed P105.2 files>",
+        "git commit -m \"feat(nexus): model founder live approval plans\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "7270fb70",
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveExecutionApprovalPlanModel.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ]
     },
     {
       "phaseId": "P105.3",
@@ -164,20 +242,41 @@
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Create a display-safe review packet that summarizes approval gates and blocked runtime transitions without submitting approvals.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
       "expectedExportsSchemasDataShapes": {
         "futurePacket": "Review packet with gate summary, missing evidence, blockers, validation commands, owner, evidence, activity, cost, and all runtime flags false."
       },
       "commandCenterUxRequirements": "No primary UX until P105.4.",
       "themeRequirements": "Preserve system, dark, and light themes.",
       "playwrightTests": "None unless UI changes.",
-      "checkerUpdates": ["Add P105.3 review packet checker."],
+      "checkerUpdates": [
+        "Add P105.3 review packet checker."
+      ],
       "docsRoadmap": "Record P105.3 when implemented.",
       "phaseStatusUpdate": "P105.3 complete only when packet checker passes.",
       "validationCommands": [],
-      "finalSafetyChecks": ["Confirm dry-run only.", "Confirm no approval writes."],
+      "finalSafetyChecks": [
+        "Confirm dry-run only.",
+        "Confirm no approval writes."
+      ],
       "gitCommands": [],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Known limitations", "Next subphase"]
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Known limitations",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P105.4",
@@ -186,20 +285,42 @@
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Render approval-planning state on the relevant founder pages without adding approval or execution controls.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
       "expectedExportsSchemasDataShapes": {
         "futureUx": "Business Build, Agent Flow, and Live Readiness display approval plan state, next action, blockers, disabled reason, owner, evidence/activity, validation commands, and cost impact. Chat/Lite remain chat-only."
       },
       "commandCenterUxRequirements": "No unprocessed data dumps, private IDs, demo leakage, approval buttons, execution controls, or fake runnable actions.",
       "themeRequirements": "Preserve system, dark, and light themes.",
       "playwrightTests": "Add focused route coverage for approval-planning card placement and Chat/Lite absence.",
-      "checkerUpdates": ["Add P105.4 UX checker."],
+      "checkerUpdates": [
+        "Add P105.4 UX checker."
+      ],
       "docsRoadmap": "Record P105.4 when implemented.",
       "phaseStatusUpdate": "P105.4 complete only when checker and Playwright pass.",
       "validationCommands": [],
-      "finalSafetyChecks": ["Confirm no approval controls.", "Confirm Chat/Lite remain clean."],
+      "finalSafetyChecks": [
+        "Confirm no approval controls.",
+        "Confirm Chat/Lite remain clean."
+      ],
       "gitCommands": [],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Command Center UX changes", "Known limitations", "Next subphase"]
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Command Center UX changes",
+        "Known limitations",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P105.5",
@@ -208,20 +329,41 @@
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Aggregate P105 checker and route-safety coverage without changing runtime behavior.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
       "expectedExportsSchemasDataShapes": {
         "futureAggregate": "Aggregate validation for P105.1-P105.5 reports, scripts, UX placement, status, docs, and safety wording."
       },
       "commandCenterUxRequirements": "Preserve P105.4 UX.",
       "themeRequirements": "Preserve system, dark, and light themes.",
       "playwrightTests": "Run retained P105.4 route coverage.",
-      "checkerUpdates": ["Add P105.5 aggregate checker."],
+      "checkerUpdates": [
+        "Add P105.5 aggregate checker."
+      ],
       "docsRoadmap": "Record P105.5 when implemented.",
       "phaseStatusUpdate": "P105.5 complete only when aggregate checker passes.",
       "validationCommands": [],
-      "finalSafetyChecks": ["Confirm no unsafe runtime changes."],
+      "finalSafetyChecks": [
+        "Confirm no unsafe runtime changes."
+      ],
       "gitCommands": [],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Checker results", "Known limitations", "Next subphase"]
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Checker results",
+        "Known limitations",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P105.6",
@@ -230,20 +372,41 @@
       "scopeClassification": "DOCS_CHANGE",
       "narrowGoal": "Close P105 docs, README, platform roadmap, and phase status evidence without behavior changes.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
       "expectedExportsSchemasDataShapes": {
         "futureDocs": "Docs record approval-planning scope, UX placement, validation commands, safety boundaries, and P105.7 handoff."
       },
       "commandCenterUxRequirements": "No UX source change.",
       "themeRequirements": "No theme source change.",
       "playwrightTests": "None unless stale UX labels change.",
-      "checkerUpdates": ["Add P105.6 docs checker."],
+      "checkerUpdates": [
+        "Add P105.6 docs checker."
+      ],
       "docsRoadmap": "Record P105.6 when implemented.",
       "phaseStatusUpdate": "P105.6 complete only when docs checker passes.",
       "validationCommands": [],
-      "finalSafetyChecks": ["Confirm docs do not imply live execution is enabled."],
+      "finalSafetyChecks": [
+        "Confirm docs do not imply live execution is enabled."
+      ],
       "gitCommands": [],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Docs/roadmap updates", "Known limitations", "Next subphase"]
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Docs/roadmap updates",
+        "Known limitations",
+        "Next subphase"
+      ]
     },
     {
       "phaseId": "P105.7",
@@ -252,25 +415,52 @@
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P105 validation, close the parent phase, stamp commits, and hand off to the next planned phase.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "dashboard/src/**", "dashboard/tests/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
       "expectedExportsSchemasDataShapes": {
         "futureFinal": "Final validation report that confirms all P105 subphases complete, status is closed, reports exist, and no execution authority was enabled."
       },
       "commandCenterUxRequirements": "No UX source change unless final validation finds stale labels.",
       "themeRequirements": "Preserve system, dark, and light themes.",
       "playwrightTests": "Run retained P105 route coverage.",
-      "checkerUpdates": ["Add P105.7 final checker."],
+      "checkerUpdates": [
+        "Add P105.7 final checker."
+      ],
       "docsRoadmap": "Record P105 complete and next phase handoff.",
       "phaseStatusUpdate": "P105 complete only when all P105 subphases pass.",
       "validationCommands": [],
-      "finalSafetyChecks": ["Confirm no live execution authority was enabled.", "Confirm no project files changed."],
+      "finalSafetyChecks": [
+        "Confirm no live execution authority was enabled.",
+        "Confirm no project files changed."
+      ],
       "gitCommands": [],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "Checker results", "Dashboard results", "Safety confirmations", "Known limitations", "Next phase/subphase"]
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Checker results",
+        "Dashboard results",
+        "Safety confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ],
   "knownLimitations": [
-    "P105.1 defines local approval-planning schema and contract only.",
+    "P105.1-P105.2 define local approval-planning schema and model only.",
     "Approval capture, approval persistence, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P105.2-P105.7 remain planned."
+    "P105.3-P105.7 remain planned."
   ]
 }

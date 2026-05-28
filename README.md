@@ -205,6 +205,10 @@ The Command Center and local operator surface have:
   schema and contract now define required gates, blocked runtime transitions,
   validation commands, and safety rules without allowing approvals to unlock
   execution. P105.2 is next.
+- P105.2 approval-plan model: deterministic local approval-plan rows now derive
+  from P104 execution-boundary rows with review questions, missing gates,
+  validation commands, blockers, owner/evidence/activity, and cost posture.
+  Approval capture and execution remain blocked. P105.3 is next.
 
 ## CareLoop Project Progress
 
