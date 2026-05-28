@@ -1,7 +1,7 @@
 {
   "phaseId": "P105",
   "title": "Founder Live Execution Approval Planning",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define governed local approval-planning gates for future live execution without granting approval capture, runtime admission, execution, mutation, deploy, network, or spend authority.",
   "safetyRules": [
@@ -618,10 +618,35 @@
     {
       "phaseId": "P105.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P105 validation, close the parent phase, stamp commits, and hand off to the next planned phase.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "scripts/check-p1057-founder-live-execution-approval-final.js",
+        "scripts/check-p1056-founder-live-execution-approval-docs.js",
+        "scripts/check-p1055-founder-live-execution-approval-aggregate.js",
+        "scripts/check-p1054-command-center-approval-review-ux.js",
+        "scripts/check-p1053-founder-live-execution-approval-review-packet.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1057-founder-live-execution-approval-final-report.md",
+        "reports/p1056-founder-live-execution-approval-docs-report.md",
+        "reports/p1055-founder-live-execution-approval-aggregate-report.md",
+        "reports/p1054-command-center-approval-review-ux-report.md",
+        "reports/p1053-founder-live-execution-approval-review-packet-report.md",
+        "reports/p1052-founder-live-execution-approval-plan-model-report.md",
+        "reports/p1051-founder-live-execution-approval-planning-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-os-phase-status.js"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -637,37 +662,65 @@
         ".env*"
       ],
       "expectedExportsSchemasDataShapes": {
-        "futureFinal": "Final validation report that confirms all P105 subphases complete, status is closed, reports exist, and no execution authority was enabled."
+        "finalChecker": "check:p1057-founder-live-execution-approval-final validates P105 parent closure, all subphases, reports, scripts, retained route coverage, display packet safety, status, docs, and P106 handoff.",
+        "report": "reports/p1057-founder-live-execution-approval-final-report.md records final checks, validation commands, limitations, and result."
       },
-      "commandCenterUxRequirements": "No UX source change unless final validation finds stale labels.",
-      "themeRequirements": "Preserve system, dark, and light themes.",
-      "playwrightTests": "Run retained P105 route coverage.",
+      "commandCenterUxRequirements": "No Command Center source change. Preserve P105.4 approval review UX on Business Build, Agent Flow, and Live Readiness. Chat with NEXUS and Lite remain chat-only.",
+      "themeRequirements": "Preserve system, dark, and light themes through retained route coverage and dashboard build.",
+      "playwrightTests": "Run retained P105.4 focused route coverage.",
       "checkerUpdates": [
-        "Add P105.7 final checker."
+        "Add check:p1057-founder-live-execution-approval-final.",
+        "Keep P105.1-P105.6 checkers forward-compatible with P105.7/P106 status closure.",
+        "Allow P106 as the next-phase handoff label in check:os-phase-status without adding P106 implementation."
       ],
-      "docsRoadmap": "Record P105 complete and next phase handoff.",
-      "phaseStatusUpdate": "P105 complete only when all P105 subphases pass.",
-      "validationCommands": [],
+      "docsRoadmap": "Record P105.7 complete, P105 complete, and P106 next in README, platform roadmap, and P105 plan.",
+      "phaseStatusUpdate": "P105 complete; P105.7 complete; current P105.7; previous P105.6; next P106.",
+      "validationCommands": [
+        "npm run check:p1057-founder-live-execution-approval-final",
+        "npm run check:p1056-founder-live-execution-approval-docs",
+        "npm run check:p1055-founder-live-execution-approval-aggregate",
+        "npm run check:p1054-command-center-approval-review-ux",
+        "npm run check:p1053-founder-live-execution-approval-review-packet",
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm no live execution authority was enabled.",
-        "Confirm no project files changed."
+        "Confirm P105 is final validation only and does not enable approval submission, capture, persistence, execution unlock, or runtime admission.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network call, or spend is enabled.",
+        "Confirm no dashboard source/test, project, or CareLoop files changed."
       ],
-      "gitCommands": [],
+      "gitCommands": [
+        "git add README.md contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json docs/architecture/NEXUS_PLATFORM_ROADMAP.md docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json package.json reports/os-phase-status-report.md reports/p1051-founder-live-execution-approval-planning-contract-report.md reports/p1052-founder-live-execution-approval-plan-model-report.md reports/p1053-founder-live-execution-approval-review-packet-report.md reports/p1054-command-center-approval-review-ux-report.md reports/p1055-founder-live-execution-approval-aggregate-report.md reports/p1056-founder-live-execution-approval-docs-report.md reports/p1057-founder-live-execution-approval-final-report.md reports/phase-validation-coverage-report.md scripts/check-os-phase-status.js scripts/check-p1051-founder-live-execution-approval-planning-contract.js scripts/check-p1052-founder-live-execution-approval-plan-model.js scripts/check-p1053-founder-live-execution-approval-review-packet.js scripts/check-p1054-command-center-approval-review-ux.js scripts/check-p1055-founder-live-execution-approval-aggregate.js scripts/check-p1056-founder-live-execution-approval-docs.js scripts/check-p1057-founder-live-execution-approval-final.js",
+        "git commit -m \"test(nexus): close founder approval planning validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
         "Checker results",
-        "Dashboard results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
         "Safety confirmations",
+        "Forbidden paths confirmation",
         "Known limitations",
         "Next phase/subphase"
       ]
     }
   ],
   "knownLimitations": [
-    "P105.6 is docs and roadmap closure only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "P105 is complete as final validation only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P105.7 remains planned for final validation."
+    "P106 is the next handoff placeholder; no P106 work is implemented in P105.7."
   ]
 }

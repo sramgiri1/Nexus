@@ -51,7 +51,7 @@ addCheck("contract records validation commands", (p1056.validationCommands || []
 addCheck("contract avoids forbidden file scope", !(p1056.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("plan records P105.6 complete", /P105\.6 Docs \/ Roadmap[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P105.6", /P105\.6 is\s+complete/.test(platformRoadmap) && /P105\.7 is\s+next/.test(platformRoadmap));
-addCheck("README records P105.6", /P105\.6 docs closure/.test(readme) && /P105\.7 is next/.test(readme));
+addCheck("README records P105.6", /P105\.6 docs closure/.test(readme) && (/P105\.7 is next/.test(readme) || /P106 is next/.test(readme)));
 addCheck("docs record approval planning scope", /approval-planning contract/i.test(docsText) && /approval-plan model/i.test(docsText) && /dry-run review packet/i.test(docsText) && /approval review UX/i.test(docsText));
 addCheck("docs record Command Center placement", /Business Build, Agent Flow, and Live Readiness/i.test(docsText) && /Chat with NEXUS and Lite remain chat-only/i.test(docsText));
 addCheck(

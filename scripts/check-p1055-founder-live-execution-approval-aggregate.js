@@ -63,8 +63,8 @@ addCheck("review packet rows are display safe", packet.reviewPacketRows?.every((
 addCheck("contract marks P105.5 complete", p1055.status === "complete");
 addCheck("P105.6 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P105.6")?.status));
 addCheck("docs record P105.5", /P105\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P105.5", /P105\.5 is\s+complete/.test(platformRoadmap) && (/P105\.6 is\s+next/.test(platformRoadmap) || /P105\.7 is\s+next/.test(platformRoadmap)));
-addCheck("README records P105.5", /P105\.5 aggregate validation/.test(readme) && (/P105\.6 is next/.test(readme) || /P105\.7 is next/.test(readme)));
+addCheck("platform roadmap records P105.5", /P105\.5 is\s+complete/.test(platformRoadmap) && (/P105\.6 is\s+next/.test(platformRoadmap) || /P105\.7 is\s+next/.test(platformRoadmap) || /P106 is\s+next/.test(platformRoadmap)));
+addCheck("README records P105.5", /P105\.5 aggregate validation/.test(readme) && (/P105\.6 is next/.test(readme) || /P105\.7 is next/.test(readme) || /P106 is next/.test(readme)));
 addCheck(
   "phase status advanced",
   ["P105.5", "P105.6", "P105.7"].includes(status.currentPhase)

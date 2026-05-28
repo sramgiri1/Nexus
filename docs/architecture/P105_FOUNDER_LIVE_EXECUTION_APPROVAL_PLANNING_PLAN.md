@@ -230,8 +230,22 @@ Safety result: docs and roadmap closure only. It records that approval submissio
 
 ## P105.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: run final P105 validation, close the parent phase, stamp commits, and hand off to the next planned phase.
 
-Validation commands: include final checker, all P105 checkers, focused Playwright coverage, dashboard build, OS phase status, phase validation coverage, and diff check.
+Validation commands:
+- npm run check:p1057-founder-live-execution-approval-final
+- npm run check:p1056-founder-live-execution-approval-docs
+- npm run check:p1055-founder-live-execution-approval-aggregate
+- npm run check:p1054-command-center-approval-review-ux
+- npm run check:p1053-founder-live-execution-approval-review-packet
+- npm run check:p1052-founder-live-execution-approval-plan-model
+- npm run check:p1051-founder-live-execution-approval-planning-contract
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only"
+- cd dashboard && npm run build
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Safety result: final validation only. P105 is complete, and approval submission, approval capture, approval persistence, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, and provider spend remain blocked.

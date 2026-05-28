@@ -227,7 +227,10 @@ The Command Center and local operator surface have:
   boundaries, blocked runtime admission, and blocked approval/execution
   authority. Provider/model calls, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, and provider spend remain blocked.
-  P105.7 is next.
+- P105.7 final validation: P105 is complete across approval-planning contract,
+  approval-plan model, dry-run review packet, Command Center approval review UX,
+  aggregate validation, docs closure, final route checks, dashboard build,
+  reports, and phase status. P106 is next.
 
 ## CareLoop Project Progress
 
