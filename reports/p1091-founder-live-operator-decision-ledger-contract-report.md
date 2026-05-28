@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.1
-- Generated at: 2026-05-28T20:25:38.417Z
+- Generated at: 2026-05-28T20:26:17.730Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8ea9418a
+- Validation HEAD: bd0e89b9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,7 +38,7 @@
 | all blocked flags false | PASS |  |
 | contract records validation commands | PASS |  |
 | P109.1 avoids forbidden file scope | PASS |  |
-| current changed files stay in P109.1 scope | PASS | README.md, contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1091-founder-live-operator-decision-ledger-contract-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1091-founder-live-operator-decision-ledger-contract.js, live-ready/founderLiveOperatorDecisionLedgerModel.js, reports/p1092-founder-live-operator-decision-ledger-model-report.md, scripts/check-p1092-founder-live-operator-decision-ledger-model.js |
+| current changed files stay in P109.1 scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1092-founder-live-operator-decision-ledger-model-report.md |
 | plan records P109.1 complete | PASS |  |
 | platform roadmap records P109.1 | PASS |  |
 | README records P109.1 | PASS |  |

@@ -13683,7 +13683,7 @@
       "order": 145,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bd0e89b9",
       "completedAt": "",
       "summary": "P109 is in progress. P109.1 defines the local decision-ledger boundary and P109.2 assembles deterministic local decision-ledger candidate records while capture, persistence, ledger writes, DB writes, runtime admission, execution, mutation, network, and spend authority remain blocked.",
       "checksRun": [
@@ -13737,7 +13737,7 @@
       "order": 145.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bd0e89b9",
       "completedAt": "2026-05-28T20:24:37.000Z",
       "summary": "Assembled deterministic local operator decision-ledger candidate records from the P109.1 boundary and P108 operator-review audit preview without enabling capture, persistence, ledger writes, DB writes, replay, runtime admission, execution, mutation, network, or spend.",
       "checksRun": [
