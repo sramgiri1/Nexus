@@ -8715,7 +8715,7 @@
       "order": 144,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "abc1adbb",
       "completedAt": "2026-05-28T20:06:47.000Z",
       "summary": "P108 is complete across the founder live approval operator-review contract, local model, audit preview, Command Center UX, aggregate validation, docs, reports, OS phase status, final validation, and P109 planned handoff while all capture, write, runtime, execution, mutation, network, and spend authority remains blocked.",
       "checksRun": [
@@ -8916,7 +8916,7 @@
       "order": 144.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "abc1adbb",
       "completedAt": "2026-05-28T20:06:47.000Z",
       "summary": "Closed P108 final validation across parent/subphase status, scripts, reports, Command Center operator-review UX retention, route safety, dashboard build, docs, roadmap, OS phase status, and P109 planned handoff.",
       "checksRun": [
