@@ -9414,24 +9414,24 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "68efeb676fe79b33a07d022dc26e92d2fb1f8a8c",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P111 is in progress. P111.1-P111.5 define contracts, local SQLite schema, approval-gated local CRUD model, display-safe Command Center UX, and aggregate validation for founder live agent work orders while unsafe authority remains blocked.",
+      "summary": "P111 is in progress. P111.1-P111.6 define contracts, local SQLite schema, approval-gated local CRUD model, display-safe Command Center UX, aggregate validation, and docs closure for founder live agent work orders while unsafe authority remains blocked.",
       "checksRun": [
+        "npm run check:p1116-founder-live-agent-work-order-persistence",
         "npm run check:p1115-founder-live-agent-work-order-persistence",
-        "npm run check:p1114-command-center-work-order-persistence-ux",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P111.5 is aggregate validation only and does not add runtime authority.",
+        "P111.6 is docs closure only and does not add runtime authority.",
         "Unsafe authority remains blocked unless a later explicit phase scopes it."
       ],
-      "nextPhase": "P111.6",
+      "nextPhase": "P111.7",
       "commandCenterVisible": true,
       "label": "Work Orders",
-      "detail": "P111.5 aggregate validation complete; P111.6 docs and roadmap closure next."
+      "detail": "P111.6 docs closure complete; P111.7 final validation next."
     },
     {
       "phaseId": "P111.1",
@@ -9575,19 +9575,27 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 147.6,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned docs and roadmap closure for P111.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T22:44:44.353Z",
+      "summary": "Closed P111 docs, README, platform roadmap, contract, reports, and OS status evidence before final validation.",
+      "checksRun": [
+        "npm run check:p1116-founder-live-agent-work-order-persistence",
+        "npm run check:p1115-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned docs closure only."
+        "P111.6 is docs and roadmap closure only and does not change runtime behavior, DB schema, dashboard source, or project files.",
+        "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P111.7 will run final validation and hand off to the next planned phase."
       ],
       "nextPhase": "P111.7",
       "commandCenterVisible": true,
       "label": "Docs / Roadmap",
-      "detail": "Planned docs closure.",
+      "detail": "Docs, roadmap, contract, reports, and status evidence are closed for P111 final validation.",
       "previousPhase": "P111.5"
     },
     {
@@ -9607,7 +9615,8 @@
       "nextPhase": "P112",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation."
+      "detail": "Planned final validation.",
+      "previousPhase": "P111.6"
     },
     {
       "phaseId": "P83",
@@ -10020,9 +10029,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T22:41:22.715Z",
-  "currentPhase": "P111.5",
-  "previousPhase": "P111.4",
-  "nextPhase": "P111.6",
+  "updatedAt": "2026-05-28T22:44:44.353Z",
+  "currentPhase": "P111.6",
+  "previousPhase": "P111.5",
+  "nextPhase": "P111.7",
   "currentPhaseStatus": "complete"
 }

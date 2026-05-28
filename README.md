@@ -546,6 +546,13 @@ The Command Center and local operator surface have:
   DB schema, dashboard source, project files, provider/model calls, dispatch,
   worker/tool execution, hosted DB mutation, raw SQL, deploy, release, export,
   package, network call, and provider spend remain unchanged and unavailable.
+- P111.6 docs closure: P111 docs, README, platform roadmap, contract, reports,
+  and OS phase status now record the work order persistence path through
+  aggregate validation. P111.7 is next for final validation and handoff.
+  Runtime behavior, DB schema, dashboard source, project files, provider/model
+  calls, dispatch, worker/tool execution, hosted DB mutation, raw SQL, deploy,
+  release, export, package, network call, and provider spend remain unchanged
+  and unavailable.
 
 ## CareLoop Project Progress
 

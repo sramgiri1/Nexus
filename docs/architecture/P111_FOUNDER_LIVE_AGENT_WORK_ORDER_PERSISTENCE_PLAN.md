@@ -476,3 +476,86 @@ and P111.6.
 
 Rollback plan: remove the P111.5 checker/script/docs/status/report updates,
 restore P111 to P111.4 with P111.5 planned, and keep P111.1-P111.4 unchanged.
+
+## P111.6 Docs / Roadmap
+
+Status: complete
+
+Narrow goal: close P111 docs, README, platform roadmap, contract, reports, and
+OS status evidence before final validation.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `cf5104f5`.
+
+Allowed files: P111.6 docs checker, P111.5 compatibility checker, P111
+contract, P111 plan, README, platform roadmap, package script registry, OS
+phase status files, and generated P111.6/P111.5/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `db/**`, `live-ready/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: added the P111.6 docs checker, registered the
+package script, updated P111.5 handoff compatibility, updated P111
+contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes: no new runtime exports, schema, or UI data. The
+checker validates docs/status/report completeness for P111.1-P111.6 and the
+handoff to P111.7 final validation.
+
+Safety rules: docs and roadmap closure only. Hosted DB mutation, raw SQL,
+provider/model calls, agent dispatch, worker/tool execution, runtime admission,
+execution unlock, project mutation, deploy, release, export, package creation,
+network calls, and provider spend remain blocked.
+
+Reuse check: P111.6 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P111.1-P111.5 reports, and existing
+OS status files. No report writer, checker formatter, UI component, DB helper,
+or runtime helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P111.6.
+P111.4 Business Build and Durable State UX is preserved; Chat/Lite remains
+clean.
+
+Dark/light/system theme requirements: no theme source change in P111.6.
+
+Playwright tests: no new Playwright test in P111.6 because no UI source changes
+are made.
+
+Checker updates: P111.6 adds a dedicated docs checker and updates P111.5 to
+accept the P111.6/P111.7 handoff state.
+
+Docs/README/roadmap updates: P111.6 is recorded in this plan, README, platform
+roadmap, P111 contract, OS roadmap/status, and generated reports. P111.7 is
+next.
+
+OS phase status update: P111 is in progress; P111.6 is complete; current phase
+P111.6; previous P111.5; next P111.7.
+
+Validation commands:
+- `npm run check:p1116-founder-live-agent-work-order-persistence`
+- `npm run check:p1115-founder-live-agent-work-order-persistence`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/live-ready/db/provider/
+deploy paths changed; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw work order table names in primary UX; no fake runnable
+actions; no hosted DB mutation, raw SQL interface, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P111.6 files>`
+- `git commit -m "feat(nexus): add p111 work order persistence docs"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: stale docs can overstate live authority. The P111.6 checker blocks
+unsafe authority claims and validates plan, README, platform roadmap, contract,
+phase status, and prior reports together.
+
+Rollback plan: remove the P111.6 checker/script/docs/status/report updates,
+restore P111 to P111.5 with P111.6 planned, and keep P111.1-P111.5 unchanged.

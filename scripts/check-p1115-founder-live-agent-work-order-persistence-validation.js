@@ -57,6 +57,7 @@ const routeTests = readText("dashboard/tests/routes.spec.js");
 const p1114Checker = readText("scripts/check-p1114-command-center-work-order-persistence-ux.js");
 const changed = changedFiles();
 const allowedFiles = new Set(p1115.allowedFiles || []);
+const enforceCurrentDiffScope = status.currentPhase === "P111.5";
 const forbiddenPrefixes = [
   "projects/",
   "careloop/",
@@ -133,12 +134,18 @@ addCheck("dashboard model stays browser safe", !businessBuildSource.includes("fo
 addCheck("P111.4 checker accepts P111.5 handoff", p1114Checker.includes('status.currentPhase === "P111.5"') && p1114Checker.includes('status.nextPhase === "P111.6"'));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P111.5"
-    && status.previousPhase === "P111.4"
-    && status.nextPhase === "P111.6"
-    && roadmap.currentPhase === "P111.5"
-    && roadmap.previousPhase === "P111.4"
-    && roadmap.nextPhase === "P111.6"
+  ((status.currentPhase === "P111.5"
+      && status.previousPhase === "P111.4"
+      && status.nextPhase === "P111.6"
+      && roadmap.currentPhase === "P111.5"
+      && roadmap.previousPhase === "P111.4"
+      && roadmap.nextPhase === "P111.6")
+    || (status.currentPhase === "P111.6"
+      && status.previousPhase === "P111.5"
+      && status.nextPhase === "P111.7"
+      && roadmap.currentPhase === "P111.6"
+      && roadmap.previousPhase === "P111.5"
+      && roadmap.nextPhase === "P111.7"))
     && statusById.get("P111")?.status === "in_progress"
     && statusById.get("P111.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P111.6")?.status)
@@ -155,7 +162,11 @@ addCheck("primary UX avoids raw packet keys", !/(workOrderId|workOrderEventId|wo
 addCheck("docs avoid fake unsafe runnable actions", !/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write work order now/i.test(docsBundle));
 addCheck("docs do not claim unsafe authority live", !/hosted DB mutation is enabled|raw SQL is allowed|runtime admission is enabled|execution is live|execution unlock is enabled|provider spend is enabled|agent dispatch is enabled|project mutation is enabled|work order execution is enabled/i.test(docsBundle));
 addCheck("DemoApp not exposed", !commandCenterSource.includes("DemoApp"));
-addCheck("changed files stay in P111.5 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
+addCheck(
+  "changed files stay in P111.5 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
 addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 
 const failed = checks.filter((check) => check.status === "FAIL");

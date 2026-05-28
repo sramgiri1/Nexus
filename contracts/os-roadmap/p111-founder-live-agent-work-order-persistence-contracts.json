@@ -625,11 +625,11 @@
     {
       "phaseId": "P111.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Close P111 docs, README, platform roadmap, contract, reports, and OS status evidence before final validation.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "cf5104f5",
       "allowedFiles": [
         "scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
         "scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
@@ -680,26 +680,27 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [
-        "package script for P111.6"
+        "package script check:p1116-founder-live-agent-work-order-persistence"
       ],
-      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "Docs/status/report closure only. Validates P111.1-P111.6 documentation, contract, README, platform roadmap, OS phase status, and prior reports before P111.7 final validation.",
+      "commandCenterUx": "No Command Center source change in P111.6. P111.4 work order persistence UX is preserved and Chat/Lite remains clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "No new Playwright test in P111.6 because no UI source changes are made."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P111.6 checker.",
-        "Run previous subphase checker for P111.5."
+        "Added check:p1116-founder-live-agent-work-order-persistence.",
+        "Updated P111.5 checker to accept P111.6/P111.7 handoff."
       ],
-      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.6.",
-      "phaseStatusUpdate": "P111 in progress; P111.6 complete when implemented; previous P111.5; next P111.7.",
+      "docsRoadmap": "Updated P111 plan, README, platform roadmap, OS status, and generated reports for P111.6.",
+      "phaseStatusUpdate": "P111 in progress; P111.6 complete; current P111.6; previous P111.5; next P111.7.",
       "validationCommands": [
         "npm run check:p1116-founder-live-agent-work-order-persistence",
+        "npm run check:p1115-founder-live-agent-work-order-persistence",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -847,8 +848,8 @@
     "P111.1 is contract-only; DB schema, runtime helpers, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P111.5",
-  "previousSubphase": "P111.4",
-  "nextSubphase": "P111.6",
-  "summary": "P111 is in progress. P111.1-P111.5 define contracts, local SQLite schema, approval-gated local CRUD model, display-safe Command Center UX, and aggregate validation for founder live agent work orders while unsafe authority remains blocked."
+  "currentSubphase": "P111.6",
+  "previousSubphase": "P111.5",
+  "nextSubphase": "P111.7",
+  "summary": "P111 is in progress. P111.1-P111.6 define contracts, local SQLite schema, approval-gated local CRUD model, display-safe Command Center UX, aggregate validation, and docs closure for founder live agent work orders while unsafe authority remains blocked."
 }
