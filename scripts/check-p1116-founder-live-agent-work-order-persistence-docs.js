@@ -44,6 +44,7 @@ const readme = readText("README.md");
 const p1115Checker = readText("scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js");
 const changed = changedFiles();
 const allowedFiles = new Set(p1116.allowedFiles || []);
+const enforceCurrentDiffScope = status.currentPhase === "P111.6";
 const forbiddenPrefixes = [
   "projects/",
   "careloop/",
@@ -92,8 +93,7 @@ addCheck("P111.6 contract is complete", p1116.status === "complete" && ["planned
 addCheck("P111.6 records validation commands", validationCommands.every((command) => p1116.validationCommands?.includes(command)));
 addCheck("prior reports exist and pass", reportPaths.every((report) => existsSync(join(ROOT, report)) && /Result[\s\S]*PASS/.test(readText(report))));
 addCheck("P111.5 checker accepts P111.6 handoff", p1115Checker.includes('status.currentPhase === "P111.6"') && p1115Checker.includes('status.nextPhase === "P111.7"'));
-addCheck(
-  "phase status advanced",
+const p1116HandoffState =
   status.currentPhase === "P111.6"
     && status.previousPhase === "P111.5"
     && status.nextPhase === "P111.7"
@@ -104,7 +104,24 @@ addCheck(
     && statusById.get("P111.6")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P111.7")?.status)
     && roadmapById.get("P111")?.status === "in_progress"
-    && roadmapById.get("P111.6")?.status === "complete",
+    && roadmapById.get("P111.6")?.status === "complete";
+const p1117HandoffState =
+  status.currentPhase === "P111.7"
+    && status.previousPhase === "P111.6"
+    && status.nextPhase === "P112"
+    && roadmap.currentPhase === "P111.7"
+    && roadmap.previousPhase === "P111.6"
+    && roadmap.nextPhase === "P112"
+    && statusById.get("P111")?.status === "complete"
+    && statusById.get("P111.6")?.status === "complete"
+    && statusById.get("P111.7")?.status === "complete"
+    && roadmapById.get("P111")?.status === "complete"
+    && roadmapById.get("P111.6")?.status === "complete"
+    && roadmapById.get("P111.7")?.status === "complete";
+
+addCheck(
+  "phase status advanced",
+  p1116HandoffState || p1117HandoffState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("P111 plan records all completed subphases", [
@@ -117,11 +134,19 @@ addCheck("P111 plan records all completed subphases", [
 ].every((pattern) => pattern.test(plan)));
 addCheck("README records P111.6", /P111\.6 docs closure/.test(readme) && /P111\.7\s+is\s+next/.test(readme));
 addCheck("platform roadmap records P111.6", /P111\.6 is\s+complete/.test(platformRoadmap) && /P111\.7\s+is\s+next/.test(platformRoadmap));
-addCheck("contract handoff points to final validation", contract.currentSubphase === "P111.6" && contract.previousSubphase === "P111.5" && contract.nextSubphase === "P111.7");
+addCheck(
+  "contract handoff points to final validation",
+  (contract.currentSubphase === "P111.6" && contract.previousSubphase === "P111.5" && contract.nextSubphase === "P111.7")
+    || (contract.currentSubphase === "P111.7" && contract.previousSubphase === "P111.6" && contract.nextSubphase === "P112"),
+);
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid fake unsafe runnable actions", !/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write work order now/i.test(docsBundle));
 addCheck("docs do not claim unsafe authority live", !/hosted DB mutation is enabled|raw SQL is allowed|runtime admission is enabled|execution is live|execution unlock is enabled|provider spend is enabled|agent dispatch is enabled|project mutation is enabled|work order execution is enabled/i.test(docsBundle));
-addCheck("changed files stay in P111.6 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
+addCheck(
+  "changed files stay in P111.6 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
 addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 
 const failed = checks.filter((check) => check.status === "FAIL");

@@ -559,3 +559,96 @@ phase status, and prior reports together.
 
 Rollback plan: remove the P111.6 checker/script/docs/status/report updates,
 restore P111 to P111.5 with P111.6 planned, and keep P111.1-P111.5 unchanged.
+
+## P111.7 Final Validation
+
+Status: complete
+
+Narrow goal: close P111 with final checker evidence and hand off to P112
+without changing Command Center source, runtime behavior, DB schema, project
+files, or execution authority.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `023ee117`.
+
+Allowed files: P111.7 final checker, P111.6 compatibility checker, OS phase
+status checker, P111 contract, P111 plan, README, platform roadmap, package
+script registry, OS phase status files, and generated P111.7/P111.6/status/
+coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `db/**`, `live-ready/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: added the P111.7 final checker, registered the
+package script, updated P111.6 handoff compatibility, updated the OS status
+checker for the P112 handoff placeholder, closed P111 contract/status/docs, and
+regenerated reports.
+
+Expected exports/data shapes: package script
+`check:p1117-founder-live-agent-work-order-persistence`. No runtime export,
+schema, UI data, or persistent runtime data change. The final checker validates
+the existing display-safe work order state and verifies unsafe runtime flags
+remain blocked.
+
+Safety rules: final validation only. Hosted DB mutation, raw SQL,
+provider/model calls, agent dispatch, worker/tool execution, runtime admission,
+execution unlock, project mutation, deploy, release, export, package creation,
+network calls, and provider spend remain blocked.
+
+Reuse check: P111.7 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing P111.1-P111.6 reports, existing
+P111 runtime contract validation, the existing Command Center display model,
+and the OS phase status checker. No report writer, checker formatter, UI
+component, DB helper, status helper, or runtime helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P111.7.
+Business Build and Durable State continue to show work order persistence
+state; Chat/Lite remains chat-only.
+
+Dark/light/system theme requirements: no theme source change in P111.7. Existing
+P111.4 route/theme coverage is preserved.
+
+Playwright tests: no new Playwright test in P111.7 because no UI source changes
+are made. The final checker validates that existing P111.4 route coverage is
+still present.
+
+Checker updates: P111.7 adds a dedicated final checker, updates P111.6 to
+accept the P111.7/P112 handoff state, and updates the OS phase status checker
+to allow P112 as the next handoff placeholder.
+
+Docs/README/roadmap updates: P111.7 and parent P111 are recorded complete in
+this plan, README, platform roadmap, P111 contract, OS roadmap/status, and
+generated reports. P112 is next and requires its own implementation-grade
+contract before work begins.
+
+OS phase status update: P111 is complete; P111.7 is complete; current phase
+P111.7; previous P111.6; next P112.
+
+Validation commands:
+- `npm run check:p1117-founder-live-agent-work-order-persistence`
+- `npm run check:p1116-founder-live-agent-work-order-persistence`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/live-ready/db/provider/
+deploy paths changed; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw work order table names in primary UX; no fake runnable
+actions; no hosted DB mutation, raw SQL interface, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P111.7 files>`
+- `git commit -m "feat(nexus): finalize p111 work order persistence"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: P112 is only a handoff placeholder until its own contract is
+written. The P111.7 checker validates the placeholder but does not implement
+P112 work.
+
+Rollback plan: remove the P111.7 checker/script/docs/status/report updates,
+restore P111 to P111.6 with P111.7 planned, and keep P111.1-P111.6 unchanged.

@@ -1,7 +1,7 @@
 {
   "phaseId": "P111",
   "title": "Founder Live Agent Work Order Persistence",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move founder live agent work orders toward governed local SQLite persistence so approved agent work can be tracked durably before any dispatch, execution, project mutation, hosted DB mutation, deploy, network, or spend authority is considered.",
   "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -735,11 +735,11 @@
     {
       "phaseId": "P111.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P111 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "023ee117",
       "allowedFiles": [
         "scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
         "scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
@@ -805,13 +805,15 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P111.7 checker.",
-        "Run previous subphase checker for P111.6."
+        "Added the dedicated P111.7 checker.",
+        "Updated P111.6 checker to accept P111.7/P112 handoff.",
+        "Updated OS phase status checker to accept P112 as a handoff placeholder."
       ],
-      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.7.",
-      "phaseStatusUpdate": "P111 in progress; P111.7 complete when implemented; previous P111.6; next P112.",
+      "docsRoadmap": "Updated P111 plan, README, platform roadmap, OS status, and generated reports for P111.7 final validation.",
+      "phaseStatusUpdate": "P111 complete; P111.7 complete; current P111.7; previous P111.6; next P112.",
       "validationCommands": [
         "npm run check:p1117-founder-live-agent-work-order-persistence",
+        "npm run check:p1116-founder-live-agent-work-order-persistence",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -848,8 +850,8 @@
     "P111.1 is contract-only; DB schema, runtime helpers, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P111.6",
-  "previousSubphase": "P111.5",
-  "nextSubphase": "P111.7",
-  "summary": "P111 is in progress. P111.1-P111.6 define contracts, local SQLite schema, approval-gated local CRUD model, display-safe Command Center UX, aggregate validation, and docs closure for founder live agent work orders while unsafe authority remains blocked."
+  "currentSubphase": "P111.7",
+  "previousSubphase": "P111.6",
+  "nextSubphase": "P112",
+  "summary": "P111 is complete with contract, local SQLite schema, approval-gated local CRUD, display-safe Command Center UX, aggregate validation, docs closure, and final validation for founder live agent work order persistence while unsafe authority remains blocked."
 }
