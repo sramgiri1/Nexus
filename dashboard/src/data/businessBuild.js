@@ -867,6 +867,100 @@ export function buildFounderLiveApprovalRequestQueuePreviewDisplayModel({
   };
 }
 
+export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  approvalRequestQueuePreview,
+} = {}) {
+  const queue = approvalRequestQueuePreview || buildFounderLiveApprovalRequestQueuePreviewDisplayModel({ founderIdeaSummary });
+  const disabledReason =
+    "P107.4 renders a local approval capture boundary preview only. It cannot capture approvals, persist approval state, write approval decisions, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const auditRows = (queue.queueRows || []).map((row, index) => ({
+    label: `${row.proposedAgentLane || "Founder workstream agent"} capture audit`,
+    proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+    proposedOutcome: row.proposedOutcome || "Review governed capture evidence before any future approval capture phase.",
+    auditPosition: index + 1,
+    auditState: "Founder Live Approval Capture Audit Ready Execution Blocked",
+    missingEvidence: row.missingEvidence || [],
+    evidenceStatus: {
+      requiredEvidenceCount: 27,
+      missingEvidenceCount: row.missingEvidence?.length || 0,
+      capturedDecisions: 0,
+      persistedDecisions: 0,
+      writableDecisions: 0,
+      executionUnlocks: 0,
+      runtimeAdmissions: 0,
+    },
+    auditQuestions: [
+      "Which founder decision would be reviewed later?",
+      "Which operator evidence would be reviewed later?",
+      "What audit evidence must exist before any future capture can be considered?",
+    ],
+    validationCommand: "npm run check:p1073-founder-live-approval-capture-audit-preview",
+    nextAction: "Keep this capture audit preview local until a later explicit phase defines approval capture.",
+    blocker: row.blocker || "Approval capture is not available.",
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Approval Capture Boundary",
+    evidenceLocation: "reports/p1073-founder-live-approval-capture-audit-preview-report.md",
+    activityLocation: row.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: row.costImpact || "Local approval capture audit preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalCaptured: "Blocked",
+    approvalPersisted: "Blocked",
+    approvalWriteAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    runtimeAdmissionAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    spendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Founder Live Approval Capture Boundary Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    auditPreviewReady: auditRows.length > 0,
+    auditPreviewCount: auditRows.length,
+    blockedAuditPreviewCount: auditRows.length,
+    capturableDecisionCount: 0,
+    persistedDecisionCount: 0,
+    writableDecisionCount: 0,
+    executableDecisionCount: 0,
+    dispatchableDecisionCount: 0,
+    projectMutationDecisionCount: 0,
+    hostedDbMutationDecisionCount: 0,
+    nextAction: "Review approval capture boundary state on non-chat pages while approval capture and execution remain blocked.",
+    blockers: [
+      "Approval capture remains blocked.",
+      "Approval persistence remains blocked.",
+      "Approval writes cannot unlock execution.",
+      "Runtime admission remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Approval Capture Boundary",
+    evidenceLocation: "reports/p1073-founder-live-approval-capture-audit-preview-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic approval capture boundary UX only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    auditRows,
+    safetyRows: [
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Approval persistence", value: "Blocked" },
+      { label: "Approval writes", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1577,6 +1671,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdeaSummary: prdFields.founderIdea,
     reviewPacket: founderLiveExecutionApprovalReviewPacket,
   });
+  const founderLiveApprovalCaptureBoundary = buildFounderLiveApprovalCaptureBoundaryDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+    approvalRequestQueuePreview: founderLiveApprovalRequestQueuePreview,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1710,6 +1808,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveExecutionBoundary,
     founderLiveExecutionApprovalReviewPacket,
     founderLiveApprovalRequestQueuePreview,
+    founderLiveApprovalCaptureBoundary,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

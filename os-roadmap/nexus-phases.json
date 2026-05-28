@@ -8471,10 +8471,13 @@
       "order": 143,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3ae95560",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P107 approval capture boundary is in progress. P107.3 adds a local approval capture audit preview while approval capture and execution authority remain blocked.",
+      "summary": "P107 approval capture boundary is in progress. P107.4 renders display-safe Command Center capture boundary UX on Business Build, Agent Flow, and Live Readiness while approval capture and execution authority remain blocked.",
       "checksRun": [
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
         "npm run check:p1073-founder-live-approval-capture-audit-preview",
         "npm run check:p1072-founder-live-approval-capture-model",
         "npm run check:p1071-founder-live-approval-capture-boundary-contract",
@@ -8483,14 +8486,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P107.3 is local audit preview only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "P107.4 is display-only Command Center UX; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P107.4-P107.7 remain planned."
+        "P107.5-P107.7 remain planned."
       ],
-      "nextPhase": "P107.4",
+      "nextPhase": "P107.5",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P107.3 capture audit preview complete; P107.4 Command Center UX is next."
+      "detail": "P107.4 Command Center capture boundary UX complete; P107.5 aggregate validation is next."
     },
     {
       "phaseId": "P107.1",
@@ -8579,19 +8582,31 @@
       "title": "Command Center Capture Boundary UX",
       "track": "NEXUS_OS",
       "order": 143.4,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Command Center Capture Boundary UX is planned for P107. No approval capture, persistence, runtime admission, execution unlock, mutation, deploy, network, or spend authority is enabled.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T18:56:28.259Z",
+      "summary": "Rendered the display-safe approval capture boundary on Business Build, Agent Flow, and Live Readiness without capture controls, execution controls, raw dumps, private IDs, demo leakage, or fake runnable actions.",
+      "checksRun": [
+        "npm run check:p1074-command-center-approval-capture-boundary-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval capture boundary appears on non-chat founder routes\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1073-founder-live-approval-capture-audit-preview",
+        "npm run check:p1072-founder-live-approval-capture-model",
+        "npm run check:p1071-founder-live-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no approval capture or execution authority enabled."
+        "P107.4 is display-only; approval capture, approval persistence, approval writes, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P107.5 aggregate validation remains planned."
       ],
       "nextPhase": "P107.5",
       "commandCenterVisible": true,
       "label": "Capture Boundary UX",
-      "detail": "Planned display-only Command Center capture boundary UX."
+      "detail": "Display-only capture boundary UX complete on Business Build, Agent Flow, and Live Readiness; Chat/Lite remain clean."
     },
     {
       "phaseId": "P107.5",
@@ -9061,9 +9076,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T18:47:23.000Z",
-  "currentPhase": "P107.3",
-  "previousPhase": "P107.2",
-  "nextPhase": "P107.4",
+  "updatedAt": "2026-05-28T18:56:28.259Z",
+  "currentPhase": "P107.4",
+  "previousPhase": "P107.3",
+  "nextPhase": "P107.5",
   "currentPhaseStatus": "complete"
 }

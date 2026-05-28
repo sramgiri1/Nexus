@@ -2524,6 +2524,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked. P107.4 is next.
 
+P107.4 is complete. Business Build, Agent Flow, and Live Readiness now render
+the display-safe approval capture boundary with current state, audit counts,
+next action, blockers, disabled reason, owner capability, evidence/activity
+location, cost posture, audit rows, and blocked safety rows. Chat with NEXUS and
+Lite remain clean/chat-only. Approval capture, approval persistence, approval
+writes, execution unlock, runtime admission, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy,
+release, export, package action, network call, and provider spend remain
+blocked. P107.5 is next.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 

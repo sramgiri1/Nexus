@@ -117,7 +117,7 @@ Final safety checks:
 
 ## P107.4 Command Center Capture Boundary UX
 
-Status: planned
+Status: complete
 
 Narrow goal: render approval capture boundary state on Business Build, Agent Flow, and Live Readiness without capture controls, execution controls, raw data dumps, private IDs, DemoApp leakage, or fake runnable actions.
 

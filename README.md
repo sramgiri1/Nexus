@@ -316,6 +316,15 @@ The Command Center and local operator surface have:
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   deploy, release, export, package, network calls, and provider spend remain
   blocked. P107.4 is next.
+- P107.4 Command Center capture boundary UX: Business Build, Agent Flow, and
+  Live Readiness now show the display-safe approval capture boundary with
+  current state, audit counts, next action, blockers, disabled reason, owner
+  capability, evidence/activity location, cost posture, audit rows, and blocked
+  safety rows. Chat with NEXUS and Lite stay clean/chat-only. Approval capture,
+  persistence, writes, execution unlock, runtime admission, provider/model
+  calls, dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  deploy, release, export, package, network calls, and provider spend remain
+  blocked. P107.5 is next.
 
 ## CareLoop Project Progress
 
