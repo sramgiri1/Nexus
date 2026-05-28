@@ -9854,6 +9854,182 @@
       "completedAt": "2026-05-28T23:40:37.658Z"
     },
     {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Founder Live Agent Work Assignment Readiness",
+      "detail": "P113.1 contract complete; P113.2 local assignment schema is next.",
+      "phaseId": "P113",
+      "title": "Founder Live Agent Work Assignment Readiness",
+      "order": 149,
+      "status": "in_progress",
+      "summary": "P113 is in progress. P113.1 defines the governed local assignment readiness boundary that follows queue admission while unsafe authority remains blocked.",
+      "nextPhase": "P113.2",
+      "previousPhase": "P112.7",
+      "checksRun": [
+        "npm run check:p1131-founder-live-agent-work-assignment-contract",
+        "npm run check:p1127-founder-live-agent-work-queue-admission-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P113.1 is contract-only and does not write assignment records.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P113.2 is next for local assignment schema work."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Assignment Readiness Contract",
+      "detail": "P113.1 contract complete; P113.2 local assignment schema is next.",
+      "phaseId": "P113.1",
+      "title": "Assignment Readiness Contract / Policy / Schema Plan",
+      "order": 149.1,
+      "status": "complete",
+      "summary": "P113.1 defines the governed local assignment readiness boundary, future schemas, future exports, reuse rules, safety rules, validation, docs, and OS status without changing runtime or DB source.",
+      "nextPhase": "P113.2",
+      "previousPhase": "P112.7",
+      "checksRun": [
+        "npm run check:p1131-founder-live-agent-work-assignment-contract",
+        "npm run check:p1127-founder-live-agent-work-queue-admission-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P113.1 is contract-only and does not change DB schema, runtime helpers, dashboard source, or runtime data.",
+        "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P113.2 is next for local assignment schema work."
+      ],
+      "completedAt": "2026-05-28T23:48:28.247Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Agent Work Assignment SQLite Schema",
+      "detail": "Planned local assignment schema.",
+      "phaseId": "P113.2",
+      "title": "Agent Work Assignment SQLite Schema",
+      "order": 149.2,
+      "status": "planned",
+      "summary": "Planned local SQLite schema metadata for assignment readiness records.",
+      "nextPhase": "P113.3",
+      "previousPhase": "P113.1",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Governed Local Assignment CRUD Model",
+      "detail": "Planned local assignment CRUD model.",
+      "phaseId": "P113.3",
+      "title": "Governed Local Assignment CRUD Model",
+      "order": 149.3,
+      "status": "planned",
+      "summary": "Planned approval-gated local CRUD model for assignment readiness records.",
+      "nextPhase": "P113.4",
+      "previousPhase": "P113.2",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Assignment Readiness Preview",
+      "detail": "Planned safe assignment readiness preview.",
+      "phaseId": "P113.4",
+      "title": "Assignment Readiness Preview / Safe Dry Run",
+      "order": 149.4,
+      "status": "planned",
+      "summary": "Planned display-safe assignment readiness preview without writes or dispatch.",
+      "nextPhase": "P113.5",
+      "previousPhase": "P113.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Command Center Agent Assignment UX",
+      "detail": "Planned Command Center assignment readiness UX.",
+      "phaseId": "P113.5",
+      "title": "Command Center Agent Assignment UX",
+      "order": 149.5,
+      "status": "planned",
+      "summary": "Planned display-safe assignment readiness UX for relevant founder operation pages.",
+      "nextPhase": "P113.6",
+      "previousPhase": "P113.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Work Assignment Validation / Docs",
+      "detail": "Planned aggregate validation and docs closure.",
+      "phaseId": "P113.6",
+      "title": "Work Assignment Validation / Docs",
+      "order": 149.6,
+      "status": "planned",
+      "summary": "Planned P113 aggregate validation and docs closure.",
+      "nextPhase": "P113.7",
+      "previousPhase": "P113.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation and handoff for P113.",
+      "phaseId": "P113.7",
+      "title": "Final Validation",
+      "order": 149.7,
+      "status": "planned",
+      "summary": "Planned final validation and handoff for P113.",
+      "nextPhase": "P114",
+      "previousPhase": "P113.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
@@ -10265,8 +10441,8 @@
     }
   ],
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P112.7",
-  "previousPhase": "P112.6",
-  "nextPhase": "P113",
+  "currentPhase": "P113.1",
+  "previousPhase": "P112.7",
+  "nextPhase": "P113.2",
   "currentPhaseStatus": "complete"
 }

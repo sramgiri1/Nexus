@@ -617,6 +617,16 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P113.1 work assignment readiness contract: P113 is split into seven
+  implementation-grade subphases for moving queue admission candidates toward
+  local agent work assignment readiness. P113.1 documents future local SQLite
+  schemas, future exports, reuse requirements, safety rules, checker coverage,
+  and OS status while leaving DB schema, runtime helpers, dashboard source, and
+  runtime data untouched. P113.2 is next for local assignment schema work.
+  Assignment writes, provider/model call, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, runtime
+  admission, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

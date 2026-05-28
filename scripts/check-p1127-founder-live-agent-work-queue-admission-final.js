@@ -112,6 +112,21 @@ const p112ClosedState =
     && roadmapById.get("P112")?.status === "complete"
     && statusById.get("P112.7")?.status === "complete"
     && roadmapById.get("P112.7")?.status === "complete";
+const p113StartedState =
+  status.currentPhase === "P113.1"
+    && status.previousPhase === "P112.7"
+    && status.nextPhase === "P113.2"
+    && roadmap.currentPhase === "P113.1"
+    && roadmap.previousPhase === "P112.7"
+    && roadmap.nextPhase === "P113.2"
+    && statusById.get("P112")?.status === "complete"
+    && roadmapById.get("P112")?.status === "complete"
+    && statusById.get("P112.7")?.status === "complete"
+    && roadmapById.get("P112.7")?.status === "complete"
+    && statusById.get("P113")?.status === "in_progress"
+    && roadmapById.get("P113")?.status === "in_progress"
+    && statusById.get("P113.1")?.status === "complete"
+    && roadmapById.get("P113.1")?.status === "complete";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1127-founder-live-agent-work-queue-admission-final"]));
 addCheck("all P112 scripts registered", p112Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
@@ -128,7 +143,7 @@ addCheck(
 addCheck("changed files avoid forbidden scope", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 addCheck("P112.6 checker accepts final handoff", p1126Checker.includes("P112.7") && p1126Checker.includes("P113") && p1126Checker.includes("scope check relaxed"));
 addCheck("OS status checker accepts P113 handoff", osStatusChecker.includes('"P113"') && osStatusChecker.includes('phaseStatus.nextPhase === "P113"'));
-addCheck("phase status closed", p112ClosedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status closed", p112ClosedState || p113StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("phase commits recorded", [statusById.get("P112")?.commit, statusById.get("P112.7")?.commit, roadmapById.get("P112")?.commit, roadmapById.get("P112.7")?.commit].every((commit) => commit && commit !== "planned"));
 addCheck("command center visibility retained", statusById.get("P112")?.commandCenterVisible === true && statusById.get("P112.7")?.commandCenterVisible === true);
 addCheck("P112 plan records final validation", /P112\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan) && /P112 is complete/.test(plan) && /P113 is next/.test(plan));

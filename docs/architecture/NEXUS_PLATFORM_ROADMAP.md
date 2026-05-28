@@ -2898,10 +2898,21 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, runtime admission, deploy, release, export, package action, network
 call, and provider spend remain blocked.
 
+P113.1 is complete. P113 is split into seven implementation-grade subphases for
+moving queue admission candidates toward local agent work assignment readiness.
+P113.1 records the future assignment schemas, future exports, reuse
+requirements, safety rules, checker coverage, and OS status while leaving DB
+schema, runtime helpers, dashboard source, and runtime data untouched. P113.2
+is next for local assignment schema work. Assignment writes, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, raw SQL interface, runtime admission, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
 [`p112-founder-live-agent-work-queue-admission-contracts.json`](../../contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json).
+[`p113-founder-live-agent-work-assignment-readiness-contracts.json`](../../contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json).
 
 The detailed plan lives in
 [`P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md`](P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md).

@@ -1,0 +1,848 @@
+{
+  "phaseId": "P113",
+  "title": "Founder Live Agent Work Assignment Readiness",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Move governed queue admission candidates into local, operator-reviewed agent work assignment readiness records so founder-facing agent flow can show prepared assignment lanes without dispatching agents, running workers/tools, mutating projects, calling providers, using hosted DB writes, deploying, networking, packaging, or spending.",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "e4bfc7db6c0fcb7004106500fde06aeb78319c4e",
+  "safetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated project sources/tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P113.1 is contract-only and must not modify db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, or runtime data.",
+    "Later P113 subphases may only add governed local SQLite CRUD for allowlisted NEXUS OS work assignment readiness records where explicitly scoped.",
+    "Do not enable hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, runtime admission, execution unlock, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "db/sqliteRuntime.js",
+    "db/sqliteCrudRepository.js",
+    "live-ready/founderLiveAgentWorkQueueAdmission.js",
+    "live-ready/founderLiveAgentWorkOrderPersistence.js",
+    "live-ready/founderLiveHandoffWorkOrders.js",
+    "existing Command Center route matrix, tabs, cards, badges, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P113.1",
+      "title": "Assignment Readiness Contract / Policy / Schema Plan",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the governed local work assignment readiness contract for admitted founder agent queue candidates without changing DB schema, runtime models, Command Center source, or runtime data.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "e4bfc7db6c0fcb7004106500fde06aeb78319c4e",
+      "allowedFiles": [
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1131-founder-live-agent-work-assignment-contract.js",
+        "scripts/check-p1127-founder-live-agent-work-queue-admission-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1127-founder-live-agent-work-queue-admission-final-report.md",
+        "reports/p1131-founder-live-agent-work-assignment-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1131-founder-live-agent-work-assignment-contract.js",
+        "scripts/check-p1127-founder-live-agent-work-queue-admission-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1127-founder-live-agent-work-queue-admission-final-report.md",
+        "reports/p1131-founder-live-agent-work-assignment-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1131-founder-live-agent-work-assignment-contract"
+      ],
+      "dataShape": "Contract-only. Documents future assignment item/event/evidence records with display-safe fields for currentState, nextAction, blockers, disabledReason, ownerCapability, sourceQueueCandidate, assignmentLane, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add check:p1131-founder-live-agent-work-assignment-contract.",
+        "Update check:os-phase-status to accept P113.1-P113.7 and P114.",
+        "Update P112.7 checker to accept P113.1/P113.2 handoff."
+      ],
+      "docsRoadmap": "Add the P113 plan, README and platform roadmap entry, OS status entries, and generated reports for P113.1.",
+      "phaseStatusUpdate": "P113 in progress; P113.1 complete; current P113.1; previous P112.7; next P113.2.",
+      "validationCommands": [
+        "npm run check:p1131-founder-live-agent-work-assignment-contract",
+        "npm run check:p1127-founder-live-agent-work-queue-admission-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.1 files>",
+        "git commit -m \"feat(nexus): implement p1131 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "futureSchemas": [
+        "founder_agent_work_assignments",
+        "founder_agent_work_assignment_events",
+        "founder_agent_work_assignment_evidence_refs"
+      ],
+      "futureExports": [
+        "P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PHASE",
+        "P113_AGENT_WORK_ASSIGNMENT_DB_ENTITIES",
+        "buildFounderLiveAgentWorkAssignmentReadinessContract",
+        "validateFounderLiveAgentWorkAssignmentReadinessContract",
+        "buildSafeAgentWorkAssignmentDbRecord",
+        "executeApprovedAgentWorkAssignmentDbCrudRequest",
+        "buildAgentWorkAssignmentReadinessViewModel"
+      ]
+    },
+    {
+      "phaseId": "P113.2",
+      "title": "Agent Work Assignment SQLite Schema",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add local SQLite schema metadata and isolated validation for assignment items, assignment events, and assignment evidence references without runtime dispatch.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1132-founder-live-agent-work-assignment-schema.js",
+        "scripts/check-p1131-founder-live-agent-work-assignment-contract.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1132-founder-live-agent-work-assignment-schema-report.md",
+        "reports/p1131-founder-live-agent-work-assignment-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1132-founder-live-agent-work-assignment-schema.js",
+        "scripts/check-p1131-founder-live-agent-work-assignment-contract.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1132-founder-live-agent-work-assignment-schema-report.md",
+        "reports/p1131-founder-live-agent-work-assignment-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "Local SQLite metadata for founder_agent_work_assignments, founder_agent_work_assignment_events, and founder_agent_work_assignment_evidence_refs with unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P113.2 checker."
+      ],
+      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.2.",
+      "phaseStatusUpdate": "P113 in progress; P113.2 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1132-founder-live-agent-work-assignment-schema",
+        "npm run check:p1131-founder-live-agent-work-assignment-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.2 files>",
+        "git commit -m \"feat(nexus): implement p1132 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P113.3",
+      "title": "Governed Local Assignment CRUD Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add approval-gated local SQLite CRUD helpers for allowlisted assignment readiness records without delete, dispatch, project mutation, hosted DB mutation, or execution.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
+        "scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js",
+        "scripts/check-p1132-founder-live-agent-work-assignment-schema.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+        "reports/p1132-founder-live-agent-work-assignment-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
+        "scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js",
+        "scripts/check-p1132-founder-live-agent-work-assignment-schema.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+        "reports/p1132-founder-live-agent-work-assignment-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PHASE",
+        "P113_AGENT_WORK_ASSIGNMENT_DB_ENTITIES",
+        "buildFounderLiveAgentWorkAssignmentReadinessContract",
+        "validateFounderLiveAgentWorkAssignmentReadinessContract",
+        "buildSafeAgentWorkAssignmentDbRecord",
+        "executeApprovedAgentWorkAssignmentDbCrudRequest"
+      ],
+      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P113.3 checker."
+      ],
+      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.3.",
+      "phaseStatusUpdate": "P113 in progress; P113.3 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
+        "npm run check:p1132-founder-live-agent-work-assignment-schema",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.3 files>",
+        "git commit -m \"feat(nexus): implement p1133 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P113.4",
+      "title": "Assignment Readiness Preview / Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build a display-safe assignment readiness preview from queue admission candidates without writing assignment records or dispatching agents.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
+        "scripts/check-p1134-founder-live-agent-work-assignment-preview.js",
+        "scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+        "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
+        "scripts/check-p1134-founder-live-agent-work-assignment-preview.js",
+        "scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+        "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "buildAgentWorkAssignmentReadinessViewModel",
+        "validateAgentWorkAssignmentReadinessViewModel"
+      ],
+      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P113.4 checker."
+      ],
+      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.4.",
+      "phaseStatusUpdate": "P113 in progress; P113.4 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1134-founder-live-agent-work-assignment-preview",
+        "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.4 files>",
+        "git commit -m \"feat(nexus): implement p1134 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P113.5",
+      "title": "Command Center Agent Assignment UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Show display-safe assignment readiness on Business Build and Agent Flow while keeping Chat with NEXUS and Lite clean.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1135-command-center-work-assignment-ux.js",
+        "scripts/check-p1134-founder-live-agent-work-assignment-preview.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1135-command-center-work-assignment-ux-report.md",
+        "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1135-command-center-work-assignment-ux.js",
+        "scripts/check-p1134-founder-live-agent-work-assignment-preview.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1135-command-center-work-assignment-ux-report.md",
+        "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add focused route coverage for Agent Flow/Business Build assignment readiness and absence from Chat/Lite/Live Readiness."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P113.5 checker."
+      ],
+      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.5.",
+      "phaseStatusUpdate": "P113 in progress; P113.5 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1135-command-center-work-assignment-ux",
+        "npm run check:p1134-founder-live-agent-work-assignment-preview",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent work assignment\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.5 files>",
+        "git commit -m \"feat(nexus): implement p1135 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P113.6",
+      "title": "Work Assignment Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Validate P113.1-P113.5 together, close docs/README/roadmap/status alignment, and hand off to P113.7 final validation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
+        "scripts/check-p1135-command-center-work-assignment-ux.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1136-founder-live-agent-work-assignment-validation-report.md",
+        "reports/p1135-command-center-work-assignment-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
+        "scripts/check-p1135-command-center-work-assignment-ux.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1136-founder-live-agent-work-assignment-validation-report.md",
+        "reports/p1135-command-center-work-assignment-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P113.6 checker."
+      ],
+      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.6.",
+      "phaseStatusUpdate": "P113 in progress; P113.6 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1136-founder-live-agent-work-assignment-validation",
+        "npm run check:p1135-command-center-work-assignment-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.6 files>",
+        "git commit -m \"feat(nexus): implement p1136 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P113.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P113 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1137-founder-live-agent-work-assignment-final.js",
+        "scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1137-founder-live-agent-work-assignment-final-report.md",
+        "reports/p1136-founder-live-agent-work-assignment-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1137-founder-live-agent-work-assignment-final.js",
+        "scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1137-founder-live-agent-work-assignment-final-report.md",
+        "reports/p1136-founder-live-agent-work-assignment-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P113.7 checker."
+      ],
+      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.7.",
+      "phaseStatusUpdate": "P113 in progress; P113.7 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1137-founder-live-agent-work-assignment-final",
+        "npm run check:p1136-founder-live-agent-work-assignment-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P113.7 files>",
+        "git commit -m \"feat(nexus): implement p1137 work assignment\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ],
+  "futureSchemas": [
+    "founder_agent_work_assignments",
+    "founder_agent_work_assignment_events",
+    "founder_agent_work_assignment_evidence_refs"
+  ],
+  "futureExports": [
+    "P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PHASE",
+    "P113_AGENT_WORK_ASSIGNMENT_DB_ENTITIES",
+    "buildFounderLiveAgentWorkAssignmentReadinessContract",
+    "validateFounderLiveAgentWorkAssignmentReadinessContract",
+    "buildSafeAgentWorkAssignmentDbRecord",
+    "executeApprovedAgentWorkAssignmentDbCrudRequest",
+    "buildAgentWorkAssignmentReadinessViewModel"
+  ],
+  "knownLimitations": [
+    "P113.1 is contract-only; DB schema, runtime helpers, assignment preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
+    "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
+  ],
+  "currentSubphase": "P113.1",
+  "previousSubphase": "P112.7",
+  "nextSubphase": "P113.2",
+  "summary": "P113 is in progress. P113.1 defines the governed local assignment readiness boundary that follows queue admission while unsafe authority remains blocked."
+}

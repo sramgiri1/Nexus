@@ -594,7 +594,8 @@
     "check:p1124-founder-live-agent-work-queue-admission-preview": "node scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js",
     "check:p1125-command-center-work-queue-admission-ux": "node scripts/check-p1125-command-center-work-queue-admission-ux.js",
     "check:p1126-founder-live-agent-work-queue-admission-validation": "node scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js",
-    "check:p1127-founder-live-agent-work-queue-admission-final": "node scripts/check-p1127-founder-live-agent-work-queue-admission-final.js"
+    "check:p1127-founder-live-agent-work-queue-admission-final": "node scripts/check-p1127-founder-live-agent-work-queue-admission-final.js",
+    "check:p1131-founder-live-agent-work-assignment-contract": "node scripts/check-p1131-founder-live-agent-work-assignment-contract.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
