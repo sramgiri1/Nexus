@@ -487,3 +487,73 @@ CREATE TABLE IF NOT EXISTS operator_decision_ledger_evidence_refs (
 CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_evidence_refs_ledger_entry_id   ON operator_decision_ledger_evidence_refs (ledger_entry_id);
 CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_evidence_refs_evidence_type     ON operator_decision_ledger_evidence_refs (evidence_type);
 CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_evidence_refs_evidence_location ON operator_decision_ledger_evidence_refs (evidence_location);
+
+-- founder_agent_work_orders
+CREATE TABLE IF NOT EXISTS founder_agent_work_orders (
+  work_order_id             TEXT        NOT NULL,
+  public_label              TEXT        NOT NULL,
+  source_handoff_label      TEXT,
+  source_admission_label    TEXT,
+  proposed_agent            TEXT,
+  proposed_work             TEXT,
+  work_order_state          TEXT        NOT NULL,
+  work_order_summary        TEXT,
+  next_action               TEXT,
+  disabled_reason           TEXT,
+  owner_capability          TEXT,
+  local_crud_allowed        BOOLEAN     NOT NULL DEFAULT false,
+  db_write_allowed          BOOLEAN     NOT NULL DEFAULT false,
+  hosted_db_mutation_allowed BOOLEAN    NOT NULL DEFAULT false,
+  dispatch_allowed          BOOLEAN     NOT NULL DEFAULT false,
+  execution_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  runtime_admission_allowed BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  provider_spend_allowed    BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs             JSONB,
+  activity_refs             JSONB,
+  created_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (work_order_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_orders_work_order_state ON founder_agent_work_orders (work_order_state);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_orders_proposed_agent   ON founder_agent_work_orders (proposed_agent);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_orders_owner_capability ON founder_agent_work_orders (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_orders_updated_at       ON founder_agent_work_orders (updated_at);
+
+-- founder_agent_work_order_events
+CREATE TABLE IF NOT EXISTS founder_agent_work_order_events (
+  work_order_event_id     TEXT        NOT NULL,
+  work_order_id           TEXT        NOT NULL,
+  event_type              TEXT        NOT NULL,
+  event_state             TEXT        NOT NULL,
+  actor_label             TEXT,
+  event_summary           TEXT,
+  rollback_available      BOOLEAN     NOT NULL DEFAULT false,
+  dispatch_allowed        BOOLEAN     NOT NULL DEFAULT false,
+  execution_allowed       BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed BOOLEAN    NOT NULL DEFAULT false,
+  evidence_refs           JSONB,
+  created_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (work_order_event_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_events_work_order_id ON founder_agent_work_order_events (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_events_event_type    ON founder_agent_work_order_events (event_type);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_events_event_state   ON founder_agent_work_order_events (event_state);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_events_created_at    ON founder_agent_work_order_events (created_at);
+
+-- founder_agent_work_order_evidence_refs
+CREATE TABLE IF NOT EXISTS founder_agent_work_order_evidence_refs (
+  work_order_evidence_ref_id TEXT        NOT NULL,
+  work_order_id              TEXT        NOT NULL,
+  evidence_label             TEXT        NOT NULL,
+  evidence_type              TEXT,
+  evidence_location          TEXT        NOT NULL,
+  redaction_required         BOOLEAN     NOT NULL DEFAULT true,
+  retained_for_audit         BOOLEAN     NOT NULL DEFAULT true,
+  created_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (work_order_evidence_ref_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_evidence_refs_work_order_id      ON founder_agent_work_order_evidence_refs (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_evidence_refs_evidence_type      ON founder_agent_work_order_evidence_refs (evidence_type);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_order_evidence_refs_evidence_location  ON founder_agent_work_order_evidence_refs (evidence_location);

@@ -2785,6 +2785,15 @@ raw SQL, runtime admission, execution unlock, project mutation, provider/model
 calls, agent dispatch, worker/tool execution, deploy, release, export, package
 action, network call, and provider spend remain blocked.
 
+P111.2 is complete. Local schema metadata, SQL tables, indexes, and isolated
+SQLite validation now exist for founder agent work orders, work order events,
+and work order evidence references. P111.3 is next for the governed local CRUD
+model. This subphase is schema/checker/status/docs only; runtime helper code,
+Command Center source, persistent runtime data writes, hosted DB mutation, raw
+SQL interface, runtime admission, execution unlock, project mutation,
+provider/model calls, agent dispatch, worker/tool execution, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json).
 

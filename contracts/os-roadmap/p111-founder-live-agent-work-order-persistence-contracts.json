@@ -163,11 +163,11 @@
     {
       "phaseId": "P111.2",
       "title": "Agent Work Order SQLite Schema",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local SQLite schema definitions for display-safe founder agent work orders, events, and evidence references.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "431be5d0",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
@@ -221,38 +221,40 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [
-        "package script for P111.2"
+        "package script check:p1112-founder-live-agent-work-order-schema",
+        "P111.2 work order schema report"
       ],
-      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "Local schema metadata and SQL tables for founder_agent_work_orders, founder_agent_work_order_events, and founder_agent_work_order_evidence_refs. All rows remain display-safe, redaction-required, low PII risk local state with dispatch/execution/project/provider flags false by default.",
+      "commandCenterUx": "No Command Center source change in P111.2. P111.4 owns display UX.",
       "themeRequirements": [
-        "Preserve System theme.",
-        "Preserve Dark theme.",
-        "Preserve Light theme."
+        "No theme source change in P111.2.",
+        "P111.4 must preserve System, Dark, and Light themes."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "No Playwright update in P111.2 because no UI files change."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P111.2 checker.",
-        "Run previous subphase checker for P111.1."
+        "Add check:p1112-founder-live-agent-work-order-schema.",
+        "Update P111.1 checker to accept P111.2/P111.3 handoff."
       ],
-      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.2.",
-      "phaseStatusUpdate": "P111 in progress; P111.2 complete when implemented; previous P111.1; next P111.3.",
+      "docsRoadmap": "Update P111 plan, README and platform roadmap entries, and OS phase tracking with P111.2 complete and P111.3 next.",
+      "phaseStatusUpdate": "P111 in progress; P111.2 complete; current P111.2; previous P111.1; next P111.3.",
       "validationCommands": [
-        "npm run check:p1112-founder-live-agent-work-order-persistence",
+        "npm run check:p1112-founder-live-agent-work-order-schema",
+        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "Confirm no projects/** or careloop/** files changed.",
-        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
-        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+        "Confirm P111.2 is schema/checker/status/docs only.",
+        "Confirm no live-ready/**, dashboard/src/**, dashboard/tests/**, projects/**, or careloop/** files changed.",
+        "Confirm temporary SQLite test DB is removed.",
+        "Confirm hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "gitCommands": [
-        "git add <allowed files>",
-        "git commit -m \"feat(nexus): implement p111.2 work order persistence\"",
+        "git add <allowed P111.2 files>",
+        "git commit -m \"feat(nexus): add p111 agent work order schema\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [
@@ -833,5 +835,8 @@
   "knownLimitations": [
     "P111.1 is contract-only; DB schema, runtime helpers, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
-  ]
+  ],
+  "currentSubphase": "P111.2",
+  "previousSubphase": "P111.1",
+  "nextSubphase": "P111.3"
 }

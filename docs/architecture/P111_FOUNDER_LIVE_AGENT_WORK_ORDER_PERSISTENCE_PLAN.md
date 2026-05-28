@@ -109,3 +109,92 @@ early. The P111.1 checker blocks those risks.
 
 Rollback plan: remove P111 contract/checker/docs/status/report updates, restore
 top-level status to P110.7 with P111 planned, and leave P110 complete.
+
+## P111.2 Agent Work Order SQLite Schema
+
+Status: complete
+
+Narrow goal: add local SQLite schema definitions for display-safe founder agent
+work orders, work order events, and work order evidence references.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `431be5d0`.
+
+Allowed files: `db/schema.json`, `db/schema.sql`, P111.2 checker, P111.1
+compatibility checker, P111 contract, P111 plan, README, platform roadmap,
+package script registry, OS phase status files, and generated P111.2,
+P111.1, OS status, and phase coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `live-ready/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+`.env*`, and persistent runtime DB files. The checker may create
+`local-state/runtime/check-p1112.sqlite` only during validation and must delete
+it before exit.
+
+Exact files/modules changed: added three schema entities, three SQL tables and
+indexes, the P111.2 schema checker, package script registration, P111.1
+checker compatibility, P111 contract/status/docs updates, and generated
+reports.
+
+Expected exports/data shapes: P111.2 exports no runtime API. It adds schema
+metadata and SQL tables for `founder_agent_work_orders`,
+`founder_agent_work_order_events`, and
+`founder_agent_work_order_evidence_refs`. Rows include display-safe labels,
+state, summary, owner capability, evidence/activity references, and blocked
+authority booleans for dispatch, execution, worker execution, project mutation,
+runtime admission, hosted DB mutation, and provider spend.
+
+Safety rules: P111.2 is schema/checker/status/docs only. It does not add
+runtime CRUD admission, persistent runtime data writes, Command Center source,
+agent dispatch, execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package, network, or provider spend.
+
+Reuse check: P111.2 reuses the existing SQLite runtime and CRUD repository for
+isolated validation. No schema loader, report writer, checker formatter,
+redaction helper, mode guard, or DB helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P111.2.
+P111.4 owns work order persistence UX.
+
+Dark/light/system theme requirements: no theme source change in P111.2.
+
+Playwright tests: no new Playwright test in P111.2 because no UI source changes
+are made.
+
+Checker updates: P111.2 adds a dedicated schema checker and updates P111.1 to
+accept the P111.2/P111.3 handoff state.
+
+Docs/README/roadmap updates: P111.2 is recorded in this plan, README, platform
+roadmap, P111 contract, OS roadmap/status, and generated reports. P111.3 is
+next.
+
+OS phase status update: P111 is in progress; P111.2 is complete; current phase
+P111.2; previous P111.1; next P111.3.
+
+Validation commands:
+- `npm run check:p1112-founder-live-agent-work-order-schema`
+- `npm run check:p1111-founder-live-agent-work-order-persistence-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/runtime/provider/deploy paths
+changed; temporary SQLite checker DB removed; no DemoApp exposure; no raw
+JSON/log/policy dumps; no fake runnable actions; no hosted DB mutation, raw SQL
+interface, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, deploy, release, export, package, network, or provider spend
+authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P111.2 files>`
+- `git commit -m "feat(nexus): add p111 agent work order schema"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: schema fields can accidentally default unsafe authority true, or
+the checker can leave a temporary SQLite DB behind. The P111.2 checker validates
+blocked booleans and removes the temporary DB.
+
+Rollback plan: remove the three schema entries/tables/indexes, remove the
+P111.2 checker/script/docs/status/report updates, restore P111 to P111.1 with
+P111.2 planned, and keep P111.1 unchanged.

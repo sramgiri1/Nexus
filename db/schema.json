@@ -964,6 +964,130 @@
       "retentionClass": "operator_decision_ledger_evidence",
       "redactionRequired": true,
       "fileFallbackSource": "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md"
+    },
+    {
+      "name": "founder_agent_work_orders",
+      "purpose": "Durable local founder agent work order records derived from founder live handoff and work admission packets without dispatch or execution authority.",
+      "primaryKey": "workOrderId",
+      "fields": {
+        "workOrderId": "string",
+        "publicLabel": "string",
+        "sourceHandoffLabel": "string",
+        "sourceAdmissionLabel": "string",
+        "proposedAgent": "string",
+        "proposedWork": "string",
+        "workOrderState": "string",
+        "workOrderSummary": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "localCrudAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "workOrderId",
+        "publicLabel",
+        "workOrderState"
+      ],
+      "indexes": [
+        "workOrderState",
+        "proposedAgent",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "live-ready/founderLiveHandoffWorkOrders.js",
+        "live-ready/founderLiveWorkAdmission.js",
+        "dashboard/src/data/businessBuild.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_order_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1023-founder-live-handoff-work-orders-report.md"
+    },
+    {
+      "name": "founder_agent_work_order_events",
+      "purpose": "Durable local audit event rows for founder agent work order state transitions without dispatch, execution, or project mutation authority.",
+      "primaryKey": "workOrderEventId",
+      "fields": {
+        "workOrderEventId": "string",
+        "workOrderId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "workOrderEventId",
+        "workOrderId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "workOrderId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "live-ready/founderLiveHandoffWorkOrders.js",
+        "live-ready/founderLiveWorkAdmission.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_order_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1023-founder-live-handoff-work-orders-report.md"
+    },
+    {
+      "name": "founder_agent_work_order_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local founder agent work order records.",
+      "primaryKey": "workOrderEvidenceRefId",
+      "fields": {
+        "workOrderEvidenceRefId": "string",
+        "workOrderId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "workOrderEvidenceRefId",
+        "workOrderId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "workOrderId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1023-founder-live-handoff-work-orders-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_order_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1023-founder-live-handoff-work-orders-report.md"
     }
   ]
 }

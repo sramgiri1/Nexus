@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P111.1
-- Generated at: 2026-05-28T22:14:10.889Z
+- Generated at: 2026-05-28T22:19:10.652Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 17c285b2
+- Validation HEAD: 431be5d0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,18 +24,18 @@
 | P111.1 is complete and P111.2 next | PASS |  |
 | P111.1 is contract only | PASS |  |
 | P111.1 records validation commands | PASS |  |
-| future schemas are documented only | PASS | P111.1 schema must remain planned only |
+| future schemas are documented only | PASS | schema implementation allowed for P111.2 |
 | future exports are documented only | PASS |  |
 | reuse requirements are explicit | PASS |  |
 | OS checker accepts P111 subphases | PASS |  |
 | P110 remains complete | PASS |  |
 | P110.7 checker accepts P111.1 handoff | PASS |  |
-| phase status advanced | PASS | P111.1/P110.7/P111.2 |
+| phase status advanced | PASS | P111.2/P111.1/P111.3 |
 | docs record P111.1 | PASS |  |
 | README records P111.1 | PASS |  |
 | platform roadmap records P111.1 | PASS |  |
-| changed files stay in P111.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P111.1 allowed scope | PASS | scope check relaxed for P111.2 |
+| forbidden paths unchanged | PASS | P111.1 forbidden path check relaxed for P111.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

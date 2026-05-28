@@ -514,6 +514,14 @@ The Command Center and local operator surface have:
   mutation, hosted DB mutation, raw SQL, runtime admission, execution unlock,
   provider/model call, dispatch, worker/tool execution, deploy, release,
   export, package, network call, or provider spend path is available.
+- P111.2 work order SQLite schema: local schema metadata, SQL tables, indexes,
+  and isolated SQLite validation now exist for founder agent work orders,
+  work order events, and work order evidence references. P111.3 is next for the
+  governed local CRUD model. This is schema/checker/status/docs only; runtime
+  helper code, Command Center source, persistent runtime data writes, project
+  mutation, hosted DB mutation, raw SQL interface, runtime admission, execution
+  unlock, provider/model call, dispatch, worker/tool execution, deploy,
+  release, export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

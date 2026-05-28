@@ -9414,24 +9414,24 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "17c285b2",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P111 is in progress. P111.1 defines governed local persistence contracts for founder live agent work orders while unsafe authority remains blocked.",
+      "summary": "P111 is in progress. P111.1 defines governed work order persistence contracts and P111.2 adds local SQLite schema definitions while unsafe authority remains blocked.",
       "checksRun": [
+        "npm run check:p1112-founder-live-agent-work-order-schema",
         "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
-        "npm run check:p1107-founder-live-operator-decision-ledger-persistence-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P111.1 is contract/docs/status/checker only and does not add DB schema, runtime helpers, Command Center source, or runtime data.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+        "P111.2 is schema/checker/status/docs only and does not add runtime helpers, Command Center source, persistent runtime data, or execution authority.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P111.2",
+      "nextPhase": "P111.3",
       "commandCenterVisible": true,
       "label": "Work Orders",
-      "detail": "P111.1 contract complete; P111.2 schema next."
+      "detail": "P111.2 schema complete; P111.3 governed local CRUD model next."
     },
     {
       "phaseId": "P111.1",
@@ -9465,19 +9465,26 @@
       "title": "Agent Work Order SQLite Schema",
       "track": "NEXUS_OS",
       "order": 147.2,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned local SQLite schema for founder agent work order records.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T22:18:14.975Z",
+      "summary": "Added local SQLite schema definitions for display-safe founder agent work orders, events, and evidence references with isolated SQLite validation.",
+      "checksRun": [
+        "npm run check:p1112-founder-live-agent-work-order-schema",
+        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no DB schema change is enabled yet."
+        "P111.2 is schema-only and does not add runtime CRUD admission, persistent runtime data writes, Command Center source, agent dispatch, execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package creation, network calls, or provider spend.",
+        "P111.3 will add governed local CRUD model helpers."
       ],
       "nextPhase": "P111.3",
       "commandCenterVisible": true,
       "label": "Work Order Schema",
-      "detail": "Planned local schema."
+      "detail": "Local schema complete; governed local CRUD model next."
     },
     {
       "phaseId": "P111.3",
@@ -9986,8 +9993,8 @@
     }
   ],
   "updatedAt": "2026-05-28T21:22:13.000Z",
-  "currentPhase": "P111.1",
-  "previousPhase": "P110.7",
-  "nextPhase": "P111.2",
+  "currentPhase": "P111.2",
+  "previousPhase": "P111.1",
+  "nextPhase": "P111.3",
   "currentPhaseStatus": "complete"
 }

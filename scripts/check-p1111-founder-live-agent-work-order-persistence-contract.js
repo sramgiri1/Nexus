@@ -124,15 +124,21 @@ addCheck("P110 remains complete", p110Contract.status === "complete" && statusBy
 addCheck("P110.7 checker accepts P111.1 handoff", p1107Checker.includes("P111.1") && p1107Checker.includes("P111.2"));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P111.1"
-    && status.previousPhase === "P110.7"
-    && status.nextPhase === "P111.2"
-    && roadmap.currentPhase === "P111.1"
-    && roadmap.previousPhase === "P110.7"
-    && roadmap.nextPhase === "P111.2"
+  ((status.currentPhase === "P111.1"
+      && status.previousPhase === "P110.7"
+      && status.nextPhase === "P111.2"
+      && roadmap.currentPhase === "P111.1"
+      && roadmap.previousPhase === "P110.7"
+      && roadmap.nextPhase === "P111.2")
+    || (status.currentPhase === "P111.2"
+      && status.previousPhase === "P111.1"
+      && status.nextPhase === "P111.3"
+      && roadmap.currentPhase === "P111.2"
+      && roadmap.previousPhase === "P111.1"
+      && roadmap.nextPhase === "P111.3"))
     && statusById.get("P111")?.status === "in_progress"
     && statusById.get("P111.1")?.status === "complete"
-    && statusById.get("P111.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P111.2")?.status)
     && roadmapById.get("P111")?.status === "in_progress"
     && roadmapById.get("P111.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
