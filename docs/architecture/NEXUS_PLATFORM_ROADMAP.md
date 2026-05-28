@@ -2589,6 +2589,14 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P108.4 is complete. Business Build, Agent Flow, and Live Readiness now render
+the display-safe operator-review audit preview while Chat with NEXUS and Lite
+remain clean. P108.5 is next. Operator decisions, approval capture, approval
+persistence, approval writes, execution unlock, runtime admission,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p107-founder-live-approval-capture-boundary-contracts.json`](../../contracts/os-roadmap/p107-founder-live-approval-capture-boundary-contracts.json).
 

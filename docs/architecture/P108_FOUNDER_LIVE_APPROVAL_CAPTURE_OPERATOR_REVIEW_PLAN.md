@@ -107,7 +107,7 @@ Final safety checks:
 
 ## P108.4 Command Center Operator Review UX
 
-Status: planned
+Status: complete
 
 Narrow goal: render operator-review boundary state on Business Build, Agent Flow, and Live Readiness without capture controls, execution controls, raw dumps, private IDs, DemoApp leakage, or fake runnable actions.
 
@@ -121,7 +121,7 @@ Theme requirements: focused Playwright coverage must verify dark, light, and sys
 
 Validation commands:
 - npm run check:p1084-command-center-operator-review-ux
-- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live operator review boundary appears on non-chat founder routes"
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live operator review appears on non-chat founder routes"
 - cd dashboard && npm run build
 - npm run check:p1083-founder-live-approval-operator-review-audit-preview
 - npm run check:p1082-founder-live-approval-operator-review-model
@@ -129,6 +129,14 @@ Validation commands:
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - git diff --check
+
+OS phase status update: P108 in progress; P108.4 complete; current P108.4; previous P108.3; next P108.5.
+
+Final safety checks:
+- Chat with NEXUS and Lite stay chat-only.
+- System, dark, and light theme route coverage passes.
+- No runnable approval, execution, provider, DB, deploy, package, or mutation action is exposed.
+- No project or CareLoop files changed.
 
 ## P108.5 Tests / Checkers
 

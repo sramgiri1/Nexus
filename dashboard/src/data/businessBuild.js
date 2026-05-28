@@ -961,6 +961,102 @@ export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   };
 }
 
+export function buildFounderLiveApprovalOperatorReviewDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  approvalCaptureBoundary,
+} = {}) {
+  const capture = approvalCaptureBoundary || buildFounderLiveApprovalCaptureBoundaryDisplayModel({ founderIdeaSummary });
+  const sourceRows = Array.isArray(capture.auditRows) ? capture.auditRows : [];
+  const disabledReason =
+    "P108.4 renders a local operator-review audit preview only. It cannot capture approvals, persist approval state, write approval decisions, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const auditRows = sourceRows.map((row, index) => ({
+    label: row.displayLabel || `Operator review audit ${index + 1}`,
+    proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+    proposedOutcome: row.proposedOutcome || "Review governed operator evidence before any future approval capture phase.",
+    auditPosition: row.reviewPosition || index + 1,
+    auditState: "Founder Live Operator Review Audit Ready Capture Blocked",
+    missingEvidence: (row.missingEvidence || []).slice(0, 4).map((entry) => toTitle(entry)),
+    evidenceStatus: {
+      requiredEvidenceCount: row.evidenceStatus?.requiredEvidenceCount || 32,
+      missingEvidenceCount: row.evidenceStatus?.missingEvidenceCount || row.missingEvidence?.length || 0,
+      capturedDecisions: 0,
+      persistedDecisions: 0,
+      writableDecisions: 0,
+      executionUnlocks: 0,
+      runtimeAdmissions: 0,
+    },
+    auditQuestions: [
+      row.auditQuestions?.[0] || "Which founder decision would be reviewed later?",
+      row.auditQuestions?.[1] || "Which operator evidence would be reviewed later?",
+      "Which rollback and revocation path must remain available before any future decision write?",
+      "What audit evidence must exist before any future operator decision capture can be considered?",
+    ],
+    validationCommand: "npm run check:p1083-founder-live-approval-operator-review-audit-preview",
+    nextAction: "Keep this operator-review audit preview local until a later explicit phase defines approval capture.",
+    blocker: row.blockers?.[0] || "Operator decision capture is not available.",
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Approval Operator Review Boundary",
+    evidenceLocation: "reports/p1083-founder-live-approval-operator-review-audit-preview-report.md",
+    activityLocation: row.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: row.costImpact || "Local operator-review audit preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    operatorDecisionCaptured: "Blocked",
+    operatorDecisionPersisted: "Blocked",
+    operatorReviewWriteAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    runtimeAdmissionAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    spendAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Founder Live Operator Review Audit Preview Ready Capture Blocked",
+    founderIdea: founderIdeaSummary,
+    auditPreviewReady: auditRows.length > 0,
+    auditPreviewCount: auditRows.length,
+    blockedAuditPreviewCount: auditRows.length,
+    capturableOperatorDecisionCount: 0,
+    persistedOperatorDecisionCount: 0,
+    writableOperatorDecisionCount: 0,
+    executableOperatorReviewCount: 0,
+    dispatchableOperatorReviewCount: 0,
+    projectMutationOperatorReviewCount: 0,
+    hostedDbMutationOperatorReviewCount: 0,
+    nextAction: "Review operator-review audit preview state on non-chat pages while approval capture and execution remain blocked.",
+    blockers: [
+      "Operator decision capture remains blocked.",
+      "Operator decision persistence remains blocked.",
+      "Operator review writes cannot unlock execution.",
+      "Runtime admission remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Live Approval Operator Review Boundary",
+    evidenceLocation: "reports/p1083-founder-live-approval-operator-review-audit-preview-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic operator-review audit preview UX only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    auditRows,
+    safetyRows: [
+      { label: "Operator decision capture", value: "Blocked" },
+      { label: "Operator persistence", value: "Blocked" },
+      { label: "Operator review writes", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -1675,6 +1771,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdeaSummary: prdFields.founderIdea,
     approvalRequestQueuePreview: founderLiveApprovalRequestQueuePreview,
   });
+  const founderLiveApprovalOperatorReview = buildFounderLiveApprovalOperatorReviewDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+    approvalCaptureBoundary: founderLiveApprovalCaptureBoundary,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1809,6 +1909,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveExecutionApprovalReviewPacket,
     founderLiveApprovalRequestQueuePreview,
     founderLiveApprovalCaptureBoundary,
+    founderLiveApprovalOperatorReview,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

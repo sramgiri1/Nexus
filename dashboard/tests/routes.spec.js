@@ -4011,6 +4011,60 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Founder live operator review appears on non-chat founder routes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder live operator review audit preview").filter({ hasText: "Business Build Operator Review" });
+      await expect(themedCard).toContainText("Founder Live Operator Review");
+      await expect(themedCard).toContainText("Operator review read-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Operator Review"],
+      ["/command-center/agent-flow", "Agent Flow Operator Review"],
+      ["/command-center/live-readiness", "Live Readiness Operator Review"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder live operator review audit preview").filter({ hasText: label });
+      await expect(card).toContainText("Founder Live Operator Review");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Audit previews");
+      await expect(card).toContainText("Blocked audit previews");
+      await expect(card).toContainText("Capturable decisions");
+      await expect(card).toContainText("Persisted decisions");
+      await expect(card).toContainText("Writable decisions");
+      await expect(card).toContainText("Executable reviews");
+      await expect(card).toContainText("NEXUS Founder Live Approval Operator Review Boundary");
+      await expect(card).toContainText("Product Strategist");
+      await expect(card).toContainText("Program Architect");
+      await expect(card).toContainText("Safety Governor");
+      await expect(card).toContainText("Missing evidence");
+      await expect(card).toContainText("Audit question");
+      await expect(card).toContainText("npm run check:p1083-founder-live-approval-operator-review-audit-preview");
+      await expect(card).toContainText("reports/p1083-founder-live-approval-operator-review-audit-preview-report.md");
+      await expect(card).toContainText("No provider calls");
+    }
+
+    await page.goto("/command-center/lite", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Founder live operator review audit preview")).toHaveCount(0);
+    await page.goto("/command-center", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Founder live operator review audit preview")).toHaveCount(0);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|review-packet-|approval-plan-|approval-request-queue-|approval-capture-audit-preview-|operator-review-audit-preview-/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

@@ -3343,6 +3343,10 @@ function AgentFlowPage() {
         capture={businessBuild.founderLiveApprovalCaptureBoundary}
         surfaceLabel="Agent Flow Approval Capture Boundary"
       />
+      <FounderLiveApprovalOperatorReviewCard
+        operatorReview={businessBuild.founderLiveApprovalOperatorReview}
+        surfaceLabel="Agent Flow Operator Review"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -9729,6 +9733,10 @@ function LiveReadinessPage() {
           capture={founderLiveUse.founderLiveApprovalCaptureBoundary}
           surfaceLabel="Live Readiness Approval Capture Boundary"
         />
+        <FounderLiveApprovalOperatorReviewCard
+          operatorReview={founderLiveUse.founderLiveApprovalOperatorReview}
+          surfaceLabel="Live Readiness Operator Review"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10072,6 +10080,10 @@ function BusinessBuildPage() {
         <FounderLiveApprovalCaptureBoundaryCard
           capture={build.founderLiveApprovalCaptureBoundary}
           surfaceLabel="Business Build Approval Capture Boundary"
+        />
+        <FounderLiveApprovalOperatorReviewCard
+          operatorReview={build.founderLiveApprovalOperatorReview}
+          surfaceLabel="Business Build Operator Review"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -10902,6 +10914,72 @@ function FounderLiveApprovalCaptureBoundaryCard({ capture, surfaceLabel = "Appro
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Approval capture evidence"}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Audit question: {row.auditQuestions?.[0] || "Capture evidence review required"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveApprovalOperatorReviewCard({ operatorReview, surfaceLabel = "Operator Review" }) {
+  if (!operatorReview) return null;
+
+  const rows = Array.isArray(operatorReview.auditRows) ? operatorReview.auditRows.slice(0, 6) : [];
+  const blockers = Array.isArray(operatorReview.blockers) ? operatorReview.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(operatorReview.safetyRows) ? operatorReview.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live operator review audit preview">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Operator Review</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>{operatorReview.currentState}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Operator review read-only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{operatorReview.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Audit previews</span><span className="ccv2-page-summary-value">{operatorReview.auditPreviewCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked audit previews</span><span className="ccv2-page-summary-value">{operatorReview.blockedAuditPreviewCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Capturable decisions</span><span className="ccv2-page-summary-value">{operatorReview.capturableOperatorDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persisted decisions</span><span className="ccv2-page-summary-value">{operatorReview.persistedOperatorDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Writable decisions</span><span className="ccv2-page-summary-value">{operatorReview.writableOperatorDecisionCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable reviews</span><span className="ccv2-page-summary-value">{operatorReview.executableOperatorReviewCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{operatorReview.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{operatorReview.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{operatorReview.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{operatorReview.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{operatorReview.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{operatorReview.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAgentLane}-${row.auditPosition}`}
+            aria-label={`${row.proposedAgentLane} operator review audit row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAgentLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.auditState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {row.missingEvidence?.[0] || "Operator review evidence"}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Audit question: {row.auditQuestions?.[0] || "Operator evidence review required"}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationCommand}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
           </div>

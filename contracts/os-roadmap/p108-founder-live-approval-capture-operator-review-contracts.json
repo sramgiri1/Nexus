@@ -331,14 +331,17 @@
     {
       "phaseId": "P108.4",
       "title": "Command Center Operator Review UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Render operator-review boundary state on Business Build, Agent Flow, and Live Readiness without capture controls, execution controls, raw dumps, private IDs, DemoApp leakage, or fake runnable actions.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "1b7a1097",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/pages/CommandCenterV2.jsx",
         "dashboard/tests/routes.spec.js",
         "scripts/check-p1084-command-center-operator-review-ux.js",
+        "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
         "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
         "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -346,7 +349,10 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1084-command-center-operator-review-ux-report.md"
+        "reports/p1084-command-center-operator-review-ux-report.md",
+        "reports/p1083-founder-live-approval-operator-review-audit-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -360,9 +366,41 @@
         "packages/**",
         ".env*"
       ],
+      "exactFilesToCreateOrUpdate": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1084-command-center-operator-review-ux.js",
+        "scripts/check-p1083-founder-live-approval-operator-review-audit-preview.js",
+        "contracts/os-roadmap/p108-founder-live-approval-capture-operator-review-contracts.json",
+        "docs/architecture/P108_FOUNDER_LIVE_APPROVAL_CAPTURE_OPERATOR_REVIEW_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "buildFounderLiveApprovalOperatorReviewDisplayModel",
+          "founderLiveApprovalOperatorReview",
+          "FounderLiveApprovalOperatorReviewCard"
+        ],
+        "displayModel": "Command Center display-safe model with currentState, founderIdea, auditPreview counts, zero capturable/persisted/writable/executable counts, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, auditRows, and safetyRows.",
+        "card": "Display-only card on Business Build, Agent Flow, and Live Readiness with no approval capture controls, execution controls, raw refs, raw logs, raw JSON, private IDs, DemoApp, or fake runnable actions."
+      },
+      "commandCenterUxRequirements": "Render the operator-review audit preview card on Business Build, Agent Flow, and Live Readiness only. The card must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, cost impact, audit rows, and blocked safety rows. Chat with NEXUS and Lite remain chat-only/clean.",
+      "themeRequirements": "Focused Playwright coverage must verify the card in dark, light, and system themes on Business Build.",
+      "playwrightTests": "Add focused route coverage for Business Build, Agent Flow, Live Readiness, and absence from Chat/Lite.",
+      "checkerUpdates": [
+        "Add check:p1084-command-center-operator-review-ux.",
+        "Update P108.3 checker to accept P108.4 handoff."
+      ],
+      "docsRoadmap": "Update P108 plan, platform roadmap, README, and OS phase tracking with P108.4 complete and P108.5 next.",
+      "phaseStatusUpdate": "P108 in progress; P108.4 complete; current P108.4; previous P108.3; next P108.5.",
       "validationCommands": [
         "npm run check:p1084-command-center-operator-review-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live operator review boundary appears on non-chat founder routes\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live operator review appears on non-chat founder routes\"",
         "cd dashboard && npm run build",
         "npm run check:p1083-founder-live-approval-operator-review-audit-preview",
         "npm run check:p1082-founder-live-approval-operator-review-model",
@@ -553,7 +591,7 @@
   ],
   "knownLimitations": [
     "P108 is an operator-review boundary phase only until each subphase completes.",
-    "P108.1-P108.3 do not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
-    "P108.4-P108.7 remain planned."
+    "P108.1-P108.4 do not capture approvals, persist approval state, unlock execution, admit runtime execution, call providers/models, dispatch agents, run workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    "P108.5-P108.7 remain planned."
   ]
 }

@@ -368,6 +368,13 @@ The Command Center and local operator surface have:
   execution unlock, runtime admission, provider/model calls, dispatch,
   worker/tool execution, project mutation, hosted DB mutation, deploy, release,
   export, package, network calls, and provider spend remain blocked.
+- P108.4 Command Center operator-review UX: Business Build, Agent Flow, and
+  Live Readiness now show the display-safe operator-review audit preview while
+  Chat with NEXUS and Lite remain clean. P108.5 is next. Operator decisions,
+  approval capture, persistence, writes, execution unlock, runtime admission,
+  provider/model calls, dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, deploy, release, export, package, network calls, and
+  provider spend remain blocked.
 
 ## CareLoop Project Progress
 
