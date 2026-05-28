@@ -9414,7 +9414,7 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "17c285b2",
       "completedAt": "",
       "summary": "P111 is in progress. P111.1 defines governed local persistence contracts for founder live agent work orders while unsafe authority remains blocked.",
       "checksRun": [
@@ -9440,7 +9440,7 @@
       "order": 147.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "17c285b2",
       "completedAt": "2026-05-28T22:12:30.882Z",
       "summary": "Defined the P111 founder live agent work order persistence contract, subphase split, future schemas/exports, reuse requirements, safety rules, checker, docs, and OS status handoff.",
       "checksRun": [
