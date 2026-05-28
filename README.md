@@ -194,6 +194,10 @@ The Command Center and local operator surface have:
 - P104.5 execution-boundary aggregate validation: route tests and aggregate
   checker now cover the full P104 path from chat cleanup through non-chat
   execution-boundary UX. P104.6 is next for docs and roadmap closure.
+- P104.6 execution-boundary docs: README, platform roadmap, P104 contract,
+  P104 plan, OS phase status, and docs checker now align on the completed
+  boundary work and final validation handoff. P104.7 is next for final
+  validation.
 
 ## CareLoop Project Progress
 

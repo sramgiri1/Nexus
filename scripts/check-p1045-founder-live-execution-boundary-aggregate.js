@@ -55,15 +55,15 @@ addCheck("boundary model display remains useful", boundary.boundaryRows?.length 
 addCheck("execution counts remain zero", boundary.approvedBoundaryCount === 0 && boundary.executableBoundaryCount === 0 && boundary.dispatchableBoundaryCount === 0 && boundary.projectMutationBoundaryCount === 0 && boundary.hostedDbMutationBoundaryCount === 0);
 addCheck("boundary rows are display-safe", boundary.boundaryRows?.every((row) => row.executionAllowed === "Blocked" && row.dispatchAllowed === "Blocked" && !("boundaryId" in row) && !("sourceAdmissionId" in row)));
 addCheck("contract marks P104.5 complete", p1045.status === "complete");
-addCheck("P104.6 remains planned", subphaseById.get("P104.6")?.status === "planned");
+addCheck("P104.6 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P104.6")?.status));
 addCheck("docs record P104.5", /P104\.5 Execution Boundary Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P104.5", /P104\.5 is\s+complete/.test(platformRoadmap) && /P104\.6\s+is\s+next/.test(platformRoadmap));
 addCheck("README records P104.5", /P104\.5 execution-boundary aggregate validation/.test(readme) && /P104\.6\s+is next/.test(readme));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P104.5"
-    && status.previousPhase === "P104.4"
-    && status.nextPhase === "P104.6"
+  ["P104.5", "P104.6", "P104.7"].includes(status.currentPhase)
+    && ["P104.4", "P104.5", "P104.6"].includes(status.previousPhase)
+    && ["P104.6", "P104.7", "P105"].includes(status.nextPhase)
     && statusById.get("P104")?.status === "in_progress"
     && statusById.get("P104.5")?.status === "complete"
     && roadmapById.get("P104.5")?.status === "complete",

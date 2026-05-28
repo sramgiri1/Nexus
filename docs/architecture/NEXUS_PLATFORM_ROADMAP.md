@@ -2339,6 +2339,9 @@ aggregate tests and checkers.
 P104.5 is complete. It adds aggregate validation and route safety coverage for
 the P104 path from chat cleanup through non-chat execution-boundary UX. P104.6
 is next for docs and roadmap closure.
+P104.6 is complete. README, platform roadmap, P104 contract, P104 plan, OS
+phase status, and docs checker now align on the completed boundary work and
+final validation handoff. P104.7 is next for final validation.
 
 Implementation follows
 [`p104-founder-live-execution-boundary-contracts.json`](../../contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json).

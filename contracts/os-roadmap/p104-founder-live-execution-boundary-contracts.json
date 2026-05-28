@@ -428,9 +428,60 @@
     {
       "phaseId": "P104.6",
       "title": "Execution Boundary Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Document the P104 execution boundary and update roadmap/readme/status evidence."
+      "narrowGoal": "Document the P104 execution boundary and update roadmap/readme/status evidence.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "9722217b",
+      "allowedFiles": [
+        "scripts/check-p1046-founder-live-execution-boundary-docs.js",
+        "scripts/check-p1045-founder-live-execution-boundary-aggregate.js",
+        "contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json",
+        "docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1046-founder-live-execution-boundary-docs-report.md",
+        "reports/p1045-founder-live-execution-boundary-aggregate-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "checker": "check:p1046-founder-live-execution-boundary-docs validates README, platform roadmap, P104 plan, P104 contract, OS status, scripts, reports, and safety wording."
+      },
+      "commandCenterUxRequirements": "No UX source change. Preserve P104.4/P104.5 Command Center behavior.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No new Playwright in P104.6 because this subphase is docs/checker only and P104.5 retained route coverage.",
+      "checkerUpdates": [
+        "Add check:p1046-founder-live-execution-boundary-docs.",
+        "Keep check:p1045-founder-live-execution-boundary-aggregate forward-compatible."
+      ],
+      "docsRoadmap": "Record P104.6 complete and P104.7 next.",
+      "phaseStatusUpdate": "P104 in progress; P104.6 complete; current P104.6; previous P104.5; next P104.7.",
+      "validationCommands": [
+        "npm run check:p1046-founder-live-execution-boundary-docs",
+        "npm run check:p1045-founder-live-execution-boundary-aggregate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P104.7",

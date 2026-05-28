@@ -314,11 +314,61 @@ Add aggregate checker and Playwright coverage for P104 behavior.
   status, safety confirmations, forbidden path confirmation, known limitations,
   and next subphase.
 
-## P104.6 Docs / Roadmap
+## P104.6 Execution Boundary Docs / Roadmap
 
-Status: planned.
+Status: complete.
 
 Document the full P104 execution boundary and update status evidence.
+
+- Narrow goal: close the P104 documentation set so README, platform roadmap,
+  P104 plan, P104 contract, reports, and OS phase status agree before final
+  validation.
+- Starting branch and expected base commit:
+  `codex/nexus-e2e-phase-validation` at `9722217b`.
+- Allowed files: P104.6 docs checker, P104.5 compatibility checker, P104
+  contract, P104 plan, platform roadmap, README, package script, OS phase JSON,
+  and generated reports.
+- Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+  `dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+  `deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`.
+- Exact files/modules to create or update:
+  `scripts/check-p1046-founder-live-execution-boundary-docs.js`,
+  `scripts/check-p1045-founder-live-execution-boundary-aggregate.js`,
+  `contracts/os-roadmap/p104-founder-live-execution-boundary-contracts.json`,
+  `docs/architecture/P104_FOUNDER_LIVE_EXECUTION_BOUNDARY_PLAN.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`, `README.md`,
+  `package.json`, `os-roadmap/phase-status.json`, and
+  `os-roadmap/nexus-phases.json`.
+- Expected exports, schemas, and data shapes: no runtime exports. The checker
+  validates docs, contract, OS status, scripts, reports, safety wording, and
+  final-validation handoff.
+- Command Center UX requirements: no UX source change. Preserve chat-only
+  Chat/Lite and non-chat execution-boundary UX from P104.4/P104.5.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none added in P104.6 because it is docs/checker only and
+  P104.5 retained focused route coverage.
+- Checker updates:
+  `npm run check:p1046-founder-live-execution-boundary-docs`; keep P104.5
+  aggregate checker forward-compatible.
+- Docs/README/roadmap: record P104.6 complete and P104.7 next.
+- OS phase status: P104 in progress, P104.6 complete, current P104.6, previous
+  P104.5, next P104.7.
+- Validation commands:
+  `npm run check:p1046-founder-live-execution-boundary-docs`,
+  `npm run check:p1045-founder-live-execution-boundary-aggregate`,
+  `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: docs/checker only; no project files changed; no
+  provider/model calls; no dispatch; no worker/tool execution; no project
+  mutation; no hosted DB mutation; no deploy/release/export/package; no network
+  calls; no spend; no raw IDs; no raw dumps; no fake runnable actions.
+- Git add/commit/push commands: stage only allowed P104.6 OS files, commit,
+  stamp the real commit hash in phase status, rerun checks, commit status
+  stamp, and push `codex/nexus-e2e-phase-validation`.
+- Final response checklist: branch, commit hash, files changed, docs/checker
+  updates, checker results, docs/roadmap updates, OS phase status, safety
+  confirmations, forbidden path confirmation, known limitations, and next
+  subphase.
 
 ## P104.7 Final Validation
 

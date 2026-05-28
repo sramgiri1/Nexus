@@ -12494,27 +12494,25 @@
       "order": 140,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6ba63f0e",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P104 is in progress. P104.5 adds aggregate validation and route safety coverage for the founder live execution boundary.",
+      "summary": "P104 is in progress. P104.6 closes docs and roadmap evidence for the founder live execution boundary.",
       "checksRun": [
+        "npm run check:p1046-founder-live-execution-boundary-docs",
         "npm run check:p1045-founder-live-execution-boundary-aggregate",
-        "npm run check:p1044-founder-live-execution-boundary-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"P104 execution boundary route safety stays coherent|Founder live execution boundary appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
-        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P104.5 is validation-only.",
-        "P104.6 and P104.7 remain planned.",
+        "P104.6 is docs/checker only.",
+        "P104.7 remains planned.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P104.6",
+      "nextPhase": "P104.7",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Boundary",
-      "detail": "P104 in progress; aggregate tests/checkers complete; docs/roadmap closure is next."
+      "detail": "P104 in progress; docs/roadmap closure complete; final validation is next."
     },
     {
       "phaseId": "P104.1",
@@ -12648,32 +12646,40 @@
       ],
       "knownLimitations": [
         "P104.5 is validation-only and has no execution authority.",
-        "P104.6 remains planned.",
+        "P104.6 is complete.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P104.6",
       "commandCenterVisible": true,
       "label": "Execution Boundary Tests / Checkers",
-      "detail": "Aggregate P104 validation complete; docs and roadmap closure is next."
+      "detail": "Aggregate P104 validation complete; docs and roadmap closure is complete."
     },
     {
       "phaseId": "P104.6",
       "title": "Execution Boundary Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 140.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Document the P104 execution boundary and update roadmap/readme/status evidence.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T02:05:00.000Z",
+      "summary": "Aligned README, platform roadmap, P104 contract, P104 plan, OS phase status, and docs checker for the completed founder live execution-boundary work and P104.7 handoff.",
+      "checksRun": [
+        "npm run check:p1046-founder-live-execution-boundary-docs",
+        "npm run check:p1045-founder-live-execution-boundary-aggregate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P104.6 is planned only and has no execution authority."
+        "P104.6 is docs/checker only and has no execution authority.",
+        "P104.7 remains planned.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P104.7",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Execution Boundary Docs / Roadmap",
-      "detail": "Execution Boundary Docs / Roadmap planned under P104."
+      "detail": "Docs and roadmap closure complete; final validation is next."
     },
     {
       "phaseId": "P104.7",
@@ -13177,8 +13183,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P104.5",
-  "previousPhase": "P104.4",
-  "nextPhase": "P104.6",
+  "currentPhase": "P104.6",
+  "previousPhase": "P104.5",
+  "nextPhase": "P104.7",
   "currentPhaseStatus": "complete"
 }
