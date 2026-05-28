@@ -8227,7 +8227,7 @@
       "order": 142,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "00fc30df",
       "completedAt": "",
       "summary": "P106 has completed the approval request boundary schema, deterministic request model, queue preview, and Command Center approval request UX. Approval request submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
       "checksRun": [
@@ -8340,7 +8340,7 @@
       "order": 142.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "00fc30df",
       "completedAt": "2026-05-28T08:45:00.000Z",
       "summary": "Rendered the display-safe approval request queue on Business Build, Agent Flow, and Live Readiness with current state, queue counts, next action, blockers, disabled reason, owner, evidence/activity location, cost posture, queue rows, and blocked safety rows while Chat with NEXUS and Lite remain clean.",
       "checksRun": [
@@ -8832,7 +8832,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T08:45:00.000Z",
+  "updatedAt": "2026-05-28T08:55:00.000Z",
   "currentPhase": "P106.4",
   "previousPhase": "P106.3",
   "nextPhase": "P106.5",
