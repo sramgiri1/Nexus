@@ -9629,6 +9629,176 @@
       "previousPhase": "P111.6"
     },
     {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Founder Live Agent Work Queue Admission",
+      "detail": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked.",
+      "phaseId": "P112",
+      "title": "Founder Live Agent Work Queue Admission",
+      "order": 148,
+      "status": "in_progress",
+      "summary": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked.",
+      "nextPhase": "P112.2",
+      "previousPhase": "P111.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "P112.1 is contract-only and does not change DB schema, runtime helpers, dashboard source, runtime data, or project files.",
+        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.2 is next for local queue schema work."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Queue Admission Contract / Policy / Schema Plan",
+      "detail": "Defined the P112 work queue admission contract, future local SQLite schema/export plan, safety boundaries, checker coverage, and OS status without changing runtime code.",
+      "phaseId": "P112.1",
+      "title": "Queue Admission Contract / Policy / Schema Plan",
+      "order": 148.1,
+      "status": "complete",
+      "summary": "Defined the P112 work queue admission contract, future local SQLite schema/export plan, safety boundaries, checker coverage, and OS status without changing runtime code.",
+      "nextPhase": "P112.2",
+      "previousPhase": "P111.7",
+      "checksRun": [
+        "npm run check:p1121-founder-live-agent-work-queue-admission-contract",
+        "npm run check:p1117-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P112.1 is contract-only and does not change DB schema, runtime helpers, dashboard source, runtime data, or project files.",
+        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.2 is next for local queue schema work."
+      ],
+      "completedAt": "2026-05-28T22:58:55.995Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Agent Work Queue SQLite Schema",
+      "detail": "Planned local SQLite schema metadata and isolated validation for queue admission records.",
+      "phaseId": "P112.2",
+      "title": "Agent Work Queue SQLite Schema",
+      "order": 148.2,
+      "status": "planned",
+      "summary": "Planned local SQLite schema metadata and isolated validation for queue admission records.",
+      "nextPhase": "P112.3",
+      "previousPhase": "P112.1",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned schema subphase only."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Governed Local Queue CRUD Model",
+      "detail": "Planned approval-gated local CRUD model for queue admission records.",
+      "phaseId": "P112.3",
+      "title": "Governed Local Queue CRUD Model",
+      "order": 148.3,
+      "status": "planned",
+      "summary": "Planned approval-gated local CRUD model for queue admission records.",
+      "nextPhase": "P112.4",
+      "previousPhase": "P112.2",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned CRUD subphase only."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Queue Admission Preview / Safe Dry Run",
+      "detail": "Planned local dry-run queue admission preview without dispatch or mutation.",
+      "phaseId": "P112.4",
+      "title": "Queue Admission Preview / Safe Dry Run",
+      "order": 148.4,
+      "status": "planned",
+      "summary": "Planned local dry-run queue admission preview without dispatch or mutation.",
+      "nextPhase": "P112.5",
+      "previousPhase": "P112.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned preview subphase only."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Command Center Queue Admission UX",
+      "detail": "Planned display-safe Command Center queue admission UX.",
+      "phaseId": "P112.5",
+      "title": "Command Center Queue Admission UX",
+      "order": 148.5,
+      "status": "planned",
+      "summary": "Planned display-safe Command Center queue admission UX.",
+      "nextPhase": "P112.6",
+      "previousPhase": "P112.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned UX subphase only."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Work Queue Admission Validation / Docs",
+      "detail": "Planned aggregate validation and docs closure for P112.",
+      "phaseId": "P112.6",
+      "title": "Work Queue Admission Validation / Docs",
+      "order": 148.6,
+      "status": "planned",
+      "summary": "Planned aggregate validation and docs closure for P112.",
+      "nextPhase": "P112.7",
+      "previousPhase": "P112.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned validation/docs subphase only."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation and handoff for P112.",
+      "phaseId": "P112.7",
+      "title": "Final Validation",
+      "order": 148.7,
+      "status": "planned",
+      "summary": "Planned final validation and handoff for P112.",
+      "nextPhase": "P113",
+      "previousPhase": "P112.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned final validation only."
+      ],
+      "completedAt": ""
+    },
+    {
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
@@ -10039,9 +10209,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T22:52:47.167Z",
-  "currentPhase": "P111.7",
-  "previousPhase": "P111.6",
-  "nextPhase": "P112",
+  "updatedAt": "2026-05-28T22:58:55.995Z",
+  "currentPhase": "P112.1",
+  "previousPhase": "P111.7",
+  "nextPhase": "P112.2",
   "currentPhaseStatus": "complete"
 }

@@ -561,6 +561,15 @@ The Command Center and local operator surface have:
   SQL, runtime admission, execution unlock, provider/model call, dispatch,
   worker/tool execution, deploy, release, export, package, network call, and
   provider spend remain unavailable.
+- P112.1 queue admission contract: P112 is split into seven
+  implementation-grade subphases for founder live agent work queue admission.
+  P112.1 documents future local SQLite schemas, future exports, reuse
+  requirements, safety rules, checker coverage, and OS status while leaving DB
+  schema, runtime helpers, Command Center source, and runtime data untouched.
+  P112.2 is next. Agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL, runtime admission, execution unlock,
+  provider/model call, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

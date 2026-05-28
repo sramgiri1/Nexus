@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-28T22:52:57.883Z
+- Generated at: 2026-05-28T22:59:17.161Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 412d582d
+- Validation HEAD: 6b6b0987
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -375,7 +375,7 @@
 | P110.5 validation coverage | PASS | 26 checkers, 19 reports |
 | P110.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P110.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P111 validation coverage | PASS | 11 checkers, 7 reports |
+| P111 validation coverage | PASS | 12 checkers, 8 reports |
 | P111.1 validation coverage | PASS | 9 checkers, 5 reports |
 | P111.2 validation coverage | PASS | 10 checkers, 6 reports |
 | P111.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -383,6 +383,14 @@
 | P111.5 validation coverage | PASS | 9 checkers, 5 reports |
 | P111.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P111.7 validation coverage | PASS | 44 checkers, 41 reports |
+| P112 validation coverage | PASS | 7 checkers, 7 reports |
+| P112.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P112.2 validation coverage | PASS | 1 checkers, 1 reports |
+| P112.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P112.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P112.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P112.6 validation coverage | PASS | 1 checkers, 1 reports |
+| P112.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P83 validation coverage | PASS | 16 checkers, 8 reports |
 | P83.1 validation coverage | PASS | 7 checkers, 1 reports |
 | P83.2 validation coverage | PASS | 7 checkers, 1 reports |
@@ -401,14 +409,28 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P111.7; next=P112; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P112.1; next=P112.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- None
+- P112.3 Governed Local Queue CRUD Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P112.4 Queue Admission Preview / Safe Dry Run
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P112.5 Command Center Queue Admission UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (386/386)
+PASS (394/394)

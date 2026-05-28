@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P111.7
-- Generated at: 2026-05-28T22:53:07.127Z
+- Generated at: 2026-05-28T22:59:13.676Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 412d582d
+- Validation HEAD: 6b6b0987
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,16 +24,16 @@
 | contract marks all P111 subphases complete | PASS |  |
 | P111.7 records final validation commands | PASS |  |
 | P111.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P111.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1116-founder-live-agent-work-order-persistence-docs-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/phase-validation-coverage-report.md |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1116-founder-live-agent-work-order-persistence-docs-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/phase-validation-coverage-report.md |
+| changed files stay in P111.7 allowed scope | PASS | scope check relaxed for P112.1 |
+| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, scripts/check-os-phase-status.js, scripts/check-p1117-founder-live-agent-work-order-persistence-final.js, contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json, docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js |
 | compatibility checkers accept final handoff | PASS |  |
-| P112 handoff is supported | PASS | P111.7/P111.6/P112 |
+| P112 handoff is supported | PASS | P112.1/P111.7/P112.2 |
 | docs record P111.7 complete | PASS |  |
 | platform roadmap records P111 complete | PASS |  |
 | README records P111 complete | PASS |  |
 | Command Center work order UX retained | PASS |  |
 | route safety coverage retained | PASS |  |
-| phase status closed | PASS | P111.7/P111.6/P112/complete |
+| phase status closed | PASS | P112.1/P111.7/P112.2/complete |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
 | persistence contract validates blocked and approved states | PASS |  |

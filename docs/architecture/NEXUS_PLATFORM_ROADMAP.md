@@ -2837,8 +2837,19 @@ admission, execution unlock, provider/model calls, agent dispatch, worker/tool
 execution, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P112.1 is complete. P112 is split into seven implementation-grade subphases for
+founder live agent work queue admission. P112.1 documents future local SQLite
+schemas, future exports, reuse requirements, safety rules, checker coverage,
+and OS status while leaving DB schema, runtime helpers, dashboard source, and
+runtime data untouched. P112.2 is next for local queue schema work. Agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL,
+runtime admission, execution unlock, provider/model calls, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
-[`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json).
+[`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
+and
+[`p112-founder-live-agent-work-queue-admission-contracts.json`](../../contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json).
 
 The detailed plan lives in
 [`P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md`](P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md).

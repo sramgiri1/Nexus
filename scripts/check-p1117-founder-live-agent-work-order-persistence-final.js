@@ -70,6 +70,7 @@ const readyValidation = validateFounderLiveAgentWorkOrderPersistenceContract(rea
 const p1117 = subphaseById.get("P111.7") || {};
 const changed = changedFiles();
 const allowedFiles = new Set(p1117.allowedFiles || []);
+const enforceCurrentDiffScope = status.currentPhase === "P111.7";
 const p111Scripts = [
   "check:p1111-founder-live-agent-work-order-persistence-contract",
   "check:p1112-founder-live-agent-work-order-schema",
@@ -118,14 +119,33 @@ const persistenceUx = JSON.stringify([
   dbRuntime.agentWorkOrderPersistence,
 ]);
 const docsBundle = [JSON.stringify(contract), plan, platformRoadmap, readme].join("\n");
-const p112HandoffState =
+const p112PlaceholderState =
   status.currentPhase === "P111.7"
     && status.previousPhase === "P111.6"
     && status.nextPhase === "P112"
     && roadmap.currentPhase === "P111.7"
     && roadmap.previousPhase === "P111.6"
     && roadmap.nextPhase === "P112"
+    && statusById.get("P111")?.status === "complete"
+    && roadmapById.get("P111")?.status === "complete";
+const p112StartedState =
+  status.currentPhase === "P112.1"
+    && status.previousPhase === "P111.7"
+    && status.nextPhase === "P112.2"
+    && roadmap.currentPhase === "P112.1"
+    && roadmap.previousPhase === "P111.7"
+    && roadmap.nextPhase === "P112.2"
+    && statusById.get("P111")?.status === "complete"
+    && roadmapById.get("P111")?.status === "complete"
+    && statusById.get("P112")?.status === "in_progress"
+    && roadmapById.get("P112")?.status === "in_progress"
+    && statusById.get("P112.1")?.status === "complete"
+    && roadmapById.get("P112.1")?.status === "complete";
+const p112HandoffState =
+  (p112PlaceholderState || p112StartedState)
     && osStatusChecker.includes('"P112"')
+    && osStatusChecker.includes('"P112.1"')
+    && osStatusChecker.includes('"P112.2"')
     && osStatusChecker.includes('phaseStatus.nextPhase === "P112"');
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1117-founder-live-agent-work-order-persistence"]));
@@ -135,7 +155,11 @@ addCheck("contract marks parent complete", contract.status === "complete");
 addCheck("contract marks all P111 subphases complete", (contract.subphases || []).every((entry) => entry.status === "complete"));
 addCheck("P111.7 records final validation commands", validationCommands.every((command) => p1117.validationCommands?.includes(command)));
 addCheck("P111.7 avoids forbidden file scope", !(p1117.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
-addCheck("changed files stay in P111.7 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
+addCheck(
+  "changed files stay in P111.7 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
 addCheck("changed files avoid forbidden scope", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 addCheck("compatibility checkers accept final handoff", p1115Checker.includes("P111.7") && p1116Checker.includes("P112") && p1116Checker.includes("scope check relaxed"));
 addCheck("P112 handoff is supported", p112HandoffState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);

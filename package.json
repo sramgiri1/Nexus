@@ -587,7 +587,8 @@
     "check:p1114-command-center-work-order-persistence-ux": "node scripts/check-p1114-command-center-work-order-persistence-ux.js",
     "check:p1115-founder-live-agent-work-order-persistence": "node scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
     "check:p1116-founder-live-agent-work-order-persistence": "node scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
-    "check:p1117-founder-live-agent-work-order-persistence": "node scripts/check-p1117-founder-live-agent-work-order-persistence-final.js"
+    "check:p1117-founder-live-agent-work-order-persistence": "node scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
+    "check:p1121-founder-live-agent-work-queue-admission-contract": "node scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

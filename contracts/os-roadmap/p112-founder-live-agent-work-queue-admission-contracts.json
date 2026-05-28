@@ -1,0 +1,852 @@
+{
+  "phaseId": "P112",
+  "title": "Founder Live Agent Work Queue Admission",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Move persisted founder agent work orders toward a governed local queue admission layer so work can be prepared for future agent lanes without dispatching agents, running workers/tools, mutating projects, calling providers, using hosted DB writes, deploying, networking, packaging, or spending.",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "6b6b0987",
+  "safetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated project sources/tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P112.1 is contract-only and must not modify db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, or runtime data.",
+    "Later P112 subphases may only add governed local SQLite CRUD for allowlisted NEXUS OS queue admission records where explicitly scoped.",
+    "Do not enable hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, runtime admission, execution unlock, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "db/sqliteRuntime.js",
+    "db/sqliteCrudRepository.js",
+    "live-ready/founderLiveAgentWorkOrderPersistence.js",
+    "live-ready/founderLiveHandoffWorkOrders.js",
+    "live-ready/founderLiveWorkAdmission.js",
+    "existing Command Center route matrix, tabs, cards, badges, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P112.1",
+      "title": "Queue Admission Contract / Policy / Schema Plan",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the governed local queue admission contract for persisted founder agent work orders without changing DB schema, runtime models, Command Center source, or runtime data.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "6b6b0987",
+      "allowedFiles": [
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js",
+        "scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1117-founder-live-agent-work-order-persistence-final-report.md",
+        "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js",
+        "scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1117-founder-live-agent-work-order-persistence-final-report.md",
+        "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1121-founder-live-agent-work-queue-admission-contract"
+      ],
+      "dataShape": "Contract-only. Documents future queue item/event/evidence records with display-safe fields for currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add check:p1121-founder-live-agent-work-queue-admission-contract.",
+        "Update check:os-phase-status to accept P112.1-P112.7.",
+        "Update P111.7 checker to accept P112.1/P112.2 handoff."
+      ],
+      "docsRoadmap": "Add the P112 plan, README and platform roadmap entry, OS status entries, and generated reports for P112.1.",
+      "phaseStatusUpdate": "P112 in progress; P112.1 complete; current P112.1; previous P111.7; next P112.2.",
+      "validationCommands": [
+        "npm run check:p1121-founder-live-agent-work-queue-admission-contract",
+        "npm run check:p1117-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.1 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "futureSchemas": [
+        "founder_agent_work_queue_items",
+        "founder_agent_work_queue_events",
+        "founder_agent_work_queue_evidence_refs"
+      ],
+      "futureExports": [
+        "P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PHASE",
+        "P112_AGENT_WORK_QUEUE_DB_ENTITIES",
+        "buildFounderLiveAgentWorkQueueAdmissionContract",
+        "validateFounderLiveAgentWorkQueueAdmissionContract",
+        "buildSafeAgentWorkQueueDbRecord",
+        "executeApprovedAgentWorkQueueDbCrudRequest",
+        "buildAgentWorkQueueAdmissionViewModel"
+      ]
+    },
+    {
+      "phaseId": "P112.2",
+      "title": "Agent Work Queue SQLite Schema",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add local SQLite schema metadata and isolated validation for queue items, queue events, and queue evidence references without runtime dispatch.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1122-founder-live-agent-work-queue-schema.js",
+        "scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1122-founder-live-agent-work-queue-schema-report.md",
+        "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1122-founder-live-agent-work-queue-schema.js",
+        "scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1122-founder-live-agent-work-queue-schema-report.md",
+        "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P112.2 checker."
+      ],
+      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.2.",
+      "phaseStatusUpdate": "P112 in progress; P112.2 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1122-founder-live-agent-work-queue-schema",
+        "npm run check:p1121-founder-live-agent-work-queue-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.2 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P112.3",
+      "title": "Governed Local Queue CRUD Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add approval-gated local CRUD helpers for allowlisted queue admission records without delete, dispatch, worker execution, or project mutation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentWorkQueueAdmission.js",
+        "scripts/check-p1123-founder-live-agent-work-queue-crud-model.js",
+        "scripts/check-p1122-founder-live-agent-work-queue-schema.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+        "reports/p1122-founder-live-agent-work-queue-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentWorkQueueAdmission.js",
+        "scripts/check-p1123-founder-live-agent-work-queue-crud-model.js",
+        "scripts/check-p1122-founder-live-agent-work-queue-schema.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+        "reports/p1122-founder-live-agent-work-queue-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P112.3 checker."
+      ],
+      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.3.",
+      "phaseStatusUpdate": "P112 in progress; P112.3 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1123-founder-live-agent-work-queue-crud-model",
+        "npm run check:p1122-founder-live-agent-work-queue-schema",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.3 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P112.4",
+      "title": "Queue Admission Preview / Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build a local dry-run admission preview that maps persisted work orders to queue candidates while keeping dispatch and mutation disabled.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentWorkQueueAdmission.js",
+        "scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js",
+        "scripts/check-p1123-founder-live-agent-work-queue-crud-model.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+        "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentWorkQueueAdmission.js",
+        "scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js",
+        "scripts/check-p1123-founder-live-agent-work-queue-crud-model.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+        "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P112.4 checker."
+      ],
+      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.4.",
+      "phaseStatusUpdate": "P112 in progress; P112.4 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1124-founder-live-agent-work-queue-admission-preview",
+        "npm run check:p1123-founder-live-agent-work-queue-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.4 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P112.5",
+      "title": "Command Center Queue Admission UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Surface display-safe queue admission state on founder Agent Flow/Business Build pages while keeping Chat/Lite clean and avoiding raw IDs or fake actions.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1125-command-center-work-queue-admission-ux.js",
+        "scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1125-command-center-work-queue-admission-ux-report.md",
+        "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1125-command-center-work-queue-admission-ux.js",
+        "scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1125-command-center-work-queue-admission-ux-report.md",
+        "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add focused Playwright coverage for Agent Flow/Business Build queue admission state and Chat/Lite absence.",
+        "Preserve route-wide DemoApp, raw dump, theme switcher, sidebar, OS Roadmap, and project milestone safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P112.5 checker."
+      ],
+      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.5.",
+      "phaseStatusUpdate": "P112 in progress; P112.5 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1125-command-center-work-queue-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent work queue admission\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.5 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P112.6",
+      "title": "Work Queue Admission Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Validate P112.1-P112.5 together and close docs, README, roadmap, reports, and OS status before final validation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js",
+        "scripts/check-p1125-command-center-work-queue-admission-ux.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1126-founder-live-agent-work-queue-admission-validation-report.md",
+        "reports/p1125-command-center-work-queue-admission-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js",
+        "scripts/check-p1125-command-center-work-queue-admission-ux.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1126-founder-live-agent-work-queue-admission-validation-report.md",
+        "reports/p1125-command-center-work-queue-admission-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P112.6 checker."
+      ],
+      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.6.",
+      "phaseStatusUpdate": "P112 in progress; P112.6 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1126-founder-live-agent-work-queue-admission-validation",
+        "npm run check:p1125-command-center-work-queue-admission-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.6 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P112.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P112 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1127-founder-live-agent-work-queue-admission-final.js",
+        "scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1127-founder-live-agent-work-queue-admission-final-report.md",
+        "reports/p1126-founder-live-agent-work-queue-admission-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1127-founder-live-agent-work-queue-admission-final.js",
+        "scripts/check-p1126-founder-live-agent-work-queue-admission-validation.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1127-founder-live-agent-work-queue-admission-final-report.md",
+        "reports/p1126-founder-live-agent-work-queue-admission-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P112.7 checker."
+      ],
+      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.7.",
+      "phaseStatusUpdate": "P112 in progress; P112.7 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1127-founder-live-agent-work-queue-admission-final",
+        "npm run check:p1126-founder-live-agent-work-queue-admission-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p112.7 work queue admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ],
+  "knownLimitations": [
+    "P112.1 is contract-only; DB schema, runtime helpers, admission preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
+    "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
+  ],
+  "currentSubphase": "P112.1",
+  "previousSubphase": "P111.7",
+  "nextSubphase": "P112.2",
+  "summary": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked."
+}
