@@ -13683,7 +13683,7 @@
       "order": 145,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "65386524",
       "completedAt": "",
       "summary": "P109 is in progress. P109.1 defines the local decision-ledger boundary, P109.2 assembles candidate records, and P109.3 builds display-safe audit preview rows while capture, persistence, ledger writes, DB writes, replay, runtime admission, execution, mutation, network, and spend authority remain blocked.",
       "checksRun": [
@@ -13764,7 +13764,7 @@
       "order": 145.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "65386524",
       "completedAt": "2026-05-28T20:30:56.000Z",
       "summary": "Assembled display-safe local operator decision-ledger audit preview rows from P109.2 candidates without enabling raw ID exposure, capture, persistence, ledger writes, DB writes, replay, runtime admission, execution, mutation, network, or spend.",
       "checksRun": [
