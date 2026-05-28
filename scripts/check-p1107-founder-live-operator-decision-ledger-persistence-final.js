@@ -117,16 +117,28 @@ const persistenceUx = JSON.stringify([
 ]);
 const docsBundle = [JSON.stringify(contract), plan, platformRoadmap, readme].join("\n");
 
-const p111PlaceholderState =
-  status.currentPhase === "P110.7"
-  && status.previousPhase === "P110.6"
-  && status.nextPhase === "P111"
-  && roadmap.currentPhase === "P110.7"
-  && roadmap.previousPhase === "P110.6"
-  && roadmap.nextPhase === "P111"
-  && statusById.get("P111")?.status === "planned"
-  && roadmapById.get("P111")?.status === "planned"
-  && osStatusChecker.includes('"P111"');
+const p111HandoffState =
+  ((status.currentPhase === "P110.7"
+    && status.previousPhase === "P110.6"
+    && status.nextPhase === "P111"
+    && roadmap.currentPhase === "P110.7"
+    && roadmap.previousPhase === "P110.6"
+    && roadmap.nextPhase === "P111"
+    && statusById.get("P111")?.status === "planned"
+    && roadmapById.get("P111")?.status === "planned")
+  || (status.currentPhase === "P111.1"
+    && status.previousPhase === "P110.7"
+    && status.nextPhase === "P111.2"
+    && roadmap.currentPhase === "P111.1"
+    && roadmap.previousPhase === "P110.7"
+    && roadmap.nextPhase === "P111.2"
+    && statusById.get("P111")?.status === "in_progress"
+    && statusById.get("P111.1")?.status === "complete"
+    && roadmapById.get("P111")?.status === "in_progress"
+    && roadmapById.get("P111.1")?.status === "complete"))
+  && osStatusChecker.includes('"P111"')
+  && osStatusChecker.includes('"P111.1"')
+  && osStatusChecker.includes('"P111.2"');
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1107-founder-live-operator-decision-ledger-persistence-final"]));
 addCheck("all P110 scripts registered", p110Scripts.every((script) => Boolean(packageJson.scripts?.[script])));
@@ -137,7 +149,7 @@ addCheck("P110.7 records final validation commands", validationCommands.every((c
 addCheck("P110.7 avoids forbidden file scope", !(p1107.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
 addCheck("changed files avoid forbidden scope", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 addCheck("compatibility checkers accept final handoff", p1105Checker.includes("P110.7") && p1105Checker.includes("P111") && p1106Checker.includes("P110.7") && p1106Checker.includes("P111"));
-addCheck("P111 handoff placeholder is supported", p111PlaceholderState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("P111 handoff is supported", p111HandoffState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("docs record P110.7 complete", /P110\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P110 complete", /P110\.7 is\s+complete/.test(platformRoadmap) && /P110 is\s+complete/.test(platformRoadmap) && /P111 is\s+next/.test(platformRoadmap));
 addCheck("README records P110 complete", /P110\.7 final validation/.test(readme) && /P110 is complete/.test(readme) && /P111 is next/.test(readme));
@@ -145,7 +157,7 @@ addCheck("Command Center persistence UX retained", businessBuild.founderLiveOper
 addCheck("route safety coverage retained", routeTests.includes("Decision ledger persistence appears on non-chat founder routes") && routeTests.includes("/command-center/lite") && routeTests.includes("/command-center/live-readiness") && routeTests.includes("toHaveCount(0)"));
 addCheck(
   "phase status closed",
-  p111PlaceholderState
+  p111HandoffState
     && statusById.get("P110")?.status === "complete"
     && statusById.get("P110.7")?.status === "complete"
     && roadmapById.get("P110")?.status === "complete"
@@ -174,7 +186,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates final P110 founder live operator decision-ledger persistence closure.",
-        "- Confirms parent P110 and all subphases are complete, reports and scripts exist, Command Center persistence route safety is retained, and P111 is the next planned handoff placeholder.",
+        "- Confirms parent P110 and all subphases are complete, reports and scripts exist, Command Center persistence route safety is retained, and the P111 handoff state is valid.",
         "- Does not enable hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },

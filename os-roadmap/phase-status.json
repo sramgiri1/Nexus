@@ -14149,20 +14149,167 @@
       "title": "Founder Live Agent Work Order Persistence",
       "track": "NEXUS_OS",
       "order": 147,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P111 is in progress. P111.1 defines governed local persistence contracts for founder live agent work orders while unsafe authority remains blocked.",
+      "checksRun": [
+        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
+        "npm run check:p1107-founder-live-operator-decision-ledger-persistence-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P111.1 is contract/docs/status/checker only and does not add DB schema, runtime helpers, Command Center source, or runtime data.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P111.2",
+      "commandCenterVisible": true,
+      "label": "Work Orders",
+      "detail": "P111.1 contract complete; P111.2 schema next."
+    },
+    {
+      "phaseId": "P111.1",
+      "title": "Work Order Persistence Contract / Policy / Schema Plan",
+      "track": "NEXUS_OS",
+      "order": 147.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T22:12:30.882Z",
+      "summary": "Defined the P111 founder live agent work order persistence contract, subphase split, future schemas/exports, reuse requirements, safety rules, checker, docs, and OS status handoff.",
+      "checksRun": [
+        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
+        "npm run check:p1107-founder-live-operator-decision-ledger-persistence-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P111.1 is contract/docs/status/checker only and does not add DB schema, runtime helpers, Command Center source, or runtime data.",
+        "Founder work order persistence remains planned until later scoped subphases.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P111.2",
+      "commandCenterVisible": true,
+      "label": "Work Order Contract",
+      "detail": "P111.1 contract complete; P111.2 schema next."
+    },
+    {
+      "phaseId": "P111.2",
+      "title": "Agent Work Order SQLite Schema",
+      "track": "NEXUS_OS",
+      "order": 147.2,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned next phase to define governed local persistence for founder-approved agent work orders before any dispatch or execution authority is considered.",
+      "summary": "Planned local SQLite schema for founder agent work order records.",
       "checksRun": [],
       "knownLimitations": [
-        "Planned placeholder only; no implementation authority is enabled until P111 is split and implemented under the NEXUS Execution Contract.",
-        "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled by this placeholder."
+        "Planned only; no DB schema change is enabled yet."
       ],
-      "nextPhase": "P111.1",
+      "nextPhase": "P111.3",
       "commandCenterVisible": true,
-      "label": "Work Orders",
-      "detail": "Planned governed persistence for founder-approved agent work orders."
+      "label": "Work Order Schema",
+      "detail": "Planned local schema."
+    },
+    {
+      "phaseId": "P111.3",
+      "title": "Governed Local Work Order CRUD Model",
+      "track": "NEXUS_OS",
+      "order": 147.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned approval-gated local CRUD model for allowlisted founder agent work order records.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no runtime helper or DB writes are enabled yet."
+      ],
+      "nextPhase": "P111.4",
+      "commandCenterVisible": true,
+      "label": "Work Order CRUD",
+      "detail": "Planned governed local CRUD model."
+    },
+    {
+      "phaseId": "P111.4",
+      "title": "Command Center Work Order Persistence UX",
+      "track": "NEXUS_OS",
+      "order": 147.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-safe Command Center UX for founder agent work order persistence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; no Command Center source change is enabled yet."
+      ],
+      "nextPhase": "P111.5",
+      "commandCenterVisible": true,
+      "label": "Work Order UX",
+      "detail": "Planned Command Center UX."
+    },
+    {
+      "phaseId": "P111.5",
+      "title": "Work Order Persistence Validation",
+      "track": "NEXUS_OS",
+      "order": 147.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned aggregate validation for P111.1-P111.4.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned validation only."
+      ],
+      "nextPhase": "P111.6",
+      "commandCenterVisible": true,
+      "label": "Work Order Validation",
+      "detail": "Planned aggregate validation."
+    },
+    {
+      "phaseId": "P111.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 147.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned docs and roadmap closure for P111.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned docs closure only."
+      ],
+      "nextPhase": "P111.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "Planned docs closure."
+    },
+    {
+      "phaseId": "P111.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 147.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final validation and handoff for P111.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned final validation only."
+      ],
+      "nextPhase": "P112",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation."
     },
     {
       "phaseId": "P83",
@@ -14647,8 +14794,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T21:22:13.000Z",
-  "currentPhase": "P110.7",
-  "previousPhase": "P110.6",
-  "nextPhase": "P111",
+  "currentPhase": "P111.1",
+  "previousPhase": "P110.7",
+  "nextPhase": "P111.2",
   "currentPhaseStatus": "complete"
 }

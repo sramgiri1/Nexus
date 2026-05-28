@@ -2773,6 +2773,24 @@ Implementation follows
 The detailed plan lives in
 [`P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md`](P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md).
 
+## P111 Founder Live Agent Work Order Persistence
+
+P111 starts founder live agent work order persistence. P111.1 is complete. It
+splits P111 into seven implementation-grade subphases and documents future
+local SQLite schemas, future exports, reuse requirements, safety rules, checker
+coverage, and OS status for founder agent work order records. P111.2 is next
+for the scoped local SQLite schema. This subphase is contract/checker/docs/status
+only; Command Center source, DB schema, runtime helper code, hosted DB mutation,
+raw SQL, runtime admission, execution unlock, project mutation, provider/model
+calls, agent dispatch, worker/tool execution, deploy, release, export, package
+action, network call, and provider spend remain blocked.
+
+Implementation follows
+[`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json).
+
+The detailed plan lives in
+[`P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md`](P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md).
+
 Implementation follows
 [`p103-founder-live-work-admission-contracts.json`](../../contracts/os-roadmap/p103-founder-live-work-admission-contracts.json).
 

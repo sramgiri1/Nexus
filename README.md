@@ -506,6 +506,14 @@ The Command Center and local operator surface have:
   DB mutation, raw SQL, runtime admission, execution unlock, provider/model
   call, dispatch, worker/tool execution, deploy, release, export, package,
   network call, and provider spend path remain unavailable.
+- P111.1 work order persistence contract: P111 is split into seven
+  implementation-grade subphases for founder live agent work order
+  persistence. P111.1 documents future local SQLite schemas, future exports,
+  reuse requirements, safety rules, checker coverage, and OS status while
+  leaving DB schema and runtime code untouched. P111.2 is next. No project
+  mutation, hosted DB mutation, raw SQL, runtime admission, execution unlock,
+  provider/model call, dispatch, worker/tool execution, deploy, release,
+  export, package, network call, or provider spend path is available.
 
 ## CareLoop Project Progress
 

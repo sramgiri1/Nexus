@@ -1,0 +1,837 @@
+{
+  "phaseId": "P111",
+  "title": "Founder Live Agent Work Order Persistence",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Move founder live agent work orders toward governed local SQLite persistence so approved agent work can be tracked durably before any dispatch, execution, project mutation, hosted DB mutation, deploy, network, or spend authority is considered.",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "d0c8d2aa",
+  "safetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated project sources/tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P111.1 is contract-only and must not modify db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, or runtime data.",
+    "Later P111 subphases may only add governed local SQLite CRUD for allowlisted NEXUS OS founder agent work order records where explicitly scoped.",
+    "Do not enable hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, runtime admission, execution unlock, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "db/sqliteRuntime.js",
+    "db/sqliteCrudRepository.js",
+    "live-ready/founderLiveHandoffWorkOrders.js",
+    "live-ready/founderLiveWorkAdmission.js",
+    "existing Command Center route matrix, tabs, cards, badges, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P111.1",
+      "title": "Work Order Persistence Contract / Policy / Schema Plan",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the governed local SQLite persistence contract for founder-approved agent work orders without changing DB schema, runtime models, Command Center source, or runtime data.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "d0c8d2aa",
+      "allowedFiles": [
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1111-founder-live-agent-work-order-persistence-contract.js",
+        "scripts/check-p1107-founder-live-operator-decision-ledger-persistence-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1107-founder-live-operator-decision-ledger-persistence-final-report.md",
+        "reports/p1111-founder-live-agent-work-order-persistence-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1111-founder-live-agent-work-order-persistence-contract.js",
+        "scripts/check-p1107-founder-live-operator-decision-ledger-persistence-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1107-founder-live-operator-decision-ledger-persistence-final-report.md",
+        "reports/p1111-founder-live-agent-work-order-persistence-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1111-founder-live-agent-work-order-persistence-contract",
+        "P111.1 work order persistence contract report"
+      ],
+      "futureExports": [
+        "P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PHASE",
+        "P111_AGENT_WORK_ORDER_DB_ENTITIES",
+        "buildFounderLiveAgentWorkOrderPersistenceContract",
+        "validateFounderLiveAgentWorkOrderPersistenceContract",
+        "buildSafeAgentWorkOrderDbRecord",
+        "executeApprovedAgentWorkOrderDbCrudRequest",
+        "buildAgentWorkOrderDbViewModel"
+      ],
+      "futureSchemas": [
+        "founder_agent_work_orders",
+        "founder_agent_work_order_events",
+        "founder_agent_work_order_evidence_refs"
+      ],
+      "futureDataShape": "Result envelope with schemaVersion, runtimeMode, dbMode, workOrderSessionSummary, agentWorkOrders[], workOrderEvents[], localCrudRequests[], allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, requiredEvidence[], missingEvidence[], evidenceRefs[], auditRefs[], activityRefs[], nextAction, blockers[], disabledReason, ownerCapability, activityLocation, costImpact, commandCenterVisible, and all non-scoped unsafe runtime flags false.",
+      "commandCenterUx": "Preserve current Command Center UX. Later P111 UX must show local work order DB state, current state, next action, blockers, disabled reason, owner agent/capability, evidence/activity location, and cost impact on relevant non-chat pages without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, raw packet keys, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P111.1 because no UI files change.",
+        "P111.4 must add focused route coverage for work order persistence UX."
+      ],
+      "checkerUpdates": [
+        "Add check:p1111-founder-live-agent-work-order-persistence-contract.",
+        "Update check:os-phase-status to accept P111.1-P111.7.",
+        "Update P110.7 final checker to accept the concrete P111.1/P111.2 handoff state."
+      ],
+      "docsRoadmap": "Add P111 plan, README and platform roadmap entries, and OS phase tracking with P111.1 complete and P111.2 next.",
+      "phaseStatusUpdate": "P111 in progress; P111.1 complete; current P111.1; previous P110.7; next P111.2.",
+      "validationCommands": [
+        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
+        "npm run check:p1107-founder-live-operator-decision-ledger-persistence-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P111.1 is contract/docs/status/checker only.",
+        "Confirm no db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, projects/**, or careloop/** files changed.",
+        "Confirm hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P111.1 files>",
+        "git commit -m \"feat(nexus): define p111 agent work order persistence contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P111.2",
+      "title": "Agent Work Order SQLite Schema",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add local SQLite schema definitions for display-safe founder agent work orders, events, and evidence references.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1112-founder-live-agent-work-order-schema.js",
+        "scripts/check-p1111-founder-live-agent-work-order-persistence-contract.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1112-founder-live-agent-work-order-schema-report.md",
+        "reports/p1111-founder-live-agent-work-order-persistence-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1112-founder-live-agent-work-order-schema.js",
+        "scripts/check-p1111-founder-live-agent-work-order-persistence-contract.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1112-founder-live-agent-work-order-schema-report.md",
+        "reports/p1111-founder-live-agent-work-order-persistence-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script for P111.2"
+      ],
+      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P111.2 checker.",
+        "Run previous subphase checker for P111.1."
+      ],
+      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.2.",
+      "phaseStatusUpdate": "P111 in progress; P111.2 complete when implemented; previous P111.1; next P111.3.",
+      "validationCommands": [
+        "npm run check:p1112-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p111.2 work order persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P111.3",
+      "title": "Governed Local Work Order CRUD Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add approval-gated local CRUD model helpers for allowlisted work order records without dispatching agents or mutating projects.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentWorkOrderPersistence.js",
+        "scripts/check-p1113-founder-live-agent-work-order-crud-model.js",
+        "scripts/check-p1112-founder-live-agent-work-order-schema.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1113-founder-live-agent-work-order-crud-model-report.md",
+        "reports/p1112-founder-live-agent-work-order-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentWorkOrderPersistence.js",
+        "scripts/check-p1113-founder-live-agent-work-order-crud-model.js",
+        "scripts/check-p1112-founder-live-agent-work-order-schema.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1113-founder-live-agent-work-order-crud-model-report.md",
+        "reports/p1112-founder-live-agent-work-order-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script for P111.3"
+      ],
+      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P111.3 checker.",
+        "Run previous subphase checker for P111.2."
+      ],
+      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.3.",
+      "phaseStatusUpdate": "P111 in progress; P111.3 complete when implemented; previous P111.2; next P111.4.",
+      "validationCommands": [
+        "npm run check:p1113-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p111.3 work order persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P111.4",
+      "title": "Command Center Work Order Persistence UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Surface display-safe founder agent work order persistence state on relevant Command Center pages while keeping Chat/Lite clean.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1114-command-center-work-order-persistence-ux.js",
+        "scripts/check-p1113-founder-live-agent-work-order-crud-model.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1114-command-center-work-order-persistence-ux-report.md",
+        "reports/p1113-founder-live-agent-work-order-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1114-command-center-work-order-persistence-ux.js",
+        "scripts/check-p1113-founder-live-agent-work-order-crud-model.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1114-command-center-work-order-persistence-ux-report.md",
+        "reports/p1113-founder-live-agent-work-order-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script for P111.4"
+      ],
+      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Expose display-safe agent work order persistence on relevant founder pages without raw JSON, raw logs, raw policy dumps, raw private IDs, raw packet keys, DemoApp, or runnable dispatch/mutation controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add focused route coverage for work order persistence UX across relevant founder routes and themes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P111.4 checker.",
+        "Run previous subphase checker for P111.3."
+      ],
+      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.4.",
+      "phaseStatusUpdate": "P111 in progress; P111.4 complete when implemented; previous P111.3; next P111.5.",
+      "validationCommands": [
+        "npm run check:p1114-command-center-work-order-persistence-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Work order persistence\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1113-founder-live-agent-work-order-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p111.4 work order persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P111.5",
+      "title": "Work Order Persistence Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P111.1-P111.4 contract, schema, CRUD model, UX, route safety, docs, and reports.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
+        "scripts/check-p1114-command-center-work-order-persistence-ux.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1115-founder-live-agent-work-order-persistence-validation-report.md",
+        "reports/p1114-command-center-work-order-persistence-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
+        "scripts/check-p1114-command-center-work-order-persistence-ux.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1115-founder-live-agent-work-order-persistence-validation-report.md",
+        "reports/p1114-command-center-work-order-persistence-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script for P111.5"
+      ],
+      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P111.5 checker.",
+        "Run previous subphase checker for P111.4."
+      ],
+      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.5.",
+      "phaseStatusUpdate": "P111 in progress; P111.5 complete when implemented; previous P111.4; next P111.6.",
+      "validationCommands": [
+        "npm run check:p1115-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p111.5 work order persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P111.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Close P111 docs, README, platform roadmap, contract, reports, and OS status evidence before final validation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
+        "scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1116-founder-live-agent-work-order-persistence-docs-report.md",
+        "reports/p1115-founder-live-agent-work-order-persistence-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
+        "scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1116-founder-live-agent-work-order-persistence-docs-report.md",
+        "reports/p1115-founder-live-agent-work-order-persistence-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script for P111.6"
+      ],
+      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P111.6 checker.",
+        "Run previous subphase checker for P111.5."
+      ],
+      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.6.",
+      "phaseStatusUpdate": "P111 in progress; P111.6 complete when implemented; previous P111.5; next P111.7.",
+      "validationCommands": [
+        "npm run check:p1116-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p111.6 work order persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P111.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P111 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
+        "scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1117-founder-live-agent-work-order-persistence-final-report.md",
+        "reports/p1116-founder-live-agent-work-order-persistence-docs-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFiles": [
+        "scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
+        "scripts/check-p1116-founder-live-agent-work-order-persistence-docs.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json",
+        "docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1117-founder-live-agent-work-order-persistence-final-report.md",
+        "reports/p1116-founder-live-agent-work-order-persistence-docs-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script for P111.7"
+      ],
+      "dataShape": "Implementation-grade subphase data must preserve display-safe founder work order state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P111.7 checker.",
+        "Run previous subphase checker for P111.6."
+      ],
+      "docsRoadmap": "Update P111 plan, README, platform roadmap, OS status, and generated reports for P111.7.",
+      "phaseStatusUpdate": "P111 in progress; P111.7 complete when implemented; previous P111.6; next P112.",
+      "validationCommands": [
+        "npm run check:p1117-founder-live-agent-work-order-persistence",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed files>",
+        "git commit -m \"feat(nexus): implement p111.7 work order persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ],
+  "knownLimitations": [
+    "P111.1 is contract-only; DB schema, runtime helpers, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
+    "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
+  ]
+}
