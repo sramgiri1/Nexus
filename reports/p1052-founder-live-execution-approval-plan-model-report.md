@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P105.2
-- Generated at: 2026-05-28T10:35:37.866Z
+- Generated at: 2026-05-28T10:42:32.326Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bc532ec0
+- Validation HEAD: fbb6da36
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,7 +36,7 @@
 | docs record P105.2 | PASS |  |
 | platform roadmap records P105.2 | PASS |  |
 | README records P105.2 | PASS |  |
-| phase status advanced | PASS | P105.4/P105.3/P105.5 |
+| phase status advanced | PASS | P105.5/P105.4/P105.6 |
 | P105.2 avoids forbidden file scope | PASS |  |
 | model stays Command Center hidden | PASS |  |
 | model avoids raw private IDs | PASS |  |

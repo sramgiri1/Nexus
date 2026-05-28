@@ -65,9 +65,9 @@ addCheck("platform roadmap records P105.2", /P105\.2 is\s+complete/.test(platfor
 addCheck("README records P105.2", /P105\.2 approval-plan model/.test(readme) && /P105\.3 is next/.test(readme));
 addCheck(
   "phase status advanced",
-  ["P105.2", "P105.3", "P105.4"].includes(status.currentPhase)
-    && ["P105.1", "P105.2", "P105.3"].includes(status.previousPhase)
-    && ["P105.3", "P105.4", "P105.5"].includes(status.nextPhase)
+  ["P105.2", "P105.3", "P105.4", "P105.5"].includes(status.currentPhase)
+    && ["P105.1", "P105.2", "P105.3", "P105.4"].includes(status.previousPhase)
+    && ["P105.3", "P105.4", "P105.5", "P105.6"].includes(status.nextPhase)
     && statusById.get("P105")?.status === "in_progress"
     && statusById.get("P105.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P105.3")?.status)

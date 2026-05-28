@@ -195,11 +195,23 @@ Safety result: display-only. No approval submission, approval capture, approval 
 
 ## P105.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: aggregate P105 checker and route-safety coverage without changing runtime behavior.
 
-Validation commands: include aggregate checker, retained focused Playwright coverage, OS phase status, phase validation coverage, and diff check.
+Validation commands:
+- npm run check:p1055-founder-live-execution-approval-aggregate
+- npm run check:p1054-command-center-approval-review-ux
+- npm run check:p1053-founder-live-execution-approval-review-packet
+- npm run check:p1052-founder-live-execution-approval-plan-model
+- npm run check:p1051-founder-live-execution-approval-planning-contract
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only"
+- cd dashboard && npm run build
+- npm run check:os-phase-status
+- npm run check:phase-validation-coverage
+- git diff --check
+
+Safety result: aggregate validation only. It preserves P105.4 UX and does not enable approval submission, approval capture, approval persistence, execution unlock, runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package action, network call, or spend.
 
 ## P105.6 Docs / Roadmap
 

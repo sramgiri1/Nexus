@@ -51,18 +51,18 @@ addCheck("evidence and validation visible", packet.evidenceLocation === "reports
 addCheck("focused Playwright coverage added", routeTests.includes("Founder live approval review packet appears on non-chat founder routes") && routeTests.includes("Business Build Approval Review") && routeTests.includes("Command Center Lite route stays chat-only"));
 addCheck("route-wide safety assertions retained", routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher exists globally"));
 addCheck("contract marks P105.4 complete", p1054.status === "complete");
-addCheck("P105.5 remains planned", subphaseById.get("P105.5")?.status === "planned");
+addCheck("P105.5 remains planned or complete", ["planned", "complete"].includes(subphaseById.get("P105.5")?.status));
 addCheck("docs record P105.4", /P105\.4 Command Center Approval Planning UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("platform roadmap records P105.4", /P105\.4 is\s+complete/.test(platformRoadmap) && /P105\.5 is\s+next/.test(platformRoadmap));
-addCheck("README records P105.4", /P105\.4 approval review UX/.test(readme) && /P105\.5 is next/.test(readme));
+addCheck("README records P105.4", /P105\.4 approval review UX/.test(readme) && (/P105\.5 is next/.test(readme) || /P105\.6 is next/.test(readme)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P105.4"
-    && status.previousPhase === "P105.3"
-    && status.nextPhase === "P105.5"
+  ["P105.4", "P105.5"].includes(status.currentPhase)
+    && ["P105.3", "P105.4"].includes(status.previousPhase)
+    && ["P105.5", "P105.6"].includes(status.nextPhase)
     && statusById.get("P105")?.status === "in_progress"
     && statusById.get("P105.4")?.status === "complete"
-    && statusById.get("P105.5")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P105.5")?.status)
     && roadmapById.get("P105.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

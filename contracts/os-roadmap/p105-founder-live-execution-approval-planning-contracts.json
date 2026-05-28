@@ -437,10 +437,27 @@
     {
       "phaseId": "P105.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Aggregate P105 checker and route-safety coverage without changing runtime behavior.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "scripts/check-p1055-founder-live-execution-approval-aggregate.js",
+        "scripts/check-p1054-command-center-approval-review-ux.js",
+        "contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json",
+        "docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1055-founder-live-execution-approval-aggregate-report.md",
+        "reports/p1054-command-center-approval-review-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1051-founder-live-execution-approval-planning-contract.js",
+        "scripts/check-p1052-founder-live-execution-approval-plan-model.js",
+        "scripts/check-p1053-founder-live-execution-approval-review-packet.js"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -454,27 +471,57 @@
         ".env*"
       ],
       "expectedExportsSchemasDataShapes": {
-        "futureAggregate": "Aggregate validation for P105.1-P105.5 reports, scripts, UX placement, status, docs, and safety wording."
+        "aggregateChecker": "check:p1055-founder-live-execution-approval-aggregate validates P105.1-P105.5 scripts, reports, route coverage, display packet data, Command Center placement, docs, status, and safety wording.",
+        "report": "reports/p1055-founder-live-execution-approval-aggregate-report.md records checks, validation commands, known limitations, and result."
       },
-      "commandCenterUxRequirements": "Preserve P105.4 UX.",
-      "themeRequirements": "Preserve system, dark, and light themes.",
-      "playwrightTests": "Run retained P105.4 route coverage.",
+      "commandCenterUxRequirements": "Preserve P105.4 approval review UX on Business Build, Agent Flow, and Live Readiness. Chat with NEXUS and Lite remain chat-only. No new controls or data dumps.",
+      "themeRequirements": "Preserve system, dark, and light themes through retained P105.4 route coverage.",
+      "playwrightTests": "Run retained P105.4 focused route coverage; no new UI route change in P105.5.",
       "checkerUpdates": [
-        "Add P105.5 aggregate checker."
+        "Add check:p1055-founder-live-execution-approval-aggregate.",
+        "Keep P105.1-P105.4 checkers forward-compatible with P105.5 status advancement."
       ],
-      "docsRoadmap": "Record P105.5 when implemented.",
-      "phaseStatusUpdate": "P105.5 complete only when aggregate checker passes.",
-      "validationCommands": [],
+      "docsRoadmap": "Record P105.5 complete and P105.6 next in plan, README, and platform roadmap.",
+      "phaseStatusUpdate": "P105 in progress; P105.5 complete; current P105.5; previous P105.4; next P105.6.",
+      "validationCommands": [
+        "npm run check:p1055-founder-live-execution-approval-aggregate",
+        "npm run check:p1054-command-center-approval-review-ux",
+        "npm run check:p1053-founder-live-execution-approval-review-packet",
+        "npm run check:p1052-founder-live-execution-approval-plan-model",
+        "npm run check:p1051-founder-live-execution-approval-planning-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "finalSafetyChecks": [
-        "Confirm no unsafe runtime changes."
+        "Confirm aggregate checker does not change runtime behavior or Command Center UX.",
+        "Confirm no approval submission, capture, persistence, execution unlock, or runtime admission is enabled.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network call, or spend is enabled.",
+        "Confirm projects/** and CareLoop files are untouched."
       ],
-      "gitCommands": [],
+      "gitCommands": [
+        "git add README.md contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json docs/architecture/NEXUS_PLATFORM_ROADMAP.md docs/architecture/P105_FOUNDER_LIVE_EXECUTION_APPROVAL_PLANNING_PLAN.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json package.json reports/os-phase-status-report.md reports/p1051-founder-live-execution-approval-planning-contract-report.md reports/p1052-founder-live-execution-approval-plan-model-report.md reports/p1053-founder-live-execution-approval-review-packet-report.md reports/p1054-command-center-approval-review-ux-report.md reports/p1055-founder-live-execution-approval-aggregate-report.md reports/phase-validation-coverage-report.md scripts/check-p1051-founder-live-execution-approval-planning-contract.js scripts/check-p1052-founder-live-execution-approval-plan-model.js scripts/check-p1053-founder-live-execution-approval-review-packet.js scripts/check-p1054-command-center-approval-review-ux.js scripts/check-p1055-founder-live-execution-approval-aggregate.js",
+        "git commit -m \"test(nexus): aggregate founder approval validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
         "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
         "Known limitations",
-        "Next subphase"
+        "Next phase/subphase"
       ]
     },
     {
@@ -571,8 +618,8 @@
     }
   ],
   "knownLimitations": [
-    "P105.4 is display-only Command Center UX; approval submission, capture, persistence, and execution unlock remain blocked.",
-    "Runtime admission, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-    "P105.5-P105.7 remain planned."
+    "P105.5 is aggregate validation only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+    "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    "P105.6-P105.7 remain planned."
   ]
 }

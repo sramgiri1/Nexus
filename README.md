@@ -216,7 +216,11 @@ The Command Center and local operator surface have:
   show the display-safe approval review packet with state, blockers, disabled
   reason, next action, owner, evidence/activity, validation command, and cost
   impact. Chat with NEXUS and Lite remain chat-only, and approval/execution
-  controls remain absent. P105.5 is next.
+  controls remain absent.
+- P105.5 aggregate validation: P105 now has aggregate coverage across the
+  approval-planning contract, approval-plan model, dry-run review packet,
+  Command Center approval review UX, retained route tests, reports, status,
+  docs, and safety wording. P105.6 is next.
 
 ## CareLoop Project Progress
 

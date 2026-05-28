@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P105.4
-- Generated at: 2026-05-28T10:38:21.903Z
+- Generated at: 2026-05-28T10:42:48.862Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3281910f
+- Validation HEAD: fbb6da36
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,11 +29,11 @@
 | focused Playwright coverage added | PASS |  |
 | route-wide safety assertions retained | PASS |  |
 | contract marks P105.4 complete | PASS |  |
-| P105.5 remains planned | PASS |  |
+| P105.5 remains planned or complete | PASS |  |
 | docs record P105.4 | PASS |  |
 | platform roadmap records P105.4 | PASS |  |
 | README records P105.4 | PASS |  |
-| phase status advanced | PASS | P105.4/P105.3/P105.5 |
+| phase status advanced | PASS | P105.5/P105.4/P105.6 |
 | P105.4 avoids forbidden file scope | PASS |  |
 | primary UX avoids raw private IDs | PASS |  |
 | primary UX avoids raw packet IDs | PASS |  |

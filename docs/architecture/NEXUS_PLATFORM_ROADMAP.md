@@ -2383,6 +2383,11 @@ impact. Chat with NEXUS and Lite remain chat-only, with no approval controls,
 execution controls, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, deploy, release, export, package action,
 network call, or spend. P105.5 is next for aggregate checker coverage.
+P105.5 is complete. Aggregate validation now covers the P105 approval-planning
+contract, approval-plan model, dry-run review packet, Command Center approval
+review UX, retained route coverage, reports, phase status, docs, and safety
+wording while all approval and execution authority remains blocked. P105.6 is
+next for docs and roadmap closure.
 
 Implementation follows
 [`p105-founder-live-execution-approval-planning-contracts.json`](../../contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json).
