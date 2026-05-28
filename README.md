@@ -627,6 +627,13 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, runtime
   admission, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P113.2 work assignment SQLite schema: P113 now has local schema metadata and
+  isolated SQLite validation for founder agent work assignments, assignment
+  events, and assignment evidence references. P113.3 is next for governed local
+  assignment CRUD modeling. Runtime helper code, dashboard source, persistent
+  runtime data writes, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

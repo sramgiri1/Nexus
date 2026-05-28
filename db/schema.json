@@ -1216,6 +1216,143 @@
       "retentionClass": "founder_agent_work_queue_evidence",
       "redactionRequired": true,
       "fileFallbackSource": "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md"
+    },
+    {
+      "name": "founder_agent_work_assignments",
+      "purpose": "Durable local assignment readiness items derived from governed founder agent work queue candidates without dispatch, worker execution, or project mutation authority.",
+      "primaryKey": "assignmentId",
+      "fields": {
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "publicLabel": "string",
+        "assignmentLane": "string",
+        "assignmentState": "string",
+        "assignmentSummary": "string",
+        "assignedAgent": "string",
+        "ownerCapability": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "operatorApprovalRequired": "boolean",
+        "operatorApproved": "boolean",
+        "localCrudAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "assignmentId",
+        "queueItemId",
+        "publicLabel",
+        "assignmentState"
+      ],
+      "indexes": [
+        "queueItemId",
+        "workOrderId",
+        "assignmentState",
+        "assignmentLane",
+        "assignedAgent",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "reports/p1127-founder-live-agent-work-queue-admission-final-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_assignment_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1131-founder-live-agent-work-assignment-contract-report.md"
+    },
+    {
+      "name": "founder_agent_work_assignment_events",
+      "purpose": "Durable local audit event rows for founder agent work assignment readiness transitions without dispatch, execution, or project mutation authority.",
+      "primaryKey": "assignmentEventId",
+      "fields": {
+        "assignmentEventId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "assignmentEventId",
+        "assignmentId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+        "reports/p1131-founder-live-agent-work-assignment-contract-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_assignment_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1131-founder-live-agent-work-assignment-contract-report.md"
+    },
+    {
+      "name": "founder_agent_work_assignment_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local founder agent work assignment readiness items.",
+      "primaryKey": "assignmentEvidenceRefId",
+      "fields": {
+        "assignmentEvidenceRefId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "assignmentEvidenceRefId",
+        "assignmentId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1131-founder-live-agent-work-assignment-contract-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_assignment_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1131-founder-live-agent-work-assignment-contract-report.md"
     }
   ]
 }

@@ -631,3 +631,86 @@ CREATE INDEX IF NOT EXISTS idx_founder_agent_work_queue_evidence_refs_queue_item
 CREATE INDEX IF NOT EXISTS idx_founder_agent_work_queue_evidence_refs_work_order_id     ON founder_agent_work_queue_evidence_refs (work_order_id);
 CREATE INDEX IF NOT EXISTS idx_founder_agent_work_queue_evidence_refs_evidence_type     ON founder_agent_work_queue_evidence_refs (evidence_type);
 CREATE INDEX IF NOT EXISTS idx_founder_agent_work_queue_evidence_refs_evidence_location ON founder_agent_work_queue_evidence_refs (evidence_location);
+
+-- founder_agent_work_assignments
+CREATE TABLE IF NOT EXISTS founder_agent_work_assignments (
+  assignment_id             TEXT        NOT NULL,
+  queue_item_id             TEXT        NOT NULL,
+  work_order_id             TEXT,
+  public_label              TEXT        NOT NULL,
+  assignment_lane           TEXT,
+  assignment_state          TEXT        NOT NULL,
+  assignment_summary        TEXT,
+  assigned_agent            TEXT,
+  owner_capability          TEXT,
+  next_action               TEXT,
+  disabled_reason           TEXT,
+  operator_approval_required BOOLEAN    NOT NULL DEFAULT true,
+  operator_approved         BOOLEAN     NOT NULL DEFAULT false,
+  local_crud_allowed        BOOLEAN     NOT NULL DEFAULT false,
+  db_write_allowed          BOOLEAN     NOT NULL DEFAULT false,
+  hosted_db_mutation_allowed BOOLEAN    NOT NULL DEFAULT false,
+  dispatch_allowed          BOOLEAN     NOT NULL DEFAULT false,
+  execution_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  runtime_admission_allowed BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  provider_spend_allowed    BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs             JSONB,
+  activity_refs             JSONB,
+  created_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (assignment_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_queue_item_id      ON founder_agent_work_assignments (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_work_order_id      ON founder_agent_work_assignments (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_assignment_state   ON founder_agent_work_assignments (assignment_state);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_assignment_lane    ON founder_agent_work_assignments (assignment_lane);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_assigned_agent     ON founder_agent_work_assignments (assigned_agent);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_owner_capability   ON founder_agent_work_assignments (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignments_updated_at         ON founder_agent_work_assignments (updated_at);
+
+-- founder_agent_work_assignment_events
+CREATE TABLE IF NOT EXISTS founder_agent_work_assignment_events (
+  assignment_event_id     TEXT        NOT NULL,
+  assignment_id           TEXT        NOT NULL,
+  queue_item_id           TEXT,
+  work_order_id           TEXT,
+  event_type              TEXT        NOT NULL,
+  event_state             TEXT        NOT NULL,
+  actor_label             TEXT,
+  event_summary           TEXT,
+  rollback_available      BOOLEAN     NOT NULL DEFAULT false,
+  dispatch_allowed        BOOLEAN     NOT NULL DEFAULT false,
+  execution_allowed       BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed BOOLEAN    NOT NULL DEFAULT false,
+  evidence_refs           JSONB,
+  created_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (assignment_event_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_events_assignment_id ON founder_agent_work_assignment_events (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_events_queue_item_id ON founder_agent_work_assignment_events (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_events_work_order_id ON founder_agent_work_assignment_events (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_events_event_type    ON founder_agent_work_assignment_events (event_type);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_events_event_state   ON founder_agent_work_assignment_events (event_state);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_events_created_at    ON founder_agent_work_assignment_events (created_at);
+
+-- founder_agent_work_assignment_evidence_refs
+CREATE TABLE IF NOT EXISTS founder_agent_work_assignment_evidence_refs (
+  assignment_evidence_ref_id TEXT        NOT NULL,
+  assignment_id              TEXT        NOT NULL,
+  queue_item_id              TEXT,
+  work_order_id              TEXT,
+  evidence_label             TEXT        NOT NULL,
+  evidence_type              TEXT,
+  evidence_location          TEXT        NOT NULL,
+  redaction_required         BOOLEAN     NOT NULL DEFAULT true,
+  retained_for_audit         BOOLEAN     NOT NULL DEFAULT true,
+  created_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (assignment_evidence_ref_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_evidence_refs_assignment_id     ON founder_agent_work_assignment_evidence_refs (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_evidence_refs_queue_item_id     ON founder_agent_work_assignment_evidence_refs (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_evidence_refs_work_order_id     ON founder_agent_work_assignment_evidence_refs (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_evidence_refs_evidence_type     ON founder_agent_work_assignment_evidence_refs (evidence_type);
+CREATE INDEX IF NOT EXISTS idx_founder_agent_work_assignment_evidence_refs_evidence_location ON founder_agent_work_assignment_evidence_refs (evidence_location);

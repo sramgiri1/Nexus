@@ -162,11 +162,11 @@
     {
       "phaseId": "P113.2",
       "title": "Agent Work Assignment SQLite Schema",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local SQLite schema metadata and isolated validation for assignment items, assignment events, and assignment evidence references without runtime dispatch.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "50dcc888679ceff0d17a73358b703ea8c9860727",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
@@ -231,10 +231,11 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P113.2 checker."
+        "Added check:p1132-founder-live-agent-work-assignment-schema.",
+        "Updated P113.1 checker to accept P113.2/P113.3 handoff."
       ],
-      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.2.",
-      "phaseStatusUpdate": "P113 in progress; P113.2 complete when implemented.",
+      "docsRoadmap": "P113.2 is recorded in the P113 plan, README, platform roadmap, OS status, and generated reports. P113.3 is next.",
+      "phaseStatusUpdate": "P113 in progress; P113.2 complete; current P113.2; previous P113.1; next P113.3.",
       "validationCommands": [
         "npm run check:p1132-founder-live-agent-work-assignment-schema",
         "npm run check:p1131-founder-live-agent-work-assignment-contract",
@@ -838,11 +839,12 @@
     "buildAgentWorkAssignmentReadinessViewModel"
   ],
   "knownLimitations": [
-    "P113.1 is contract-only; DB schema, runtime helpers, assignment preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
-    "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
+    "P113.2 is schema-only and does not write assignment records through runtime helpers.",
+    "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+    "P113.3 is next for governed local assignment CRUD modeling."
   ],
-  "currentSubphase": "P113.1",
-  "previousSubphase": "P112.7",
-  "nextSubphase": "P113.2",
-  "summary": "P113 is in progress. P113.1 defines the governed local assignment readiness boundary that follows queue admission while unsafe authority remains blocked."
+  "currentSubphase": "P113.2",
+  "previousSubphase": "P113.1",
+  "nextSubphase": "P113.3",
+  "summary": "P113 is in progress. P113.1-P113.2 define the governed local assignment readiness boundary and local SQLite schema while unsafe authority remains blocked."
 }
