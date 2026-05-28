@@ -8946,7 +8946,7 @@
       "order": 145,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a99443cc",
       "completedAt": "",
       "summary": "P109 is in progress. P109.1-P109.6 now cover local decision-ledger boundary/model/audit-preview state, display-safe non-chat Command Center UX, aggregate validation, and docs/status closure while all write/execution authority remains blocked.",
       "checksRun": [
@@ -9118,7 +9118,7 @@
       "order": 145.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a99443cc",
       "completedAt": "2026-05-28T20:56:50.000Z",
       "summary": "Closed P109 docs, README, platform roadmap, contract, reports, and OS phase status evidence for P109.1-P109.6 without changing runtime or Command Center behavior.",
       "checksRun": [
