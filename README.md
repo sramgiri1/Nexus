@@ -522,6 +522,14 @@ The Command Center and local operator surface have:
   mutation, hosted DB mutation, raw SQL interface, runtime admission, execution
   unlock, provider/model call, dispatch, worker/tool execution, deploy,
   release, export, package, network call, and provider spend remain unavailable.
+- P111.3 governed local CRUD model: P111 now has approval-gated local SQLite
+  CRUD helpers for allowlisted founder agent work order records, validated with
+  isolated create/read/update/upsert/list checks. P111.4 is next for Command
+  Center UX. Delete, outside entities, unapproved execution, hosted DB
+  mutation, raw SQL interface, runtime admission, execution unlock,
+  provider/model call, dispatch, worker/tool execution, project mutation,
+  deploy, release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

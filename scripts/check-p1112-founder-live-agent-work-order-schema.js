@@ -142,12 +142,18 @@ addCheck("README records P111.2", /P111\.2 work order SQLite schema/.test(readme
 addCheck("platform roadmap records P111.2", /P111\.2 is complete/.test(platformRoadmap) && /P111\.3 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P111.2"
-    && status.previousPhase === "P111.1"
-    && status.nextPhase === "P111.3"
-    && roadmap.currentPhase === "P111.2"
-    && roadmap.previousPhase === "P111.1"
-    && roadmap.nextPhase === "P111.3"
+  ((status.currentPhase === "P111.2"
+      && status.previousPhase === "P111.1"
+      && status.nextPhase === "P111.3"
+      && roadmap.currentPhase === "P111.2"
+      && roadmap.previousPhase === "P111.1"
+      && roadmap.nextPhase === "P111.3")
+    || (status.currentPhase === "P111.3"
+      && status.previousPhase === "P111.2"
+      && status.nextPhase === "P111.4"
+      && roadmap.currentPhase === "P111.3"
+      && roadmap.previousPhase === "P111.2"
+      && roadmap.nextPhase === "P111.4"))
     && statusById.get("P111")?.status === "in_progress"
     && statusById.get("P111.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P111.3")?.status)

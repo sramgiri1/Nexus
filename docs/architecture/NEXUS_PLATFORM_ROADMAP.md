@@ -2794,6 +2794,15 @@ SQL interface, runtime admission, execution unlock, project mutation,
 provider/model calls, agent dispatch, worker/tool execution, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P111.3 is complete. P111 now has approval-gated local SQLite CRUD helpers for
+allowlisted founder agent work order records, validated with isolated
+create/read/update/upsert/list checks. P111.4 is next for Command Center work
+order persistence UX. Delete, outside entities, unapproved execution, hosted DB
+mutation, raw SQL interface, runtime admission, execution unlock, project
+mutation, provider/model calls, agent dispatch, worker/tool execution, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json).
 

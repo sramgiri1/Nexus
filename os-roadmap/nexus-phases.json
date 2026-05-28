@@ -9414,10 +9414,11 @@
       "order": 147,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "56d74345",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P111 is in progress. P111.1 defines governed work order persistence contracts and P111.2 adds local SQLite schema definitions while unsafe authority remains blocked.",
+      "summary": "P111 is in progress. P111.1-P111.3 define contracts, local SQLite schema, and approval-gated local CRUD model for founder live agent work orders while unsafe authority remains blocked.",
       "checksRun": [
+        "npm run check:p1113-founder-live-agent-work-order-crud-model",
         "npm run check:p1112-founder-live-agent-work-order-schema",
         "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
         "npm run check:os-phase-status",
@@ -9425,13 +9426,13 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P111.2 is schema/checker/status/docs only and does not add runtime helpers, Command Center source, persistent runtime data, or execution authority.",
+        "P111.3 adds governed local CRUD helpers only and does not add Command Center source, persistent runtime data outside isolated checker validation, or execution authority.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P111.3",
+      "nextPhase": "P111.4",
       "commandCenterVisible": true,
       "label": "Work Orders",
-      "detail": "P111.2 schema complete; P111.3 governed local CRUD model next."
+      "detail": "P111.3 CRUD model complete; P111.4 Command Center UX next."
     },
     {
       "phaseId": "P111.1",
@@ -9491,19 +9492,27 @@
       "title": "Governed Local Work Order CRUD Model",
       "track": "NEXUS_OS",
       "order": 147.3,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned approval-gated local CRUD model for allowlisted founder agent work order records.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T22:24:12.646Z",
+      "summary": "Added approval-gated local CRUD helpers for allowlisted founder agent work order records with isolated SQLite create/read/update/upsert/list validation.",
+      "checksRun": [
+        "npm run check:p1113-founder-live-agent-work-order-crud-model",
+        "npm run check:p1112-founder-live-agent-work-order-schema",
+        "npm run check:p1111-founder-live-agent-work-order-persistence-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no runtime helper or DB writes are enabled yet."
+        "P111.3 admits local SQLite CRUD only for allowlisted founder agent work order OS records after explicit local approval gates.",
+        "It does not wire Command Center to DB records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
       ],
       "nextPhase": "P111.4",
       "commandCenterVisible": true,
       "label": "Work Order CRUD",
-      "detail": "Planned governed local CRUD model."
+      "detail": "Governed local CRUD model complete; Command Center UX next."
     },
     {
       "phaseId": "P111.4",
@@ -9993,8 +10002,8 @@
     }
   ],
   "updatedAt": "2026-05-28T21:22:13.000Z",
-  "currentPhase": "P111.2",
-  "previousPhase": "P111.1",
-  "nextPhase": "P111.3",
+  "currentPhase": "P111.3",
+  "previousPhase": "P111.2",
+  "nextPhase": "P111.4",
   "currentPhaseStatus": "complete"
 }

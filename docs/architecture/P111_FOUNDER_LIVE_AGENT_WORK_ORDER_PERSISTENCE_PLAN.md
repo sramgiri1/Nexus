@@ -198,3 +198,96 @@ blocked booleans and removes the temporary DB.
 Rollback plan: remove the three schema entries/tables/indexes, remove the
 P111.2 checker/script/docs/status/report updates, restore P111 to P111.1 with
 P111.2 planned, and keep P111.1 unchanged.
+
+## P111.3 Governed Local Work Order CRUD Model
+
+Status: complete
+
+Narrow goal: add approval-gated local CRUD helpers for the allowlisted founder
+agent work order entities without dispatching agents, executing workers/tools,
+or mutating projects.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `6010680e`.
+
+Allowed files: `live-ready/founderLiveAgentWorkOrderPersistence.js`, P111.3
+checker, P111.2 compatibility checker, P111 contract, P111 plan, README,
+platform roadmap, package script registry, OS phase status files, and generated
+P111.3/P111.2/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`, and
+persistent runtime DB files. The checker may create
+`local-state/runtime/check-p1113.sqlite` only during validation and must delete
+it before exit.
+
+Exact files/modules changed: added the P111.3 live-ready CRUD model and
+checker, registered the package script, updated P111.2 compatibility, updated
+P111 contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes: P111.3 exports the phase id, allowlisted work
+order DB entity list, safe record builder, approval-gated CRUD executor,
+persistence contract builder, and contract validator. The model returns
+display-safe work order records, events, evidence refs, CRUD requests,
+forbidden operations, mutation gate, runtime flags, blockers, disabled reason,
+owner capability, evidence/activity refs, and cost impact.
+
+Safety rules: default execution is blocked; unapproved execution is blocked;
+delete is blocked; outside-allowlist entities are blocked; local CRUD requires
+`execute=true`, operator approval, rollback acceptance, audit acceptance,
+validation command acceptance, sqlite-live mode, and local write flags. Hosted
+DB mutation, raw SQL interface, runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy, release, export, package, network, and provider spend remain blocked.
+
+Reuse check: P111.3 reuses `shared/resultEnvelope.js`, `db/sqliteRuntime.js`,
+`db/sqliteCrudRepository.js`, `live-ready/founderLiveHandoffWorkOrders.js`,
+and `live-ready/founderLiveWorkAdmission.js`. No SQLite repository or handoff
+helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P111.3.
+P111.4 owns work order persistence UX.
+
+Dark/light/system theme requirements: no theme source change in P111.3.
+
+Playwright tests: no new Playwright test in P111.3 because no UI source changes
+are made.
+
+Checker updates: P111.3 adds a dedicated CRUD checker and updates P111.2 to
+accept the P111.3/P111.4 handoff state.
+
+Docs/README/roadmap updates: P111.3 is recorded in this plan, README, platform
+roadmap, P111 contract, OS roadmap/status, and generated reports. P111.4 is
+next.
+
+OS phase status update: P111 is in progress; P111.3 is complete; current phase
+P111.3; previous P111.2; next P111.4.
+
+Validation commands:
+- `npm run check:p1113-founder-live-agent-work-order-crud-model`
+- `npm run check:p1112-founder-live-agent-work-order-schema`
+- `npm run check:p1111-founder-live-agent-work-order-persistence-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/provider/deploy paths
+changed; temporary SQLite checker DB removed; no DemoApp exposure; no raw
+JSON/log/policy dumps; no fake runnable actions; no hosted DB mutation, raw SQL
+interface, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, deploy, release, export, package, network, or provider spend
+authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P111.3 files>`
+- `git commit -m "feat(nexus): add p111 work order crud model"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: CRUD helpers can accidentally admit deletes, outside entities, or
+unsafe execution wording. The P111.3 checker blocks those cases and validates
+isolated create/read/update/upsert/list behavior.
+
+Rollback plan: remove the P111.3 live-ready module/checker/script/docs/status
+and report updates, restore P111 to P111.2 with P111.3 planned, and keep
+P111.1-P111.2 unchanged.

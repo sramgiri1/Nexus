@@ -39,6 +39,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1111 = subphaseById.get("P111.1") || {};
 const p1112 = subphaseById.get("P111.2") || {};
+const p1113 = subphaseById.get("P111.3") || {};
 const plan = readText("docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
@@ -108,7 +109,7 @@ const unsafeClaims = /hosted DB mutation is enabled|raw SQL is allowed|runtime a
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1111-founder-live-agent-work-order-persistence-contract"]));
 addCheck("P111 contract status in progress", contract.phaseId === "P111" && contract.status === "in_progress");
 addCheck("P111 subphase split is implementation-grade", (contract.subphases || []).length === 7 && expectedSubphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P111.1 is complete and P111.2 next", p1111.status === "complete" && ["planned", "complete"].includes(p1112.status));
+addCheck("P111.1 is complete and follow-on subphases are tracked", p1111.status === "complete" && ["planned", "complete"].includes(p1112.status) && ["planned", "complete"].includes(p1113.status));
 addCheck("P111.1 is contract only", p1111.scopeClassification === "NEXUS_OS_CHANGE" && (p1111.forbiddenFiles || []).includes("db/**") && (p1111.forbiddenFiles || []).includes("live-ready/**") && (p1111.forbiddenFiles || []).includes("dashboard/src/**"));
 addCheck("P111.1 records validation commands", validationCommands.every((command) => p1111.validationCommands?.includes(command)));
 addCheck(
@@ -135,10 +136,17 @@ addCheck(
       && status.nextPhase === "P111.3"
       && roadmap.currentPhase === "P111.2"
       && roadmap.previousPhase === "P111.1"
-      && roadmap.nextPhase === "P111.3"))
+      && roadmap.nextPhase === "P111.3")
+    || (status.currentPhase === "P111.3"
+      && status.previousPhase === "P111.2"
+      && status.nextPhase === "P111.4"
+      && roadmap.currentPhase === "P111.3"
+      && roadmap.previousPhase === "P111.2"
+      && roadmap.nextPhase === "P111.4"))
     && statusById.get("P111")?.status === "in_progress"
     && statusById.get("P111.1")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P111.2")?.status)
+    && ["planned", "complete"].includes(statusById.get("P111.3")?.status)
     && roadmapById.get("P111")?.status === "in_progress"
     && roadmapById.get("P111.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
