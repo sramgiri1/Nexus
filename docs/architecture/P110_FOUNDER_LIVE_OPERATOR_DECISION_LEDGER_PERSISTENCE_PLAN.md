@@ -115,15 +115,91 @@ forbidden paths confirmation, known limitations, and next phase/subphase.
 
 ## P110.2 Decision Ledger SQLite Schema
 
-Status: planned
+Status: complete
 
 Narrow goal: add local SQLite schema definitions for display-safe operator
-decision ledger entries, events, and evidence references. Allowed files are
-limited to `db/schema.json`, `db/schema.sql`, P110 schema checker, docs/status,
-package, and reports. Command Center source, runtime models, project files,
-providers, tools, workers, deploy/release/export/package paths, and env files
-remain forbidden. Validation must include the P110.2 checker, P110.1 checker,
-OS status, phase coverage, and diff check.
+decision ledger entries, events, and evidence references.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` from `d8f8982f`.
+
+Scope classification: `NEXUS_OS_CHANGE`.
+
+Allowed files: `db/schema.json`, `db/schema.sql`,
+`scripts/check-p1102-founder-live-operator-decision-ledger-schema.js`, P110
+contract, this plan, README, platform roadmap, package, OS roadmap/status,
+P109.7/P110.1 checker compatibility, and generated
+P110.2/P110.1/P109.7/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `live-ready/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`. Validation may create and remove an isolated temp SQLite DB under
+`local-state/runtime/check-p1102.sqlite`; no persistent runtime artifact may
+remain.
+
+Exact files/modules changed: added `operator_decision_ledger_entries`,
+`operator_decision_ledger_events`, and
+`operator_decision_ledger_evidence_refs` to `db/schema.json` and
+`db/schema.sql`; added the P110.2 checker; registered
+`check:p1102-founder-live-operator-decision-ledger-schema`; updated P110
+contract/docs/README/roadmap/status; updated P110.1 checker scope enforcement
+for later P110 phases; updated P109.7 checker handoff compatibility for
+P110.2/P110.3; generated reports.
+
+Expected schemas:
+- `operator_decision_ledger_entries`: `ledgerEntryId` primary key, public
+  label, source labels, proposed lane/outcome, decision state/summary,
+  next action, disabled reason, owner capability, safety booleans, evidence
+  refs, activity refs, timestamps.
+- `operator_decision_ledger_events`: `ledgerEventId` primary key, ledger entry
+  link, event type/state, actor label, event summary, rollback/replay/execution
+  safety booleans, evidence refs, timestamp.
+- `operator_decision_ledger_evidence_refs`: `evidenceRefId` primary key,
+  ledger entry link, evidence label/type/location, redaction and audit-retention
+  flags, timestamp.
+
+Reuse check: P110.2 reuses `db/sqliteRuntime.js`,
+`db/sqliteCrudRepository.js`, `shared/reportWriter.js`, and
+`shared/checkResultFormatter.js`. No DB runtime, repository, report writer,
+redaction, result envelope, checker formatter, or Command Center component was
+duplicated.
+
+Command Center UX requirements: no UI source change in P110.2. Chat with NEXUS
+and Lite remain clean; P110.4 is responsible for display-safe route UX.
+
+Dark/light/system theme requirements: no theme source change in P110.2. P110.4
+must validate theme behavior when UX changes.
+
+Playwright tests: no Playwright update in P110.2 because no UI files changed.
+
+Checker updates: P110.2 adds schema coverage for `schema.json`, `schema.sql`,
+SQLite transform, CRUD repository descriptions, isolated temp DB initialization,
+safe sample insert/list validation, docs/status, and unsafe authority wording.
+P110.1 checker scope enforcement is limited to the active P110.1 phase so later
+P110 schema/model subphases can run it as compatibility evidence. P109.7
+checker accepts the concrete P110.2/P110.3 handoff after schema completion.
+
+Docs/README/roadmap updates: P110.2 is recorded in this plan, README, platform
+roadmap, P110 contract, OS roadmap/status, and generated reports. P110.3 is
+next.
+
+OS phase status update: P110 remains in progress; P110.2 is complete; current
+phase P110.2; previous P110.1; next P110.3.
+
+Validation commands:
+- `npm run check:p1102-founder-live-operator-decision-ledger-schema`
+- `npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract`
+- `npm run check:p1097-founder-live-operator-decision-ledger-final`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: schema-only; no live runtime model changes; no Command
+Center source/test changes; no project files; no persistent temp DB; no hosted
+DB mutation, raw SQL, runtime admission, execution unlock, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, deploy,
+release, export, package creation, network calls, or provider spend.
 
 ## P110.3 Governed Local CRUD Model
 

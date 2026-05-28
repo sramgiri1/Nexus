@@ -2709,6 +2709,16 @@ raw SQL, runtime admission, execution unlock, provider/model calls, agent
 dispatch, worker/tool execution, project mutation, deploy, release, export,
 package action, network call, and provider spend remain blocked.
 
+P110.2 is complete. The local SQLite schema now includes display-safe operator
+decision ledger entries, events, and evidence references with low-risk
+redacted retention metadata and explicit safety booleans for replay, execution
+unlock, runtime admission, dispatch, project mutation, hosted DB mutation, and
+provider spend. P110.3 is next. This is schema-only; runtime CRUD admission,
+Command Center DB wiring, operator decision capture, hosted DB mutation, raw
+SQL, project mutation, provider/model calls, agent dispatch, worker/tool
+execution, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

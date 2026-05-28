@@ -457,6 +457,14 @@ The Command Center and local operator surface have:
   execution unlock, provider/model calls, dispatch, worker/tool execution,
   project mutation, deploy, release, export, package, network calls, and
   provider spend remain blocked.
+- P110.2 decision-ledger SQLite schema: local schema entries now exist for
+  operator decision ledger entries, events, and evidence references, with
+  low-risk redacted retention metadata and safety booleans for replay,
+  execution unlock, runtime admission, dispatch, project mutation, hosted DB
+  mutation, and spend. P110.3 is next. This is schema-only; no runtime CRUD
+  admission, Command Center DB wiring, operator decision capture, project
+  mutation, provider/model call, dispatch, worker/tool execution, deploy,
+  release, export, package, network call, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

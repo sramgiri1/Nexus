@@ -842,6 +842,128 @@
       "retentionClass": "business_build_runtime_state",
       "redactionRequired": true,
       "fileFallbackSource": "dashboard/src/data/businessBuild.js"
+    },
+    {
+      "name": "operator_decision_ledger_entries",
+      "purpose": "Durable local operator decision ledger entries derived from founder live operator review and decision-ledger previews.",
+      "primaryKey": "ledgerEntryId",
+      "fields": {
+        "ledgerEntryId": "string",
+        "publicLabel": "string",
+        "sourceCandidateLabel": "string",
+        "sourceReviewLabel": "string",
+        "proposedAgentLane": "string",
+        "proposedOutcome": "string",
+        "decisionState": "string",
+        "decisionSummary": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "ledgerWriteAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "replayAllowed": "boolean",
+        "executionUnlockAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "dispatchAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "ledgerEntryId",
+        "publicLabel",
+        "decisionState"
+      ],
+      "indexes": [
+        "decisionState",
+        "proposedAgentLane",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js",
+        "dashboard/src/data/businessBuild.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "operator_decision_ledger_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md"
+    },
+    {
+      "name": "operator_decision_ledger_events",
+      "purpose": "Durable local audit event rows for operator decision ledger state transitions without replay or execution authority.",
+      "primaryKey": "ledgerEventId",
+      "fields": {
+        "ledgerEventId": "string",
+        "ledgerEntryId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "replayAllowed": "boolean",
+        "executionUnlockAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "ledgerEventId",
+        "ledgerEntryId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "ledgerEntryId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "live-ready/founderLiveOperatorDecisionLedgerAuditPreview.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "operator_decision_ledger_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md"
+    },
+    {
+      "name": "operator_decision_ledger_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local operator decision ledger entries.",
+      "primaryKey": "evidenceRefId",
+      "fields": {
+        "evidenceRefId": "string",
+        "ledgerEntryId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "evidenceRefId",
+        "ledgerEntryId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "ledgerEntryId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "operator_decision_ledger_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1093-founder-live-operator-decision-ledger-audit-preview-report.md"
     }
   ]
 }

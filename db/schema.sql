@@ -417,3 +417,73 @@ CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_prd_id            ON
 CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_snapshot_state    ON business_build_prd_snapshots (snapshot_state);
 CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_readiness_percent ON business_build_prd_snapshots (readiness_percent);
 CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_updated_at        ON business_build_prd_snapshots (updated_at);
+
+-- operator_decision_ledger_entries
+CREATE TABLE IF NOT EXISTS operator_decision_ledger_entries (
+  ledger_entry_id           TEXT        NOT NULL,
+  public_label              TEXT        NOT NULL,
+  source_candidate_label    TEXT,
+  source_review_label       TEXT,
+  proposed_agent_lane       TEXT,
+  proposed_outcome          TEXT,
+  decision_state            TEXT        NOT NULL,
+  decision_summary          TEXT,
+  next_action               TEXT,
+  disabled_reason           TEXT,
+  owner_capability          TEXT,
+  ledger_write_allowed      BOOLEAN     NOT NULL DEFAULT false,
+  db_write_allowed          BOOLEAN     NOT NULL DEFAULT false,
+  hosted_db_mutation_allowed BOOLEAN    NOT NULL DEFAULT false,
+  replay_allowed            BOOLEAN     NOT NULL DEFAULT false,
+  execution_unlock_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  runtime_admission_allowed BOOLEAN     NOT NULL DEFAULT false,
+  dispatch_allowed          BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  provider_spend_allowed    BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs             JSONB,
+  activity_refs             JSONB,
+  created_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (ledger_entry_id)
+);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_entries_decision_state      ON operator_decision_ledger_entries (decision_state);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_entries_proposed_agent_lane ON operator_decision_ledger_entries (proposed_agent_lane);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_entries_owner_capability    ON operator_decision_ledger_entries (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_entries_updated_at          ON operator_decision_ledger_entries (updated_at);
+
+-- operator_decision_ledger_events
+CREATE TABLE IF NOT EXISTS operator_decision_ledger_events (
+  ledger_event_id           TEXT        NOT NULL,
+  ledger_entry_id           TEXT        NOT NULL,
+  event_type                TEXT        NOT NULL,
+  event_state               TEXT        NOT NULL,
+  actor_label               TEXT,
+  event_summary             TEXT,
+  rollback_available        BOOLEAN     NOT NULL DEFAULT false,
+  replay_allowed            BOOLEAN     NOT NULL DEFAULT false,
+  execution_unlock_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  runtime_admission_allowed BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs             JSONB,
+  created_at                TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (ledger_event_id)
+);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_events_ledger_entry_id ON operator_decision_ledger_events (ledger_entry_id);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_events_event_type      ON operator_decision_ledger_events (event_type);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_events_event_state     ON operator_decision_ledger_events (event_state);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_events_created_at      ON operator_decision_ledger_events (created_at);
+
+-- operator_decision_ledger_evidence_refs
+CREATE TABLE IF NOT EXISTS operator_decision_ledger_evidence_refs (
+  evidence_ref_id    TEXT        NOT NULL,
+  ledger_entry_id    TEXT        NOT NULL,
+  evidence_label     TEXT        NOT NULL,
+  evidence_type      TEXT,
+  evidence_location  TEXT        NOT NULL,
+  redaction_required BOOLEAN     NOT NULL DEFAULT true,
+  retained_for_audit BOOLEAN     NOT NULL DEFAULT true,
+  created_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (evidence_ref_id)
+);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_evidence_refs_ledger_entry_id   ON operator_decision_ledger_evidence_refs (ledger_entry_id);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_evidence_refs_evidence_type     ON operator_decision_ledger_evidence_refs (evidence_type);
+CREATE INDEX IF NOT EXISTS idx_operator_decision_ledger_evidence_refs_evidence_location ON operator_decision_ledger_evidence_refs (evidence_location);

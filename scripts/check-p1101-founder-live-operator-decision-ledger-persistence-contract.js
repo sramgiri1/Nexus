@@ -65,6 +65,7 @@ const forbiddenPrefixes = [
 ];
 const allowedFiles = new Set(p1101.allowedFiles || []);
 const docsBundle = JSON.stringify(contract) + "\n" + plan + "\n" + platformRoadmap + "\n" + readme;
+const enforceCurrentDiffScope = status.currentPhase === "P110.1";
 
 const expectedFutureSchemas = [
   "operator_decision_ledger_entries",
@@ -106,25 +107,37 @@ const unsafeClaims = /hosted DB mutation is enabled|raw SQL is allowed|runtime a
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1101-founder-live-operator-decision-ledger-persistence-contract"]));
 addCheck("P110 contract status in progress", contract.phaseId === "P110" && contract.status === "in_progress");
 addCheck("P110 subphase split is implementation-grade", (contract.subphases || []).length === 7 && ["P110.1", "P110.2", "P110.3", "P110.4", "P110.5", "P110.6", "P110.7"].every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P110.1 is complete and P110.2 next", p1101.status === "complete" && p1102.status === "planned");
+addCheck("P110.1 is complete and P110.2 next", p1101.status === "complete" && ["planned", "complete"].includes(p1102.status));
 addCheck("P110.1 is contract only", p1101.scopeClassification === "NEXUS_OS_CHANGE" && (p1101.forbiddenFiles || []).includes("db/**") && (p1101.forbiddenFiles || []).includes("live-ready/**") && (p1101.forbiddenFiles || []).includes("dashboard/src/**"));
 addCheck("P110.1 records validation commands", requiredValidationCommands.every((command) => p1101.validationCommands?.includes(command)));
-addCheck("future schemas are documented only", expectedFutureSchemas.every((schemaName) => p1101.futureSchemas?.includes(schemaName)) && expectedFutureSchemas.every((schemaName) => !dbSchema.includes(`"name": "${schemaName}"`)));
+addCheck(
+  "future schemas are documented only",
+  expectedFutureSchemas.every((schemaName) => p1101.futureSchemas?.includes(schemaName))
+    && (!enforceCurrentDiffScope || expectedFutureSchemas.every((schemaName) => !dbSchema.includes(`"name": "${schemaName}"`))),
+  enforceCurrentDiffScope ? "P110.1 schema must remain planned only" : `schema implementation allowed for ${status.currentPhase}`,
+);
 addCheck("future exports are documented only", expectedFutureExports.every((exportName) => p1101.futureExports?.includes(exportName)));
 addCheck("reuse requirements are explicit", requiredReuse.every((helper) => (contract.reuseRequired || []).includes(helper)));
 addCheck("OS checker accepts P110 subphases", ["P110.1", "P110.2", "P110.3", "P110.4", "P110.5", "P110.6", "P110.7"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
 addCheck("P109.7 remains complete", p109Contract.status === "complete" && statusById.get("P109.7")?.status === "complete" && roadmapById.get("P109.7")?.status === "complete");
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P110.1"
+  ((status.currentPhase === "P110.1"
     && status.previousPhase === "P109.7"
     && status.nextPhase === "P110.2"
-    && statusById.get("P110")?.status === "in_progress"
-    && statusById.get("P110.1")?.status === "complete"
-    && statusById.get("P110.2")?.status === "planned"
     && roadmap.currentPhase === "P110.1"
     && roadmap.previousPhase === "P109.7"
     && roadmap.nextPhase === "P110.2"
+    && statusById.get("P110.2")?.status === "planned")
+    || (status.currentPhase === "P110.2"
+      && status.previousPhase === "P110.1"
+      && status.nextPhase === "P110.3"
+      && roadmap.currentPhase === "P110.2"
+      && roadmap.previousPhase === "P110.1"
+      && roadmap.nextPhase === "P110.3"
+      && statusById.get("P110.2")?.status === "complete"))
+    && statusById.get("P110")?.status === "in_progress"
+    && statusById.get("P110.1")?.status === "complete"
     && roadmapById.get("P110")?.status === "in_progress"
     && roadmapById.get("P110.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
@@ -132,8 +145,16 @@ addCheck(
 addCheck("docs record P110.1", /P110\.1 Persistence Contract \/ Policy \/ Schema Plan[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P110.1", /P110\.1 decision-ledger persistence contract/.test(readme) && /P110\.2 is next/.test(readme));
 addCheck("platform roadmap records P110.1", /P110\.1 is complete/.test(platformRoadmap) && /P110\.2 is next/.test(platformRoadmap));
-addCheck("changed files stay in P110.1 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck(
+  "changed files stay in P110.1 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
+addCheck(
+  "forbidden paths unchanged",
+  !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))),
+  enforceCurrentDiffScope ? changed.join(", ") : `P110.1 forbidden path check relaxed for ${status.currentPhase}`,
+);
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid fake unsafe runnable actions", !/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write ledger now|migrate now/i.test(docsBundle));
 addCheck("docs do not claim unsafe authority live", !unsafeClaims.test(docsBundle));

@@ -165,13 +165,17 @@
     {
       "phaseId": "P110.2",
       "title": "Decision Ledger SQLite Schema",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local SQLite schema definitions for display-safe operator decision ledger entries, events, and evidence references.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "d8f8982f",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
         "scripts/check-p1102-founder-live-operator-decision-ledger-schema.js",
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js",
         "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
         "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -180,6 +184,8 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/p1102-founder-live-operator-decision-ledger-schema-report.md",
+        "reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -189,7 +195,6 @@
         "dashboard/src/**",
         "dashboard/tests/**",
         "live-ready/**",
-        "local-state/runtime/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -199,12 +204,130 @@
         "packages/**",
         ".env*"
       ],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1102-founder-live-operator-decision-ledger-schema.js",
+        "scripts/check-p1097-founder-live-operator-decision-ledger-final.js",
+        "scripts/check-p1101-founder-live-operator-decision-ledger-persistence-contract.js",
+        "contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json",
+        "docs/architecture/P110_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PERSISTENCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1102-founder-live-operator-decision-ledger-schema-report.md",
+        "reports/p1101-founder-live-operator-decision-ledger-persistence-contract-report.md",
+        "reports/p1097-founder-live-operator-decision-ledger-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1102-founder-live-operator-decision-ledger-schema",
+        "P110.2 schema report",
+        "SQLite schema entities operator_decision_ledger_entries, operator_decision_ledger_events, operator_decision_ledger_evidence_refs"
+      ],
+      "schemas": [
+        {
+          "name": "operator_decision_ledger_entries",
+          "primaryKey": "ledgerEntryId",
+          "requiredFields": [
+            "ledgerEntryId",
+            "publicLabel",
+            "decisionState"
+          ],
+          "safetyFields": [
+            "ledgerWriteAllowed",
+            "dbWriteAllowed",
+            "hostedDbMutationAllowed",
+            "replayAllowed",
+            "executionUnlockAllowed",
+            "runtimeAdmissionAllowed",
+            "dispatchAllowed",
+            "projectMutationAllowed",
+            "providerSpendAllowed"
+          ]
+        },
+        {
+          "name": "operator_decision_ledger_events",
+          "primaryKey": "ledgerEventId",
+          "requiredFields": [
+            "ledgerEventId",
+            "ledgerEntryId",
+            "eventType",
+            "eventState"
+          ],
+          "safetyFields": [
+            "replayAllowed",
+            "executionUnlockAllowed",
+            "runtimeAdmissionAllowed"
+          ]
+        },
+        {
+          "name": "operator_decision_ledger_evidence_refs",
+          "primaryKey": "evidenceRefId",
+          "requiredFields": [
+            "evidenceRefId",
+            "ledgerEntryId",
+            "evidenceLabel",
+            "evidenceLocation"
+          ],
+          "safetyFields": [
+            "redactionRequired",
+            "retainedForAudit"
+          ]
+        }
+      ],
+      "commandCenterUx": "No Command Center source change in P110.2. Preserve Chat with NEXUS and Lite cleanliness; P110.4 will surface display-safe DB state on non-chat routes.",
+      "themeRequirements": [
+        "No theme source change in P110.2.",
+        "P110.4 must preserve System, Dark, and Light themes."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P110.2 because no UI files change."
+      ],
+      "checkerUpdates": [
+        "Add schema checker covering schema.json, schema.sql, SQLite transform, CRUD repository descriptions, isolated temp DB initialization, safe sample inserts/lists, docs/status, and unsafe authority wording.",
+        "Run P110.1 and P109.7 checkers as prior-phase compatibility evidence.",
+        "Update the P110.1 checker so its current-diff allowed-scope assertion is enforced only while P110.1 is active.",
+        "Update the P110.1 checker to accept P110.2 active status and relax P110.1-only diff restrictions after P110.1 closes."
+      ],
+      "docsRoadmap": "Update P110 plan, platform roadmap, README, and OS phase tracking with P110.2 complete and P110.3 next.",
+      "phaseStatusUpdate": "P110 in progress; P110.2 complete; current P110.2; previous P110.1; next P110.3.",
       "validationCommands": [
         "npm run check:p1102-founder-live-operator-decision-ledger-schema",
         "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P110.2 is schema-only plus isolated temp SQLite validation.",
+        "Confirm no live-ready/**, dashboard/src/**, dashboard/tests/**, projects/**, or careloop/** files changed.",
+        "Confirm no persistent local-state/runtime artifact remains after validation.",
+        "Confirm hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P110.2 files>",
+        "git commit -m \"feat(nexus): add decision ledger sqlite schema\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ]
     },
     {
@@ -345,8 +468,8 @@
     }
   ],
   "knownLimitations": [
-    "P110.1 is contract/docs/status/checker only and does not change DB schema, runtime models, Command Center source, project files, or runtime data.",
-    "Local SQLite CRUD for operator decision ledger records remains planned until P110.2-P110.3 and must use explicit local approval gates.",
+    "P110.1-P110.2 define the contract and local SQLite schema only. They do not add runtime CRUD admission, capture operator decisions, wire Command Center to DB records, or mutate project files.",
+    "Local SQLite CRUD for operator decision ledger records remains planned until P110.3 and must use explicit local approval gates.",
     "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
   ]
 }

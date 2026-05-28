@@ -13917,10 +13917,11 @@
       "order": 146,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5ddca897",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P110 is in progress. P110.1 defines the governed local SQLite persistence contract for operator decision ledger records while leaving DB schema, runtime models, Command Center source, project files, runtime data, and unsafe authority unchanged.",
+      "summary": "P110 is in progress. P110.1-P110.2 now define the governed local SQLite persistence contract and schema for operator decision ledger records while leaving runtime CRUD admission, Command Center DB wiring, project files, and unsafe authority unchanged.",
       "checksRun": [
+        "npm run check:p1102-founder-live-operator-decision-ledger-schema",
         "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
         "npm run check:p1097-founder-live-operator-decision-ledger-final",
         "npm run check:os-phase-status",
@@ -13928,14 +13929,14 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P110.1 is contract/docs/status/checker only and does not change DB schema, live runtime models, Command Center source, project files, or runtime data.",
-        "Local SQLite CRUD for operator decision ledger records remains planned until later P110 subphases and must use explicit local approval gates.",
+        "P110.1-P110.2 define the contract and local SQLite schema only; they do not add runtime CRUD admission, capture operator decisions, wire Command Center to DB records, or mutate project files.",
+        "Local SQLite CRUD for operator decision ledger records remains planned until P110.3 and must use explicit local approval gates.",
         "Hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P110.2",
+      "nextPhase": "P110.3",
       "commandCenterVisible": true,
       "label": "Ledger Persistence",
-      "detail": "P110.1 contract complete; P110.2 schema next."
+      "detail": "P110.2 schema complete; P110.3 CRUD model next."
     },
     {
       "phaseId": "P110.1",
@@ -13969,20 +13970,28 @@
       "title": "Decision Ledger SQLite Schema",
       "track": "NEXUS_OS",
       "order": 146.2,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned local SQLite schema for decision-ledger entries, events, and evidence refs.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T21:22:13.000Z",
+      "summary": "Added local SQLite schema definitions for display-safe operator decision ledger entries, events, and evidence references, with isolated temp DB validation and no runtime CRUD admission or unsafe authority changes.",
+      "checksRun": [
+        "npm run check:p1102-founder-live-operator-decision-ledger-schema",
+        "npm run check:p1101-founder-live-operator-decision-ledger-persistence-contract",
+        "npm run check:p1097-founder-live-operator-decision-ledger-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no implementation authority until separately scoped and validated.",
-        "No DB schema change, runtime model change, Command Center source change, project mutation, provider/model call, agent dispatch, worker/tool execution, deploy, release, export, package creation, network call, or spend is enabled by this placeholder."
+        "P110.2 is schema-only and does not add runtime CRUD admission, write persistent runtime data, capture operator decisions, wire Command Center to DB records, unlock execution, or admit runtime execution.",
+        "Validation uses an isolated temp SQLite DB that is removed after the checker runs; no persistent local-state/runtime artifact is part of the phase.",
+        "Hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P110.3",
       "commandCenterVisible": true,
-      "label": "Schema",
-      "detail": "Planned local SQLite schema for decision-ledger entries, events, and evidence refs."
+      "label": "Ledger Schema",
+      "detail": "Decision-ledger local SQLite schema complete; CRUD model next."
     },
     {
       "phaseId": "P110.3",
@@ -14566,9 +14575,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T21:15:09.000Z",
-  "currentPhase": "P110.1",
-  "previousPhase": "P109.7",
-  "nextPhase": "P110.2",
+  "updatedAt": "2026-05-28T21:22:13.000Z",
+  "currentPhase": "P110.2",
+  "previousPhase": "P110.1",
+  "nextPhase": "P110.3",
   "currentPhaseStatus": "complete"
 }
