@@ -13208,7 +13208,7 @@
       "order": 143,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "58937b21",
       "completedAt": "",
       "summary": "P107 approval capture boundary is in progress. P107.1 defines the local approval capture schema from the P106 request queue while approval capture and execution authority remain blocked.",
       "checksRun": [
@@ -13235,7 +13235,7 @@
       "order": 143.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "58937b21",
       "completedAt": "2026-05-28T18:36:11.000Z",
       "summary": "Defined the local founder approval capture boundary schema from the P106 request queue without enabling approval capture, persistence, writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend.",
       "checksRun": [
