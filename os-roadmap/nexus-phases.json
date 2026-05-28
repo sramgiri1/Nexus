@@ -8946,7 +8946,7 @@
       "order": 145,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bca3fe4c",
       "completedAt": "",
       "summary": "P109 is in progress. P109.1-P109.5 now cover local decision-ledger boundary/model/audit-preview state, display-safe non-chat Command Center UX, and aggregate validation while all write/execution authority remains blocked.",
       "checksRun": [
@@ -9088,7 +9088,7 @@
       "order": 145.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bca3fe4c",
       "completedAt": "2026-05-28T20:51:25.000Z",
       "summary": "Added aggregate validation for P109.1-P109.4 boundary, model, audit preview, Command Center UX, route safety, docs, reports, phase status, and forbidden scope without changing runtime behavior.",
       "checksRun": [

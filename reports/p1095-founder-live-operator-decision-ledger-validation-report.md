@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P109.5
-- Generated at: 2026-05-28T20:52:34.971Z
+- Generated at: 2026-05-28T20:53:48.096Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 118bb5b4
+- Validation HEAD: bca3fe4c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | contract keeps P109.6 planned or complete | PASS |  |
 | contract records aggregate validation commands | PASS |  |
 | P109.5 avoids forbidden file scope | PASS |  |
-| working diff stays in P109.5 allowed scope | PASS | README.md, contracts/os-roadmap/p109-founder-live-operator-decision-ledger-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P109_FOUNDER_LIVE_OPERATOR_DECISION_LEDGER_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1091-founder-live-operator-decision-ledger-contract.js, scripts/check-p1092-founder-live-operator-decision-ledger-model.js, scripts/check-p1093-founder-live-operator-decision-ledger-audit-preview.js, scripts/check-p1095-founder-live-operator-decision-ledger-validation.js |
+| working diff stays in P109.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1094-command-center-decision-ledger-ux-report.md |
 | decision ledger boundary schema validates | PASS |  |
 | decision ledger model schema validates | PASS |  |
 | decision ledger audit preview schema validates | PASS |  |
