@@ -9631,7 +9631,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fd8e0fb05254b7ed6f2f82e5fd5082e067a19d29",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
       "detail": "P112.5 Command Center queue admission UX complete; P112.6 validation/docs is next.",
@@ -9765,7 +9765,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fd8e0fb05254b7ed6f2f82e5fd5082e067a19d29",
       "commandCenterVisible": true,
       "label": "Command Center Queue Admission UX",
       "detail": "Business Build and Agent Flow show display-safe work queue admission; Chat/Lite remain clean.",
