@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.1
-- Generated at: 2026-05-28T22:59:25.502Z
+- Generated at: 2026-05-28T23:00:03.149Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6b6b0987
+- Validation HEAD: ee9b233d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | docs record P112.1 | PASS |  |
 | README records P112.1 | PASS |  |
 | platform roadmap records P112.1 | PASS |  |
-| changed files stay in P112.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1117-founder-live-agent-work-order-persistence-final.js, contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json, docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1117-founder-live-agent-work-order-persistence-final.js, contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json, docs/architecture/P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PLAN.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js |
+| changed files stay in P112.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, reports/phase-validation-coverage-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, reports/phase-validation-coverage-report.md |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

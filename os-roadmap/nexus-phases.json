@@ -9631,7 +9631,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ee9b233d1257240f6aefc8991526bb42398c30c8",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
       "detail": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked.",
@@ -9653,7 +9653,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ee9b233d1257240f6aefc8991526bb42398c30c8",
       "commandCenterVisible": true,
       "label": "Queue Admission Contract / Policy / Schema Plan",
       "detail": "Defined the P112 work queue admission contract, future local SQLite schema/export plan, safety boundaries, checker coverage, and OS status without changing runtime code.",
@@ -10209,7 +10209,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-28T22:58:55.995Z",
+  "updatedAt": "2026-05-28T22:59:46.576Z",
   "currentPhase": "P112.1",
   "previousPhase": "P111.7",
   "nextPhase": "P112.2",
