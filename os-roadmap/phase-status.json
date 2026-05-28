@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-28T05:55:00.000Z",
+  "generatedAt": "2026-05-28T06:10:00.000Z",
   "phases": [
     {
       "phaseId": "P85",
@@ -12729,27 +12729,22 @@
       "order": 141,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c24c0b2c",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P105.1-P105.5 are complete. Approval planning, deterministic plan rows, dry-run review packet, non-chat Command Center UX, and aggregate validation are in place while execution remains blocked.",
+      "summary": "P105.1-P105.6 are complete. Approval planning, deterministic plan rows, dry-run review packet, non-chat Command Center UX, aggregate validation, and docs closure are in place while execution remains blocked.",
       "checksRun": [
+        "npm run check:p1056-founder-live-execution-approval-docs",
         "npm run check:p1055-founder-live-execution-approval-aggregate",
-        "npm run check:p1054-command-center-approval-review-ux",
-        "npm run check:p1053-founder-live-execution-approval-review-packet",
-        "npm run check:p1052-founder-live-execution-approval-plan-model",
-        "npm run check:p1051-founder-live-execution-approval-planning-contract",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live approval review packet appears on non-chat founder routes|Command Center Lite route stays chat-only\"",
-        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P105.5 is aggregate validation only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+        "P105.6 is docs and roadmap closure only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P105.6-P105.7 remain planned."
+        "P105.7 remains planned for final validation."
       ],
-      "nextPhase": "P105.6",
+      "nextPhase": "P105.7",
       "commandCenterVisible": true,
       "label": "Live Approval Planning",
       "detail": "P105.3 complete; non-runnable Command Center approval-planning UX is next."
@@ -12882,9 +12877,8 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P105.5 is aggregate validation only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
-        "P105.6-P105.7 remain planned."
+        "P105.5 aggregate validation is complete and covered by P105.6 docs closure.",
+        "Approval submission, capture, persistence, execution unlock, and runtime admission remain blocked."
       ],
       "commandCenterVisible": true,
       "phaseId": "P105.5",
@@ -12898,19 +12892,27 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "checksRun": [],
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-28T06:10:00.000Z",
+      "checksRun": [
+        "npm run check:p1056-founder-live-execution-approval-docs",
+        "npm run check:p1055-founder-live-execution-approval-aggregate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only; no execution authority enabled."
+        "P105.6 is docs and roadmap closure only; approval submission, capture, persistence, execution unlock, and runtime admission remain blocked.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+        "P105.7 remains planned for final validation."
       ],
       "commandCenterVisible": true,
       "phaseId": "P105.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "order": 141.6,
-      "summary": "Close P105 docs, README, platform roadmap, and phase status evidence without behavior changes.",
+      "summary": "Closed P105 docs and roadmap evidence across README, platform roadmap, P105 plan, contract, reports, phase status, validation commands, and safety wording.",
       "nextPhase": "P105.7",
       "label": "Approval Docs",
       "detail": "Planned docs and roadmap closure."
@@ -13416,9 +13418,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T05:55:00.000Z",
-  "currentPhase": "P105.5",
-  "previousPhase": "P105.4",
-  "nextPhase": "P105.6",
+  "updatedAt": "2026-05-28T06:10:00.000Z",
+  "currentPhase": "P105.6",
+  "previousPhase": "P105.5",
+  "nextPhase": "P105.7",
   "currentPhaseStatus": "complete"
 }

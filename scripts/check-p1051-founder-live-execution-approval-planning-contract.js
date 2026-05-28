@@ -74,9 +74,9 @@ addCheck("platform roadmap records P105.1", /P105 - Founder Live Execution Appro
 addCheck("README records P105.1", /P105\.1 approval planning/.test(readme) && /P105\.2 is next/.test(readme));
 addCheck(
   "phase status advanced to P105.1",
-  ["P105.1", "P105.2", "P105.3", "P105.4", "P105.5"].includes(status.currentPhase)
-    && ["P104.7", "P105.1", "P105.2", "P105.3", "P105.4"].includes(status.previousPhase)
-    && ["P105.2", "P105.3", "P105.4", "P105.5", "P105.6"].includes(status.nextPhase)
+  ["P105.1", "P105.2", "P105.3", "P105.4", "P105.5", "P105.6"].includes(status.currentPhase)
+    && ["P104.7", "P105.1", "P105.2", "P105.3", "P105.4", "P105.5"].includes(status.previousPhase)
+    && ["P105.2", "P105.3", "P105.4", "P105.5", "P105.6", "P105.7"].includes(status.nextPhase)
     && statusById.get("P105")?.status === "in_progress"
     && statusById.get("P105.1")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P105.2")?.status)

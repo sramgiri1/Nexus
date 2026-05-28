@@ -2388,6 +2388,14 @@ contract, approval-plan model, dry-run review packet, Command Center approval
 review UX, retained route coverage, reports, phase status, docs, and safety
 wording while all approval and execution authority remains blocked. P105.6 is
 next for docs and roadmap closure.
+P105.6 is complete. README, platform roadmap, P105 plan, contract, reports, and
+phase status now record approval-planning scope, Business Build, Agent Flow, and
+Live Readiness placement, Chat with NEXUS and Lite chat-only boundaries, and the
+blocked approval/execution authority. Approval submission, approval capture,
+approval persistence, execution unlock, runtime admission, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+deploy, release, export, package action, network call, and provider spend remain
+blocked. P105.7 is next for final validation.
 
 Implementation follows
 [`p105-founder-live-execution-approval-planning-contracts.json`](../../contracts/os-roadmap/p105-founder-live-execution-approval-planning-contracts.json).

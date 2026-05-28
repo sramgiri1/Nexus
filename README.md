@@ -220,7 +220,14 @@ The Command Center and local operator surface have:
 - P105.5 aggregate validation: P105 now has aggregate coverage across the
   approval-planning contract, approval-plan model, dry-run review packet,
   Command Center approval review UX, retained route tests, reports, status,
-  docs, and safety wording. P105.6 is next.
+  docs, and safety wording.
+- P105.6 docs closure: README, platform roadmap, P105 plan, contract, reports,
+  and phase status now record approval-planning scope, Business Build, Agent
+  Flow, and Live Readiness placement, Chat with NEXUS and Lite chat-only
+  boundaries, blocked runtime admission, and blocked approval/execution
+  authority. Provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, and provider spend remain blocked.
+  P105.7 is next.
 
 ## CareLoop Project Progress
 
