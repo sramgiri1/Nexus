@@ -14368,22 +14368,22 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e118ec8a2a886ad2cfa20bac0fa1a4b6180cc142",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
-      "detail": "P112.3 CRUD model complete; P112.4 admission preview is next.",
+      "detail": "P112.4 admission preview complete; P112.5 Command Center UX is next.",
       "phaseId": "P112",
       "title": "Founder Live Agent Work Queue Admission",
       "order": 148,
       "status": "in_progress",
-      "summary": "P112 is in progress. P112.1-P112.3 define the queue admission contract, local SQLite schema, and approval-gated local CRUD model while unsafe authority remains blocked.",
-      "nextPhase": "P112.4",
+      "summary": "P112 is in progress. P112.1-P112.4 define the queue admission contract, local SQLite schema, approval-gated local CRUD model, and local dry-run admission preview while unsafe authority remains blocked.",
+      "nextPhase": "P112.5",
       "previousPhase": "P111.7",
       "checksRun": [],
       "knownLimitations": [
-        "P112.3 admits local SQLite CRUD only for allowlisted queue OS records after explicit local approval gates.",
-        "Delete, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P112.4 is next for queue admission preview and safe dry run."
+        "P112.4 is a local dry-run preview only and does not write queue records.",
+        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.5 is next for display-safe Command Center queue admission UX."
       ],
       "completedAt": ""
     },
@@ -14473,23 +14473,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Queue Admission Preview / Safe Dry Run",
-      "detail": "Planned local dry-run queue admission preview without dispatch or mutation.",
+      "detail": "Local dry-run queue admission preview is ready and all live authority remains blocked.",
       "phaseId": "P112.4",
       "title": "Queue Admission Preview / Safe Dry Run",
       "order": 148.4,
-      "status": "planned",
-      "summary": "Planned local dry-run queue admission preview without dispatch or mutation.",
+      "status": "complete",
+      "summary": "Added local-only dry-run queue admission preview candidates with display-safe lanes, blockers, owners, evidence, activity, and cost impact for future Command Center UX.",
       "nextPhase": "P112.5",
       "previousPhase": "P112.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned preview subphase only."
+      "checksRun": [
+        "npm run check:p1124-founder-live-agent-work-queue-admission-preview",
+        "npm run check:p1123-founder-live-agent-work-queue-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112.4 is a local dry-run preview only and does not write queue records.",
+        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.5 is next for display-safe Command Center queue admission UX."
+      ],
+      "completedAt": "2026-05-28T23:18:24.739Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15033,9 +15041,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T23:11:05.821Z",
-  "currentPhase": "P112.3",
-  "previousPhase": "P112.2",
-  "nextPhase": "P112.4",
+  "updatedAt": "2026-05-28T23:18:24.739Z",
+  "currentPhase": "P112.4",
+  "previousPhase": "P112.3",
+  "nextPhase": "P112.5",
   "currentPhaseStatus": "complete"
 }

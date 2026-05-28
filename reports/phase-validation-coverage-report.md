@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-28T23:11:16.961Z
+- Generated at: 2026-05-28T23:18:52.359Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e118ec8a
+- Validation HEAD: ff11b502
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -375,7 +375,7 @@
 | P110.5 validation coverage | PASS | 26 checkers, 19 reports |
 | P110.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P110.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P111 validation coverage | PASS | 14 checkers, 10 reports |
+| P111 validation coverage | PASS | 15 checkers, 11 reports |
 | P111.1 validation coverage | PASS | 9 checkers, 5 reports |
 | P111.2 validation coverage | PASS | 10 checkers, 6 reports |
 | P111.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -383,13 +383,13 @@
 | P111.5 validation coverage | PASS | 9 checkers, 5 reports |
 | P111.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P111.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P112 validation coverage | PASS | 9 checkers, 9 reports |
+| P112 validation coverage | PASS | 10 checkers, 10 reports |
 | P112.1 validation coverage | PASS | 5 checkers, 1 reports |
-| P112.2 validation coverage | PASS | 7 checkers, 3 reports |
+| P112.2 validation coverage | PASS | 8 checkers, 4 reports |
 | P112.3 validation coverage | PASS | 4 checkers, 1 reports |
-| P112.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P112.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P112.5 validation coverage | PASS | dedicated_checker, validation_report |
-| P112.6 validation coverage | PASS | 1 checkers, 1 reports |
+| P112.6 validation coverage | PASS | 2 checkers, 2 reports |
 | P112.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P83 validation coverage | PASS | 16 checkers, 8 reports |
 | P83.1 validation coverage | PASS | 7 checkers, 1 reports |
@@ -409,18 +409,13 @@
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P112.3; next=P112.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P112.4; next=P112.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P112.4 Queue Admission Preview / Safe Dry Run
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P112.5 Command Center Queue Admission UX
   - status: planned
   - checkers: 0

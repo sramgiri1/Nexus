@@ -402,11 +402,11 @@
     {
       "phaseId": "P112.4",
       "title": "Queue Admission Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build a local dry-run admission preview that maps persisted work orders to queue candidates while keeping dispatch and mutation disabled.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "ff11b50250ccd8288cd3e990506a3fcee56fb92f",
       "allowedFiles": [
         "live-ready/founderLiveAgentWorkQueueAdmission.js",
         "scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js",
@@ -463,8 +463,13 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this subphase. Future work must preserve display-safe queue admission state with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "expectedExports": [
+        "P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_PHASE",
+        "P112_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_STATES",
+        "buildFounderLiveAgentWorkQueueAdmissionPreview",
+        "validateFounderLiveAgentWorkQueueAdmissionPreview"
+      ],
+      "dataShape": "Local-only dry-run queue admission preview with schemaVersion, currentState, previewMode, display-safe sourceWorkOrderSummary, queueAdmissionSummary, queueSections, queueRows, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible false, and all unsafe runtime/write flags false.",
       "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -475,10 +480,11 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P112.4 checker."
+        "Added the dedicated P112.4 queue admission preview checker.",
+        "Updated P112.3 checker to accept P112.4/P112.5 handoff."
       ],
-      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.4.",
-      "phaseStatusUpdate": "P112 in progress; P112.4 complete when implemented.",
+      "docsRoadmap": "Updated P112 plan, README, platform roadmap, OS status, and generated reports for P112.4.",
+      "phaseStatusUpdate": "P112 in progress; P112.4 complete; current P112.4; previous P112.3; next P112.5.",
       "validationCommands": [
         "npm run check:p1124-founder-live-agent-work-queue-admission-preview",
         "npm run check:p1123-founder-live-agent-work-queue-crud-model",
@@ -493,7 +499,7 @@
       ],
       "gitCommands": [
         "git add <allowed files>",
-        "git commit -m \"feat(nexus): implement p112.4 work queue admission\"",
+        "git commit -m \"feat(nexus): add p112 work queue admission preview\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [
@@ -854,8 +860,8 @@
     "P112.1 is contract-only; DB schema, runtime helpers, admission preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P112.3",
-  "previousSubphase": "P112.2",
-  "nextSubphase": "P112.4",
-  "summary": "P112 is in progress. P112.1-P112.3 define the governed local queue admission contract, schema, and local CRUD model while unsafe authority remains blocked."
+  "currentSubphase": "P112.4",
+  "previousSubphase": "P112.3",
+  "nextSubphase": "P112.5",
+  "summary": "P112 is in progress. P112.1-P112.4 define the governed local queue admission contract, schema, local CRUD model, and local dry-run preview while unsafe authority remains blocked."
 }

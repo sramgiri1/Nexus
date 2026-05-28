@@ -2863,6 +2863,15 @@ project mutation, hosted DB mutation, raw SQL interface, runtime admission,
 execution unlock, provider/model calls, deploy, release, export, package
 action, network call, and provider spend remain blocked.
 
+P112.4 is complete. P112 now builds local-only dry-run queue admission
+candidates from display-safe founder work order context, including queue lanes,
+blockers, owners, evidence, activity location, and cost impact for P112.5
+Command Center visibility. P112.5 is next for display-safe Command Center queue
+admission UX. Local queue writes, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, runtime admission,
+execution unlock, provider/model calls, deploy, release, export, package
+action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

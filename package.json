@@ -590,7 +590,8 @@
     "check:p1117-founder-live-agent-work-order-persistence": "node scripts/check-p1117-founder-live-agent-work-order-persistence-final.js",
     "check:p1121-founder-live-agent-work-queue-admission-contract": "node scripts/check-p1121-founder-live-agent-work-queue-admission-contract.js",
     "check:p1122-founder-live-agent-work-queue-schema": "node scripts/check-p1122-founder-live-agent-work-queue-schema.js",
-    "check:p1123-founder-live-agent-work-queue-crud-model": "node scripts/check-p1123-founder-live-agent-work-queue-crud-model.js"
+    "check:p1123-founder-live-agent-work-queue-crud-model": "node scripts/check-p1123-founder-live-agent-work-queue-crud-model.js",
+    "check:p1124-founder-live-agent-work-queue-admission-preview": "node scripts/check-p1124-founder-live-agent-work-queue-admission-preview.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

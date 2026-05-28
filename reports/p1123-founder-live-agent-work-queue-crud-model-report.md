@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.3
-- Generated at: 2026-05-28T23:11:27.139Z
+- Generated at: 2026-05-28T23:18:42.275Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e118ec8a
+- Validation HEAD: ff11b502
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,7 +40,7 @@
 | docs record P112.3 | PASS |  |
 | README records P112.3 | PASS |  |
 | platform roadmap records P112.3 | PASS |  |
-| phase status advanced | PASS | P112.3/P112.2/P112.4 |
+| phase status advanced | PASS | P112.4/P112.3/P112.5 |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |
 | no unsafe imports or URLs | PASS |  |

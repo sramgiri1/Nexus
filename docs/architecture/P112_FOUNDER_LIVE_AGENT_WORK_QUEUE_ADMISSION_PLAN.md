@@ -286,3 +286,102 @@ Command Center UX remain planned.
 Rollback plan: remove the P112.3 helper/checker/script/docs/status/report
 updates, restore P112 to P112.2 with P112.3 planned, and keep P112.1-P112.2
 unchanged.
+
+## P112.4 Queue Admission Preview / Safe Dry Run
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Narrow goal: add a deterministic local dry-run preview that converts
+display-safe founder work order context into queue admission candidates while
+keeping queue writes, dispatch, execution, project mutation, hosted DB mutation,
+provider/model calls, deploy/release/export/package, network calls, and spend
+blocked.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `ff11b50250ccd8288cd3e990506a3fcee56fb92f`.
+
+Allowed files: P112 queue admission helper, P112.4 preview checker, P112.3
+checker compatibility update, P112 contract, P112 plan, README, platform
+roadmap, package script registry, OS phase status files, and generated P112.4/
+P112.3/status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `dashboard/src/**`, `dashboard/tests/**`,
+`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: updated
+`live-ready/founderLiveAgentWorkQueueAdmission.js`, added the P112.4 preview
+checker, updated the P112.3 checker handoff compatibility, registered the
+package script, updated P112 contract/status/docs, and regenerated reports.
+
+Expected exports/data shapes:
+- `P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_PHASE`
+- `P112_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_STATES`
+- `buildFounderLiveAgentWorkQueueAdmissionPreview`
+- `validateFounderLiveAgentWorkQueueAdmissionPreview`
+- Preview envelope data with `schemaVersion`, `currentState`, `previewMode`,
+  `sourceWorkOrderSummary`, `queueAdmissionSummary`, `queueSections`,
+  `queueRows`, `nextAction`, `blockers`, `disabledReason`, `ownerCapability`,
+  `evidenceRefs`, `auditRefs`, `activityLocation`, `costImpact`,
+  `commandCenterVisible`, and all unsafe runtime flags false.
+
+Safety rules: P112.4 is local preview only. It does not write local queue
+records, unlock execution, admit runtime execution, call providers/models,
+dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run
+raw SQL, deploy, release, export, package, use network calls, or spend.
+
+Reuse check: P112.4 reuses `shared/resultEnvelope.js`, P112.3 queue admission
+helpers, the P111 work-order record builder through the existing P112.3 helper,
+`shared/reportWriter.js`, and `shared/checkResultFormatter.js`. No report
+writer, result envelope, redaction helper, checker formatter, route matrix, UI
+component, SQLite runtime, CRUD repository, or work-order helper is duplicated.
+
+Command Center UX requirements: no Command Center source change in P112.4.
+Preview output is marked `commandCenterVisible: false` until P112.5 renders it
+on the appropriate non-chat founder page.
+
+Dark/light/system theme requirements: no theme source change in P112.4.
+
+Playwright tests: no new Playwright test in P112.4 because no UI source changes
+are made. P112.5 owns Command Center UX and Playwright coverage.
+
+Checker updates: P112.4 adds a dedicated preview checker and updates P112.3 to
+accept the P112.4/P112.5 handoff state.
+
+Docs/README/roadmap updates: P112.4 is recorded in this plan, README, platform
+roadmap, P112 contract, OS roadmap/status, and generated reports. P112.5 is
+next.
+
+OS phase status update: P112 is in progress; P112.4 is complete; current phase
+P112.4; previous P112.3; next P112.5.
+
+Validation commands:
+- `npm run check:p1124-founder-live-agent-work-queue-admission-preview`
+- `npm run check:p1123-founder-live-agent-work-queue-crud-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/provider/deploy paths
+changed; no local runtime DB artifact is retained; no DemoApp exposure; no raw
+JSON/log/policy dumps; no raw private IDs, queue record keys, raw DB table
+names, or fake runnable actions are introduced; no provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL,
+deploy, release, export, package, network, or provider spend authority is
+enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P112.4 files>`
+- `git commit -m "feat(nexus): add p112 work queue admission preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: preview queue candidates can be mistaken for queued live work.
+P112.4 keeps them read-only, display-safe, and hidden from Command Center until
+the scoped P112.5 UX renders them with disabled reasons.
+
+Rollback plan: remove the P112.4 preview helper/checker/script/docs/status/
+report updates, restore P112 to P112.3 complete with P112.4 planned, and keep
+P112.1-P112.3 unchanged.

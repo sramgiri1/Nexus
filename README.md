@@ -586,6 +586,14 @@ The Command Center and local operator surface have:
   interface, runtime admission, execution unlock, provider/model call, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P112.4 queue admission preview: P112 now builds local-only dry-run queue
+  admission candidates from display-safe founder work order context, including
+  queue lanes, blockers, owners, evidence, activity location, and cost impact
+  for P112.5 Command Center UX. P112.5 is next for display-safe Command Center
+  queue admission visibility. Local queue writes, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, runtime
+  admission, execution unlock, provider/model call, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

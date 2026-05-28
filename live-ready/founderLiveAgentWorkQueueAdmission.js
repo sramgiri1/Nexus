@@ -10,6 +10,12 @@ import {
 import { buildSafeAgentWorkOrderDbRecord } from "./founderLiveAgentWorkOrderPersistence.js";
 
 export const P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PHASE = "P112.3";
+export const P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_PHASE = "P112.4";
+
+export const P112_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_STATES = Object.freeze({
+  LOCAL_PREVIEW_READY_EXECUTION_BLOCKED: "founder_agent_work_queue_admission_preview_ready_execution_blocked",
+  NEEDS_WORK_ORDER_CONTEXT: "founder_agent_work_queue_admission_preview_needs_work_order_context",
+});
 
 export const P112_AGENT_WORK_QUEUE_DB_ENTITIES = Object.freeze([
   "founder_agent_work_queue_items",
@@ -135,6 +141,138 @@ function blockedResult(request, disabledReason, errors = []) {
 
 function sourceWorkOrder(input = {}) {
   return input.workOrderRecord || buildSafeAgentWorkOrderDbRecord("founder_agent_work_orders", input);
+}
+
+function sourceWorkOrderSummary(input = {}) {
+  const workOrder = sourceWorkOrder(input);
+  return {
+    publicLabel: workOrder.publicLabel || "Founder agent work order",
+    sourceHandoffLabel: workOrder.sourceHandoffLabel || "Founder live handoff work order",
+    sourceAdmissionLabel: workOrder.sourceAdmissionLabel || "Founder live work admission",
+    proposedAgent: workOrder.proposedAgent || "Product Strategy",
+    proposedWork: workOrder.proposedWork || "Prepare governed founder work for later review.",
+    workOrderSummary: workOrder.workOrderSummary || "Display-safe founder agent work order summary.",
+    nextAction: workOrder.nextAction || "Review queue admission preview before local queue CRUD.",
+  };
+}
+
+function previewLanes(input = {}) {
+  return input.previewLanes || [
+    {
+      lane: "Product Strategy",
+      displayLabel: "Business validation queue candidate",
+      proposedOutcome: "Clarify founder problem, target user, value promise, and PRD readiness.",
+      ownerCapability: "NEXUS Founder Strategy Agent",
+    },
+    {
+      lane: "Technical Planning",
+      displayLabel: "Technical scope queue candidate",
+      proposedOutcome: "Map architecture, data needs, platform constraints, and build risks.",
+      ownerCapability: "NEXUS Technical Planning Agent",
+    },
+    {
+      lane: "Go-to-Market",
+      displayLabel: "Launch planning queue candidate",
+      proposedOutcome: "Outline positioning, validation experiments, pricing questions, and launch blockers.",
+      ownerCapability: "NEXUS Go-to-Market Agent",
+    },
+  ];
+}
+
+function buildPreviewQueueRow(lane, index, input = {}) {
+  const workOrder = sourceWorkOrderSummary(input);
+  const queueRecord = buildSafeAgentWorkQueueDbRecord("founder_agent_work_queue_items", {
+    ...input,
+    queueLane: lane.lane,
+    publicLabel: lane.displayLabel,
+    queueSummary: lane.proposedOutcome,
+    ownerCapability: lane.ownerCapability,
+  });
+
+  return {
+    displayHandle: `queue-preview-${index + 1}-${safeSlug(lane.lane, "lane")}`,
+    displayLabel: lane.displayLabel,
+    sourceWorkOrderLabel: workOrder.publicLabel,
+    sourceHandoffLabel: workOrder.sourceHandoffLabel,
+    sourceAdmissionLabel: workOrder.sourceAdmissionLabel,
+    proposedAgentLane: lane.lane,
+    proposedOutcome: lane.proposedOutcome || queueRecord.queueSummary,
+    queuePosition: index + 1,
+    queueState: P112_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED,
+    previewMode: "local-only-dry-run",
+    localPreviewReady: true,
+    queueSummary: lane.proposedOutcome || queueRecord.queueSummary,
+    nextAction: "Review this local queue candidate in Command Center before any later approved local queue CRUD.",
+    blockers: [
+      "Queue admission preview is local and read-only.",
+      "Local queue writes require a later explicit approved CRUD request.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason:
+      "P112.4 previews queue admission candidates only. It cannot write queue records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    ownerCapability: lane.ownerCapability || queueRecord.ownerCapability,
+    evidenceRefs: [
+      "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+      "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+    ],
+    auditRefs: ["reports/os-phase-status-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic queue admission preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    queueWriteAllowed: false,
+    localCrudAllowed: false,
+    dbWriteAllowed: false,
+    sqliteWriteAllowed: false,
+    hostedDbMutationAllowed: false,
+    dispatchAllowed: false,
+    executionAllowed: false,
+    workerExecutionAllowed: false,
+    toolExecutionAllowed: false,
+    runtimeAdmissionAllowed: false,
+    runtimeTransitionAllowed: false,
+    projectCreationAllowed: false,
+    projectMutationAllowed: false,
+    deployAllowed: false,
+    releaseAllowed: false,
+    exportAllowed: false,
+    packageAllowed: false,
+    spendAllowed: false,
+    ...blockedRuntimeFlags(),
+  };
+}
+
+function buildPreviewQueueSections(queueRows = []) {
+  return [
+    {
+      sectionHandle: "queue-candidates",
+      displayLabel: "Queue candidates",
+      candidateCount: queueRows.length,
+      blockedCount: queueRows.length,
+      nextAction: "Show these candidates in P112.5 without write, dispatch, execution, provider, project, or deploy controls.",
+      disabledReason: "This section is read-only queue admission preview data.",
+    },
+    {
+      sectionHandle: "approval-gates",
+      displayLabel: "Admission gates",
+      candidateCount: queueRows.length,
+      blockedCount: queueRows.length,
+      nextAction: "Keep operator approval, rollback, audit, validation, sqlite-live, and local write evidence separate from the preview.",
+      disabledReason: "Preview data cannot satisfy or bypass local CRUD admission gates.",
+    },
+    {
+      sectionHandle: "blocked-authority",
+      displayLabel: "Blocked authority",
+      candidateCount: queueRows.length,
+      blockedCount: queueRows.length,
+      nextAction: "Keep runtime authority blocked until a later explicitly scoped phase changes the contract.",
+      disabledReason: "Provider/model calls, dispatch, execution, project mutation, hosted DB writes, deploy, release, export, package, network calls, and spend are blocked.",
+    },
+  ];
 }
 
 export function buildSafeAgentWorkQueueDbRecord(entityName = "", input = {}) {
@@ -427,5 +565,200 @@ export function validateFounderLiveAgentWorkQueueAdmissionContract(envelope = {}
   const serialized = JSON.stringify(data);
   if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("Founder agent work queue CRUD model must not expose raw private IDs");
   if (/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now|execute now/i.test(serialized)) errors.push("Founder agent work queue CRUD model must not expose fake unsafe runnable actions");
+  return { valid: errors.length === 0, errors };
+}
+
+export function buildFounderLiveAgentWorkQueueAdmissionPreview(input = {}) {
+  const contractEnvelope = input.contractEnvelope || buildFounderLiveAgentWorkQueueAdmissionContract(input);
+  const workOrder = sourceWorkOrderSummary(input);
+  const queueRows = previewLanes(input).map((lane, index) => buildPreviewQueueRow(lane, index, input));
+  const queueSections = buildPreviewQueueSections(queueRows);
+  const previewReady = queueRows.length > 0;
+
+  return createPassResult({
+    phase: P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_PHASE,
+    mode: "founder-live-agent-work-queue-admission-preview",
+    source: "live-ready/founderLiveAgentWorkQueueAdmission.js",
+    summary: "Founder live agent work queue admission preview is assembled locally from display-safe work order context; queue writes and live execution remain blocked.",
+    data: {
+      schemaVersion: "1.0",
+      currentState: previewReady
+        ? P112_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED
+        : P112_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_STATES.NEEDS_WORK_ORDER_CONTEXT,
+      sourceContractPhase: contractEnvelope.phase,
+      sourceContractState: contractEnvelope.data?.currentState || "",
+      previewMode: "local-only-dry-run",
+      sourceWorkOrderSummary: workOrder,
+      queueAdmissionSummary: {
+        previewReady,
+        candidateCount: queueRows.length,
+        blockedCandidateCount: queueRows.length,
+        writableCandidateCount: 0,
+        persistedCandidateCount: 0,
+        dispatchableCandidateCount: 0,
+        executableCandidateCount: 0,
+        projectMutationCandidateCount: 0,
+        hostedDbMutationCandidateCount: 0,
+        providerSpendCandidateCount: 0,
+      },
+      queueSections,
+      queueRows,
+      forbiddenOperations: [...FORBIDDEN_OPERATIONS],
+      nextAction: previewReady
+        ? "Render P112.5 Command Center queue admission preview on non-chat founder pages without write or execution controls."
+        : "Complete display-safe founder work order context before queue admission preview assembly.",
+      blockers: [
+        "Queue admission preview is local and read-only.",
+        "Local queue writes require explicit operator approval gates in a separate CRUD request.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project creation and mutation remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Deploy, release, export, and package actions remain blocked.",
+        "Network calls and provider spend remain blocked.",
+      ],
+      disabledReason:
+        "P112.4 is a local queue admission preview only. It does not write queue records, unlock execution, admit runtime execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+      ownerCapability: "NEXUS Founder Agent Work Queue Admission Preview",
+      evidenceRefs: [
+        "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+        "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+      ],
+      auditRefs: ["reports/os-phase-status-report.md"],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic queue admission preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      commandCenterVisible: false,
+      queueWriteAllowed: false,
+      localCrudAllowed: false,
+      dbWriteAllowed: false,
+      sqliteWriteAllowed: false,
+      hostedDbMutationAllowed: false,
+      runtimeAdmissionAllowed: false,
+      runtimeTransitionAllowed: false,
+      executionAllowed: false,
+      dispatchAllowed: false,
+      workerExecutionAllowed: false,
+      toolExecutionAllowed: false,
+      projectCreationAllowed: false,
+      projectMutationAllowed: false,
+      deployAllowed: false,
+      releaseAllowed: false,
+      exportAllowed: false,
+      packageAllowed: false,
+      spendAllowed: false,
+      ...blockedRuntimeFlags(),
+    },
+    evidence: [
+      "reports/p1124-founder-live-agent-work-queue-admission-preview-report.md",
+      "reports/p1123-founder-live-agent-work-queue-crud-model-report.md",
+      "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+    ],
+    warnings: [
+      "P112.4 does not write queue records, unlock execution, admit runtime execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, package, or spend.",
+    ],
+  });
+}
+
+export function validateFounderLiveAgentWorkQueueAdmissionPreview(envelope = {}) {
+  const errors = [];
+  const data = envelope.data || {};
+  if (envelope.phase !== P112_FOUNDER_LIVE_AGENT_WORK_QUEUE_ADMISSION_PREVIEW_PHASE) errors.push("phase must be P112.4");
+  for (const field of [
+    "schemaVersion",
+    "currentState",
+    "sourceContractPhase",
+    "sourceContractState",
+    "previewMode",
+    "sourceWorkOrderSummary",
+    "queueAdmissionSummary",
+    "queueSections",
+    "queueRows",
+    "forbiddenOperations",
+    "nextAction",
+    "blockers",
+    "disabledReason",
+    "ownerCapability",
+    "evidenceRefs",
+    "auditRefs",
+    "activityLocation",
+    "costImpact",
+  ]) {
+    if (!(field in data)) errors.push(`${field} missing`);
+  }
+  if (data.previewMode !== "local-only-dry-run") errors.push("previewMode must be local-only-dry-run");
+  if (!Array.isArray(data.queueRows) || data.queueRows.length < 3) errors.push("queueRows must include founder agent queue candidates");
+  if (!Array.isArray(data.queueSections) || data.queueSections.length < 3) errors.push("queueSections must describe candidate, gate, and blocked authority groups");
+  for (const countField of [
+    "writableCandidateCount",
+    "persistedCandidateCount",
+    "dispatchableCandidateCount",
+    "executableCandidateCount",
+    "projectMutationCandidateCount",
+    "hostedDbMutationCandidateCount",
+    "providerSpendCandidateCount",
+  ]) {
+    if (data.queueAdmissionSummary?.[countField] !== 0) errors.push(`${countField} must be 0`);
+  }
+  for (const flag of [
+    "queueWriteAllowed",
+    "localCrudAllowed",
+    "dbWriteAllowed",
+    "sqliteWriteAllowed",
+    "hostedDbMutationAllowed",
+    "runtimeAdmissionAllowed",
+    "runtimeTransitionAllowed",
+    "executionAllowed",
+    "dispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectCreationAllowed",
+    "projectMutationAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageAllowed",
+    "spendAllowed",
+  ]) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const flag of BLOCKED_RUNTIME_FLAGS) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const row of data.queueRows || []) {
+    for (const field of ["displayHandle", "displayLabel", "sourceWorkOrderLabel", "proposedAgentLane", "proposedOutcome", "queuePosition", "queueState", "previewMode", "queueSummary", "nextAction", "blockers", "disabledReason", "ownerCapability", "evidenceRefs", "auditRefs", "activityLocation", "costImpact"]) {
+      if (!(field in row)) errors.push(`${row.displayLabel || "row"}.${field} missing`);
+    }
+    if (row.previewMode !== "local-only-dry-run") errors.push(`${row.displayLabel}.previewMode must be local-only-dry-run`);
+    for (const flag of [
+      "queueWriteAllowed",
+      "localCrudAllowed",
+      "dbWriteAllowed",
+      "sqliteWriteAllowed",
+      "hostedDbMutationAllowed",
+      "dispatchAllowed",
+      "executionAllowed",
+      "workerExecutionAllowed",
+      "toolExecutionAllowed",
+      "runtimeAdmissionAllowed",
+      "projectCreationAllowed",
+      "projectMutationAllowed",
+      "deployAllowed",
+      "releaseAllowed",
+      "exportAllowed",
+      "packageAllowed",
+      "spendAllowed",
+    ]) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+    for (const flag of BLOCKED_RUNTIME_FLAGS) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+  }
+  const serialized = JSON.stringify(data);
+  if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("queue admission preview must not expose raw private IDs");
+  if (/(queueItemId|workOrderId|sqliteEntity|recordRef|requestKey|founder_agent_work_queue_items|founder_agent_work_queue_events|founder_agent_work_queue_evidence_refs)/.test(serialized)) errors.push("queue admission preview must not expose raw queue record keys or DB table names");
+  if (/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write queue now/i.test(serialized)) errors.push("queue admission preview must not expose fake unsafe runnable actions");
+  if (/raw JSON|raw logs|raw policy dump/i.test(serialized)) errors.push("queue admission preview must not expose raw dumps");
   return { valid: errors.length === 0, errors };
 }
