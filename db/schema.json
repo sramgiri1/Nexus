@@ -1088,6 +1088,134 @@
       "retentionClass": "founder_agent_work_order_evidence",
       "redactionRequired": true,
       "fileFallbackSource": "reports/p1023-founder-live-handoff-work-orders-report.md"
+    },
+    {
+      "name": "founder_agent_work_queue_items",
+      "purpose": "Durable local queue admission items derived from persisted founder agent work orders without dispatch, worker execution, or project mutation authority.",
+      "primaryKey": "queueItemId",
+      "fields": {
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "publicLabel": "string",
+        "queueLane": "string",
+        "queueState": "string",
+        "queueSummary": "string",
+        "priorityLabel": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "ownerCapability": "string",
+        "localCrudAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "queueItemId",
+        "workOrderId",
+        "publicLabel",
+        "queueState"
+      ],
+      "indexes": [
+        "workOrderId",
+        "queueState",
+        "queueLane",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "reports/p1117-founder-live-agent-work-order-persistence-final-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_queue_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md"
+    },
+    {
+      "name": "founder_agent_work_queue_events",
+      "purpose": "Durable local audit event rows for founder agent work queue admission transitions without dispatch, execution, or project mutation authority.",
+      "primaryKey": "queueEventId",
+      "fields": {
+        "queueEventId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "queueEventId",
+        "queueItemId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "queueItemId",
+        "workOrderId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json",
+        "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_queue_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md"
+    },
+    {
+      "name": "founder_agent_work_queue_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local founder agent work queue admission items.",
+      "primaryKey": "queueEvidenceRefId",
+      "fields": {
+        "queueEvidenceRefId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "queueEvidenceRefId",
+        "queueItemId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "queueItemId",
+        "workOrderId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_work_queue_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1121-founder-live-agent-work-queue-admission-contract-report.md"
     }
   ]
 }

@@ -105,3 +105,93 @@ P112.1 checker blocks unsafe authority claims and fake runnable actions.
 Rollback plan: remove the P112.1 checker/script/docs/status/report updates,
 restore current phase to P111.7 with P112 as a handoff placeholder, and keep
 P111 completion unchanged.
+
+## P112.2 Agent Work Queue SQLite Schema
+
+Status: complete
+
+Narrow goal: add local SQLite schema metadata and isolated validation for queue
+items, queue events, and queue evidence references without runtime dispatch.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `0ff77692`.
+
+Allowed files: local DB schema metadata and SQL, P112.2 schema checker, P112.1
+compatibility checker, P112 contract, P112 plan, README, platform roadmap,
+package script registry, OS phase status files, and generated P112.2/P112.1/
+status/coverage reports.
+
+Forbidden files: `projects/**`, `careloop/**`, `generated-projects/*/Sources/**`,
+`generated-projects/*/Tests/**`, `live-ready/**`, `dashboard/src/**`,
+`dashboard/tests/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: added `founder_agent_work_queue_items`,
+`founder_agent_work_queue_events`, and
+`founder_agent_work_queue_evidence_refs` to `db/schema.json` and
+`db/schema.sql`; added the P112.2 checker; registered the package script;
+updated P112.1 handoff compatibility; updated P112 contract/status/docs; and
+regenerated reports.
+
+Expected exports/data shapes: no runtime exports. The local schema now includes
+display-safe queue item, queue event, and queue evidence reference records with
+explicit false-capable flags for local CRUD, DB writes, hosted DB mutation,
+dispatch, execution, worker execution, runtime admission, project mutation, and
+provider spend.
+
+Safety rules: schema-only. Hosted DB mutation, raw SQL interface,
+provider/model calls, agent dispatch, worker/tool execution, runtime admission,
+execution unlock, project mutation, deploy, release, export, package creation,
+network calls, and provider spend remain blocked.
+
+Reuse check: P112.2 reuses `db/sqliteRuntime.js`,
+`db/sqliteCrudRepository.js`, `shared/reportWriter.js`, and
+`shared/checkResultFormatter.js`. No SQLite runtime, CRUD repository, report
+writer, checker formatter, status helper, UI component, or runtime helper is
+duplicated.
+
+Command Center UX requirements: no Command Center source change in P112.2.
+Queue admission UX remains planned for P112.5.
+
+Dark/light/system theme requirements: no theme source change in P112.2.
+
+Playwright tests: no new Playwright test in P112.2 because no UI source changes
+are made.
+
+Checker updates: P112.2 adds a dedicated schema checker and updates P112.1 to
+accept the P112.2/P112.3 handoff state.
+
+Docs/README/roadmap updates: P112.2 is recorded in this plan, README, platform
+roadmap, P112 contract, OS roadmap/status, and generated reports. P112.3 is
+next.
+
+OS phase status update: P112 is in progress; P112.2 is complete; current phase
+P112.2; previous P112.1; next P112.3.
+
+Validation commands:
+- `npm run check:p1122-founder-live-agent-work-queue-schema`
+- `npm run check:p1121-founder-live-agent-work-queue-admission-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/live-ready/provider/deploy
+paths changed; isolated SQLite test DB is removed; no DemoApp exposure; no raw
+JSON/log/policy dumps; no raw private IDs in primary UX; no fake runnable
+actions; no hosted DB mutation, raw SQL interface, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy, release, export,
+package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P112.2 files>`
+- `git commit -m "feat(nexus): add p112 work queue schema"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: schema additions can be mistaken for live queue execution. P112.2
+only validates local schema and isolated local inserts; queue CRUD and
+admission preview remain planned.
+
+Rollback plan: remove the three queue schema entities/tables/indexes, remove
+the P112.2 checker/script/docs/status/report updates, restore P112 to P112.1
+with P112.2 planned, and keep P112.1 unchanged.

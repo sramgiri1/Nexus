@@ -162,11 +162,11 @@
     {
       "phaseId": "P112.2",
       "title": "Agent Work Queue SQLite Schema",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local SQLite schema metadata and isolated validation for queue items, queue events, and queue evidence references without runtime dispatch.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "0ff77692",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
@@ -238,10 +238,11 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P112.2 checker."
+        "Added the dedicated P112.2 schema checker.",
+        "Updated P112.1 checker to accept P112.2/P112.3 handoff."
       ],
-      "docsRoadmap": "Update P112 plan, README, platform roadmap, OS status, and generated reports for P112.2.",
-      "phaseStatusUpdate": "P112 in progress; P112.2 complete when implemented.",
+      "docsRoadmap": "Updated P112 plan, README, platform roadmap, OS status, and generated reports for P112.2.",
+      "phaseStatusUpdate": "P112 in progress; P112.2 complete; current P112.2; previous P112.1; next P112.3.",
       "validationCommands": [
         "npm run check:p1122-founder-live-agent-work-queue-schema",
         "npm run check:p1121-founder-live-agent-work-queue-admission-contract",
@@ -845,8 +846,8 @@
     "P112.1 is contract-only; DB schema, runtime helpers, admission preview, Command Center UX, aggregate validation, docs closure, and final validation are split into later subphases.",
     "No provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package creation, network calls, or provider spend are enabled."
   ],
-  "currentSubphase": "P112.1",
-  "previousSubphase": "P111.7",
-  "nextSubphase": "P112.2",
-  "summary": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked."
+  "currentSubphase": "P112.2",
+  "previousSubphase": "P112.1",
+  "nextSubphase": "P112.3",
+  "summary": "P112 is in progress. P112.1-P112.2 define the governed local queue admission contract and local SQLite schema while unsafe authority remains blocked."
 }

@@ -14368,22 +14368,22 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ee9b233d1257240f6aefc8991526bb42398c30c8",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Queue Admission",
-      "detail": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked.",
+      "detail": "P112.2 schema complete; P112.3 local queue CRUD is next.",
       "phaseId": "P112",
       "title": "Founder Live Agent Work Queue Admission",
       "order": 148,
       "status": "in_progress",
-      "summary": "P112 is in progress. P112.1 defines the governed local queue admission contract for persisted founder agent work orders while unsafe authority remains blocked.",
-      "nextPhase": "P112.2",
+      "summary": "P112 is in progress. P112.1-P112.2 define the queue admission contract and local SQLite schema for persisted founder agent work orders while unsafe authority remains blocked.",
+      "nextPhase": "P112.3",
       "previousPhase": "P111.7",
       "checksRun": [],
       "knownLimitations": [
-        "P112.1 is contract-only and does not change DB schema, runtime helpers, dashboard source, runtime data, or project files.",
-        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P112.2 is next for local queue schema work."
+        "P112.2 is schema-only and does not add runtime CRUD helpers, dashboard source, runtime data writes, or project files.",
+        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.3 is next for the governed local queue CRUD model."
       ],
       "completedAt": ""
     },
@@ -14417,23 +14417,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Agent Work Queue SQLite Schema",
-      "detail": "Planned local SQLite schema metadata and isolated validation for queue admission records.",
+      "detail": "Local queue schema and isolated SQLite validation are complete; runtime dispatch remains blocked.",
       "phaseId": "P112.2",
       "title": "Agent Work Queue SQLite Schema",
       "order": 148.2,
-      "status": "planned",
-      "summary": "Planned local SQLite schema metadata and isolated validation for queue admission records.",
+      "status": "complete",
+      "summary": "Added local SQLite schema metadata, SQL tables, indexes, and isolated validation for founder agent work queue records.",
       "nextPhase": "P112.3",
       "previousPhase": "P112.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned schema subphase only."
+      "checksRun": [
+        "npm run check:p1122-founder-live-agent-work-queue-schema",
+        "npm run check:p1121-founder-live-agent-work-queue-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P112.2 is schema-only and does not add runtime CRUD helpers, dashboard source, runtime data writes, or project files.",
+        "Agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, execution unlock, provider/model calls, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P112.3 is next for the governed local queue CRUD model."
+      ],
+      "completedAt": "2026-05-28T23:04:25.358Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15017,9 +15025,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-28T22:59:46.576Z",
-  "currentPhase": "P112.1",
-  "previousPhase": "P111.7",
-  "nextPhase": "P112.2",
+  "updatedAt": "2026-05-28T23:04:25.358Z",
+  "currentPhase": "P112.2",
+  "previousPhase": "P112.1",
+  "nextPhase": "P112.3",
   "currentPhaseStatus": "complete"
 }

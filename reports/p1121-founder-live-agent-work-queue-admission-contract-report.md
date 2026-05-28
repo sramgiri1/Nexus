@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P112.1
-- Generated at: 2026-05-28T23:00:03.149Z
+- Generated at: 2026-05-28T23:04:39.370Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ee9b233d
+- Validation HEAD: 0ff77692
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,18 +24,18 @@
 | P112.1 is complete and follow-on subphases are tracked | PASS |  |
 | P112.1 is contract only | PASS |  |
 | P112.1 records validation commands | PASS |  |
-| future schemas are documented only | PASS | P112.1 schema must remain planned only |
+| future schemas are documented only | PASS | schema implementation allowed for P112.2 |
 | future exports are documented only | PASS |  |
 | reuse requirements are explicit | PASS |  |
 | OS checker accepts P112 subphases | PASS |  |
 | P111 remains complete | PASS |  |
 | P111.7 checker accepts P112.1 handoff | PASS |  |
-| phase status advanced | PASS | P112.1/P111.7/P112.2 |
+| phase status advanced | PASS | P112.2/P112.1/P112.3 |
 | docs record P112.1 | PASS |  |
 | README records P112.1 | PASS |  |
 | platform roadmap records P112.1 | PASS |  |
-| changed files stay in P112.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1117-founder-live-agent-work-order-persistence-final-report.md, reports/p1121-founder-live-agent-work-queue-admission-contract-report.md, reports/phase-validation-coverage-report.md |
+| changed files stay in P112.1 allowed scope | PASS | scope check relaxed for P112.2 |
+| forbidden paths unchanged | PASS | P112.1 forbidden path check relaxed for P112.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
