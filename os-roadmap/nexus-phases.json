@@ -9180,7 +9180,7 @@
       "order": 146,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e02e3291",
       "completedAt": "",
       "summary": "P110 is in progress. P110.1-P110.6 now define governed local SQLite persistence contracts, schema, approval-gated local CRUD, Command Center persistence UX, aggregate validation, and docs/roadmap closure for operator decision ledger records while unsafe authority remains blocked.",
       "checksRun": [
@@ -9356,7 +9356,7 @@
       "order": 146.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e02e3291",
       "completedAt": "2026-05-28T21:55:19.000Z",
       "summary": "Closed P110 docs, README, platform roadmap, contract, reports, and OS phase status evidence for P110.1-P110.5 while preserving P110.7 as final validation handoff.",
       "checksRun": [
