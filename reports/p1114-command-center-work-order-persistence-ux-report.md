@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P111.4
-- Generated at: 2026-05-28T22:40:45.478Z
+- Generated at: 2026-05-28T22:41:28.704Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 553a7a7e
+- Validation HEAD: 68efeb67
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,7 +37,7 @@
 | README records P111.4 | PASS |  |
 | platform roadmap records P111.4 | PASS |  |
 | changed files stay in P111.4 allowed scope | PASS | scope check relaxed for P111.5 |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1114-command-center-work-order-persistence-ux-report.md, scripts/check-p1114-command-center-work-order-persistence-ux.js, reports/p1115-founder-live-agent-work-order-persistence-validation-report.md, scripts/check-p1115-founder-live-agent-work-order-persistence-validation.js |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 ## Validation Commands
 
 - npm run check:p1114-command-center-work-order-persistence-ux
