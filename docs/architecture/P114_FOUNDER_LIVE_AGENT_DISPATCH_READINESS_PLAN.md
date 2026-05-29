@@ -197,3 +197,123 @@ spend fields false in isolated validation records.
 Rollback plan: remove the P114.2 schema/checker/script/docs/status/report
 updates, restore P114 to P114.1 complete with P114.2 planned, and keep P114.1
 unchanged.
+
+## P114.3 Governed Local Dispatch CRUD Model
+
+Phase: P114 Founder Live Agent Dispatch Readiness
+
+Subphase: P114.3 Governed Local Dispatch CRUD Model
+
+Goal: add approval-gated local SQLite CRUD helpers for allowlisted dispatch
+readiness records without delete, agent dispatch, project mutation, hosted DB
+mutation, or execution.
+
+Why this is needed: P114.2 defines dispatch readiness tables, but NEXUS still
+needs a governed local model for persisting dispatch readiness before any
+future preview or UX subphase can inspect dispatch candidates.
+
+User/operator impact: operators can inspect the exact local dispatch readiness
+records that would be created for founder work lanes after explicit approval
+gates. The helper returns disabled reasons, next action, blocker, evidence,
+activity, and cost fields without exposing raw private IDs.
+
+Command Center impact: no Command Center source change in P114.3. Dispatch
+readiness UX remains planned for P114.5.
+
+Safety impact: P114.3 allows only local SQLite create/read/update/upsert/list
+for allowlisted dispatch readiness entities after explicit local approval
+gates. Delete, raw SQL, hosted DB mutation, runtime admission, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, deploy/release/export/package, network calls, and provider spend
+remain blocked.
+
+Cost impact: no provider/model calls, network calls, or provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: P114 dispatch readiness helper, P114.3 checker,
+P114.2 compatibility checker/report, P114 contract, this plan, README,
+platform roadmap, package script registry, OS phase status files, and generated
+P114.3/P114.2/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`, `db/**`,
+`dashboard/src/**`, `dashboard/tests/**`, `local-state/runtime/**`,
+`providers/**`, `tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`,
+`exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added
+`live-ready/founderLiveAgentDispatchReadiness.js`; added
+`scripts/check-p1143-founder-live-agent-dispatch-readiness.js`; registered the
+package script; updated P114 contract/status/docs; and regenerated reports.
+
+Expected exports/data shapes:
+- `P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PHASE`
+- `P114_AGENT_DISPATCH_DB_ENTITIES`
+- `buildFounderLiveAgentDispatchReadinessContract`
+- `validateFounderLiveAgentDispatchReadinessContract`
+- `buildSafeAgentDispatchDbRecord`
+- `executeApprovedAgentDispatchDbCrudRequest`
+
+Safety rules: do not add delete, raw SQL, hosted DB mutation, runtime
+admission, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, deploy/release/export/package, network calls, or
+provider spend. Do not expose raw private IDs, raw logs, raw policy dumps, or
+fake runnable actions.
+
+Reuse check: P114.3 reuses `db/sqliteRuntime.js`,
+`db/sqliteCrudRepository.js`, `shared/resultEnvelope.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`, and the P113
+assignment helper. It does not duplicate SQLite runtime, CRUD repository,
+result envelopes, report writers, checker formatters, status helpers, or UI
+components.
+
+Command Center UX requirements: no UI source change in P114.3. The generated
+contract records what changed, current state, next action, blockers, disabled
+reason, owner capability, evidence/activity location, and cost impact for
+future P114.5 UX.
+
+Dark/light/system theme requirements: no theme source change in P114.3.
+
+Playwright tests: no new Playwright test in P114.3 because no UI source changes
+are made.
+
+Checker updates: P114.3 adds a dedicated CRUD model checker that initializes an
+isolated local SQLite DB, exercises approved create/read/update/upsert/list
+paths, blocks default/unapproved/delete/outside-allowlist attempts, removes its
+temporary DB, validates docs/status, and confirms unsafe authority remains
+false.
+
+Docs/README/roadmap updates: P114.3 is recorded in this plan, README, platform
+roadmap, P114 contract, OS roadmap/status, and generated reports. P114.4 is
+next.
+
+OS phase status update: P114 is in progress; P114.3 is complete; current phase
+P114.3; previous P114.2; next P114.4.
+
+Validation commands:
+- `npm run check:p1143-founder-live-agent-dispatch-readiness`
+- `npm run check:p1142-founder-live-agent-dispatch-readiness`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; temporary local
+schema-check DB is removed; no DemoApp exposure; no raw JSON/log/policy dumps;
+no raw private IDs or raw dispatch/assignment/queue table names in primary UX;
+no fake runnable actions; no hosted DB mutation, raw SQL interface,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy, release, export, package, network, or provider spend authority is
+enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P114.3 files>`
+- `git commit -m "feat(nexus): implement p1143 dispatch readiness crud"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: CRUD admission can be mistaken for live dispatch. P114.3 keeps all
+dispatch, execution, project mutation, hosted DB mutation, and provider spend
+fields false in isolated validation records.
+
+Rollback plan: remove the P114.3 helper/checker/script/docs/status/report
+updates, restore P114 to P114.2 complete with P114.3 planned, and keep the
+P114.2 schema unchanged.

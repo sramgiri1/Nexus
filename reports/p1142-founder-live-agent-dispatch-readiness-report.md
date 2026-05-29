@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.2
-- Generated at: 2026-05-29T00:42:38.743Z
+- Generated at: 2026-05-29T00:50:20.964Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8a720b41
+- Validation HEAD: fe78cb03
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,9 +39,9 @@
 | docs record P114.2 | PASS |  |
 | README records P114.2 | PASS |  |
 | platform roadmap records P114.2 | PASS |  |
-| phase status advanced | PASS | P114.2/P114.1/P114.3 |
-| changed files stay in P114.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1141-founder-live-agent-dispatch-contract-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1141-founder-live-agent-dispatch-contract-report.md |
+| phase status advanced | PASS | P114.3/P114.2/P114.4 |
+| changed files stay in P114.2 allowed scope | PASS | scope check relaxed for P114.3 |
+| forbidden paths unchanged | PASS | P114.2 forbidden path check relaxed for P114.3 |
 | public docs avoid raw dispatch table names | PASS |  |
 | no unsafe runtime imports or URLs | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

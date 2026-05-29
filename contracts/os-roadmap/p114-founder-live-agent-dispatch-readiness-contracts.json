@@ -275,16 +275,15 @@
     {
       "phaseId": "P114.3",
       "title": "Governed Local Dispatch CRUD Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add approval-gated local SQLite CRUD helpers for allowlisted dispatch readiness records without delete, dispatch, project mutation, hosted DB mutation, or execution.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "fe78cb033f4e",
       "allowedFiles": [
         "live-ready/founderLiveAgentDispatchReadiness.js",
-        "scripts/check-p1142-founder-live-agent-dispatch-schema.js",
-        "reports/p1142-founder-live-agent-dispatch-schema-report.md",
         "scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
+        "scripts/check-p1142-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -293,6 +292,7 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+        "reports/p1142-founder-live-agent-dispatch-readiness-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -316,9 +316,8 @@
       ],
       "exactFiles": [
         "live-ready/founderLiveAgentDispatchReadiness.js",
-        "scripts/check-p1142-founder-live-agent-dispatch-schema.js",
-        "reports/p1142-founder-live-agent-dispatch-schema-report.md",
         "scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
+        "scripts/check-p1142-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -327,11 +326,19 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+        "reports/p1142-founder-live-agent-dispatch-readiness-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "expectedExports": [
+        "P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PHASE",
+        "P114_AGENT_DISPATCH_DB_ENTITIES",
+        "buildFounderLiveAgentDispatchReadinessContract",
+        "validateFounderLiveAgentDispatchReadinessContract",
+        "buildSafeAgentDispatchDbRecord",
+        "executeApprovedAgentDispatchDbCrudRequest"
+      ],
+      "dataShape": "Approval-gated local SQLite CRUD model for dispatch readiness items, dispatch events, and dispatch evidence references with unsafe runtime flags false.",
       "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -342,12 +349,14 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P114.3 checker."
+        "Added check:p1143-founder-live-agent-dispatch-readiness.",
+        "P114.2 remains compatible with the P114.3/P114.4 handoff state."
       ],
-      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.3.",
-      "phaseStatusUpdate": "P114 in progress; P114.3 complete when implemented.",
+      "docsRoadmap": "P114.3 is recorded in the P114 plan, README, platform roadmap, OS status, and generated reports. P114.4 is next.",
+      "phaseStatusUpdate": "P114 in progress; P114.3 complete; current P114.3; previous P114.2; next P114.4.",
       "validationCommands": [
         "npm run check:p1143-founder-live-agent-dispatch-readiness",
+        "npm run check:p1142-founder-live-agent-dispatch-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -838,12 +847,12 @@
     "buildAgentDispatchReadinessViewModel"
   ],
   "knownLimitations": [
-    "P114.2 is schema-only and does not add runtime helper or UI behavior.",
+    "P114.3 admits local SQLite CRUD only for allowlisted dispatch readiness OS records after explicit local approval gates.",
     "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P114.3 is next for governed local dispatch CRUD modeling."
+    "P114.4 is next for safe dispatch readiness preview modeling."
   ],
-  "currentSubphase": "P114.2",
-  "previousSubphase": "P114.1",
-  "nextSubphase": "P114.3",
-  "summary": "P114 is in progress. P114.1-P114.2 define dispatch readiness contracts, future exports, local schema metadata, isolated validation, and OS status while unsafe authority remains blocked."
+  "currentSubphase": "P114.3",
+  "previousSubphase": "P114.2",
+  "nextSubphase": "P114.4",
+  "summary": "P114 is in progress. P114.1-P114.3 define dispatch readiness contracts, local schema metadata, approved local CRUD, and isolated validation while unsafe authority remains blocked."
 }
