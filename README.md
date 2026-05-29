@@ -1157,6 +1157,15 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P122.1 approval decision application authority handoff contract: P122 now
+  has an implementation-grade subphase split and contract-only safety policy.
+  P122.1 starts the authority handoff track without enabling live authority.
+  P122.2 is next for browser-safe eligibility metadata. Approval decision
+  application, approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

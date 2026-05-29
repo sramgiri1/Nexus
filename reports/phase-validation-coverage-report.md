@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T13:25:58.854Z
+- Generated at: 2026-05-29T13:32:16.066Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 063cfbcf
+- Validation HEAD: afb30703
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -447,7 +447,7 @@
 | P117.5 validation coverage | PASS | 8 checkers, 5 reports |
 | P117.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P117.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P118 validation coverage | PASS | 32 checkers, 28 reports |
+| P118 validation coverage | PASS | 33 checkers, 29 reports |
 | P118.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P118.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P118.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -455,7 +455,7 @@
 | P118.5 validation coverage | PASS | 7 checkers, 5 reports |
 | P118.6 validation coverage | PASS | 5 checkers, 2 reports |
 | P118.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P119 validation coverage | PASS | 32 checkers, 28 reports |
+| P119 validation coverage | PASS | 33 checkers, 29 reports |
 | P119.1 validation coverage | PASS | 11 checkers, 7 reports |
 | P119.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P119.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -463,7 +463,7 @@
 | P119.5 validation coverage | PASS | 7 checkers, 5 reports |
 | P119.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P119.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P120 validation coverage | PASS | 32 checkers, 28 reports |
+| P120 validation coverage | PASS | 33 checkers, 29 reports |
 | P120.1 validation coverage | PASS | 11 checkers, 7 reports |
 | P120.2 validation coverage | PASS | 11 checkers, 7 reports |
 | P120.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -471,7 +471,7 @@
 | P120.5 validation coverage | PASS | 8 checkers, 5 reports |
 | P120.6 validation coverage | PASS | 12 checkers, 7 reports |
 | P120.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P121 validation coverage | PASS | 32 checkers, 28 reports |
+| P121 validation coverage | PASS | 33 checkers, 29 reports |
 | P121.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P121.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P121.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -479,17 +479,48 @@
 | P121.5 validation coverage | PASS | 3 checkers, 1 reports |
 | P121.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P121.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P122 validation coverage | PASS | 28 checkers, 28 reports |
+| P122 validation coverage | PASS | 33 checkers, 29 reports |
+| P122.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P122.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P122.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P122.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P122.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P122.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P122.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P121.7; next=P122; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P122.1; next=P122.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- None
+- P122.2 Application Authority Eligibility Metadata
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P122.3 Governed Local Authority Intent Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P122.4 Authority Handoff Safe Dry Run
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P122.5 Command Center Authority Handoff UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P122.6 Authority Handoff Validation / Docs
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (467/467)
+PASS (474/474)
