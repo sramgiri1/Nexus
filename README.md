@@ -814,6 +814,15 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P116.5 Command Center runtime execution UX: Business Build and Agent Flow now
+  render display-safe runtime execution readiness candidates with source
+  admission context, current state, blockers, next action, owner,
+  evidence/activity, and cost posture while Chat with NEXUS, Lite chat, Live
+  Readiness, and OS Roadmap remain clean. P116.6 is next for runtime execution
+  validation/docs aggregation. Runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

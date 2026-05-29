@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T03:22:34.650Z
+- Generated at: 2026-05-29T03:31:17.050Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3615c41e
+- Validation HEAD: 1df23c84
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -423,7 +423,7 @@
 | P114.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P115 validation coverage | PASS | 16 checkers, 11 reports |
+| P115 validation coverage | PASS | 17 checkers, 12 reports |
 | P115.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P115.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P115.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -431,17 +431,17 @@
 | P115.5 validation coverage | PASS | 6 checkers, 3 reports |
 | P115.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P115.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P116 validation coverage | PASS | 15 checkers, 11 reports |
+| P116 validation coverage | PASS | 16 checkers, 12 reports |
 | P116.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P116.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P116.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P116.4 validation coverage | PASS | 4 checkers, 1 reports |
-| P116.5 validation coverage | PASS | 1 checkers, 1 reports |
+| P116.5 validation coverage | PASS | 5 checkers, 2 reports |
 | P116.6 validation coverage | PASS | dedicated_checker, validation_report |
 | P116.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P116.4; next=P116.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P116.5; next=P116.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

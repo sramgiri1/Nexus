@@ -15757,29 +15757,32 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3615c41e",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
-      "detail": "P116.4 runtime execution readiness preview complete; P116.5 is next.",
+      "detail": "P116.5 Command Center runtime execution readiness UX complete; P116.6 is next.",
       "phaseId": "P116",
       "title": "Founder Live Runtime Execution Readiness",
       "order": 152,
       "status": "in_progress",
-      "summary": "P116 is in progress. P116.4 adds a display-safe local dry-run preview for founder runtime execution readiness while runtime execution remains blocked.",
-      "nextPhase": "P116.5",
-      "previousPhase": "P116.3",
+      "summary": "P116 is in progress. P116.5 renders display-safe runtime execution readiness on Business Build and Agent Flow while runtime execution remains blocked.",
+      "nextPhase": "P116.6",
+      "previousPhase": "P116.4",
       "checksRun": [
+        "npm run check:p1165-founder-live-runtime-execution-readiness",
         "npm run check:p1164-founder-live-runtime-execution-readiness",
-        "npm run check:p1163-founder-live-runtime-execution-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime execution readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P116.4 is preview-only; it does not write readiness records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
-        "P116.5 is next for Command Center runtime execution readiness UX."
+        "P116.5 is Command Center UX only; it does not write readiness records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "Runtime execution readiness appears only on Business Build and Agent Flow; Chat with NEXUS, Lite chat, Live Readiness, and OS Roadmap stay scoped to their own surfaces.",
+        "P116.6 is next for aggregate validation and docs closure."
       ],
-      "completedAt": "2026-05-29T03:18:47.001Z"
+      "completedAt": "2026-05-29T03:28:45.898Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15893,23 +15896,33 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Command Center Execution Readiness UX",
-      "detail": "Planned Command Center Execution Readiness UX for P116.",
+      "detail": "Command Center runtime execution readiness UX renders on Business Build and Agent Flow only.",
       "phaseId": "P116.5",
       "title": "Command Center Execution Readiness UX",
       "order": 152.5,
-      "status": "planned",
-      "summary": "Planned Command Center Execution Readiness UX for P116.",
+      "status": "complete",
+      "summary": "Rendered display-safe runtime execution readiness candidates, blockers, next action, owner, evidence/activity, and cost posture in founder Command Center pages without runnable execution controls.",
       "nextPhase": "P116.6",
       "previousPhase": "P116.4",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1165-founder-live-runtime-execution-readiness",
+        "npm run check:p1164-founder-live-runtime-execution-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime execution readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P116.5 is Command Center UX only; it does not write readiness records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "Runtime execution readiness appears only on Business Build and Agent Flow; Chat with NEXUS, Lite chat, Live Readiness, and OS Roadmap stay scoped to their own surfaces.",
+        "P116.6 is next for aggregate validation and docs closure."
+      ],
+      "completedAt": "2026-05-29T03:28:45.898Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15954,8 +15967,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T03:18:47.001Z",
-  "currentPhase": "P116.4",
-  "previousPhase": "P116.3",
-  "nextPhase": "P116.5",
+  "currentPhase": "P116.5",
+  "previousPhase": "P116.4",
+  "nextPhase": "P116.6",
   "currentPhaseStatus": "complete"
 }

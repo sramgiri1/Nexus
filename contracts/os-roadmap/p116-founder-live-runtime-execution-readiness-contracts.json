@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move approved runtime admission readiness toward governed runtime execution readiness while keeping actual execution blocked until explicitly allowed.",
-  "currentSubphase": "P116.4",
-  "previousSubphase": "P116.3",
-  "nextSubphase": "P116.5",
+  "currentSubphase": "P116.5",
+  "previousSubphase": "P116.4",
+  "nextSubphase": "P116.6",
   "safetyRules": [
     "Do not enable runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P116.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -516,11 +516,11 @@
         ".env*",
         "db/**",
         "live-ready/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "local-state/runtime/**"
       ],
-      "expectedExports": [],
+      "expectedExports": [
+        "buildFounderLiveRuntimeExecutionReadinessDisplayModel"
+      ],
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -547,35 +547,71 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "allowedFiles": [],
-      "exactFiles": [],
-      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1165-founder-live-runtime-execution-readiness.js",
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+        "reports/p1165-founder-live-runtime-execution-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1165-founder-live-runtime-execution-readiness.js",
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+        "reports/p1165-founder-live-runtime-execution-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "dataShape": "Browser-safe runtime execution readiness display model with currentState, founderIdea, previewMode, source admission label, candidate counts, execution sections, execution rows, blockers, disabled reason, owner capability, evidence/activity/cost labels, safety rows, and all execution/dispatch/project/hosted DB/deploy/package/spend posture blocked.",
+      "commandCenterUx": "Render display-safe runtime execution readiness on Business Build and Agent Flow only. Hide it from Chat with NEXUS, Lite chat, Live Readiness, and OS Roadmap. Show what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without runnable controls.",
       "playwrightTests": [
-        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+        "Add route coverage for runtime execution readiness on Business Build and Agent Flow across dark, light, and system themes while confirming Chat/Lite and Live Readiness stay clean."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated checker for this subphase."
+        "Add check:p1165-founder-live-runtime-execution-readiness for browser-safe display model, scoped Command Center rendering, Playwright coverage, docs/status/report alignment, and safety wording."
       ],
       "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.5.",
-      "phaseStatusUpdate": "P116 in progress; P116.5 complete when implemented.",
+      "phaseStatusUpdate": "P116 in progress; P116.5 complete; current phase P116.5; previous P116.4; next P116.6.",
       "validationCommands": [
         "npm run check:p1165-founder-live-runtime-execution-readiness",
+        "npm run check:p1164-founder-live-runtime-execution-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime execution readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "gitCommands": [
         "git add <allowed P116.5 files>",
-        "git commit -m \"feat(nexus): implement p1165 runtime execution readiness\"",
+        "git commit -m \"feat(nexus): implement p1165 runtime execution ux\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "phaseId": "P116.5",
       "title": "Command Center Execution Readiness UX",
-      "status": "planned",
+      "status": "complete",
       "narrowGoal": "Render execution readiness state in the appropriate founder-facing Command Center pages without live controls.",
       "nextPhase": "P116.6",
-      "previousPhase": "P116.4"
+      "previousPhase": "P116.4",
+      "expectedBaseCommit": "1df23c84"
     },
     {
       "scopeClassification": "NEXUS_OS_CHANGE",

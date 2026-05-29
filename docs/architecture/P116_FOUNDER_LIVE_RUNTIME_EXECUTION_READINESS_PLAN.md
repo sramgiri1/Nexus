@@ -609,3 +609,132 @@ hidden until P116.5.
 Rollback plan: remove P116.4 preview exports/checker/docs/status/report
 updates, restore P116 to P116.3 complete with P116.4 planned, and keep P116.3
 CRUD unchanged.
+
+## P116.5 Command Center Runtime Execution UX
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE
+
+Narrow goal: render display-safe runtime execution readiness on Business Build
+and Agent Flow only, without live execution controls.
+
+Allowed files:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1165-founder-live-runtime-execution-readiness.js`
+- `contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json`
+- `docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1164-founder-live-runtime-execution-readiness-report.md`
+- `reports/p1165-founder-live-runtime-execution-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `live-ready/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- `local-state/runtime/**`
+
+Exact files/modules changed: updated the browser-safe Business Build display
+model, added the reusable Command Center runtime execution readiness card,
+added Playwright route coverage, added the P116.5 checker/package script,
+updated P116 contract/status/docs, and regenerated reports.
+
+Expected exports and data shapes:
+- `buildFounderLiveRuntimeExecutionReadinessDisplayModel`
+
+The display model includes `currentState`, `founderIdea`, `previewMode`,
+source admission label, candidate counts, execution sections, execution rows,
+blockers, disabled reason, owner capability, evidence/activity/cost labels, and
+safety rows. All execution, dispatch, project mutation, hosted DB, deploy,
+package, network, and spend posture remains blocked.
+
+Command Center UX requirements: Business Build and Agent Flow show runtime
+execution readiness candidates with current state, next action, blockers,
+disabled reason, owner, evidence/activity, and cost impact. Chat with NEXUS,
+Command Center Lite chat, Live Readiness, and OS Roadmap do not show this card.
+No raw IDs, raw DB table names, raw JSON/log/policy dumps, or fake runnable
+actions are exposed.
+
+Dark/light/system theme requirements: preserve existing theme behavior and add
+Playwright coverage across dark, light, and system themes.
+
+Playwright tests: added route coverage for runtime execution readiness on
+Business Build and Agent Flow, plus negative assertions for Chat/Lite and Live
+Readiness.
+
+Checker updates: P116.5 adds a dedicated checker validating the browser-safe
+display model, scoped Command Center placement, Playwright coverage, docs,
+status, reports, and safety wording.
+
+Docs/README/roadmap updates: P116.5 is recorded in this plan, README, platform
+roadmap, P116 contract, OS roadmap/status, and generated reports. P116.6 is
+next for validation/docs aggregation.
+
+OS phase status update: P116 is in progress; P116.5 is complete; current phase
+P116.5; previous P116.4; next P116.6.
+
+Validation commands:
+- `npm run check:p1165-founder-live-runtime-execution-readiness`
+- `npm run check:p1164-founder-live-runtime-execution-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Runtime execution readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no DB schema,
+live-ready, provider, tool, worker runtime, deploy, release, export, package,
+env, or local runtime state files changed; no runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL, deploy, release, export, package,
+network, or provider spend authority is enabled; no DemoApp exposure, raw
+private IDs, raw DB table names, raw JSON/log/policy dumps, or fake actions are
+introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P116.5 files>`
+- `git commit -m "feat(nexus): implement p1165 runtime execution ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: runtime execution readiness can be mistaken for live runtime
+execution. The card labels the lane as blocked, keeps executable candidates at
+zero, and exposes no runnable controls.
+
+Rollback plan: remove the P116.5 display model/card/test/checker/docs/status
+updates, restore P116.5 to planned with P116.4 as current, and keep P116.4
+preview code unchanged.

@@ -1326,6 +1326,111 @@ export function buildFounderLiveRuntimeAdmissionReadinessDisplayModel(founderIde
   };
 }
 
+export function buildFounderLiveRuntimeExecutionReadinessDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  // Keep this browser-safe: the P116 runtime helper owns local CRUD and preview validation separately.
+  const rows = [
+    {
+      label: "Founder execution readiness gate",
+      proposedExecutionLane: "Founder Execution Gate",
+      proposedOutcome: "Review founder intent, PRD readiness, admission evidence, and local safety gates before any later runtime execution request.",
+      ownerCapability: "NEXUS Founder Runtime Execution Review",
+    },
+    {
+      label: "Product build boundary gate",
+      proposedExecutionLane: "Product Build Boundary",
+      proposedOutcome: "Check product scope, implementation boundaries, acceptance criteria, and validation commands before any later runtime handoff.",
+      ownerCapability: "NEXUS Product Build Boundary Review",
+    },
+    {
+      label: "Release safety boundary gate",
+      proposedExecutionLane: "Release Safety Boundary",
+      proposedOutcome: "Confirm rollback evidence, audit evidence, package/deploy restrictions, network limits, and blocked spend authority before any later runtime transition.",
+      ownerCapability: "NEXUS Release Safety Review",
+    },
+  ];
+  const sections = [
+    { label: "Execution readiness candidates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Execution gates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Blocked authority", candidateCount: rows.length, blockedCount: rows.length },
+  ];
+  const disabledReason =
+    "P116.5 renders local runtime execution readiness preview state only. It cannot execute runtime work, unlock execution, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+
+  return {
+    currentState: "Founder Runtime Execution Readiness Preview Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Local Only Dry Run",
+    sourceAdmissionLabel: "Founder runtime admission readiness item",
+    candidateCount: rows.length,
+    blockedCandidateCount: rows.length,
+    writableCandidateCount: 0,
+    persistedCandidateCount: 0,
+    executableCandidateCount: 0,
+    dispatchableCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    hostedDbMutationCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    nextAction: "Review runtime execution readiness gates before any future explicitly approved runtime execution phase.",
+    blockers: [
+      "Runtime execution readiness preview is local and read-only.",
+      "Local readiness writes require explicit operator approval gates in a separate CRUD request.",
+      "Runtime execution remains blocked.",
+      "Execution unlock remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Runtime Execution Readiness Preview",
+    evidenceLocation: "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic runtime execution readiness preview only. No runtime execution, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    runtimeExecutionSections: sections.map((section) => ({
+      ...section,
+      nextAction: "Keep this section read-only.",
+      disabledReason: "Runtime execution readiness preview cannot run runtime work or execute.",
+    })),
+    runtimeExecutionRows: rows.map((row, index) => ({
+      label: row.label,
+      proposedExecutionLane: row.proposedExecutionLane || "Founder runtime execution lane",
+      proposedOutcome: row.proposedOutcome || "Prepare governed runtime execution readiness for later review.",
+      executionPosition: index + 1,
+      executionState: "Local Preview Ready Execution Blocked",
+      previewMode: "Local Only Dry Run",
+      nextAction: "Review this local runtime execution readiness candidate before any approved execution phase.",
+      blocker: "Runtime execution readiness preview is local and read-only.",
+      disabledReason,
+      ownerCapability: row.ownerCapability || "NEXUS Founder Runtime Execution Readiness Preview",
+      evidenceLocation: "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic runtime execution readiness preview only. No runtime execution, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      runtimeExecutionAllowed: "Blocked",
+      executionUnlockAllowed: "Blocked",
+      localCrudAllowed: "Blocked",
+      dispatchAllowed: "Blocked",
+      projectMutationAllowed: "Blocked",
+      hostedDbMutationAllowed: "Blocked",
+      providerSpendAllowed: "Blocked",
+    })),
+    safetyRows: [
+      { label: "Runtime execution", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Local CRUD admission", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -2475,6 +2580,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderLiveAgentWorkAssignment = buildFounderLiveAgentWorkAssignmentDisplayModel(prdFields.founderIdea);
   const founderLiveAgentDispatchReadiness = buildFounderLiveAgentDispatchReadinessDisplayModel(prdFields.founderIdea);
   const founderLiveRuntimeAdmissionReadiness = buildFounderLiveRuntimeAdmissionReadinessDisplayModel(prdFields.founderIdea);
+  const founderLiveRuntimeExecutionReadiness = buildFounderLiveRuntimeExecutionReadinessDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2617,6 +2723,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveAgentWorkAssignment,
     founderLiveAgentDispatchReadiness,
     founderLiveRuntimeAdmissionReadiness,
+    founderLiveRuntimeExecutionReadiness,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

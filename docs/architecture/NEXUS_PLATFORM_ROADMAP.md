@@ -3114,6 +3114,15 @@ unlock, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
 package action, network call, and provider spend remain blocked.
 
+P116.5 is complete. Business Build and Agent Flow now render display-safe
+runtime execution readiness candidates with source admission context, current
+state, blockers, next action, owner, evidence/activity, and cost posture while
+Chat with NEXUS, Lite chat, Live Readiness, and OS Roadmap remain clean. P116.6 is next
+for runtime execution validation/docs aggregation. Runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
