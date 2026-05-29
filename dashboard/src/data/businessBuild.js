@@ -1431,6 +1431,131 @@ export function buildFounderLiveRuntimeExecutionReadinessDisplayModel(founderIde
   };
 }
 
+export function buildFounderRuntimeExecutionApprovalGateDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  // Keep this browser-safe: the P117 runtime helper owns SQLite-backed approval evidence validation separately.
+  const rows = [
+    {
+      label: "Founder intent evidence",
+      proposedApprovalLane: "Founder Intent Evidence",
+      sourceRuntimeLane: "Founder Runtime Execution Readiness",
+      proposedOutcome: "Review founder idea clarity, PRD readiness, target customer, and business objective before any later approval review.",
+      ownerCapability: "NEXUS Founder Intent Review",
+    },
+    {
+      label: "Implementation boundary evidence",
+      proposedApprovalLane: "Implementation Boundary Evidence",
+      sourceRuntimeLane: "Product Build Boundary",
+      proposedOutcome: "Review product scope, local implementation boundary, validation commands, and rollback expectations before any later approval review.",
+      ownerCapability: "NEXUS Implementation Boundary Review",
+    },
+    {
+      label: "Release safety evidence",
+      proposedApprovalLane: "Release Safety Evidence",
+      sourceRuntimeLane: "Release Safety Boundary",
+      proposedOutcome: "Review audit, recovery, package/deploy restrictions, provider spend limits, and blocked network authority before any later approval review.",
+      ownerCapability: "NEXUS Release Safety Review",
+    },
+  ];
+  const sections = [
+    { label: "Approval evidence candidates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Approval capture", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Blocked authority", candidateCount: rows.length, blockedCount: rows.length },
+  ];
+  const disabledReason =
+    "Runtime execution approval gate is a local read-only preview. It cannot capture approvals, persist approval decisions, record approval outcomes, unlock execution, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+
+  return {
+    currentState: "Runtime Execution Approval Gate Preview Ready Approval Capture Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Local Only Dry Run",
+    sourceRuntimeState: "Runtime execution readiness preview is available for approval evidence review",
+    candidateCount: rows.length,
+    blockedCandidateCount: rows.length,
+    writableCandidateCount: 0,
+    persistedCandidateCount: 0,
+    approvalCaptureCandidateCount: 0,
+    approvalPersistenceCandidateCount: 0,
+    approvalDecisionRecordedCount: 0,
+    approveRejectCandidateCount: 0,
+    runtimeExecutableCandidateCount: 0,
+    executableCandidateCount: 0,
+    executionUnlockCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    hostedDbMutationCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    nextAction: "Review approval evidence candidates on founder work pages while approval capture and runtime execution remain blocked.",
+    blockers: [
+      "Approval gate preview is local and read-only.",
+      "Approval capture remains blocked.",
+      "Approval persistence remains blocked.",
+      "Approval decisions cannot unlock execution.",
+      "Runtime execution remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Runtime Approval Gate Preview",
+    evidenceLocation: "Runtime execution approval gate preview report",
+    activityLocation: "OS phase status report",
+    costImpact: "Local deterministic approval gate preview only. No approval capture, runtime execution, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalGateSections: sections.map((section) => ({
+      ...section,
+      nextAction: "Keep this section read-only until a later explicit approval capture phase.",
+      disabledReason: "Approval gate preview cannot capture decisions or execute runtime work.",
+    })),
+    approvalGateRows: rows.map((row, index) => ({
+      label: row.label,
+      proposedApprovalLane: row.proposedApprovalLane || "Runtime execution approval lane",
+      sourceRuntimeLane: row.sourceRuntimeLane || "Runtime execution readiness",
+      proposedOutcome: row.proposedOutcome || "Review governed approval evidence before later runtime execution approval.",
+      approvalPosition: index + 1,
+      approvalGateState: "Local Preview Ready Approval Capture Blocked",
+      previewMode: "Local Only Dry Run",
+      nextAction: "Review this local approval evidence candidate before any future execution approval phase.",
+      blocker: "Approval capture and runtime execution remain blocked.",
+      disabledReason,
+      ownerCapability: row.ownerCapability || "NEXUS Runtime Approval Gate Preview",
+      evidenceLocation: "Runtime execution approval gate preview report",
+      activityLocation: "OS phase status report",
+      costImpact: "Local deterministic approval gate preview only. No approval capture, runtime execution, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      localCrudAllowed: "Blocked",
+      dbWriteAllowed: "Blocked",
+      approvalCaptureAllowed: "Blocked",
+      approvalPersistenceAllowed: "Blocked",
+      approvalDecisionRecorded: "Blocked",
+      runtimeApprovalAllowed: "Blocked",
+      runtimeExecutionAllowed: "Blocked",
+      executionUnlockAllowed: "Blocked",
+      dispatchAllowed: "Blocked",
+      workerExecutionAllowed: "Blocked",
+      toolExecutionAllowed: "Blocked",
+      projectMutationAllowed: "Blocked",
+      hostedDbMutationAllowed: "Blocked",
+      deployAllowed: "Blocked",
+      packageAllowed: "Blocked",
+      providerSpendAllowed: "Blocked",
+    })),
+    safetyRows: [
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Approval persistence", value: "Blocked" },
+      { label: "Approval decision recording", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Runtime execution", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -2581,6 +2706,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderLiveAgentDispatchReadiness = buildFounderLiveAgentDispatchReadinessDisplayModel(prdFields.founderIdea);
   const founderLiveRuntimeAdmissionReadiness = buildFounderLiveRuntimeAdmissionReadinessDisplayModel(prdFields.founderIdea);
   const founderLiveRuntimeExecutionReadiness = buildFounderLiveRuntimeExecutionReadinessDisplayModel(prdFields.founderIdea);
+  const founderRuntimeExecutionApprovalGate = buildFounderRuntimeExecutionApprovalGateDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2724,6 +2850,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveAgentDispatchReadiness,
     founderLiveRuntimeAdmissionReadiness,
     founderLiveRuntimeExecutionReadiness,
+    founderRuntimeExecutionApprovalGate,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

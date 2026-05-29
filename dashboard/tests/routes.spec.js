@@ -4268,6 +4268,60 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Runtime execution approval gate appears only on Business Build and Agent Flow", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Runtime execution approval gate").filter({ hasText: "Business Build Runtime Execution Approval Gate" });
+      await expect(themedCard).toContainText("Runtime Execution Approval Gate");
+      await expect(themedCard).toContainText("Approval capture blocked");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Runtime Execution Approval Gate"],
+      ["/command-center/agent-flow", "Agent Flow Runtime Execution Approval Gate"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Runtime execution approval gate").filter({ hasText: label });
+      await expect(card).toContainText("Runtime Execution Approval Gate");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Preview mode");
+      await expect(card).toContainText("Source runtime state");
+      await expect(card).toContainText("Approval candidates");
+      await expect(card).toContainText("Blocked candidates");
+      await expect(card).toContainText("Writable candidates");
+      await expect(card).toContainText("Captured approvals");
+      await expect(card).toContainText("Executable candidates");
+      await expect(card).toContainText("NEXUS Runtime Approval Gate Preview");
+      await expect(card).toContainText("Founder Intent Evidence");
+      await expect(card).toContainText("Implementation Boundary Evidence");
+      await expect(card).toContainText("Release Safety Evidence");
+      await expect(card).toContainText("Approval capture");
+      await expect(card).toContainText("Approval persistence");
+      await expect(card).toContainText("Execution unlock");
+      await expect(card).toContainText("Runtime execution approval gate preview report");
+      await expect(card).toContainText("No approval capture");
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Runtime execution approval gate")).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|approvalEvidenceId|runtimeExecutionId|runtimeAdmissionId|dispatchReadinessId|assignmentId|queueItemId|workOrderId|founder_runtime_execution_|founder_runtime_admission_|founder_runtime_execution_approval_/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|reject now|admit now|call provider now|create project now|dispatch agent now|write sqlite now|write runtime now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Founder live approval capture boundary appears on non-chat founder routes", async ({ page }) => {
     const errors = captureClientErrors(page);
 

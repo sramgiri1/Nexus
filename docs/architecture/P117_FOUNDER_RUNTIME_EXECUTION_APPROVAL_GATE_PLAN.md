@@ -594,3 +594,190 @@ P117.5.
 Rollback plan: remove P117.4 preview exports/checker/docs/status/report
 updates, restore P117 to P117.3 complete with P117.4 planned, and keep P117.3
 modeling unchanged.
+
+## P117.5 Command Center Approval Gate UX
+
+Phase: P117 Founder Runtime Execution Approval Gate
+
+Subphase: P117.5 Command Center Approval Gate UX
+
+Goal: render a display-safe runtime execution approval gate card on Business
+Build and Agent Flow without approval capture, approval persistence,
+approve/reject controls, runtime execution, execution unlock, DB writes,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package, network calls, or spend.
+
+Why this is needed: P117.4 produces a safe dry-run approval gate preview but
+keeps it hidden from Command Center. P117.5 gives founders and operators a
+useful visual surface for approval evidence, blockers, owner, next action, and
+cost posture before later validation.
+
+User/operator impact: Business Build and Agent Flow now show which approval
+evidence candidates exist, why every lane is blocked, what to review next, who
+owns the gate, where evidence/activity lives, and that cost impact is local and
+zero-spend. Chat with NEXUS remains chat-only.
+
+Command Center impact: add a browser-safe dashboard display model and a reused
+Command Center card pattern. Render the card only on Business Build and Agent
+Flow. Do not render it on Chat, Lite chat, Live Readiness, OS Roadmap, or Demo
+surfaces.
+
+Safety impact: P117.5 is read-only UX. It does not import the node-only P117
+runtime helper, does not touch SQLite/runtime files, and does not add any
+runnable controls. Primary UX uses friendly evidence labels instead of raw
+phase/report paths.
+
+Cost impact: local deterministic display only. No provider/model calls, network
+calls, deploy/package actions, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `1c478184`.
+
+Allowed files:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1175-founder-runtime-execution-approval-gate.js`
+- `contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json`
+- `docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- generated P117.4/P117.5/OS/coverage reports
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1175-founder-runtime-execution-approval-gate.js`
+- `package.json`
+- P117 contract, this plan, README, platform roadmap, OS roadmap/status, and
+  generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `buildFounderRuntimeExecutionApprovalGateDisplayModel` to
+  `dashboard/src/data/businessBuild.js`
+- add `FounderRuntimeExecutionApprovalGateCard` and render it from Business
+  Build and Agent Flow in `dashboard/src/pages/CommandCenterV2.jsx`
+- add focused route coverage to `dashboard/tests/routes.spec.js`
+- add `scripts/check-p1175-founder-runtime-execution-approval-gate.js`
+- add `check:p1175-founder-runtime-execution-approval-gate` to `package.json`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderRuntimeExecutionApprovalGateDisplayModel`
+- browser-safe model with current state, founder idea, preview mode, source
+  runtime state, approval candidate counts, sections, rows, blockers, disabled
+  reason, owner capability, evidence/activity/cost labels, safety rows, and all
+  approval/runtime/dispatch/project/hosted DB/deploy/package/spend posture
+  blocked.
+
+Reuse check: reuse the existing Business Build data model file, existing
+Command Center V2 card/grid/pill/safety-row patterns, existing route test
+helpers, `shared/reportWriter.js`, `shared/checkResultFormatter.js`, and
+existing OS phase status/reporting checks. Do not duplicate report writers,
+formatters, route matrices, mode guards, redaction helpers, or phase status
+updaters.
+
+Command Center UX requirements: show what changed, current state, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact. Do not show raw JSON, raw logs, raw policy dumps, raw private IDs,
+raw DB table names, internal phase labels, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve existing System, Dark, and Light
+theme behavior and add Playwright coverage for the new approval-gate card.
+
+Playwright tests: add a focused route test verifying the card appears on
+Business Build and Agent Flow, survives dark/light/system themes, and is absent
+from Chat, Lite chat, and Live Readiness.
+
+Checker updates: add a dedicated P117.5 checker that validates the browser-safe
+model, scoped rendering, Playwright coverage, docs/status updates, allowed file
+scope, and absence of raw IDs, raw DB names, raw dumps, internal primary UX
+phase labels, unsafe imports, or fake runnable actions.
+
+Docs/README/roadmap updates: P117.5 is recorded in this plan, README, platform
+roadmap, P117 contract, OS roadmap/status, and generated reports. P117.6 is
+next for approval gate validation/docs.
+
+OS phase status update: P117 is in progress; P117.5 is complete; current phase
+P117.5; previous P117.4; next P117.6.
+
+Reports to regenerate:
+- `reports/p1175-founder-runtime-execution-approval-gate-report.md`
+- `reports/p1174-founder-runtime-execution-approval-gate-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1175-founder-runtime-execution-approval-gate`
+- `npm run check:p1174-founder-runtime-execution-approval-gate`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Runtime execution approval gate appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+- `find local-state/runtime -maxdepth 1 -name 'check-p117*.sqlite' -print`
+
+Final safety checks: no project/CareLoop paths changed; no DB/runtime provider,
+tool, worker, deploy, release, export, package, or env paths changed; no
+approval capture, approval persistence, approval decision recording, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL, network, deploy,
+release, export, package, or spend authority is enabled; no DemoApp exposure,
+raw private IDs, raw DB table names, raw JSON/log/policy dumps, internal primary
+UX phase labels, or fake actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P117.5 files>`
+- `git commit -m "feat(nexus): implement p1175 execution approval ux"`
+- stamp P117/P117.5 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1175 execution approval ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: approval-gate UX can be mistaken for live approval capture.
+P117.5 keeps every approval capture, persistence, decision recording, execution,
+dispatch, project mutation, DB, deploy/package, network, and spend posture
+blocked and avoids approval/run controls.
+
+Rollback plan: remove P117.5 display model/card/test/checker/docs/status/report
+updates, restore P117 to P117.4 complete with P117.5 planned, and keep P117.4
+preview modeling unchanged.

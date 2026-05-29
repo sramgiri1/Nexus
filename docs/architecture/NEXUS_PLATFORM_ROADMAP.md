@@ -3176,6 +3176,17 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 raw SQL interface, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P117.5 is complete. Business Build and Agent Flow now render a browser-safe
+runtime execution approval gate card with approval evidence candidates, blocked
+state, next action, blockers, owner, evidence/activity labels, and cost posture.
+Chat with NEXUS remains chat-only and the approval gate stays out of Lite,
+Live Readiness, and OS Roadmap. P117.6 is next for approval gate
+validation/docs. Approval capture, approval persistence, approve/reject
+decision recording, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
