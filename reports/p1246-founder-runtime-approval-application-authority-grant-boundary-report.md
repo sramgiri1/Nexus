@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.6
-- Generated at: 2026-05-29T16:22:31.528Z
+- Generated at: 2026-05-29T16:24:49.205Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 43763995
+- Validation HEAD: 8d3099b0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,8 +32,8 @@
 | README records P124.6 | PASS |  |
 | platform roadmap records P124.6 | PASS |  |
 | phase status advanced | PASS | P124.6/P124.5/P124.7 |
-| changed files stay in P124.6 allowed scope | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js, reports/p1246-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js, reports/p1246-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js |
+| changed files stay in P124.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw grant table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | Command Center grant UX avoids raw paths and fake actions | PASS |  |
