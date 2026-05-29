@@ -1119,6 +1119,108 @@ export function buildFounderLiveAgentWorkAssignmentDisplayModel(founderIdeaSumma
   };
 }
 
+export function buildFounderLiveAgentDispatchReadinessDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  // Keep this browser-safe: the P114 runtime helper owns SQLite dispatch CRUD and is validated separately.
+  const rows = [
+    {
+      label: "Founder strategy dispatch candidate",
+      proposedDispatchLane: "Founder Strategy Dispatch",
+      proposedOutcome: "Prepare the founder strategy agent lane to review feasibility, customer pain, value promise, and PRD gaps.",
+      ownerCapability: "NEXUS Founder Strategy Agent",
+    },
+    {
+      label: "Product architecture dispatch candidate",
+      proposedDispatchLane: "Product Architecture Dispatch",
+      proposedOutcome: "Prepare the product architecture lane to map app scope, data boundaries, platform constraints, and build risks.",
+      ownerCapability: "NEXUS Product Architecture Agent",
+    },
+    {
+      label: "Launch operations dispatch candidate",
+      proposedDispatchLane: "Launch Operations Dispatch",
+      proposedOutcome: "Prepare the launch operations lane to plan validation experiments, pricing questions, release blockers, and go-to-market needs.",
+      ownerCapability: "NEXUS Launch Operations Agent",
+    },
+  ];
+  const sections = [
+    { label: "Dispatch candidates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Dispatch gates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Blocked authority", candidateCount: rows.length, blockedCount: rows.length },
+  ];
+  const disabledReason =
+    "P114.5 renders local dispatch readiness preview state only. It cannot write dispatch records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+
+  return {
+    currentState: "Founder Agent Dispatch Readiness Preview Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Local Only Dry Run",
+    sourceAssignmentLabel: "Founder agent work assignment readiness item",
+    candidateCount: rows.length,
+    blockedCandidateCount: rows.length,
+    writableCandidateCount: 0,
+    persistedCandidateCount: 0,
+    dispatchableCandidateCount: 0,
+    executableCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    hostedDbMutationCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    nextAction: "Review dispatch candidates before any future explicitly approved dispatch or execution phase.",
+    blockers: [
+      "Dispatch readiness preview is local and read-only.",
+      "Local dispatch writes require explicit operator approval gates in a separate CRUD request.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Agent Dispatch Readiness Preview",
+    evidenceLocation: "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic dispatch readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    dispatchSections: sections.map((section) => ({
+      ...section,
+      nextAction: "Keep this section read-only.",
+      disabledReason: "Dispatch readiness preview cannot write or execute.",
+    })),
+    dispatchRows: rows.map((row, index) => ({
+      label: row.label,
+      proposedDispatchLane: row.proposedDispatchLane || "Founder agent dispatch lane",
+      proposedOutcome: row.proposedOutcome || "Prepare governed dispatch readiness for later review.",
+      dispatchPosition: index + 1,
+      dispatchState: "Local Preview Ready Execution Blocked",
+      previewMode: "Local Only Dry Run",
+      nextAction: "Review this local dispatch candidate before any approved dispatch or execution phase.",
+      blocker: "Dispatch readiness preview is local and read-only.",
+      disabledReason,
+      ownerCapability: row.ownerCapability || "NEXUS Founder Agent Dispatch Readiness Preview",
+      evidenceLocation: "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic dispatch readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      dispatchWriteAllowed: "Blocked",
+      localCrudAllowed: "Blocked",
+      executionAllowed: "Blocked",
+      dispatchAllowed: "Blocked",
+      projectMutationAllowed: "Blocked",
+      hostedDbMutationAllowed: "Blocked",
+      providerSpendAllowed: "Blocked",
+    })),
+    safetyRows: [
+      { label: "Dispatch writes", value: "Blocked" },
+      { label: "Local CRUD admission", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -2266,6 +2368,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderLiveAgentWorkOrderPersistence = buildFounderLiveAgentWorkOrderPersistenceDisplayModel(prdFields.founderIdea);
   const founderLiveAgentWorkQueueAdmission = buildFounderLiveAgentWorkQueueAdmissionDisplayModel(prdFields.founderIdea);
   const founderLiveAgentWorkAssignment = buildFounderLiveAgentWorkAssignmentDisplayModel(prdFields.founderIdea);
+  const founderLiveAgentDispatchReadiness = buildFounderLiveAgentDispatchReadinessDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2406,6 +2509,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveAgentWorkOrderPersistence,
     founderLiveAgentWorkQueueAdmission,
     founderLiveAgentWorkAssignment,
+    founderLiveAgentDispatchReadiness,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

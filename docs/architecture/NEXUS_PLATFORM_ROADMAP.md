@@ -2994,6 +2994,16 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 raw SQL interface, runtime admission, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P114.5 is complete. Business Build and Agent Flow now show display-safe Agent
+Dispatch Readiness cards with dispatch lane rows, blocked counts, next actions,
+blockers, owner capability, evidence/activity locations, and local-only cost
+impact. Chat with NEXUS, Lite, full Command Center home, and Live Readiness do
+not show the dispatch card. P114.6 is next for dispatch validation and docs.
+Dispatch writes, SQLite writes, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
+runtime admission, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

@@ -10491,28 +10491,30 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1bf0ae2d394ad153ae2fa0299404cecbe7082d6c",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
-      "detail": "P114.4 safe dispatch readiness preview complete; P114.5 Command Center dispatch UX is next.",
+      "detail": "P114.5 Command Center dispatch UX complete; P114.6 validation and docs are next.",
       "phaseId": "P114",
       "title": "Founder Live Agent Dispatch Readiness",
       "order": 150,
       "status": "in_progress",
-      "summary": "P114 is in progress. P114.1-P114.4 define dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, and isolated validation while unsafe authority remains blocked.",
-      "nextPhase": "P114.5",
+      "summary": "P114 is in progress. P114.1-P114.5 define dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, and isolated validation while unsafe authority remains blocked.",
+      "nextPhase": "P114.6",
       "previousPhase": "P113.7",
       "checksRun": [
+        "npm run check:p1145-founder-live-agent-dispatch-readiness",
         "npm run check:p1144-founder-live-agent-dispatch-readiness",
-        "npm run check:p1143-founder-live-agent-dispatch-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent dispatch readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P114.4 previews display-safe dispatch readiness candidates only and does not write dispatch records.",
+        "P114.5 renders display-safe dispatch readiness only on Business Build and Agent Flow.",
         "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P114.5 is next for Command Center Agent Dispatch UX."
+        "P114.6 is next for dispatch validation and docs."
       ],
       "completedAt": ""
     },
@@ -10629,23 +10631,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Command Center Agent Dispatch UX",
-      "detail": "Planned command center agent dispatch ux for P114.",
+      "detail": "P114.5 Command Center dispatch UX complete; P114.6 validation and docs are next.",
       "phaseId": "P114.5",
       "title": "Command Center Agent Dispatch UX",
       "order": 150.5,
-      "status": "planned",
-      "summary": "Planned command center agent dispatch ux for P114.",
+      "status": "complete",
+      "summary": "P114.5 renders display-safe founder agent dispatch readiness on Business Build and Agent Flow with blocked counts, lane rows, safety rows, evidence/activity/cost refs, and no live dispatch controls.",
       "nextPhase": "P114.6",
       "previousPhase": "P114.4",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1145-founder-live-agent-dispatch-readiness",
+        "npm run check:p1144-founder-live-agent-dispatch-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent dispatch readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "Command Center UX only; no dispatch writes, SQLite writes, raw SQL, hosted DB mutation, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network, or spend."
+      ],
+      "completedAt": "2026-05-29T01:06:26.850Z"
     },
     {
       "track": "NEXUS_OS",
@@ -10689,8 +10699,8 @@
     }
   ],
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P114.4",
-  "previousPhase": "P114.3",
-  "nextPhase": "P114.5",
+  "currentPhase": "P114.5",
+  "previousPhase": "P114.4",
+  "nextPhase": "P114.6",
   "currentPhaseStatus": "complete"
 }

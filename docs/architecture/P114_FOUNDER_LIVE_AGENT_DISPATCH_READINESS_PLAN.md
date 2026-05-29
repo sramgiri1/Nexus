@@ -441,3 +441,128 @@ hidden until P114.5.
 Rollback plan: remove the P114.4 preview exports/checker/docs/status/report
 updates, restore P114 to P114.3 complete with P114.4 planned, and keep P114.3
 CRUD unchanged.
+
+## P114.5 Command Center Agent Dispatch UX
+
+Phase: P114 Founder Live Agent Dispatch Readiness
+
+Subphase: P114.5 Command Center Agent Dispatch UX
+
+Status: complete
+
+Goal: render display-safe dispatch readiness on Business Build and Agent Flow
+without exposing dispatch controls, fake runnable actions, raw record IDs, raw
+DB table names, raw logs, or raw policy dumps.
+
+Why this is needed: P114.4 creates the safe dry-run model, but founders need to
+see prepared agent dispatch lanes in useful Command Center pages instead of
+buried phase/report metadata.
+
+User/operator impact: founders can see which dispatch lanes are prepared for
+review, why each lane is blocked, what the next action is, the owner
+capability, and where evidence/activity/cost context lives.
+
+Command Center impact: Business Build and Agent Flow now show an Agent Dispatch
+Readiness card. Chat with NEXUS, Lite, full Command Center home, and Live
+Readiness do not show the card.
+
+Safety impact: P114.5 is UI-only. It does not add provider/model calls, agent
+dispatch, worker/tool execution, SQLite writes, hosted DB mutation, project
+mutation, raw SQL, runtime admission, deploy/release/export/package, network
+calls, or spend.
+
+Cost impact: no provider/model calls, network calls, runtime execution, or
+provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: Business Build display data, Command Center V2 page,
+Command Center route Playwright tests, P114.5 checker, P114 contract, this
+plan, README, platform roadmap, package script registry, OS phase status files,
+and generated P114.5/P114.4/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`, `db/**`,
+`live-ready/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Exact files/modules changed: updated `dashboard/src/data/businessBuild.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`, and
+`dashboard/tests/routes.spec.js`; added
+`scripts/check-p1145-founder-live-agent-dispatch-readiness.js`; registered the
+package script; updated P114 contract/status/docs; and regenerated reports.
+
+Expected exports/data shapes:
+- `buildFounderLiveAgentDispatchReadinessDisplayModel`
+- `businessBuild.founderLiveAgentDispatchReadiness`
+- `FounderLiveAgentDispatchReadinessCard`
+
+The display data shape includes `currentState`, `founderIdea`, `previewMode`,
+dispatch candidate counts, `dispatchSections`, `dispatchRows`, `safetyRows`,
+`nextAction`, `disabledReason`, `ownerCapability`, `evidenceLocation`,
+`activityLocation`, and `costImpact`.
+
+Safety rules: do not add dispatch controls, SQLite writes, raw SQL, hosted DB
+mutation, runtime admission, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, deploy/release/export/
+package, network calls, or provider spend. Do not expose raw private IDs, raw
+record keys, raw DB table names, raw logs, raw policy dumps, or fake runnable
+actions.
+
+Reuse check: P114.5 reuses existing Business Build display-model patterns,
+Command Center cards, route layout, theme handling, Playwright route helpers,
+`shared/reportWriter.js`, and `shared/checkResultFormatter.js`. It does not
+duplicate runtime SQLite helpers, result envelopes, route matrices, status
+helpers, or dashboard shell components.
+
+Command Center UX requirements: show what changed, current state, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact on Business Build and Agent Flow. Keep Chat with NEXUS clean and
+chat-only. Preserve route-wide navigation and no DemoApp leakage.
+
+Dark/light/system theme requirements: Playwright covers the card on Business
+Build under dark, light, and system themes. The card uses existing CSS classes.
+
+Playwright tests: P114.5 adds focused route coverage for Business Build and
+Agent Flow visibility, absence from Lite/full home/Live Readiness, theme
+coverage, and raw-ID/fake-action guards.
+
+Checker updates: P114.5 adds a dedicated Command Center UX checker that
+validates the browser-safe display model, card placement, Playwright coverage,
+docs/status updates, allowed file scope, and safety wording.
+
+Docs/README/roadmap updates: P114.5 is recorded in this plan, README, platform
+roadmap, P114 contract, OS roadmap/status, and generated reports. P114.6 is
+next.
+
+OS phase status update: P114 is in progress; P114.5 is complete; current phase
+P114.5; previous P114.4; next P114.6.
+
+Validation commands:
+- `npm run check:p1145-founder-live-agent-dispatch-readiness`
+- `npm run check:p1144-founder-live-agent-dispatch-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Agent dispatch readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no temporary local
+runtime DB remains; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw dispatch/assignment/queue table names in primary UX; no fake
+runnable actions; no hosted DB mutation, raw SQL interface, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, deploy,
+release, export, package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P114.5 files>`
+- `git commit -m "feat(nexus): implement p1145 dispatch readiness ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: another dense card can crowd Business Build and Agent Flow. P114.5
+keeps it focused on lane readiness and safety state, and P114.6 can consolidate
+or tune the surrounding phase evidence if needed.
+
+Rollback plan: remove the P114.5 display model/card/test/checker/docs/status/
+report updates, restore P114 to P114.4 complete with P114.5 planned, and keep
+P114.4 preview modeling unchanged.
