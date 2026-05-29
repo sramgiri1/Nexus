@@ -2,10 +2,10 @@
 
 ## Scope Classification
 
-NEXUS_OS_CHANGE. P129 is NEXUS OS work only. P129.2 must not modify project,
-CareLoop, generated project, dashboard source/test, provider, tool, worker
-runtime, deploy, release, export, package, local runtime state, DB, or
-environment files.
+NEXUS_OS_CHANGE. P129 is NEXUS OS work only. P129.6 may modify scoped
+Command Center source/test files listed in its allowed file scope. It must not
+modify project, CareLoop, generated project, provider, tool, worker runtime,
+deploy, release, export, package, local runtime state, DB, or environment files.
 
 ## P129 Subphase Split
 
@@ -18,6 +18,194 @@ P129 is split into seven implementation-grade subphases:
 - P129.5 Store CRUD Safe Dry Run
 - P129.6 Command Center Store UX
 - P129.7 Final Validation
+
+## P129.6 Command Center Store UX
+
+Status: complete
+Phase: P129
+Subphase: P129.6
+Goal: Render scoped Command Center capture persistence store readiness from the
+P129.5 safe dry-run model while keeping live CRUD, DB/runtime writes,
+providers, dispatch, mutation, network, and spend blocked.
+Why this is needed: P129.5 created blocked dry-run store envelopes. P129.6
+turns that into founder/operator-visible state on the relevant work pages
+without exposing raw envelopes or pretending store actions are live.
+User/operator impact: Operators can see current store readiness, next action,
+blockers, disabled reason, owner capability, evidence/activity labels, and cost
+impact from Business Build and Agent Flow.
+Command Center impact: Business Build and Agent Flow show Capture Persistence
+Store Readiness. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness stay
+clean.
+Safety impact: P129.6 is display-only. It does not create DB schemas, migration
+files, raw SQL interfaces, reads, writes, runtime records, CRUD actions,
+acceptance capture, handoff acceptance, authority handoff, authority grant,
+activation, approval application, approve/reject recording, runtime execution,
+provider/model calls, agent dispatch, project mutation, deploy, release, export,
+package, network calls, or spend.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `3f25d2d4`
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json`
+- `docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md`
+- `scripts/check-p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`
+- `scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md`
+- `reports/p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Update `dashboard/src/data/businessBuild.js` with
+  `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreDisplayModel`.
+- Update `dashboard/src/pages/CommandCenterV2.jsx` to reuse the existing
+  `FounderApprovalDecisionBoundaryCard` on Business Build and Agent Flow.
+- Update `dashboard/tests/routes.spec.js` with scoped Playwright coverage.
+- Create `scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`.
+- Update P129 docs, contract, status, package script, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreDisplayModel`
+- Data shape: browser-safe display model with current state, store dry-run
+  envelope counts, blocked live CRUD/DB/runtime/execution counts, row labels,
+  blockers, disabled reason, owner capability, evidence/activity labels, and
+  cost impact. No raw result envelope, DB schema, query, migration file, runtime
+  record, live CRUD executor, provider envelope, dispatch packet, raw private ID,
+  raw table name, or project data.
+
+Reuse check:
+- Reuse P129.5 safe dry-run model.
+- Reuse `FounderApprovalDecisionBoundaryCard`.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, or UI components.
+
+Command Center UX requirements:
+- Business Build and Agent Flow show Capture Persistence Store Readiness.
+- The section must show current state, next action, blockers, disabled reason,
+  owner capability, evidence/activity labels, and cost impact.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw table names, DemoApp,
+  raw report paths, internal phase labels, or private project IDs in primary UX.
+- No provider/tool/project mutation, DB writes, live CRUD, migration execution,
+  or deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Add route coverage for all three themes.
+
+Tests to add/update/remove:
+- Add scoped Playwright test
+  `capture persistence store readiness appears only on scoped pages`.
+- Preserve existing P128/P129 persistence route guard tests.
+
+Checker updates:
+- Add the P129.6 checker.
+- Validate display-safe store readiness shape, scoped Command Center placement,
+  Playwright coverage, forbidden paths, safe docs, result envelope reuse, and
+  status handoff.
+
+Docs to update:
+- This P129 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P129.5 report.
+- P129.6 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P129 in progress.
+- P129.6 complete.
+- Current phase P129.6.
+- Previous phase P129.5.
+- Next phase P129.7.
+- P129.7 remains planned.
+
+Known risks:
+- Store readiness copy can imply live CRUD exists. The checker blocks unsafe
+  positive claims, raw store internals, internal phase labels, and fake runnable
+  action phrases.
+- Command Center can become noisy. The store readiness card stays scoped to
+  Business Build and Agent Flow, not Chat with NEXUS or Lite.
+
+Rollback plan:
+- Revert only the P129.6 implementation and stamp commits. P129.5 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store`
+- `npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "capture persistence store readiness appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P129.6 allowed files>`
+- `git commit -m "feat(nexus): implement p1296 capture persistence store ux"`
+- `git add <P129.6 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1296 capture persistence store ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Store CRUD execution, DB schemas, migrations, DB/runtime reads or writes,
+  live capture, handoff acceptance, authority grant handoff, execution,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- Chat with NEXUS and Lite remain clean.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX changes.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
 
 ## P129.5 Store CRUD Safe Dry Run
 

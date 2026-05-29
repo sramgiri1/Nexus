@@ -3466,6 +3466,15 @@ function AgentFlowPage() {
         rowAriaSuffix="approval application authority grant handoff acceptance capture persistence row"
         maxRows={3}
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStore}
+        surfaceLabel="Agent Flow Capture Persistence Store Readiness"
+        heading="Capture Persistence Store Readiness"
+        pillLabel="Store dry-run only"
+        ariaLabel="Founder approval application authority grant handoff acceptance capture persistence store"
+        rowAriaSuffix="approval application authority grant handoff acceptance capture persistence store row"
+        maxRows={3}
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10341,6 +10350,15 @@ function BusinessBuildPage() {
           pillLabel="Persistence read-only"
           ariaLabel="Founder approval application authority grant handoff acceptance capture persistence"
           rowAriaSuffix="approval application authority grant handoff acceptance capture persistence row"
+          maxRows={3}
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStore}
+          surfaceLabel="Business Build Capture Persistence Store Readiness"
+          heading="Capture Persistence Store Readiness"
+          pillLabel="Store dry-run only"
+          ariaLabel="Founder approval application authority grant handoff acceptance capture persistence store"
+          rowAriaSuffix="approval application authority grant handoff acceptance capture persistence store row"
           maxRows={3}
         />
 

@@ -13,6 +13,7 @@ import { buildFounderApprovalApplicationAuthorityGrantHandoffSafeDryRun } from "
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun.js";
+import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -3103,6 +3104,153 @@ export function buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCa
   };
 }
 
+export function buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  acceptanceCapturePersistenceStoreDryRun,
+} = {}) {
+  const dryRun = acceptanceCapturePersistenceStoreDryRun
+    || buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun();
+  const envelopes = Array.isArray(dryRun.dryRunEnvelopes) ? dryRun.dryRunEnvelopes : [];
+  const disabledReason =
+    "Capture persistence store is display-only. It cannot run CRUD actions, read or write DB records, write runtime records, persist acceptance capture, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record decisions, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const ownerCapability = "NEXUS Capture Persistence Store Guard";
+  const nextAction =
+    "Review store readiness on scoped founder work pages before any future live persistence phase can be considered.";
+  const evidenceLocation = "Store CRUD dry-run evidence";
+  const activityLocation = "OS phase status report";
+  const costImpact = "No provider spend. Local deterministic store readiness display only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or DB/runtime writes.";
+  const rows = envelopes.map((envelope, index) => {
+    const data = envelope.data || {};
+    return {
+      label: data.publicLabel || `Store dry-run action ${index + 1}`,
+      decisionPosition: index + 1,
+      decisionState: "Store dry-run blocked",
+      nextAction,
+      blocker: "Live store CRUD, DB reads, DB writes, runtime writes, and execution remain blocked.",
+      disabledReason,
+      ownerCapability,
+      evidenceLocation,
+      activityLocation,
+      costImpact: data.costImpactLabel || "No provider spend",
+      crudAllowed: "Blocked",
+      dbReadAllowed: "Blocked",
+      dbWriteAllowed: "Blocked",
+      runtimeWriteAllowed: "Blocked",
+      capturePersistenceAllowed: "Blocked",
+      executionAllowed: "Blocked",
+      providerSpendAllowed: "Blocked",
+    };
+  });
+  const model = {
+    currentState: "Capture Persistence Store Ready For Review Writes Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Store dry-run only",
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    dryRunEnvelopeCount: rows.length,
+    liveCrudActionCount: 0,
+    dbReadCandidateCount: 0,
+    dbWritableCandidateCount: 0,
+    runtimeWritableCandidateCount: 0,
+    persistedCaptureCandidateCount: 0,
+    runtimeExecutableCandidateCount: 0,
+    executionUnlockCandidateCount: 0,
+    agentDispatchCandidateCount: 0,
+    workerExecutionCandidateCount: 0,
+    toolExecutionCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    hostedDbMutationCandidateCount: 0,
+    networkCallCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    nextAction,
+    blockers: [
+      "Live capture persistence store CRUD remains blocked.",
+      "DB reads, DB writes, runtime writes, migrations, and raw SQL remain blocked.",
+      "Acceptance capture, handoff acceptance, authority changes, and approval decision recording remain blocked.",
+      "Runtime execution, providers, agent dispatch, project mutation, network calls, deploy, package, and spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability,
+    evidenceLocation,
+    activityLocation,
+    costImpact,
+    readinessSections: [
+      {
+        label: "Store dry-run envelopes",
+        currentState: "Modeled locally",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+      {
+        label: "Storage writes",
+        currentState: "Writes blocked",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+      {
+        label: "Execution boundary",
+        currentState: "Execution blocked",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+    ],
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Live CRUD actions", value: "Blocked" },
+      { label: "DB reads", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime writes", value: "Blocked" },
+      { label: "Acceptance capture persistence", value: "Blocked" },
+      { label: "Handoff acceptance", value: "Blocked" },
+      { label: "Authority handoff", value: "Blocked" },
+      { label: "Authority grant", value: "Blocked" },
+      { label: "Authority activation", value: "Blocked" },
+      { label: "Approval application", value: "Blocked" },
+      { label: "Decision recording", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Network", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    summaryRows: [
+      { label: "Founder idea", value: model.founderIdea },
+      { label: "Store state", value: model.previewMode },
+      { label: "Dry-run envelopes", value: model.dryRunEnvelopeCount },
+      { label: "Live CRUD actions", value: model.liveCrudActionCount },
+      { label: "DB-read candidates", value: model.dbReadCandidateCount },
+      { label: "DB-writable candidates", value: model.dbWritableCandidateCount },
+      { label: "Runtime-writable candidates", value: model.runtimeWritableCandidateCount },
+      { label: "Persisted capture candidates", value: model.persistedCaptureCandidateCount },
+      { label: "Executable candidates", value: model.runtimeExecutableCandidateCount },
+      { label: "Execution unlock candidates", value: model.executionUnlockCandidateCount },
+      { label: "Agent-dispatch candidates", value: model.agentDispatchCandidateCount },
+      { label: "Project-mutation candidates", value: model.projectMutationCandidateCount },
+      { label: "Network-call candidates", value: model.networkCallCandidateCount },
+      { label: "Provider-spend candidates", value: model.providerSpendCandidateCount },
+      { label: "Owner capability", value: model.ownerCapability },
+      { label: "Next action", value: model.nextAction },
+      { label: "Disabled reason", value: model.disabledReason },
+      { label: "Evidence", value: model.evidenceLocation },
+      { label: "Activity", value: model.activityLocation },
+      { label: "Cost impact", value: model.costImpact },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -4287,6 +4435,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStore = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -4442,6 +4593,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundary,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundary,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary,
+    founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStore,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,
