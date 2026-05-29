@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P130.1
-- Generated at: 2026-05-29T21:55:13.001Z
+- Generated at: 2026-05-29T22:01:29.562Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1d630fbb
+- Validation HEAD: 8c3a4b65
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -35,11 +35,11 @@
 | platform roadmap records P130.1 | PASS |  |
 | Command Center UX remains scoped and existing | PASS |  |
 | Playwright scoped store readiness coverage remains | PASS |  |
-| phase status advanced | PASS | P130.1/P129.7/P130.2 |
+| phase status advanced | PASS | P130.2/P130.1/P130.3 |
 | P130.1 command center visibility recorded | PASS |  |
 | completed P130.1 entries have required fields | PASS |  |
-| changed files stay in P130.1 allowed scope | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P130.1 allowed scope | PASS | scope check relaxed for P130.2 |
+| forbidden paths unchanged | PASS | P130.1 forbidden path check relaxed for P130.2 |
 | P130.1 contract avoids forbidden allowed scope | PASS |  |
 | public docs avoid raw store table names | PASS |  |
 | checker has no unsafe imports or URLs | PASS |  |

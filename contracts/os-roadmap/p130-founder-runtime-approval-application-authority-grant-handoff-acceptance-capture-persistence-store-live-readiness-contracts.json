@@ -3,13 +3,13 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store Live Readiness Gate",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P130.1",
-  "previousSubphase": "P129.7",
-  "nextSubphase": "P130.2",
+  "currentSubphase": "P130.2",
+  "previousSubphase": "P130.1",
+  "nextSubphase": "P130.3",
   "branch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "98b2d8da",
+  "expectedBaseCommit": "8c3a4b65",
   "owner": "NEXUS OS",
-  "goal": "Define the capture persistence store live-readiness gate while keeping live CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
+  "goal": "Model the capture persistence store live-readiness prerequisites while keeping live CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
   "safetyRules": [
     "Do not create DB schemas, migrations, tables, indexes, raw SQL interfaces, or DB/runtime reads or writes in P130.1.",
     "Do not persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, or record approve/reject decisions in P130.1.",
@@ -162,10 +162,10 @@
     {
       "phaseId": "P130.2",
       "title": "Store Live Prerequisite Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1301-stamp",
+      "expectedBaseCommit": "8c3a4b65",
       "narrowGoal": "Add a browser-safe local prerequisite model for the store live readiness gate while keeping all live actions blocked.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessPrerequisites.js",
@@ -203,6 +203,8 @@
       "expectedExports": [
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PREREQUISITES_PHASE",
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PREREQUISITES_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_REQUIREMENT_NAMES",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_FLAGS",
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessPrerequisites",
         "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessPrerequisites"
       ],
@@ -246,7 +248,30 @@
       ],
       "previousPhase": "P130.1",
       "nextPhase": "P130.3",
-      "order": 166.2
+      "order": 166.2,
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessPrerequisites.js",
+        "contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json",
+        "docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md",
+        "scripts/check-p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
+        "scripts/check-p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
+        "reports/p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "detail": "P130.2 store live prerequisite model complete; P130.3 approval evidence gate is next.",
+      "summary": "Added a browser-safe local store live prerequisite model that reuses P129.5 safe dry-run evidence and keeps live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
+      "knownLimitations": [
+        "P130.2 is a prerequisite model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T22:01:02.263Z"
     },
     {
       "phaseId": "P130.3",
@@ -678,16 +703,16 @@
     }
   ],
   "current": {
-    "phaseId": "P130.1",
-    "title": "Live Readiness Contract / Policy",
+    "phaseId": "P130.2",
+    "title": "Store Live Prerequisite Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "1d630fbb",
-    "completedAt": "2026-05-29T21:53:32.341Z",
-    "summary": "Created the P130 store live readiness contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping DB/runtime writes and live CRUD blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T22:01:02.263Z",
+    "summary": "Added a browser-safe local store live prerequisite model that reuses P129.5 safe dry-run evidence and keeps live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
     "checksRun": [
+      "npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -696,9 +721,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P130.1 is contract/policy only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P130.2 is a prerequisite model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P130.2",
+    "nextPhase": "P130.3",
     "commandCenterVisible": true
   }
 }
