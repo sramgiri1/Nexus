@@ -3457,6 +3457,15 @@ function AgentFlowPage() {
         rowAriaSuffix="approval application authority grant handoff acceptance capture row"
         maxRows={4}
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary}
+        surfaceLabel="Agent Flow Approval Application Authority Grant Handoff Acceptance Capture Persistence"
+        heading="Approval Application Authority Grant Handoff Acceptance Capture Persistence"
+        pillLabel="Persistence read-only"
+        ariaLabel="Founder approval application authority grant handoff acceptance capture persistence"
+        rowAriaSuffix="approval application authority grant handoff acceptance capture persistence row"
+        maxRows={3}
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10324,6 +10333,15 @@ function BusinessBuildPage() {
           ariaLabel="Founder approval application authority grant handoff acceptance capture"
           rowAriaSuffix="approval application authority grant handoff acceptance capture row"
           maxRows={4}
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary}
+          surfaceLabel="Business Build Approval Application Authority Grant Handoff Acceptance Capture Persistence"
+          heading="Approval Application Authority Grant Handoff Acceptance Capture Persistence"
+          pillLabel="Persistence read-only"
+          ariaLabel="Founder approval application authority grant handoff acceptance capture persistence"
+          rowAriaSuffix="approval application authority grant handoff acceptance capture persistence row"
+          maxRows={3}
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">

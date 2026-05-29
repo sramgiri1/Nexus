@@ -2839,6 +2839,19 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P128.5 is complete. Business Build and Agent Flow now show a read-only
+acceptance capture persistence card with display-safe readiness rows, blocked
+counts, owner, next action, blockers, disabled reason, evidence/activity
+labels, and cost impact. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness
+stay clean. P128.6 is next for validation and docs consolidation. Acceptance
+capture persistence, DB schemas, migrations, DB/runtime writes, live acceptance
+capture, handoff acceptance, authority handoff, authority grant, activation,
+approval application, approval capture, approval persistence, approve/reject
+decision recording, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

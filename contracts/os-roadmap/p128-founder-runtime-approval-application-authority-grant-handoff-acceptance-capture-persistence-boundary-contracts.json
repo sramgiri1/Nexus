@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P128.4",
-  "previousSubphase": "P128.3",
-  "nextSubphase": "P128.5",
+  "currentSubphase": "P128.5",
+  "previousSubphase": "P128.4",
+  "nextSubphase": "P128.6",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "18fbb37a",
   "owner": "NEXUS OS",
@@ -494,10 +494,10 @@
     {
       "phaseId": "P128.5",
       "title": "Command Center Capture Persistence UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P128.4-stamp",
+      "expectedBaseCommit": "40916dba",
       "narrowGoal": "Expose display-safe capture persistence readiness only on scoped founder work pages without adding runnable persistence actions.",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
@@ -574,6 +574,24 @@
         "Validation results",
         "Safety confirmations",
         "Next phase/subphase"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
+        "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ]
     },
     {
@@ -741,19 +759,19 @@
     }
   ],
   "currentStatus": {
-    "phaseId": "P128.4",
+    "phaseId": "P128.5",
     "status": "complete",
-    "previousPhase": "P128.3",
-    "nextPhase": "P128.5",
-    "detail": "P128.4 capture persistence safe dry-run complete; P128.5 scoped Command Center persistence UX is next.",
-    "summary": "Added a local result-envelope acceptance capture persistence safe dry-run preview with display-safe rows, blocked counts, owner/evidence/activity/cost labels, and all persistence, DB/runtime write, execution, dispatch, provider, mutation, network, and spend flags false.",
+    "previousPhase": "P128.4",
+    "nextPhase": "P128.6",
+    "detail": "P128.5 Command Center capture persistence UX complete; P128.6 validation and docs are next.",
+    "summary": "Added scoped Business Build and Agent Flow acceptance capture persistence cards using the P128.4 safe dry-run display model, with read-only status, blockers, owner, evidence/activity labels, and cost impact while Chat, Lite, OS Roadmap, and Live Readiness stay clean.",
     "knownLimitations": [
-      "P128.4 is a local dry-run preview only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      "P128.5 is a display-only Command Center UX subphase. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
     ]
   },
-  "nextPhase": "P128.5",
+  "nextPhase": "P128.6",
   "knownLimitations": [
     "P128.3 is a pure local model only. Safe dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
   ],
-  "summary": "P128 is in progress. P128.4 adds a local safe dry-run preview for acceptance capture persistence while all persistence and execution paths remain blocked."
+  "summary": "P128 is in progress. P128.5 exposes display-safe acceptance capture persistence readiness in scoped Command Center founder work pages while all persistence and execution paths remain blocked."
 }

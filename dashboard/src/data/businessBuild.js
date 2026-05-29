@@ -12,6 +12,7 @@ import { buildFounderApprovalApplicationAuthorityGrantSafeDryRun } from "../../.
 import { buildFounderApprovalApplicationAuthorityGrantHandoffSafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffSafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun.js";
+import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -2943,6 +2944,165 @@ export function buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCa
   };
 }
 
+export function buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  acceptanceCapturePersistencePreview,
+} = {}) {
+  const preview = acceptanceCapturePersistencePreview || buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun({
+    founderIdeaSummary,
+    nextAction: "Review acceptance capture persistence readiness on scoped founder work pages while persistence, write, and execution controls remain unavailable.",
+  });
+  const data = preview.data || {};
+  const summary = data.acceptanceCapturePersistenceSummary || {};
+  const disabledReason =
+    "Acceptance capture persistence is display-only. It cannot persist acceptance capture, create schemas, run migrations, write DB records, write runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const rowNextAction =
+    "Review this persistence readiness row on scoped founder work pages while persistence, write, and execution controls remain unavailable.";
+  const sectionNextAction =
+    "Keep this persistence section in local review while persistence, write, and execution controls remain unavailable.";
+  const rows = (data.previewRows || []).map((row, index) => ({
+    label: row.rowLabel || `Acceptance capture persistence readiness ${index + 1}`,
+    decisionPosition: index + 1,
+    decisionState: row.currentState || "Dry-run only; acceptance capture persistence blocked",
+    nextAction: rowNextAction,
+    blocker: row.blocker || "Acceptance capture persistence remains blocked.",
+    disabledReason,
+    ownerCapability: row.ownerCapability || data.ownerCapability || "NEXUS Acceptance Capture Persistence Guard",
+    evidenceLocation: "Capture persistence safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: row.costImpactLabel || "Local dry-run only. No provider calls, model calls, network calls, deploy, package creation, DB/runtime writes, or provider spend.",
+    persistenceAllowed: "Blocked",
+    schemaCreationAllowed: "Blocked",
+    migrationAllowed: "Blocked",
+    dbWriteAllowed: "Blocked",
+    runtimeWriteAllowed: "Blocked",
+    handoffAcceptanceAllowed: "Blocked",
+    acceptanceCaptureAllowed: "Blocked",
+    authorityHandoffAllowed: "Blocked",
+    authorityGrantAllowed: "Blocked",
+    authorityActivationAllowed: "Blocked",
+    approvalApplicationAllowed: "Blocked",
+    approvalDecisionRecordingAllowed: "Blocked",
+    runtimeExecutionAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    agentDispatchAllowed: "Blocked",
+    workerExecutionAllowed: "Blocked",
+    toolExecutionAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    networkCallAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+  const sections = (data.previewSections || []).map((section) => ({
+    label: section.sectionLabel,
+    currentState: section.currentState,
+    rowCount: section.rowCount,
+    blockedCount: section.blockedCount,
+    nextAction: sectionNextAction,
+    disabledReason,
+  }));
+  const model = {
+    currentState: "Acceptance Capture Persistence Preview Ready Writes Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: toTitle(data.previewMode || "local-only-authority-grant-handoff-acceptance-capture-persistence-safe-dry-run"),
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    persistenceCandidateCount: summary.persistenceCandidateCount || 0,
+    persistableCaptureCandidateCount: summary.persistableCaptureCandidateCount || 0,
+    persistenceDraftCandidateCount: summary.persistenceDraftCandidateCount || 0,
+    persistenceEventCandidateCount: summary.persistenceEventCandidateCount || 0,
+    persistenceEvidenceCandidateCount: summary.persistenceEvidenceCandidateCount || 0,
+    schemaCreatableCandidateCount: summary.schemaCreatableCandidateCount || 0,
+    migrationRunnableCandidateCount: summary.migrationRunnableCandidateCount || 0,
+    dbWritableCandidateCount: summary.dbWritableCandidateCount || 0,
+    runtimeWritableCandidateCount: summary.runtimeWritableCandidateCount || 0,
+    runtimeExecutableCandidateCount: summary.runtimeExecutableCandidateCount || 0,
+    executionUnlockCandidateCount: summary.executionUnlockCandidateCount || 0,
+    handoffCandidateCount: summary.handoffCandidateCount || 0,
+    authorityHandoffCandidateCount: summary.authorityHandoffCandidateCount || 0,
+    grantCandidateCount: summary.grantCandidateCount || 0,
+    authorityGrantCandidateCount: summary.authorityGrantCandidateCount || 0,
+    activationCandidateCount: summary.activationCandidateCount || 0,
+    applicationCandidateCount: summary.applicationCandidateCount || 0,
+    approvalApplicationCandidateCount: summary.approvalApplicationCandidateCount || 0,
+    approvalDecisionRecordableCandidateCount: summary.approvalDecisionRecordableCandidateCount || 0,
+    agentDispatchCandidateCount: summary.agentDispatchCandidateCount || 0,
+    workerExecutionCandidateCount: summary.workerExecutionCandidateCount || 0,
+    toolExecutionCandidateCount: summary.toolExecutionCandidateCount || 0,
+    projectMutationCandidateCount: summary.projectMutationCandidateCount || 0,
+    hostedDbMutationCandidateCount: summary.hostedDbMutationCandidateCount || 0,
+    networkCallCandidateCount: summary.networkCallCandidateCount || 0,
+    providerSpendCandidateCount: summary.providerSpendCandidateCount || 0,
+    nextAction: data.nextAction || "Review acceptance capture persistence readiness on scoped founder work pages while persistence remains blocked.",
+    blockers: Array.isArray(data.blockers) ? data.blockers : [
+      "Acceptance capture persistence remains blocked.",
+      "DB and runtime writes remain blocked.",
+      "Acceptance capture and authority changes remain blocked.",
+      "Runtime execution remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: data.ownerCapability || "NEXUS Acceptance Capture Persistence Guard",
+    evidenceLocation: "Capture persistence safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: "Local deterministic acceptance capture persistence preview only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, DB/runtime writes, or provider spend.",
+    readinessSections: sections,
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Persistence draft", value: "Blocked" },
+      { label: "Persistence event", value: "Blocked" },
+      { label: "Persistence evidence", value: "Blocked" },
+      { label: "Schema creation", value: "Blocked" },
+      { label: "Migration", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime writes", value: "Blocked" },
+      { label: "Acceptance capture", value: "Blocked" },
+      { label: "Handoff acceptance", value: "Blocked" },
+      { label: "Authority handoff", value: "Blocked" },
+      { label: "Authority grant", value: "Blocked" },
+      { label: "Authority activation", value: "Blocked" },
+      { label: "Approval application", value: "Blocked" },
+      { label: "Approval decision recording", value: "Blocked" },
+      { label: "Runtime execution", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Network", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    summaryRows: [
+      { label: "Founder idea", value: model.founderIdea },
+      { label: "Preview mode", value: model.previewMode },
+      { label: "Persistence rows", value: model.readinessRowCount },
+      { label: "Blocked rows", value: model.blockedReadinessRowCount },
+      { label: "Persistence candidates", value: model.persistenceCandidateCount },
+      { label: "Persistable capture candidates", value: model.persistableCaptureCandidateCount },
+      { label: "Schema candidates", value: model.schemaCreatableCandidateCount },
+      { label: "Migration candidates", value: model.migrationRunnableCandidateCount },
+      { label: "DB-writable candidates", value: model.dbWritableCandidateCount },
+      { label: "Runtime-writable candidates", value: model.runtimeWritableCandidateCount },
+      { label: "Executable candidates", value: model.runtimeExecutableCandidateCount },
+      { label: "Execution unlock candidates", value: model.executionUnlockCandidateCount },
+      { label: "Agent-dispatch candidates", value: model.agentDispatchCandidateCount },
+      { label: "Project-mutation candidates", value: model.projectMutationCandidateCount },
+      { label: "Network-call candidates", value: model.networkCallCandidateCount },
+      { label: "Provider-spend candidates", value: model.providerSpendCandidateCount },
+      { label: "Owner capability", value: model.ownerCapability },
+      { label: "Next action", value: model.nextAction },
+      { label: "Disabled reason", value: model.disabledReason },
+      { label: "Evidence", value: model.evidenceLocation },
+      { label: "Activity", value: model.activityLocation },
+      { label: "Cost impact", value: model.costImpact },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -4124,6 +4284,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundary = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -4278,6 +4441,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderApprovalApplicationAuthorityGrantHandoff,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundary,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundary,
+    founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,
