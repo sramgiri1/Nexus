@@ -96,7 +96,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -194,7 +194,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -292,7 +292,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -390,7 +390,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -481,7 +481,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -575,7 +575,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -670,7 +670,7 @@
       "finalSafetyChecks": [
         "Confirm no forbidden paths changed.",
         "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
-        "Confirm no stale pending-final-commit remains after the status stamp commit."
+        "Confirm no stale f544c7ed remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -685,7 +685,7 @@
       "order": 167.7,
       "completedAt": "2026-05-29T23:47:33.019Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f544c7ed",
       "summary": "Closed P131 with final validation evidence, completed phase status, scoped UX preservation checks, and the planned-only P132 handoff while all live store actions remain blocked.",
       "knownLimitations": [
         "P131.7 is final validation closure only and P132 is planned-only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
