@@ -676,7 +676,8 @@
     "check:p1242-founder-runtime-approval-application-authority-grant-boundary": "node scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js",
     "check:p1243-founder-runtime-approval-application-authority-grant-boundary": "node scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js",
     "check:p1244-founder-runtime-approval-application-authority-grant-boundary": "node scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js",
-    "check:p1245-founder-runtime-approval-application-authority-grant-boundary": "node scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js"
+    "check:p1245-founder-runtime-approval-application-authority-grant-boundary": "node scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js",
+    "check:p1246-founder-runtime-approval-application-authority-grant-boundary": "node scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

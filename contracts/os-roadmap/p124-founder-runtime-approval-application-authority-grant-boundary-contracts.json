@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant boundary before any live authority grant can be considered, while keeping grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P124.5",
-  "previousSubphase": "P124.4",
-  "nextSubphase": "P124.6",
+  "currentSubphase": "P124.6",
+  "previousSubphase": "P124.5",
+  "nextSubphase": "P124.7",
   "safetyRules": [
     "Do not enable approval application authority grant in P124.1.",
     "Do not enable approval application, approval capture, approval persistence, or approve/reject decision recording in P124.1.",
@@ -691,7 +691,7 @@
     {
       "phaseId": "P124.6",
       "title": "Grant Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Validate P124.1-P124.5 evidence, docs, reports, status, and scoped Command Center grant UX without changing runtime behavior.",
@@ -744,7 +744,7 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime exports. Validation/docs/report evidence only.",
+      "dataShape": "No runtime exports. Validation/docs/report evidence only for P124.1-P124.5 checkers, reports, scoped UX, docs, status, and safety posture.",
       "commandCenterUx": "Preserve P124.5 scoped UX. No new controls, routes, mutation actions, or raw dumps.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -752,22 +752,25 @@
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Add or run focused Command Center Playwright coverage only when this subphase changes primary UX.",
+        "Run focused Command Center Playwright coverage: Approval application authority grant appears only on scoped pages.",
         "Preserve route-wide safety coverage for no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
       ],
       "checkerUpdates": [
-        "Add scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js or update the prior checker handoff as needed.",
+        "Add scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js.",
+        "Update the P124.5 checker to accept P124.6 handoff.",
         "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden paths, safe wording, status, docs, reports, and no unsafe imports or URLs."
+        "Validate P124.1-P124.5 checkers/reports/package scripts, scoped UX evidence, forbidden paths, safe wording, status, docs, reports, and no unsafe imports or URLs."
       ],
-      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, and generated reports.",
+      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, generated reports, and P124.7 planned handoff.",
       "phaseStatusUpdate": "P124 in progress; P124.6 complete; current phase P124.6; previous P124.5; next P124.7.",
       "validationCommands": [
         "npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
@@ -807,7 +810,8 @@
       "summary": "Planned grant validation/docs subphase. No P124.6 behavior is implemented in P124.5.",
       "knownLimitations": [
         "Planned only. This subphase is not implemented in P124.5."
-      ]
+      ],
+      "expectedBaseCommit": "43763995"
     },
     {
       "phaseId": "P124.7",
@@ -925,11 +929,16 @@
       ],
       "previousPhase": "P124.6",
       "nextPhase": "P125",
-      "order": 160.7
+      "order": 160.7,
+      "detail": "Planned final validation subphase. No P124.7 behavior is implemented in P124.6.",
+      "summary": "Planned final validation subphase. No P124.7 behavior is implemented in P124.6.",
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.6."
+      ]
     }
   ],
   "completedAt": "2026-05-29T15:38:15.699Z",
-  "summary": "P124.5 renders the P124.4 authority grant safe dry-run in scoped Command Center pages. Live grants remain blocked.",
+  "summary": "P124.6 validates P124.1-P124.5 grant boundary evidence and scoped UX. Live grants remain blocked.",
   "previousPhase": "P123.7",
-  "nextPhase": "P124.6"
+  "nextPhase": "P124.7"
 }

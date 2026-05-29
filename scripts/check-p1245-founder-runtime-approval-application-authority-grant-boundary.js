@@ -146,7 +146,11 @@ addCheck("contract records expected export", p1245.expectedExports?.includes("bu
 addCheck("P124.4 checker accepts P124.5 handoff", p1244Checker.includes("P124.5") && p1244Checker.includes("P124.6") && p1244Checker.includes("p1245StartedState"));
 addCheck("docs record P124.5", /P124\.5 Command Center Grant Boundary UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P124.5", /P124\.5 scoped approval application authority grant Command Center UX/i.test(readme) && /P124\.6\s+is\s+next/.test(readme));
-addCheck("platform roadmap records P124.5", /P124\.5 is complete/.test(platformRoadmap) && /P124\.6\s+is\s+next/.test(platformRoadmap));
+addCheck(
+  "platform roadmap records P124.5",
+  /P124\.5 is complete/.test(platformRoadmap)
+    && (/P124\.6\s+is\s+next/.test(platformRoadmap) || /P124\.6 is complete/.test(platformRoadmap)),
+);
 addCheck(
   "phase status advanced",
   (p1245CurrentState || p1246StartedState)

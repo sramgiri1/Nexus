@@ -755,12 +755,145 @@ P124.5 to planned, and return current phase to P124.4.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P124.6 Grant Validation / Docs
 
-P124.6 Grant Validation / Docs: validation/docs only, allowed files are P124.5
-checker, P124.6 checker, P124 contract/docs/status, README, roadmap, package
-script, and reports. It must validate P124.1-P124.5 evidence and scoped UX
-without changing runtime behavior or Command Center source.
+Phase: P124 Founder Runtime Approval Application Authority Grant Boundary
+
+Subphase: P124.6
+
+Goal: validate P124.1-P124.5 evidence, docs, reports, status, and scoped
+Command Center grant UX without changing runtime behavior.
+
+Why this is needed: P124.5 added the scoped UX. P124.6 creates the validation
+closure evidence needed before final P124 completion.
+
+User/operator impact: operators get one validation report confirming the grant
+boundary contract, metadata, intent model, safe dry-run, scoped UX, docs,
+reports, and status remain aligned and display-only.
+
+Command Center impact: preserve P124.5 scoped UX. No new controls, routes,
+cards, mutation actions, labels, or raw dumps.
+
+Safety impact: approval application authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package, network calls,
+and provider spend remain blocked.
+
+Cost impact: validation/docs only. No provider calls, model calls, network
+calls, worker runtime, deploy, package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js`
+- `contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json`
+- `docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1245-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1246-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes: no runtime exports. P124.6 only
+creates validation/report evidence for P124.1-P124.5, scoped UX coverage,
+status alignment, validation commands, known limitations, and blocked safety
+posture.
+
+Command Center UX requirements: preserve P124.5 scoped Business Build and Agent
+Flow grant UX. Do not add grant content to Chat with NEXUS, Lite, OS Roadmap,
+Live Readiness, or unrelated pages. Do not show raw report paths, raw private
+IDs, raw schema/table names, raw dumps, internal helper names, or fake runnable
+actions.
+
+Dark/light/system theme requirements: preserve existing System, Dark, and Light
+theme behavior. No CSS/theme change is allowed in P124.6.
+
+Playwright tests: run the existing focused grant card route coverage. No
+dashboard test edits are allowed in P124.6.
+
+Tests to add/update/remove: add P124.6 checker and package script. Update P124.5
+checker only to accept P124.6 handoff. Do not remove route-wide safety tests.
+
+Checker updates: add
+`scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js`.
+Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`. Validate
+P124.1-P124.5 checkers/reports/package scripts, scoped UX evidence, docs/status
+alignment, allowed-file scope, forbidden paths, and unsafe claim prevention.
+
+Docs to update: update this plan, README, platform roadmap, P124 contract, OS
+roadmap/status, generated P124.6 report, OS phase status report, and phase
+validation coverage report.
+
+Reports to regenerate:
+- `reports/p1246-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+- `reports/p1245-founder-runtime-approval-application-authority-grant-boundary-report.md`
+  if the handoff checker refreshes it.
+
+OS phase status update: P124 is in progress. P124.6 is complete. Current phase
+is P124.6, previous phase is P124.5, and next phase is P124.7.
+
+Validation commands:
+- `npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P124.6 files>`
+- `git commit -m "feat(nexus): implement p1246 approval authority grant boundary"`
+- stamp P124/P124.6 status with the implementation commit
+- `git add <allowed P124.6 status/report files>`
+- `git commit -m "chore(nexus): stamp p1246 approval authority grant boundary"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks: confirm no project/CareLoop/generated project paths changed,
+no dashboard source/test files changed, no runtime/provider/project/deploy/
+package/env paths changed, no authority grant/write/execution/spend behavior is
+enabled, no raw UX dumps or fake runnable actions are introduced, and no stale
+`pending-final-commit` remains after the status stamp commit.
+
+Known risks: validation-only work can accidentally sound like live behavior is
+complete. P124.6 keeps every completion claim scoped to validation/docs and
+display-only UX.
+
+Rollback plan: remove the P124.6 checker/report/package script, revert
+contract/docs/status/report updates, restore P124.6 to planned, and return
+current phase to P124.5.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P124.7 Final Validation: final validation only, allowed files are P124.6/P124.7
 checkers, OS phase status checker, P124 contract/docs/status, README, roadmap,

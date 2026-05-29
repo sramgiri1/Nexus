@@ -3657,6 +3657,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P124.6 is complete. The validation/docs closure now confirms P124.1-P124.5
+checkers, reports, docs, status, package scripts, and scoped Business
+Build/Agent Flow grant UX evidence remain aligned, tested, and display-only.
+P124.7 is next for final validation. Authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
