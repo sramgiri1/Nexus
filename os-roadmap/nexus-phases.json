@@ -13920,7 +13920,7 @@
       "order": 165,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a39696c9",
       "commandCenterVisible": true,
       "detail": "P129 is in progress; P129.5 store CRUD safe dry run is complete and P129.6 Command Center store UX is next.",
       "summary": "P129 capture persistence store work now includes contract/policy, schema metadata, repository intent rows, migration preview rows, and blocked safe dry-run envelopes while DB/runtime writes and live CRUD remain blocked.",
@@ -13939,7 +13939,7 @@
       "knownLimitations": [
         "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:18:18.002Z"
+      "completedAt": "2026-05-29T21:19:52.162Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14065,7 +14065,7 @@
       "order": 165.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a39696c9",
       "commandCenterVisible": true,
       "detail": "P129.5 store CRUD safe dry run complete; P129.6 Command Center store UX is next.",
       "summary": "Added browser-safe local blocked dry-run envelopes for future acceptance capture persistence store CRUD while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
@@ -14084,7 +14084,7 @@
       "knownLimitations": [
         "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:18:18.002Z"
+      "completedAt": "2026-05-29T21:19:52.162Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14106,7 +14106,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-05-29T21:18:18.002Z",
+  "updatedAt": "2026-05-29T21:19:52.162Z",
   "currentPhase": "P129.5",
   "previousPhase": "P129.4",
   "nextPhase": "P129.6",
@@ -14118,7 +14118,7 @@
     "order": 165.5,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "a39696c9",
     "commandCenterVisible": true,
     "detail": "P129.5 store CRUD safe dry run complete; P129.6 Command Center store UX is next.",
     "summary": "Added browser-safe local blocked dry-run envelopes for future acceptance capture persistence store CRUD while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
@@ -14137,7 +14137,7 @@
     "knownLimitations": [
       "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:18:18.002Z"
+    "completedAt": "2026-05-29T21:19:52.162Z"
   },
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
@@ -14148,7 +14148,7 @@
     "order": 165.5,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "a39696c9",
     "commandCenterVisible": true,
     "detail": "P129.5 store CRUD safe dry run complete; P129.6 Command Center store UX is next.",
     "summary": "Added browser-safe local blocked dry-run envelopes for future acceptance capture persistence store CRUD while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
@@ -14167,6 +14167,6 @@
     "knownLimitations": [
       "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:18:18.002Z"
+    "completedAt": "2026-05-29T21:19:52.162Z"
   }
 }
