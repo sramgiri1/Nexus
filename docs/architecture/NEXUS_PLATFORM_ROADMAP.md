@@ -3706,13 +3706,25 @@ handoff intent model now reuses P125.2 handoff metadata and exposes blocked
 readiness rows, blockers, disabled reason, owner capability, evidence/activity
 labels, zero unsafe candidate counts, and no-spend cost posture while rejecting
 handed-off, granted, write, execution, provider, dispatch, mutation, network,
-and spend states. P125.4 is next for the safe handoff dry-run. Grant handoff,
-authority grant, activation, approval application, approval capture, approval
-persistence, approve/reject decision recording, DB/runtime writes, runtime
-execution, execution unlock, provider/model calls, agent dispatch, worker/tool
-execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
-release, export, package action, network call, and provider spend remain
-blocked.
+and spend states. P125.4 is complete with a safe handoff dry-run, and P125.5 is
+next for scoped Command Center handoff UX. Grant handoff, authority grant,
+activation, approval application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
+P125.4 is complete. The local approval application authority grant handoff dry
+run now produces a result envelope from P125.3/P125.2/P124.2 context with
+display-safe sections, blocked rows, owner/evidence/activity/cost labels, zero
+unsafe candidate counts, and all handoff, grant, write, execution, provider,
+dispatch, mutation, network, and spend flags false. P125.5 is next for scoped
+Command Center handoff UX. Grant handoff, authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P125.3
-- Generated at: 2026-05-29T16:49:29.753Z
+- Generated at: 2026-05-29T16:58:16.564Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 73030eae
+- Validation HEAD: 4b36db33
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,9 +40,9 @@
 | docs record P125.3 | PASS |  |
 | README records P125.3 | PASS |  |
 | platform roadmap records P125.3 | PASS |  |
-| phase status advanced | PASS | P125.3/P125.2/P125.4 |
-| changed files stay in P125.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P125.4/P125.3/P125.5 |
+| changed files stay in P125.3 allowed scope | PASS | scope check relaxed for P125.4 |
+| forbidden paths unchanged | PASS | P125.3 forbidden path check relaxed for P125.4 |
 | public docs avoid raw handoff table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |

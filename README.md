@@ -1383,8 +1383,21 @@ The Command Center and local operator surface have:
   readiness rows, blockers, disabled reason, owner capability,
   evidence/activity labels, zero unsafe candidate counts, and no-spend posture
   while rejecting handed-off, granted, write, execution, provider, dispatch,
-  mutation, network, and spend states. P125.4 is next for the safe handoff
-  dry-run. Grant handoff, authority grant, activation, approval application,
+  mutation, network, and spend states. P125.4 is complete with a safe handoff
+  dry-run, and P125.5 is next for scoped Command Center handoff UX. Grant
+  handoff, authority grant, activation, approval application, approval capture,
+  approval persistence, approve/reject decision recording, DB/runtime writes,
+  runtime execution, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
+- P125.4 approval application authority grant handoff safe dry run: the local
+  result envelope now previews handoff readiness from P125.3/P125.2/P124.2
+  context with display-safe sections, blocked rows, zero unsafe candidate
+  counts, owner/evidence/activity/cost labels, and all handoff/grant/write/
+  execution/provider/dispatch/mutation/network/spend flags false. P125.5 is
+  next for scoped Command Center handoff UX. Grant handoff, authority grant,
+  activation, approval application,
   approval capture, approval persistence, approve/reject decision recording,
   DB/runtime writes, runtime execution, execution unlock, provider/model call,
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,

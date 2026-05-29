@@ -286,11 +286,95 @@ current phase to P125.2.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P125.4 Handoff Safe Dry Run
 
-P125.4 Handoff Safe Dry Run: result-envelope dry-run only. No live grant
-handoff, writes, execution, provider calls, dispatch, mutation, network, or
-spend.
+Phase: P125 Founder Runtime Approval Application Authority Grant Handoff
+Subphase: P125.4 Handoff Safe Dry Run
+
+Goal: add a local-only result-envelope dry-run preview for approval application
+authority grant handoff without enabling live handoff, writes, execution,
+provider/model calls, dispatch, mutation, network, deploy, package, or spend.
+
+Why this is needed: P125 needs a validated handoff preview artifact before any
+Command Center handoff display is allowed.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffSafeDryRun.js`
+- `scripts/check-p1253-founder-runtime-approval-application-authority-grant-handoff.js`
+- `scripts/check-p1254-founder-runtime-approval-application-authority-grant-handoff.js`
+- `contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json`
+- `docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1254-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/p1253-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_SAFE_DRY_RUN_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_SAFE_DRY_RUN_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_SAFE_DRY_RUN_STATES`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffSafeDryRun`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffSafeDryRun`
+
+Data shape: result envelope with schema version, local-only preview mode,
+`dryRunOnly`, `commandCenterVisible: false`, P125.3/P125.2/P124.2 source
+phases, founder summary, handoff summary, preview sections/rows, blockers, next
+action, disabled reason, owner capability, evidence/activity/cost labels, and
+all-false handoff, grant, write, execution, provider, dispatch, mutation,
+network, and spend flags.
+
+Command Center UX requirements: no source/test changes and no primary UX
+surface. The dry-run stays hidden until a later scoped UX subphase.
+
+Validation commands:
+- `npm run check:p1254-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:p1253-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P125 in progress, P125.4 complete, current phase
+P125.4, previous phase P125.3, next phase P125.5.
+
+Known risks: dry-run wording can imply live authority handoff. P125.4 keeps all
+candidate counts zero, all action booleans false, all authority flags blocked,
+and the preview hidden from primary UX.
+
+Rollback plan: remove the P125.4 helper/checker/report/package script, revert
+contract/docs/status/report updates, restore P125.4 to planned, and return
+current phase to P125.3.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P125.5 Command Center Handoff UX: scoped display-only UX if explicitly allowed
 by that subphase. No mutation controls or fake runnable actions.
