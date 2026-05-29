@@ -8373,7 +8373,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d56b4d9d",
       "commandCenterVisible": true,
       "label": "Activation Boundary",
       "detail": "P123.3 governed activation intent model complete; P123.4 activation safe dry run is next.",
@@ -8465,7 +8465,7 @@
       "order": 159.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d56b4d9d",
       "commandCenterVisible": true,
       "detail": "P123.3 governed activation intent model complete; P123.4 activation safe dry run is next.",
       "summary": "Added a pure local approval application authority activation intent model that reuses P123.2 activation eligibility metadata and exposes readiness rows, blockers, disabled reasons, evidence/activity labels, zero unsafe counts, and cost posture without enabling live authority.",
@@ -17519,7 +17519,7 @@
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d56b4d9d",
     "commandCenterVisible": true,
     "label": "Activation Boundary",
     "detail": "P123.3 governed activation intent model complete; P123.4 activation safe dry run is next.",
