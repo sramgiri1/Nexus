@@ -1660,6 +1660,17 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P128.6 capture persistence validation/docs: aggregate validation now checks
+  P128.1-P128.5 reports, status, docs, scoped Business Build and Agent Flow UX
+  evidence, and checker handoffs before final validation. P128.7 is next for
+  final validation and P129 handoff planning. Acceptance capture persistence,
+  DB schemas, migrations, DB/runtime writes, live acceptance capture, handoff
+  acceptance, authority handoff, authority grant, activation, approval
+  application, approval capture, approval persistence, approve/reject decision
+  recording, runtime execution, execution unlock, provider/model calls, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, deploy, release, export, package, network call, and provider
+  spend remain unavailable.
 
 ## CareLoop Project Progress
 
