@@ -212,7 +212,7 @@
       "knownLimitations": [
         "P131.2 is a request model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "commit": "pending-final-commit",
+      "commit": "8df00b85",
       "completedAt": "2026-05-29T23:02:06.271Z"
     },
     {
@@ -616,7 +616,7 @@
     "title": "Live Admission Request Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "8df00b85",
     "completedAt": "2026-05-29T23:02:06.271Z",
     "summary": "Added a browser-safe local request model for store live admission intent, evidence requirements, blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
     "checksRun": [
