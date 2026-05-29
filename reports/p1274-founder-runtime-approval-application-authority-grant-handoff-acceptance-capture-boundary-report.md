@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P127.4
-- Generated at: 2026-05-29T18:57:15.342Z
+- Generated at: 2026-05-29T18:59:29.063Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 09c042ac
+- Validation HEAD: 06ab266b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | README records P127.4 | PASS |  |
 | platform roadmap records P127.4 | PASS |  |
 | phase status advanced | PASS | P127.4/P127.3/P127.5 |
-| changed files stay in P127.4 allowed scope | PASS | README.md, contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun.js |
+| changed files stay in P127.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw capture table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |
