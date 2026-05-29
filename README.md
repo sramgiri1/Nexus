@@ -1240,7 +1240,13 @@ The Command Center and local operator surface have:
   browser-safe metadata now reuses the P122.2 authority handoff metadata and
   defines activation sections for prior handoff, activation scope, runtime
   write guard, and operator evidence. P123.3 is next for governed local
-  activation intent modeling. Activation, authority grant, approval decision
+  activation intent modeling and is now complete.
+- P123.3 governed approval application authority activation intent model: a
+  pure local model now reuses P123.2 metadata to describe activation intent,
+  readiness rows, blockers, disabled reasons, next actions, owner capability,
+  evidence/activity labels, zero unsafe candidate counts, and cost posture while
+  staying hidden from primary UX. P123.4 is next for safe dry-run preview.
+  Activation, authority grant, approval decision
   application, approval capture, approval persistence, approve/reject decision
   recording, DB/runtime writes, runtime execution, execution unlock,
   provider/model call, agent dispatch, worker/tool execution, project mutation,
