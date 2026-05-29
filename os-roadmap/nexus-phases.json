@@ -12286,7 +12286,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "50668380",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
       "detail": "P122.3 authority intent model complete; P122.4 safe dry run is next.",
@@ -12307,7 +12307,7 @@
       "knownLimitations": [
         "P122.3 is model-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:47:10.895Z"
+      "completedAt": "2026-05-29T13:48:03.852Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12364,7 +12364,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "50668380",
       "commandCenterVisible": true,
       "label": "Authority Intent",
       "detail": "Governed local authority intent model complete; P122.4 is next.",
@@ -12385,7 +12385,7 @@
       "knownLimitations": [
         "P122.3 is model-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:47:10.895Z"
+      "completedAt": "2026-05-29T13:48:03.852Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12468,14 +12468,14 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T13:47:10.895Z",
+  "updatedAt": "2026-05-29T13:48:03.852Z",
   "currentPhase": "P122.3",
   "previousPhase": "P122.2",
   "nextPhase": "P122.4",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "50668380",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
     "detail": "P122.3 authority intent model complete; P122.4 safe dry run is next.",
@@ -12496,7 +12496,7 @@
     "knownLimitations": [
       "P122.3 is model-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T13:47:10.895Z"
+    "completedAt": "2026-05-29T13:48:03.852Z"
   },
-  "generatedAt": "2026-05-29T13:47:10.895Z"
+  "generatedAt": "2026-05-29T13:48:03.852Z"
 }
