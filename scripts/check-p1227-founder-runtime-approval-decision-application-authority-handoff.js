@@ -86,6 +86,23 @@ const forbiddenPrefixes = [
 ];
 const p122Entries = [statusById.get("P122"), ...p122Subphases.map((phaseId) => statusById.get(phaseId))].filter(Boolean);
 const stalePending = p122Entries.filter((entry) => entry.commit === "pending-final-commit" && !["P122", "P122.7"].includes(entry.phaseId));
+const p1227StatusAccepted = (status.currentPhase === "P122.7"
+  && status.previousPhase === "P122.6"
+  && status.nextPhase === "P123"
+  && roadmap.currentPhase === "P122.7"
+  && roadmap.previousPhase === "P122.6"
+  && roadmap.nextPhase === "P123")
+  || (status.currentPhase === "P123.1"
+    && status.previousPhase === "P122.7"
+    && status.nextPhase === "P123.2"
+    && roadmap.currentPhase === "P123.1"
+    && roadmap.previousPhase === "P122.7"
+    && roadmap.nextPhase === "P123.2");
+const p123HandoffAccepted = (p123Status.status === "planned" && p123Roadmap.status === "planned")
+  || (p123Status.status === "in_progress"
+    && p123Roadmap.status === "in_progress"
+    && statusById.get("P123.1")?.status === "complete"
+    && roadmapById.get("P123.1")?.status === "complete");
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1227-founder-runtime-approval-decision-application-authority-handoff"]));
 addCheck("contract marks P122 complete", contract.status === "complete" && contract.currentSubphase === "P122.7" && contract.previousSubphase === "P122.6" && contract.nextSubphase === "P123");
@@ -106,12 +123,7 @@ addCheck("platform roadmap records P122.7 and parent completion", /P122\.7 is co
 addCheck("README records P122.7 and parent completion", /P122\.7 approval application authority final validation/.test(readme) && /P122 is complete/.test(readme) && /P123\s+is\s+next/.test(readme));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P122.7"
-    && status.previousPhase === "P122.6"
-    && status.nextPhase === "P123"
-    && roadmap.currentPhase === "P122.7"
-    && roadmap.previousPhase === "P122.6"
-    && roadmap.nextPhase === "P123"
+  p1227StatusAccepted
     && statusById.get("P122")?.status === "complete"
     && statusById.get("P122.7")?.status === "complete"
     && p122Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
@@ -119,7 +131,7 @@ addCheck(
     && roadmapById.get("P122.7")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P123 planned handoff exists", p123Status.status === "planned" && p123Roadmap.status === "planned" && p123Status.commandCenterVisible === true);
+addCheck("P123 planned handoff exists", p123HandoffAccepted && p123Status.commandCenterVisible === true);
 addCheck("completed P122 entries have commits", p122Entries.length === 8 && p122Entries.every((entry) => Boolean(entry.commit)) && stalePending.length === 0, stalePending.map((entry) => entry.phaseId).join(", "));
 addCheck(
   "changed files stay in P122.7 allowed scope",

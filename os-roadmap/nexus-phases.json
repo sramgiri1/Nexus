@@ -3,416 +3,6 @@
   "track": "NEXUS_OS",
   "phases": [
     {
-      "phaseId": "P83",
-      "title": "Explicit Runtime Admission Activation Contract",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "48bb9d6",
-      "completedAt": "2026-05-19T20:25:22.828Z",
-      "summary": "Completed local Snake iOS activation: admitted generated workspace, scaffolded app, validated local build, surfaced Command Center state, and preserved blocked runtime actions.",
-      "checksRun": [
-        "npm run check:p837-final-validation",
-        "npm run check:p836-tests-checkers-docs",
-        "npm run check:p835-command-center-build-ux",
-        "npm run check:p834-local-validation-harness",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83 completes local generated workspace activation only.",
-        "Simulator launch, signing, App Store/TestFlight, provider calls, worker dispatch, DB writes, deploy, release, package creation, network calls, existing project mutation, and provider spend remain blocked until later explicit admission."
-      ],
-      "nextPhase": "P84",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.1",
-      "title": "Local Project Creation Admission",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "47c1526",
-      "completedAt": "2026-05-19T19:52:24.399Z",
-      "summary": "Admitted generated-projects/snake-ios for future local file creation after explicit approval, scope, rollback, validation, activity, cost, and redaction gates.",
-      "checksRun": [
-        "npm run check:p831-local-project-creation-admission",
-        "npm run check:p83-execution-plan",
-        "npm run check:p827-final-validation",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.1 does not create app files. File creation is deferred to P83.3 after scaffold planning.",
-        "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
-      ],
-      "nextPhase": "P83.2",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.2",
-      "title": "Snake iOS Scaffold Plan",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7c56a7f",
-      "completedAt": "2026-05-19T19:58:48.914Z",
-      "summary": "Defined the SwiftUI/SpriteKit Snake iOS scaffold plan for generated-projects/snake-ios without creating app files.",
-      "checksRun": [
-        "npm run check:p832-snake-ios-scaffold-plan",
-        "npm run check:p831-local-project-creation-admission",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.2 does not create files. P83.3 must enforce the admitted root and file plan before writing.",
-        "Provider/tool/worker execution, DB writes, deploy/release/export/package behavior, network calls, and provider spend remain blocked."
-      ],
-      "nextPhase": "P83.3",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.3",
-      "title": "Approved Local File Creation",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7447b22",
-      "completedAt": "2026-05-19T20:04:06.170Z",
-      "summary": "Created the Snake iOS Swift package scaffold only under generated-projects/snake-ios with local game-state tests.",
-      "checksRun": [
-        "npm run check:p833-approved-local-file-creation",
-        "npm run check:p832-snake-ios-scaffold-plan",
-        "npm run check:p831-local-project-creation-admission",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "cd generated-projects/snake-ios && swift run SnakeIOSAppTests",
-        "cd generated-projects/snake-ios && swift build",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.3 does not deploy, package, call networks, call providers/tools, start workers, write DB state, or spend.",
-        "The active SwiftPM environment does not expose XCTest or Testing, so game-rule assertions run through the local executable test target until P83.4 adds the durable validation harness."
-      ],
-      "nextPhase": "P83.4",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.4",
-      "title": "Local Validation Harness",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7608cb9",
-      "completedAt": "2026-05-19T20:12:16.405Z",
-      "summary": "Added a local-only validation manifest and checker for the generated Snake iOS workspace.",
-      "checksRun": [
-        "npm run check:p834-local-validation-harness",
-        "npm run check:p833-approved-local-file-creation",
-        "npm run check:p832-snake-ios-scaffold-plan",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.4 does not deploy, package, sign, run a simulator, call networks, call providers/tools, start workers, write DB state, or spend.",
-        "P83.5 will expose local validation state in Command Center."
-      ],
-      "nextPhase": "P83.5",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.5",
-      "title": "Command Center Build UX",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2cf6060",
-      "completedAt": "2026-05-19T20:18:15.836Z",
-      "summary": "Surfaced the generated Snake iOS local build state in Command Center Live Readiness without enabling runtime actions.",
-      "checksRun": [
-        "npm run check:p835-command-center-build-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "cd dashboard && npm run build",
-        "npm run check:p834-local-validation-harness",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.5 is display-only and does not add mutation controls, simulator launch, signing, deploy, provider, worker, DB, network, package, or spend actions.",
-        "P83.6 will aggregate P83 test, checker, docs, and roadmap evidence."
-      ],
-      "nextPhase": "P83.6",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.6",
-      "title": "Tests / Checkers / Docs",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e0b66c0",
-      "completedAt": "2026-05-19T20:22:04.239Z",
-      "summary": "Aggregated P83.1-P83.5 scripts, reports, docs, roadmap, status, and Command Center coverage.",
-      "checksRun": [
-        "npm run check:p836-tests-checkers-docs",
-        "npm run check:p835-command-center-build-ux",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.6 is aggregation-only and does not add runtime behavior.",
-        "P83.7 will close final validation for the local Snake iOS activation track."
-      ],
-      "nextPhase": "P83.7",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P83.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "48bb9d6",
-      "completedAt": "2026-05-19T20:25:22.828Z",
-      "summary": "Closed final validation for the local Snake iOS activation track.",
-      "checksRun": [
-        "npm run check:p837-final-validation",
-        "npm run check:p836-tests-checkers-docs",
-        "npm run check:p835-command-center-build-ux",
-        "npm run check:p834-local-validation-harness",
-        "npm run check:p83-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P83.7 final validation does not enable deploy, release, package, provider, worker, DB, network, simulator, signing, or spend behavior."
-      ],
-      "nextPhase": "P84",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84",
-      "title": "Governed Founder Runtime Admission",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8996dce",
-      "completedAt": "2026-05-19T22:00:37.240Z",
-      "summary": "Completed governed local founder runtime admission, focused Command Center Lite, local agent plan admission, Live Readiness visibility, validation aggregation, docs, and final validation while keeping unsafe execution blocked.",
-      "checksRun": [
-        "npm run check:p847-final-validation",
-        "npm run check:p846-docs-roadmap",
-        "npm run check:p845-validation-aggregation",
-        "npm run check:p844-command-center-runtime-ux",
-        "npm run check:p843-agent-plan-admission-preview",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84 completes governed local founder runtime admission and visibility only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain disabled until later explicit admission."
-      ],
-      "nextPhase": "P85",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.1",
-      "title": "Founder Runtime Admission Contract",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b97fa38",
-      "completedAt": "2026-05-19T21:11:34.634Z",
-      "summary": "Defined governed local founder runtime admission for deterministic Q&A, local PRD drafting, workstream planning, and generated workspace planning without unsafe execution.",
-      "checksRun": [
-        "npm run check:p841-founder-runtime-admission",
-        "npm run check:p84-execution-plan",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.1 does not call providers/models, dispatch agents, write projects, write DB state, deploy, package, call networks, or spend.",
-        "P84.2 will create the local runtime envelope."
-      ],
-      "nextPhase": "P84.2",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.2",
-      "title": "Live-Local Q&A to PRD Envelope",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3480a60",
-      "completedAt": "2026-05-19T21:27:38.019Z",
-      "summary": "Added the live-local founder Q&A to PRD envelope and focused the primary Command Center into Lite chat plus graphical agent planning.",
-      "checksRun": [
-        "npm run check:p842-command-center-lite",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite|home route\"",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.2 does not dispatch agents, call providers, mutate projects, write DB state, deploy, release, export, package, or spend.",
-        "Advanced routes remain registered for direct URL access but are hidden from primary Lite navigation."
-      ],
-      "nextPhase": "P84.3",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.3",
-      "title": "Agent Plan Admission Preview",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "41dd8eb",
-      "completedAt": "2026-05-19T21:46:56.984Z",
-      "summary": "Admitted local founder agent/workstream planning records by reusing P81 workstreams and the P82 worker gate while keeping dispatch and execution blocked.",
-      "checksRun": [
-        "npm run check:p843-agent-plan-admission-preview",
-        "npm run check:p842-command-center-lite",
-        "npm run check:p84-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.3 is planning admission only; no provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, network calls, deploy, release, export, package creation, or provider spend are enabled.",
-        "Command Center aggregate runtime UX is deferred to P84.4."
-      ],
-      "nextPhase": "P84.4",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.4",
-      "title": "Command Center Runtime UX",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ec787a5",
-      "completedAt": "2026-05-19T21:50:45.683Z",
-      "summary": "Surfaced founder Q&A to PRD runtime and founder agent plan admission rows in Command Center Live Readiness while keeping execution disabled.",
-      "checksRun": [
-        "npm run check:p844-command-center-runtime-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "npm run check:p843-agent-plan-admission-preview",
-        "npm run check:p84-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.4 updates display-only Command Center readiness rows only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P84.5",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.5",
-      "title": "Validation Aggregation",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d9d7b85",
-      "completedAt": "2026-05-19T21:55:18.833Z",
-      "summary": "Aggregated P84.1-P84.4 validation evidence across scripts, reports, phase status, Command Center UX, and safety posture.",
-      "checksRun": [
-        "npm run check:p845-validation-aggregation",
-        "npm run check:p844-command-center-runtime-ux",
-        "npm run check:p843-agent-plan-admission-preview",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.5 adds validation aggregation only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P84.6",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.6",
-      "title": "Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c84b1ee",
-      "completedAt": "2026-05-19T21:58:03.029Z",
-      "summary": "Finalized P84 docs and roadmap evidence for founder runtime admission before final validation.",
-      "checksRun": [
-        "npm run check:p846-docs-roadmap",
-        "npm run check:p845-validation-aggregation",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.6 changes docs, roadmap, status, and checker evidence only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P84.7",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P84.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8996dce",
-      "completedAt": "2026-05-19T22:00:37.240Z",
-      "summary": "Closed P84 governed founder runtime admission with final validation evidence and safety confirmations.",
-      "checksRun": [
-        "npm run check:p847-final-validation",
-        "npm run check:p846-docs-roadmap",
-        "npm run check:p845-validation-aggregation",
-        "npm run check:p844-command-center-runtime-ux",
-        "npm run check:p843-agent-plan-admission-preview",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "npm run check:phase-validation-coverage",
-        "npm run check:os-phase-status",
-        "npm run check:format-readability",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P84.7 closes local admission and visibility only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P85",
-      "commandCenterVisible": true
-    },
-    {
       "phaseId": "P26-P41",
       "title": "Completed Foundation",
       "track": "NEXUS_OS",
@@ -12509,47 +12099,614 @@
     },
     {
       "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Activation Boundary",
+      "detail": "P123.1 activation boundary contract complete; P123.2 activation eligibility metadata is next.",
+      "phaseId": "P123",
+      "title": "Founder Runtime Approval Application Authority Activation Boundary",
+      "order": 159,
+      "status": "in_progress",
+      "summary": "P123 is in progress with activation boundary contract/policy complete. Activation, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+      "nextPhase": "P123.2",
+      "previousPhase": "P123.1",
+      "checksRun": [
+        "npm run check:p1231-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1227-founder-runtime-approval-decision-application-authority-handoff",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P123.1 is contract/policy only. It does not activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T14:31:21.720Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.1",
+      "title": "Activation Boundary Contract / Policy",
+      "label": "Activation Contract",
+      "order": 159.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P123.1 activation boundary contract complete; P123.2 activation eligibility metadata is next.",
+      "summary": "Created the P123 activation boundary contract, P123.1-P123.7 implementation-grade subphase split, safety rules, reuse rules, validation commands, docs, status handoff, and P122.7 handoff acceptance without enabling live authority.",
+      "previousPhase": "P122.7",
+      "nextPhase": "P123.2",
+      "checksRun": [
+        "npm run check:p1231-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1227-founder-runtime-approval-decision-application-authority-handoff",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P123.1 is contract/policy only. It does not activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T14:31:21.720Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.2",
+      "title": "Activation Eligibility Metadata",
+      "label": "Activation Eligibility Metadata",
+      "order": 159.2,
+      "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "label": "Next OS Phase",
-      "detail": "Planned next NEXUS OS phase. No P123 behavior is implemented until a separate implementation-grade phase contract is written.",
-      "phaseId": "P123",
-      "title": "Next NEXUS OS Phase",
-      "order": 159,
-      "status": "planned",
-      "summary": "Planned next NEXUS OS phase. No P123 behavior is implemented until a separate implementation-grade phase contract is written.",
-      "nextPhase": "P123.1",
-      "previousPhase": "P122.7",
+      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "previousPhase": "P123.1",
+      "nextPhase": "P123.3",
       "checksRun": [],
       "knownLimitations": [
-        "Planned next NEXUS OS phase. No P123 behavior is implemented until a separate implementation-grade phase contract is written."
+        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
       ],
       "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.3",
+      "title": "Governed Activation Intent Model",
+      "label": "Governed Activation Intent Model",
+      "order": 159.29999999999998,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "previousPhase": "P123.2",
+      "nextPhase": "P123.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.4",
+      "title": "Activation Safe Dry Run",
+      "label": "Activation Safe Dry Run",
+      "order": 159.39999999999998,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "previousPhase": "P123.3",
+      "nextPhase": "P123.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.5",
+      "title": "Command Center Activation Boundary UX",
+      "label": "Command Center Activation Boundary UX",
+      "order": 159.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "previousPhase": "P123.4",
+      "nextPhase": "P123.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.6",
+      "title": "Activation Validation / Docs",
+      "label": "Activation Validation Docs",
+      "order": 159.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "previousPhase": "P123.5",
+      "nextPhase": "P123.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P123.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 159.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "previousPhase": "P123.6",
+      "nextPhase": "P124",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "phaseId": "P83",
+      "title": "Explicit Runtime Admission Activation Contract",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "48bb9d6",
+      "completedAt": "2026-05-19T20:25:22.828Z",
+      "summary": "Completed local Snake iOS activation: admitted generated workspace, scaffolded app, validated local build, surfaced Command Center state, and preserved blocked runtime actions.",
+      "checksRun": [
+        "npm run check:p837-final-validation",
+        "npm run check:p836-tests-checkers-docs",
+        "npm run check:p835-command-center-build-ux",
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83 completes local generated workspace activation only.",
+        "Simulator launch, signing, App Store/TestFlight, provider calls, worker dispatch, DB writes, deploy, release, package creation, network calls, existing project mutation, and provider spend remain blocked until later explicit admission."
+      ],
+      "nextPhase": "P84",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.1",
+      "title": "Local Project Creation Admission",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "47c1526",
+      "completedAt": "2026-05-19T19:52:24.399Z",
+      "summary": "Admitted generated-projects/snake-ios for future local file creation after explicit approval, scope, rollback, validation, activity, cost, and redaction gates.",
+      "checksRun": [
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:p827-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.1 does not create app files. File creation is deferred to P83.3 after scaffold planning.",
+        "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P83.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.2",
+      "title": "Snake iOS Scaffold Plan",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "7c56a7f",
+      "completedAt": "2026-05-19T19:58:48.914Z",
+      "summary": "Defined the SwiftUI/SpriteKit Snake iOS scaffold plan for generated-projects/snake-ios without creating app files.",
+      "checksRun": [
+        "npm run check:p832-snake-ios-scaffold-plan",
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.2 does not create files. P83.3 must enforce the admitted root and file plan before writing.",
+        "Provider/tool/worker execution, DB writes, deploy/release/export/package behavior, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P83.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.3",
+      "title": "Approved Local File Creation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "7447b22",
+      "completedAt": "2026-05-19T20:04:06.170Z",
+      "summary": "Created the Snake iOS Swift package scaffold only under generated-projects/snake-ios with local game-state tests.",
+      "checksRun": [
+        "npm run check:p833-approved-local-file-creation",
+        "npm run check:p832-snake-ios-scaffold-plan",
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "cd generated-projects/snake-ios && swift run SnakeIOSAppTests",
+        "cd generated-projects/snake-ios && swift build",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.3 does not deploy, package, call networks, call providers/tools, start workers, write DB state, or spend.",
+        "The active SwiftPM environment does not expose XCTest or Testing, so game-rule assertions run through the local executable test target until P83.4 adds the durable validation harness."
+      ],
+      "nextPhase": "P83.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.4",
+      "title": "Local Validation Harness",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "7608cb9",
+      "completedAt": "2026-05-19T20:12:16.405Z",
+      "summary": "Added a local-only validation manifest and checker for the generated Snake iOS workspace.",
+      "checksRun": [
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p833-approved-local-file-creation",
+        "npm run check:p832-snake-ios-scaffold-plan",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.4 does not deploy, package, sign, run a simulator, call networks, call providers/tools, start workers, write DB state, or spend.",
+        "P83.5 will expose local validation state in Command Center."
+      ],
+      "nextPhase": "P83.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.5",
+      "title": "Command Center Build UX",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "2cf6060",
+      "completedAt": "2026-05-19T20:18:15.836Z",
+      "summary": "Surfaced the generated Snake iOS local build state in Command Center Live Readiness without enabling runtime actions.",
+      "checksRun": [
+        "npm run check:p835-command-center-build-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npm run build",
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.5 is display-only and does not add mutation controls, simulator launch, signing, deploy, provider, worker, DB, network, package, or spend actions.",
+        "P83.6 will aggregate P83 test, checker, docs, and roadmap evidence."
+      ],
+      "nextPhase": "P83.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "e0b66c0",
+      "completedAt": "2026-05-19T20:22:04.239Z",
+      "summary": "Aggregated P83.1-P83.5 scripts, reports, docs, roadmap, status, and Command Center coverage.",
+      "checksRun": [
+        "npm run check:p836-tests-checkers-docs",
+        "npm run check:p835-command-center-build-ux",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.6 is aggregation-only and does not add runtime behavior.",
+        "P83.7 will close final validation for the local Snake iOS activation track."
+      ],
+      "nextPhase": "P83.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "48bb9d6",
+      "completedAt": "2026-05-19T20:25:22.828Z",
+      "summary": "Closed final validation for the local Snake iOS activation track.",
+      "checksRun": [
+        "npm run check:p837-final-validation",
+        "npm run check:p836-tests-checkers-docs",
+        "npm run check:p835-command-center-build-ux",
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.7 final validation does not enable deploy, release, package, provider, worker, DB, network, simulator, signing, or spend behavior."
+      ],
+      "nextPhase": "P84",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84",
+      "title": "Governed Founder Runtime Admission",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "8996dce",
+      "completedAt": "2026-05-19T22:00:37.240Z",
+      "summary": "Completed governed local founder runtime admission, focused Command Center Lite, local agent plan admission, Live Readiness visibility, validation aggregation, docs, and final validation while keeping unsafe execution blocked.",
+      "checksRun": [
+        "npm run check:p847-final-validation",
+        "npm run check:p846-docs-roadmap",
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p844-command-center-runtime-ux",
+        "npm run check:p843-agent-plan-admission-preview",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84 completes governed local founder runtime admission and visibility only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain disabled until later explicit admission."
+      ],
+      "nextPhase": "P85",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.1",
+      "title": "Founder Runtime Admission Contract",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "b97fa38",
+      "completedAt": "2026-05-19T21:11:34.634Z",
+      "summary": "Defined governed local founder runtime admission for deterministic Q&A, local PRD drafting, workstream planning, and generated workspace planning without unsafe execution.",
+      "checksRun": [
+        "npm run check:p841-founder-runtime-admission",
+        "npm run check:p84-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.1 does not call providers/models, dispatch agents, write projects, write DB state, deploy, package, call networks, or spend.",
+        "P84.2 will create the local runtime envelope."
+      ],
+      "nextPhase": "P84.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.2",
+      "title": "Live-Local Q&A to PRD Envelope",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "3480a60",
+      "completedAt": "2026-05-19T21:27:38.019Z",
+      "summary": "Added the live-local founder Q&A to PRD envelope and focused the primary Command Center into Lite chat plus graphical agent planning.",
+      "checksRun": [
+        "npm run check:p842-command-center-lite",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite|home route\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.2 does not dispatch agents, call providers, mutate projects, write DB state, deploy, release, export, package, or spend.",
+        "Advanced routes remain registered for direct URL access but are hidden from primary Lite navigation."
+      ],
+      "nextPhase": "P84.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.3",
+      "title": "Agent Plan Admission Preview",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "41dd8eb",
+      "completedAt": "2026-05-19T21:46:56.984Z",
+      "summary": "Admitted local founder agent/workstream planning records by reusing P81 workstreams and the P82 worker gate while keeping dispatch and execution blocked.",
+      "checksRun": [
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:p842-command-center-lite",
+        "npm run check:p84-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.3 is planning admission only; no provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, network calls, deploy, release, export, package creation, or provider spend are enabled.",
+        "Command Center aggregate runtime UX is deferred to P84.4."
+      ],
+      "nextPhase": "P84.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.4",
+      "title": "Command Center Runtime UX",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "ec787a5",
+      "completedAt": "2026-05-19T21:50:45.683Z",
+      "summary": "Surfaced founder Q&A to PRD runtime and founder agent plan admission rows in Command Center Live Readiness while keeping execution disabled.",
+      "checksRun": [
+        "npm run check:p844-command-center-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:p84-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.4 updates display-only Command Center readiness rows only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P84.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.5",
+      "title": "Validation Aggregation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "d9d7b85",
+      "completedAt": "2026-05-19T21:55:18.833Z",
+      "summary": "Aggregated P84.1-P84.4 validation evidence across scripts, reports, phase status, Command Center UX, and safety posture.",
+      "checksRun": [
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p844-command-center-runtime-ux",
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.5 adds validation aggregation only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P84.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "c84b1ee",
+      "completedAt": "2026-05-19T21:58:03.029Z",
+      "summary": "Finalized P84 docs and roadmap evidence for founder runtime admission before final validation.",
+      "checksRun": [
+        "npm run check:p846-docs-roadmap",
+        "npm run check:p845-validation-aggregation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.6 changes docs, roadmap, status, and checker evidence only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P84.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "8996dce",
+      "completedAt": "2026-05-19T22:00:37.240Z",
+      "summary": "Closed P84 governed founder runtime admission with final validation evidence and safety confirmations.",
+      "checksRun": [
+        "npm run check:p847-final-validation",
+        "npm run check:p846-docs-roadmap",
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p844-command-center-runtime-ux",
+        "npm run check:p843-agent-plan-admission-preview",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.7 closes local admission and visibility only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P85",
+      "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-29T14:21:13.358Z",
-  "currentPhase": "P122.7",
-  "previousPhase": "P122.6",
-  "nextPhase": "P123",
+  "updatedAt": "2026-05-29T14:31:21.720Z",
+  "currentPhase": "P123.1",
+  "previousPhase": "P122.7",
+  "nextPhase": "P123.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "685d143f",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "label": "Application Authority Handoff",
-    "detail": "P122 complete; P123 planned next.",
-    "phaseId": "P122",
-    "title": "Founder Runtime Approval Decision Application Authority Handoff",
-    "order": 158,
-    "status": "complete",
-    "summary": "P122 is complete with contract, authority eligibility metadata, local authority intent model, safe dry-run preview, scoped Command Center authority UX, validation/docs closure, and final validation complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-    "nextPhase": "P123",
-    "previousPhase": "P122.7",
+    "label": "Activation Boundary",
+    "detail": "P123.1 activation boundary contract complete; P123.2 activation eligibility metadata is next.",
+    "phaseId": "P123",
+    "title": "Founder Runtime Approval Application Authority Activation Boundary",
+    "order": 159,
+    "status": "in_progress",
+    "summary": "P123 is in progress with activation boundary contract/policy complete. Activation, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+    "nextPhase": "P123.2",
+    "previousPhase": "P123.1",
     "checksRun": [
+      "npm run check:p1231-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:p1227-founder-runtime-approval-decision-application-authority-handoff",
-      "npm run check:p1226-founder-runtime-approval-decision-application-authority-handoff",
-      "npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
       "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
@@ -12558,10 +12715,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P122.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-      "Planned next NEXUS OS phase. No P123 behavior is implemented until a separate implementation-grade phase contract is written."
+      "P123.1 is contract/policy only. It does not activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T14:21:13.358Z"
+    "completedAt": "2026-05-29T14:31:21.720Z"
   },
   "generatedAt": "2026-05-29T14:02:08.266Z"
 }

@@ -1232,6 +1232,16 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P123.1 approval application authority activation boundary contract: P123 now
+  has an implementation-grade activation boundary contract and P123.1-P123.7
+  subphase split. P123.1 is contract-only and records safety rules, reuse
+  rules, validation commands, docs, status, and the P122.7 handoff. P123.2 is
+  next for activation eligibility metadata. Activation, approval decision
+  application, approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
