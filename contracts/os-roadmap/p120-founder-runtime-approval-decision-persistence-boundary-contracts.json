@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision persistence boundary while keeping approval persistence, approve/reject decision recording, DB/runtime writes, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P120.1",
-  "previousSubphase": "P119.7",
-  "nextSubphase": "P120.2",
+  "currentSubphase": "P120.2",
+  "previousSubphase": "P120.1",
+  "nextSubphase": "P120.3",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P120.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -143,12 +143,42 @@
     {
       "phaseId": "P120.2",
       "title": "Approval Decision Persistence Schema Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Define browser-safe approval decision persistence schema metadata without DB files, DB writes, persistence, or approve/reject decision recording.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "allowedFiles": [
+        "shared/founderApprovalDecisionPersistenceSchemaMetadata.js",
+        "contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json",
+        "docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md",
+        "scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js",
+        "scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md",
+        "reports/p1202-founder-runtime-approval-decision-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "shared/founderApprovalDecisionPersistenceSchemaMetadata.js",
+        "contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json",
+        "docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md",
+        "scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js",
+        "scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md",
+        "reports/p1202-founder-runtime-approval-decision-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -167,28 +197,46 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "expectedExports": [
+        "FOUNDER_APPROVAL_DECISION_PERSISTENCE_SCHEMA_METADATA_PHASE",
+        "FOUNDER_APPROVAL_DECISION_PERSISTENCE_SCHEMA_VERSION",
+        "FOUNDER_APPROVAL_DECISION_PERSISTENCE_ENTITY_NAMES",
+        "FOUNDER_APPROVAL_DECISION_PERSISTENCE_AUTHORITY_FLAGS",
+        "FOUNDER_APPROVAL_DECISION_PERSISTENCE_SCHEMA_ENTITIES",
+        "buildFounderApprovalDecisionPersistenceSchemaMetadata"
+      ],
+      "dataShape": "Browser-safe metadata object with schema version, phase id, schemaOnly true, commandCenterVisible false, metadata-only write policy, and three entities for future persistence drafts, events, and evidence references.",
+      "commandCenterUx": "No Command Center source change in P120.2. Preserve P119/P120.1 read-only UX and avoid any approve/reject, save, or persistence controls.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test unless dashboard source changes are explicitly allowed."
+        "No new Playwright test because P120.2 has no UI source changes; preserve route-wide safety tests."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P120.2 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add a P120.2 schema metadata checker.",
+        "Reuse P120.1 checker handoff acceptance for P120.2 started state."
+      ],
+      "docsRoadmap": "Update P120 plan, README, platform roadmap, OS status, generated reports, and P120 contract for P120.2.",
+      "phaseStatusUpdate": "P120 in progress; P120.2 complete; current phase P120.2; previous P120.1; next P120.3.",
+      "validationCommands": [
+        "npm run check:p1202-founder-runtime-approval-decision-persistence-boundary",
+        "npm run check:p1201-founder-runtime-approval-decision-persistence-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P120.2 files>",
-        "git commit -m \"feat(nexus): implement p1202 approval decision persistence\"",
+        "git commit -m \"feat(nexus): implement p1202 approval decision persistence schema\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw DB table names, or fake runnable actions are introduced."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -205,7 +253,8 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P120.3",
-      "previousPhase": "P120.1"
+      "previousPhase": "P120.1",
+      "expectedBaseCommit": "e25c78d5"
     },
     {
       "phaseId": "P120.3",
@@ -543,5 +592,5 @@
       "previousPhase": "P120.6"
     }
   ],
-  "summary": "P120 is in progress. P120.1 defines the approval-decision persistence boundary contract while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
+  "summary": "P120 is in progress. P120.1 defines the approval-decision persistence boundary contract, and P120.2 defines browser-safe persistence schema metadata while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
 }

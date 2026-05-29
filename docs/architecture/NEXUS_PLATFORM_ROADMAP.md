@@ -3347,6 +3347,16 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P120.2 is complete. Browser-safe approval decision persistence metadata now
+describes future persistence drafts, events, and evidence references with all
+write, execution, dispatch, project mutation, network, and spend flags false.
+P120.3 is next for the governed local persistence intent model. Approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

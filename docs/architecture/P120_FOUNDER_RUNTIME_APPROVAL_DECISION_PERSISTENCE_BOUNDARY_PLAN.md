@@ -191,9 +191,193 @@ Rollback plan: remove the P120.1 contract/checker/docs/status/report changes,
 restore P120 to planned, set current phase back to P119.7, and keep P119
 complete.
 
+## P120.2 Approval Decision Persistence Schema Metadata
+
+Status: complete
+
+Phase: P120 Founder Runtime Approval Decision Persistence Boundary
+
+Subphase: P120.2 Approval Decision Persistence Schema Metadata
+
+Goal: define browser-safe approval decision persistence schema metadata without
+DB files, DB writes, persistence, approve/reject decision recording, or runtime
+execution.
+
+Why this is needed: P120.1 defines the persistence boundary. P120.2 gives later
+P120 intent, preview, and UX phases a stable display-safe metadata shape while
+all write authority remains blocked.
+
+User/operator impact: no founder-facing behavior changes. Operators get
+schema-level evidence for future persistence drafts, events, and evidence
+references without storing decisions.
+
+Command Center impact: no Command Center source changes in P120.2. Preserve
+P119/P120.1 read-only posture and avoid any approve/reject or save decision
+controls.
+
+Safety impact: P120.2 is metadata-only. It does not enable approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+hosted DB mutation, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, raw SQL, deploy,
+release, export, package, network calls, or spend.
+
+Cost impact: local deterministic metadata only. No provider/model/network/spend
+path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `e25c78d5`.
+
+Allowed files:
+- `shared/founderApprovalDecisionPersistenceSchemaMetadata.js`
+- `contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json`
+- `docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md`
+- `scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js`
+- `scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md`
+- `reports/p1202-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files expected to change:
+- `shared/founderApprovalDecisionPersistenceSchemaMetadata.js`
+- `scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js`
+- P120 contract, this plan, README, platform roadmap, OS roadmap/status, and
+  generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `shared/founderApprovalDecisionPersistenceSchemaMetadata.js`
+- add `scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js`
+- add `check:p1202-founder-runtime-approval-decision-persistence-boundary`
+  to `package.json`
+- update P120 contract, this plan, README, platform roadmap, OS roadmap/status,
+  and generated reports
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_SCHEMA_METADATA_PHASE`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_SCHEMA_VERSION`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_ENTITY_NAMES`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_AUTHORITY_FLAGS`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_SCHEMA_ENTITIES`
+- `buildFounderApprovalDecisionPersistenceSchemaMetadata`
+- browser-safe metadata object with schema version, phase id,
+  `schemaOnly: true`, `commandCenterVisible: false`, metadata-only write
+  policy, and three entities for future persistence drafts, persistence events,
+  and persistence evidence references.
+
+Reuse check: reuse the P119.2 schema metadata pattern, P120.1 checker handoff
+style, `shared/reportWriter.js`, `shared/checkResultFormatter.js`, existing OS
+status checks, and existing phase validation coverage. Do not duplicate report
+writers, checker formatters, phase status updaters, redaction helpers, mode
+guards, route matrices, UI card/tab/status components, or audit/activity
+appenders.
+
+Command Center UX requirements: no UI changes. Do not add approve/reject/save
+decision controls, persistence controls, raw JSON/log/policy dumps, raw private
+IDs, raw DB table names, internal phase labels in primary UX, DemoApp, or fake
+working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: no new Playwright test is added in P120.2 because there is
+no UI source change. Existing route-wide safety tests remain the required UX
+backstop.
+
+Checker updates: add a dedicated P120.2 checker covering metadata shape,
+authority flags, helper import safety, docs/report alignment, allowed file
+scope, and P120.1 handoff acceptance.
+
+Docs/README/roadmap updates: P120.2 is recorded in this plan, README, platform
+roadmap, P120 contract, OS roadmap/status, and generated reports. P120.3 is
+next for the governed local approval decision persistence intent model.
+
+OS phase status update: P120 is in progress; P120.2 is complete; current phase
+P120.2; previous P120.1; next P120.3.
+
+Reports to regenerate:
+- `reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md`
+- `reports/p1202-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1202-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1201-founder-runtime-approval-decision-persistence-boundary-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+dashboard test files changed; no DB/runtime provider, tool, worker, deploy,
+release, export, package, or env paths changed; no approval capture, approval
+persistence, approval decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+spend authority is enabled; no DemoApp exposure, raw private IDs, raw DB table
+names, raw JSON/log/policy dumps, internal primary UX phase labels, or fake
+actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P120.2 files>`
+- `git commit -m "feat(nexus): implement p1202 approval decision persistence schema"`
+- stamp P120/P120.2 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1202 approval decision persistence schema"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: schema metadata could be mistaken for persisted storage. P120.2
+keeps `schemaOnly: true`, `commandCenterVisible: false`, and all write,
+execution, dispatch, project mutation, network, and spend flags false.
+
+Rollback plan: remove the P120.2 helper/checker/docs/status/report changes,
+restore P120.2 to planned, set current phase back to P120.1, and keep P120.1
+complete.
+
 ## Planned Subphase Controls
 
-P120.1 Approval Decision Persistence Contract / Policy is complete. P120.2 is
-next for browser-safe persistence schema metadata, with approval persistence,
+P120.2 Approval Decision Persistence Schema Metadata is complete. P120.3 is
+next for a governed local persistence intent model, with approval persistence,
 DB/runtime writes, approve/reject decision recording, and execution still
 blocked unless a future subphase explicitly grants narrow authority.
