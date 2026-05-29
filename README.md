@@ -1588,6 +1588,19 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P127.7 acceptance capture final validation: P127 is complete. Final
+  validation now covers P127.1-P127.7 evidence, scoped Command Center UX
+  preservation, reports, status, package scripts, and the planned P128 handoff.
+  P128 is planned next for the approval application authority grant handoff
+  acceptance capture persistence boundary. P128 is planned-only until its own
+  implementation-grade contract is written. Acceptance capture, record
+  acceptance, handoff acceptance, authority handoff, authority grant,
+  activation, approval application, approval capture, approval persistence,
+  approve/reject decision recording, DB/runtime writes, runtime execution,
+  execution unlock, provider/model calls, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

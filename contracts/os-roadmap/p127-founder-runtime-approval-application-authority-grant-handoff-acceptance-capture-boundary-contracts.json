@@ -1,11 +1,11 @@
 {
   "phaseId": "P127",
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P127.6",
-  "previousSubphase": "P127.5",
-  "nextSubphase": "P127.7",
+  "currentSubphase": "P127.7",
+  "previousSubphase": "P127.6",
+  "nextSubphase": "P128",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "after-P126.7-stamp",
   "owner": "NEXUS OS",
@@ -773,15 +773,49 @@
     {
       "phaseId": "P127.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P127.6-stamp",
-      "narrowGoal": "Close P127 with final validation evidence and create the next planned handoff.",
+      "expectedBaseCommit": "62138bd8",
+      "narrowGoal": "Close P127 with final validation evidence and create the P128 planned handoff.",
       "allowedFiles": [
-        "scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+        "scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json",
+        "docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json",
+        "docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -801,44 +835,81 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
-      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "dataShape": "Final validation markdown report with scope, P127.1-P127.7 check table, validation commands, known limitations, and result. P128 is a planned-only OS phase handoff entry. No runtime exports, DB schema, runtime schema, capture record shape, provider envelope, dispatch packet, project data, or Command Center source changes.",
+      "commandCenterUx": "No dashboard source or test changes. Preserve P127.5 scoped acceptance capture UX on Business Build and Agent Flow only, and preserve Chat/Lite, OS Roadmap, and Live Readiness cleanliness.",
       "themeRequirements": [
-        "Preserve System theme.",
-        "Preserve Dark theme.",
-        "Preserve Light theme."
+        "Preserve System theme by rerunning the scoped P127.5 Playwright coverage.",
+        "Preserve Dark theme by rerunning the scoped P127.5 Playwright coverage.",
+        "Preserve Light theme by rerunning the scoped P127.5 Playwright coverage."
       ],
       "playwrightTests": [
-        "Planned scoped route coverage if UX changes are later allowed."
+        "Do not add or remove route tests in P127.7.",
+        "Rerun the scoped P127.5 route test for acceptance capture placement and route cleanliness."
       ],
       "checkerUpdates": [
-        "Planned checker for the subphase."
+        "Add the P127.7 final validation checker.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Validate P127.1-P127.7 scripts, reports, contract statuses, docs, status, P127 parent completion, P127.5 scoped UX preservation, and P128 planned handoff.",
+        "Update check-os-phase-status.js to recognize P128 as a planned next handoff.",
+        "Confirm no dashboard source/test changes and no forbidden path changes.",
+        "Update the P127.4 checker to accept P127.7 final closure when the parent phase is complete.",
+        "Update the P127.5 checker to accept P127.7 final closure when the parent phase is complete."
       ],
-      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P127 in progress; P127.7 complete when implemented; previous P127.6; next P128.",
-      "validationCommands": [],
-      "gitCommands": [],
+      "docsRoadmap": "Update the P127 plan, README, platform roadmap, OS status, generated reports, and P127 contract for P127.7 completion and P128 planned handoff.",
+      "phaseStatusUpdate": "P127 complete; P127.7 complete; current phase P127.7; previous P127.6; next P128 planned.",
+      "validationCommands": [
+        "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js scripts/check-os-phase-status.js contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md package.json os-roadmap/phase-status.json os-roadmap/nexus-phases.json reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md reports/p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md reports/p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
+        "git commit -m \"feat(nexus): implement p1277 acceptance capture final validation\"",
+        "git commit -m \"chore(nexus): stamp p1277 acceptance capture final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
       "finalSafetyChecks": [
-        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+        "Confirm no dashboard source/test files changed.",
+        "Confirm no acceptance capture, handoff acceptance, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled.",
+        "Confirm P127.5 scoped UX and route-cleanliness coverage remain present.",
+        "Confirm P128 is planned-only and does not claim implemented behavior.",
+        "Confirm forbidden project and runtime paths are untouched."
       ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
-        "Validation results",
+        "P127 closure",
+        "Command Center UX preservation",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
         "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
         "Next phase/subphase"
       ],
       "previousPhase": "P127.6",
       "nextPhase": "P128",
       "order": 163.7,
-      "detail": "Planned Final Validation.",
-      "summary": "Planned Final Validation. No P127.7 behavior is implemented in P127.1.",
+      "detail": "P127.7 final validation is complete; P128 is planned next.",
+      "summary": "Closed P127 with final validation across P127.1-P127.7 evidence, docs, reports, status, package scripts, scoped Command Center UX preservation, and P128 planned handoff. No capture, writes, execution, providers, dispatch, mutation, network, or spend were enabled.",
       "knownLimitations": [
-        "Planned only. Not implemented in P127.1."
+        "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
       ]
     }
   ],
-  "nextPhase": "P127.2",
-  "updatedAt": "2026-05-29T19:14:24.111Z"
+  "nextPhase": "P128",
+  "updatedAt": "2026-05-29T19:22:32.248Z",
+  "summary": "P127 is complete. P127.1-P127.7 define and validate the approval application authority grant handoff acceptance capture boundary, metadata, intent model, safe dry-run, scoped Command Center UX, aggregate validation, and final handoff while acceptance capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked."
 }

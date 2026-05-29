@@ -139,7 +139,7 @@ addCheck("README records P127.5", /P127\.5 Command Center acceptance capture UX/
 addCheck(
   "phase status advanced",
   p1275HandoffAccepted
-    && statusById.get("P127")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P127")?.status)
     && statusById.get("P127.4")?.status === "complete"
     && statusById.get("P127.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P127.6")?.status)

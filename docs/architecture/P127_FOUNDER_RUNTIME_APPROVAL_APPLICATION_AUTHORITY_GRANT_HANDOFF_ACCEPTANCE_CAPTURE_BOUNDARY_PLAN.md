@@ -597,6 +597,80 @@ P127.6 to planned with P127.5 as the current completed handoff.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P127.7 Final Validation
 
-P127.7 Final Validation: planned final validation only.
+Phase: P127 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Capture Boundary
+Subphase: P127.7 Final Validation
+
+Goal: close P127 as complete, validate P127.1-P127.7 evidence, and create the
+P128 planned handoff.
+
+Why this is needed: P127 has completed its contract, metadata, intent model,
+safe dry-run, scoped UX, and aggregate validation. Final validation makes the
+parent phase complete and records the next planned phase without enabling any
+runtime capability.
+
+User/operator impact: no new UI. Operators keep using the P127.5 Business
+Build and Agent Flow acceptance capture cards.
+
+Command Center impact: no dashboard source or test changes. P127.7 preserves
+the scoped P127.5 UX and keeps Chat/Lite, OS Roadmap, and Live Readiness clean.
+
+Safety impact: final validation only. Acceptance capture, record acceptance,
+handoff acceptance, authority handoff, authority grant, activation, DB/runtime
+writes, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, deploy, release, export,
+package, network calls, and spend remain blocked.
+
+Cost impact: local validation only. No provider/model/network calls or spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json`
+- `docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change: `projects/**`, `careloop/**`,
+`generated-projects/**`, `dashboard/src/**`, `dashboard/tests/**`, `db/**`,
+`live-ready/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+`.env*`.
+
+Tests to add/update/remove: add the P127.7 final validation checker, update
+the P127.4/P127.5 checkers to recognize final P127.7 closure, and update the
+OS phase status checker to recognize the P128 planned handoff. Do not edit
+dashboard route tests; rerun the existing P127.5 scoped Playwright coverage.
+
+Docs to update: P127 plan, README, platform roadmap, OS phase status, generated
+reports, and P127 contract.
+
+Reports to regenerate: P127.4 report, P127.5 report, P127.6 report, P127.7
+report, OS phase status report, and phase validation coverage report.
+
+OS phase status update: P127 complete, P127.7 complete, current phase P127.7,
+previous phase P127.6, next phase P128. P128 is planned-only.
+
+Known risks: next-phase handoff can imply implementation. P127.7 records P128
+as planned-only until its own implementation-grade contract is written.
+
+Rollback plan: revert the P127.7 implementation and stamp commits, remove the
+P128 planned handoff, then return P127 to in progress with P127.6 as the
+current completed handoff.
+
+Status: complete.

@@ -184,6 +184,12 @@ const p1276StartedState = status.currentPhase === "P127.6"
   && roadmap.currentPhase === "P127.6"
   && roadmap.previousPhase === "P127.5"
   && roadmap.nextPhase === "P127.7";
+const p1277FinalState = status.currentPhase === "P127.7"
+  && status.previousPhase === "P127.6"
+  && status.nextPhase === "P128"
+  && roadmap.currentPhase === "P127.7"
+  && roadmap.previousPhase === "P127.6"
+  && roadmap.nextPhase === "P128";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary"]));
 addCheck("phase and version exports", FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_SAFE_DRY_RUN_PHASE === "P127.4" && FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_SAFE_DRY_RUN_VERSION === "1.0");
@@ -221,8 +227,8 @@ addCheck(
 );
 addCheck(
   "phase status advanced",
-  (p1274CurrentState || p1275StartedState || p1276StartedState)
-    && statusById.get("P127")?.status === "in_progress"
+  (p1274CurrentState || p1275StartedState || p1276StartedState || p1277FinalState)
+    && ["in_progress", "complete"].includes(statusById.get("P127")?.status)
     && statusById.get("P127.3")?.status === "complete"
     && statusById.get("P127.4")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P127.5")?.status)

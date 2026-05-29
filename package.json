@@ -698,7 +698,8 @@
     "check:p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary": "node scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
     "check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary": "node scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
     "check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary": "node scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
-    "check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary": "node scripts/check-p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+    "check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary": "node scripts/check-p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+    "check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary": "node scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

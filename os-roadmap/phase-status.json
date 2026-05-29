@@ -18252,15 +18252,16 @@
       "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Boundary",
       "label": "Acceptance Capture",
       "order": 163,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9e774a54",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P127.6 acceptance capture validation/docs closure complete; P127.7 final validation is next.",
-      "summary": "P127 is in progress with aggregate validation across contract, metadata, intent model, safe dry-run, scoped Command Center UX, docs, reports, status, and package scripts. Live acceptance capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
-      "previousPhase": "P127.5",
-      "nextPhase": "P127.7",
+      "detail": "P127 is complete; P128 approval application authority grant handoff acceptance capture persistence boundary is planned next.",
+      "summary": "P127 is complete with final validation across contract, metadata, intent model, safe dry-run, scoped Command Center UX, aggregate validation, reports, status, package scripts, and P128 planned handoff. Live acceptance capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "previousPhase": "P127.6",
+      "nextPhase": "P128",
       "checksRun": [
+        "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
         "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
         "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
         "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
@@ -18272,9 +18273,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P127.6 is validation and docs only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
       ],
-      "completedAt": "2026-05-29T19:15:38.888Z"
+      "completedAt": "2026-05-29T19:23:58.575Z"
     },
     {
       "track": "NEXUS_OS",
@@ -18457,41 +18458,73 @@
       "title": "Final Validation",
       "label": "Final Validation",
       "order": 163.7,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P127.7 final validation is complete; P128 is planned next.",
+      "summary": "Closed P127 with final validation across P127.1-P127.7 evidence, docs, reports, status, package scripts, scoped Command Center UX preservation, and P128 planned handoff.",
+      "previousPhase": "P127.6",
+      "nextPhase": "P128",
+      "checksRun": [
+        "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-29T19:23:58.575Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P128",
+      "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
+      "label": "Capture Persistence",
+      "order": 164,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned Final Validation.",
-      "summary": "Planned Final Validation. No P127.7 behavior is implemented in P127.1.",
-      "previousPhase": "P127.6",
-      "nextPhase": "P128",
+      "detail": "P128 is planned next after P127 final validation. No P128 implementation exists until its implementation-grade contract is written.",
+      "summary": "Planned next NEXUS OS phase for the approval application authority grant handoff acceptance capture persistence boundary. P128 is planned-only and does not enable acceptance capture persistence, DB/runtime writes, execution, providers, dispatch, mutation, network, or spend.",
+      "previousPhase": "P127.7",
+      "nextPhase": "P128.1",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. Not implemented in P127.1."
+        "P128 is planned-only. No P128 contract, subphase implementation, persistence path, DB/runtime write, provider/model call, dispatch, project mutation, deploy, release, export, package, network call, or spend is enabled."
       ],
       "completedAt": ""
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T19:15:38.888Z",
-  "currentPhase": "P127.6",
-  "previousPhase": "P127.5",
-  "nextPhase": "P127.7",
+  "updatedAt": "2026-05-29T19:23:58.575Z",
+  "currentPhase": "P127.7",
+  "previousPhase": "P127.6",
+  "nextPhase": "P128",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P127.6",
-    "title": "Acceptance Capture Validation / Docs",
-    "label": "Capture Validation",
-    "order": 163.6,
+    "phaseId": "P127.7",
+    "title": "Final Validation",
+    "label": "Final Validation",
+    "order": 163.7,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "9e774a54",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P127.6 acceptance capture validation/docs closure complete; P127.7 final validation is next.",
-    "summary": "Added aggregate validation for P127.1-P127.5 evidence, docs, reports, status, package scripts, and scoped Command Center UX preservation without changing dashboard source or enabling unsafe actions.",
-    "previousPhase": "P127.5",
-    "nextPhase": "P127.7",
+    "detail": "P127.7 final validation is complete; P128 is planned next.",
+    "summary": "Closed P127 with final validation across P127.1-P127.7 evidence, docs, reports, status, package scripts, scoped Command Center UX preservation, and P128 planned handoff.",
+    "previousPhase": "P127.6",
+    "nextPhase": "P128",
     "checksRun": [
+      "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
@@ -18503,25 +18536,26 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P127.6 is validation and docs only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T19:15:38.888Z"
+    "completedAt": "2026-05-29T19:23:58.575Z"
   },
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P127.6",
-    "title": "Acceptance Capture Validation / Docs",
-    "label": "Capture Validation",
-    "order": 163.6,
+    "phaseId": "P127.7",
+    "title": "Final Validation",
+    "label": "Final Validation",
+    "order": 163.7,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "9e774a54",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P127.6 acceptance capture validation/docs closure complete; P127.7 final validation is next.",
-    "summary": "Added aggregate validation for P127.1-P127.5 evidence, docs, reports, status, package scripts, and scoped Command Center UX preservation without changing dashboard source or enabling unsafe actions.",
-    "previousPhase": "P127.5",
-    "nextPhase": "P127.7",
+    "detail": "P127.7 final validation is complete; P128 is planned next.",
+    "summary": "Closed P127 with final validation across P127.1-P127.7 evidence, docs, reports, status, package scripts, scoped Command Center UX preservation, and P128 planned handoff.",
+    "previousPhase": "P127.6",
+    "nextPhase": "P128",
     "checksRun": [
+      "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
@@ -18533,8 +18567,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P127.6 is validation and docs only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T19:15:38.888Z"
+    "completedAt": "2026-05-29T19:23:58.575Z"
   }
 }
