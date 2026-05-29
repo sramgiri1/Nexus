@@ -15298,7 +15298,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "303466ef9879",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
       "detail": "P114.1 dispatch readiness contract complete; P114.2 local dispatch schema is next.",
@@ -15326,7 +15326,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "303466ef9879",
       "commandCenterVisible": true,
       "label": "Dispatch Contract",
       "detail": "P114.1 contract complete; P114.2 local dispatch schema is next.",
