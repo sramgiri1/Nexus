@@ -10491,28 +10491,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "aea19bea0c7f4ae8b06984f81e2f1d8793dda1f0",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
-      "detail": "P114.3 local dispatch CRUD model complete; P114.4 safe dispatch preview is next.",
+      "detail": "P114.4 safe dispatch readiness preview complete; P114.5 Command Center dispatch UX is next.",
       "phaseId": "P114",
       "title": "Founder Live Agent Dispatch Readiness",
       "order": 150,
       "status": "in_progress",
-      "summary": "P114 is in progress. P114.1-P114.3 define dispatch readiness contracts, local schema metadata, approved local CRUD, and isolated validation while unsafe authority remains blocked.",
-      "nextPhase": "P114.4",
+      "summary": "P114 is in progress. P114.1-P114.4 define dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, and isolated validation while unsafe authority remains blocked.",
+      "nextPhase": "P114.5",
       "previousPhase": "P113.7",
       "checksRun": [
+        "npm run check:p1144-founder-live-agent-dispatch-readiness",
         "npm run check:p1143-founder-live-agent-dispatch-readiness",
-        "npm run check:p1142-founder-live-agent-dispatch-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P114.3 admits local SQLite CRUD only for allowlisted dispatch readiness OS records after explicit local approval gates.",
+        "P114.4 previews display-safe dispatch readiness candidates only and does not write dispatch records.",
         "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P114.4 is next for safe dispatch readiness preview modeling."
+        "P114.5 is next for Command Center Agent Dispatch UX."
       ],
       "completedAt": ""
     },
@@ -10602,23 +10602,30 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Dispatch Readiness Preview",
-      "detail": "Planned dispatch readiness preview / safe dry run for P114.",
+      "detail": "P114.4 safe dispatch readiness preview complete; P114.5 Command Center dispatch UX is next.",
       "phaseId": "P114.4",
       "title": "Dispatch Readiness Preview / Safe Dry Run",
       "order": 150.39999999999998,
-      "status": "planned",
-      "summary": "Planned dispatch readiness preview / safe dry run for P114.",
+      "status": "complete",
+      "summary": "P114.4 adds a display-safe local-only dispatch readiness preview model for founder agent lanes, carrying assignment context, blockers, next actions, evidence/activity/cost refs, and all unsafe authority flags false.",
       "nextPhase": "P114.5",
       "previousPhase": "P114.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1144-founder-live-agent-dispatch-readiness",
+        "npm run check:p1143-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "Local dry-run preview only; no dispatch writes, SQLite writes, raw SQL, hosted DB mutation, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network, or spend.",
+        "Command Center rendering is planned for P114.5."
+      ],
+      "completedAt": "2026-05-29T00:56:59.010Z"
     },
     {
       "track": "NEXUS_OS",
@@ -10682,8 +10689,8 @@
     }
   ],
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P114.3",
-  "previousPhase": "P114.2",
-  "nextPhase": "P114.4",
+  "currentPhase": "P114.4",
+  "previousPhase": "P114.3",
+  "nextPhase": "P114.5",
   "currentPhaseStatus": "complete"
 }

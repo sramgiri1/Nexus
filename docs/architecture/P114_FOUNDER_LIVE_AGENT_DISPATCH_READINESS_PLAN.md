@@ -317,3 +317,127 @@ fields false in isolated validation records.
 Rollback plan: remove the P114.3 helper/checker/script/docs/status/report
 updates, restore P114 to P114.2 complete with P114.3 planned, and keep the
 P114.2 schema unchanged.
+
+## P114.4 Dispatch Readiness Preview / Safe Dry Run
+
+Phase: P114 Founder Live Agent Dispatch Readiness
+
+Subphase: P114.4 Dispatch Readiness Preview / Safe Dry Run
+
+Status: complete
+
+Goal: build a display-safe local dry-run view model for dispatch readiness
+candidates without writing dispatch records or dispatching agents.
+
+Why this is needed: P114.3 can persist approved local dispatch readiness
+records, but Command Center needs a clean preview model before P114.5 can show
+founder-useful agent flow without exposing raw DB details or fake actions.
+
+User/operator impact: operators can inspect prepared dispatch lanes, current
+blocked state, next action, blockers, owner capability, evidence/activity
+location, and local-only cost impact before any later explicitly scoped live
+dispatch authority.
+
+Command Center impact: no Command Center source change in P114.4. The preview
+model is hidden from Command Center until P114.5 renders it on non-chat founder
+pages. Chat with NEXUS remains clean and chat-focused.
+
+Safety impact: P114.4 is local dry-run only. It does not write dispatch
+records, unlock execution, admit runtime execution, call providers/models,
+dispatch agents, execute workers/tools, mutate projects, use hosted DBs, expose
+raw SQL, deploy, release, export, package, use network calls, or spend.
+
+Cost impact: deterministic local preview only; no provider/model calls, network
+calls, deploy/package work, or provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: P114 dispatch readiness helper, P114.4 checker, P114
+contract, this plan, README, platform roadmap, package script registry, OS
+phase status files, and generated P114.4/P114.3/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`, `db/**`,
+`dashboard/src/**`, `dashboard/tests/**`, `local-state/runtime/**`,
+`providers/**`, `tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`,
+`exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: updated
+`live-ready/founderLiveAgentDispatchReadiness.js`; added
+`scripts/check-p1144-founder-live-agent-dispatch-readiness.js`; registered the
+package script; updated P114 contract/status/docs; and regenerated reports.
+
+Expected exports/data shapes:
+- `P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PREVIEW_PHASE`
+- `P114_AGENT_DISPATCH_READINESS_PREVIEW_STATES`
+- `buildAgentDispatchReadinessViewModel`
+- `validateAgentDispatchReadinessViewModel`
+
+The preview data shape includes `schemaVersion`, `currentState`,
+`sourceContractPhase`, `sourceContractState`, `previewMode`,
+`sourceAssignmentSummary`, `dispatchReadinessSummary`, `dispatchSections`,
+`dispatchRows`, `forbiddenOperations`, `nextAction`, `blockers`,
+`disabledReason`, `ownerCapability`, evidence/audit/activity/cost refs, and
+all write/runtime/dispatch/project/deploy/package/spend flags false.
+
+Safety rules: do not add SQLite writes, delete, raw SQL, hosted DB mutation,
+runtime admission, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, deploy/release/export/package, network
+calls, or provider spend. Do not expose raw private IDs, raw record keys, raw
+DB table names, raw logs, raw policy dumps, or fake runnable actions.
+
+Reuse check: P114.4 reuses `shared/resultEnvelope.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`, the P114.3
+dispatch readiness contract/record builder, and the P113 assignment readiness
+helper. It does not duplicate SQLite runtime, CRUD repository, result
+envelopes, report writers, checker formatters, status helpers, or UI
+components.
+
+Command Center UX requirements: no UI source change in P114.4. P114.5 must
+render the display-safe dispatch preview on relevant non-chat founder pages and
+continue to hide raw DB details and fake runnable controls.
+
+Dark/light/system theme requirements: no theme source change in P114.4.
+
+Playwright tests: no new Playwright test in P114.4 because no UI source changes
+are made.
+
+Checker updates: P114.4 adds a dedicated dispatch readiness preview checker
+that validates the dry-run shape, useful candidate rows/sections, safe founder
+context carry-forward, false unsafe flags, docs/status updates, allowed file
+scope, and absence of raw private IDs, raw record keys/table names, raw dumps,
+or fake runnable actions.
+
+Docs/README/roadmap updates: P114.4 is recorded in this plan, README, platform
+roadmap, P114 contract, OS roadmap/status, and generated reports. P114.5 is
+next.
+
+OS phase status update: P114 is in progress; P114.4 is complete; current phase
+P114.4; previous P114.3; next P114.5.
+
+Validation commands:
+- `npm run check:p1144-founder-live-agent-dispatch-readiness`
+- `npm run check:p1143-founder-live-agent-dispatch-readiness`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no temporary local
+runtime DB remains; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw dispatch/assignment/queue table names in primary UX; no fake
+runnable actions; no hosted DB mutation, raw SQL interface, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, deploy,
+release, export, package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P114.4 files>`
+- `git commit -m "feat(nexus): implement p1144 dispatch readiness preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: dry-run dispatch readiness can be mistaken for live agent
+dispatch. P114.4 keeps all write, dispatch, execution, project mutation, hosted
+DB mutation, and provider spend fields false and marks the model Command Center
+hidden until P114.5.
+
+Rollback plan: remove the P114.4 preview exports/checker/docs/status/report
+updates, restore P114 to P114.3 complete with P114.4 planned, and keep P114.3
+CRUD unchanged.

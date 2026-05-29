@@ -2985,6 +2985,15 @@ execution, project mutation, hosted DB mutation, raw SQL interface, runtime
 admission, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P114.4 is complete. P114 now has a display-safe local dry-run dispatch
+readiness model for founder agent candidates, including assignment context,
+dispatch lane rows, blocked authority sections, next actions, blockers,
+evidence/activity locations, and cost impact. P114.5 is next for Command
+Center agent dispatch UX. Dispatch writes, SQLite writes, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, runtime admission, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

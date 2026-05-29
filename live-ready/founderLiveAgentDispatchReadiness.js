@@ -10,6 +10,12 @@ import {
 import { buildSafeAgentWorkAssignmentDbRecord } from "./founderLiveAgentWorkAssignmentReadiness.js";
 
 export const P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PHASE = "P114.3";
+export const P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PREVIEW_PHASE = "P114.4";
+
+export const P114_AGENT_DISPATCH_READINESS_PREVIEW_STATES = Object.freeze({
+  LOCAL_PREVIEW_READY_EXECUTION_BLOCKED: "founder_agent_dispatch_readiness_preview_ready_execution_blocked",
+  NEEDS_ASSIGNMENT_CONTEXT: "founder_agent_dispatch_readiness_preview_needs_assignment_context",
+});
 
 export const P114_AGENT_DISPATCH_DB_ENTITIES = Object.freeze([
   "founder_agent_dispatch_readiness_items",
@@ -139,6 +145,139 @@ function dispatchKey(input = {}) {
 
 function sourceAssignmentRecord(input = {}) {
   return input.assignmentRecord || buildSafeAgentWorkAssignmentDbRecord("founder_agent_work_assignments", input);
+}
+
+function sourceAssignmentSummary(input = {}) {
+  const assignmentRecord = sourceAssignmentRecord(input);
+  return {
+    publicLabel: assignmentRecord.publicLabel || "Founder agent work assignment readiness item",
+    assignmentLane: assignmentRecord.assignmentLane || "Founder Strategy",
+    assignmentState: assignmentRecord.assignmentState || "assignment ready after operator gate",
+    assignmentSummary: assignmentRecord.assignmentSummary || "Display-safe founder agent work assignment readiness summary.",
+    assignedAgent: assignmentRecord.assignedAgent || "NEXUS Founder Strategy Agent",
+    nextAction: assignmentRecord.nextAction || "Review dispatch readiness preview before any future live dispatch consideration.",
+    ownerCapability: assignmentRecord.ownerCapability || "NEXUS Founder Agent Work Assignment DB",
+  };
+}
+
+function dispatchPreviewLanes(input = {}) {
+  return input.previewLanes || [
+    {
+      lane: "Founder Strategy Dispatch",
+      displayLabel: "Founder strategy dispatch candidate",
+      proposedOutcome: "Prepare the founder strategy agent lane to review feasibility, customer pain, value promise, and PRD gaps.",
+      ownerCapability: "NEXUS Founder Strategy Agent",
+    },
+    {
+      lane: "Product Architecture Dispatch",
+      displayLabel: "Product architecture dispatch candidate",
+      proposedOutcome: "Prepare the product architecture lane to map app scope, data boundaries, platform constraints, and build risks.",
+      ownerCapability: "NEXUS Product Architecture Agent",
+    },
+    {
+      lane: "Launch Operations Dispatch",
+      displayLabel: "Launch operations dispatch candidate",
+      proposedOutcome: "Prepare the launch operations lane to plan validation experiments, pricing questions, release blockers, and go-to-market needs.",
+      ownerCapability: "NEXUS Launch Operations Agent",
+    },
+  ];
+}
+
+function buildPreviewDispatchRow(lane, index, input = {}) {
+  const assignmentSummary = sourceAssignmentSummary(input);
+  const dispatchRecord = buildSafeAgentDispatchDbRecord("founder_agent_dispatch_readiness_items", {
+    ...input,
+    dispatchLane: lane.lane,
+    publicLabel: lane.displayLabel,
+    dispatchSummary: lane.proposedOutcome,
+    assignedAgent: lane.ownerCapability,
+    ownerCapability: lane.ownerCapability,
+  });
+
+  return {
+    displayHandle: `dispatch-preview-${index + 1}-${safeSlug(lane.lane)}`,
+    displayLabel: lane.displayLabel,
+    sourceAssignmentLabel: assignmentSummary.publicLabel,
+    sourceAssignmentLane: assignmentSummary.assignmentLane,
+    sourceAssignmentState: assignmentSummary.assignmentState,
+    proposedDispatchLane: lane.lane,
+    proposedOutcome: lane.proposedOutcome || dispatchRecord.dispatchSummary,
+    dispatchPosition: index + 1,
+    dispatchState: P114_AGENT_DISPATCH_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED,
+    previewMode: "local-only-dry-run",
+    localPreviewReady: true,
+    dispatchSummary: lane.proposedOutcome || dispatchRecord.dispatchSummary,
+    nextAction: "Review this local dispatch candidate in Command Center before any later explicitly approved dispatch phase.",
+    blockers: [
+      "Dispatch readiness preview is local and read-only.",
+      "Local dispatch writes require a separate approved CRUD request.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason:
+      "P114.4 previews dispatch readiness candidates only. It cannot write dispatch records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    ownerCapability: lane.ownerCapability || dispatchRecord.ownerCapability,
+    evidenceRefs: [
+      "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+      "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+    ],
+    auditRefs: ["reports/os-phase-status-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic dispatch readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    dispatchWriteAllowed: false,
+    localCrudAllowed: false,
+    dbWriteAllowed: false,
+    sqliteWriteAllowed: false,
+    hostedDbMutationAllowed: false,
+    dispatchAllowed: false,
+    executionAllowed: false,
+    workerExecutionAllowed: false,
+    toolExecutionAllowed: false,
+    runtimeAdmissionAllowed: false,
+    runtimeTransitionAllowed: false,
+    projectCreationAllowed: false,
+    projectMutationAllowed: false,
+    deployAllowed: false,
+    releaseAllowed: false,
+    exportAllowed: false,
+    packageAllowed: false,
+    spendAllowed: false,
+    ...blockedRuntimeFlags(),
+  };
+}
+
+function buildPreviewDispatchSections(dispatchRows = []) {
+  return [
+    {
+      sectionHandle: "dispatch-candidates",
+      displayLabel: "Dispatch candidates",
+      candidateCount: dispatchRows.length,
+      blockedCount: dispatchRows.length,
+      nextAction: "Show these candidates in P114.5 without write, dispatch, execution, provider, project, or deploy controls.",
+      disabledReason: "This section is read-only dispatch readiness preview data.",
+    },
+    {
+      sectionHandle: "approval-gates",
+      displayLabel: "Dispatch gates",
+      candidateCount: dispatchRows.length,
+      blockedCount: dispatchRows.length,
+      nextAction: "Keep operator approval, rollback, audit, validation, sqlite-live, and local write evidence separate from the preview.",
+      disabledReason: "Preview data cannot satisfy or bypass local CRUD or dispatch gates.",
+    },
+    {
+      sectionHandle: "blocked-authority",
+      displayLabel: "Blocked authority",
+      candidateCount: dispatchRows.length,
+      blockedCount: dispatchRows.length,
+      nextAction: "Keep runtime authority blocked until a later explicitly scoped phase changes the contract.",
+      disabledReason: "Provider/model calls, dispatch, execution, project mutation, hosted DB writes, deploy, release, export, package, network calls, and spend are blocked.",
+    },
+  ];
 }
 
 export function buildSafeAgentDispatchDbRecord(entityName = "", input = {}) {
@@ -443,5 +582,200 @@ export function validateFounderLiveAgentDispatchReadinessContract(envelope = {})
   const serialized = JSON.stringify(data);
   if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("Founder agent dispatch CRUD model must not expose raw private IDs");
   if (/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now|execute now/i.test(serialized)) errors.push("Founder agent dispatch CRUD model must not expose fake unsafe runnable actions");
+  return { valid: errors.length === 0, errors };
+}
+
+export function buildAgentDispatchReadinessViewModel(input = {}) {
+  const contractEnvelope = input.contractEnvelope || buildFounderLiveAgentDispatchReadinessContract(input);
+  const assignmentSummary = sourceAssignmentSummary(input);
+  const dispatchRows = dispatchPreviewLanes(input).map((lane, index) => buildPreviewDispatchRow(lane, index, input));
+  const dispatchSections = buildPreviewDispatchSections(dispatchRows);
+  const previewReady = dispatchRows.length > 0;
+
+  return createPassResult({
+    phase: P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PREVIEW_PHASE,
+    mode: "founder-live-agent-dispatch-readiness-preview",
+    source: "live-ready/founderLiveAgentDispatchReadiness.js",
+    summary: "Founder live agent dispatch readiness preview is assembled locally from display-safe assignment context; dispatch writes and live execution remain blocked.",
+    data: {
+      schemaVersion: "1.0",
+      currentState: previewReady
+        ? P114_AGENT_DISPATCH_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED
+        : P114_AGENT_DISPATCH_READINESS_PREVIEW_STATES.NEEDS_ASSIGNMENT_CONTEXT,
+      sourceContractPhase: contractEnvelope.phase,
+      sourceContractState: contractEnvelope.data?.currentState || "",
+      previewMode: "local-only-dry-run",
+      sourceAssignmentSummary: assignmentSummary,
+      dispatchReadinessSummary: {
+        previewReady,
+        candidateCount: dispatchRows.length,
+        blockedCandidateCount: dispatchRows.length,
+        writableCandidateCount: 0,
+        persistedCandidateCount: 0,
+        dispatchableCandidateCount: 0,
+        executableCandidateCount: 0,
+        projectMutationCandidateCount: 0,
+        hostedDbMutationCandidateCount: 0,
+        providerSpendCandidateCount: 0,
+      },
+      dispatchSections,
+      dispatchRows,
+      forbiddenOperations: [...FORBIDDEN_OPERATIONS],
+      nextAction: previewReady
+        ? "Render P114.5 Command Center dispatch readiness preview on non-chat founder pages without write or execution controls."
+        : "Complete display-safe founder assignment context before dispatch readiness preview assembly.",
+      blockers: [
+        "Dispatch readiness preview is local and read-only.",
+        "Local dispatch writes require explicit operator approval gates in a separate CRUD request.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project creation and mutation remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Deploy, release, export, and package actions remain blocked.",
+        "Network calls and provider spend remain blocked.",
+      ],
+      disabledReason:
+        "P114.4 is a local dispatch readiness preview only. It does not write dispatch records, unlock execution, admit runtime execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+      ownerCapability: "NEXUS Founder Agent Dispatch Readiness Preview",
+      evidenceRefs: [
+        "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+        "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+      ],
+      auditRefs: ["reports/os-phase-status-report.md"],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic dispatch readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      commandCenterVisible: false,
+      dispatchWriteAllowed: false,
+      localCrudAllowed: false,
+      dbWriteAllowed: false,
+      sqliteWriteAllowed: false,
+      hostedDbMutationAllowed: false,
+      runtimeAdmissionAllowed: false,
+      runtimeTransitionAllowed: false,
+      executionAllowed: false,
+      dispatchAllowed: false,
+      workerExecutionAllowed: false,
+      toolExecutionAllowed: false,
+      projectCreationAllowed: false,
+      projectMutationAllowed: false,
+      deployAllowed: false,
+      releaseAllowed: false,
+      exportAllowed: false,
+      packageAllowed: false,
+      spendAllowed: false,
+      ...blockedRuntimeFlags(),
+    },
+    evidence: [
+      "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+      "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+      "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+    ],
+    warnings: [
+      "P114.4 does not write dispatch records, unlock execution, admit runtime execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, package, or spend.",
+    ],
+  });
+}
+
+export function validateAgentDispatchReadinessViewModel(envelope = {}) {
+  const errors = [];
+  const data = envelope.data || {};
+  if (envelope.phase !== P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PREVIEW_PHASE) errors.push("phase must be P114.4");
+  for (const field of [
+    "schemaVersion",
+    "currentState",
+    "sourceContractPhase",
+    "sourceContractState",
+    "previewMode",
+    "sourceAssignmentSummary",
+    "dispatchReadinessSummary",
+    "dispatchSections",
+    "dispatchRows",
+    "forbiddenOperations",
+    "nextAction",
+    "blockers",
+    "disabledReason",
+    "ownerCapability",
+    "evidenceRefs",
+    "auditRefs",
+    "activityLocation",
+    "costImpact",
+  ]) {
+    if (!(field in data)) errors.push(`${field} missing`);
+  }
+  if (data.previewMode !== "local-only-dry-run") errors.push("previewMode must be local-only-dry-run");
+  if (!Array.isArray(data.dispatchRows) || data.dispatchRows.length < 3) errors.push("dispatchRows must include founder agent dispatch candidates");
+  if (!Array.isArray(data.dispatchSections) || data.dispatchSections.length < 3) errors.push("dispatchSections must describe candidate, gate, and blocked authority groups");
+  for (const countField of [
+    "writableCandidateCount",
+    "persistedCandidateCount",
+    "dispatchableCandidateCount",
+    "executableCandidateCount",
+    "projectMutationCandidateCount",
+    "hostedDbMutationCandidateCount",
+    "providerSpendCandidateCount",
+  ]) {
+    if (data.dispatchReadinessSummary?.[countField] !== 0) errors.push(`${countField} must be 0`);
+  }
+  for (const flag of [
+    "dispatchWriteAllowed",
+    "localCrudAllowed",
+    "dbWriteAllowed",
+    "sqliteWriteAllowed",
+    "hostedDbMutationAllowed",
+    "runtimeAdmissionAllowed",
+    "runtimeTransitionAllowed",
+    "executionAllowed",
+    "dispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectCreationAllowed",
+    "projectMutationAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageAllowed",
+    "spendAllowed",
+  ]) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const flag of BLOCKED_RUNTIME_FLAGS) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const row of data.dispatchRows || []) {
+    for (const field of ["displayHandle", "displayLabel", "sourceAssignmentLabel", "proposedDispatchLane", "proposedOutcome", "dispatchPosition", "dispatchState", "previewMode", "dispatchSummary", "nextAction", "blockers", "disabledReason", "ownerCapability", "evidenceRefs", "auditRefs", "activityLocation", "costImpact"]) {
+      if (!(field in row)) errors.push(`${row.displayLabel || "row"}.${field} missing`);
+    }
+    if (row.previewMode !== "local-only-dry-run") errors.push(`${row.displayLabel}.previewMode must be local-only-dry-run`);
+    for (const flag of [
+      "dispatchWriteAllowed",
+      "localCrudAllowed",
+      "dbWriteAllowed",
+      "sqliteWriteAllowed",
+      "hostedDbMutationAllowed",
+      "dispatchAllowed",
+      "executionAllowed",
+      "workerExecutionAllowed",
+      "toolExecutionAllowed",
+      "runtimeAdmissionAllowed",
+      "projectCreationAllowed",
+      "projectMutationAllowed",
+      "deployAllowed",
+      "releaseAllowed",
+      "exportAllowed",
+      "packageAllowed",
+      "spendAllowed",
+    ]) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+    for (const flag of BLOCKED_RUNTIME_FLAGS) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+  }
+  const serialized = JSON.stringify(data);
+  if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("dispatch readiness preview must not expose raw private IDs");
+  if (/(dispatchReadinessId|assignmentId|queueItemId|workOrderId|sqliteEntity|recordRef|requestKey|founder_agent_dispatch_readiness_items|founder_agent_dispatch_readiness_events|founder_agent_dispatch_readiness_evidence_refs)/.test(serialized)) errors.push("dispatch readiness preview must not expose raw dispatch record keys or DB table names");
+  if (/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write dispatch now/i.test(serialized)) errors.push("dispatch readiness preview must not expose fake unsafe runnable actions");
+  if (/raw JSON|raw logs|raw policy dump/i.test(serialized)) errors.push("dispatch readiness preview must not expose raw dumps");
   return { valid: errors.length === 0, errors };
 }

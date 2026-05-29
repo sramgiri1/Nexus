@@ -696,6 +696,14 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, runtime admission, deploy, release, export, package, network call,
   and provider spend remain unavailable.
+- P114.4 dispatch readiness preview: P114 now has a display-safe local dry-run
+  model for founder agent dispatch candidates, including assignment context,
+  dispatch lane rows, blocked authority sections, next actions, blockers,
+  evidence/activity locations, and cost impact. P114.5 is next for Command
+  Center agent dispatch UX. Dispatch writes, SQLite writes, provider/model
+  call, agent dispatch, worker/tool execution, project mutation, hosted DB
+  mutation, raw SQL interface, runtime admission, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

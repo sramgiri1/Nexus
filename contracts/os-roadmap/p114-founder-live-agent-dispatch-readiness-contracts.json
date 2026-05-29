@@ -393,15 +393,15 @@
     {
       "phaseId": "P114.4",
       "title": "Dispatch Readiness Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build a display-safe local dry-run view model for dispatch readiness candidates without writing dispatch records or dispatching agents.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "f6933cdd8f4d712bb67c2d71d3ae3b9a4c3d079f",
       "allowedFiles": [
         "live-ready/founderLiveAgentDispatchReadiness.js",
-        "scripts/check-p1143-founder-live-agent-dispatch-crud-model.js",
-        "reports/p1143-founder-live-agent-dispatch-crud-model-report.md",
+        "scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
+        "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
         "scripts/check-p1144-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
@@ -434,8 +434,8 @@
       ],
       "exactFiles": [
         "live-ready/founderLiveAgentDispatchReadiness.js",
-        "scripts/check-p1143-founder-live-agent-dispatch-crud-model.js",
-        "reports/p1143-founder-live-agent-dispatch-crud-model-report.md",
+        "scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
+        "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
         "scripts/check-p1144-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
@@ -448,24 +448,31 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "expectedExports": [
+        "P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PREVIEW_PHASE",
+        "P114_AGENT_DISPATCH_READINESS_PREVIEW_STATES",
+        "buildAgentDispatchReadinessViewModel",
+        "validateAgentDispatchReadinessViewModel"
+      ],
+      "dataShape": "Display-safe local-only dry-run dispatch readiness view model with sourceAssignmentSummary, dispatchReadinessSummary, dispatchSections, dispatchRows, evidence/audit/activity/cost refs, disabled reasons, next actions, blockers, and all unsafe runtime/write/dispatch/project/spend flags false.",
+      "commandCenterUx": "No dashboard source change in P114.4. The dry-run data model is Command Center hidden until P114.5 renders it on non-chat founder pages without write, dispatch, execution, provider, project, deploy, package, or spend controls.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "No new Playwright test in P114.4 because no UI source changes are made."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P114.4 checker."
+        "Add dedicated P114.4 dispatch readiness preview checker.",
+        "P114.3 remains compatible with the P114.4/P114.5 handoff state."
       ],
-      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.4.",
-      "phaseStatusUpdate": "P114 in progress; P114.4 complete when implemented.",
+      "docsRoadmap": "P114.4 is recorded in the P114 plan, README, platform roadmap, OS status, and generated reports. P114.5 is next for Command Center Agent Dispatch UX.",
+      "phaseStatusUpdate": "P114 in progress; P114.4 complete; current P114.4; previous P114.3; next P114.5.",
       "validationCommands": [
         "npm run check:p1144-founder-live-agent-dispatch-readiness",
+        "npm run check:p1143-founder-live-agent-dispatch-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -477,7 +484,7 @@
       ],
       "gitCommands": [
         "git add <allowed P114.4 files>",
-        "git commit -m \"feat(nexus): implement p1144 dispatch readiness\"",
+        "git commit -m \"feat(nexus): implement p1144 dispatch readiness preview\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [
@@ -851,8 +858,14 @@
     "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
     "P114.4 is next for safe dispatch readiness preview modeling."
   ],
-  "currentSubphase": "P114.3",
-  "previousSubphase": "P114.2",
-  "nextSubphase": "P114.4",
-  "summary": "P114 is in progress. P114.1-P114.3 define dispatch readiness contracts, local schema metadata, approved local CRUD, and isolated validation while unsafe authority remains blocked."
+  "currentSubphase": "P114.4",
+  "previousSubphase": "P114.3",
+  "nextSubphase": "P114.5",
+  "summary": "P114 is in progress. P114.1-P114.4 define dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, and isolated validation while unsafe authority remains blocked.",
+  "implementationNotes": [
+    "P114.1-P114.4 are complete.",
+    "P114.4 previews display-safe dispatch readiness candidates from assignment context without writing records or dispatching agents.",
+    "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+    "P114.5 is next for Command Center Agent Dispatch UX."
+  ]
 }
