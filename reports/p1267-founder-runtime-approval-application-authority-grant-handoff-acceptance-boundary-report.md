@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P126.7
-- Generated at: 2026-05-29T18:26:55.334Z
+- Generated at: 2026-05-29T18:27:45.710Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e611800d
+- Validation HEAD: 826b657d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | phase status advanced | PASS | P126.7/P126.6/P127 |
 | P127 handoff exists | PASS |  |
 | completed P126 entries have commits | PASS |  |
-| changed files stay in P126.7 allowed scope | PASS | README.md, contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js |
+| changed files stay in P126.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P126.7 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw acceptance table names | PASS |  |
