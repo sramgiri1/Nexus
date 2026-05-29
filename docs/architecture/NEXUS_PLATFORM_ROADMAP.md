@@ -3338,6 +3338,15 @@ worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
 deploy, release, export, package action, network call, and provider spend
 remain blocked.
 
+P120.1 is complete. The founder runtime approval decision persistence boundary
+is split into implementation-grade subphases, with P120.1 contract-only and
+P120.2 is next for browser-safe schema metadata. Approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

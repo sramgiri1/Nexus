@@ -643,7 +643,8 @@
     "check:p1194-founder-runtime-approval-decision-recording-boundary": "node scripts/check-p1194-founder-runtime-approval-decision-recording-boundary.js",
     "check:p1195-founder-runtime-approval-decision-recording-boundary": "node scripts/check-p1195-founder-runtime-approval-decision-recording-boundary.js",
     "check:p1196-founder-runtime-approval-decision-recording-boundary": "node scripts/check-p1196-founder-runtime-approval-decision-recording-boundary.js",
-    "check:p1197-founder-runtime-approval-decision-recording-boundary": "node scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js"
+    "check:p1197-founder-runtime-approval-decision-recording-boundary": "node scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js",
+    "check:p1201-founder-runtime-approval-decision-persistence-boundary-contract": "node scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

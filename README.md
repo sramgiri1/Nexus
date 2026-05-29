@@ -1023,6 +1023,14 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P120.1 approval decision persistence contract: P120 is now split into
+  implementation-grade subphases for the founder approval decision persistence
+  boundary. P120.1 is contract-only, P120.2 is next for browser-safe schema
+  metadata, and approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

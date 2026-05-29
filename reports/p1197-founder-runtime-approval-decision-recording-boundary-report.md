@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P119.7
-- Generated at: 2026-05-29T06:49:46.572Z
+- Generated at: 2026-05-29T06:56:21.399Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c92589ee
+- Validation HEAD: 2c1d7430
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,14 +25,14 @@
 | contract handoff points to P120 | PASS |  |
 | P119.7 records final validation commands | PASS |  |
 | P119.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P119.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P119.7 allowed scope | PASS | scope check relaxed for P120.1 |
+| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, scripts/check-os-phase-status.js, scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md, scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js |
 | P119.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P120 handoff | PASS |  |
-| phase status closed | PASS | P119.7/P119.6/P120 |
+| phase status closed or P120.1 started | PASS | P120.1/P119.7/P120.2 |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
-| P120 placeholder is controlled | PASS |  |
+| P120 handoff is controlled | PASS |  |
 | P119 plan records final validation | PASS |  |
 | platform roadmap records P119 complete | PASS |  |
 | README records P119 complete | PASS |  |

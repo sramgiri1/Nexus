@@ -1,0 +1,547 @@
+{
+  "phaseId": "P120",
+  "title": "Founder Runtime Approval Decision Persistence Boundary",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Define and validate the founder approval decision persistence boundary while keeping approval persistence, approve/reject decision recording, DB/runtime writes, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
+  "currentSubphase": "P120.1",
+  "previousSubphase": "P119.7",
+  "nextSubphase": "P120.2",
+  "safetyRules": [
+    "Do not enable approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P120.1.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show raw private project IDs, approval decision keys, raw DB table names, raw JSON, raw logs, or raw policy dumps in primary UX.",
+    "Do not invent fake working actions, approval persistence buttons, approve/reject buttons, save decision buttons, or live run controls."
+  ],
+  "reuseRequirements": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "existing dashboard tabs/cards/badges",
+    "existing route matrix",
+    "existing evidence/audit/activity helpers"
+  ],
+  "knownLimitations": [
+    "P120.1 is contract/policy only.",
+    "Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
+  ],
+  "subphases": [
+    {
+      "phaseId": "P120.1",
+      "title": "Approval Decision Persistence Contract / Policy",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Define the P120 approval-decision persistence boundary contract, subphase split, safety policy, reuse rules, validation commands, and OS handoff records without implementation behavior.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json",
+        "docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md",
+        "scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js",
+        "scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1197-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json",
+        "docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md",
+        "scripts/check-p1201-founder-runtime-approval-decision-persistence-boundary-contract.js",
+        "scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1197-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/p1201-founder-runtime-approval-decision-persistence-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No approval decision persistence data shape is implemented in P120.1. Future subphases may define browser-safe metadata and local schema descriptions only after explicit scoped plans.",
+      "commandCenterUx": "No Command Center source change in P120.1. Preserve P119 approval decision boundary UX and keep Chat with NEXUS and Lite chat clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test because P120.1 has no UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add a P120.1 contract checker.",
+        "Update P119.7 final checker to accept P120.1 started handoff.",
+        "Update OS phase status checker to recognize P120.1-P120.7."
+      ],
+      "docsRoadmap": "Update P120 plan, README, platform roadmap, OS status, generated reports, and P120 contract for P120.1.",
+      "phaseStatusUpdate": "P120 in progress; P120.1 complete; current phase P120.1; previous P119.7; next P120.2.",
+      "validationCommands": [
+        "npm run check:p1201-founder-runtime-approval-decision-persistence-boundary-contract",
+        "npm run check:p1197-founder-runtime-approval-decision-recording-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P120.1 files>",
+        "git commit -m \"feat(nexus): implement p1201 approval decision persistence contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P120.2",
+      "previousPhase": "P119.7",
+      "expectedBaseCommit": "2c1d7430"
+    },
+    {
+      "phaseId": "P120.2",
+      "title": "Approval Decision Persistence Schema Metadata",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Define browser-safe approval decision persistence schema metadata without DB files, DB writes, persistence, or approve/reject decision recording.",
+      "allowedFiles": [],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase.",
+      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test unless dashboard source changes are explicitly allowed."
+      ],
+      "checkerUpdates": [],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P120.2 planned.",
+      "validationCommands": [],
+      "gitCommands": [
+        "git add <allowed P120.2 files>",
+        "git commit -m \"feat(nexus): implement p1202 approval decision persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P120.3",
+      "previousPhase": "P120.1"
+    },
+    {
+      "phaseId": "P120.3",
+      "title": "Governed Local Approval Decision Persistence Intent Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Map approval decision persistence intent locally without writes, dispatch, execution, or provider calls.",
+      "allowedFiles": [],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase.",
+      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test unless dashboard source changes are explicitly allowed."
+      ],
+      "checkerUpdates": [],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P120.3 planned.",
+      "validationCommands": [],
+      "gitCommands": [
+        "git add <allowed P120.3 files>",
+        "git commit -m \"feat(nexus): implement p1203 approval decision persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P120.4",
+      "previousPhase": "P120.2"
+    },
+    {
+      "phaseId": "P120.4",
+      "title": "Approval Decision Persistence Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Preview persistence readiness locally without saving decisions, writing DB/runtime records, or unlocking execution.",
+      "allowedFiles": [],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase.",
+      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test unless dashboard source changes are explicitly allowed."
+      ],
+      "checkerUpdates": [],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P120.4 planned.",
+      "validationCommands": [],
+      "gitCommands": [
+        "git add <allowed P120.4 files>",
+        "git commit -m \"feat(nexus): implement p1204 approval decision persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P120.5",
+      "previousPhase": "P120.3"
+    },
+    {
+      "phaseId": "P120.5",
+      "title": "Command Center Approval Decision Persistence Boundary UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Show display-safe approval decision persistence readiness in scoped Command Center pages without write controls.",
+      "allowedFiles": [],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase.",
+      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test unless dashboard source changes are explicitly allowed."
+      ],
+      "checkerUpdates": [],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P120.5 planned.",
+      "validationCommands": [],
+      "gitCommands": [
+        "git add <allowed P120.5 files>",
+        "git commit -m \"feat(nexus): implement p1205 approval decision persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P120.6",
+      "previousPhase": "P120.4"
+    },
+    {
+      "phaseId": "P120.6",
+      "title": "Approval Decision Persistence Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Validate P120.1-P120.5 together and close docs/status alignment before final validation.",
+      "allowedFiles": [],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase.",
+      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test unless dashboard source changes are explicitly allowed."
+      ],
+      "checkerUpdates": [],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P120.6 planned.",
+      "validationCommands": [],
+      "gitCommands": [
+        "git add <allowed P120.6 files>",
+        "git commit -m \"feat(nexus): implement p1206 approval decision persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P120.7",
+      "previousPhase": "P120.5"
+    },
+    {
+      "phaseId": "P120.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Close P120 and hand off to the next planned phase without enabling approval persistence or runtime execution.",
+      "allowedFiles": [],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this subphase.",
+      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test unless dashboard source changes are explicitly allowed."
+      ],
+      "checkerUpdates": [],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P120.7 planned.",
+      "validationCommands": [],
+      "gitCommands": [
+        "git add <allowed P120.7 files>",
+        "git commit -m \"feat(nexus): implement p1207 approval decision persistence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval persistence, DB writes, or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P121",
+      "previousPhase": "P120.6"
+    }
+  ],
+  "summary": "P120 is in progress. P120.1 defines the approval-decision persistence boundary contract while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
+}
