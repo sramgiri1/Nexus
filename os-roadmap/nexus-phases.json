@@ -12286,7 +12286,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f9312b23",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
       "detail": "P122.4 authority safe dry run complete; P122.5 UX is next.",
@@ -12307,7 +12307,7 @@
       "knownLimitations": [
         "P122.4 is safe dry-run preview only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:54:26.435Z"
+      "completedAt": "2026-05-29T13:55:11.308Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12390,7 +12390,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f9312b23",
       "commandCenterVisible": true,
       "label": "Authority Dry Run",
       "detail": "Local safe dry-run preview complete; P122.5 is next.",
@@ -12411,7 +12411,7 @@
       "knownLimitations": [
         "P122.4 is safe dry-run preview only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:54:26.435Z"
+      "completedAt": "2026-05-29T13:55:11.308Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12474,14 +12474,14 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T13:54:26.435Z",
+  "updatedAt": "2026-05-29T13:55:11.308Z",
   "currentPhase": "P122.4",
   "previousPhase": "P122.3",
   "nextPhase": "P122.5",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "f9312b23",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
     "detail": "P122.4 authority safe dry run complete; P122.5 UX is next.",
@@ -12502,7 +12502,7 @@
     "knownLimitations": [
       "P122.4 is safe dry-run preview only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T13:54:26.435Z"
+    "completedAt": "2026-05-29T13:55:11.308Z"
   },
-  "generatedAt": "2026-05-29T13:54:26.435Z"
+  "generatedAt": "2026-05-29T13:55:11.308Z"
 }
