@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.4
-- Generated at: 2026-05-29T05:23:45.373Z
+- Generated at: 2026-05-29T05:24:58.939Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3dc38112
+- Validation HEAD: 09f94b85
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | README records P118.4 | PASS |  |
 | platform roadmap records P118.4 | PASS |  |
 | phase status advanced | PASS | P118.4/P118.3/P118.5 |
-| changed files stay in P118.4 allowed scope | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1183-founder-runtime-approval-capture-boundary.js, shared/founderApprovalCaptureIntentModel.js, reports/p1184-founder-runtime-approval-capture-boundary-report.md, scripts/check-p1184-founder-runtime-approval-capture-boundary.js, shared/founderApprovalCapturePreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1183-founder-runtime-approval-capture-boundary.js, shared/founderApprovalCaptureIntentModel.js, reports/p1184-founder-runtime-approval-capture-boundary-report.md, scripts/check-p1184-founder-runtime-approval-capture-boundary.js, shared/founderApprovalCapturePreview.js |
+| changed files stay in P118.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |

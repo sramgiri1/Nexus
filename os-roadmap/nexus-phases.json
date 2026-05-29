@@ -11408,7 +11408,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "09f94b85",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
       "detail": "P118.4 approval capture safe dry run complete; P118.5 scoped UX is next.",
@@ -11517,7 +11517,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "09f94b85",
       "commandCenterVisible": true,
       "label": "Approval Capture Dry Run",
       "detail": "Local approval capture safe dry-run preview complete without approvals or writes.",
@@ -11603,7 +11603,7 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T05:23:18.794Z",
+  "updatedAt": "2026-05-29T05:24:48.588Z",
   "currentPhase": "P118.4",
   "previousPhase": "P118.3",
   "nextPhase": "P118.5",
