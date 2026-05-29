@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P130.6
-- Generated at: 2026-05-29T22:41:12.697Z
+- Generated at: 2026-05-29T22:47:03.153Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: cffd1233
+- Validation HEAD: faa4ffb6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -20,7 +20,7 @@
 | package script registered | PASS |  |
 | contract marks P130.6 complete | PASS |  |
 | P130.6 records expected base commit | PASS |  |
-| P130.7 remains planned | PASS |  |
+| P130.7 remains planned or complete | PASS |  |
 | P130.6 allowed files include checker and reports | PASS |  |
 | P130.6 forbids dashboard/project/db/runtime paths | PASS |  |
 | P130.6 records validation commands | PASS |  |
@@ -33,11 +33,11 @@
 | plan records P130.6 implementation | PASS |  |
 | README records P130.6 | PASS |  |
 | platform roadmap records P130.6 | PASS |  |
-| phase status advanced | PASS | P130.6/P130.5/P130.7 |
+| phase status advanced | PASS | P130.7/P130.6/P131 |
 | phase status summary objects advanced | PASS |  |
 | completed P130.6 entries have required fields | PASS |  |
-| changed files stay in P130.6 allowed scope | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P130.6 allowed scope | PASS | scope check relaxed for P130.7 |
+| forbidden paths unchanged | PASS | P130.6 forbidden path check relaxed for P130.7 |
 | public docs avoid raw store table names | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |

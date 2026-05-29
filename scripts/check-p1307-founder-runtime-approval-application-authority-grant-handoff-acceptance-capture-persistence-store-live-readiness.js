@@ -5,7 +5,7 @@ import { buildCheckTable, writeMarkdownReport } from "../shared/reportWriter.js"
 import { printCheckReport } from "../shared/checkResultFormatter.js";
 
 const ROOT = process.cwd();
-const REPORT_PATH = "reports/p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md";
+const REPORT_PATH = "reports/p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md";
 const CONTRACT_PATH = "contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json";
 const PLAN_PATH = "docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md";
 
@@ -37,7 +37,7 @@ function hasUnsafePositiveClaim(text, pattern) {
   return lines.some((line, index) => {
     const context = `${lines[index - 2] || ""} ${lines[index - 1] || ""} ${line}`;
     return pattern.test(line)
-      && !/\b(no|not|never|without|blocked|unavailable|disabled|forbidden|do not|does not|remain|remains|safe dry-run|dry-run-only|planned-only|display-only|read-only|future|local-only|model-only|evidence gate|gate only|cannot|validation\/docs)\b/i.test(context);
+      && !/\b(no|not|never|without|blocked|unavailable|disabled|forbidden|do not|does not|remain|remains|safe dry-run|dry-run-only|planned-only|display-only|read-only|future|local-only|model-only|evidence gate|gate only|cannot|validation\/docs|final validation)\b/i.test(context);
   });
 }
 
@@ -53,12 +53,12 @@ const roadmap = readJson("os-roadmap/nexus-phases.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
 const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId, entry]));
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
-const p1306 = subphaseById.get("P130.6") || {};
 const p1307 = subphaseById.get("P130.7") || {};
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
-const p1305Checker = readText("scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js");
+const osChecker = readText("scripts/check-os-phase-status.js");
+const p1306Checker = readText("scripts/check-p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js");
 const dataSource = readText("dashboard/src/data/businessBuild.js");
 const pageSource = readText("dashboard/src/pages/CommandCenterV2.jsx");
 const routeTests = readText("dashboard/tests/routes.spec.js");
@@ -67,8 +67,8 @@ const roadmapP130Slice = platformRoadmap.match(/P130\.1 is complete[\s\S]*?Imple
 const docsBundle = `${plan}\n${readmeP130Slice}\n${roadmapP130Slice}`;
 const publicDocsBundle = `${readmeP130Slice}\n${roadmapP130Slice}`;
 const changed = changedFiles();
-const enforceCurrentDiffScope = status.currentPhase === "P130.6";
-const allowedFiles = new Set(p1306.allowedFiles || []);
+const enforceCurrentDiffScope = status.currentPhase === "P130.7";
+const allowedFiles = new Set(p1307.allowedFiles || []);
 const forbiddenPrefixes = [
   "projects/",
   "careloop/",
@@ -86,10 +86,10 @@ const forbiddenPrefixes = [
   "packages/",
   ".env",
 ];
-const requiredScript = "check:p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness";
+const requiredScript = "check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness";
 const validationCommands = [
+  "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
   "npm run check:p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-  "npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
   "npm run check:os-phase-status",
   "npm run check:phase-validation-coverage",
   "cd dashboard && npm run build",
@@ -103,77 +103,61 @@ const p130Reports = [
   "reports/p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
   "reports/p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
   "reports/p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
+  "reports/p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
 ];
-const completedSubphases = ["P130.1", "P130.2", "P130.3", "P130.4", "P130.5"];
+const completedSubphases = ["P130.1", "P130.2", "P130.3", "P130.4", "P130.5", "P130.6", "P130.7"];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck(
-  "contract marks P130.6 complete",
-  ((contract.status === "in_progress" && contract.currentSubphase === "P130.6" && contract.previousSubphase === "P130.5" && contract.nextSubphase === "P130.7")
-    || (contract.status === "complete" && contract.currentSubphase === "P130.7" && contract.previousSubphase === "P130.6" && contract.nextSubphase === "P131"))
-    && p1306.status === "complete",
-);
-addCheck("P130.6 records expected base commit", p1306.expectedBaseCommit === "ebda5611");
-addCheck("P130.7 remains planned or complete", ["planned", "complete"].includes(p1307.status));
-addCheck("P130.6 allowed files include checker and reports", p1306.allowedFiles?.includes("scripts/check-p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js") && p1306.allowedFiles?.includes(REPORT_PATH));
-addCheck("P130.6 forbids dashboard/project/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "dashboard/tests/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1306.forbiddenFiles?.includes(path)));
-addCheck("P130.6 records validation commands", validationCommands.every((command) => p1306.validationCommands?.includes(command)));
-addCheck("P130.1-P130.5 contract entries complete", completedSubphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("P130.1-P130.5 reports pass", p130Reports.every(reportPassed));
-addCheck("P130.5 checker accepts P130.6 handoff", p1305Checker.includes("p1306StartedState") && p1305Checker.includes('status.currentPhase === "P130.6"'));
+addCheck("contract marks P130 final state", contract.status === "complete" && contract.currentSubphase === "P130.7" && contract.previousSubphase === "P130.6" && contract.nextSubphase === "P131" && contract.nextPhase === "P131");
+addCheck("P130.7 records expected base commit", p1307.expectedBaseCommit === "faa4ffb6");
+addCheck("P130.1-P130.7 contract entries complete", completedSubphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
+addCheck("P130.7 allowed files include checker, OS checker, and report", p1307.allowedFiles?.includes("scripts/check-p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js") && p1307.allowedFiles?.includes("scripts/check-os-phase-status.js") && p1307.allowedFiles?.includes(REPORT_PATH));
+addCheck("P130.7 forbids dashboard/project/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "dashboard/tests/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1307.forbiddenFiles?.includes(path)));
+addCheck("P130.7 records validation commands", validationCommands.every((command) => p1307.validationCommands?.includes(command)));
+addCheck("P130.1-P130.6 reports pass", p130Reports.every(reportPassed), p130Reports.filter((report) => !reportPassed(report)).join(", "));
+addCheck("P130.6 checker accepts P130.7 handoff", p1306Checker.includes('contract.currentSubphase === "P130.7"') && p1306Checker.includes('status.currentPhase === "P130.7"') && p1306Checker.includes('status.next?.phaseId === "P131"'));
+addCheck("OS checker recognizes P131", osChecker.includes('"P131"'));
 addCheck("P130.5 scoped data export remains intact", dataSource.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessDisplayModel") && dataSource.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun"));
 addCheck("P130.5 scoped page labels remain intact", pageSource.includes("Business Build Store Live Readiness Gate") && pageSource.includes("Agent Flow Store Live Readiness Gate") && pageSource.includes('ariaLabel="Store live readiness gate"') && !pageSource.includes("Lite Store Live Readiness Gate") && !pageSource.includes("Chat Store Live Readiness Gate"));
 addCheck("P130.5 scoped route coverage remains", routeTests.includes("store live readiness gate appears only on scoped pages") && routeTests.includes("Business Build Store Live Readiness Gate") && routeTests.includes("Agent Flow Store Live Readiness Gate") && routeTests.includes("/command-center/lite") && routeTests.includes("/command-center/os-roadmap") && routeTests.includes("/command-center/live-readiness"));
-addCheck("plan records P130.6 implementation", /## P130\.6 Store Live Readiness Validation \/ Docs[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P130.6", /P130\.6 store live readiness validation/i.test(readme));
-addCheck("platform roadmap records P130.6", /P130\.6 is complete/i.test(platformRoadmap) && (/P130\.7\s+is next/i.test(platformRoadmap) || /P130\.7\s+is complete/i.test(platformRoadmap)));
+addCheck("plan records P130.7 implementation", /## P130\.7 Store Live Readiness Final Validation[\s\S]*Status:\s+complete/.test(plan));
+addCheck("README records P130.7", /P130\.7 store live readiness final validation/i.test(readme));
+addCheck("platform roadmap records P130.7", /P130\.7 is complete/i.test(platformRoadmap) && /P131\s+is planned/i.test(platformRoadmap));
 addCheck(
-  "phase status advanced",
-  ((status.currentPhase === "P130.6"
-    && status.previousPhase === "P130.5"
-    && status.nextPhase === "P130.7"
-    && roadmap.currentPhase === "P130.6"
-    && roadmap.previousPhase === "P130.5"
-    && roadmap.nextPhase === "P130.7")
-    || (status.currentPhase === "P130.7"
-      && status.previousPhase === "P130.6"
-      && status.nextPhase === "P131"
-      && roadmap.currentPhase === "P130.7"
-      && roadmap.previousPhase === "P130.6"
-      && roadmap.nextPhase === "P131"))
-    && ["in_progress", "complete"].includes(statusById.get("P130")?.status)
-    && ["in_progress", "complete"].includes(roadmapById.get("P130")?.status)
-    && statusById.get("P130.5")?.status === "complete"
-    && roadmapById.get("P130.5")?.status === "complete"
-    && statusById.get("P130.6")?.status === "complete"
-    && roadmapById.get("P130.6")?.status === "complete",
+  "phase status closed",
+  status.currentPhase === "P130.7"
+    && status.previousPhase === "P130.6"
+    && status.nextPhase === "P131"
+    && roadmap.currentPhase === "P130.7"
+    && roadmap.previousPhase === "P130.6"
+    && roadmap.nextPhase === "P131"
+    && statusById.get("P130")?.status === "complete"
+    && roadmapById.get("P130")?.status === "complete"
+    && statusById.get("P130.7")?.status === "complete"
+    && roadmapById.get("P130.7")?.status === "complete"
+    && statusById.get("P131")?.status === "planned"
+    && roadmapById.get("P131")?.status === "planned",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(
-  "phase status summary objects advanced",
-  (status.current?.phaseId === "P130.6"
-    && status.previous?.phaseId === "P130.5"
-    && status.next?.phaseId === "P130.7"
-    && roadmap.current?.phaseId === "P130.6"
-    && roadmap.previous?.phaseId === "P130.5"
-    && roadmap.next?.phaseId === "P130.7")
-    || (status.current?.phaseId === "P130.7"
-      && status.previous?.phaseId === "P130.6"
-      && status.next?.phaseId === "P131"
-      && roadmap.current?.phaseId === "P130.7"
-      && roadmap.previous?.phaseId === "P130.6"
-      && roadmap.next?.phaseId === "P131"),
+  "phase status summary objects closed",
+  status.current?.phaseId === "P130.7"
+    && status.previous?.phaseId === "P130.6"
+    && status.next?.phaseId === "P131"
+    && roadmap.current?.phaseId === "P130.7"
+    && roadmap.previous?.phaseId === "P130.6"
+    && roadmap.next?.phaseId === "P131",
 );
-addCheck("completed P130.6 entries have required fields", [statusById.get("P130"), statusById.get("P130.6"), roadmapById.get("P130.6")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
+addCheck("completed P130.7 entries have required fields", [statusById.get("P130"), statusById.get("P130.7"), roadmapById.get("P130.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck(
-  "changed files stay in P130.6 allowed scope",
+  "changed files stay in P130.7 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
   enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
 );
 addCheck(
   "forbidden paths unchanged",
   !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))),
-  enforceCurrentDiffScope ? changed.join(", ") : `P130.6 forbidden path check relaxed for ${status.currentPhase}`,
+  enforceCurrentDiffScope ? changed.join(", ") : `P130.7 forbidden path check relaxed for ${status.currentPhase}`,
 );
 addCheck("public docs avoid raw store table names", !/(approval_authority_grant_handoff_acceptance_capture_persistence_store|acceptance_capture_store|persistence_store_records|CREATE TABLE|INSERT INTO|UPDATE .* SET|DELETE FROM)/i.test(publicDocsBundle));
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
@@ -188,21 +172,21 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Validates aggregate P130.1-P130.5 evidence, reports, docs, scoped route coverage, checker handoffs, and OS status before final validation.",
-        "- Confirms P130.5 Store Live Readiness Gate remains scoped to Business Build and Agent Flow with Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
-        "- Does not modify dashboard source/tests, create runtime exports, create schemas, write DB/runtime records, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+        "- Closes P130 with final validation evidence, OS status, reports, and the planned-only P131 handoff.",
+        "- Confirms the P130.5 Store Live Readiness Gate remains scoped to Business Build and Agent Flow with Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
+        "- Does not create runtime exports, create schemas, run migrations, write DB/runtime records, admit live store actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
-    { title: "Validation Commands", body: p1306.validationCommands.map((command) => `- ${command}`).join("\n") },
+    { title: "Validation Commands", body: p1307.validationCommands.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P130.6 is validation/docs closure only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+      body: "- P130.7 is final validation only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P131 is planned-only until its own implementation-grade contract is written.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
-  { title: "P130.6 Store Live Readiness Validation / Docs Report", phase: "P130.6" },
+  { title: "P130.7 Store Live Readiness Final Validation Report", phase: "P130.7" },
 );
 
-printCheckReport("P130.6 Store Live Readiness Validation / Docs Check", checks, failed.length === 0 ? "PASS" : "FAIL");
+printCheckReport("P130.7 Store Live Readiness Final Validation Check", checks, failed.length === 0 ? "PASS" : "FAIL");
 if (failed.length > 0) process.exit(1);

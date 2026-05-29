@@ -1827,6 +1827,17 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P130.7 store live readiness final validation: Closed P130 with final
+  validation evidence, OS status, reports, and the planned-only P131 handoff
+  while preserving the scoped Store Live Readiness Gate on Business Build and
+  Agent Flow. P131 is planned only and has no implementation yet. Approval
+  capture, decision persistence, store CRUD execution, DB schemas, migrations,
+  DB/runtime reads or writes, live acceptance capture, handoff acceptance,
+  authority handoff, authority grant, activation, approval application,
+  approve/reject decision recording, runtime execution, execution unlock,
+  provider/model calls, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

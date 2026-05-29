@@ -1,11 +1,11 @@
 {
   "phaseId": "P130",
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store Live Readiness Gate",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P130.6",
-  "previousSubphase": "P130.5",
-  "nextSubphase": "P130.7",
+  "currentSubphase": "P130.7",
+  "previousSubphase": "P130.6",
+  "nextSubphase": "P131",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "54a628bd",
   "owner": "NEXUS OS",
@@ -668,10 +668,10 @@
     {
       "phaseId": "P130.7",
       "title": "Store Live Readiness Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1306-stamp",
+      "expectedBaseCommit": "faa4ffb6",
       "narrowGoal": "Close P130 with final validation evidence, OS status, reports, and the planned-only next-phase handoff while unsafe live actions remain blocked unless later explicitly admitted.",
       "allowedFiles": [
         "contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json",
@@ -747,20 +747,27 @@
       ],
       "previousPhase": "P130.6",
       "nextPhase": "P131",
-      "order": 166.7
+      "order": 166.7,
+      "detail": "P130.7 store live readiness final validation complete; P131 is planned only.",
+      "summary": "Closed P130 with final validation evidence, OS status, reports, and the planned-only P131 handoff while all live store actions remain blocked.",
+      "knownLimitations": [
+        "P130.7 is final validation only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P131 is planned-only until its own implementation-grade contract is written."
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T22:46:45.914Z"
     }
   ],
   "current": {
-    "phaseId": "P130.6",
-    "title": "Store Live Readiness Validation / Docs",
+    "phaseId": "P130.7",
+    "title": "Store Live Readiness Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "cffd1233",
-    "completedAt": "2026-05-29T22:38:36.934Z",
-    "summary": "Aggregated P130.1-P130.5 evidence, reports, docs, scoped route coverage, checker handoffs, and OS status while all live store actions remain blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T22:46:45.914Z",
+    "summary": "Closed P130 with final validation evidence, OS status, reports, and the planned-only P131 handoff while all live store actions remain blocked.",
     "checksRun": [
+      "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -769,9 +776,10 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P130.6 is validation/docs closure only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P130.7 is final validation only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P131 is planned-only until its own implementation-grade contract is written."
     ],
-    "nextPhase": "P130.7",
+    "nextPhase": "P131",
     "commandCenterVisible": true
-  }
+  },
+  "nextPhase": "P131"
 }
