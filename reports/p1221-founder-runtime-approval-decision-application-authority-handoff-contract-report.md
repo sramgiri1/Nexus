@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P122.1
-- Generated at: 2026-05-29T13:32:01.414Z
+- Generated at: 2026-05-29T13:32:45.640Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: afb30703
+- Validation HEAD: d3970998
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | README records P122.1 | PASS |  |
 | platform roadmap records P122.1 | PASS |  |
 | phase status advanced | PASS | P122.1/P121.7/P122.2 |
-| changed files stay in P122.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json, docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md, scripts/check-p1221-founder-runtime-approval-decision-application-authority-handoff-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json, docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md, scripts/check-p1221-founder-runtime-approval-decision-application-authority-handoff-contract.js |
+| changed files stay in P122.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw approval authority keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

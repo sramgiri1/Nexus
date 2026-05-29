@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.7
-- Generated at: 2026-05-29T13:32:04.895Z
+- Generated at: 2026-05-29T13:32:53.116Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: afb30703
+- Validation HEAD: d3970998
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | P121.7 records final validation commands | PASS |  |
 | P121.7 avoids forbidden file scope | PASS |  |
 | changed files stay in P121.7 allowed scope | PASS | scope check relaxed for P122.1 |
-| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json, docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md, reports/p1221-founder-runtime-approval-decision-application-authority-handoff-contract-report.md, scripts/check-p1221-founder-runtime-approval-decision-application-authority-handoff-contract.js |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1221-founder-runtime-approval-decision-application-authority-handoff-contract-report.md |
 | P121.6 checker accepts final handoff | PASS |  |
 | OS status checker recognizes P121 | PASS |  |
 | phase status closed or P122 started | PASS | P122.1/P121.7/P122.2 |

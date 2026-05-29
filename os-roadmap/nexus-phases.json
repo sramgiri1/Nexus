@@ -12286,7 +12286,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d3970998",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
       "detail": "P122.1 contract complete; P122.2 eligibility metadata is next.",
@@ -12307,12 +12307,12 @@
       "knownLimitations": [
         "P122.1 is contract-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:31:49.278Z"
+      "completedAt": "2026-05-29T13:32:42.281Z"
     },
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d3970998",
       "commandCenterVisible": true,
       "label": "Authority Contract",
       "detail": "Contract-only authority handoff complete; P122.2 is next.",
@@ -12333,7 +12333,7 @@
       "knownLimitations": [
         "P122.1 is contract-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:31:49.278Z"
+      "completedAt": "2026-05-29T13:32:42.281Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12456,14 +12456,14 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T13:31:49.278Z",
+  "updatedAt": "2026-05-29T13:32:42.281Z",
   "currentPhase": "P122.1",
   "previousPhase": "P121.7",
   "nextPhase": "P122.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d3970998",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
     "detail": "P122.1 contract complete; P122.2 eligibility metadata is next.",
@@ -12484,7 +12484,7 @@
     "knownLimitations": [
       "P122.1 is contract-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T13:31:49.278Z"
+    "completedAt": "2026-05-29T13:32:42.281Z"
   },
-  "generatedAt": "2026-05-29T13:31:49.278Z"
+  "generatedAt": "2026-05-29T13:32:42.281Z"
 }
