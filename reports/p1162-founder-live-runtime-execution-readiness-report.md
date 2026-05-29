@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.2
-- Generated at: 2026-05-29T03:02:41.759Z
+- Generated at: 2026-05-29T03:03:49.286Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 7194e4a1
+- Validation HEAD: 7a94edf4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P116.2 | PASS |  |
 | platform roadmap records P116.2 | PASS |  |
 | phase status advanced | PASS | P116.2/P116.1/P116.3 |
-| changed files stay in P116.2 allowed scope | PASS | README.md, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/db-foundation-report.md, reports/os-phase-status-report.md, reports/p1152-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/p922-sqlite-crud-repository-report.md, reports/phase-validation-coverage-report.md, scripts/check-db-foundation.js, scripts/check-p1152-founder-live-runtime-admission-readiness.js, scripts/check-p1161-founder-live-runtime-execution-contract.js, reports/p1162-founder-live-runtime-execution-readiness-report.md, scripts/check-p1162-founder-live-runtime-execution-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/db-foundation-report.md, reports/os-phase-status-report.md, reports/p1152-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/p922-sqlite-crud-repository-report.md, reports/phase-validation-coverage-report.md, scripts/check-db-foundation.js, scripts/check-p1152-founder-live-runtime-admission-readiness.js, scripts/check-p1161-founder-live-runtime-execution-contract.js, reports/p1162-founder-live-runtime-execution-readiness-report.md, scripts/check-p1162-founder-live-runtime-execution-readiness.js |
+| changed files stay in P116.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
 | public docs avoid raw runtime execution table names | PASS |  |
 | no unsafe runtime imports or URLs | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

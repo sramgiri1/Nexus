@@ -10950,7 +10950,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7a94edf4",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
       "detail": "P116.2 local execution schema metadata complete; P116.3 is next.",
@@ -11006,7 +11006,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7a94edf4",
       "commandCenterVisible": true,
       "label": "Local Execution Schema Metadata",
       "detail": "P116.2 local execution schema metadata complete; P116.3 is next.",
