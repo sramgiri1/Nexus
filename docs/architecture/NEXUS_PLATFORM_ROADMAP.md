@@ -3879,7 +3879,7 @@ blocked.
 P127.4 is complete. The local acceptance capture safe dry-run envelope now
 reuses P127.3 intent, P127.2 capture metadata, and P126.2 acceptance metadata
 while keeping all capture, write, execution, provider, dispatch, mutation,
-network, and spend flags blocked. P127.5 is next for scoped Command Center
+network, and spend flags blocked. P127.5 follows with scoped Command Center
 acceptance capture UX. Acceptance capture, handoff acceptance, grant handoff,
 authority grant, activation, approval application, approval capture, approval
 persistence, approve/reject decision recording, DB/runtime writes, runtime
@@ -3887,6 +3887,18 @@ execution, execution unlock, provider/model calls, agent dispatch, worker/tool
 execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
+
+P127.5 is complete. Business Build and Agent Flow now render display-safe
+approval application authority grant handoff acceptance capture readiness using
+the P127.4 dry-run envelope and existing Command Center boundary card. Chat
+with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean. P127.6 is next
+for validation/docs closure. Acceptance capture, record acceptance, handoff
+acceptance, authority handoff, authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)

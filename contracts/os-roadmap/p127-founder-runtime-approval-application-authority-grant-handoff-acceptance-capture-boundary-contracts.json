@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P127.4",
-  "previousSubphase": "P127.3",
-  "nextSubphase": "P127.5",
+  "currentSubphase": "P127.5",
+  "previousSubphase": "P127.4",
+  "nextSubphase": "P127.6",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "after-P126.7-stamp",
   "owner": "NEXUS OS",
@@ -522,21 +522,49 @@
     {
       "phaseId": "P127.5",
       "title": "Command Center Acceptance Capture UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P127.4-stamp",
-      "narrowGoal": "Surface scoped read-only acceptance capture readiness only where founder work is coordinated.",
+      "expectedBaseCommit": "5851fd34",
+      "narrowGoal": "Surface display-safe acceptance capture readiness only on scoped Command Center founder work pages.",
       "allowedFiles": [
-        "scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json",
+        "docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json",
+        "docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "live-ready/**",
         "local-state/runtime/**",
@@ -549,42 +577,74 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
-      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "expectedExports": [
+        "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryDisplayModel"
+      ],
+      "dataShape": "Browser-safe Command Center display model with currentState, founderIdea, previewMode, readiness row counts, zero acceptance/write/execution/spend candidate counts, summaryRows, readinessSections, readinessRows, safetyRows, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, and costImpact. No raw phase labels, report paths, private IDs, raw JSON/logs, DB schema, runtime schema, capture record shape, provider envelope, dispatch packet, or project data.",
+      "commandCenterUx": "Render display-safe acceptance capture readiness cards on Business Build and Agent Flow only. Preserve Chat/Lite as chat-focused, OS Roadmap as OS phases only, Live Readiness as readiness-only, route navigation, and dark/light/system themes. Do not show raw JSON, raw logs, raw policy dumps, raw DB names, private IDs, internal P127 labels, report paths, DemoApp, capture controls, accept handoff controls, save controls, execution controls, or fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Planned scoped route coverage if UX changes are later allowed."
+        "Add scoped page coverage for the acceptance capture card.",
+        "Verify Business Build and Agent Flow show the card in dark, light, and system themes.",
+        "Verify Lite, Chat, OS Roadmap, and Live Readiness do not show the card.",
+        "Verify no DemoApp, raw dumps, private IDs, internal phase labels, report paths, or fake runnable actions appear."
       ],
       "checkerUpdates": [
-        "Planned checker for the subphase."
+        "Add the P127.5 Command Center UX checker.",
+        "Reuse the existing approval decision boundary card structure and P127.4 safe dry-run model.",
+        "Confirm scoped rendering, display-safe data, Playwright coverage, allowed paths, and P127.4 handoff."
       ],
-      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P127 in progress; P127.5 complete when implemented; previous P127.4; next P127.6.",
-      "validationCommands": [],
-      "gitCommands": [],
+      "docsRoadmap": "Update the P127 plan, README, platform roadmap, OS status, generated reports, and P127 contract for P127.5.",
+      "phaseStatusUpdate": "P127 in progress; P127.5 complete; current phase P127.5; previous P127.4; next P127.6.",
+      "validationCommands": [
+        "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add dashboard/src/data/businessBuild.js dashboard/src/pages/CommandCenterV2.jsx dashboard/tests/routes.spec.js scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md package.json os-roadmap/phase-status.json os-roadmap/nexus-phases.json reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
+        "git commit -m \"feat(nexus): implement p1275 acceptance capture command center ux\"",
+        "git commit -m \"chore(nexus): stamp p1275 acceptance capture command center ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
       "finalSafetyChecks": [
-        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+        "Confirm no acceptance capture, handoff acceptance, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled.",
+        "Confirm Chat/Lite, OS Roadmap, and Live Readiness do not render the acceptance capture UX.",
+        "Confirm no raw P127 labels, report paths, private IDs, raw dumps, DemoApp, or fake runnable actions appear in primary UX.",
+        "Confirm forbidden project and runtime paths are untouched."
       ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
-        "Validation results",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
         "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
         "Next phase/subphase"
       ],
       "previousPhase": "P127.4",
       "nextPhase": "P127.6",
       "order": 163.5,
-      "detail": "Planned Command Center Acceptance Capture UX.",
-      "summary": "Planned Command Center Acceptance Capture UX. No P127.5 behavior is implemented in P127.1.",
+      "detail": "P127.5 Command Center acceptance capture UX is complete; P127.6 validation and docs closure is next.",
+      "summary": "Added display-safe acceptance capture readiness to scoped Command Center founder work pages by reusing the P127.4 safe dry-run envelope and existing card component. Capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "knownLimitations": [
-        "Planned only. Not implemented in P127.1."
+        "P127.5 is display-only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -724,5 +784,6 @@
       ]
     }
   ],
-  "nextPhase": "P127.2"
+  "nextPhase": "P127.2",
+  "updatedAt": "2026-05-29T19:06:50.344Z"
 }

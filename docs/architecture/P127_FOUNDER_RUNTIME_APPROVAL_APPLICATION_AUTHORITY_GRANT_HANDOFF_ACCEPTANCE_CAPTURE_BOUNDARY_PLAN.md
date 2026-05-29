@@ -434,9 +434,9 @@ Validation commands:
 - `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance appears only on scoped pages"`
 - `git diff --check`
 
-OS phase status update: P127 in progress, P127.4 complete, current phase
-P127.4, previous phase P127.3, next phase P127.5. P127.5-P127.7 remain
-planned-only.
+OS phase status update at completion: P127 in progress, P127.4 complete,
+current phase P127.4, previous phase P127.3, next phase P127.5. P127.5-P127.7
+remained planned-only at the P127.4 handoff.
 
 Known risks: dry-run preview language can imply execution. P127.4 keeps the
 preview local-only, hidden from primary UX, and all action booleans false.
@@ -447,11 +447,86 @@ current phase to P127.3 with P127.4 planned.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P127.5 Command Center Acceptance Capture UX
 
-P127.5 Command Center Acceptance Capture UX: planned. Scoped read-only UX only
-if explicitly implemented later. No Chat/Lite leakage and no runnable capture
-controls.
+Phase: P127 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Capture Boundary
+Subphase: P127.5 Command Center Acceptance Capture UX
+
+Goal: surface display-safe acceptance capture readiness only on scoped Command
+Center founder work pages.
+
+Why this is needed: P127.4 created a local safe-dry-run envelope, but the
+founder/operator could not inspect the acceptance capture boundary from the
+Business Build and Agent Flow pages.
+
+User/operator impact: Business Build and Agent Flow now show current capture
+state, next action, blockers, disabled reason, owner capability, evidence,
+activity, and cost impact for acceptance capture without adding capture or
+execution controls.
+
+Command Center impact: Business Build and Agent Flow render the existing
+read-only boundary card with acceptance capture data. Chat with NEXUS and Lite
+remain chat-focused, OS Roadmap remains OS-phase only, and Live Readiness stays
+readiness-only.
+
+Safety impact: display-only. Acceptance capture, record acceptance, handoff
+acceptance, authority handoff, authority grant, activation, DB/runtime writes,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package,
+network calls, and spend remain blocked.
+
+Cost impact: local deterministic display only. No provider/model/network calls
+or spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json`
+- `docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change: `projects/**`, `careloop/**`,
+`generated-projects/**`, `db/**`, `live-ready/**`, `local-state/runtime/**`,
+`providers/**`, `tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`,
+`exports/**`, `packages/**`, `.env*`.
+
+Tests to add/update/remove: add scoped Playwright coverage for the acceptance
+capture card in dark, light, and system themes; verify Business Build and
+Agent Flow show it; verify Lite, Chat root, OS Roadmap, and Live Readiness do
+not show it; add a P127.5 checker. No obsolete tests were removed.
+
+Docs to update: P127 plan, README, platform roadmap, OS phase status, generated
+reports, and P127 contract.
+
+Reports to regenerate: P127.4 report, P127.5 report, OS phase status report,
+and phase validation coverage report.
+
+OS phase status update: P127 in progress, P127.5 complete, current phase
+P127.5, previous phase P127.4, next phase P127.6. P127.6-P127.7 remain
+planned-only.
+
+Known risks: Command Center source is large, so P127.5 only adds scoped card
+placements and reuses the existing reusable card.
+
+Rollback plan: revert the P127.5 implementation and stamp commits, then return
+P127.5 to planned with P127.4 as the current completed handoff.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P127.6 Acceptance Capture Validation / Docs: planned validation/docs closure
 only.
