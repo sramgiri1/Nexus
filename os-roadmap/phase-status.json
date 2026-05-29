@@ -14593,28 +14593,30 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "89de0c85643f9a844eb556977a245cdc48a194bc",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
-      "detail": "P113.4 safe assignment preview complete; P113.5 Command Center assignment UX is next.",
+      "detail": "P113.5 Command Center assignment UX complete; P113.6 validation and docs closure is next.",
       "phaseId": "P113",
       "title": "Founder Live Agent Work Assignment Readiness",
       "order": 149,
       "status": "in_progress",
-      "summary": "P113 is in progress. P113.1-P113.4 define assignment readiness contracts, schema, approved local CRUD, and safe read-only preview data while unsafe authority remains blocked.",
-      "nextPhase": "P113.5",
+      "summary": "P113 is in progress. P113.1-P113.5 define assignment readiness contracts, schema, approved local CRUD, safe preview data, and scoped Command Center assignment UX while unsafe authority remains blocked.",
+      "nextPhase": "P113.6",
       "previousPhase": "P112.7",
       "checksRun": [
+        "npm run check:p1135-command-center-work-assignment-ux",
         "npm run check:p1134-founder-live-agent-work-assignment-preview",
-        "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent work assignment\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P113.4 is local preview only and does not write assignment records or expose runtime execution controls.",
-        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P113.5 is next for Command Center agent assignment UX."
+        "P113.5 renders display-safe assignment readiness on Business Build and Agent Flow only; Chat with NEXUS, Lite, and Live Readiness stay clean.",
+        "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P113.6 is next for validation and docs closure."
       ],
       "completedAt": ""
     },
@@ -14732,23 +14734,33 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Command Center Agent Assignment UX",
-      "detail": "Planned Command Center assignment readiness UX.",
+      "detail": "P113.5 assignment readiness UX complete; P113.6 validation and docs closure is next.",
       "phaseId": "P113.5",
       "title": "Command Center Agent Assignment UX",
       "order": 149.5,
-      "status": "planned",
-      "summary": "Planned display-safe assignment readiness UX for relevant founder operation pages.",
+      "status": "complete",
+      "summary": "P113.5 renders display-safe agent work assignment readiness on Business Build and Agent Flow while Chat with NEXUS, Lite, and Live Readiness stay clean.",
       "nextPhase": "P113.6",
       "previousPhase": "P113.4",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1135-command-center-work-assignment-ux",
+        "npm run check:p1134-founder-live-agent-work-assignment-preview",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent work assignment\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P113.5 is Command Center rendering only and does not write assignment records, unlock runtime admission, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "The assignment readiness card is scoped to Business Build and Agent Flow only.",
+        "P113.6 is next for validation and docs closure."
+      ],
+      "completedAt": "2026-05-29T00:16:05.302Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15273,8 +15285,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P113.4",
-  "previousPhase": "P113.3",
-  "nextPhase": "P113.5",
+  "currentPhase": "P113.5",
+  "previousPhase": "P113.4",
+  "nextPhase": "P113.6",
   "currentPhaseStatus": "complete"
 }

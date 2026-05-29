@@ -457,3 +457,129 @@ reasons and false safety flags on every preview row.
 Rollback plan: remove the P113.4 preview/checker/script/docs/status/report
 updates, restore P113 to P113.3 complete with P113.4 planned, and keep the
 P113.3 CRUD model unchanged.
+
+## P113.5 Command Center Agent Assignment UX
+
+Phase: P113 Founder Live Agent Work Assignment Readiness
+
+Subphase: P113.5 Command Center Agent Assignment UX
+
+Goal: show display-safe assignment readiness on Business Build and Agent Flow
+while keeping Chat with NEXUS, Lite, and Live Readiness clean.
+
+Why this is needed: P113.4 created safe assignment preview data, but founders
+and operators need to see how the idea maps to agent assignment lanes on the
+work pages where planning happens.
+
+User/operator impact: Business Build and Agent Flow now show assignment
+candidates, owner capabilities, blockers, next actions, evidence/activity
+locations, cost impact, and blocked authority counts without exposing raw DB
+identifiers.
+
+Command Center impact: adds one scoped card labeled `Founder agent work
+assignment readiness` to Business Build and Agent Flow only. Chat with NEXUS,
+Lite, Command Center home, and Live Readiness do not show the card.
+
+Safety impact: UI-only and read-only. Assignment writes, local CRUD admission,
+runtime admission, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package creation, network calls, and provider spend remain blocked.
+
+Cost impact: local display data only. No provider/model calls, network calls,
+or provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: `dashboard/src/data/businessBuild.js`,
+`dashboard/src/data/dbRuntimeReadiness.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+P113.5 checker, P113.4 compatibility checker/report, P113 contract, this plan,
+README, platform roadmap, package script registry, OS phase status files, and
+generated P113.5/P113.4/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`,
+`generated-projects/*/Sources/**`, `generated-projects/*/Tests/**`,
+`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added browser-safe
+`buildFounderLiveAgentWorkAssignmentDisplayModel`; added DB runtime summary
+rows for assignment readiness; added `FounderLiveAgentWorkAssignmentCard` and
+rendered it only on Business Build and Agent Flow; added focused Playwright
+coverage; added the P113.5 checker; registered the package script; updated
+P113 contract/status/docs; and regenerated reports.
+
+Expected exports/data shapes:
+- `buildFounderLiveAgentWorkAssignmentDisplayModel(founderIdeaSummary)`
+
+The browser-safe display model contains founder idea, preview mode, assignment
+candidate counts, assignment sections, assignment rows, safety rows, blockers,
+disabled reason, owner capability, evidence/activity locations, and cost
+impact. It contains no raw assignment IDs, queue IDs, work order IDs, table
+names, raw dumps, or runnable action labels.
+
+Safety rules: do not import node-only SQLite/runtime helpers into dashboard
+source. Do not expose write controls, dispatch controls, execution controls,
+raw JSON/logs/policy dumps, DemoApp, raw private IDs, raw assignment/queue
+keys, raw DB table names, or fake runnable actions.
+
+Reuse check: P113.5 reuses existing dashboard data/display patterns,
+`BusinessBuild` display model conventions, existing card/grid/pill components,
+`shared/reportWriter.js`, and `shared/checkResultFormatter.js`. It does not
+duplicate SQLite runtime, CRUD repository, report writer, checker formatter,
+phase status updater, result envelope, redaction helper, mode guard, route
+matrix, or UI status components.
+
+Command Center UX requirements: Business Build and Agent Flow show what changed
+through the assignment card; current state, next action, blockers, disabled
+reason, owner capability, evidence/activity location, and cost impact are all
+visible. Chat with NEXUS stays chat-related; Lite stays chat-only; Live
+Readiness stays clear of assignment preview details.
+
+Dark/light/system theme requirements: Playwright coverage checks the assignment
+card under Dark, Light, and System theme selection.
+
+Playwright tests: `dashboard/tests/routes.spec.js` adds focused coverage for
+`Agent work assignment readiness appears only on Business Build and Agent
+Flow`.
+
+Checker updates: P113.5 adds a dedicated checker validating the browser-safe
+display model, DB runtime summary, card render sites, page/test safety, docs,
+status, and raw ID/action exclusions.
+
+Docs/README/roadmap updates: P113.5 is recorded in this plan, README, platform
+roadmap, P113 contract, OS roadmap/status, and generated reports. P113.6 is
+next.
+
+OS phase status update: P113 is in progress; P113.5 is complete; current phase
+P113.5; previous P113.4; next P113.6.
+
+Validation commands:
+- `npm run check:p1135-command-center-work-assignment-ux`
+- `npm run check:p1134-founder-live-agent-work-assignment-preview`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Agent work assignment"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no runtime DB artifacts
+are created; no DemoApp exposure; no raw JSON/log/policy dumps; no raw private
+IDs, raw assignment keys, raw queue keys, or raw DB table names in primary UX;
+no fake runnable actions; no local write, hosted DB mutation, raw SQL
+interface, provider/model call, agent dispatch, worker/tool execution, project
+mutation, deploy, release, export, package, network, or provider spend
+authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P113.5 files>`
+- `git commit -m "feat(nexus): add p113 assignment ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: Command Center can become noisy if every readiness phase appears
+everywhere. P113.5 keeps the assignment card scoped to Business Build and Agent
+Flow and keeps Chat/Lite clean.
+
+Rollback plan: remove the P113.5 display model/card/test/checker/script/docs/
+status/report updates, restore P113 to P113.4 complete with P113.5 planned, and
+keep the P113.4 preview model unchanged.

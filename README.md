@@ -649,6 +649,14 @@ The Command Center and local operator surface have:
   mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P113.5 Command Center agent assignment UX: Business Build and Agent Flow now
+  show display-safe agent assignment readiness with assignment candidates,
+  owner capabilities, blockers, next actions, evidence/activity, cost impact,
+  and blocked authority counts. P113.6 is next for validation and docs closure.
+  Chat with NEXUS, Lite, and Live Readiness stay clean. Assignment writes,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

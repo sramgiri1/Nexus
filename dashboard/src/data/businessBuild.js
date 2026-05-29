@@ -1017,6 +1017,108 @@ export function buildFounderLiveAgentWorkQueueAdmissionDisplayModel(founderIdeaS
   };
 }
 
+export function buildFounderLiveAgentWorkAssignmentDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  // Keep this browser-safe: the P113 runtime helper owns SQLite assignment CRUD and is validated separately.
+  const rows = [
+    {
+      label: "Founder strategy assignment",
+      proposedAgentLane: "Founder Strategy",
+      proposedOutcome: "Clarify business feasibility, customer pain, value promise, and PRD readiness.",
+      ownerCapability: "NEXUS Founder Strategy Agent",
+    },
+    {
+      label: "Product architecture assignment",
+      proposedAgentLane: "Product Architecture",
+      proposedOutcome: "Map product scope, data boundaries, platform constraints, and build risks.",
+      ownerCapability: "NEXUS Product Architecture Agent",
+    },
+    {
+      label: "Launch operations assignment",
+      proposedAgentLane: "Launch Operations",
+      proposedOutcome: "Plan validation experiments, go-to-market blockers, pricing questions, and launch readiness.",
+      ownerCapability: "NEXUS Launch Operations Agent",
+    },
+  ];
+  const sections = [
+    { label: "Assignment candidates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Assignment gates", candidateCount: rows.length, blockedCount: rows.length },
+    { label: "Blocked authority", candidateCount: rows.length, blockedCount: rows.length },
+  ];
+  const disabledReason =
+    "P113.5 renders local assignment readiness preview state only. It cannot write assignment records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+
+  return {
+    currentState: "Founder Agent Work Assignment Readiness Preview Ready Execution Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Local Only Dry Run",
+    sourceQueueLabel: "Founder agent work queue item",
+    candidateCount: rows.length,
+    blockedCandidateCount: rows.length,
+    writableCandidateCount: 0,
+    persistedCandidateCount: 0,
+    dispatchableCandidateCount: 0,
+    executableCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    hostedDbMutationCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    nextAction: "Review assignment candidates before any future approved dispatch or execution phase.",
+    blockers: [
+      "Assignment readiness preview is local and read-only.",
+      "Local assignment writes require explicit operator approval gates in a separate CRUD request.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability: "NEXUS Founder Agent Work Assignment Readiness Preview",
+    evidenceLocation: "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic assignment readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    assignmentSections: sections.map((section) => ({
+      ...section,
+      nextAction: "Keep this section read-only.",
+      disabledReason: "Assignment readiness preview cannot write or execute.",
+    })),
+    assignmentRows: rows.map((row, index) => ({
+      label: row.label,
+      proposedAgentLane: row.proposedAgentLane || "Founder workstream agent",
+      proposedOutcome: row.proposedOutcome || "Prepare governed assignment readiness for later review.",
+      assignmentPosition: index + 1,
+      assignmentState: "Local Preview Ready Execution Blocked",
+      previewMode: "Local Only Dry Run",
+      nextAction: "Review this local assignment candidate before any approved dispatch or execution phase.",
+      blocker: "Assignment readiness preview is local and read-only.",
+      disabledReason,
+      ownerCapability: row.ownerCapability || "NEXUS Founder Agent Work Assignment Readiness Preview",
+      evidenceLocation: "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic assignment readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      assignmentWriteAllowed: "Blocked",
+      localCrudAllowed: "Blocked",
+      executionAllowed: "Blocked",
+      dispatchAllowed: "Blocked",
+      projectMutationAllowed: "Blocked",
+      hostedDbMutationAllowed: "Blocked",
+      providerSpendAllowed: "Blocked",
+    })),
+    safetyRows: [
+      { label: "Assignment writes", value: "Blocked" },
+      { label: "Local CRUD admission", value: "Blocked" },
+      { label: "Runtime admission", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -2163,6 +2265,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderLiveOperatorDecisionLedgerPersistence = buildFounderLiveOperatorDecisionLedgerPersistenceDisplayModel(prdFields.founderIdea);
   const founderLiveAgentWorkOrderPersistence = buildFounderLiveAgentWorkOrderPersistenceDisplayModel(prdFields.founderIdea);
   const founderLiveAgentWorkQueueAdmission = buildFounderLiveAgentWorkQueueAdmissionDisplayModel(prdFields.founderIdea);
+  const founderLiveAgentWorkAssignment = buildFounderLiveAgentWorkAssignmentDisplayModel(prdFields.founderIdea);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2302,6 +2405,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveOperatorDecisionLedgerPersistence,
     founderLiveAgentWorkOrderPersistence,
     founderLiveAgentWorkQueueAdmission,
+    founderLiveAgentWorkAssignment,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

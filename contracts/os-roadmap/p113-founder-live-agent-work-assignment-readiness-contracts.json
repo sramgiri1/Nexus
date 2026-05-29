@@ -497,11 +497,11 @@
     {
       "phaseId": "P113.5",
       "title": "Command Center Agent Assignment UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Show display-safe assignment readiness on Business Build and Agent Flow while keeping Chat with NEXUS and Lite clean.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "3d5b3a47cd434f524302647246bfc9bdf81c6aa6",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/data/dbRuntimeReadiness.js",
@@ -556,8 +556,8 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "Browser-safe Command Center display model for founder agent work assignment readiness with assignment candidate counts, assignment sections, assignment rows, safety rows, blockers, disabled reason, owner capability, evidence/activity locations, and cost impact. No raw assignment IDs, queue IDs, table names, raw dumps, write controls, dispatch controls, execution controls, or fake runnable actions are exposed.",
+      "commandCenterUx": "Business Build and Agent Flow render the display-safe assignment readiness card. Chat with NEXUS, Lite, Command Center home, and Live Readiness remain clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -569,8 +569,8 @@
       "checkerUpdates": [
         "Add or update the dedicated P113.5 checker."
       ],
-      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.5.",
-      "phaseStatusUpdate": "P113 in progress; P113.5 complete when implemented.",
+      "docsRoadmap": "P113.5 is recorded in the P113 plan, README, platform roadmap, OS status, and generated reports. P113.6 is next.",
+      "phaseStatusUpdate": "P113 in progress; P113.5 complete; current P113.5; previous P113.4; next P113.6.",
       "validationCommands": [
         "npm run check:p1135-command-center-work-assignment-ux",
         "npm run check:p1134-founder-live-agent-work-assignment-preview",
@@ -839,12 +839,12 @@
     "buildAgentWorkAssignmentReadinessViewModel"
   ],
   "knownLimitations": [
-    "P113.4 is local preview only and does not write assignment records or expose runtime execution controls.",
-    "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P113.5 is next for Command Center agent assignment UX."
+    "P113.5 renders display-safe assignment readiness on Business Build and Agent Flow only; Chat with NEXUS, Lite, and Live Readiness stay clean.",
+    "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+    "P113.6 is next for validation and docs closure."
   ],
-  "currentSubphase": "P113.4",
-  "previousSubphase": "P113.3",
-  "nextSubphase": "P113.5",
-  "summary": "P113 is in progress. P113.1-P113.4 define assignment readiness contracts, schema, approved local CRUD, and safe read-only preview data while unsafe authority remains blocked."
+  "currentSubphase": "P113.5",
+  "previousSubphase": "P113.4",
+  "nextSubphase": "P113.6",
+  "summary": "P113 is in progress. P113.1-P113.5 define assignment readiness contracts, schema, approved local CRUD, safe preview data, and scoped Command Center assignment UX while unsafe authority remains blocked."
 }
