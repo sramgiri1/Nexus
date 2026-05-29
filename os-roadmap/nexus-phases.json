@@ -13920,7 +13920,7 @@
       "order": 165,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "62210b91",
       "commandCenterVisible": true,
       "detail": "P129 is in progress; P129.2 store record schema metadata is complete and P129.3 store repository intent model is next.",
       "summary": "P129 capture persistence store work now includes the contract/policy and browser-safe local store record schema metadata while DB/runtime writes and live CRUD remain blocked.",
@@ -13939,7 +13939,7 @@
       "knownLimitations": [
         "P129.2 is schema metadata only. It does not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T20:55:38.015Z"
+      "completedAt": "2026-05-29T20:57:27.443Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13978,7 +13978,7 @@
       "order": 165.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "62210b91",
       "commandCenterVisible": true,
       "detail": "P129.2 store record schema metadata complete; P129.3 store repository intent model is next.",
       "summary": "Added browser-safe local acceptance capture persistence store schema metadata for future store records, indexes, and evidence links while reusing P128.2 persistence boundary metadata and keeping DB/runtime writes and live CRUD blocked.",
@@ -13997,7 +13997,7 @@
       "knownLimitations": [
         "P129.2 is schema metadata only. It does not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T20:55:38.015Z"
+      "completedAt": "2026-05-29T20:57:27.443Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14019,7 +14019,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-05-29T20:55:38.015Z",
+  "updatedAt": "2026-05-29T20:57:27.443Z",
   "currentPhase": "P129.2",
   "previousPhase": "P129.1",
   "nextPhase": "P129.3",
@@ -14031,7 +14031,7 @@
     "order": 165.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "62210b91",
     "commandCenterVisible": true,
     "detail": "P129.2 store record schema metadata complete; P129.3 store repository intent model is next.",
     "summary": "Added browser-safe local acceptance capture persistence store schema metadata for future store records, indexes, and evidence links while reusing P128.2 persistence boundary metadata and keeping DB/runtime writes and live CRUD blocked.",
@@ -14050,7 +14050,7 @@
     "knownLimitations": [
       "P129.2 is schema metadata only. It does not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T20:55:38.015Z"
+    "completedAt": "2026-05-29T20:57:27.443Z"
   },
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
@@ -14061,7 +14061,7 @@
     "order": 165.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "62210b91",
     "commandCenterVisible": true,
     "detail": "P129.2 store record schema metadata complete; P129.3 store repository intent model is next.",
     "summary": "Added browser-safe local acceptance capture persistence store schema metadata for future store records, indexes, and evidence links while reusing P128.2 persistence boundary metadata and keeping DB/runtime writes and live CRUD blocked.",
@@ -14080,6 +14080,6 @@
     "knownLimitations": [
       "P129.2 is schema metadata only. It does not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T20:55:38.015Z"
+    "completedAt": "2026-05-29T20:57:27.443Z"
   }
 }

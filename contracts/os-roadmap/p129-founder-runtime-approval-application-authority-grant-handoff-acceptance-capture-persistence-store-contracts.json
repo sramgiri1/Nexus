@@ -240,7 +240,9 @@
       "summary": "Added browser-safe local acceptance capture persistence store schema metadata that reuses P128.2 persistence boundary metadata while keeping DB/runtime writes and live CRUD blocked.",
       "knownLimitations": [
         "P129.2 is schema metadata only. It does not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-      ]
+      ],
+      "commit": "62210b91",
+      "completedAt": "2026-05-29T20:57:27.443Z"
     },
     {
       "phaseId": "P129.3",
@@ -673,8 +675,8 @@
     "title": "Store Record Schema Metadata",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
-    "completedAt": "2026-05-29T20:53:45.624Z",
+    "commit": "62210b91",
+    "completedAt": "2026-05-29T20:57:27.443Z",
     "summary": "Added browser-safe local acceptance capture persistence store schema metadata that reuses P128.2 persistence boundary metadata while keeping DB/runtime writes, live CRUD, execution, providers, dispatch, mutation, network, and spend blocked.",
     "checksRun": [
       "npm run check:p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
