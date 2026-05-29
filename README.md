@@ -863,6 +863,15 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
   SQL interface, deploy, release, export, package, network call, and provider
   spend remain unavailable.
+- P117.4 approval gate safe dry-run preview: local display-safe approval gate
+  candidates are now assembled with review context, current blocked state, next
+  action, blockers, owner, evidence/activity location, and cost posture while
+  remaining hidden from Command Center until the UX subphase. P117.5 is next
+  for Command Center approval gate UX. Approval capture, approval persistence,
+  approve/reject decision recording, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and later validate a governed founder runtime execution approval gate while keeping runtime execution blocked until a later explicitly scoped phase grants narrow authority.",
-  "currentSubphase": "P117.3",
-  "previousSubphase": "P117.2",
-  "nextSubphase": "P117.4",
+  "currentSubphase": "P117.4",
+  "previousSubphase": "P117.3",
+  "nextSubphase": "P117.5",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P117.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -377,12 +377,44 @@
     {
       "phaseId": "P117.4",
       "title": "Approval Gate Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Preview approval-gate candidates without capturing approvals, writing decisions, or unlocking execution.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "allowedFiles": [
+        "live-ready/founderRuntimeExecutionApprovalGate.js",
+        "scripts/check-p1174-founder-runtime-execution-approval-gate.js",
+        "contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json",
+        "docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1174-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1173-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1172-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1171-founder-runtime-execution-approval-gate-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "live-ready/founderRuntimeExecutionApprovalGate.js",
+        "scripts/check-p1174-founder-runtime-execution-approval-gate.js",
+        "contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json",
+        "docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1174-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1173-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1172-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1171-founder-runtime-execution-approval-gate-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -398,24 +430,31 @@
         ".env*",
         "local-state/runtime/**"
       ],
-      "expectedExports": [],
-      "dataShape": "No preview is implemented until P117.4 is explicitly scoped.",
-      "commandCenterUx": "Preview remains hidden until P117.5.",
+      "expectedExports": [
+        "P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PREVIEW_PHASE",
+        "P117_APPROVAL_GATE_PREVIEW_STATES",
+        "buildRuntimeExecutionApprovalGatePreviewModel",
+        "validateRuntimeExecutionApprovalGatePreviewModel"
+      ],
+      "dataShape": "Display-safe local dry-run approval gate preview with schema version, current state, source contract phase/state, preview mode, display-safe source review summary, approval summary counts, sections, rows, forbidden operations, next action, blockers, disabled reason, owner, evidence/audit/activity/cost references, commandCenterVisible false, and all approval capture, approval persistence, approve/reject recording, write, runtime, provider, agent, worker/tool, project, deploy, release, export, package, network, and spend flags false.",
+      "commandCenterUx": "No Command Center source change in P117.4. P117.5 must render the preview only on scoped non-chat founder pages.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "No new Playwright test because P117.4 has no UI source changes; preserve route-wide safety tests."
       ],
       "checkerUpdates": [
-        "Add a dedicated P117.4 checker when implemented."
+        "Add a dedicated P117.4 preview checker."
       ],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P117 in progress; P117.4 complete when implemented.",
+      "docsRoadmap": "P117.4 is recorded in the P117 plan, README, platform roadmap, P117 contract, OS roadmap/status, and generated reports. P117.5 is next for Command Center approval gate UX.",
+      "phaseStatusUpdate": "P117 in progress; P117.4 complete; current P117.4; previous P117.3; next P117.5.",
       "validationCommands": [
         "npm run check:p1174-founder-runtime-execution-approval-gate",
+        "npm run check:p1173-founder-runtime-execution-approval-gate",
+        "npm run check:p1172-founder-runtime-execution-approval-gate",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -426,14 +465,27 @@
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval capture or runtime execution authority is enabled."
+        "Confirm no live approval capture, approval persistence, approve/reject decision persistence, runtime execution, or execution unlock authority is enabled.",
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no database schema files or dashboard source files changed in P117.4.",
+        "Confirm no temporary check database remains under local-state/runtime.",
+        "Confirm no DemoApp, raw private IDs, raw logs, raw policy dumps, or fake runnable actions are introduced."
       ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
         "What was implemented",
-        "Known limitations"
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ],
       "nextPhase": "P117.5",
       "previousPhase": "P117.3"
@@ -631,5 +683,5 @@
       "previousPhase": "P117.6"
     }
   ],
-  "summary": "P117 is in progress. P117.1-P117.3 define the approval-gate contract, local approval evidence schema metadata, and governed local approval evidence review model without approval capture, approval persistence, or runtime execution authority."
+  "summary": "P117 is in progress. P117.1-P117.4 define the approval-gate contract, local approval evidence schema metadata, governed local approval evidence review model, and safe dry-run preview without approval capture, approval persistence, or runtime execution authority."
 }

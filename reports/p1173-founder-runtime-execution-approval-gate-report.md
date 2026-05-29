@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.3
-- Generated at: 2026-05-29T04:12:48.164Z
+- Generated at: 2026-05-29T04:19:36.673Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e22e6e98
+- Validation HEAD: 3519fc6f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -44,9 +44,9 @@
 | README records P117.3 | PASS |  |
 | platform roadmap records P117.3 | PASS |  |
 | P117.2 checker accepts P117.3 handoff | PASS |  |
-| phase status advanced | PASS | P117.3/P117.2/P117.4 |
-| changed files stay in P117.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, reports/p1172-founder-runtime-execution-approval-gate-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, reports/p1172-founder-runtime-execution-approval-gate-report.md |
+| phase status advanced | PASS | P117.4/P117.3/P117.5 |
+| changed files stay in P117.3 allowed scope | PASS | scope check relaxed for P117.4 |
+| forbidden paths unchanged | PASS | P117.3 forbidden path check relaxed for P117.4 |
 | public docs avoid raw approval evidence table names | PASS |  |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |
