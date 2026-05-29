@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P127.5
-- Generated at: 2026-05-29T19:09:13.041Z
+- Generated at: 2026-05-29T19:10:30.667Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5851fd34
+- Validation HEAD: 38ba1129
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | platform roadmap records P127.5 | PASS |  |
 | README records P127.5 | PASS |  |
 | phase status advanced | PASS | P127.5/P127.4/P127.6 |
-| changed files stay in P127.5 allowed scope | PASS | README.md, contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md, reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md, scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md, reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md, scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js |
+| changed files stay in P127.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P127.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
