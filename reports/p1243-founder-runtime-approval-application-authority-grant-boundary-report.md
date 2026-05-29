@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.3
-- Generated at: 2026-05-29T15:56:09.616Z
+- Generated at: 2026-05-29T15:59:28.200Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8f559390
+- Validation HEAD: f061f70b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P124.3 | PASS |  |
 | platform roadmap records P124.3 | PASS |  |
 | phase status advanced | PASS | P124.3/P124.2/P124.4 |
-| changed files stay in P124.3 allowed scope | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js, shared/founderApprovalApplicationAuthorityGrantIntentModel.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js, shared/founderApprovalApplicationAuthorityGrantIntentModel.js |
+| changed files stay in P124.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, reports/phase-validation-coverage-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, reports/phase-validation-coverage-report.md |
 | public docs avoid raw grant table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
