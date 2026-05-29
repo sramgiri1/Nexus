@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T22:48:10.563Z
+- Generated at: 2026-05-29T22:54:07.786Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 51d9d077
+- Validation HEAD: d63816a9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -547,25 +547,27 @@
 | P130.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.3 validation coverage | PASS | 4 checkers, 1 reports |
-| P130.4 validation coverage | PASS | 4 checkers, 1 reports |
+| P130.4 validation coverage | PASS | 5 checkers, 2 reports |
 | P130.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.6 validation coverage | PASS | 11 checkers, 7 reports |
 | P130.7 validation coverage | PASS | 11 checkers, 7 reports |
-| P131 validation coverage | PASS | dedicated_checker, validation_report |
+| P131 validation coverage | PASS | 5 checkers, 1 reports |
+| P131.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P131.2 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P130.7; next=P131; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P131.1; next=P131.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P131 Store Live Admission Scope Contract
+- P131.2 Live Admission Request Model
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (539/539)
+PASS (541/541)

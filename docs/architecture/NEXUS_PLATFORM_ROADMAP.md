@@ -3039,6 +3039,17 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P131.1 is complete. P131 starts store live admission scope with an
+implementation-grade contract, seven-subphase split, safety boundary, checker,
+docs, and status handoff. P131.2 is next for the live admission request model.
+Approval capture, decision persistence, store CRUD execution, DB schemas,
+migrations, DB/runtime reads or writes, live acceptance capture, handoff
+acceptance, authority handoff, authority grant, activation, approval
+application, approve/reject decision recording, runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

@@ -1,0 +1,619 @@
+{
+  "phaseId": "P131",
+  "title": "Founder Runtime Store Live Admission Scope Contract",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "currentSubphase": "P131.1",
+  "previousSubphase": "P130.7",
+  "nextSubphase": "P131.2",
+  "branch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "d63816a9",
+  "owner": "NEXUS OS",
+  "goal": "Define the store live admission scope contract and safety boundary while keeping live CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
+  "safetyRules": [
+    "P131.1 is contract/checker/docs/status only.",
+    "Do not create DB schemas, migrations, DB reads, DB writes, runtime records, live CRUD actions, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+    "Do not expose raw JSON, raw logs, raw policy dumps, raw table names, raw report paths, private IDs, or fake runnable actions in primary UX.",
+    "Do not modify project-owned files."
+  ],
+  "reuseCheck": [
+    "Reuse shared/reportWriter.js.",
+    "Reuse shared/checkResultFormatter.js.",
+    "Reuse P130.5 scoped Command Center UX evidence.",
+    "Reuse P130.7 final validation handoff evidence.",
+    "Do not duplicate report writers, checker formatters, mode guards, redaction helpers, route matrices, status helpers, UI components, or evidence/audit/activity appenders."
+  ],
+  "commandCenterUx": "P131.1 does not change dashboard source. The P130.5 scoped Store Live Readiness Gate remains visible only on Business Build and Agent Flow. Chat with NEXUS and Lite stay clean.",
+  "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
+  "subphases": [
+    {
+      "phaseId": "P131.1",
+      "title": "Store Live Admission Contract / Safety Boundary",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "d63816a9",
+      "narrowGoal": "Create the P131 implementation-grade contract, seven-subphase split, safety boundary, docs, checker, status handoff, and planned P131.2 handoff.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "scripts/check-p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
+        "scripts/check-p1311-founder-runtime-store-live-admission-scope.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md",
+        "reports/p1311-founder-runtime-store-live-admission-scope-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Contract/status/report evidence only. No DB schema, query, migration file, runtime record, live CRUD executor, provider envelope, dispatch packet, raw private ID, raw table name, or project data.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.1 checker, update P130.7 handoff checker, and update OS phase status recognition for P131.1-P131.7."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 in progress; P131.1 complete; current phase P131.1; previous P130.7; next P131.2.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P130.7",
+      "nextPhase": "P131.2",
+      "order": 167.1,
+      "detail": "P131.1 store live admission contract/safety boundary complete; P131.2 live admission request model is next.",
+      "summary": "Started P131 with an implementation-grade store live admission scope contract, seven-subphase split, safety boundary, checker, docs, and status handoff while all live store actions remain blocked.",
+      "knownLimitations": [
+        "P131.1 is contract/checker/docs/status only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T22:53:37.897Z"
+    },
+    {
+      "phaseId": "P131.2",
+      "title": "Live Admission Request Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1311-stamp",
+      "narrowGoal": "Define a browser-safe live admission request model without executing admission or mutating DB/runtime state.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.2 checker and update P131.1 handoff checker."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 in progress; P131.2 complete; current phase P131.2; previous P131.1; next P131.3.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P131.1",
+      "nextPhase": "P131.3",
+      "order": 167.2
+    },
+    {
+      "phaseId": "P131.3",
+      "title": "Approval Evidence Readiness Resolver",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1312-stamp",
+      "narrowGoal": "Resolve approval evidence readiness from existing safe evidence without capturing approvals or persisting decisions.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.3 checker and update P131.2 handoff checker."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 in progress; P131.3 complete; current phase P131.3; previous P131.2; next P131.4.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P131.2",
+      "nextPhase": "P131.4",
+      "order": 167.3
+    },
+    {
+      "phaseId": "P131.4",
+      "title": "Write Boundary Admission Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1313-stamp",
+      "narrowGoal": "Model write-boundary admission as blocked dry-run results without enabling DB/runtime writes or live CRUD.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.4 checker and update P131.3 handoff checker."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 in progress; P131.4 complete; current phase P131.4; previous P131.3; next P131.5.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P131.3",
+      "nextPhase": "P131.5",
+      "order": 167.4
+    },
+    {
+      "phaseId": "P131.5",
+      "title": "Command Center Admission Scope UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1314-stamp",
+      "narrowGoal": "Add scoped display-safe admission scope UX only if needed, while Chat with NEXUS and Lite stay clean.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.5 checker and update P131.4 handoff checker."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 in progress; P131.5 complete; current phase P131.5; previous P131.4; next P131.6.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P131.4",
+      "nextPhase": "P131.6",
+      "order": 167.5
+    },
+    {
+      "phaseId": "P131.6",
+      "title": "Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1315-stamp",
+      "narrowGoal": "Aggregate P131.1-P131.5 evidence, docs, checker handoffs, and OS status before final validation.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.6 checker and update P131.5 handoff checker."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 in progress; P131.6 complete; current phase P131.6; previous P131.5; next P131.7.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P131.5",
+      "nextPhase": "P131.7",
+      "order": 167.6
+    },
+    {
+      "phaseId": "P131.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1316-stamp",
+      "narrowGoal": "Close P131 with final validation evidence and planned-only next-phase handoff while unsafe live actions remain blocked unless later explicitly admitted.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
+        "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P130.5 scoped store live readiness route coverage."
+      ],
+      "checkerUpdates": [
+        "Add P131.7 checker and update P131.6 handoff checker."
+      ],
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "phaseStatusUpdate": "P131 complete; P131.7 complete; current phase P131.7; previous P131.6; next phase planned-only.",
+      "validationCommands": [
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm no live CRUD, DB/runtime write, provider/model call, dispatch, mutation, deploy, export, package, network, or spend is enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P131.6",
+      "nextPhase": "P132",
+      "order": 167.7
+    }
+  ],
+  "current": {
+    "phaseId": "P131.1",
+    "title": "Store Live Admission Contract / Safety Boundary",
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T22:53:37.897Z",
+    "summary": "Started P131 with an implementation-grade store live admission scope contract, seven-subphase split, safety boundary, checker, docs, and status handoff while all live store actions remain blocked.",
+    "checksRun": [
+      "npm run check:p1311-founder-runtime-store-live-admission-scope",
+      "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P131.1 is contract/checker/docs/status only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "nextPhase": "P131.2",
+    "commandCenterVisible": true
+  }
+}

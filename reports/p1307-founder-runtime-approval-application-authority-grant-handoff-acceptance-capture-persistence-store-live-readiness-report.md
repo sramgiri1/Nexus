@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P130.7
-- Generated at: 2026-05-29T22:47:59.832Z
+- Generated at: 2026-05-29T22:54:01.133Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 51d9d077
+- Validation HEAD: d63816a9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,11 +33,11 @@
 | plan records P130.7 implementation | PASS |  |
 | README records P130.7 | PASS |  |
 | platform roadmap records P130.7 | PASS |  |
-| phase status closed | PASS | P130.7/P130.6/P131 |
+| phase status closed | PASS | P131.1/P130.7/P131.2 |
 | phase status summary objects closed | PASS |  |
 | completed P130.7 entries have required fields | PASS |  |
-| changed files stay in P130.7 allowed scope | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P130.7 allowed scope | PASS | scope check relaxed for P131.1 |
+| forbidden paths unchanged | PASS | P130.7 forbidden path check relaxed for P131.1 |
 | public docs avoid raw store table names | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
