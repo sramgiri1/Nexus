@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P126.4
-- Generated at: 2026-05-29T17:59:47.444Z
+- Generated at: 2026-05-29T18:00:25.920Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a7796a8f
+- Validation HEAD: adefe2c5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | README records P126.4 | PASS |  |
 | platform roadmap records P126.4 | PASS |  |
 | phase status advanced | PASS | P126.4/P126.3/P126.5 |
-| changed files stay in P126.4 allowed scope | PASS | README.md, contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js, reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js, reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md, scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js |
+| changed files stay in P126.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw acceptance table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |
