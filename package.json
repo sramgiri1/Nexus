@@ -614,7 +614,8 @@
     "check:p1153-founder-live-runtime-admission-readiness": "node scripts/check-p1153-founder-live-runtime-admission-readiness.js",
     "check:p1154-founder-live-runtime-admission-readiness": "node scripts/check-p1154-founder-live-runtime-admission-readiness.js",
     "check:p1155-founder-live-runtime-admission-readiness": "node scripts/check-p1155-founder-live-runtime-admission-readiness.js",
-    "check:p1156-founder-live-runtime-admission-readiness": "node scripts/check-p1156-founder-live-runtime-admission-readiness.js"
+    "check:p1156-founder-live-runtime-admission-readiness": "node scripts/check-p1156-founder-live-runtime-admission-readiness.js",
+    "check:p1157-founder-live-runtime-admission-readiness": "node scripts/check-p1157-founder-live-runtime-admission-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

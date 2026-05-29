@@ -1,12 +1,12 @@
 {
   "phaseId": "P115",
   "title": "Founder Live Runtime Admission Readiness",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move approved dispatch readiness toward governed runtime admission readiness while keeping actual runtime admission and execution blocked until explicitly allowed.",
-  "currentSubphase": "P115.6",
-  "previousSubphase": "P115.5",
-  "nextSubphase": "P115.7",
+  "currentSubphase": "P115.7",
+  "previousSubphase": "P115.6",
+  "nextSubphase": "P116",
   "safetyRules": [
     "Do not enable runtime admission, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P115.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -725,17 +725,36 @@
     {
       "phaseId": "P115.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Run final P115 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
+      "narrowGoal": "Run final P115 validation and hand off to planned P116 without enabling non-scoped unsafe authority.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
-      "allowedFiles": [],
+      "expectedBaseCommit": "7339271f543cf7860e53a763abd778980dec5be8",
+      "allowedFiles": [
+        "scripts/check-p1157-founder-live-runtime-admission-readiness.js",
+        "package.json",
+        "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+        "docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1155-founder-live-runtime-admission-readiness-report.md",
+        "reports/p1156-founder-live-runtime-admission-readiness-report.md",
+        "reports/p1157-founder-live-runtime-admission-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/*/Sources/**",
         "generated-projects/*/Tests/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -743,44 +762,61 @@
         "release/**",
         "exports/**",
         "packages/**",
-        ".env*",
-        "db/**",
-        "live-ready/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
-        "local-state/runtime/**"
+        ".env*"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1157-founder-live-runtime-admission-readiness.js",
+        "package.json",
+        "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+        "docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1155-founder-live-runtime-admission-readiness-report.md",
+        "reports/p1156-founder-live-runtime-admission-readiness-report.md",
+        "reports/p1157-founder-live-runtime-admission-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime admission controls, chat-page clutter, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "dataShape": "No product runtime data shape is added. The P115.7 checker writes a markdown final validation report with scope, check table, validation commands, known limitations, and result sections.",
+      "commandCenterUx": "Preserve P115.5 Command Center UX. Business Build and Agent Flow keep display-safe Runtime Admission Readiness cards; Chat with NEXUS, Lite, full home, and Live Readiness stay clean. No runtime admission controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
-        "Preserve Light theme."
+        "Preserve Light theme.",
+        "Re-run P115.5 focused route coverage for theme preservation."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+        "Do not add new Playwright tests because no UI source changes are allowed.",
+        "Re-run the existing P115.5 focused route test for Business Build and Agent Flow runtime admission readiness visibility and clean-route absence."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P115.7 checker."
+        "Add dedicated P115.7 final validation checker.",
+        "Run P115.6 and P115.5 handoff checkers for final compatibility."
       ],
-      "docsRoadmap": "Update P115 plan, README, platform roadmap, OS status, and generated reports for P115.7.",
-      "phaseStatusUpdate": "P115 in progress; P115.7 complete when implemented.",
+      "docsRoadmap": "P115.7 is recorded in the P115 plan, README, platform roadmap, OS status, and generated reports. P116 is next as planned placeholder only.",
+      "phaseStatusUpdate": "P115 complete; P115.7 complete; current P115.7; previous P115.6; next P116. P116 is planned only.",
       "validationCommands": [
         "npm run check:p1157-founder-live-runtime-admission-readiness",
+        "npm run check:p1156-founder-live-runtime-admission-readiness",
+        "npm run check:p1155-founder-live-runtime-admission-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime admission readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "finalSafetyChecks": [
         "Confirm no projects/** or careloop/** files changed.",
-        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime admission, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no dashboard source/tests, DB schema/runtime, live-ready, local-state, provider, tool, worker, deploy, release, export, package, or .env files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime admission, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
         "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
       ],
       "gitCommands": [
         "git add <allowed P115.7 files>",
-        "git commit -m \"feat(nexus): implement p1157 runtime admission readiness\"",
+        "git commit -m \"feat(nexus): implement p1157 runtime admission final validation\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [
@@ -803,10 +839,10 @@
       "previousPhase": "P115.6"
     }
   ],
-  "summary": "P115 is in progress. P115.1-P115.6 define runtime admission readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, and aggregate validation while runtime admission and execution remain blocked.",
+  "summary": "P115 is complete. It defines runtime admission readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, aggregate validation, and final validation while runtime admission and execution remain blocked.",
   "knownLimitations": [
+    "P115.7 is final validation only; it does not admit runtime work, unlock execution, or write runtime admission records.",
     "Runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-    "P115.6 is validation/docs only and does not change Command Center source, runtime behavior, DB schema, or project files.",
-    "P115.7 is next for final validation."
+    "P116 is a planned placeholder until its own implementation-grade contract is written."
   ]
 }

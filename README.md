@@ -772,11 +772,17 @@ The Command Center and local operator surface have:
   remain unavailable.
 - P115.6 runtime admission validation: P115 now has aggregate validation across
   the runtime admission contract, local schema metadata, governed local CRUD,
-  safe dry-run preview, and Command Center UX evidence. P115.7 is next for
-  final validation. Runtime admission, execution
-  unlock, provider/model call, agent dispatch, worker/tool execution, project
-  mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
-  package, network call, and provider spend remain unavailable.
+  safe dry-run preview, and Command Center UX evidence. Runtime admission,
+  execution unlock, provider/model call, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
+- P115.7 final validation: P115 is complete. Runtime admission readiness is
+  contract-covered, locally modeled, previewed, visible on Business Build and
+  Agent Flow, and validated end to end. P116 is next as a planned placeholder.
+  Runtime admission, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 
