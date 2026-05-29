@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.7
-- Generated at: 2026-05-29T04:48:31.671Z
+- Generated at: 2026-05-29T04:49:08.019Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c6346f8b
+- Validation HEAD: c3cf6a0c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | contract handoff points to P118 | PASS |  |
 | P117.7 records final validation commands | PASS |  |
 | P117.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P117.7 allowed scope | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1175-founder-runtime-execution-approval-gate-report.md, reports/p1176-founder-runtime-execution-approval-gate-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, reports/p1177-founder-runtime-execution-approval-gate-report.md, scripts/check-p1177-founder-runtime-execution-approval-gate.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1175-founder-runtime-execution-approval-gate-report.md, reports/p1176-founder-runtime-execution-approval-gate-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, reports/p1177-founder-runtime-execution-approval-gate-report.md, scripts/check-p1177-founder-runtime-execution-approval-gate.js |
+| changed files stay in P117.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P117.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P118 handoff | PASS |  |
 | phase status closed | PASS | P117.7/P117.6/P118 |

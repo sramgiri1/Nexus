@@ -11179,7 +11179,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c3cf6a0c",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
       "detail": "P117 final validation complete; P118 is planned next.",
@@ -11378,7 +11378,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c3cf6a0c",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "P117 final validation complete; P118 is planned next.",
