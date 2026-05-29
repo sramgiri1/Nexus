@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P126.4",
-  "previousSubphase": "P126.3",
-  "nextSubphase": "P126.5",
+  "currentSubphase": "P126.5",
+  "previousSubphase": "P126.4",
+  "nextSubphase": "P126.6",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "67d3198576e324c0db5ea3f15455931098fb53fa",
   "owner": "NEXUS OS",
@@ -531,7 +531,7 @@
     {
       "phaseId": "P126.5",
       "title": "Command Center Acceptance Boundary UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "after-P126.4-stamp",
@@ -539,9 +539,39 @@
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/pages/CommandCenterV2.jsx",
-        "dashboard/tests/routes.spec.js"
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -561,7 +591,7 @@
       "expectedExports": [
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryDisplayModel"
       ],
-      "dataShape": "Browser-safe display model with readiness counts, blockers, disabled reason, owner/evidence/activity labels, cost posture, and no raw IDs.",
+      "dataShape": "Browser-safe display model with scoped readiness counts, blockers, disabled reason, owner/evidence/activity labels, no-spend cost posture, all unsafe candidates at zero, all safety rows blocked, and no raw IDs.",
       "commandCenterUx": "Render scoped read-only acceptance boundary cards only on Business Build and Agent Flow. Do not expose on Chat with NEXUS, Lite, OS Roadmap, Live Readiness, or unrelated pages.",
       "themeRequirements": [
         "System theme must render.",
@@ -572,9 +602,10 @@
         "Add scoped route test for acceptance boundary card visibility and exclusions."
       ],
       "checkerUpdates": [
-        "Add P126.5 checker and update P126.4 checker."
+        "Add P126.5 checker.",
+        "Update P126.4 checker to accept P126.5/P126.6 handoff state."
       ],
-      "docsRoadmap": "Update P126 docs/status/reports.",
+      "docsRoadmap": "Update P126 plan, README, platform roadmap, OS status, and P126.4/P126.5 reports.",
       "phaseStatusUpdate": "P126 in progress; P126.5 complete; current phase P126.5; previous P126.4; next P126.6.",
       "validationCommands": [
         "npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
@@ -606,10 +637,10 @@
       "previousPhase": "P126.4",
       "nextPhase": "P126.6",
       "order": 162.5,
-      "detail": "Planned scoped Command Center acceptance UX.",
-      "summary": "Planned scoped read-only acceptance UX. No P126.5 behavior is implemented in P126.1.",
+      "detail": "P126.5 scoped Command Center acceptance boundary UX complete; P126.6 validation/docs is next.",
+      "summary": "Added scoped read-only Business Build and Agent Flow acceptance boundary cards using the existing boundary card component and P126.4 safe dry-run data while keeping Chat/Lite/OS Roadmap/Live Readiness clean.",
       "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+        "P126.5 is display-only scoped UX. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -775,5 +806,5 @@
       ]
     }
   ],
-  "nextPhase": "P126.5"
+  "nextPhase": "P126.6"
 }

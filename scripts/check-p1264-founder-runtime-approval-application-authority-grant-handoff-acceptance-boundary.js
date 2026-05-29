@@ -55,6 +55,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1264 = subphaseById.get("P126.4") || {};
 const p1265 = subphaseById.get("P126.5") || {};
+const p1266 = subphaseById.get("P126.6") || {};
 const plan = readText("docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
@@ -174,6 +175,12 @@ const p1265StartedState = status.currentPhase === "P126.5"
   && roadmap.currentPhase === "P126.5"
   && roadmap.previousPhase === "P126.4"
   && roadmap.nextPhase === "P126.6";
+const p1266StartedState = status.currentPhase === "P126.6"
+  && status.previousPhase === "P126.5"
+  && status.nextPhase === "P126.7"
+  && roadmap.currentPhase === "P126.6"
+  && roadmap.previousPhase === "P126.5"
+  && roadmap.nextPhase === "P126.7";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary"]));
 addCheck("phase and version exports", FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_PHASE === "P126.4" && FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_VERSION === "1.0");
@@ -189,7 +196,7 @@ addCheck("summary keeps unsafe counts zero", zeroSummaryFields.every((field) => 
 addCheck("top-level authority flags false", flagsFalse(data));
 addCheck("row authority flags false", data.previewRows?.every((row) => flagsFalse(row) && row.wouldAcceptHandoff === false && row.wouldCaptureAcceptance === false && row.wouldHandoffAuthority === false && row.wouldGrantAuthority === false && row.wouldActivateAuthority === false && row.wouldApplyDecision === false && row.wouldCaptureApproval === false && row.wouldPersistAcceptance === false && row.wouldPersistApproval === false && row.wouldRecordDecision === false && row.wouldAcceptDecision === false && row.wouldRejectDecision === false && row.wouldWriteDb === false && row.wouldWriteRuntime === false && row.wouldUnlockExecution === false && row.wouldDispatchAgent === false && row.wouldExecuteWorker === false && row.wouldExecuteTool === false && row.wouldMutateProject === false && row.wouldUseNetwork === false && row.wouldSpend === false));
 addCheck("preview carries owner/evidence/activity/cost", Boolean(data.ownerCapability) && data.evidenceRefs?.includes(REPORT_PATH) && data.activityLocation === "reports/os-phase-status-report.md" && /No provider calls/i.test(data.costImpact));
-addCheck("contract marks P126.4 complete and P126.5 handoff valid", p1264.status === "complete" && ["planned", "complete"].includes(p1265.status));
+addCheck("contract marks P126.4 complete and P126.5/P126.6 handoff valid", p1264.status === "complete" && p1265.status === "complete" && ["planned", "complete"].includes(p1266.status));
 addCheck("contract records expected exports", [
   "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_PHASE",
   "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_VERSION",
@@ -211,11 +218,12 @@ addCheck(
 );
 addCheck(
   "phase status advanced",
-  (p1264CurrentState || p1265StartedState)
+  (p1264CurrentState || p1265StartedState || p1266StartedState)
     && statusById.get("P126")?.status === "in_progress"
     && statusById.get("P126.3")?.status === "complete"
     && statusById.get("P126.4")?.status === "complete"
-    && ["planned", "complete"].includes(statusById.get("P126.5")?.status)
+    && statusById.get("P126.5")?.status === "complete"
+    && ["planned", "complete"].includes(statusById.get("P126.6")?.status)
     && roadmapById.get("P126.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

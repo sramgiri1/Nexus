@@ -370,15 +370,122 @@ current phase to P126.3.
 
 Status: complete.
 
+## P126.5 Command Center Acceptance Boundary UX
+
+Goal: surface local approval application authority grant handoff acceptance
+readiness in scoped Command Center work pages without runnable acceptance
+controls.
+
+Why this is needed: P126.4 created a hidden local dry-run envelope. P126.5
+makes that state useful to founder/operators on Business Build and Agent Flow
+while preserving Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and
+unrelated pages.
+
+User/operator impact: operators can inspect handoff acceptance readiness,
+blocked rows, zero unsafe candidate counts, blockers, owner capability, next
+action, disabled reason, evidence/activity labels, and no-spend posture on the
+pages where governed founder work is coordinated.
+
+Command Center impact: Business Build and Agent Flow render read-only
+acceptance boundary cards through the existing boundary card component. No new
+full Command Center card component is created.
+
+Safety impact: display-only UX. Handoff acceptance, acceptance capture,
+authority handoff, authority grant, activation, approval application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package, network call, and provider
+spend remain blocked.
+
+Cost impact: no provider calls, model calls, network calls, worker runtime,
+deploy/package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `scripts/check-p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json`
+- `docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- dashboard files other than `dashboard/src/data/businessBuild.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`, and
+  `dashboard/tests/routes.spec.js`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryDisplayModel`
+
+Data shape: browser-safe display model with current state, founder idea,
+preview mode, readiness row counts, zero unsafe candidate counts,
+readiness rows/sections, safety rows, blockers, owner capability, next action,
+disabled reason, evidence/activity labels, and no-spend cost posture.
+
+Command Center UX requirements: render scoped read-only cards on Business Build
+and Agent Flow only. Do not expose in Chat with NEXUS, Lite, OS Roadmap, Live
+Readiness, or unrelated pages. Do not show raw IDs, raw reports, raw JSON, raw
+logs, raw policy dumps, DemoApp, or fake runnable action text.
+
+Validation commands:
+- `npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P126 in progress, P126.5 complete, current phase
+P126.5, previous phase P126.4, next phase P126.6.
+
+Known risks: adding a scoped card could clutter unrelated pages or imply live
+acceptance. P126.5 limits rendering to Business Build and Agent Flow, labels it
+read-only, keeps all candidates at zero, and rejects fake runnable actions in
+tests/checkers.
+
+Rollback plan: remove the P126.5 display model/checker/report/package script,
+remove the two scoped card render calls and Playwright test, revert P126.4
+checker updates, restore P126.5 to planned, and return current phase to P126.4.
+
+Status: complete.
+
 ## Planned Subphase Contracts
 
 P126.4 Acceptance Safe Dry Run: complete. Local dry-run envelope only. No
 handoff acceptance, writes, execution, providers, dispatch, mutation, network,
 or spend.
 
-P126.5 Command Center Acceptance Boundary UX: scoped read-only Business Build
-and Agent Flow UX only. No Chat/Lite/OS Roadmap leakage and no runnable
-acceptance controls.
+P126.5 Command Center Acceptance Boundary UX: complete. Scoped read-only
+Business Build and Agent Flow UX only. No Chat/Lite/OS Roadmap leakage and no
+runnable acceptance controls.
 
 P126.6 Acceptance Validation / Docs: validation/docs closure only.
 

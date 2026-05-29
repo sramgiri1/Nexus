@@ -1488,6 +1488,17 @@ The Command Center and local operator surface have:
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   raw SQL interface, deploy, release, export, package, network call, and
   provider spend remain unavailable.
+- P126.5 scoped approval application authority grant handoff acceptance Command
+  Center UX: Business Build and Agent Flow now show a read-only acceptance
+  boundary card using the P126.4 safe dry-run display model and existing card
+  pattern. Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and unrelated
+  pages stay clean. P126.6 is next for validation/docs closure. Handoff
+  acceptance, acceptance capture, grant handoff, authority grant, activation,
+  approval application, approval capture, approval persistence, approve/reject
+  decision recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

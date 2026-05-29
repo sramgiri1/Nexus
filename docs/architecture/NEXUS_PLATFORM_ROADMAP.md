@@ -3810,6 +3810,18 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P126.5 is complete. Business Build and Agent Flow now render a scoped read-only
+approval application authority grant handoff acceptance boundary card using the
+P126.4 safe dry-run display model and existing boundary card pattern. Chat with
+NEXUS, Lite, OS Roadmap, Live Readiness, and unrelated pages stay clean. P126.6
+is next for validation/docs closure. Handoff acceptance, acceptance capture,
+grant handoff, authority grant, activation, approval application, approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

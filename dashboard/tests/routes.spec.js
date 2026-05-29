@@ -5314,7 +5314,7 @@ test.describe("Command Center route-wide UX", () => {
     for (const theme of ["dark", "light", "system"]) {
       await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
       await pickTheme(page, theme);
-      const themedCard = page.getByLabel("Founder approval application authority grant").filter({ hasText: "Business Build Approval Application Authority Grant" });
+      const themedCard = page.getByLabel("Founder approval application authority grant", { exact: true }).filter({ hasText: "Business Build Approval Application Authority Grant" });
       await expect(themedCard).toContainText("Approval Application Authority Grant");
       await expect(themedCard).toContainText("Grant read-only");
     }
@@ -5324,7 +5324,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/agent-flow", "Agent Flow Approval Application Authority Grant"],
     ]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
-      const card = page.getByLabel("Founder approval application authority grant").filter({ hasText: label });
+      const card = page.getByLabel("Founder approval application authority grant", { exact: true }).filter({ hasText: label });
       await expect(card).toContainText("Approval Application Authority Grant");
       await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
       await expect(card).toContainText("Preview mode");
@@ -5361,7 +5361,7 @@ test.describe("Command Center route-wide UX", () => {
 
     for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
-      await expect(page.getByLabel("Founder approval application authority grant")).toHaveCount(0);
+      await expect(page.getByLabel("Founder approval application authority grant", { exact: true })).toHaveCount(0);
     }
 
     const body = await page.locator("body").innerText();
@@ -5382,7 +5382,7 @@ test.describe("Command Center route-wide UX", () => {
     for (const theme of ["dark", "light", "system"]) {
       await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
       await pickTheme(page, theme);
-      const themedCard = page.getByLabel("Founder approval application authority grant handoff").filter({ hasText: "Business Build Approval Application Authority Grant Handoff" });
+      const themedCard = page.getByLabel("Founder approval application authority grant handoff", { exact: true }).filter({ hasText: "Business Build Approval Application Authority Grant Handoff" });
       await expect(themedCard).toContainText("Approval Application Authority Grant Handoff");
       await expect(themedCard).toContainText("Handoff read-only");
     }
@@ -5392,7 +5392,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/agent-flow", "Agent Flow Approval Application Authority Grant Handoff"],
     ]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
-      const card = page.getByLabel("Founder approval application authority grant handoff").filter({ hasText: label });
+      const card = page.getByLabel("Founder approval application authority grant handoff", { exact: true }).filter({ hasText: label });
       await expect(card).toContainText("Approval Application Authority Grant Handoff");
       await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
       await expect(card).toContainText("Preview mode");
@@ -5431,7 +5431,7 @@ test.describe("Command Center route-wide UX", () => {
 
     for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
-      await expect(page.getByLabel("Founder approval application authority grant handoff")).toHaveCount(0);
+      await expect(page.getByLabel("Founder approval application authority grant handoff", { exact: true })).toHaveCount(0);
     }
 
     const body = await page.locator("body").innerText();
@@ -5439,6 +5439,77 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
     expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoff|approval_authority_grant_handoff|approvalApplicationAuthorityGrantHandoffKey|handoffDraftRef|handoffEventRef|handoffEvidenceRef/i);
     expect(body).not.toMatch(/run now|execute now|deploy now|activate now|handoff authority now|grant authority now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i);
+    expect(errors).toEqual([]);
+  });
+
+  test("Approval application authority grant handoff acceptance appears only on scoped pages", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder approval application authority grant handoff acceptance", { exact: true }).filter({ hasText: "Business Build Approval Application Authority Grant Handoff Acceptance" });
+      await expect(themedCard).toContainText("Approval Application Authority Grant Handoff Acceptance");
+      await expect(themedCard).toContainText("Acceptance read-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Approval Application Authority Grant Handoff Acceptance"],
+      ["/command-center/agent-flow", "Agent Flow Approval Application Authority Grant Handoff Acceptance"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder approval application authority grant handoff acceptance", { exact: true }).filter({ hasText: label });
+      await expect(card).toContainText("Approval Application Authority Grant Handoff Acceptance");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Preview mode");
+      await expect(card).toContainText("Readiness rows");
+      await expect(card).toContainText("Blocked rows");
+      await expect(card).toContainText("Acceptance candidates");
+      await expect(card).toContainText("Acceptance-capture candidates");
+      await expect(card).toContainText("Handoff candidates");
+      await expect(card).toContainText("Authority handoff candidates");
+      await expect(card).toContainText("Grant candidates");
+      await expect(card).toContainText("Authority grant candidates");
+      await expect(card).toContainText("Activation candidates");
+      await expect(card).toContainText("Application candidates");
+      await expect(card).toContainText("Approval application candidates");
+      await expect(card).toContainText("Decision-recordable candidates");
+      await expect(card).toContainText("DB-writable candidates");
+      await expect(card).toContainText("Runtime-writable candidates");
+      await expect(card).toContainText("Executable candidates");
+      await expect(card).toContainText("Execution unlock candidates");
+      await expect(card).toContainText("Agent-dispatch candidates");
+      await expect(card).toContainText("Worker-execution candidates");
+      await expect(card).toContainText("Tool-execution candidates");
+      await expect(card).toContainText("Network-call candidates");
+      await expect(card).toContainText("Provider-spend candidates");
+      await expect(card).toContainText("NEXUS Approval Application Authority Grant Handoff Acceptance Guard");
+      await expect(card).toContainText("Prior handoff boundary");
+      await expect(card).toContainText("Acceptance scope");
+      await expect(card).toContainText("Runtime acceptance guard");
+      await expect(card).toContainText("Operator acceptance evidence");
+      await expect(card).toContainText("Acceptance intent");
+      await expect(card).toContainText("Runtime boundary");
+      await expect(card).toContainText("Approval application authority grant handoff acceptance safe dry-run report");
+      await expect(card).toContainText("No provider calls");
+      const cardText = await card.innerText();
+      expect(cardText).not.toMatch(/P126|reports\/p126|founderApprovalApplicationAuthorityGrantHandoffAcceptance|approval_authority_grant_handoff_acceptance/i);
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Founder approval application authority grant handoff acceptance", { exact: true })).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoffAcceptance|approval_authority_grant_handoff_acceptance|approvalApplicationAuthorityGrantHandoffAcceptanceKey|acceptanceDraftRef|acceptanceEventRef|acceptanceEvidenceRef/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|activate now|accept handoff now|capture acceptance now|handoff authority now|grant authority now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i);
     expect(errors).toEqual([]);
   });
 });
