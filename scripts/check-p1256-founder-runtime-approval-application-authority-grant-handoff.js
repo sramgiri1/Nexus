@@ -113,8 +113,16 @@ addCheck("P125.5 scoped UX source preserved", commandCenterSource.includes("Busi
 addCheck("P125.5 display model preserved", dataSource.includes("buildFounderApprovalApplicationAuthorityGrantHandoffDisplayModel") && dataSource.includes("Approval application authority grant handoff safe dry-run report"));
 addCheck("P125.5 Playwright coverage preserved", routeTests.includes("Approval application authority grant handoff appears only on scoped pages") && routeTests.includes("Handoff read-only") && routeTests.includes("/command-center/lite") && routeTests.includes("toHaveCount(0)"));
 addCheck("docs record P125.6", /P125\.6 Handoff Validation \/ Docs[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P125.6", /P125\.6 approval application authority grant handoff validation/i.test(readme) && /P125\.7\s+is\s+next/.test(readme));
-addCheck("platform roadmap records P125.6", /P125\.6 is complete/.test(platformRoadmap) && /P125\.7\s+is\s+next/.test(platformRoadmap));
+addCheck(
+  "README records P125.6",
+  /P125\.6 approval application authority grant handoff validation/i.test(readme)
+    && (/P125\.7\s+is\s+next/.test(readme) || /P125\.7 approval application authority grant handoff final validation/i.test(readme)),
+);
+addCheck(
+  "platform roadmap records P125.6",
+  /P125\.6 is complete/.test(platformRoadmap)
+    && (/P125\.7\s+is\s+next/.test(platformRoadmap) || /P125\.7 is complete/.test(platformRoadmap)),
+);
 addCheck(
   "phase status advanced",
   (

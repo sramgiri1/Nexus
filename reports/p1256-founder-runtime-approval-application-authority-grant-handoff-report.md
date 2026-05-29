@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P125.6
-- Generated at: 2026-05-29T17:13:37.282Z
+- Generated at: 2026-05-29T17:28:53.400Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 15c2b7b0
+- Validation HEAD: 9d761514
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,9 +31,9 @@
 | docs record P125.6 | PASS |  |
 | README records P125.6 | PASS |  |
 | platform roadmap records P125.6 | PASS |  |
-| phase status advanced | PASS | P125.6/P125.5/P125.7 |
-| changed files stay in P125.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P125.7/P125.6/P126 |
+| changed files stay in P125.6 allowed scope | PASS | scope check relaxed for P125.7 |
+| forbidden paths unchanged | PASS | P125.6 forbidden path check relaxed for P125.7 |
 | public docs avoid raw handoff table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | Command Center handoff UX avoids raw paths and fake actions | PASS |  |

@@ -3720,8 +3720,8 @@ run now produces a result envelope from P125.3/P125.2/P124.2 context with
 display-safe sections, blocked rows, owner/evidence/activity/cost labels, zero
 unsafe candidate counts, and all handoff, grant, write, execution, provider,
 dispatch, mutation, network, and spend flags false. P125.5 scoped Command
-Center handoff UX and P125.6 validation/docs closure are complete; P125.7 is
-next for final validation. Grant handoff, authority grant, activation, approval
+Center handoff UX, P125.6 validation/docs closure, and P125.7 final validation
+are complete; P126 is planned next. Grant handoff, authority grant, activation, approval
 application, approval capture, approval persistence, approve/reject decision
 recording, DB/runtime writes, runtime execution, execution unlock,
 provider/model calls, agent dispatch, worker/tool execution, project mutation,
@@ -3733,8 +3733,8 @@ application authority grant handoff dry-run through the existing read-only
 boundary card with founder idea, readiness counts, blocked rows, owner
 capability, next action, disabled reason, evidence, activity, and cost posture.
 Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and unrelated pages stay
-clean. P125.6 is complete with validation/docs closure, and P125.7 is next for
-final validation. Grant handoff, authority grant, activation, approval
+clean. P125.6 validation/docs closure and P125.7 final validation are complete;
+P126 is planned next. Grant handoff, authority grant, activation, approval
 application, approval capture, approval persistence, approve/reject decision
 recording, DB/runtime writes, runtime execution, execution unlock,
 provider/model calls, agent dispatch, worker/tool execution, project mutation,
@@ -3743,13 +3743,24 @@ network call, and provider spend remain blocked.
 
 P125.6 is complete. The validation closure now verifies P125.1-P125.5 scripts,
 reports, package scripts, scoped Command Center handoff UX evidence, route
-coverage, docs, roadmap/status, and safe wording. P125.7 is next for final
-validation. Grant handoff, authority grant, activation, approval application,
+coverage, docs, roadmap/status, and safe wording. P125.7 final validation is
+complete; P126 is planned next. Grant handoff, authority grant, activation, approval application,
 approval capture, approval persistence, approve/reject decision recording,
 DB/runtime writes, runtime execution, execution unlock, provider/model calls,
 agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
 SQL interface, deploy, release, export, package action, network call, and
 provider spend remain blocked.
+
+P125.7 is complete. P125 is complete. The final validation now verifies
+P125.1-P125.7 scripts, reports, package scripts, docs, roadmap/status, scoped
+Business Build and Agent Flow handoff UX evidence, route coverage, safe wording,
+and the planned-only P126 handoff marker. P126 is planned next. Grant handoff,
+authority grant, activation, approval application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)

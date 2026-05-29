@@ -540,7 +540,83 @@ current phase to P125.5.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P125.7 Final Validation
 
-P125.7 Final Validation: final validation only, closes P125, stamps real
-commits, creates the next planned handoff, and keeps live handoff blocked.
+Phase: P125 Founder Runtime Approval Application Authority Grant Handoff
+Subphase: P125.7 Final Validation
+
+Goal: close P125 with final validation evidence, complete P125/P125.7 status,
+and create a planned-only P126 handoff marker without changing runtime behavior.
+
+Why this is needed: P125.1-P125.6 are complete, but parent P125 remains in
+progress until final validation proves the contract, docs, status, reports,
+checker coverage, and scoped Command Center UX are consistent.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1257-founder-runtime-approval-application-authority-grant-handoff.js`
+- `scripts/check-p1256-founder-runtime-approval-application-authority-grant-handoff.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json`
+- `docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1256-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/p1257-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports: none.
+
+Data shape: final validation/status/report evidence only. No runtime exports,
+no schemas, no live approval authority handoff records, and no project data.
+
+Command Center UX requirements: preserve P125.5 scoped Business Build and Agent
+Flow handoff cards. Do not add Chat with NEXUS, Lite, OS Roadmap, Live
+Readiness, or unrelated page content. Do not add mutation controls, raw dumps,
+raw report paths, or fake runnable actions.
+
+Validation commands:
+- `npm run check:p1257-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:p1256-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P125 complete, P125.7 complete, current phase P125.7,
+previous phase P125.6, next phase P126. P126 is planned-only.
+
+Known risks: creating a next phase marker can imply live capability. P125.7
+keeps P126 planned-only and states that all handoff, writes, execution,
+providers, dispatch, mutation, network, and spend remain blocked.
+
+Rollback plan: remove the P125.7 checker/report/package script, revert
+contract/docs/status/report updates, restore P125 to in progress, restore
+P125.7 to planned, and return current phase to P125.6.
+
+Status: complete.
