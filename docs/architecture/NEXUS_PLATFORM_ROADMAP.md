@@ -3106,6 +3106,14 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P116.4 is complete. P116 now has a display-safe local dry-run preview model for
+runtime execution readiness candidates, including readiness sections, candidate
+rows, blockers, owner, evidence/activity, and cost posture. P116.5 is next for
+Command Center runtime execution readiness UX. Runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

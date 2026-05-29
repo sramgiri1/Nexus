@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.3
-- Generated at: 2026-05-29T03:14:12.107Z
+- Generated at: 2026-05-29T03:20:16.610Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6244c697
+- Validation HEAD: 04e8e88b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -42,9 +42,9 @@
 | README records P116.3 | PASS |  |
 | platform roadmap records P116.3 | PASS |  |
 | P116.2 checker accepts P116.3 handoff | PASS |  |
-| phase status advanced | PASS | P116.3/P116.2/P116.4 |
-| changed files stay in P116.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
+| phase status advanced | PASS | P116.4/P116.3/P116.5 |
+| changed files stay in P116.3 allowed scope | PASS | scope check relaxed for P116.4 |
+| forbidden paths unchanged | PASS | P116.3 forbidden path check relaxed for P116.4 |
 | public docs avoid raw runtime execution table names | PASS |  |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |

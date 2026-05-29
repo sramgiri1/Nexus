@@ -10950,31 +10950,29 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6244c697",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
-      "detail": "P116.3 governed local execution CRUD model complete; P116.4 is next.",
+      "detail": "P116.4 runtime execution readiness preview complete; P116.5 is next.",
       "phaseId": "P116",
       "title": "Founder Live Runtime Execution Readiness",
       "order": 152,
       "status": "in_progress",
-      "summary": "P116 is in progress. P116.3 adds approval-gated local CRUD helpers for founder runtime execution readiness records while runtime execution remains blocked.",
-      "nextPhase": "P116.4",
-      "previousPhase": "P116.2",
+      "summary": "P116 is in progress. P116.4 adds a display-safe local dry-run preview for founder runtime execution readiness while runtime execution remains blocked.",
+      "nextPhase": "P116.5",
+      "previousPhase": "P116.3",
       "checksRun": [
+        "npm run check:p1164-founder-live-runtime-execution-readiness",
         "npm run check:p1163-founder-live-runtime-execution-readiness",
-        "npm run check:p1162-founder-live-runtime-execution-readiness",
-        "npm run check:p1161-founder-live-runtime-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P116.3 allows local SQLite CRUD only for allowlisted execution-readiness metadata after explicit local approval gates.",
-        "Runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-        "P116.4 is next for safe dry-run runtime execution readiness preview modeling."
+        "P116.4 is preview-only; it does not write readiness records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "P116.5 is next for Command Center runtime execution readiness UX."
       ],
-      "completedAt": "2026-05-29T03:11:50.557Z"
+      "completedAt": "2026-05-29T03:18:47.001Z"
     },
     {
       "track": "NEXUS_OS",
@@ -11061,23 +11059,30 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Execution Readiness Preview / Safe Dry Run",
-      "detail": "Planned Execution Readiness Preview / Safe Dry Run for P116.",
+      "detail": "P116.4 runtime execution readiness preview complete; P116.5 is next.",
       "phaseId": "P116.4",
       "title": "Execution Readiness Preview / Safe Dry Run",
       "order": 152.4,
-      "status": "planned",
-      "summary": "Planned Execution Readiness Preview / Safe Dry Run for P116.",
+      "status": "complete",
+      "summary": "P116.4 adds a display-safe local dry-run preview model for runtime execution readiness candidates, including readiness sections, candidate rows, blockers, owner, evidence/activity, and cost posture without enabling execution.",
       "nextPhase": "P116.5",
       "previousPhase": "P116.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1164-founder-live-runtime-execution-readiness",
+        "npm run check:p1163-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P116.4 is a local dry-run preview only; it does not write readiness records or enable runtime execution.",
+        "P116.5 is next for Command Center runtime execution readiness UX."
+      ],
+      "completedAt": "2026-05-29T03:18:47.001Z"
     },
     {
       "track": "NEXUS_OS",
@@ -11140,9 +11145,9 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T03:11:50.557Z",
-  "currentPhase": "P116.3",
-  "previousPhase": "P116.2",
-  "nextPhase": "P116.4",
+  "updatedAt": "2026-05-29T03:18:47.001Z",
+  "currentPhase": "P116.4",
+  "previousPhase": "P116.3",
+  "nextPhase": "P116.5",
   "currentPhaseStatus": "complete"
 }

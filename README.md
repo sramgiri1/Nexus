@@ -806,6 +806,14 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P116.4 runtime execution readiness preview: P116 now has a display-safe
+  local dry-run preview model for runtime execution readiness candidates,
+  including readiness sections, candidate rows, blockers, owner,
+  evidence/activity, and cost posture. P116.5 is next for Command Center
+  runtime execution readiness UX. Runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

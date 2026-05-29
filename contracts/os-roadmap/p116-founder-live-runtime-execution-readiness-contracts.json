@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move approved runtime admission readiness toward governed runtime execution readiness while keeping actual execution blocked until explicitly allowed.",
-  "currentSubphase": "P116.3",
-  "previousSubphase": "P116.2",
-  "nextSubphase": "P116.4",
+  "currentSubphase": "P116.4",
+  "previousSubphase": "P116.3",
+  "nextSubphase": "P116.5",
   "safetyRules": [
     "Do not enable runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P116.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -393,6 +393,9 @@
         "careloop/**",
         "generated-projects/*/Sources/**",
         "generated-projects/*/Tests/**",
+        "db/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -401,13 +404,14 @@
         "exports/**",
         "packages/**",
         ".env*",
-        "db/**",
-        "live-ready/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "local-state/runtime/**"
       ],
-      "expectedExports": [],
+      "expectedExports": [
+        "P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PREVIEW_PHASE",
+        "P116_RUNTIME_EXECUTION_READINESS_PREVIEW_STATES",
+        "buildRuntimeExecutionReadinessViewModel",
+        "validateRuntimeExecutionReadinessViewModel"
+      ],
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -434,35 +438,65 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "allowedFiles": [],
-      "exactFiles": [],
-      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "allowedFiles": [
+        "live-ready/founderLiveRuntimeExecutionReadiness.js",
+        "scripts/check-p1164-founder-live-runtime-execution-readiness.js",
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1163-founder-live-runtime-execution-readiness-report.md",
+        "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveRuntimeExecutionReadiness.js",
+        "scripts/check-p1164-founder-live-runtime-execution-readiness.js",
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1163-founder-live-runtime-execution-readiness-report.md",
+        "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "dataShape": "Display-safe local dry-run preview with schema version, current state, source contract phase/state, preview mode, source admission summary, execution readiness summary counts, execution sections, execution rows, forbidden operations, next action, blockers, disabled reason, owner capability, evidence/audit/activity/cost refs, commandCenterVisible false, and all write/runtime/dispatch/project/deploy/package/spend flags false.",
+      "commandCenterUx": "No dashboard source change in P116.4. P116.5 must render the display-safe runtime execution readiness preview on relevant non-chat founder pages and continue to hide raw DB details and fake runnable controls.",
       "playwrightTests": [
         "No new Playwright test until UI source changes; preserve route-wide safety tests."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated checker for this subphase."
+        "Add dedicated P116.4 preview checker."
       ],
-      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.4.",
-      "phaseStatusUpdate": "P116 in progress; P116.4 complete when implemented.",
+      "docsRoadmap": "P116.4 is recorded in the P116 plan, README, platform roadmap, OS status, and generated reports. P116.5 is next for Command Center runtime execution readiness UX.",
+      "phaseStatusUpdate": "P116 in progress; P116.4 complete; current P116.4; previous P116.3; next P116.5.",
       "validationCommands": [
         "npm run check:p1164-founder-live-runtime-execution-readiness",
+        "npm run check:p1163-founder-live-runtime-execution-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "gitCommands": [
         "git add <allowed P116.4 files>",
-        "git commit -m \"feat(nexus): implement p1164 runtime execution readiness\"",
+        "git commit -m \"feat(nexus): implement p1164 runtime execution preview\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "phaseId": "P116.4",
       "title": "Execution Readiness Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "narrowGoal": "Build a display-safe execution readiness preview while execution remains blocked.",
       "nextPhase": "P116.5",
-      "previousPhase": "P116.3"
+      "previousPhase": "P116.3",
+      "expectedBaseCommit": "04e8e88b"
     },
     {
       "scopeClassification": "NEXUS_OS_CHANGE",

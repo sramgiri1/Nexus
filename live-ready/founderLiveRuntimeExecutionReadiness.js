@@ -10,6 +10,12 @@ import {
 import { buildSafeRuntimeAdmissionDbRecord } from "./founderLiveRuntimeAdmissionReadiness.js";
 
 export const P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PHASE = "P116.3";
+export const P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PREVIEW_PHASE = "P116.4";
+
+export const P116_RUNTIME_EXECUTION_READINESS_PREVIEW_STATES = Object.freeze({
+  LOCAL_PREVIEW_READY_EXECUTION_BLOCKED: "founder_runtime_execution_readiness_preview_ready_execution_blocked",
+  NEEDS_EXECUTION_CONTEXT: "founder_runtime_execution_readiness_preview_needs_execution_context",
+});
 
 export const P116_RUNTIME_EXECUTION_DB_ENTITIES = Object.freeze([
   "founder_runtime_execution_readiness_items",
@@ -159,6 +165,129 @@ function sourceAdmissionSummary(input = {}) {
     nextAction: admissionRecord.nextAction || "Review execution readiness before any later explicit runtime execution phase.",
     ownerCapability: admissionRecord.ownerCapability || "NEXUS Founder Runtime Admission Readiness DB",
   };
+}
+
+function runtimeExecutionPreviewLanes(input = {}) {
+  return input.previewLanes || [
+    {
+      lane: "Founder Execution Gate",
+      displayLabel: "Founder execution readiness gate",
+      proposedOutcome: "Review whether the founder intent, PRD readiness, admission evidence, and local safety gates are complete enough for a later runtime execution request.",
+      ownerCapability: "NEXUS Founder Runtime Execution Review",
+    },
+    {
+      lane: "Product Build Boundary",
+      displayLabel: "Product build boundary gate",
+      proposedOutcome: "Check product scope, implementation boundaries, acceptance criteria, and validation commands before any later local runtime handoff.",
+      ownerCapability: "NEXUS Product Build Boundary Review",
+    },
+    {
+      lane: "Release Safety Boundary",
+      displayLabel: "Release safety boundary gate",
+      proposedOutcome: "Confirm rollback evidence, audit evidence, package/deploy restrictions, network limits, and blocked spend authority before any later runtime transition.",
+      ownerCapability: "NEXUS Release Safety Review",
+    },
+  ];
+}
+
+function buildPreviewExecutionRow(lane, index, input = {}) {
+  const admissionSummary = sourceAdmissionSummary(input);
+  const executionRecord = buildSafeRuntimeExecutionDbRecord("founder_runtime_execution_readiness_items", {
+    ...input,
+    executionLane: lane.lane,
+    publicLabel: lane.displayLabel,
+    executionSummary: lane.proposedOutcome,
+    ownerCapability: lane.ownerCapability,
+  });
+
+  return {
+    displayHandle: `execution-preview-${index + 1}-${safeSlug(lane.lane)}`,
+    displayLabel: lane.displayLabel,
+    sourceAdmissionLabel: admissionSummary.publicLabel,
+    sourceAdmissionLane: admissionSummary.admissionLane,
+    sourceAdmissionState: admissionSummary.admissionState,
+    proposedExecutionLane: lane.lane,
+    proposedOutcome: lane.proposedOutcome || executionRecord.executionSummary,
+    executionPosition: index + 1,
+    executionState: P116_RUNTIME_EXECUTION_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED,
+    previewMode: "local-only-dry-run",
+    localPreviewReady: true,
+    executionSummary: lane.proposedOutcome || executionRecord.executionSummary,
+    nextAction: "Review this local runtime execution readiness candidate before any later explicitly approved runtime execution phase.",
+    blockers: [
+      "Runtime execution readiness preview is local and read-only.",
+      "Local readiness writes require a separate approved CRUD request.",
+      "Runtime execution remains blocked.",
+      "Execution unlock remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason:
+      "P116.4 previews runtime execution readiness candidates only. It cannot execute runtime work, unlock execution, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    ownerCapability: lane.ownerCapability || executionRecord.ownerCapability,
+    evidenceRefs: [
+      "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+      "reports/p1163-founder-live-runtime-execution-readiness-report.md",
+    ],
+    auditRefs: ["reports/os-phase-status-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic runtime execution readiness preview only. No runtime execution, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    localCrudAllowed: false,
+    dbWriteAllowed: false,
+    sqliteWriteAllowed: false,
+    hostedDbMutationAllowed: false,
+    runtimeAdmissionAllowed: false,
+    runtimeTransitionAllowed: false,
+    runtimeExecutionAllowed: false,
+    executionAllowed: false,
+    executionUnlockAllowed: false,
+    dispatchAllowed: false,
+    agentDispatchAllowed: false,
+    workerExecutionAllowed: false,
+    toolExecutionAllowed: false,
+    projectCreationAllowed: false,
+    projectMutationAllowed: false,
+    deployAllowed: false,
+    releaseAllowed: false,
+    exportAllowed: false,
+    packageAllowed: false,
+    spendAllowed: false,
+    ...blockedRuntimeFlags(),
+  };
+}
+
+function buildPreviewExecutionSections(executionRows = []) {
+  return [
+    {
+      sectionHandle: "execution-readiness-candidates",
+      displayLabel: "Execution readiness candidates",
+      candidateCount: executionRows.length,
+      blockedCount: executionRows.length,
+      nextAction: "Show these candidates in P116.5 without execution, provider, project, deploy, package, or spend controls.",
+      disabledReason: "This section is read-only runtime execution readiness preview data.",
+    },
+    {
+      sectionHandle: "approval-gates",
+      displayLabel: "Runtime gates",
+      candidateCount: executionRows.length,
+      blockedCount: executionRows.length,
+      nextAction: "Keep operator approval, rollback, audit, validation, sqlite-live, and local write evidence separate from the preview.",
+      disabledReason: "Preview data cannot satisfy or bypass local CRUD or runtime execution gates.",
+    },
+    {
+      sectionHandle: "blocked-authority",
+      displayLabel: "Blocked authority",
+      candidateCount: executionRows.length,
+      blockedCount: executionRows.length,
+      nextAction: "Keep runtime authority blocked until a later explicitly scoped phase changes the contract.",
+      disabledReason: "Runtime execution, execution unlock, provider/model calls, dispatch, project mutation, hosted DB writes, deploy, release, export, package, network calls, and spend are blocked.",
+    },
+  ];
 }
 
 export function buildSafeRuntimeExecutionDbRecord(entityName = "", input = {}) {
@@ -502,5 +631,173 @@ export function validateFounderLiveRuntimeExecutionReadinessContract(envelope = 
   const serialized = JSON.stringify(data);
   if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("Founder runtime execution readiness CRUD model must not expose raw private IDs");
   if (/run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now|execute runtime now|execute now/i.test(serialized)) errors.push("Founder runtime execution readiness CRUD model must not expose fake unsafe runnable actions");
+  return { valid: errors.length === 0, errors };
+}
+
+export function buildRuntimeExecutionReadinessViewModel(input = {}) {
+  const contractEnvelope = input.contractEnvelope || buildFounderLiveRuntimeExecutionReadinessContract(input);
+  const admissionSummary = sourceAdmissionSummary(input);
+  const executionRows = runtimeExecutionPreviewLanes(input).map((lane, index) => buildPreviewExecutionRow(lane, index, input));
+  const executionSections = buildPreviewExecutionSections(executionRows);
+  const previewReady = executionRows.length > 0;
+
+  return createPassResult({
+    phase: P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PREVIEW_PHASE,
+    mode: "founder-runtime-execution-readiness-preview",
+    source: "live-ready/founderLiveRuntimeExecutionReadiness.js",
+    summary: "Founder live runtime execution readiness preview is assembled locally from display-safe admission context; runtime execution remains blocked.",
+    data: {
+      schemaVersion: "1.0",
+      currentState: previewReady
+        ? P116_RUNTIME_EXECUTION_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED
+        : P116_RUNTIME_EXECUTION_READINESS_PREVIEW_STATES.NEEDS_EXECUTION_CONTEXT,
+      sourceContractPhase: contractEnvelope.phase,
+      sourceContractState: contractEnvelope.data?.currentState || "unknown",
+      previewMode: "local-only-dry-run",
+      sourceAdmissionSummary: admissionSummary,
+      runtimeExecutionReadinessSummary: {
+        candidateCount: executionRows.length,
+        blockedCandidateCount: executionRows.length,
+        writableCandidateCount: 0,
+        persistedCandidateCount: 0,
+        runtimeExecutableCandidateCount: 0,
+        executableCandidateCount: 0,
+        executionUnlockCandidateCount: 0,
+        projectMutationCandidateCount: 0,
+        hostedDbMutationCandidateCount: 0,
+        providerSpendCandidateCount: 0,
+      },
+      executionSections,
+      executionRows,
+      forbiddenOperations: [...FORBIDDEN_OPERATIONS],
+      nextAction: previewReady
+        ? "Render P116.5 Command Center runtime execution readiness preview on non-chat founder pages without execution controls."
+        : "Complete display-safe runtime admission context before execution readiness preview assembly.",
+      blockers: [
+        "Runtime execution readiness preview is local and read-only.",
+        "Runtime execution remains blocked.",
+        "Execution unlock remains blocked.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project creation and mutation remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Deploy, release, export, and package actions remain blocked.",
+        "Network calls and provider spend remain blocked.",
+      ],
+      disabledReason:
+        "P116.4 is a local runtime execution readiness preview only. It does not execute runtime work, unlock execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+      ownerCapability: "NEXUS Founder Runtime Execution Readiness Preview",
+      evidenceRefs: [
+        "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+        "reports/p1163-founder-live-runtime-execution-readiness-report.md",
+      ],
+      auditRefs: ["reports/os-phase-status-report.md"],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic runtime execution readiness preview only. No runtime execution, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      commandCenterVisible: false,
+      localCrudAllowed: false,
+      dbWriteAllowed: false,
+      sqliteWriteAllowed: false,
+      hostedDbMutationAllowed: false,
+      runtimeAdmissionAllowed: false,
+      runtimeTransitionAllowed: false,
+      runtimeExecutionAllowed: false,
+      executionAllowed: false,
+      executionUnlockAllowed: false,
+      dispatchAllowed: false,
+      agentDispatchAllowed: false,
+      workerExecutionAllowed: false,
+      toolExecutionAllowed: false,
+      projectCreationAllowed: false,
+      projectMutationAllowed: false,
+      deployAllowed: false,
+      releaseAllowed: false,
+      exportAllowed: false,
+      packageAllowed: false,
+      spendAllowed: false,
+      ...blockedRuntimeFlags(),
+    },
+    evidence: [
+      "reports/p1164-founder-live-runtime-execution-readiness-report.md",
+      "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+    ],
+    warnings: [
+      "P116.4 does not execute runtime work, call providers, dispatch agents, mutate projects, use hosted DBs, unlock execution, deploy, package, or spend.",
+    ],
+  });
+}
+
+export function validateRuntimeExecutionReadinessViewModel(envelope = {}) {
+  const errors = [];
+  const data = envelope.data || {};
+  const requiredFields = [
+    "schemaVersion",
+    "currentState",
+    "sourceContractPhase",
+    "sourceContractState",
+    "previewMode",
+    "sourceAdmissionSummary",
+    "runtimeExecutionReadinessSummary",
+    "executionSections",
+    "executionRows",
+    "forbiddenOperations",
+    "nextAction",
+    "blockers",
+    "disabledReason",
+    "ownerCapability",
+    "evidenceRefs",
+    "auditRefs",
+    "activityLocation",
+    "costImpact",
+    "commandCenterVisible",
+  ];
+  if (envelope.phase !== P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PREVIEW_PHASE) errors.push("phase must be P116.4");
+  for (const field of requiredFields) {
+    if (!(field in data)) errors.push(`${field} missing`);
+  }
+  if (!Array.isArray(data.executionRows) || data.executionRows.length < 3) errors.push("executionRows must include runtime execution readiness candidates");
+  if (!Array.isArray(data.executionSections) || data.executionSections.length < 3) errors.push("executionSections must include execution readiness sections");
+  for (const field of ["writableCandidateCount", "persistedCandidateCount", "runtimeExecutableCandidateCount", "executableCandidateCount", "executionUnlockCandidateCount", "projectMutationCandidateCount", "hostedDbMutationCandidateCount", "providerSpendCandidateCount"]) {
+    if (data.runtimeExecutionReadinessSummary?.[field] !== 0) errors.push(`${field} must be 0`);
+  }
+  const previewSafetyFlags = [
+    "localCrudAllowed",
+    "dbWriteAllowed",
+    "sqliteWriteAllowed",
+    "hostedDbMutationAllowed",
+    "runtimeAdmissionAllowed",
+    "runtimeTransitionAllowed",
+    "runtimeExecutionAllowed",
+    "executionAllowed",
+    "executionUnlockAllowed",
+    "dispatchAllowed",
+    "agentDispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectCreationAllowed",
+    "projectMutationAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageAllowed",
+    "spendAllowed",
+  ];
+  for (const flag of [...previewSafetyFlags, ...BLOCKED_RUNTIME_FLAGS]) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const row of data.executionRows || []) {
+    for (const flag of [...previewSafetyFlags, ...BLOCKED_RUNTIME_FLAGS]) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel || "row"}.${flag} must be false`);
+    }
+    if (!row.disabledReason) errors.push(`${row.displayLabel || "row"}.disabledReason missing`);
+    if (!Array.isArray(row.blockers) || row.blockers.length < 8) errors.push(`${row.displayLabel || "row"}.blockers incomplete`);
+  }
+  if (data.commandCenterVisible !== false) errors.push("commandCenterVisible must be false until P116.5");
+  const serialized = JSON.stringify(data);
+  if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("runtime execution readiness preview must not expose raw private IDs");
+  if (/(runtimeExecutionId|runtimeAdmissionId|dispatchReadinessId|assignmentId|queueItemId|workOrderId|sqliteEntity|recordRef|requestKey|founder_runtime_execution_readiness_items|founder_runtime_execution_events|founder_runtime_execution_evidence_refs)/.test(serialized)) errors.push("runtime execution readiness preview must not expose raw record keys or DB table names");
+  if (/run now|execute now|deploy now|apply now|approve now|admit now|call provider now|create project now|dispatch agent now|write sqlite now|write runtime now/i.test(serialized)) errors.push("runtime execution readiness preview must not expose fake unsafe runnable actions");
+  if (/raw JSON|raw logs|raw policy dump/i.test(serialized)) errors.push("runtime execution readiness preview must not expose raw dumps");
   return { valid: errors.length === 0, errors };
 }
