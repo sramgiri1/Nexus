@@ -1635,6 +1635,18 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P128.4 acceptance capture persistence safe dry run: the local result-envelope
+  preview now assembles display-safe persistence rows, blocked counts,
+  owner/evidence/activity labels, next action, disabled reason, and cost impact
+  while reusing P128.3 intent and P128.2 metadata. P128.5 is next for scoped
+  Command Center UX. Acceptance capture persistence, DB schemas, migrations,
+  DB/runtime writes, live acceptance capture, handoff acceptance, authority
+  handoff, authority grant, activation, approval application, approval capture,
+  approval persistence, approve/reject decision recording, runtime execution,
+  execution unlock, provider/model calls, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

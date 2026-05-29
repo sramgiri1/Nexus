@@ -13684,15 +13684,15 @@
       "order": 164,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "cf097c89",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P128 is in progress; P128.3 capture persistence intent model is complete and P128.4 persistence safe dry-run is next.",
-      "summary": "P128 acceptance capture persistence boundary now includes contract, browser-safe schema metadata, and a local intent model. Persistence, DB/runtime writes, live capture, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "detail": "P128 is in progress; P128.4 capture persistence safe dry-run is complete and P128.5 scoped Command Center persistence UX is next.",
+      "summary": "P128 acceptance capture persistence boundary now includes contract, browser-safe schema metadata, local intent model, and safe dry-run preview. Persistence, DB/runtime writes, live capture, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P127.7",
-      "nextPhase": "P128.4",
+      "nextPhase": "P128.5",
       "checksRun": [
+        "npm run check:p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
         "npm run check:p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
-        "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -13701,9 +13701,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P128 is in progress. P128.3 is a pure local model only. P128 does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P128.4 is a local dry-run preview only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T19:59:32.952Z"
+      "completedAt": "2026-05-29T20:09:55.392Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13791,29 +13791,77 @@
         "P128.3 is a pure local model only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "completedAt": "2026-05-29T19:59:32.952Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P128.4",
+      "title": "Capture Persistence Safe Dry Run",
+      "label": "Capture Persistence Dry Run",
+      "order": 164.4,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P128.4 capture persistence safe dry-run complete; P128.5 scoped Command Center persistence UX is next.",
+      "summary": "Added a local result-envelope acceptance capture persistence safe dry-run preview with display-safe rows, blocked counts, owner/evidence/activity/cost labels, and all persistence, DB/runtime write, execution, dispatch, provider, mutation, network, and spend flags false.",
+      "previousPhase": "P128.3",
+      "nextPhase": "P128.5",
+      "checksRun": [
+        "npm run check:p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P128.4 is a local dry-run preview only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T20:09:55.392Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P128.5",
+      "title": "Command Center Capture Persistence UX",
+      "label": "Capture Persistence UX",
+      "order": 164.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P128.5 will expose the P128.4 safe dry-run preview in scoped Command Center pages without enabling persistence or execution.",
+      "summary": "Planned scoped Command Center UX for acceptance capture persistence readiness using display-safe safe dry-run data only.",
+      "previousPhase": "P128.4",
+      "nextPhase": "P128.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "P128.5 is planned only. It must not enable persistence, DB/runtime writes, live capture, handoff acceptance, authority grant, execution, provider calls, dispatch, project mutation, network calls, deploy, export, package actions, or spend."
+      ]
     }
   ],
-  "updatedAt": "2026-05-29T19:59:32.952Z",
-  "currentPhase": "P128.3",
-  "previousPhase": "P128.2",
-  "nextPhase": "P128.4",
+  "updatedAt": "2026-05-29T20:09:55.392Z",
+  "currentPhase": "P128.4",
+  "previousPhase": "P128.3",
+  "nextPhase": "P128.5",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P128.3",
-    "title": "Capture Persistence Intent Model",
-    "label": "Capture Persistence Intent",
-    "order": 164.3,
+    "phaseId": "P128.4",
+    "title": "Capture Persistence Safe Dry Run",
+    "label": "Capture Persistence Dry Run",
+    "order": 164.4,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "cf097c89",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P128.3 capture persistence intent model complete; P128.4 persistence safe dry-run is next.",
-    "summary": "Added the local acceptance capture persistence intent model with allowlisted states, zero candidate counts, blocked readiness rows, owner/evidence/activity/cost labels, and all persistence, write, execution, dispatch, provider, mutation, network, and spend flags false.",
-    "previousPhase": "P128.2",
-    "nextPhase": "P128.4",
+    "detail": "P128.4 capture persistence safe dry-run complete; P128.5 scoped Command Center persistence UX is next.",
+    "summary": "Added a local result-envelope acceptance capture persistence safe dry-run preview with display-safe rows, blocked counts, owner/evidence/activity/cost labels, and all persistence, DB/runtime write, execution, dispatch, provider, mutation, network, and spend flags false.",
+    "previousPhase": "P128.3",
+    "nextPhase": "P128.5",
     "checksRun": [
+      "npm run check:p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
-      "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13822,28 +13870,28 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P128.3 is a pure local model only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P128.4 is a local dry-run preview only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T19:59:32.952Z"
+    "completedAt": "2026-05-29T20:09:55.392Z"
   },
-  "generatedAt": "2026-05-29T16:47:51.312Z",
+  "generatedAt": "2026-05-29T20:09:55.392Z",
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P128.3",
-    "title": "Capture Persistence Intent Model",
-    "label": "Capture Persistence Intent",
-    "order": 164.3,
+    "phaseId": "P128.4",
+    "title": "Capture Persistence Safe Dry Run",
+    "label": "Capture Persistence Dry Run",
+    "order": 164.4,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "cf097c89",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P128.3 capture persistence intent model complete; P128.4 persistence safe dry-run is next.",
-    "summary": "Added the local acceptance capture persistence intent model with allowlisted states, zero candidate counts, blocked readiness rows, owner/evidence/activity/cost labels, and all persistence, write, execution, dispatch, provider, mutation, network, and spend flags false.",
-    "previousPhase": "P128.2",
-    "nextPhase": "P128.4",
+    "detail": "P128.4 capture persistence safe dry-run complete; P128.5 scoped Command Center persistence UX is next.",
+    "summary": "Added a local result-envelope acceptance capture persistence safe dry-run preview with display-safe rows, blocked counts, owner/evidence/activity/cost labels, and all persistence, DB/runtime write, execution, dispatch, provider, mutation, network, and spend flags false.",
+    "previousPhase": "P128.3",
+    "nextPhase": "P128.5",
     "checksRun": [
+      "npm run check:p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
-      "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13852,8 +13900,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P128.3 is a pure local model only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P128.4 is a local dry-run preview only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T19:59:32.952Z"
+    "completedAt": "2026-05-29T20:09:55.392Z"
   }
 }

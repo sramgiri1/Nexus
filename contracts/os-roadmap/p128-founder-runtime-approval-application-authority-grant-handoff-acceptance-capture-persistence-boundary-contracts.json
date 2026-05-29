@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P128.3",
-  "previousSubphase": "P128.2",
-  "nextSubphase": "P128.4",
+  "currentSubphase": "P128.4",
+  "previousSubphase": "P128.3",
+  "nextSubphase": "P128.5",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "18fbb37a",
   "owner": "NEXUS OS",
@@ -391,10 +391,10 @@
     {
       "phaseId": "P128.4",
       "title": "Capture Persistence Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P128.3-stamp",
+      "expectedBaseCommit": "ec8c7f76",
       "narrowGoal": "Build a local safe dry-run envelope that previews what would need persistence while keeping every write and runtime action blocked.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun.js",
@@ -431,6 +431,8 @@
       ],
       "expectedExports": [
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_SAFE_DRY_RUN_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_SAFE_DRY_RUN_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_SAFE_DRY_RUN_STATES",
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun",
         "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun"
       ],
@@ -471,6 +473,22 @@
         "Validation results",
         "Safety confirmations",
         "Next phase/subphase"
+      ],
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun.js",
+        "scripts/check-p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
+        "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ]
     },
     {
@@ -723,19 +741,19 @@
     }
   ],
   "currentStatus": {
-    "phaseId": "P128.3",
+    "phaseId": "P128.4",
     "status": "complete",
-    "previousPhase": "P128.2",
-    "nextPhase": "P128.4",
-    "detail": "P128.3 capture persistence intent model complete; P128.4 persistence safe dry-run is next.",
-    "summary": "Added the local acceptance capture persistence intent model with allowlisted states, zero candidate counts, blocked readiness rows, owner/evidence/activity/cost labels, and all persistence, write, execution, dispatch, provider, mutation, network, and spend flags false.",
+    "previousPhase": "P128.3",
+    "nextPhase": "P128.5",
+    "detail": "P128.4 capture persistence safe dry-run complete; P128.5 scoped Command Center persistence UX is next.",
+    "summary": "Added a local result-envelope acceptance capture persistence safe dry-run preview with display-safe rows, blocked counts, owner/evidence/activity/cost labels, and all persistence, DB/runtime write, execution, dispatch, provider, mutation, network, and spend flags false.",
     "knownLimitations": [
-      "P128.3 is a pure local model only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      "P128.4 is a local dry-run preview only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
     ]
   },
-  "nextPhase": "P128.4",
+  "nextPhase": "P128.5",
   "knownLimitations": [
     "P128.3 is a pure local model only. Safe dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
   ],
-  "summary": "P128 is in progress. P128.3 defines the local acceptance capture persistence intent model while all persistence and execution paths remain blocked."
+  "summary": "P128 is in progress. P128.4 adds a local safe dry-run preview for acceptance capture persistence while all persistence and execution paths remain blocked."
 }

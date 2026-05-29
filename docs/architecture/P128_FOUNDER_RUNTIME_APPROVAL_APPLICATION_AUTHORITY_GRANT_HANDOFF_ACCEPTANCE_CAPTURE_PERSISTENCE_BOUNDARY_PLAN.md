@@ -135,6 +135,122 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P128.4 Capture Persistence Safe Dry Run
+
+Status: complete
+Phase: P128
+Subphase: P128.4
+Goal: Add a local result-envelope safe dry-run preview for acceptance capture
+persistence while keeping every persistence, DB/runtime write, authority, and
+execution action blocked.
+Why this is needed: P128.3 modeled acceptance capture persistence intent.
+P128.4 turns that model into a checker-validated preview artifact that P128.5
+can expose in scoped Command Center UX without creating live persistence.
+User/operator impact: Operators can inspect display-safe persistence preview
+rows, blockers, owner, evidence/activity labels, and cost impact before any
+live persistence path exists.
+Command Center impact: No dashboard source or test changes. The preview remains
+hidden from primary UX until P128.5. Existing route-wide navigation, Lite,
+Chat with NEXUS, System/Dark/Light themes, and DemoApp isolation stay intact.
+Safety impact: P128.4 does not persist acceptance capture, create DB schemas,
+create migrations, write DB/runtime records, capture acceptance, accept
+handoff, hand off authority, grant authority, activate authority, apply
+approvals, record approve/reject decisions, unlock execution, call
+providers/models, dispatch agents, execute workers/tools, mutate projects,
+deploy, release, export, package, use network calls, or spend.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun.js`
+- `scripts/check-p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`
+- `scripts/check-p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`
+- `contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json`
+- `docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md`
+- `reports/p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Tests to add/update/remove:
+- Add `scripts/check-p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`.
+- Update the P128.3 checker so it accepts the P128.4 handoff.
+- Do not add or remove Playwright tests in P128.4 because no UX changes.
+
+Docs to update:
+- This P128 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P128.3 report.
+- P128.4 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P128 in progress.
+- P128.4 complete.
+- Current phase P128.4.
+- Previous phase P128.3.
+- Next phase P128.5.
+
+Known risks:
+- Dry-run wording could imply live persistence. The checker enforces
+  local-only dry-run mode, zero candidate counts, false authority flags, and
+  blocked write/execution actions.
+
+Rollback plan:
+- Revert the P128.4 implementation and stamp commits only. P128.3 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary`
+- `npm run check:p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance capture appears only on scoped pages"`
+- `git diff --check`
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P128.3 Capture Persistence Intent Model
 
 Status: complete

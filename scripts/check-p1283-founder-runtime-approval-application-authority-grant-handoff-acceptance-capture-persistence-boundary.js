@@ -140,6 +140,12 @@ const p1283CurrentState = status.currentPhase === "P128.3"
   && roadmap.currentPhase === "P128.3"
   && roadmap.previousPhase === "P128.2"
   && roadmap.nextPhase === "P128.4";
+const p1284StartedState = status.currentPhase === "P128.4"
+  && status.previousPhase === "P128.3"
+  && status.nextPhase === "P128.5"
+  && roadmap.currentPhase === "P128.4"
+  && roadmap.previousPhase === "P128.3"
+  && roadmap.nextPhase === "P128.5";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary"]));
 addCheck("phase export is P128.3", FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_INTENT_MODEL_PHASE === "P128.3" && FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_INTENT_MODEL_VERSION === "1.0");
@@ -168,14 +174,23 @@ addCheck("contract records expected exports", [
 ].every((name) => p1283.expectedExports?.includes(name)));
 addCheck("P128.2 checker accepts P128.3 handoff", p1282Checker.includes("p1283StartedState") && p1282Checker.includes('status.nextPhase === "P128.4"'));
 addCheck("docs record P128.3", /## P128\.3 Capture Persistence Intent Model[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P128.3", /P128\.3 capture persistence intent model/i.test(readme) && /P128\.4 is next/i.test(readme));
-addCheck("platform roadmap records P128.3", /P128\.3 is complete/i.test(platformRoadmap) && /P128\.4 is next/i.test(platformRoadmap));
+addCheck(
+  "README records P128.3",
+  /P128\.3 capture persistence intent model/i.test(readme)
+    && (/P128\.4 is next/i.test(readme) || /P128\.4 acceptance capture persistence safe dry run/i.test(readme)),
+);
+addCheck(
+  "platform roadmap records P128.3",
+  /P128\.3 is complete/i.test(platformRoadmap)
+    && (/P128\.4 is next/i.test(platformRoadmap) || /P128\.4 is complete/i.test(platformRoadmap)),
+);
 addCheck(
   "phase status advanced",
-  p1283CurrentState
+  (p1283CurrentState || p1284StartedState)
     && statusById.get("P128")?.status === "in_progress"
     && statusById.get("P128.2")?.status === "complete"
     && statusById.get("P128.3")?.status === "complete"
+    && ["planned", "complete"].includes(statusById.get("P128.4")?.status)
     && roadmapById.get("P128.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
