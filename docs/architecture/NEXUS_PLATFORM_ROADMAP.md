@@ -3513,6 +3513,18 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P122.4 is complete. A local result-envelope safe dry-run preview now reuses the
+P122.3 intent model and P122.2 metadata to show authority handoff sections,
+preview rows, blockers, disabled reasons, next actions, owner capability,
+evidence/activity labels, zero unsafe counts, and cost posture while staying
+hidden from primary UX. P122.5 is next for scoped Command Center authority
+handoff UX. Approval decision application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

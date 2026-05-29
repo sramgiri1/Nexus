@@ -12286,28 +12286,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "50668380",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
-      "detail": "P122.3 authority intent model complete; P122.4 safe dry run is next.",
+      "detail": "P122.4 authority safe dry run complete; P122.5 UX is next.",
       "phaseId": "P122",
       "title": "Founder Runtime Approval Decision Application Authority Handoff",
       "order": 158,
       "status": "in_progress",
-      "summary": "P122 is in progress with contract, authority eligibility metadata, and governed local authority intent model complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P122.4",
-      "previousPhase": "P122.3",
+      "summary": "P122 is in progress with contract, authority eligibility metadata, governed local authority intent model, and safe dry-run preview complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P122.5",
+      "previousPhase": "P122.4",
       "checksRun": [
+        "npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff",
         "npm run check:p1223-founder-runtime-approval-decision-application-authority-handoff",
-        "npm run check:p1222-founder-runtime-approval-decision-application-authority-handoff",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P122.3 is model-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P122.4 is safe dry-run preview only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:48:03.852Z"
+      "completedAt": "2026-05-29T13:54:26.435Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12389,23 +12389,29 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Authority Dry Run",
-      "detail": "Planned P122 subphase. Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "detail": "Local safe dry-run preview complete; P122.5 is next.",
       "phaseId": "P122.4",
       "title": "Authority Handoff Safe Dry Run",
       "order": 158.4,
-      "status": "planned",
-      "summary": "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Added a local result-envelope approval decision application authority safe dry-run preview reusing P122.3 intent and P122.2 metadata with sections, rows, blockers, disabled reasons, next actions, zero unsafe counts, and false authority flags. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P122.5",
       "previousPhase": "P122.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1223-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P122.4 is safe dry-run preview only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T13:54:26.435Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12468,35 +12474,35 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T13:48:03.852Z",
-  "currentPhase": "P122.3",
-  "previousPhase": "P122.2",
-  "nextPhase": "P122.4",
+  "updatedAt": "2026-05-29T13:54:26.435Z",
+  "currentPhase": "P122.4",
+  "previousPhase": "P122.3",
+  "nextPhase": "P122.5",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "50668380",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
-    "detail": "P122.3 authority intent model complete; P122.4 safe dry run is next.",
+    "detail": "P122.4 authority safe dry run complete; P122.5 UX is next.",
     "phaseId": "P122",
     "title": "Founder Runtime Approval Decision Application Authority Handoff",
     "order": 158,
     "status": "in_progress",
-    "summary": "P122 is in progress with contract, authority eligibility metadata, and governed local authority intent model complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-    "nextPhase": "P122.4",
-    "previousPhase": "P122.3",
+    "summary": "P122 is in progress with contract, authority eligibility metadata, governed local authority intent model, and safe dry-run preview complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+    "nextPhase": "P122.5",
+    "previousPhase": "P122.4",
     "checksRun": [
+      "npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff",
       "npm run check:p1223-founder-runtime-approval-decision-application-authority-handoff",
-      "npm run check:p1222-founder-runtime-approval-decision-application-authority-handoff",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "git diff --check"
     ],
     "knownLimitations": [
-      "P122.3 is model-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P122.4 is safe dry-run preview only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T13:48:03.852Z"
+    "completedAt": "2026-05-29T13:54:26.435Z"
   },
-  "generatedAt": "2026-05-29T13:48:03.852Z"
+  "generatedAt": "2026-05-29T13:54:26.435Z"
 }

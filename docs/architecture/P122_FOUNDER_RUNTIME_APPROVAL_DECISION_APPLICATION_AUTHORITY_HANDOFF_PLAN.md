@@ -470,12 +470,165 @@ phase to P122.2.
 
 Status: complete.
 
+## P122.4 Authority Handoff Safe Dry Run
+
+Phase: P122
+Subphase: P122.4
+Goal: add a local-only result-envelope dry-run preview that reuses the P122.3
+authority intent model and P122.2 metadata while keeping authority, approval
+application, writes, execution, dispatch, network, and spend blocked.
+Why this is needed: P122.3 models intent only. P122.4 produces the safe preview
+artifact P122.5 can render without adding live controls or mutation behavior.
+User/operator impact: operators get dry-run sections and rows for authority
+handoff, prior boundary, runtime guard, and operator evidence with blockers,
+disabled reasons, next actions, owner capability, evidence/activity labels,
+zero unsafe counts, and cost posture.
+Command Center impact: no Command Center source change in P122.4. The preview
+remains hidden from primary UX until P122.5.
+Safety impact: dry-run preview only. Approval decision application, approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL,
+deploy, release, export, package, network calls, and provider spend remain
+blocked.
+Cost impact: none; no provider, model, network, worker, deploy, package, or
+spend path is used.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalDecisionApplicationAuthorityPreview.js`
+- `contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json`
+- `docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md`
+- `scripts/check-p1224-founder-runtime-approval-decision-application-authority-handoff.js`
+- `scripts/check-p1223-founder-runtime-approval-decision-application-authority-handoff.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1223-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/p1224-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_PREVIEW_PHASE`
+- `FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_PREVIEW_VERSION`
+- `FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_PREVIEW_STATES`
+- `buildFounderApprovalDecisionApplicationAuthorityPreview`
+- `validateFounderApprovalDecisionApplicationAuthorityPreview`
+
+The preview uses the existing result-envelope shape and keeps
+`commandCenterVisible` false. `data` includes `schemaVersion`, `currentState`,
+`previewMode`, `dryRunOnly`, source model/metadata phases,
+`authorityHandoffSummary`, `previewSections`, `previewRows`, `blockers`,
+`nextAction`, `disabledReason`, `ownerCapability`, `evidenceRefs`,
+`activityLocation`, `costImpact`, and false authority flags.
+
+Reuse check: reuse `shared/resultEnvelope.js`, P122.3
+`shared/founderApprovalDecisionApplicationAuthorityIntentModel.js`, P122.2
+`shared/founderApprovalDecisionApplicationAuthorityEligibilityMetadata.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+`shared/reportMetadata.js`, `shared/modeGuard.js`, `shared/redaction.js`,
+`os-roadmap/updatePhaseStatus.js`, existing dashboard cards/routes, route
+safety tests, OS phase status records, and P122.3 evidence. Do not duplicate
+report writers, mode guards, redaction helpers, result envelopes, phase status
+updaters, route matrices, UI cards, or evidence/audit/activity appenders.
+
+Tests to add/update/remove: add the dedicated P122.4 safe dry-run checker and
+package script. No Playwright test is added because dashboard source is not in
+scope.
+
+Docs to update: this P122 plan, README, platform roadmap, P122 contract, OS
+roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1223-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/p1224-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P122 is in progress; P122.4 is complete; current phase
+P122.4; previous P122.3; next P122.5.
+
+Validation commands:
+- `npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff`
+- `npm run check:p1223-founder-runtime-approval-decision-application-authority-handoff`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P122.4 files>`
+- `git commit -m "feat(nexus): implement p1224 approval application authority safe dry run"`
+- stamp P122/P122.4 status with the implementation commit
+- `git add <allowed P122.4 status/report files>`
+- `git commit -m "chore(nexus): stamp p1224 approval application authority safe dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop/generated project paths changed
+- confirm no dashboard source or test files changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, local runtime state, or env paths changed
+- confirm no approval decision application, approval capture, approval
+  persistence, approve/reject decision recording, DB/runtime writes, runtime
+  execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL, network,
+  deploy, release, export, package, or spend authority is enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB/schema names, raw report
+  paths in primary UX, JSON/log/policy dumps, internal primary UX phase labels,
+  or fake actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: preview rows may be mistaken for runnable controls. The preview is
+hidden from primary UX, validates every unsafe `would*` field as false, and has
+no action labels that imply execution.
+
+Rollback plan: remove the P122.4 preview, checker, report, package script,
+contract/docs/status updates, restore P122.4 to planned, and return current
+phase to P122.3.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
 P122.1 Authority Handoff Contract / Policy is complete. P122.2 Application
 Authority Eligibility Metadata is complete. P122.3 Governed Local Authority
-Intent Model is complete. P122.4 is next for authority handoff safe dry-run
-preview. Approval decision application,
+Intent Model is complete. P122.4 Authority Handoff Safe Dry Run is complete.
+P122.5 is next for scoped Command Center authority handoff UX. Approval decision application,
 approval capture, approval persistence, approve/reject decision recording,
 DB/runtime writes, runtime execution, execution unlock, provider/model calls,
 agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
