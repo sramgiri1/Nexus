@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.2
-- Generated at: 2026-05-29T15:48:21.496Z
+- Generated at: 2026-05-29T15:49:53.275Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e10ddea6
+- Validation HEAD: 644208ab
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | README records P124.2 | PASS |  |
 | platform roadmap records P124.2 | PASS |  |
 | phase status advanced | PASS | P124.2/P124.1/P124.3 |
-| changed files stay in P124.2 allowed scope | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js, shared/founderApprovalApplicationAuthorityGrantEligibilityMetadata.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js, shared/founderApprovalApplicationAuthorityGrantEligibilityMetadata.js |
+| changed files stay in P124.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw grant table names | PASS |  |
 | metadata avoids raw private IDs | PASS |  |
 | metadata avoids fake runnable actions | PASS |  |
