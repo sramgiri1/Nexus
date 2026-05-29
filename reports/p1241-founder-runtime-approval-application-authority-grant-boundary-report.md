@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.1
-- Generated at: 2026-05-29T15:42:09.860Z
+- Generated at: 2026-05-29T15:43:04.991Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 97151c8e
+- Validation HEAD: 5437cf53
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | platform roadmap records P124.1 | PASS |  |
 | README records P124.1 | PASS |  |
 | phase status advanced | PASS | P124.1/P123.7/P124.2 |
-| changed files stay in P124.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1237-founder-runtime-approval-application-authority-activation-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1237-founder-runtime-approval-application-authority-activation-boundary.js, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, reports/p1241-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1241-founder-runtime-approval-application-authority-grant-boundary.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1237-founder-runtime-approval-application-authority-activation-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1237-founder-runtime-approval-application-authority-activation-boundary.js, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, reports/p1241-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1241-founder-runtime-approval-application-authority-grant-boundary.js |
+| changed files stay in P124.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P124.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | no unsafe imports or URLs | PASS |  |
