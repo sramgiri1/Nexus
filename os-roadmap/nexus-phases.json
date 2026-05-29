@@ -10950,7 +10950,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "27f6bcd1",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
       "detail": "P116 final validation complete; P117 is planned next.",
@@ -11149,7 +11149,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "27f6bcd1",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "Final P116 validation complete; P117 is planned next.",
