@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.7
-- Generated at: 2026-05-29T01:35:50.417Z
+- Generated at: 2026-05-29T01:36:33.235Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: dc4450ae
+- Validation HEAD: f9e09154
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | P114.7 records final validation commands | PASS |  |
 | P114.7 avoids forbidden file scope | PASS |  |
 | changed files stay in P114.7 allowed scope | PASS | scope check relaxed for P115.1 |
-| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1147-founder-live-agent-dispatch-readiness-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1147-founder-live-agent-dispatch-readiness.js, contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json, docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md, reports/p1151-founder-live-runtime-admission-contract-report.md, scripts/check-p1151-founder-live-runtime-admission-contract.js |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1151-founder-live-runtime-admission-contract-report.md |
 | P114.6 checker accepts final handoff | PASS |  |
 | OS status checker accepts P115 handoff | PASS |  |
 | phase status closed or P115 started | PASS | P115.1/P114.7/P115.2 |

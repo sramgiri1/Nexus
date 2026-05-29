@@ -10719,7 +10719,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f9e091545c42b9fdf12774a92ebd9e5574c308d0",
       "commandCenterVisible": true,
       "label": "Founder Live Runtime Admission Readiness",
       "detail": "P115.1 runtime admission contract complete; P115.2 local admission schema metadata is next.",
@@ -10747,7 +10747,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f9e091545c42b9fdf12774a92ebd9e5574c308d0",
       "commandCenterVisible": true,
       "label": "Runtime Admission Contract",
       "detail": "P115.1 runtime admission contract complete; P115.2 local admission schema metadata is next.",
@@ -10891,7 +10891,7 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T01:35:36.589Z",
+  "updatedAt": "2026-05-29T01:36:28.938Z",
   "currentPhase": "P115.1",
   "previousPhase": "P114.7",
   "nextPhase": "P115.2",
