@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.1
-- Generated at: 2026-05-29T02:48:44.467Z
+- Generated at: 2026-05-29T02:51:14.084Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6e941f94
+- Validation HEAD: 28e45576
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,8 +28,8 @@
 | reuse requirements recorded | PASS |  |
 | safety rules block runtime execution | PASS |  |
 | validation commands recorded | PASS |  |
-| changed files stay in P116.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1157-founder-live-runtime-admission-readiness.js, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, scripts/check-p1161-founder-live-runtime-execution-contract.js |
-| changed files avoid forbidden paths | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1157-founder-live-runtime-admission-readiness.js, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, scripts/check-p1161-founder-live-runtime-execution-contract.js |
+| changed files stay in P116.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1157-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/phase-validation-coverage-report.md |
+| changed files avoid forbidden paths | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1157-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/phase-validation-coverage-report.md |
 | P115.7 checker accepts P116 start | PASS |  |
 | OS status checker accepts P116 subphases | PASS |  |
 | phase status advanced | PASS | P116.1/P115.7/P116.2 |
@@ -37,7 +37,7 @@
 | docs plan records P116.1 | PASS |  |
 | README records P116.1 | PASS |  |
 | platform roadmap records P116.1 | PASS |  |
-| no runtime execution implementation files changed | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1157-founder-live-runtime-admission-readiness.js, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, scripts/check-p1161-founder-live-runtime-execution-contract.js |
+| no runtime execution implementation files changed | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1157-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/phase-validation-coverage-report.md |
 | docs avoid raw runtime execution keys | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

@@ -10950,7 +10950,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "28e45576",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
       "detail": "P116.1 runtime execution contract complete; P116.2 is next.",
@@ -10978,7 +10978,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "28e45576",
       "commandCenterVisible": true,
       "label": "Execution Contract / Policy",
       "detail": "P116.1 runtime execution contract complete; P116.2 is next.",
