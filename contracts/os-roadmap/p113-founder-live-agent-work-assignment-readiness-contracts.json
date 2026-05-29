@@ -273,11 +273,11 @@
     {
       "phaseId": "P113.3",
       "title": "Governed Local Assignment CRUD Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add approval-gated local SQLite CRUD helpers for allowlisted assignment readiness records without delete, dispatch, project mutation, hosted DB mutation, or execution.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "cae1a7bf80a497a967c8b3728ec0d4a02f0cd98a",
       "allowedFiles": [
         "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
         "scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js",
@@ -335,7 +335,7 @@
         "buildSafeAgentWorkAssignmentDbRecord",
         "executeApprovedAgentWorkAssignmentDbCrudRequest"
       ],
-      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "dataShape": "Display-safe local SQLite CRUD contract for founder agent work assignment items, assignment events, and assignment evidence references. The model exposes localCrudRequests, allowedLocalCrudOperations, forbiddenOperations, mutationGate, runtimeFlags, nextAction, blockers, disabledReason, evidence/activity refs, and cost impact while unsafe authority stays false.",
       "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -348,8 +348,8 @@
       "checkerUpdates": [
         "Add or update the dedicated P113.3 checker."
       ],
-      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.3.",
-      "phaseStatusUpdate": "P113 in progress; P113.3 complete when implemented.",
+      "docsRoadmap": "P113.3 is recorded in the P113 plan, README, platform roadmap, OS status, and generated reports. P113.4 is next.",
+      "phaseStatusUpdate": "P113 in progress; P113.3 complete; current P113.3; previous P113.2; next P113.4.",
       "validationCommands": [
         "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
         "npm run check:p1132-founder-live-agent-work-assignment-schema",
@@ -839,12 +839,12 @@
     "buildAgentWorkAssignmentReadinessViewModel"
   ],
   "knownLimitations": [
-    "P113.2 is schema-only and does not write assignment records through runtime helpers.",
+    "P113.3 admits local SQLite CRUD only for allowlisted assignment readiness OS records after explicit local approval gates.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P113.3 is next for governed local assignment CRUD modeling."
+    "P113.4 is next for safe assignment readiness preview modeling."
   ],
-  "currentSubphase": "P113.2",
-  "previousSubphase": "P113.1",
-  "nextSubphase": "P113.3",
-  "summary": "P113 is in progress. P113.1-P113.2 define the governed local assignment readiness boundary and local SQLite schema while unsafe authority remains blocked."
+  "currentSubphase": "P113.3",
+  "previousSubphase": "P113.2",
+  "nextSubphase": "P113.4",
+  "summary": "P113 is in progress. P113.1-P113.3 define the governed local assignment readiness boundary, local SQLite schema, and approval-gated local assignment CRUD model while unsafe authority remains blocked."
 }
