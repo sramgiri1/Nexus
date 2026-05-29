@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P129.7
-- Generated at: 2026-05-29T21:42:19.227Z
+- Generated at: 2026-05-29T21:43:09.780Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 16f5cb5a
+- Validation HEAD: a3532775
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -35,8 +35,8 @@
 | docs record P129.7 complete | PASS |  |
 | docs record P130 planned-only | PASS |  |
 | phase status closed | PASS | P129.7/P129.6/P130 |
-| changed files stay in P129.7 allowed scope | PASS | README.md, contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js, scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js, reports/p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js, scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js, reports/p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js |
+| changed files stay in P129.7 allowed scope | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw store internals | PASS |  |
 | display model avoids fake runnable actions | PASS |  |
