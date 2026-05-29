@@ -15298,28 +15298,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "303466ef9879",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
-      "detail": "P114.1 dispatch readiness contract complete; P114.2 local dispatch schema is next.",
+      "detail": "P114.2 local dispatch schema complete; P114.3 governed local dispatch CRUD is next.",
       "phaseId": "P114",
       "title": "Founder Live Agent Dispatch Readiness",
       "order": 150,
       "status": "in_progress",
-      "summary": "P114 is in progress. P114.1 defines dispatch readiness contracts, future schema, future exports, reuse requirements, safety rules, validation, docs, and OS status while unsafe authority remains blocked.",
-      "nextPhase": "P114.2",
+      "summary": "P114 is in progress. P114.1-P114.2 define dispatch readiness contracts, future exports, local schema metadata, isolated validation, and OS status while unsafe authority remains blocked.",
+      "nextPhase": "P114.3",
       "previousPhase": "P113.7",
       "checksRun": [
+        "npm run check:p1142-founder-live-agent-dispatch-readiness",
         "npm run check:p1141-founder-live-agent-dispatch-contract",
-        "npm run check:p1137-founder-live-agent-work-assignment-final",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P114.1 is contract-only and does not add runtime or UI behavior.",
+        "P114.2 is schema-only and does not add runtime helper or UI behavior.",
         "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P114.2 is next for local dispatch schema work."
+        "P114.3 is next for governed local dispatch CRUD modeling."
       ],
       "completedAt": ""
     },
@@ -15353,23 +15353,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Agent Dispatch SQLite Schema",
-      "detail": "Planned agent dispatch sqlite schema for P114.",
+      "detail": "P114.2 schema complete; P114.3 governed local dispatch CRUD is next.",
       "phaseId": "P114.2",
       "title": "Agent Dispatch SQLite Schema",
       "order": 150.2,
-      "status": "planned",
-      "summary": "Planned agent dispatch sqlite schema for P114.",
+      "status": "complete",
+      "summary": "P114.2 adds local SQLite schema metadata and isolated validation for founder agent dispatch readiness items, dispatch events, and dispatch evidence references while unsafe authority remains blocked.",
       "nextPhase": "P114.3",
       "previousPhase": "P114.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1142-founder-live-agent-dispatch-readiness",
+        "npm run check:p1141-founder-live-agent-dispatch-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P114.2 does not add runtime CRUD admission, write persistent runtime data, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "Temporary local schema-check DB artifacts are removed by the checker.",
+        "P114.3 is next for governed local dispatch CRUD modeling."
+      ],
+      "completedAt": "2026-05-29T00:41:46.729Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15474,8 +15482,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P114.1",
-  "previousPhase": "P113.7",
-  "nextPhase": "P114.2",
+  "currentPhase": "P114.2",
+  "previousPhase": "P114.1",
+  "nextPhase": "P114.3",
   "currentPhaseStatus": "complete"
 }

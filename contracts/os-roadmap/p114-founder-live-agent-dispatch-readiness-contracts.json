@@ -162,11 +162,11 @@
     {
       "phaseId": "P114.2",
       "title": "Agent Dispatch SQLite Schema",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local SQLite schema metadata and isolated validation for dispatch readiness items, dispatch events, and dispatch evidence references without runtime dispatch.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "abda78fb2182",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
@@ -197,7 +197,6 @@
         "exports/**",
         "packages/**",
         ".env*",
-        "db/**",
         "live-ready/**",
         "dashboard/src/**",
         "dashboard/tests/**",
@@ -221,7 +220,7 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "dataShape": "Local SQLite metadata for dispatch readiness items, dispatch events, and dispatch evidence references with unsafe runtime flags false.",
       "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -232,12 +231,14 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P114.2 checker."
+        "Added check:p1142-founder-live-agent-dispatch-readiness.",
+        "P114.1 already accepts the P114.2/P114.3 handoff state."
       ],
-      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.2.",
-      "phaseStatusUpdate": "P114 in progress; P114.2 complete when implemented.",
+      "docsRoadmap": "P114.2 is recorded in the P114 plan, README, platform roadmap, OS status, and generated reports. P114.3 is next.",
+      "phaseStatusUpdate": "P114 in progress; P114.2 complete; current P114.2; previous P114.1; next P114.3.",
       "validationCommands": [
         "npm run check:p1142-founder-live-agent-dispatch-readiness",
+        "npm run check:p1141-founder-live-agent-dispatch-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -309,7 +310,6 @@
         "packages/**",
         ".env*",
         "db/**",
-        "live-ready/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "local-state/runtime/**"
@@ -419,7 +419,6 @@
         "packages/**",
         ".env*",
         "db/**",
-        "live-ready/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "local-state/runtime/**"
@@ -533,8 +532,6 @@
         ".env*",
         "db/**",
         "live-ready/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "local-state/runtime/**"
       ],
       "exactFiles": [
@@ -841,12 +838,12 @@
     "buildAgentDispatchReadinessViewModel"
   ],
   "knownLimitations": [
-    "P114.1 is contract-only and does not add runtime or UI behavior.",
+    "P114.2 is schema-only and does not add runtime helper or UI behavior.",
     "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P114.2 is next for local dispatch schema work."
+    "P114.3 is next for governed local dispatch CRUD modeling."
   ],
-  "currentSubphase": "P114.1",
-  "previousSubphase": "P113.7",
-  "nextSubphase": "P114.2",
-  "summary": "P114 is in progress. P114.1 defines dispatch readiness contracts, future schema, future exports, reuse requirements, safety rules, validation, docs, and OS status while unsafe authority remains blocked."
+  "currentSubphase": "P114.2",
+  "previousSubphase": "P114.1",
+  "nextSubphase": "P114.3",
+  "summary": "P114 is in progress. P114.1-P114.2 define dispatch readiness contracts, future exports, local schema metadata, isolated validation, and OS status while unsafe authority remains blocked."
 }

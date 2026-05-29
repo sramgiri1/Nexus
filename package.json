@@ -602,7 +602,8 @@
     "check:p1135-command-center-work-assignment-ux": "node scripts/check-p1135-command-center-work-assignment-ux.js",
     "check:p1136-founder-live-agent-work-assignment-validation": "node scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
     "check:p1137-founder-live-agent-work-assignment-final": "node scripts/check-p1137-founder-live-agent-work-assignment-final.js",
-    "check:p1141-founder-live-agent-dispatch-contract": "node scripts/check-p1141-founder-live-agent-dispatch-contract.js"
+    "check:p1141-founder-live-agent-dispatch-contract": "node scripts/check-p1141-founder-live-agent-dispatch-contract.js",
+    "check:p1142-founder-live-agent-dispatch-readiness": "node scripts/check-p1142-founder-live-agent-dispatch-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

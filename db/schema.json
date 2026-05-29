@@ -1353,6 +1353,150 @@
       "retentionClass": "founder_agent_work_assignment_evidence",
       "redactionRequired": true,
       "fileFallbackSource": "reports/p1131-founder-live-agent-work-assignment-contract-report.md"
+    },
+    {
+      "name": "founder_agent_dispatch_readiness_items",
+      "purpose": "Durable local dispatch readiness items derived from governed founder agent work assignment candidates without agent dispatch, worker execution, or project mutation authority.",
+      "primaryKey": "dispatchReadinessId",
+      "fields": {
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "publicLabel": "string",
+        "dispatchLane": "string",
+        "dispatchState": "string",
+        "dispatchSummary": "string",
+        "assignedAgent": "string",
+        "dispatchTarget": "string",
+        "ownerCapability": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "operatorApprovalRequired": "boolean",
+        "operatorApproved": "boolean",
+        "localCrudAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "dispatchReadinessId",
+        "assignmentId",
+        "publicLabel",
+        "dispatchState"
+      ],
+      "indexes": [
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "dispatchState",
+        "dispatchLane",
+        "assignedAgent",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "reports/p1137-founder-live-agent-work-assignment-final-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_dispatch_readiness_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1141-founder-live-agent-dispatch-contract-report.md"
+    },
+    {
+      "name": "founder_agent_dispatch_readiness_events",
+      "purpose": "Durable local audit event rows for founder agent dispatch readiness transitions without dispatch, execution, or project mutation authority.",
+      "primaryKey": "dispatchEventId",
+      "fields": {
+        "dispatchEventId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "dispatchAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "dispatchEventId",
+        "dispatchReadinessId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "reports/p1141-founder-live-agent-dispatch-contract-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_dispatch_readiness_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1141-founder-live-agent-dispatch-contract-report.md"
+    },
+    {
+      "name": "founder_agent_dispatch_readiness_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local founder agent dispatch readiness items.",
+      "primaryKey": "dispatchEvidenceRefId",
+      "fields": {
+        "dispatchEvidenceRefId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "dispatchEvidenceRefId",
+        "dispatchReadinessId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1141-founder-live-agent-dispatch-contract-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_agent_dispatch_readiness_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1141-founder-live-agent-dispatch-contract-report.md"
     }
   ]
 }

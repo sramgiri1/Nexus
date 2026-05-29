@@ -682,6 +682,13 @@ The Command Center and local operator surface have:
   dispatch, provider/model call, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P114.2 dispatch SQLite schema: P114 now has local schema metadata and
+  isolated SQLite validation for dispatch readiness items, dispatch events, and
+  dispatch evidence references. P114.3 is next for governed local dispatch CRUD
+  modeling. Runtime helper code, dashboard source, persistent runtime data
+  writes, agent dispatch, worker/tool execution, project mutation, hosted DB
+  mutation, raw SQL interface, runtime admission, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
