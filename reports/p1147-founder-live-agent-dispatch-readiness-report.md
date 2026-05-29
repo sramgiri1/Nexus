@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.7
-- Generated at: 2026-05-29T01:28:24.086Z
+- Generated at: 2026-05-29T01:29:39.947Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ad10aac4
+- Validation HEAD: d1e2d025
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | contract handoff points to P115 | PASS |  |
 | P114.7 records final validation commands | PASS |  |
 | P114.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P114.7 allowed scope | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1145-founder-live-agent-dispatch-readiness-report.md, reports/p1146-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1145-founder-live-agent-dispatch-readiness.js, scripts/check-p1146-founder-live-agent-dispatch-readiness.js, reports/p1147-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1147-founder-live-agent-dispatch-readiness.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1145-founder-live-agent-dispatch-readiness-report.md, reports/p1146-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1145-founder-live-agent-dispatch-readiness.js, scripts/check-p1146-founder-live-agent-dispatch-readiness.js, reports/p1147-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1147-founder-live-agent-dispatch-readiness.js |
+| changed files stay in P114.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P114.6 checker accepts final handoff | PASS |  |
 | OS status checker accepts P115 handoff | PASS |  |
 | phase status closed | PASS | P114.7/P114.6/P115 |

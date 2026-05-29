@@ -15298,7 +15298,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d1e2d02518b61b3730b05eb3a02b19e305171b83",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
       "detail": "P114.7 final validation complete; P114 is closed and P115 is the next placeholder phase.",
@@ -15496,7 +15496,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d1e2d02518b61b3730b05eb3a02b19e305171b83",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "P114.7 final validation complete; P114 is closed and P115 is the next placeholder phase.",
@@ -15525,7 +15525,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T01:26:31.186Z",
+  "updatedAt": "2026-05-29T01:29:27.261Z",
   "currentPhase": "P114.7",
   "previousPhase": "P114.6",
   "nextPhase": "P115",
