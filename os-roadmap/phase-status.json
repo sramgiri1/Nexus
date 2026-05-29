@@ -14593,7 +14593,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "86899eb716e0bbf1d4cfb5d3ea5c7695ec8e580e",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
       "detail": "P113.3 CRUD model complete; P113.4 safe assignment preview is next.",
@@ -14677,7 +14677,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "86899eb716e0bbf1d4cfb5d3ea5c7695ec8e580e",
       "commandCenterVisible": true,
       "label": "Governed Local Assignment CRUD Model",
       "detail": "P113.3 local assignment CRUD model complete; P113.4 safe assignment preview is next.",

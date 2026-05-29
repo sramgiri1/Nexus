@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P113.3
-- Generated at: 2026-05-29T00:03:27.703Z
+- Generated at: 2026-05-29T00:04:22.931Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: cae1a7bf
+- Validation HEAD: 86899eb7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P113.3 | PASS |  |
 | platform roadmap records P113.3 | PASS |  |
 | phase status advanced | PASS | P113.3/P113.2/P113.4 |
-| changed files stay in P113.3 allowed scope | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, live-ready/founderLiveAgentWorkAssignmentReadiness.js, scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, live-ready/founderLiveAgentWorkAssignmentReadiness.js, scripts/check-p1133-founder-live-agent-work-assignment-crud-model.js |
+| changed files stay in P113.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1132-founder-live-agent-work-assignment-schema-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1132-founder-live-agent-work-assignment-schema-report.md |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |
 | no unsafe imports or URLs | PASS |  |
