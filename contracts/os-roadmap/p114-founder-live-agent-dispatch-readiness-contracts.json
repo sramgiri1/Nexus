@@ -1,7 +1,7 @@
 {
   "phaseId": "P114",
   "title": "Founder Live Agent Dispatch Readiness",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move approved local assignment readiness records into governed local dispatch readiness records so founder-facing agent flow can show prepared dispatch lanes without dispatching agents, running workers/tools, mutating projects, calling providers, using hosted DB writes, deploying, networking, packaging, or spending.",
   "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -739,15 +739,16 @@
     {
       "phaseId": "P114.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P114 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "ad10aac48a53e8268c614b750c881d675887fc82",
       "allowedFiles": [
-        "scripts/check-p1146-founder-live-agent-dispatch-validation.js",
-        "scripts/check-os-phase-status.js",
-        "reports/p1146-founder-live-agent-dispatch-validation-report.md",
+        "scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
+        "reports/p1145-founder-live-agent-dispatch-readiness-report.md",
+        "scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
+        "reports/p1146-founder-live-agent-dispatch-readiness-report.md",
         "scripts/check-p1147-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
@@ -780,9 +781,10 @@
         "local-state/runtime/**"
       ],
       "exactFiles": [
-        "scripts/check-p1146-founder-live-agent-dispatch-validation.js",
-        "scripts/check-os-phase-status.js",
-        "reports/p1146-founder-live-agent-dispatch-validation-report.md",
+        "scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
+        "reports/p1145-founder-live-agent-dispatch-readiness-report.md",
+        "scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
+        "reports/p1146-founder-live-agent-dispatch-readiness-report.md",
         "scripts/check-p1147-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
@@ -796,23 +798,28 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "No runtime data shape is added. P114.7 writes only a final validation report proving P114 closure and P115 handoff placeholder alignment.",
+      "commandCenterUx": "Preserve the P114.5 Agent Dispatch Readiness cards on Business Build and Agent Flow only. Do not add chat-page clutter, live dispatch controls, raw record IDs, raw DB table names, raw JSON/log/policy dumps, or fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "Run the focused route coverage proving Business Build and Agent Flow visibility, dark/light/system theme rendering, and absence from Lite/full home/Live Readiness."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P114.7 checker."
+        "Add dedicated P114.7 final validation checker.",
+        "Update P114.6 checker to accept the P114.7/P115 final handoff state."
       ],
-      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.7.",
-      "phaseStatusUpdate": "P114 in progress; P114.7 complete when implemented.",
+      "docsRoadmap": "P114.7 is recorded in the P114 plan, README, platform roadmap, OS status, and generated reports. P114 is complete and P115 remains the next placeholder phase until it receives its own implementation-grade contract.",
+      "phaseStatusUpdate": "P114 complete; P114.7 complete; current P114.7; previous P114.6; next P115.",
       "validationCommands": [
         "npm run check:p1147-founder-live-agent-dispatch-readiness",
+        "npm run check:p1146-founder-live-agent-dispatch-readiness",
+        "npm run check:p1145-founder-live-agent-dispatch-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent dispatch readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -824,7 +831,7 @@
       ],
       "gitCommands": [
         "git add <allowed P114.7 files>",
-        "git commit -m \"feat(nexus): implement p1147 dispatch readiness\"",
+        "git commit -m \"feat(nexus): implement p1147 dispatch final validation\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [
@@ -866,9 +873,9 @@
     "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
     "P114.4 is next for safe dispatch readiness preview modeling."
   ],
-  "currentSubphase": "P114.6",
-  "previousSubphase": "P114.5",
-  "nextSubphase": "P114.7",
+  "currentSubphase": "P114.7",
+  "previousSubphase": "P114.6",
+  "nextSubphase": "P115",
   "summary": "P114 is in progress. P114.1-P114.5 define dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, and isolated validation while unsafe authority remains blocked.",
   "implementationNotes": [
     "P114.1-P114.5 are complete.",

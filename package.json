@@ -607,7 +607,8 @@
     "check:p1143-founder-live-agent-dispatch-readiness": "node scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
     "check:p1144-founder-live-agent-dispatch-readiness": "node scripts/check-p1144-founder-live-agent-dispatch-readiness.js",
     "check:p1145-founder-live-agent-dispatch-readiness": "node scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
-    "check:p1146-founder-live-agent-dispatch-readiness": "node scripts/check-p1146-founder-live-agent-dispatch-readiness.js"
+    "check:p1146-founder-live-agent-dispatch-readiness": "node scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
+    "check:p1147-founder-live-agent-dispatch-readiness": "node scripts/check-p1147-founder-live-agent-dispatch-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

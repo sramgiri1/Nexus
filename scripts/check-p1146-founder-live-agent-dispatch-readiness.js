@@ -101,7 +101,11 @@ addCheck(
     && requiredReports.every((report) => /Result[\s\S]*PASS|PASS \(/.test(readText(report))),
 );
 addCheck("contract marks P114.1-P114.6 complete", ["P114.1", "P114.2", "P114.3", "P114.4", "P114.5", "P114.6"].every((phaseId) => subphaseById.get(phaseId)?.status === "complete") && ["planned", "complete"].includes(p1147.status));
-addCheck("contract handoff points to P114.7", contract.currentSubphase === "P114.6" && contract.previousSubphase === "P114.5" && contract.nextSubphase === "P114.7");
+addCheck(
+  "contract handoff points to P114.7 or final P115 handoff",
+  (contract.currentSubphase === "P114.6" && contract.previousSubphase === "P114.5" && contract.nextSubphase === "P114.7")
+    || (contract.currentSubphase === "P114.7" && contract.previousSubphase === "P114.6" && contract.nextSubphase === "P115"),
+);
 addCheck("P114.5 Command Center UX preserved", pageSource.includes("FounderLiveAgentDispatchReadinessCard") && pageSource.includes("Business Build Agent Dispatch Readiness") && pageSource.includes("Agent Flow Agent Dispatch Readiness") && !pageSource.includes("Lite Agent Dispatch Readiness") && !pageSource.includes("Live Readiness Agent Dispatch Readiness"));
 addCheck("P114.5 display model preserved", businessBuildSource.includes("buildFounderLiveAgentDispatchReadinessDisplayModel") && businessBuildSource.includes("Dispatch writes") && businessBuildSource.includes("reports/p1144-founder-live-agent-dispatch-readiness-report.md"));
 addCheck("P114.5 Playwright coverage preserved", routeTests.includes("Agent dispatch readiness appears only on Business Build and Agent Flow") && routeTests.includes("Founder agent dispatch readiness") && routeTests.includes("Founder Strategy Dispatch"));
@@ -122,7 +126,7 @@ addCheck(
     && ["P114.6", "P114.7"].includes(roadmap.currentPhase)
     && ["P114.5", "P114.6"].includes(roadmap.previousPhase)
     && ["P114.7", "P115"].includes(roadmap.nextPhase)
-    && statusById.get("P114")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P114")?.status)
     && statusById.get("P114.6")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P114.7")?.status)
     && roadmapById.get("P114.6")?.status === "complete",

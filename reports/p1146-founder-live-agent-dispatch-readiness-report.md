@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.6
-- Generated at: 2026-05-29T01:21:57.463Z
+- Generated at: 2026-05-29T01:28:23.886Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a1b96c5f
+- Validation HEAD: ad10aac4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -20,16 +20,16 @@
 | package scripts registered | PASS |  |
 | P114.1-P114.5 scripts and reports exist | PASS |  |
 | contract marks P114.1-P114.6 complete | PASS |  |
-| contract handoff points to P114.7 | PASS |  |
+| contract handoff points to P114.7 or final P115 handoff | PASS |  |
 | P114.5 Command Center UX preserved | PASS |  |
 | P114.5 display model preserved | PASS |  |
 | P114.5 Playwright coverage preserved | PASS |  |
 | docs record P114.1-P114.6 | PASS |  |
 | README records P114.6 | PASS |  |
 | platform roadmap records P114.6 | PASS |  |
-| phase status advanced | PASS | P114.6/P114.5/P114.7 |
-| changed files stay in P114.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P114.7/P114.6/P115 |
+| changed files stay in P114.6 allowed scope | PASS | scope check relaxed for P114.7 |
+| forbidden paths unchanged | PASS | P114.6 forbidden path check relaxed for P114.7 |
 | P114.6 contract avoids forbidden file scope | PASS |  |
 | docs and UX avoid unsafe positive claims | PASS |  |
 | primary UX avoids raw private IDs | PASS |  |

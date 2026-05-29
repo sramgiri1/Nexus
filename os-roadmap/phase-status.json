@@ -15298,18 +15298,19 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "a1b96c5f98182f9c49ed09ada122353424e24ae0",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
-      "detail": "P114.6 dispatch validation and docs complete; P114.7 final validation is next.",
+      "detail": "P114.7 final validation complete; P114 is closed and P115 is the next placeholder phase.",
       "phaseId": "P114",
       "title": "Founder Live Agent Dispatch Readiness",
       "order": 150,
-      "status": "in_progress",
-      "summary": "P114 is in progress. P114.1-P114.6 now cover dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, and aggregate validation while unsafe authority remains blocked.",
-      "nextPhase": "P114.7",
+      "status": "complete",
+      "summary": "P114 is complete. P114.1-P114.7 close founder live agent dispatch readiness with contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, aggregate validation, final validation, and P115 handoff while unsafe authority remains blocked.",
+      "nextPhase": "P115",
       "previousPhase": "P113.7",
       "checksRun": [
+        "npm run check:p1147-founder-live-agent-dispatch-readiness",
         "npm run check:p1146-founder-live-agent-dispatch-readiness",
         "npm run check:p1145-founder-live-agent-dispatch-readiness",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent dispatch readiness appears only on Business Build and Agent Flow\"",
@@ -15319,11 +15320,11 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P114.6 is aggregate validation and docs closure only.",
+        "P114 closes dispatch readiness validation only.",
         "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P114.7 is next for final validation and P115 handoff."
+        "P115 is a handoff placeholder until its own implementation-grade contract is written."
       ],
-      "completedAt": ""
+      "completedAt": "2026-05-29T01:26:31.186Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15494,29 +15495,39 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation for P114.",
+      "detail": "P114.7 final validation complete; P114 is closed and P115 is the next placeholder phase.",
       "phaseId": "P114.7",
       "title": "Final Validation",
       "order": 150.7,
-      "status": "planned",
-      "summary": "Planned final P114 validation and handoff to P115.",
+      "status": "complete",
+      "summary": "P114.7 validates all P114 subphases, preserves the Business Build and Agent Flow dispatch readiness UX evidence, confirms final docs/status/report alignment, and hands off to P115 as a placeholder next phase.",
       "nextPhase": "P115",
       "previousPhase": "P114.6",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1147-founder-live-agent-dispatch-readiness",
+        "npm run check:p1146-founder-live-agent-dispatch-readiness",
+        "npm run check:p1145-founder-live-agent-dispatch-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent dispatch readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "Final validation only; no dispatch writes, SQLite writes, raw SQL, hosted DB mutation, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network, or spend.",
+        "P115 is not implemented in P114.7."
+      ],
+      "completedAt": "2026-05-29T01:26:31.186Z"
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T01:21:53.127Z",
-  "currentPhase": "P114.6",
-  "previousPhase": "P114.5",
-  "nextPhase": "P114.7",
+  "updatedAt": "2026-05-29T01:26:31.186Z",
+  "currentPhase": "P114.7",
+  "previousPhase": "P114.6",
+  "nextPhase": "P115",
   "currentPhaseStatus": "complete"
 }

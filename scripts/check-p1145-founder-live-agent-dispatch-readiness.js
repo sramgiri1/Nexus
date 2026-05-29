@@ -84,13 +84,13 @@ addCheck("platform roadmap records P114.5", /P114\.5 is complete/.test(platformR
 addCheck("README records P114.5", /P114\.5 Command Center agent dispatch UX/.test(readme) && (/P114\.6 is next/.test(readme) || /P114\.6 dispatch validation/.test(readme)));
 addCheck(
   "phase status advanced",
-  ["P114.5", "P114.6"].includes(status.currentPhase)
-    && ["P114.4", "P114.5"].includes(status.previousPhase)
-    && ["P114.6", "P114.7"].includes(status.nextPhase)
-    && ["P114.5", "P114.6"].includes(roadmap.currentPhase)
-    && ["P114.4", "P114.5"].includes(roadmap.previousPhase)
-    && ["P114.6", "P114.7"].includes(roadmap.nextPhase)
-    && statusById.get("P114")?.status === "in_progress"
+  ["P114.5", "P114.6", "P114.7"].includes(status.currentPhase)
+    && ["P114.4", "P114.5", "P114.6"].includes(status.previousPhase)
+    && ["P114.6", "P114.7", "P115"].includes(status.nextPhase)
+    && ["P114.5", "P114.6", "P114.7"].includes(roadmap.currentPhase)
+    && ["P114.4", "P114.5", "P114.6"].includes(roadmap.previousPhase)
+    && ["P114.6", "P114.7", "P115"].includes(roadmap.nextPhase)
+    && ["in_progress", "complete"].includes(statusById.get("P114")?.status)
     && statusById.get("P114.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P114.6")?.status)
     && roadmapById.get("P114.5")?.status === "complete",

@@ -3014,6 +3014,16 @@ worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
 runtime admission, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P114.7 is complete. P114 is complete with final checker evidence for dispatch
+contracts, local schema metadata, governed local CRUD, safe dry-run preview
+modeling, Command Center Business Build / Agent Flow dispatch readiness
+visibility, aggregate validation, docs, OS phase status, and P115 handoff.
+P115 is the next placeholder phase and must start with its own
+implementation-grade contract before coding. Dispatch writes, SQLite writes,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

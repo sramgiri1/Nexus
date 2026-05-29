@@ -713,3 +713,154 @@ handoff, and safety wording coupled to the phase evidence.
 Rollback plan: remove the P114.6 checker/report/docs/status/package updates,
 restore P114 to P114.5 complete with P114.6 planned, and keep P114.5 UX
 unchanged.
+
+## P114.7 Final Validation
+
+Phase: P114 Founder Live Agent Dispatch Readiness
+
+Subphase: P114.7 Final Validation
+
+Status: complete
+
+Goal: close P114 with final validation and hand off to P115 as a placeholder
+next phase without starting P115 work early.
+
+Why this is needed: P114.1-P114.6 are complete. P114.7 proves the dispatch
+readiness contract, local schema metadata, governed CRUD evidence, preview
+model, Command Center UX, docs, reports, and OS phase status all close
+together.
+
+User/operator impact: operators can see P114 is complete and that P115 is next,
+while dispatch execution and all unsafe authority remain blocked.
+
+Command Center impact: preserve P114.5 UX. Business Build and Agent Flow keep
+the display-safe Agent Dispatch Readiness cards; Chat with NEXUS, Lite, full
+home, and Live Readiness stay free of the dispatch card.
+
+Safety impact: P114.7 is final validation only. It does not add dispatch writes,
+SQLite writes, raw SQL, hosted DB mutation, runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy/release/export/package actions, network calls, or provider spend.
+
+Cost impact: local checkers, focused Playwright route coverage, and dashboard
+build only. No provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`. This subphase modifies only NEXUS OS
+contract, docs, status, checker, package, and report files.
+
+Allowed files:
+- `scripts/check-p1145-founder-live-agent-dispatch-readiness.js`
+- `reports/p1145-founder-live-agent-dispatch-readiness-report.md`
+- `scripts/check-p1146-founder-live-agent-dispatch-readiness.js`
+- `reports/p1146-founder-live-agent-dispatch-readiness-report.md`
+- `scripts/check-p1147-founder-live-agent-dispatch-readiness.js`
+- `contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json`
+- `docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1147-founder-live-agent-dispatch-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `live-ready/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules changed: added
+`scripts/check-p1147-founder-live-agent-dispatch-readiness.js`; updated the
+P114.6 checker for the final handoff; registered the P114.7 package script;
+updated P114 contract/status/docs; and regenerated P114.5, P114.6, P114.7, OS
+status, and validation coverage reports.
+
+Expected exports, schemas, and data shapes: no runtime exports, schemas, or
+data shapes are added. The checker imports the existing browser-safe dispatch
+display model for validation only and writes a final validation report table.
+
+Command Center UX requirements: keep the P114.5 display-safe dispatch readiness
+card placement and content unchanged. Do not add chat-page clutter, live
+dispatch buttons, raw JSON/log/policy dumps, raw private IDs, raw DB table
+names, or fake runnable actions.
+
+Dark/light/system theme requirements: preserve existing theme handling. The
+focused Playwright route test continues to cover dark, light, and system theme
+rendering for the dispatch readiness card.
+
+Playwright tests: run the focused P114.5 route coverage proving Business Build
+and Agent Flow visibility, absence from Lite/full home/Live Readiness, theme
+coverage, and raw-ID/fake-action guards.
+
+Checker updates: P114.7 adds a final checker that validates all P114 scripts
+and reports, complete contract state, final handoff to P115, Command Center UX
+evidence, docs, status, allowed file scope, and safety wording. P114.6 is
+updated to accept the P114.7/P115 handoff.
+
+Docs/README/roadmap updates: P114.7 is recorded in this plan, README, platform
+roadmap, P114 contract, OS roadmap/status, and generated reports. P114 is
+complete. P115 remains a placeholder until its own implementation-grade
+contract is written.
+
+OS phase status update: P114 is complete; P114.7 is complete; current phase
+P114.7; previous P114.6; next P115.
+
+Validation commands:
+- `npm run check:p1147-founder-live-agent-dispatch-readiness`
+- `npm run check:p1146-founder-live-agent-dispatch-readiness`
+- `npm run check:p1145-founder-live-agent-dispatch-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Agent dispatch readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no temporary local
+runtime DB remains; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw dispatch/assignment/queue table names in primary UX; no fake
+runnable actions; no hosted DB mutation, raw SQL interface, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, deploy,
+release, export, package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P114.7 files>`
+- `git commit -m "feat(nexus): implement p1147 dispatch final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: P115 has no implementation-grade contract yet. P114.7 records only
+the handoff placeholder and does not implement P115 early.
+
+Rollback plan: remove the P114.7 checker/report/docs/status/package updates,
+restore P114 to P114.6 complete with P114.7 planned, and keep P114.5 UX plus
+P114.6 aggregate validation unchanged.
