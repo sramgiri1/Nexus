@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P123.5
-- Generated at: 2026-05-29T15:07:27.289Z
+- Generated at: 2026-05-29T15:11:14.165Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 87727c24
+- Validation HEAD: 4a44919a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | platform roadmap records P123.5 | PASS |  |
 | README records P123.5 | PASS |  |
 | phase status advanced | PASS | P123.5/P123.4/P123.6 |
-| changed files stay in P123.5 allowed scope | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1235-founder-runtime-approval-application-authority-activation-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1235-founder-runtime-approval-application-authority-activation-boundary.js |
+| changed files stay in P123.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | P123.5 contract avoids forbidden project/runtime scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
