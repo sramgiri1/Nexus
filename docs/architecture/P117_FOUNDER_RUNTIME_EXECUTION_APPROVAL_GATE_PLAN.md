@@ -957,3 +957,180 @@ dashboard build while leaving dashboard source untouched.
 
 Rollback plan: remove P117.6 checker/docs/status/report updates, restore P117
 to P117.5 complete with P117.6 planned, and keep P117.5 UX untouched.
+
+## P117.7 Final Validation
+
+Status: complete
+
+Phase: P117 Founder Runtime Execution Approval Gate
+
+Subphase: P117.7 Final Validation
+
+Goal: close P117, validate P117.1-P117.6 together, preserve scoped Command
+Center approval-gate UX, and hand off to planned P118 without adding execution
+authority.
+
+Why this is needed: P117 now has contract, schema metadata, local review
+modeling, safe dry-run preview, scoped Command Center UX, and aggregate
+validation. P117.7 turns that into a closed phase with a planned next-phase
+handoff and no stale in-progress status.
+
+User/operator impact: operators can see P117 as complete and P118 as planned.
+Business Build and Agent Flow continue to show the approval-gate readiness
+summary; Chat with NEXUS and Lite chat remain clean.
+
+Command Center impact: preserve P117.5 UX exactly. Do not modify
+`dashboard/src/**` or `dashboard/tests/**` in this subphase. Rerun the focused
+P117.5 Playwright coverage and dashboard build only as validation.
+
+Safety impact: P117.7 is final validation and status/docs closure only. It does
+not enable approval capture, approval persistence, approve/reject recording, DB
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL,
+deploy, release, export, package, network calls, or spend.
+
+Cost impact: validation and docs only. No provider/model/network/spend path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `c6346f8b`.
+
+Allowed files:
+- `scripts/check-p1177-founder-runtime-execution-approval-gate.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json`
+- `docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- generated P117.5/P117.6/P117.7/OS/coverage reports
+
+Files expected to change:
+- P117.7 checker
+- package script registration
+- OS status checker P118 recognition
+- P117 contract
+- P117 plan, README, platform roadmap
+- OS roadmap/status and generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `scripts/check-p1177-founder-runtime-execution-approval-gate.js`
+- update `scripts/check-os-phase-status.js` to recognize planned P118
+- add `check:p1177-founder-runtime-execution-approval-gate` to `package.json`
+- update P117 contract/docs/roadmap/status/reports
+
+Expected exports, schemas, and data shapes: no runtime data shape is introduced.
+P117.7 writes a markdown validation report only and records P118 as a planned
+handoff placeholder.
+
+Reuse check: reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+existing P117 checkers/reports, existing dashboard display model for validation
+only, existing Playwright route coverage, and existing OS status/check coverage.
+Do not duplicate report writers, checker formatters, phase status updaters,
+route matrices, redaction helpers, mode guards, or UI components.
+
+Command Center UX requirements: preserve P117.5 UX on Business Build and Agent
+Flow. Do not add new UI, controls, route labels, raw JSON/log/policy dumps, raw
+private IDs, raw DB table names, internal phase labels in primary UX, DemoApp,
+or fake working actions.
+
+Dark/light/system theme requirements: preserve existing System, Dark, and Light
+theme behavior by rerunning focused route coverage and the dashboard build.
+
+Playwright tests: no new Playwright test is added in P117.7. Preserve and rerun
+the P117.5 approval-gate route test.
+
+Checker updates: add a dedicated P117.7 final validation checker covering
+P117.1-P117.6 scripts/reports, docs/status alignment, Command Center UX
+preservation, P118 planned handoff, allowed file scope, and safety wording.
+Update OS phase status validation to recognize P118.
+
+Docs/README/roadmap updates: P117.7 is recorded in this plan, README, platform
+roadmap, P117 contract, OS roadmap/status, and generated reports. P117 is
+complete. P118 is planned next and must get its own implementation-grade
+contract before coding.
+
+OS phase status update: P117 is complete; P117.7 is complete; current phase
+P117.7; previous P117.6; next P118 planned.
+
+Reports to regenerate:
+- `reports/p1175-founder-runtime-execution-approval-gate-report.md`
+- `reports/p1176-founder-runtime-execution-approval-gate-report.md`
+- `reports/p1177-founder-runtime-execution-approval-gate-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1177-founder-runtime-execution-approval-gate`
+- `npm run check:p1176-founder-runtime-execution-approval-gate`
+- `npm run check:p1175-founder-runtime-execution-approval-gate`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Runtime execution approval gate appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+- `find local-state/runtime -maxdepth 1 -name 'check-p117*.sqlite' -print`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+dashboard test files changed in P117.7; no DB/runtime provider, tool, worker,
+deploy, release, export, package, or env paths changed; no approval capture,
+approval persistence, approval decision recording, runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL, network, deploy, release, export,
+package, or spend authority is enabled; no DemoApp exposure, raw private IDs,
+raw DB table names, raw JSON/log/policy dumps, internal primary UX phase labels,
+or fake actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P117.7 files>`
+- `git commit -m "feat(nexus): finalize p117 execution approval gate"`
+- stamp P117/P117.7 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p117 execution approval gate final"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: final validation can drift from the scoped UX if route coverage is
+not rerun. P117.7 explicitly reruns P117.5 checker, focused Playwright route
+coverage, and dashboard build while leaving dashboard source untouched.
+
+Rollback plan: remove P117.7 checker/docs/status/report updates, restore P117
+to P117.6 complete with P117.7 planned, remove the planned P118 handoff, and
+keep P117.5 UX untouched.

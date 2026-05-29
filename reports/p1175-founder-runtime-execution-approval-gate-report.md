@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.5
-- Generated at: 2026-05-29T04:38:46.123Z
+- Generated at: 2026-05-29T04:47:41.060Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b01d9a45
+- Validation HEAD: c6346f8b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,9 +32,9 @@
 | docs record P117.5 | PASS |  |
 | platform roadmap records P117.5 | PASS |  |
 | README records P117.5 | PASS |  |
-| phase status advanced | PASS | P117.6/P117.5/P117.7 |
-| changed files stay in P117.5 allowed scope | PASS | scope check relaxed for P117.6 |
-| forbidden paths unchanged | PASS | P117.5 forbidden path check relaxed for P117.6 |
+| phase status advanced | PASS | P117.7/P117.6/P118 |
+| changed files stay in P117.5 allowed scope | PASS | scope check relaxed for P117.7 |
+| forbidden paths unchanged | PASS | P117.5 forbidden path check relaxed for P117.7 |
 | P117.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw approval/runtime keys and table names | PASS |  |

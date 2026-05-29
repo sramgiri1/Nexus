@@ -3196,6 +3196,16 @@ unlock, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
 package action, network call, and provider spend remain blocked.
 
+P117.7 is complete. P117 is complete across the approval-gate contract, local
+schema metadata, governed local review model, safe dry-run preview, scoped
+Command Center UX, aggregate validation, and final handoff. P118 is planned
+next and must start with its own implementation-grade contract before coding.
+Approval capture, approval persistence, approve/reject decision recording,
+runtime execution, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
+deploy, release, export, package action, network call, and provider spend
+remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

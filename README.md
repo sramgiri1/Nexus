@@ -890,6 +890,15 @@ The Command Center and local operator surface have:
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   raw SQL interface, deploy, release, export, package, network call, and
   provider spend remain unavailable.
+- P117.7 final validation: P117 is complete across the approval-gate contract,
+  local schema metadata, governed local review model, safe dry-run preview,
+  scoped Command Center UX, aggregate validation, and final handoff. P118 is
+  planned next and must start with its own implementation-grade contract before
+  coding. Approval capture, approval persistence, approve/reject decision
+  recording, runtime execution, execution unlock, provider/model call, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, deploy, release, export, package, network call, and provider
+  spend remain unavailable.
 
 ## CareLoop Project Progress
 
