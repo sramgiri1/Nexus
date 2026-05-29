@@ -738,3 +738,120 @@ zero, and exposes no runnable controls.
 Rollback plan: remove the P116.5 display model/card/test/checker/docs/status
 updates, restore P116.5 to planned with P116.4 as current, and keep P116.4
 preview code unchanged.
+
+## P116.6 Execution Readiness Validation / Docs
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE
+
+Narrow goal: validate P116.1-P116.5 together and close docs/status/report
+alignment before P116.7 final validation.
+
+Allowed files:
+- `scripts/check-p1166-founder-live-runtime-execution-readiness.js`
+- `contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json`
+- `docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1165-founder-live-runtime-execution-readiness-report.md`
+- `reports/p1166-founder-live-runtime-execution-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- `local-state/runtime/**`
+
+Exact files/modules changed: added the P116.6 aggregate checker, registered the
+package script, updated P116 contract/status/docs, and regenerated reports.
+
+Expected exports and data shapes: no runtime data shape is introduced. P116.6
+writes a markdown validation report only.
+
+Command Center UX requirements: preserve the P116.5 runtime execution readiness
+card on Business Build and Agent Flow. Do not add new UI or controls. Confirm
+Chat with NEXUS, Lite chat, Live Readiness, and OS Roadmap remain scoped to
+their own surfaces.
+
+Dark/light/system theme requirements: preserve the existing theme behavior and
+rerun the P116.5 route coverage that exercises dark, light, and system themes.
+
+Playwright tests: no new Playwright test is added because P116.6 has no UI
+source changes. Existing P116.5 route coverage is required.
+
+Checker updates: P116.6 adds an aggregate checker covering scripts, reports,
+P116.1-P116.5 completion, Command Center UX preservation, docs/status/report
+alignment, allowed file scope, and safety wording.
+
+Docs/README/roadmap updates: P116.6 is recorded in this plan, README, platform
+roadmap, P116 contract, OS roadmap/status, and generated reports. P116.7 is
+next for final validation.
+
+OS phase status update: P116 is in progress; P116.6 is complete; current phase
+P116.6; previous P116.5; next P116.7.
+
+Validation commands:
+- `npm run check:p1166-founder-live-runtime-execution-readiness`
+- `npm run check:p1165-founder-live-runtime-execution-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Runtime execution readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+test files changed; no DB schema, live-ready, provider, tool, worker runtime,
+deploy, release, export, package, env, or local runtime state files changed; no
+runtime execution, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy,
+release, export, package, network, or provider spend authority is enabled; no
+DemoApp exposure, raw private IDs, raw DB table names, raw JSON/log/policy
+dumps, or fake actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P116.6 files>`
+- `git commit -m "feat(nexus): implement p1166 runtime execution validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: validation/docs language can imply execution is ready to run. The
+checker rejects unsafe positive claims and confirms the UX still labels runtime
+execution as blocked.
+
+Rollback plan: remove the P116.6 checker/package script/docs/status/report
+updates, restore P116.6 to planned with P116.5 as current, and keep P116.1-P116.5
+implementation intact.

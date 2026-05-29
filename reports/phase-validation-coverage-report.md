@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T03:33:26.745Z
+- Generated at: 2026-05-29T03:38:21.178Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 03ebff09
+- Validation HEAD: 8845ac7a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -423,7 +423,7 @@
 | P114.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P115 validation coverage | PASS | 17 checkers, 12 reports |
+| P115 validation coverage | PASS | 18 checkers, 13 reports |
 | P115.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P115.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P115.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -431,28 +431,24 @@
 | P115.5 validation coverage | PASS | 6 checkers, 3 reports |
 | P115.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P115.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P116 validation coverage | PASS | 16 checkers, 12 reports |
+| P116 validation coverage | PASS | 17 checkers, 13 reports |
 | P116.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P116.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P116.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P116.4 validation coverage | PASS | 4 checkers, 1 reports |
 | P116.5 validation coverage | PASS | 5 checkers, 2 reports |
-| P116.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P116.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P116.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P116.5; next=P116.6; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P116.6; next=P116.7; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P116.6 Execution Readiness Validation / Docs
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (426/426)
