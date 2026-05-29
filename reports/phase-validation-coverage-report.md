@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T01:11:20.277Z
+- Generated at: 2026-05-29T01:20:51.752Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8baf3179
+- Validation HEAD: 19b3b595
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -375,7 +375,7 @@
 | P110.5 validation coverage | PASS | 26 checkers, 19 reports |
 | P110.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P110.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P111 validation coverage | PASS | 28 checkers, 24 reports |
+| P111 validation coverage | PASS | 29 checkers, 25 reports |
 | P111.1 validation coverage | PASS | 9 checkers, 5 reports |
 | P111.2 validation coverage | PASS | 10 checkers, 6 reports |
 | P111.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -383,7 +383,7 @@
 | P111.5 validation coverage | PASS | 9 checkers, 5 reports |
 | P111.6 validation coverage | PASS | 20 checkers, 17 reports |
 | P111.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P112 validation coverage | PASS | 28 checkers, 24 reports |
+| P112 validation coverage | PASS | 29 checkers, 25 reports |
 | P112.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P112.2 validation coverage | PASS | 10 checkers, 6 reports |
 | P112.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -391,7 +391,7 @@
 | P112.5 validation coverage | PASS | 3 checkers, 1 reports |
 | P112.6 validation coverage | PASS | 9 checkers, 5 reports |
 | P112.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P113 validation coverage | PASS | 28 checkers, 24 reports |
+| P113 validation coverage | PASS | 29 checkers, 25 reports |
 | P113.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P113.2 validation coverage | PASS | 10 checkers, 6 reports |
 | P113.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -415,28 +415,24 @@
 | P84.5 validation coverage | PASS | 7 checkers, 2 reports |
 | P84.6 validation coverage | PASS | 21 checkers, 16 reports |
 | P84.7 validation coverage | PASS | 48 checkers, 40 reports |
-| P114 validation coverage | PASS | 27 checkers, 23 reports |
+| P114 validation coverage | PASS | 28 checkers, 24 reports |
 | P114.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.4 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.5 validation coverage | PASS | 4 checkers, 1 reports |
-| P114.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P114.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P114.5; next=P114.6; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P114.6; next=P114.7; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P114.6 Dispatch Validation / Docs
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (410/410)

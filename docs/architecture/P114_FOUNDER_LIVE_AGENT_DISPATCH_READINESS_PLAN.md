@@ -566,3 +566,150 @@ or tune the surrounding phase evidence if needed.
 Rollback plan: remove the P114.5 display model/card/test/checker/docs/status/
 report updates, restore P114 to P114.4 complete with P114.5 planned, and keep
 P114.4 preview modeling unchanged.
+
+## P114.6 Dispatch Validation / Docs
+
+Phase: P114 Founder Live Agent Dispatch Readiness
+
+Subphase: P114.6 Dispatch Validation / Docs
+
+Status: complete
+
+Goal: validate P114.1-P114.5 together and close docs, README, roadmap, and OS
+phase status alignment before final validation.
+
+Why this is needed: P114 now has dispatch readiness contracts, local schema
+metadata, governed local CRUD, safe dry-run preview modeling, and Command
+Center visibility. P114.6 proves those pieces remain aligned before P114.7
+closes the phase.
+
+User/operator impact: operators can trust that Business Build and Agent Flow
+still show useful dispatch-readiness state while unsafe execution authority
+stays blocked.
+
+Command Center impact: preserve P114.5 UX only. Business Build and Agent Flow
+retain display-safe Agent Dispatch Readiness cards; Chat with NEXUS, Lite, full
+home, and Live Readiness stay free of the dispatch card.
+
+Safety impact: P114.6 is validation and docs only. It does not add dispatch
+writes, SQLite writes, raw SQL, hosted DB mutation, runtime admission, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, deploy/release/export/package actions, network calls, or provider
+spend.
+
+Cost impact: local checkers and Playwright/build validation only. No provider
+spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`. This subphase modifies only NEXUS OS
+contract, docs, status, checker, package, and report files.
+
+Allowed files:
+- `scripts/check-p1145-founder-live-agent-dispatch-readiness.js`
+- `reports/p1145-founder-live-agent-dispatch-readiness-report.md`
+- `scripts/check-p1146-founder-live-agent-dispatch-readiness.js`
+- `contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json`
+- `docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1146-founder-live-agent-dispatch-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `live-ready/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules changed: added
+`scripts/check-p1146-founder-live-agent-dispatch-readiness.js`; registered its
+package script; updated P114 contract/status/docs; and regenerated P114.5,
+P114.6, OS status, and validation coverage reports.
+
+Expected exports, schemas, and data shapes: no runtime exports, schemas, or
+data shapes are added. The checker writes a validation report table only.
+
+Command Center UX requirements: keep the P114.5 display-safe dispatch readiness
+card placement and content unchanged. Do not add chat-page clutter, live
+dispatch buttons, raw JSON/log/policy dumps, raw private IDs, raw DB table
+names, or fake runnable actions.
+
+Dark/light/system theme requirements: preserve existing theme handling. The
+focused Playwright route test continues to cover dark, light, and system theme
+rendering for the dispatch readiness card.
+
+Playwright tests: run the focused P114.5 route coverage proving Business Build
+and Agent Flow visibility, absence from Lite/full home/Live Readiness, theme
+coverage, and raw-ID/fake-action guards.
+
+Checker updates: P114.6 adds an aggregate checker that validates P114.1-P114.5
+scripts/reports, contract handoff, Command Center UX evidence, Playwright
+coverage, docs, status, allowed file scope, and safety wording.
+
+Docs/README/roadmap updates: P114.6 is recorded in this plan, README, platform
+roadmap, P114 contract, OS roadmap/status, and generated reports. P114.7 is
+next.
+
+OS phase status update: P114 is in progress; P114.6 is complete; current phase
+P114.6; previous P114.5; next P114.7.
+
+Validation commands:
+- `npm run check:p1146-founder-live-agent-dispatch-readiness`
+- `npm run check:p1145-founder-live-agent-dispatch-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Agent dispatch readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no temporary local
+runtime DB remains; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw dispatch/assignment/queue table names in primary UX; no fake
+runnable actions; no hosted DB mutation, raw SQL interface, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, deploy,
+release, export, package, network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P114.6 files>`
+- `git commit -m "feat(nexus): implement p1146 dispatch validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: P114.6 can become stale if a later UX or checker change moves the
+dispatch readiness card. The aggregate checker keeps the card placement,
+handoff, and safety wording coupled to the phase evidence.
+
+Rollback plan: remove the P114.6 checker/report/docs/status/package updates,
+restore P114 to P114.5 complete with P114.6 planned, and keep P114.5 UX
+unchanged.

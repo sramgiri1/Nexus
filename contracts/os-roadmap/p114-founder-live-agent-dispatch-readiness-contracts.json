@@ -627,14 +627,14 @@
     {
       "phaseId": "P114.6",
       "title": "Dispatch Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Validate P114.1-P114.5 together and close docs, README, roadmap, and status alignment before final validation.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "19b3b595db593c4bfcd187959d1c431d7346f814",
       "allowedFiles": [
-        "scripts/check-p1145-command-center-agent-dispatch-ux.js",
-        "reports/p1145-command-center-agent-dispatch-ux-report.md",
+        "scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
+        "reports/p1145-founder-live-agent-dispatch-readiness-report.md",
         "scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
@@ -667,8 +667,8 @@
         "local-state/runtime/**"
       ],
       "exactFiles": [
-        "scripts/check-p1145-command-center-agent-dispatch-ux.js",
-        "reports/p1145-command-center-agent-dispatch-ux-report.md",
+        "scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
+        "reports/p1145-founder-live-agent-dispatch-readiness-report.md",
         "scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
         "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
         "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
@@ -682,23 +682,27 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "No runtime data shape is added. P114.6 writes only a validation report data table confirming P114.1-P114.5 are aligned and unsafe authority remains blocked.",
+      "commandCenterUx": "Preserve the P114.5 Agent Dispatch Readiness cards on Business Build and Agent Flow only. Do not add chat-page clutter, live dispatch controls, raw record IDs, raw DB table names, raw JSON/log/policy dumps, or fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until UI source changes."
+        "Run the existing focused route coverage proving Business Build and Agent Flow visibility, dark/light/system theme rendering, and absence from Lite/full home/Live Readiness."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P114.6 checker."
+        "Add dedicated P114.6 aggregate dispatch validation checker.",
+        "Run P114.5 checker to preserve the Command Center UX evidence before final validation."
       ],
-      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.6.",
-      "phaseStatusUpdate": "P114 in progress; P114.6 complete when implemented.",
+      "docsRoadmap": "P114.6 is recorded in the P114 plan, README, platform roadmap, OS status, and generated reports. P114.7 is next for final validation.",
+      "phaseStatusUpdate": "P114 in progress; P114.6 complete; current P114.6; previous P114.5; next P114.7.",
       "validationCommands": [
         "npm run check:p1146-founder-live-agent-dispatch-readiness",
+        "npm run check:p1145-founder-live-agent-dispatch-readiness",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Agent dispatch readiness appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -710,7 +714,7 @@
       ],
       "gitCommands": [
         "git add <allowed P114.6 files>",
-        "git commit -m \"feat(nexus): implement p1146 dispatch readiness\"",
+        "git commit -m \"feat(nexus): implement p1146 dispatch validation\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [
@@ -862,9 +866,9 @@
     "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
     "P114.4 is next for safe dispatch readiness preview modeling."
   ],
-  "currentSubphase": "P114.5",
-  "previousSubphase": "P114.4",
-  "nextSubphase": "P114.6",
+  "currentSubphase": "P114.6",
+  "previousSubphase": "P114.5",
+  "nextSubphase": "P114.7",
   "summary": "P114 is in progress. P114.1-P114.5 define dispatch readiness contracts, local schema metadata, approved local CRUD, safe dry-run preview modeling, Command Center visibility, and isolated validation while unsafe authority remains blocked.",
   "implementationNotes": [
     "P114.1-P114.5 are complete.",

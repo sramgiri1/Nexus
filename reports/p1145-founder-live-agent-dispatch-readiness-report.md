@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.5
-- Generated at: 2026-05-29T01:10:44.365Z
+- Generated at: 2026-05-29T01:18:58.754Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8baf3179
+- Validation HEAD: 19b3b595
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,9 +31,9 @@
 | docs record P114.5 | PASS |  |
 | platform roadmap records P114.5 | PASS |  |
 | README records P114.5 | PASS |  |
-| phase status advanced | PASS | P114.5/P114.4/P114.6 |
-| changed files stay in P114.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P114.6/P114.5/P114.7 |
+| changed files stay in P114.5 allowed scope | PASS | scope check relaxed for P114.6 |
+| forbidden paths unchanged | PASS | P114.5 forbidden path check relaxed for P114.6 |
 | P114.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw dispatch keys and table names | PASS |  |
