@@ -16215,28 +16215,29 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "09f94b85",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P118.4 approval capture safe dry run complete; P118.5 scoped UX is next.",
+      "detail": "P118.5 scoped Command Center approval capture boundary UX complete; P118.6 validation/docs is next.",
       "phaseId": "P118",
       "title": "Founder Runtime Approval Capture Boundary",
       "order": 154,
       "status": "in_progress",
-      "summary": "P118 is in progress with the approval capture boundary contract, browser-safe schema metadata, governed local approval intent model, and local dry-run preview complete. Approval capture, approval persistence, approve/reject decision recording, runtime execution, and execution unlock remain blocked.",
-      "nextPhase": "P118.5",
-      "previousPhase": "P118.3",
+      "summary": "P118 is in progress with the approval capture boundary contract, browser-safe schema metadata, governed local approval intent model, local dry-run preview, and scoped Command Center UX complete. Approval capture, approval persistence, approve/reject decision recording, runtime execution, and execution unlock remain blocked.",
+      "nextPhase": "P118.6",
+      "previousPhase": "P118.4",
       "checksRun": [
-        "npm run check:p1184-founder-runtime-approval-capture-boundary",
-        "npm run check:p1183-founder-runtime-approval-capture-boundary",
+        "npm run check:p1185-founder-runtime-approval-capture-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval capture boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check",
         "find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print"
       ],
       "knownLimitations": [
-        "P118.4 is a local dry-run preview only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P118.5 is next for scoped Command Center approval capture boundary UX."
+        "P118.5 is scoped Command Center display only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P118.6 is next for approval capture validation/docs."
       ],
       "completedAt": ""
     },
@@ -16351,23 +16352,32 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Approval Capture UX",
-      "detail": "Planned scoped Command Center approval capture boundary UX.",
+      "detail": "Scoped Command Center approval capture boundary UX complete without controls or writes.",
       "phaseId": "P118.5",
       "title": "Command Center Approval Capture Boundary UX",
       "order": 154.5,
-      "status": "planned",
-      "summary": "Planned scoped Command Center UX for approval capture boundary without submit, approve, reject, run, or execution controls.",
+      "status": "complete",
+      "summary": "Added a scoped read-only Command Center approval capture boundary card on Business Build and Agent Flow with current state, readiness rows, blockers, next action, disabled reason, owner, evidence/activity location, and cost posture without approval capture, persistence, approve/reject decision recording, DB writes, or runtime execution.",
       "nextPhase": "P118.6",
       "previousPhase": "P118.4",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Chat with NEXUS and Lite must stay clean unless a future subphase explicitly scopes chat interaction."
+      "checksRun": [
+        "npm run check:p1185-founder-runtime-approval-capture-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval capture boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check",
+        "find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P118.5 is read-only Command Center UX only; it does not accept approvals, create DB tables, write DB/runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "The P118.5 card is scoped to Business Build and Agent Flow; Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean."
+      ],
+      "completedAt": "2026-05-29T05:33:03.406Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16411,9 +16421,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T05:24:48.588Z",
-  "currentPhase": "P118.4",
-  "previousPhase": "P118.3",
-  "nextPhase": "P118.5",
+  "updatedAt": "2026-05-29T05:33:03.406Z",
+  "currentPhase": "P118.5",
+  "previousPhase": "P118.4",
+  "nextPhase": "P118.6",
   "currentPhaseStatus": "complete"
 }

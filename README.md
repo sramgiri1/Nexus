@@ -933,6 +933,16 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider
   spend remain unavailable.
+- P118.5 Command Center approval capture boundary UX: Business Build and Agent
+  Flow now show a scoped read-only approval capture boundary card with current
+  state, readiness rows, blockers, next action, disabled reason, owner,
+  evidence/activity location, and cost impact. Chat with NEXUS, Lite, OS
+  Roadmap, and Live Readiness stay clean. P118.6 is next for approval capture
+  validation/docs. Approval capture, approval persistence, approve/reject
+  decision recording, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

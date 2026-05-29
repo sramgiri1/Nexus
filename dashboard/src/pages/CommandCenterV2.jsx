@@ -3379,6 +3379,10 @@ function AgentFlowPage() {
         approvalGate={businessBuild.founderRuntimeExecutionApprovalGate}
         surfaceLabel="Agent Flow Runtime Execution Approval Gate"
       />
+      <FounderApprovalCaptureBoundaryCard
+        capture={businessBuild.founderApprovalCaptureBoundary}
+        surfaceLabel="Agent Flow Runtime Approval Capture Boundary"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10169,6 +10173,10 @@ function BusinessBuildPage() {
           approvalGate={build.founderRuntimeExecutionApprovalGate}
           surfaceLabel="Business Build Runtime Execution Approval Gate"
         />
+        <FounderApprovalCaptureBoundaryCard
+          capture={build.founderApprovalCaptureBoundary}
+          surfaceLabel="Business Build Runtime Approval Capture Boundary"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -11745,6 +11753,93 @@ function FounderRuntimeExecutionApprovalGateCard({
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Source: {row.sourceRuntimeLane}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {row.evidenceLocation}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {sections.map((section) => (
+          <div className="ccv2-safety-row" key={section.label}>
+            <span className="ccv2-safety-row__label">{section.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{section.blockedCount} blocked</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderApprovalCaptureBoundaryCard({
+  capture,
+  surfaceLabel = "Runtime Approval Capture Boundary",
+}) {
+  if (!capture) return null;
+
+  const rows = Array.isArray(capture.readinessRows)
+    ? capture.readinessRows.slice(0, 3)
+    : [];
+  const sections = Array.isArray(capture.readinessSections)
+    ? capture.readinessSections.slice(0, 3)
+    : [];
+  const blockers = Array.isArray(capture.blockers)
+    ? capture.blockers.slice(0, 6)
+    : [];
+  const safetyRows = Array.isArray(capture.safetyRows)
+    ? capture.safetyRows
+    : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder runtime approval capture boundary">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Runtime Approval Capture Boundary</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {capture.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Capture read-only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{capture.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview mode</span><span className="ccv2-page-summary-value">{capture.previewMode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Readiness rows</span><span className="ccv2-page-summary-value">{capture.readinessRowCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{capture.blockedReadinessRowCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Capturable candidates</span><span className="ccv2-page-summary-value">{capture.capturableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persistable candidates</span><span className="ccv2-page-summary-value">{capture.persistableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Decision-recordable candidates</span><span className="ccv2-page-summary-value">{capture.decisionRecordableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable candidates</span><span className="ccv2-page-summary-value">{capture.runtimeExecutableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{capture.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{capture.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{capture.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{capture.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{capture.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{capture.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.label}-${row.capturePosition}`}
+            aria-label={`${row.label} approval capture boundary row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.captureState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.nextAction}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {row.evidenceLocation}</div>
           </div>

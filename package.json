@@ -633,7 +633,8 @@
     "check:p1181-founder-runtime-approval-capture-boundary-contract": "node scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js",
     "check:p1182-founder-runtime-approval-capture-boundary": "node scripts/check-p1182-founder-runtime-approval-capture-boundary.js",
     "check:p1183-founder-runtime-approval-capture-boundary": "node scripts/check-p1183-founder-runtime-approval-capture-boundary.js",
-    "check:p1184-founder-runtime-approval-capture-boundary": "node scripts/check-p1184-founder-runtime-approval-capture-boundary.js"
+    "check:p1184-founder-runtime-approval-capture-boundary": "node scripts/check-p1184-founder-runtime-approval-capture-boundary.js",
+    "check:p1185-founder-runtime-approval-capture-boundary": "node scripts/check-p1185-founder-runtime-approval-capture-boundary.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

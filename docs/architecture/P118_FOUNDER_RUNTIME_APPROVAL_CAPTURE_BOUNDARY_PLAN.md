@@ -751,6 +751,191 @@ Rollback plan: remove the P118.4 helper/checker/docs/status/report changes,
 restore P118.4 to planned, set current phase back to P118.3, and keep P118.3
 complete.
 
+## P118.5 Command Center Approval Capture Boundary UX
+
+Status: complete
+
+Phase: P118 Founder Runtime Approval Capture Boundary
+
+Subphase: P118.5 Command Center Approval Capture Boundary UX
+
+Goal: render a scoped, display-safe approval capture boundary card on founder
+work pages without submit, approve, reject, run, DB write, provider, dispatch,
+project mutation, deploy/package, network, or spend authority.
+
+Why this is needed: P118.4 produces a safe dry-run approval capture preview but
+keeps it hidden from Command Center. P118.5 gives founders and operators a
+useful visual surface for capture readiness, blockers, owner, next action, and
+cost posture before later validation.
+
+User/operator impact: Business Build and Agent Flow now show which approval
+capture readiness rows exist, why every row is blocked, what to review next,
+who owns the boundary, where evidence/activity lives, and that cost impact is
+local and zero-spend. Chat with NEXUS remains chat-only.
+
+Command Center impact: add a browser-safe dashboard display model and a reused
+Command Center card pattern. Render the card only on Business Build and Agent
+Flow. Do not render it on Chat, Lite chat, Live Readiness, OS Roadmap, or Demo
+surfaces.
+
+Safety impact: P118.5 is read-only UX. It does not import node-only DB/runtime
+helpers, does not touch SQLite/runtime files, and does not add any runnable
+controls. Primary UX uses friendly evidence labels instead of raw phase/report
+paths or schema names.
+
+Cost impact: local deterministic display only. No provider/model calls,
+network calls, deploy/package actions, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `1c420094`.
+
+Allowed files:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1185-founder-runtime-approval-capture-boundary.js`
+- `contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json`
+- `docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- generated P118.5/OS/coverage reports
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1185-founder-runtime-approval-capture-boundary.js`
+- `package.json`
+- P118 contract, this plan, README, platform roadmap, OS roadmap/status, and
+  generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `buildFounderApprovalCaptureBoundaryDisplayModel` to
+  `dashboard/src/data/businessBuild.js`
+- add `FounderApprovalCaptureBoundaryCard` and render it from Business Build
+  and Agent Flow in `dashboard/src/pages/CommandCenterV2.jsx`
+- add focused route coverage to `dashboard/tests/routes.spec.js`
+- add `scripts/check-p1185-founder-runtime-approval-capture-boundary.js`
+- add `check:p1185-founder-runtime-approval-capture-boundary` to
+  `package.json`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalCaptureBoundaryDisplayModel`
+- browser-safe model with current state, founder idea, preview mode, readiness
+  counts, sections, rows, blockers, disabled reason, owner capability,
+  evidence/activity/cost labels, safety rows, and all capture/write/execution/
+  dispatch/project/hosted DB/deploy/package/spend posture blocked.
+
+Reuse check: reuse the P118.4 preview helper, existing Business Build data
+model file, existing Command Center V2 card/grid/pill/safety-row patterns,
+existing route test helpers, `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, and existing OS phase status/reporting
+checks. Do not duplicate report writers, formatters, route matrices, mode
+guards, redaction helpers, or phase status updaters.
+
+Command Center UX requirements: show what changed, current state, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact. Render only on Business Build and Agent Flow. Do not show raw
+JSON, raw logs, raw policy dumps, raw private IDs, raw DB table names, internal
+phase labels, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve existing System, Dark, and
+Light theme behavior and add Playwright coverage for the new approval capture
+boundary card.
+
+Playwright tests: add a focused route test verifying the card appears on
+Business Build and Agent Flow, survives dark/light/system themes, and is absent
+from Chat, Lite chat, OS Roadmap, and Live Readiness.
+
+Checker updates: add a dedicated P118.5 checker that validates the browser-safe
+model, scoped rendering, Playwright coverage, docs/status updates, allowed file
+scope, and absence of raw IDs, raw schema names, raw dumps, internal primary UX
+phase labels, unsafe imports, or fake runnable actions.
+
+Docs/README/roadmap updates: P118.5 is recorded in this plan, README, platform
+roadmap, P118 contract, OS roadmap/status, and generated reports. P118.6 is
+next for approval capture validation/docs.
+
+OS phase status update: P118 is in progress; P118.5 is complete; current phase
+P118.5; previous P118.4; next P118.6.
+
+Reports to regenerate:
+- `reports/p1185-founder-runtime-approval-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1185-founder-runtime-approval-capture-boundary`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Approval capture boundary appears only on scoped pages"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+- `find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print`
+
+Final safety checks: no project/CareLoop paths changed; no DB/runtime provider,
+tool, worker, deploy, release, export, package, or env paths changed; no
+approval capture, approval persistence, approval decision recording, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL, network, deploy,
+release, export, package, or spend authority is enabled; no DemoApp exposure,
+raw private IDs, raw DB table names, raw JSON/log/policy dumps, internal
+primary UX phase labels, or fake actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P118.5 files>`
+- `git commit -m "feat(nexus): implement p1185 approval capture ux"`
+- stamp P118/P118.5 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1185 approval capture ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: a display card can look like a live approval control if labels are
+loose. P118.5 uses read-only language, disabled pills, zero unsafe counts, no
+buttons, and scoped route coverage.
+
+Rollback plan: remove the P118.5 dashboard/checker/docs/status/report changes,
+restore P118.5 to planned, set current phase back to P118.4, and keep P118.4
+complete.
+
 ## Planned Subphase Controls
 
 P118.2 Approval Capture Schema Metadata is complete. The metadata helper is
@@ -766,11 +951,9 @@ available for P118.5 scoped UX work, while approval capture, persistence,
 approve/reject decision recording, writes, execution, provider dispatch, and
 project mutation remain unavailable.
 
-P118.5 Command Center Approval Capture Boundary UX: if implemented, scoped
-non-chat pages must show current state, next action, blockers, disabled reason,
-owner/capability, evidence/activity location, and cost impact. Chat with NEXUS
-and Lite must remain clean. Playwright must prove the boundary UI appears only
-on scoped pages and preserves System/Dark/Light behavior.
+P118.5 Command Center Approval Capture Boundary UX is complete. Business Build
+and Agent Flow show scoped approval capture readiness while Chat with NEXUS,
+Lite, OS Roadmap, and Live Readiness remain clean.
 
 P118.6 Approval Capture Validation / Docs: validate P118.1-P118.5 together,
 regenerate reports, and preserve UX without adding new UI or controls. No

@@ -4322,6 +4322,62 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Approval capture boundary appears only on scoped pages", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder runtime approval capture boundary").filter({ hasText: "Business Build Runtime Approval Capture Boundary" });
+      await expect(themedCard).toContainText("Runtime Approval Capture Boundary");
+      await expect(themedCard).toContainText("Capture read-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Runtime Approval Capture Boundary"],
+      ["/command-center/agent-flow", "Agent Flow Runtime Approval Capture Boundary"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder runtime approval capture boundary").filter({ hasText: label });
+      await expect(card).toContainText("Runtime Approval Capture Boundary");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Preview mode");
+      await expect(card).toContainText("Readiness rows");
+      await expect(card).toContainText("Blocked rows");
+      await expect(card).toContainText("Capturable candidates");
+      await expect(card).toContainText("Persistable candidates");
+      await expect(card).toContainText("Decision-recordable candidates");
+      await expect(card).toContainText("Executable candidates");
+      await expect(card).toContainText("NEXUS Approval Capture Boundary");
+      await expect(card).toContainText("Approval capture request");
+      await expect(card).toContainText("Approval capture event");
+      await expect(card).toContainText("Approval capture evidence");
+      await expect(card).toContainText("Capture readiness");
+      await expect(card).toContainText("Decision recording");
+      await expect(card).toContainText("Runtime authority");
+      await expect(card).toContainText("Approval capture safe dry-run report");
+      await expect(card).toContainText("No provider calls");
+      const cardText = await card.innerText();
+      expect(cardText).not.toMatch(/P118|reports\/p118|founderApprovalCapture/i);
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Founder runtime approval capture boundary")).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalCapture|approval_capture_|approvalCaptureRecordKey|captureRequestRef|captureEventRef|captureEvidenceRef/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|reject now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Founder live approval capture boundary appears on non-chat founder routes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
