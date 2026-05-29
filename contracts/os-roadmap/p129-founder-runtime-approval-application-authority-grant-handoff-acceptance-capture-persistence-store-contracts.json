@@ -3,13 +3,13 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P129.3",
-  "previousSubphase": "P129.2",
-  "nextSubphase": "P129.4",
+  "currentSubphase": "P129.4",
+  "previousSubphase": "P129.3",
+  "nextSubphase": "P129.5",
   "branch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "ce6f29be",
+  "expectedBaseCommit": "d88313b4",
   "owner": "NEXUS OS",
-  "goal": "Add a browser-safe local repository intent model for future acceptance capture persistence store operations without enabling DB/runtime reads or writes, live CRUD, providers, dispatch, mutation, network, or spend in P129.3.",
+  "goal": "Add a browser-safe local migration preview model for future acceptance capture persistence store readiness without creating DB schemas, migrations, SQL, reads, writes, runtime records, live CRUD, providers, dispatch, mutation, network, or spend in P129.4.",
   "safetyRules": [
     "Do not create DB schemas, migrations, tables, indexes, raw SQL interfaces, or DB/runtime writes in P129.1.",
     "Do not persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, or record approve/reject decisions in P129.1.",
@@ -26,7 +26,7 @@
     "Reuse existing dashboard cards/routes/tests; do not duplicate UI components.",
     "Reuse existing evidence/activity/audit/cost terminology; do not create new appenders in P129.1."
   ],
-  "commandCenterUx": "P129.3 adds no UI. Existing read-only capture persistence UX stays scoped to Business Build and Agent Flow only. Chat with NEXUS and Lite stay chat-focused and clean.",
+  "commandCenterUx": "P129.4 adds no UI. Existing read-only capture persistence UX stays scoped to Business Build and Agent Flow only. Chat with NEXUS and Lite stay chat-focused and clean.",
   "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
   "subphases": [
     {
@@ -366,23 +366,23 @@
     {
       "phaseId": "P129.4",
       "title": "Store Migration Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P129.3-stamp",
-      "narrowGoal": "Preview local persistence migration requirements without creating or running migrations.",
+      "expectedBaseCommit": "d88313b4",
+      "narrowGoal": "Add browser-safe local migration preview rows for future acceptance capture persistence store readiness while keeping DB schemas, migrations, SQL, reads, writes, runtime records, CRUD, providers, dispatch, mutation, network, and spend blocked.",
       "allowedFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreMigrationPreview.js",
         "contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json",
         "docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md",
-        "scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
         "scripts/check-p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
-        "scripts/check-os-phase-status.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
         "reports/p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
@@ -404,9 +404,17 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Contract/status/report evidence only. No runtime exports, DB schemas, migrations, CRUD envelopes, write envelopes, provider envelopes, dispatch packets, or project data.",
-      "commandCenterUx": "No dashboard source/test changes. Preserve existing scoped read-only P128 persistence boundary UX only on Business Build and Agent Flow.",
+      "expectedExports": [
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_MIGRATION_PREVIEW_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_MIGRATION_PREVIEW_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_MIGRATION_PREVIEW_AREA_NAMES",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_MIGRATION_PREVIEW_FLAGS",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_MIGRATION_PREVIEW_ITEMS",
+        "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreMigrationPreview",
+        "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreMigrationPreview"
+      ],
+      "dataShape": "Browser-safe migration preview model only. Exported data includes phase/version strings, allowlisted preview areas, blocked migration flags, display-safe preview rows, source P129.3 repository intent lineage, blockers, next action, owner capability, evidence/activity labels, and cost impact labels. No DB schemas, SQL, migration files, CRUD executors, read/write envelopes, runtime records, provider envelopes, dispatch packets, raw private IDs, or project data.",
+      "commandCenterUx": "No dashboard source/test changes. Preserve existing scoped read-only persistence UX only on Business Build and Agent Flow; Chat with NEXUS and Lite stay chat-only and clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -416,15 +424,15 @@
         "Run existing scoped P128 capture persistence route coverage as applicable."
       ],
       "checkerUpdates": [
-        "Add or update the phase checker for this subphase.",
+        "Create scripts/check-p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js.",
         "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden scope and safe wording."
+        "Validate migration preview exports, P129.3 repository intent reuse, forbidden scope, safe docs, blocked authority flags, and no DB/runtime/provider imports."
       ],
-      "docsRoadmap": "Update P129 plan, README, platform roadmap, OS status, and generated reports.",
-      "phaseStatusUpdate": "P129 in progress; P129.4 planned; current phase P129.4; previous and next subphases per contract.",
+      "docsRoadmap": "Update P129 plan, README, platform roadmap, P129 contract, OS roadmap/status, and generated reports.",
+      "phaseStatusUpdate": "P129 in progress; P129.4 complete; current phase P129.4; previous P129.3; next P129.5.",
       "validationCommands": [
-        "npm run check:p1291-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
-        "npm run check:p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -433,8 +441,11 @@
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "Confirm no provider/model calls, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network, or spend.",
-        "Confirm no project, CareLoop, generated project, dashboard source/test, DB, runtime, provider, tool, worker, deploy, release, export, package, or env paths changed unless explicitly allowed."
+        "Confirm no project/CareLoop/generated project paths changed.",
+        "Confirm no dashboard source/test files changed in P129.4.",
+        "Confirm no DB/runtime provider, tool, worker, deploy, release, export, package, local runtime state, or env paths changed.",
+        "Confirm store CRUD, DB schemas, migrations, DB/runtime reads or writes, live capture, handoff acceptance, authority grant handoff, execution, provider/model calls, agent dispatch, project mutation, network calls, and spend remain blocked.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -446,7 +457,28 @@
       ],
       "order": 165.4,
       "previousPhase": "P129.3",
-      "nextPhase": "P129.5"
+      "nextPhase": "P129.5",
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreMigrationPreview.js",
+        "contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json",
+        "docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md",
+        "scripts/check-p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
+        "scripts/check-p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
+        "reports/p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "detail": "P129.4 store migration preview complete; P129.5 store CRUD safe dry run is next.",
+      "summary": "Added a browser-safe local migration preview model for future acceptance capture persistence store readiness while keeping all schemas, migrations, DB/runtime, execution, provider, dispatch, mutation, network, and spend actions blocked.",
+      "knownLimitations": [
+        "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
     },
     {
       "phaseId": "P129.5",
@@ -705,16 +737,16 @@
     }
   ],
   "currentStatus": {
-    "phaseId": "P129.3",
-    "title": "Store Repository Intent Model",
+    "phaseId": "P129.4",
+    "title": "Store Migration Preview",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "23850bab",
-    "completedAt": "2026-05-29T21:04:56.865Z",
-    "summary": "Added a browser-safe local repository intent model for future acceptance capture persistence store operations, with every CRUD, DB, runtime, execution, provider, dispatch, mutation, network, and spend action blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T21:10:04.562Z",
+    "summary": "Added a browser-safe local migration preview model for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, providers, dispatch, mutation, network, and spend blocked.",
     "checksRun": [
+      "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
-      "npm run check:p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -723,10 +755,10 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P129.3 is repository intent modeling only. It does not create DB schemas, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P129.4",
+    "nextPhase": "P129.5",
     "commandCenterVisible": true
   },
-  "nextPhase": "P129.4"
+  "nextPhase": "P129.5"
 }

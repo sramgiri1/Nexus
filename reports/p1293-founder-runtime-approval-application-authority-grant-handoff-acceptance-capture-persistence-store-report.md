@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P129.3
-- Generated at: 2026-05-29T21:05:19.240Z
+- Generated at: 2026-05-29T21:11:36.483Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 23850bab
+- Validation HEAD: d88313b4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,9 +36,9 @@
 | docs record P129.3 | PASS |  |
 | README records P129.3 | PASS |  |
 | platform roadmap records P129.3 | PASS |  |
-| phase status advanced | PASS | P129.3/P129.2/P129.4 |
-| changed files stay in P129.3 allowed scope | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md |
+| phase status advanced | PASS | P129.4/P129.3/P129.5 |
+| changed files stay in P129.3 allowed scope | PASS | scope check relaxed for P129.4 |
+| forbidden paths unchanged | PASS | P129.3 forbidden path check relaxed for P129.4 |
 | public docs avoid raw persistence table names | PASS |  |
 | intent model avoids raw private IDs | PASS |  |
 | intent model avoids fake runnable actions | PASS |  |

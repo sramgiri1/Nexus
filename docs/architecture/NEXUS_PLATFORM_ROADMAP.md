@@ -2908,6 +2908,18 @@ unlock, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
 package action, network call, and provider spend remain blocked.
 
+P129.4 is complete. NEXUS now has browser-safe local migration preview rows for
+future store record container, index lookup, evidence-link, retention audit, and
+rollback review areas while every migration action remains blocked and display
+safe. P129.5 is next for store CRUD safe dry-run modeling. Store CRUD, DB
+schemas, migrations, DB/runtime reads or writes, live acceptance capture,
+handoff acceptance, authority handoff, authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

@@ -1715,6 +1715,17 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
   SQL interface, deploy, release, export, package, network call, and provider
   spend remain unavailable.
+- P129.4 store migration preview: Added browser-safe local migration preview
+  rows for future store record container, index lookup, evidence-link,
+  retention audit, and rollback review areas while keeping every migration
+  action blocked and display safe. P129.5 is next for store CRUD safe dry-run
+  modeling. Store CRUD, DB schemas, migrations, DB/runtime reads or writes,
+  live acceptance capture, handoff acceptance, authority handoff, authority
+  grant, activation, approval application, approval capture, approval
+  persistence, approve/reject decision recording, runtime execution, execution
+  unlock, provider/model calls, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
