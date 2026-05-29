@@ -3387,6 +3387,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P120.6 is complete. An aggregate OS-only checker now validates the P120.1-P120.5
+chain, package scripts, contracts, prior reports, intent model, safe dry-run
+preview, scoped Command Center display model, Playwright coverage presence,
+docs, phase status, allowed paths, forbidden paths, and unsafe authority claims.
+P120.7 is next for final validation. Approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

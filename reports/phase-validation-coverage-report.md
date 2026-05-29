@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T12:12:28.636Z
+- Generated at: 2026-05-29T12:20:29.042Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ec846c1f
+- Validation HEAD: b2f0cbea
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -447,7 +447,7 @@
 | P117.5 validation coverage | PASS | 8 checkers, 5 reports |
 | P117.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P117.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P118 validation coverage | PASS | 23 checkers, 19 reports |
+| P118 validation coverage | PASS | 24 checkers, 20 reports |
 | P118.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P118.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P118.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -455,7 +455,7 @@
 | P118.5 validation coverage | PASS | 7 checkers, 5 reports |
 | P118.6 validation coverage | PASS | 5 checkers, 2 reports |
 | P118.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P119 validation coverage | PASS | 23 checkers, 19 reports |
+| P119 validation coverage | PASS | 24 checkers, 20 reports |
 | P119.1 validation coverage | PASS | 11 checkers, 7 reports |
 | P119.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P119.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -463,17 +463,17 @@
 | P119.5 validation coverage | PASS | 7 checkers, 5 reports |
 | P119.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P119.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P120 validation coverage | PASS | 23 checkers, 19 reports |
-| P120.1 validation coverage | PASS | 9 checkers, 5 reports |
-| P120.2 validation coverage | PASS | 9 checkers, 5 reports |
+| P120 validation coverage | PASS | 25 checkers, 20 reports |
+| P120.1 validation coverage | PASS | 10 checkers, 6 reports |
+| P120.2 validation coverage | PASS | 10 checkers, 6 reports |
 | P120.3 validation coverage | PASS | 4 checkers, 1 reports |
-| P120.4 validation coverage | PASS | 9 checkers, 5 reports |
+| P120.4 validation coverage | PASS | 10 checkers, 6 reports |
 | P120.5 validation coverage | PASS | 8 checkers, 5 reports |
-| P120.6 validation coverage | PASS | 5 checkers, 5 reports |
+| P120.6 validation coverage | PASS | 11 checkers, 6 reports |
 | P120.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P120.5; next=P120.6; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P120.6; next=P120.7; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

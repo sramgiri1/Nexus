@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P120.5
-- Generated at: 2026-05-29T12:12:16.110Z
+- Generated at: 2026-05-29T12:20:24.377Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ec846c1f
+- Validation HEAD: b2f0cbea
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,9 +32,9 @@
 | docs record P120.5 | PASS |  |
 | platform roadmap records P120.5 | PASS |  |
 | README records P120.5 | PASS |  |
-| phase status advanced | PASS | P120.5/P120.4/P120.6 |
-| changed files stay in P120.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| phase status advanced | PASS | P120.6/P120.5/P120.7 |
+| changed files stay in P120.5 allowed scope | PASS | scope check relaxed for P120.6 |
+| forbidden paths unchanged | PASS | P120.5 forbidden path check relaxed for P120.6 |
 | P120.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
@@ -49,7 +49,7 @@
 
 - npm run check:p1205-founder-runtime-approval-decision-persistence-boundary
 - npm run check:p1204-founder-runtime-approval-decision-persistence-boundary
-- npm --prefix dashboard run test -- --project=chromium dashboard/tests/routes.spec.js -g "Approval decision persistence boundary"
+- npm --prefix dashboard run test:pages -- -g "Approval decision persistence boundary" dashboard/tests/routes.spec.js
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - git diff --check

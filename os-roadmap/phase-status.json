@@ -16660,28 +16660,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ec846c1f",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Decision Persistence",
-      "detail": "P120.5 scoped Command Center persistence boundary UX complete; P120.6 validation hardening is next.",
+      "detail": "P120.6 aggregate validation and docs alignment complete; P120.7 final validation is next.",
       "phaseId": "P120",
       "title": "Founder Runtime Approval Decision Persistence Boundary",
       "order": 156,
       "status": "in_progress",
-      "summary": "P120 is in progress with the approval decision persistence boundary contract, browser-safe schema metadata, governed local persistence intent model, local safe dry-run preview, and scoped Command Center persistence boundary UX complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P120.6",
-      "previousPhase": "P120.5",
+      "summary": "P120 is in progress with the approval decision persistence boundary contract, browser-safe schema metadata, governed local persistence intent model, local safe dry-run preview, scoped Command Center persistence boundary UX, and aggregate validation/docs alignment complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P120.7",
+      "previousPhase": "P120.6",
       "checksRun": [
+        "npm run check:p1206-founder-runtime-approval-decision-persistence-boundary",
         "npm run check:p1205-founder-runtime-approval-decision-persistence-boundary",
         "npm run check:p1204-founder-runtime-approval-decision-persistence-boundary",
-        "npm --prefix dashboard run test -- --project=chromium dashboard/tests/routes.spec.js -g \"Approval decision persistence boundary\"",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P120.5 is display-only Command Center UX; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P120.6 is next for validation hardening without persistence authority."
+        "P120.6 is validation/docs only; it does not capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P120.7 is next for final validation and P120 handoff without persistence authority."
       ],
       "completedAt": ""
     },
@@ -16806,7 +16806,7 @@
       "checksRun": [
         "npm run check:p1205-founder-runtime-approval-decision-persistence-boundary",
         "npm run check:p1204-founder-runtime-approval-decision-persistence-boundary",
-        "npm --prefix dashboard run test -- --project=chromium dashboard/tests/routes.spec.js -g \"Approval decision persistence boundary\"",
+        "npm --prefix dashboard run test:pages -- -g \"Approval decision persistence boundary\" dashboard/tests/routes.spec.js",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -16818,23 +16818,30 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
-      "label": "Persistence Validation / Docs",
-      "detail": "Planned P120 subphase. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Persistence Validation",
+      "detail": "Aggregate approval decision persistence boundary validation and docs alignment complete.",
       "phaseId": "P120.6",
       "title": "Approval Decision Persistence Validation / Docs",
       "order": 156.6,
-      "status": "planned",
-      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Validated P120.1-P120.5 together across package scripts, contract state, prior reports, intent model, safe dry-run preview, scoped Command Center display model, Playwright coverage presence, docs, status, allowed paths, forbidden paths, and unsafe authority claims. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P120.7",
       "previousPhase": "P120.5",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1206-founder-runtime-approval-decision-persistence-boundary",
+        "npm run check:p1205-founder-runtime-approval-decision-persistence-boundary",
+        "npm run check:p1204-founder-runtime-approval-decision-persistence-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P120.6 is validation/docs only; it does not capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T12:18:16.347Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16842,7 +16849,7 @@
       "commit": "planned",
       "commandCenterVisible": false,
       "label": "Final Validation",
-      "detail": "Planned P120 subphase. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "detail": "Planned P120 final validation subphase. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "phaseId": "P120.7",
       "title": "Final Validation",
       "order": 156.7,
@@ -16858,9 +16865,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T06:07:47.353Z",
-  "currentPhase": "P120.5",
-  "previousPhase": "P120.4",
-  "nextPhase": "P120.6",
+  "updatedAt": "2026-05-29T12:18:16.347Z",
+  "currentPhase": "P120.6",
+  "previousPhase": "P120.5",
+  "nextPhase": "P120.7",
   "currentPhaseStatus": "complete"
 }

@@ -1069,6 +1069,16 @@ The Command Center and local operator surface have:
   execution unlock, provider/model call, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, raw SQL interface, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P120.6 approval decision persistence validation: an aggregate OS-only checker
+  now validates the P120.1-P120.5 chain, package scripts, contracts, reports,
+  intent model, safe dry-run preview, scoped Command Center display model,
+  Playwright coverage presence, docs, status, allowed paths, forbidden paths,
+  and unsafe authority claims. P120.7 is next for final validation. Approval
+  capture, approval persistence, approve/reject decision recording, DB/runtime
+  writes, runtime execution, execution unlock, provider/model call, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

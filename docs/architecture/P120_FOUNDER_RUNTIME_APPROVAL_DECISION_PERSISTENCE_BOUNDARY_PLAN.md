@@ -893,9 +893,162 @@ Rollback plan: remove the P120.5 UI/data/test/checker/docs/status/report
 changes, restore P120.5 to planned, set current phase back to P120.4, and keep
 P120.4 complete.
 
+Status: complete.
+
+## P120.6 Approval Decision Persistence Validation / Docs
+
+Phase: P120 Founder Runtime Approval Decision Persistence Boundary
+
+Subphase: P120.6 Approval Decision Persistence Validation / Docs
+
+Goal: validate P120.1-P120.5 together and align docs, reports, package scripts,
+contracts, and OS phase status before final validation.
+
+Why this is needed: P120 now has the contract, browser-safe schema metadata,
+local intent model, safe dry-run preview, and scoped Command Center display. The
+chain needs an aggregate validation pass before P120 can be closed.
+
+User/operator impact: operators can see that the approval-decision persistence
+boundary is consistent across reports and roadmap state. This does not add any
+new action, persistence, runtime, provider, or project authority.
+
+Command Center impact: preserve the existing scoped Business Build and Agent
+Flow approval decision persistence boundary card. Chat/Lite remains
+chat-focused, OS Roadmap remains OS phases only, and Live Readiness remains
+readiness-only. No new controls are added.
+
+Safety impact: approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package actions, network
+calls, and provider spend remain blocked.
+
+Cost impact: no provider/model calls, network calls, hosted DB calls, or spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1206-founder-runtime-approval-decision-persistence-boundary.js`
+- `contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json`
+- `docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1204-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1205-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1206-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- create `scripts/check-p1206-founder-runtime-approval-decision-persistence-boundary.js`
+- update the P120 contract, P120 plan, platform roadmap, README, package script,
+  OS status files, and generated reports listed above
+
+Expected exports, schemas, and data shapes: no new exports or schemas. P120.6
+validates the existing P120.3 intent model, P120.4 preview envelope, and P120.5
+display model. It does not create a persisted approval record, DB table, runtime
+event, project mutation, provider request, tool call, or worker dispatch.
+
+Command Center UX requirements: keep the scoped persistence boundary visible
+only where P120.5 placed it. Primary UX must not show raw JSON, raw logs, raw
+policy dumps, raw DB table names, private project IDs, internal P120 labels
+outside OS Roadmap, DemoApp, approve/reject controls, save controls, execution
+controls, or fake runnable actions.
+
+Dark/light/system theme requirements: preserve existing dark, light, and system
+theme behavior. No CSS or component theme changes are allowed in this subphase.
+
+Playwright tests: no new Playwright source change because dashboard source and
+tests are forbidden in P120.6. The aggregate checker verifies the existing P120.5
+scoped Playwright coverage remains present.
+
+Checker updates: add a dedicated P120.6 checker that reuses
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`, the P120.3 intent
+model, the P120.4 preview model, and the P120.5 display model. Do not duplicate
+report writers, result envelopes, redaction helpers, mode guards, or phase
+status updaters.
+
+Docs/README/roadmap updates: P120.6 is recorded in this plan, README, platform
+roadmap, P120 contract, OS roadmap/status, and generated reports. P120.7 is
+next for final validation.
+
+OS phase status update: P120 is in progress; P120.6 is complete; current phase
+P120.6; previous P120.5; next P120.7.
+
+Validation commands:
+- `npm run check:p1206-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1205-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1204-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P120.6 files>`
+- `git commit -m "chore(nexus): validate p1206 approval decision persistence"`
+- stamp P120/P120.6 status with the implementation commit
+- `git add <allowed P120.6 status/report files>`
+- `git commit -m "chore(nexus): stamp p1206 approval decision persistence"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model calls, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL, deploy, release, export, package actions,
+  network calls, or provider spend are enabled
+- confirm no project-owned, CareLoop, generated-project, dashboard source/test,
+  DB, live-ready, runtime, provider, tool, worker, deploy, release, export,
+  package, or env files changed
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: existing validation reports can contain older command text; P120.6
+normalizes status/contract command text without changing dashboard test source.
+
+Rollback plan: remove the P120.6 checker/docs/status/report changes, restore
+P120.6 to planned, set current phase back to P120.5, and keep P120.5 complete.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
-P120.5 Command Center Approval Decision Persistence Boundary UX is complete.
-P120.6 is next for validation hardening, with approval persistence, DB/runtime
+P120.6 Approval Decision Persistence Validation / Docs is complete.
+P120.7 is next for final validation, with approval persistence, DB/runtime
 writes, approve/reject decision recording, and execution still blocked unless a
 future subphase explicitly grants narrow authority.
