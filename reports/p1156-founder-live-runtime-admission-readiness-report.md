@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P115.6
-- Generated at: 2026-05-29T02:31:53.605Z
+- Generated at: 2026-05-29T02:33:21.418Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f7ddbc2d
+- Validation HEAD: bf5af7d6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,8 +31,8 @@
 | platform roadmap records P115.6 | PASS |  |
 | phase status advanced | PASS | P115.6/P115.5/P115.7 |
 | contract handoff points to final validation | PASS |  |
-| changed files stay in P115.6 allowed scope | PASS | README.md, contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1156-founder-live-runtime-admission-readiness-report.md, scripts/check-p1156-founder-live-runtime-admission-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1156-founder-live-runtime-admission-readiness-report.md, scripts/check-p1156-founder-live-runtime-admission-readiness.js |
+| changed files stay in P115.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P115.6 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | primary UX avoids raw runtime table names | PASS |  |
