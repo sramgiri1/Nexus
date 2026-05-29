@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.5
-- Generated at: 2026-05-29T20:19:13.229Z
+- Generated at: 2026-05-29T20:21:47.173Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 40916dba
+- Validation HEAD: bee4b482
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | platform roadmap records P128.5 | PASS |  |
 | README records P128.5 | PASS |  |
 | phase status advanced | PASS | P128.5/P128.4/P128.6 |
-| changed files stay in P128.5 allowed scope | PASS | README.md, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js |
+| changed files stay in P128.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P128.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
