@@ -478,7 +478,9 @@
       "summary": "Added a browser-safe local migration preview model for future acceptance capture persistence store readiness while keeping all schemas, migrations, DB/runtime, execution, provider, dispatch, mutation, network, and spend actions blocked.",
       "knownLimitations": [
         "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-      ]
+      ],
+      "commit": "e9b85f36",
+      "completedAt": "2026-05-29T21:12:42.442Z"
     },
     {
       "phaseId": "P129.5",
@@ -741,8 +743,8 @@
     "title": "Store Migration Preview",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
-    "completedAt": "2026-05-29T21:10:04.562Z",
+    "commit": "e9b85f36",
+    "completedAt": "2026-05-29T21:12:42.442Z",
     "summary": "Added a browser-safe local migration preview model for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, providers, dispatch, mutation, network, and spend blocked.",
     "checksRun": [
       "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",

@@ -13920,7 +13920,7 @@
       "order": 165,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e9b85f36",
       "commandCenterVisible": true,
       "detail": "P129 is in progress; P129.4 store migration preview is complete and P129.5 store CRUD safe dry run is next.",
       "summary": "P129 capture persistence store work now includes contract/policy, schema metadata, repository intent rows, and migration preview rows while DB/runtime writes and live CRUD remain blocked.",
@@ -13939,7 +13939,7 @@
       "knownLimitations": [
         "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:11:28.529Z"
+      "completedAt": "2026-05-29T21:12:42.442Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14036,7 +14036,7 @@
       "order": 165.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e9b85f36",
       "commandCenterVisible": true,
       "detail": "P129.4 store migration preview complete; P129.5 store CRUD safe dry run is next.",
       "summary": "Added browser-safe local migration preview rows for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, provider, dispatch, mutation, network, and spend blocked.",
@@ -14055,7 +14055,7 @@
       "knownLimitations": [
         "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:11:28.529Z"
+      "completedAt": "2026-05-29T21:12:42.442Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14077,7 +14077,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-05-29T21:11:28.529Z",
+  "updatedAt": "2026-05-29T21:12:42.442Z",
   "currentPhase": "P129.4",
   "previousPhase": "P129.3",
   "nextPhase": "P129.5",
@@ -14089,7 +14089,7 @@
     "order": 165.4,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e9b85f36",
     "commandCenterVisible": true,
     "detail": "P129.4 store migration preview complete; P129.5 store CRUD safe dry run is next.",
     "summary": "Added browser-safe local migration preview rows for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, provider, dispatch, mutation, network, and spend blocked.",
@@ -14108,7 +14108,7 @@
     "knownLimitations": [
       "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:11:28.529Z"
+    "completedAt": "2026-05-29T21:12:42.442Z"
   },
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
@@ -14119,7 +14119,7 @@
     "order": 165.4,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e9b85f36",
     "commandCenterVisible": true,
     "detail": "P129.4 store migration preview complete; P129.5 store CRUD safe dry run is next.",
     "summary": "Added browser-safe local migration preview rows for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, provider, dispatch, mutation, network, and spend blocked.",
@@ -14138,6 +14138,6 @@
     "knownLimitations": [
       "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:11:28.529Z"
+    "completedAt": "2026-05-29T21:12:42.442Z"
   }
 }
