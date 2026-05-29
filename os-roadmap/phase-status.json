@@ -16872,7 +16872,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0f492641",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121.1 application boundary contract complete; P121.2 eligibility metadata is next.",
@@ -16898,7 +16898,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0f492641",
       "commandCenterVisible": true,
       "label": "Application Contract",
       "detail": "Approval decision application boundary contract complete.",
@@ -16919,7 +16919,7 @@
       "knownLimitations": [
         "P121.1 is contract-only; it does not apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:32:28.282Z"
+      "completedAt": "2026-05-29T12:34:37.523Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17043,7 +17043,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T12:32:28.282Z",
+  "updatedAt": "2026-05-29T12:34:37.523Z",
   "currentPhase": "P121.1",
   "previousPhase": "P120.7",
   "nextPhase": "P121.2",

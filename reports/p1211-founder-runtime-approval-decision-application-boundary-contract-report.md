@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.1
-- Generated at: 2026-05-29T12:33:54.347Z
+- Generated at: 2026-05-29T12:34:44.285Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d2c610dc
+- Validation HEAD: 0f492641
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | README records P121.1 | PASS |  |
 | platform roadmap records P121.1 | PASS |  |
 | phase status advanced | PASS | P121.1/P120.7/P121.2 |
-| changed files stay in P121.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md, scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md, scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js |
+| changed files stay in P121.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw approval application keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
