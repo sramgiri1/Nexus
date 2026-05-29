@@ -3502,6 +3502,17 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P122.3 is complete. A pure local authority intent model now reuses P122.2
+metadata to describe approval decision application authority intent, readiness
+rows, blockers, disabled reason, next action, owner capability,
+activity/evidence labels, zero unsafe candidate counts, and cost posture
+without granting authority. P122.4 is next for authority handoff safe dry-run
+preview. Approval decision application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

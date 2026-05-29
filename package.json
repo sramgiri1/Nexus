@@ -659,7 +659,8 @@
     "check:p1216-founder-runtime-approval-decision-application-boundary": "node scripts/check-p1216-founder-runtime-approval-decision-application-boundary.js",
     "check:p1217-founder-runtime-approval-decision-application-boundary": "node scripts/check-p1217-founder-runtime-approval-decision-application-boundary.js",
     "check:p1221-founder-runtime-approval-decision-application-authority-handoff-contract": "node scripts/check-p1221-founder-runtime-approval-decision-application-authority-handoff-contract.js",
-    "check:p1222-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1222-founder-runtime-approval-decision-application-authority-handoff.js"
+    "check:p1222-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1222-founder-runtime-approval-decision-application-authority-handoff.js",
+    "check:p1223-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1223-founder-runtime-approval-decision-application-authority-handoff.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
