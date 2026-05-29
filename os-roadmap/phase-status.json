@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-29T13:14:18.967Z",
+  "generatedAt": "2026-05-29T13:16:17.626Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -16872,7 +16872,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fc2f320e",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121.6 validation/docs complete; P121.7 final validation is next.",
@@ -16896,7 +16896,7 @@
       "knownLimitations": [
         "P121.6 is validation and docs only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:14:18.967Z"
+      "completedAt": "2026-05-29T13:16:17.626Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17035,7 +17035,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fc2f320e",
       "commandCenterVisible": true,
       "label": "Application Validation",
       "detail": "Aggregate validation and docs complete; final validation is next.",
@@ -17059,7 +17059,7 @@
       "knownLimitations": [
         "P121.6 is validation and docs only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:14:18.967Z"
+      "completedAt": "2026-05-29T13:16:17.626Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17083,14 +17083,14 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T13:14:18.967Z",
+  "updatedAt": "2026-05-29T13:16:17.626Z",
   "currentPhase": "P121.6",
   "previousPhase": "P121.5",
   "nextPhase": "P121.7",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "fc2f320e",
     "commandCenterVisible": true,
     "label": "Approval Application Boundary",
     "detail": "P121.6 validation/docs complete; P121.7 final validation is next.",
@@ -17114,6 +17114,6 @@
     "knownLimitations": [
       "P121.6 is validation and docs only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T13:14:18.967Z"
+    "completedAt": "2026-05-29T13:16:17.626Z"
   }
 }
