@@ -1646,6 +1646,175 @@
       "retentionClass": "founder_runtime_admission_readiness_evidence",
       "redactionRequired": true,
       "fileFallbackSource": "reports/p1151-founder-live-runtime-admission-contract-report.md"
+    },
+    {
+      "name": "founder_runtime_execution_readiness_items",
+      "purpose": "Durable local runtime execution readiness items derived from governed founder runtime admission records without execution unlock, worker execution, provider calls, or project mutation authority.",
+      "primaryKey": "runtimeExecutionId",
+      "fields": {
+        "runtimeExecutionId": "string",
+        "runtimeAdmissionId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "publicLabel": "string",
+        "executionLane": "string",
+        "executionState": "string",
+        "executionSummary": "string",
+        "executionTarget": "string",
+        "ownerCapability": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "operatorApprovalRequired": "boolean",
+        "operatorApproved": "boolean",
+        "localCrudAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "runtimeAdmissionRequired": "boolean",
+        "runtimeAdmissionSatisfied": "boolean",
+        "runtimeExecutionAllowed": "boolean",
+        "executionUnlockAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "toolExecutionAllowed": "boolean",
+        "providerCallAllowed": "boolean",
+        "agentDispatchAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "packageActionAllowed": "boolean",
+        "deployActionAllowed": "boolean",
+        "releaseActionAllowed": "boolean",
+        "exportActionAllowed": "boolean",
+        "networkCallAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "runtimeExecutionId",
+        "runtimeAdmissionId",
+        "publicLabel",
+        "executionState"
+      ],
+      "indexes": [
+        "runtimeAdmissionId",
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "executionState",
+        "executionLane",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "reports/p1157-founder-live-runtime-admission-readiness-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_execution_readiness_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1161-founder-live-runtime-execution-contract-report.md"
+    },
+    {
+      "name": "founder_runtime_execution_events",
+      "purpose": "Durable local audit event rows for founder runtime execution readiness transitions without execution unlock, worker execution, provider calls, or project mutation authority.",
+      "primaryKey": "runtimeExecutionEventId",
+      "fields": {
+        "runtimeExecutionEventId": "string",
+        "runtimeExecutionId": "string",
+        "runtimeAdmissionId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "runtimeExecutionAllowed": "boolean",
+        "executionUnlockAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "toolExecutionAllowed": "boolean",
+        "providerCallAllowed": "boolean",
+        "agentDispatchAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "networkCallAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "runtimeExecutionEventId",
+        "runtimeExecutionId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "runtimeExecutionId",
+        "runtimeAdmissionId",
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "reports/p1161-founder-live-runtime-execution-contract-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_execution_readiness_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1161-founder-live-runtime-execution-contract-report.md"
+    },
+    {
+      "name": "founder_runtime_execution_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local founder runtime execution readiness items.",
+      "primaryKey": "runtimeExecutionEvidenceRefId",
+      "fields": {
+        "runtimeExecutionEvidenceRefId": "string",
+        "runtimeExecutionId": "string",
+        "runtimeAdmissionId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "runtimeExecutionEvidenceRefId",
+        "runtimeExecutionId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "runtimeExecutionId",
+        "runtimeAdmissionId",
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1161-founder-live-runtime-execution-contract-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_execution_readiness_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1161-founder-live-runtime-execution-contract-report.md"
     }
   ]
 }

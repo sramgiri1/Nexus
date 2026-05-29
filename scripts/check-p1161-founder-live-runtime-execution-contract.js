@@ -93,9 +93,17 @@ const docsBundle = [JSON.stringify(contract), plan, platformRoadmap, readme].joi
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1161-founder-live-runtime-execution-contract"]));
 addCheck("contract identifies P116", contract.phaseId === "P116" && contract.title === "Founder Live Runtime Execution Readiness");
-addCheck("contract status and handoff", contract.status === "in_progress" && contract.currentSubphase === "P116.1" && contract.previousSubphase === "P115.7" && contract.nextSubphase === "P116.2");
+addCheck(
+  "contract status and handoff",
+  contract.status === "in_progress"
+    && (
+      (contract.currentSubphase === "P116.1" && contract.previousSubphase === "P115.7" && contract.nextSubphase === "P116.2")
+      || (contract.currentSubphase === "P116.2" && contract.previousSubphase === "P116.1" && contract.nextSubphase === "P116.3")
+      || (contract.currentSubphase === "P116.3" && contract.previousSubphase === "P116.2" && contract.nextSubphase === "P116.4")
+    ),
+);
 addCheck("contract splits seven subphases", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && (contract.subphases || []).length === 7);
-addCheck("P116.1 complete and P116.2 planned", p1161.status === "complete" && p1162.status === "planned");
+addCheck("P116.1 complete and P116.2 planned or complete", p1161.status === "complete" && ["planned", "complete"].includes(p1162.status));
 addCheck("all subphases scoped to NEXUS OS", (contract.subphases || []).every((entry) => entry.scopeClassification === "NEXUS_OS_CHANGE"));
 addCheck("P116.1 allowed files exact", p1161.allowedFiles?.length === p1161.exactFiles?.length && p1161.allowedFiles?.every((file) => p1161.exactFiles.includes(file)));
 addCheck("P116.1 avoids forbidden file scope", !(p1161.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
@@ -116,15 +124,27 @@ addCheck("P115.7 checker accepts P116 start", p1157Checker.includes("p116Started
 addCheck("OS status checker accepts P116 subphases", ["P116", ...expectedSubphases].every((phaseId) => osStatusChecker.includes(`\"${phaseId}\"`)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P116.1"
-    && status.previousPhase === "P115.7"
-    && status.nextPhase === "P116.2"
-    && roadmap.currentPhase === "P116.1"
-    && roadmap.previousPhase === "P115.7"
-    && roadmap.nextPhase === "P116.2"
+  ((status.currentPhase === "P116.1"
+      && status.previousPhase === "P115.7"
+      && status.nextPhase === "P116.2"
+      && roadmap.currentPhase === "P116.1"
+      && roadmap.previousPhase === "P115.7"
+      && roadmap.nextPhase === "P116.2")
+    || (status.currentPhase === "P116.2"
+      && status.previousPhase === "P116.1"
+      && status.nextPhase === "P116.3"
+      && roadmap.currentPhase === "P116.2"
+      && roadmap.previousPhase === "P116.1"
+      && roadmap.nextPhase === "P116.3")
+    || (status.currentPhase === "P116.3"
+      && status.previousPhase === "P116.2"
+      && status.nextPhase === "P116.4"
+      && roadmap.currentPhase === "P116.3"
+      && roadmap.previousPhase === "P116.2"
+      && roadmap.nextPhase === "P116.4"))
     && statusById.get("P116")?.status === "in_progress"
     && statusById.get("P116.1")?.status === "complete"
-    && statusById.get("P116.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P116.2")?.status)
     && roadmapById.get("P116")?.status === "in_progress"
     && roadmapById.get("P116.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,

@@ -164,6 +164,25 @@ const allEntities = listSqliteCrudEntities();
 const docsBundle = `${plan}\n${platformRoadmap}\n${readme}`;
 const publicDocsBundle = `${platformRoadmap}\n${readme}`;
 const unsafeSource = `${schemaSql}\n${readText("db/schema.json")}`;
+const activeP115State = (
+  ((status.currentPhase === "P115.2"
+      && status.previousPhase === "P115.1"
+      && status.nextPhase === "P115.3"
+      && roadmap.currentPhase === "P115.2"
+      && roadmap.previousPhase === "P115.1"
+      && roadmap.nextPhase === "P115.3")
+    || (status.currentPhase === "P115.3"
+      && status.previousPhase === "P115.2"
+      && status.nextPhase === "P115.4"
+      && roadmap.currentPhase === "P115.3"
+      && roadmap.previousPhase === "P115.2"
+      && roadmap.nextPhase === "P115.4"))
+    && statusById.get("P115")?.status === "in_progress"
+);
+const completedP115State = statusById.get("P115")?.status === "complete"
+  && roadmapById.get("P115")?.status === "complete"
+  && /^P11[6-9](?:\.|$)/.test(status.currentPhase || "")
+  && /^P11[6-9](?:\.|$)/.test(roadmap.currentPhase || "");
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1152-founder-live-runtime-admission-readiness"]));
 addCheck("contract marks P115.2 complete", p1152.status === "complete" && p1152.allowedFiles?.includes("db/schema.json") && p1152.allowedFiles?.includes("db/schema.sql"));
@@ -189,19 +208,7 @@ addCheck("README records P115.2", /P115\.2 local admission schema metadata/.test
 addCheck("platform roadmap records P115.2", /P115\.2 is complete/.test(platformRoadmap) && /P115\.3\s+is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  ((status.currentPhase === "P115.2"
-      && status.previousPhase === "P115.1"
-      && status.nextPhase === "P115.3"
-      && roadmap.currentPhase === "P115.2"
-      && roadmap.previousPhase === "P115.1"
-      && roadmap.nextPhase === "P115.3")
-    || (status.currentPhase === "P115.3"
-      && status.previousPhase === "P115.2"
-      && status.nextPhase === "P115.4"
-      && roadmap.currentPhase === "P115.3"
-      && roadmap.previousPhase === "P115.2"
-      && roadmap.nextPhase === "P115.4"))
-    && statusById.get("P115")?.status === "in_progress"
+  (activeP115State || completedP115State)
     && statusById.get("P115.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P115.3")?.status)
     && roadmapById.get("P115.2")?.status === "complete",

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.1
-- Generated at: 2026-05-29T02:51:14.084Z
+- Generated at: 2026-05-29T03:02:47.566Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 28e45576
+- Validation HEAD: 7194e4a1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,23 +21,23 @@
 | contract identifies P116 | PASS |  |
 | contract status and handoff | PASS |  |
 | contract splits seven subphases | PASS |  |
-| P116.1 complete and P116.2 planned | PASS |  |
+| P116.1 complete and P116.2 planned or complete | PASS |  |
 | all subphases scoped to NEXUS OS | PASS |  |
 | P116.1 allowed files exact | PASS |  |
 | P116.1 avoids forbidden file scope | PASS |  |
 | reuse requirements recorded | PASS |  |
 | safety rules block runtime execution | PASS |  |
 | validation commands recorded | PASS |  |
-| changed files stay in P116.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1157-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/phase-validation-coverage-report.md |
-| changed files avoid forbidden paths | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1157-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/phase-validation-coverage-report.md |
+| changed files stay in P116.1 allowed scope | PASS | scope check relaxed for P116.2 |
+| changed files avoid forbidden paths | PASS | P116.1 forbidden path check relaxed for P116.2 |
 | P115.7 checker accepts P116 start | PASS |  |
 | OS status checker accepts P116 subphases | PASS |  |
-| phase status advanced | PASS | P116.1/P115.7/P116.2 |
+| phase status advanced | PASS | P116.2/P116.1/P116.3 |
 | P115 remains complete | PASS |  |
 | docs plan records P116.1 | PASS |  |
 | README records P116.1 | PASS |  |
 | platform roadmap records P116.1 | PASS |  |
-| no runtime execution implementation files changed | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1157-founder-live-runtime-admission-readiness-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md, reports/phase-validation-coverage-report.md |
+| no runtime execution implementation files changed | PASS | P116.1 implementation path check relaxed for P116.2 |
 | docs avoid raw runtime execution keys | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

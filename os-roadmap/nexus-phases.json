@@ -10950,30 +10950,30 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "28e45576",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
-      "detail": "P116.1 runtime execution contract complete; P116.2 is next.",
+      "detail": "P116.2 local execution schema metadata complete; P116.3 is next.",
       "phaseId": "P116",
       "title": "Founder Live Runtime Execution Readiness",
       "order": 152,
       "status": "in_progress",
-      "summary": "P116 is in progress. P116.1 defines the runtime execution readiness contract, safety gates, subphase split, checker coverage, docs, and OS status while runtime execution remains blocked.",
-      "nextPhase": "P116.2",
-      "previousPhase": "P115.7",
+      "summary": "P116 is in progress. P116.2 adds local schema metadata and isolated SQLite validation for founder runtime execution readiness records while runtime execution remains blocked.",
+      "nextPhase": "P116.3",
+      "previousPhase": "P116.1",
       "checksRun": [
+        "npm run check:p1162-founder-live-runtime-execution-readiness",
         "npm run check:p1161-founder-live-runtime-execution-contract",
-        "npm run check:p1157-founder-live-runtime-admission-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P116.1 is contract/docs/checker/status only; it does not enable runtime execution or execution unlock.",
+        "P116.2 is schema-only; it does not enable runtime execution or execution unlock.",
         "Runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-        "P116.2 is next for local execution schema metadata."
+        "P116.3 is next for governed local execution CRUD modeling."
       ],
-      "completedAt": "2026-05-29T02:46:22.000Z"
+      "completedAt": "2026-05-29T02:57:48.305Z"
     },
     {
       "track": "NEXUS_OS",
@@ -11005,23 +11005,30 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Local Execution Schema Metadata",
-      "detail": "Planned Local Execution Schema Metadata for P116.",
+      "detail": "P116.2 local execution schema metadata complete; P116.3 is next.",
       "phaseId": "P116.2",
       "title": "Local Execution Schema Metadata",
       "order": 152.2,
-      "status": "planned",
-      "summary": "Planned Local Execution Schema Metadata for P116.",
+      "status": "complete",
+      "summary": "P116.2 adds local schema metadata and isolated SQLite validation for founder runtime execution readiness items, events, and evidence references without enabling runtime execution.",
       "nextPhase": "P116.3",
       "previousPhase": "P116.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1162-founder-live-runtime-execution-readiness",
+        "npm run check:p1161-founder-live-runtime-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P116.2 is schema-only; it does not enable runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend.",
+        "P116.3 is next for governed local execution CRUD modeling."
+      ],
+      "completedAt": "2026-05-29T02:57:48.305Z"
     },
     {
       "track": "NEXUS_OS",
@@ -11124,9 +11131,9 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T02:46:22.000Z",
-  "currentPhase": "P116.1",
-  "previousPhase": "P115.7",
-  "nextPhase": "P116.2",
+  "updatedAt": "2026-05-29T02:57:48.305Z",
+  "currentPhase": "P116.2",
+  "previousPhase": "P116.1",
+  "nextPhase": "P116.3",
   "currentPhaseStatus": "complete"
 }

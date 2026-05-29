@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T02:51:18.238Z
+- Generated at: 2026-05-29T03:02:59.558Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 28e45576
+- Validation HEAD: 7194e4a1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -423,7 +423,7 @@
 | P114.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P115 validation coverage | PASS | 13 checkers, 8 reports |
+| P115 validation coverage | PASS | 14 checkers, 9 reports |
 | P115.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P115.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P115.3 validation coverage | PASS | 5 checkers, 1 reports |
@@ -431,9 +431,9 @@
 | P115.5 validation coverage | PASS | 6 checkers, 3 reports |
 | P115.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P115.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P116 validation coverage | PASS | 12 checkers, 8 reports |
+| P116 validation coverage | PASS | 13 checkers, 9 reports |
 | P116.1 validation coverage | PASS | 5 checkers, 1 reports |
-| P116.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P116.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P116.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P116.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P116.5 validation coverage | PASS | 1 checkers, 1 reports |
@@ -441,18 +441,13 @@
 | P116.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P116.1; next=P116.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P116.2; next=P116.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P116.2 Local Execution Schema Metadata
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P116.3 Governed Local Execution CRUD Model
   - status: planned
   - checkers: 0
