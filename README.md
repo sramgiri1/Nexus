@@ -1793,6 +1793,17 @@ The Command Center and local operator surface have:
   unlock, provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
   package, network call, and provider spend remain unavailable.
+- P130.4 store live admission safe dry run: Added browser-safe blocked result
+  envelopes for store live admission review, approval evidence admission, write
+  boundary admission, rollback, audit, validation, and founder runtime
+  admission. P130.5 is next for scoped Command Center store live gate UX.
+  Approval capture, decision persistence, store CRUD execution, DB schemas,
+  migrations, DB/runtime reads or writes, live acceptance capture, handoff
+  acceptance, authority handoff, authority grant, activation, approval
+  application, approve/reject decision recording, runtime execution, execution
+  unlock, provider/model calls, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

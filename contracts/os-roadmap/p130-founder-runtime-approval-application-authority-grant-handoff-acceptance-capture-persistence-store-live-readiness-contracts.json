@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store Live Readiness Gate",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P130.3",
-  "previousSubphase": "P130.2",
-  "nextSubphase": "P130.4",
+  "currentSubphase": "P130.4",
+  "previousSubphase": "P130.3",
+  "nextSubphase": "P130.5",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "54a628bd",
   "owner": "NEXUS OS",
@@ -390,10 +390,10 @@
     {
       "phaseId": "P130.4",
       "title": "Store Live Admission Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1303-stamp",
+      "expectedBaseCommit": "8a7efdaf",
       "narrowGoal": "Create a blocked local result-envelope dry run for store live admission without executing CRUD or touching DB/runtime state.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun.js",
@@ -472,7 +472,14 @@
       ],
       "previousPhase": "P130.3",
       "nextPhase": "P130.5",
-      "order": 166.4
+      "order": 166.4,
+      "detail": "P130.4 store live admission safe dry run complete; P130.5 scoped Command Center UX is next.",
+      "summary": "Added browser-safe blocked result envelopes for store live admission safe dry run while approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend remain blocked.",
+      "knownLimitations": [
+        "P130.4 is safe dry-run modeling only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T22:20:00.816Z"
     },
     {
       "phaseId": "P130.5",
@@ -730,16 +737,16 @@
     }
   ],
   "current": {
-    "phaseId": "P130.3",
-    "title": "Store Live Approval Evidence Gate",
+    "phaseId": "P130.4",
+    "title": "Store Live Admission Safe Dry Run",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d6c60a43",
-    "completedAt": "2026-05-29T22:08:11.952Z",
-    "summary": "Added a browser-safe local store live approval evidence gate that reuses P130.2 prerequisites and keeps approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T22:20:00.816Z",
+    "summary": "Added browser-safe blocked result envelopes for store live admission safe dry run while approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend remain blocked.",
     "checksRun": [
+      "npm run check:p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -748,9 +755,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P130.3 is an approval evidence gate model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P130.4 is safe dry-run modeling only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P130.4",
+    "nextPhase": "P130.5",
     "commandCenterVisible": true
   }
 }

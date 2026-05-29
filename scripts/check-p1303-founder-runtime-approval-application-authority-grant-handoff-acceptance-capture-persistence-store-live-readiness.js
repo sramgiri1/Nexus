@@ -72,6 +72,26 @@ const routeTests = readText("dashboard/tests/routes.spec.js");
 const model = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessApprovalGate();
 const modelValidation = validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessApprovalGate(model);
 const serializedModel = JSON.stringify(model);
+const p1303ContractState = contract.status === "in_progress"
+  && contract.currentSubphase === "P130.3"
+  && contract.previousSubphase === "P130.2"
+  && contract.nextSubphase === "P130.4";
+const p1304ContractState = contract.status === "in_progress"
+  && contract.currentSubphase === "P130.4"
+  && contract.previousSubphase === "P130.3"
+  && contract.nextSubphase === "P130.5";
+const p1303CurrentState = status.currentPhase === "P130.3"
+  && status.previousPhase === "P130.2"
+  && status.nextPhase === "P130.4"
+  && roadmap.currentPhase === "P130.3"
+  && roadmap.previousPhase === "P130.2"
+  && roadmap.nextPhase === "P130.4";
+const p1304StartedState = status.currentPhase === "P130.4"
+  && status.previousPhase === "P130.3"
+  && status.nextPhase === "P130.5"
+  && roadmap.currentPhase === "P130.4"
+  && roadmap.previousPhase === "P130.3"
+  && roadmap.nextPhase === "P130.5";
 const readmeP130Slice = readme.match(/- P130\.1[\s\S]*?## CareLoop Project Progress/)?.[0] || readme;
 const roadmapP130Slice = platformRoadmap.match(/P130\.1 is complete[\s\S]*?Implementation follows/)?.[0] || platformRoadmap;
 const docsBundle = `${plan}\n${readmeP130Slice}\n${roadmapP130Slice}`;
@@ -109,9 +129,9 @@ const validationCommands = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck("contract marks P130.3 complete", contract.status === "in_progress" && contract.currentSubphase === "P130.3" && contract.previousSubphase === "P130.2" && contract.nextSubphase === "P130.4" && p1303.status === "complete");
+addCheck("contract marks P130.3 complete", (p1303ContractState || p1304ContractState) && p1303.status === "complete");
 addCheck("P130.3 records expected base commit", p1303.expectedBaseCommit === "54a628bd");
-addCheck("P130.4 remains planned", p1304.status === "planned");
+addCheck("P130.4 remains planned or complete", ["planned", "complete"].includes(p1304.status));
 addCheck("P130.3 allowed files include model and checker", p1303.allowedFiles?.includes(MODEL_PATH) && p1303.allowedFiles?.includes("scripts/check-p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js"));
 addCheck("P130.3 forbids project/dashboard/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "dashboard/tests/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1303.forbiddenFiles?.includes(path)));
 addCheck("P130.3 records validation commands", validationCommands.every((command) => p1303.validationCommands?.includes(command)));
@@ -140,12 +160,7 @@ addCheck("Command Center UX remains unchanged and scoped", pageSource.includes("
 addCheck("Playwright scoped store readiness coverage remains", routeTests.includes("capture persistence store readiness appears only on scoped pages"));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P130.3"
-    && status.previousPhase === "P130.2"
-    && status.nextPhase === "P130.4"
-    && roadmap.currentPhase === "P130.3"
-    && roadmap.previousPhase === "P130.2"
-    && roadmap.nextPhase === "P130.4"
+  (p1303CurrentState || p1304StartedState)
     && statusById.get("P130")?.status === "in_progress"
     && roadmapById.get("P130")?.status === "in_progress"
     && statusById.get("P130.2")?.status === "complete"
