@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P130.6
-- Generated at: 2026-05-29T22:40:12.561Z
+- Generated at: 2026-05-29T22:41:12.697Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ebda5611
+- Validation HEAD: cffd1233
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | phase status advanced | PASS | P130.6/P130.5/P130.7 |
 | phase status summary objects advanced | PASS |  |
 | completed P130.6 entries have required fields | PASS |  |
-| changed files stay in P130.6 allowed scope | PASS | README.md, contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js, reports/p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md, scripts/check-p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js, reports/p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md, scripts/check-p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js |
+| changed files stay in P130.6 allowed scope | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw store table names | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
