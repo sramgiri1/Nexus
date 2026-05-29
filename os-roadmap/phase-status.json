@@ -14593,7 +14593,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "89de0c85643f9a844eb556977a245cdc48a194bc",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
       "detail": "P113.4 safe assignment preview complete; P113.5 Command Center assignment UX is next.",
@@ -14705,7 +14705,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "89de0c85643f9a844eb556977a245cdc48a194bc",
       "commandCenterVisible": true,
       "label": "Assignment Readiness Preview",
       "detail": "P113.4 local assignment readiness preview complete; P113.5 Command Center assignment UX is next.",
