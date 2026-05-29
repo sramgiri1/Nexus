@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.7
-- Generated at: 2026-05-29T16:31:26.171Z
+- Generated at: 2026-05-29T16:32:16.665Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c83501af
+- Validation HEAD: 3083e6a6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | phase status advanced | PASS | P124.7/P124.6/P125 |
 | P125 planned handoff exists | PASS |  |
 | completed P124 entries have commits | PASS |  |
-| changed files stay in P124.7 allowed scope | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js, reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js, reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js |
+| changed files stay in P124.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P124.7 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw grant table names | PASS |  |
