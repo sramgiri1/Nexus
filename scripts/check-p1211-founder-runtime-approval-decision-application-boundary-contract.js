@@ -90,6 +90,13 @@ const p1212StartedState =
     && roadmap.currentPhase === "P121.2"
     && roadmap.previousPhase === "P121.1"
     && roadmap.nextPhase === "P121.3";
+const p1213StartedState =
+  status.currentPhase === "P121.3"
+    && status.previousPhase === "P121.2"
+    && status.nextPhase === "P121.4"
+    && roadmap.currentPhase === "P121.3"
+    && roadmap.previousPhase === "P121.2"
+    && roadmap.nextPhase === "P121.4";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1211-founder-runtime-approval-decision-application-boundary-contract"]));
 addCheck("contract identifies P121", contract.phaseId === "P121" && contract.title === "Founder Runtime Approval Decision Application Boundary");
@@ -99,6 +106,7 @@ addCheck(
     && (
       (contract.currentSubphase === "P121.1" && contract.previousSubphase === "P120.7" && contract.nextSubphase === "P121.2")
       || (contract.currentSubphase === "P121.2" && contract.previousSubphase === "P121.1" && contract.nextSubphase === "P121.3")
+      || (contract.currentSubphase === "P121.3" && contract.previousSubphase === "P121.2" && contract.nextSubphase === "P121.4")
     ),
 );
 addCheck("subphase split complete", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && (contract.subphases || []).length === 7);
@@ -128,7 +136,7 @@ addCheck("README records P121.1", /P121\.1 approval decision application contrac
 addCheck("platform roadmap records P121.1", /P121\.1 is complete/.test(platformRoadmap) && /P121\.2 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  (p1211CurrentState || p1212StartedState)
+  (p1211CurrentState || p1212StartedState || p1213StartedState)
     && statusById.get("P121")?.status === "in_progress"
     && roadmapById.get("P121")?.status === "in_progress"
     && statusById.get("P121.1")?.status === "complete"

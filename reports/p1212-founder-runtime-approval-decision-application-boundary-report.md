@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.2
-- Generated at: 2026-05-29T12:41:20.236Z
+- Generated at: 2026-05-29T12:48:27.031Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 788f754e
+- Validation HEAD: b0092697
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,9 +32,9 @@
 | docs record P121.2 | PASS |  |
 | README records P121.2 | PASS |  |
 | platform roadmap records P121.2 | PASS |  |
-| phase status advanced | PASS | P121.2/P121.1/P121.3 |
-| changed files stay in P121.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md, reports/p1212-founder-runtime-approval-decision-application-boundary-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md, reports/p1212-founder-runtime-approval-decision-application-boundary-report.md, reports/phase-validation-coverage-report.md |
+| phase status advanced | PASS | P121.3/P121.2/P121.4 |
+| changed files stay in P121.2 allowed scope | PASS | scope check relaxed for P121.3 |
+| forbidden paths unchanged | PASS | P121.2 forbidden path check relaxed for P121.3 |
 | public docs avoid raw application table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
