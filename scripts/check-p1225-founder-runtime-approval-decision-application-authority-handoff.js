@@ -133,7 +133,7 @@ addCheck("README records P122.5", /P122\.5 Command Center approval application a
 addCheck(
   "phase status advanced",
   p1225HandoffAccepted
-    && statusById.get("P122")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P122")?.status)
     && statusById.get("P122.4")?.status === "complete"
     && statusById.get("P122.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P122.6")?.status)

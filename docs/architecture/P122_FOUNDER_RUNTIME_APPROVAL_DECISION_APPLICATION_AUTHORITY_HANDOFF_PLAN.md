@@ -938,13 +938,182 @@ current phase to P122.5.
 
 Status: complete.
 
+## P122.7 Final Validation
+
+Phase: P122 Founder Runtime Approval Decision Application Authority Handoff
+
+Subphase: P122.7 Final Validation
+
+Goal: close P122 by validating every P122 subphase, stamping the parent phase
+complete, and handing off to planned P123 without changing Command Center
+source/tests or enabling live authority.
+
+Why this is needed: P122.1-P122.6 are complete. P122.7 prevents stale parent
+phase status by proving the contract, docs, checkers, reports, status files,
+and next-phase handoff all agree.
+
+User/operator impact: operators can see P122 complete, P122.1-P122.7 complete,
+and P123 planned as the next OS phase while live authority remains blocked.
+
+Command Center impact: no new UI is introduced. Business Build and Agent Flow
+retain the P122.5 read-only authority handoff card. Chat with NEXUS, Lite, OS
+Roadmap, Live Readiness, and unrelated routes stay clean.
+
+Safety impact: approval decision application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL, deploy, release,
+export, package, network calls, and provider spend remain blocked.
+
+Cost impact: local final validation only. No provider calls, model calls,
+network calls, worker runtime, deploy, package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE. No project source or CareLoop files are
+allowed.
+
+Starting branch and base commit: `codex/nexus-e2e-phase-validation` at
+`4705f59e`.
+
+Files expected to change:
+- `contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json`
+- `docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md`
+- `scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js`
+- `scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js`
+- `scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js`
+- `scripts/check-os-phase-status.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1226-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/p1227-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes: no runtime exports, schemas, DB
+tables, or data model changes. The new checker validates P122 parent closure,
+P122.1-P122.7 completion, P123 planned handoff, and existing P122.5 display
+model safety.
+
+Reuse check: reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+the P122.6 checker handoff pattern, OS phase status checker conventions, and
+phase validation coverage conventions. Do not duplicate report writers,
+redaction helpers, result envelopes, mode guards, UI components, route
+matrices, or activity/evidence/audit helpers.
+
+Command Center UX requirements: preserve the existing scoped P122.5 card only
+on Business Build and Agent Flow. Do not add controls, submit/apply/approve
+actions, raw JSON/logs/policy dumps, raw private IDs, raw DB/schema names, raw
+report paths, internal phase labels in primary UX, or DemoApp exposure.
+
+Dark/light/system theme requirements: no theme source changes. Existing P122.5
+Playwright coverage must remain the route/theme regression guard.
+
+Playwright tests: do not edit dashboard tests in this subphase. Run the existing
+P122.5 focused Playwright test to confirm the scoped authority handoff remains
+present and theme-safe.
+
+Checker updates: add
+`scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js`,
+update the P122.5 and P122.6 checkers so they accept final parent closure, and
+update the OS phase status checker so planned P123 is recognized.
+
+Docs to update: this P122 plan, `README.md`, and
+`docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- `reports/p1226-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/p1227-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P122 is complete. P122.7 is complete. Current phase is
+P122.7, previous phase is P122.6, and next phase is planned P123.
+
+Validation commands:
+- `npm run check:p1227-founder-runtime-approval-decision-application-authority-handoff`
+- `npm run check:p1226-founder-runtime-approval-decision-application-authority-handoff`
+- `npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority handoff appears only on scoped pages"`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P122.7 files>`
+- `git commit -m "feat(nexus): implement p1227 approval application authority final validation"`
+- stamp P122/P122.7 status with the implementation commit
+- `git add <allowed P122.7 status/report files>`
+- `git commit -m "chore(nexus): stamp p1227 approval application authority final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no forbidden project, CareLoop, generated project, dashboard source,
+  dashboard test, DB, provider, tool, worker, deploy, release, export, package,
+  local runtime state, or env paths changed.
+- confirm no approval decision application, approval capture, approval
+  persistence, approve/reject decision recording, DB/runtime write, runtime
+  execution, execution unlock, provider/model call, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, or provider spend has been enabled.
+- confirm no stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- branch name
+- commit hash
+- files changed
+- what was implemented
+- Command Center UX preservation
+- tests/checkers run
+- dashboard build/unit/page results
+- docs/README/roadmap updates
+- OS phase status update
+- evidence/audit/activity/cost records if applicable
+- safety confirmations
+- forbidden paths confirmation
+- known limitations
+- next phase/subphase
+
+Known risks: final validation can accidentally overreach into new phase work.
+This subphase only closes P122 and records P123 as planned; it does not define
+or implement P123 behavior.
+
+Rollback plan: remove the P122.7 checker, report, package script,
+contract/docs/status/report updates, restore P122 to in progress, restore P122.7
+to planned, remove the P123 planned handoff entry, and return current phase to
+P122.6.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
 P122.1 Authority Handoff Contract / Policy is complete. P122.2 Application
 Authority Eligibility Metadata is complete. P122.3 Governed Local Authority
 Intent Model is complete. P122.4 Authority Handoff Safe Dry Run is complete.
 P122.5 Command Center Authority Handoff UX is complete. P122.6 Authority
-Handoff Validation / Docs is complete. P122.7 is next for final validation.
+Handoff Validation / Docs is complete. P122.7 Final Validation is complete.
+P122 is complete and P123 is next as a planned OS phase.
 Approval decision application,
 approval capture, approval persistence, approve/reject decision recording,
 DB/runtime writes, runtime execution, execution unlock, provider/model calls,

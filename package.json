@@ -663,7 +663,8 @@
     "check:p1223-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1223-founder-runtime-approval-decision-application-authority-handoff.js",
     "check:p1224-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1224-founder-runtime-approval-decision-application-authority-handoff.js",
     "check:p1225-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js",
-    "check:p1226-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js"
+    "check:p1226-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js",
+    "check:p1227-founder-runtime-approval-decision-application-authority-handoff": "node scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

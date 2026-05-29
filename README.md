@@ -1202,7 +1202,7 @@ The Command Center and local operator surface have:
   current state, readiness rows, blockers, next action, disabled reason, owner,
   evidence/activity labels, safety rows, and cost impact. Chat with NEXUS,
   Lite, OS Roadmap, and Live Readiness stay clean. P122.6 is complete for
-  validation/docs closure and P122.7 is next for final validation. Approval
+  validation/docs closure and P122.7 is complete for final validation. Approval
   decision application, approval capture,
   approval persistence, approve/reject decision recording, DB/runtime writes,
   runtime execution, execution unlock, provider/model call, agent dispatch,
@@ -1212,7 +1212,19 @@ The Command Center and local operator surface have:
 - P122.6 approval application authority validation/docs closure: the P122
   contract, plan, README, roadmap, OS status, generated reports, and P122.5
   checker handoff now agree that P122.1-P122.5 are complete, P122.6 is
-  validation/docs only, and P122.7 is next for final validation. Command Center
+  validation/docs only, and P122.7 is complete for final validation. P122 is
+  complete and P123 is next as a planned OS phase. Command Center
+  source and dashboard tests are unchanged in this subphase. Approval decision
+  application, approval capture,
+  approval persistence, approve/reject decision recording, DB/runtime writes,
+  runtime execution, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
+- P122.7 approval application authority final validation: P122 is complete.
+  The final checker validates P122.1-P122.7 completion, P122 parent closure,
+  P123 planned handoff, existing scoped Command Center UX safety, OS phase
+  status, coverage reports, and forbidden path boundaries. Command Center
   source and dashboard tests are unchanged in this subphase. Approval decision
   application, approval capture,
   approval persistence, approve/reject decision recording, DB/runtime writes,

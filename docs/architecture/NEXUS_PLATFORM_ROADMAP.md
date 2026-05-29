@@ -3533,14 +3533,18 @@ and Live Readiness stay clean.
 
 P122.6 is complete. The P122 contract, plan, README, roadmap, OS phase status,
 generated reports, and P122.5 checker handoff now agree that P122.1-P122.5 are
-complete, P122.6 is validation/docs closure only, and P122.7 is next for final
-validation. Command Center source and dashboard tests remain unchanged in this
-subphase. Approval decision application, approval capture, approval
-persistence, approve/reject decision recording, DB/runtime writes, runtime
-execution, execution unlock, provider/model calls, agent dispatch, worker/tool
-execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
-release, export, package action, network call, and provider spend remain
-blocked.
+complete and P122.6 is validation/docs closure only.
+
+P122.7 is complete. P122 is complete and P123 is next as a planned OS phase.
+The final checker validates P122.1-P122.7 completion, P122 parent closure, P123
+planned handoff, existing scoped Command Center UX safety, OS phase status,
+coverage reports, and forbidden path boundaries. Command Center source and
+dashboard tests remain unchanged in this subphase. Approval decision
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)

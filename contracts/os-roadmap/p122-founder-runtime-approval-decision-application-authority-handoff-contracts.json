@@ -1,20 +1,20 @@
 {
   "phaseId": "P122",
   "title": "Founder Runtime Approval Decision Application Authority Handoff",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "objective": "Close P122.6 validation/docs for the governed local approval application authority handoff without changing Command Center source/tests or enabling live application, DB/runtime writes, execution, dispatch, project mutation, provider calls, deploy, release, export, package, network, or spend authority.",
-  "currentSubphase": "P122.6",
-  "previousSubphase": "P122.5",
-  "nextSubphase": "P122.7",
+  "objective": "Close P122 final validation for the governed local approval application authority handoff without changing Command Center source/tests or enabling live application, DB/runtime writes, execution, dispatch, project mutation, provider calls, deploy, release, export, package, network, or spend authority.",
+  "currentSubphase": "P122.7",
+  "previousSubphase": "P122.6",
+  "nextSubphase": "P123",
   "safetyRules": [
-    "Do not enable approval decision application in P122.6.",
-    "Do not enable approval capture, approval persistence, or approve/reject decision recording in P122.6.",
-    "Do not enable DB writes, hosted DB mutation, raw SQL, runtime writes, runtime execution, or execution unlock in P122.6.",
-    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend in P122.6.",
-    "Do not change Command Center source or dashboard tests in P122.6.",
+    "Do not enable approval decision application in P122.7.",
+    "Do not enable approval capture, approval persistence, or approve/reject decision recording in P122.7.",
+    "Do not enable DB writes, hosted DB mutation, raw SQL, runtime writes, runtime execution, or execution unlock in P122.7.",
+    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend in P122.7.",
+    "Do not change Command Center source or dashboard tests in P122.7.",
     "Do not expose DemoApp, raw JSON/log/policy dumps, raw private IDs, raw DB names, raw report paths in primary UX, fake runnable actions, or mutation controls.",
-    "Future P122 subphases must define narrow authority, validation, UX, and rollback before any later phase can consider live behavior."
+    "P123 is planned only until a separate implementation-grade phase contract is written."
   ],
   "reuseRequirements": [
     "shared/reportWriter.js",
@@ -30,8 +30,9 @@
     "P121 approval decision application boundary evidence"
   ],
   "knownLimitations": [
-    "P122.6 is validation/docs closure only and does not enable live authority.",
-    "Command Center source and dashboard tests are intentionally unchanged in P122.6.",
+    "P122.7 is final validation only and does not enable live authority.",
+    "Command Center source and dashboard tests are intentionally unchanged in P122.7.",
+    "P123 is recorded as a planned next OS phase only; no P123 behavior is implemented in P122.7.",
     "Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "subphases": [
@@ -764,12 +765,46 @@
     {
       "phaseId": "P122.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Planned P122 subphase. Implementation requires its own implementation-grade plan before coding.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "narrowGoal": "Close P122 by validating every P122 subphase, marking the parent phase complete, and handing off to planned P123 without changing Command Center source/tests or enabling live authority.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json",
+        "docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md",
+        "scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/p1226-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/p1227-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json",
+        "docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md",
+        "scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/p1226-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/p1227-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -789,35 +824,60 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls until explicitly scoped.",
+      "dataShape": "No runtime exports, schemas, DB tables, or data model changes. P122.7 validates P122 parent closure, P122.1-P122.7 completion, P123 planned handoff, and existing P122.5 display model safety only.",
+      "commandCenterUx": "Preserve existing Command Center UX. Business Build and Agent Flow keep the P122.5 read-only authority handoff card; no new cards, routes, controls, or labels are introduced.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
-        "Preserve Light theme."
+        "Preserve Light theme.",
+        "Run existing P122.5 focused Playwright coverage as route/theme regression."
       ],
       "playwrightTests": [
-        "No new Playwright test until dashboard source changes are explicitly allowed."
+        "Do not edit dashboard tests in P122.7 because dashboard/test paths are forbidden.",
+        "Run existing focused Playwright test: Approval application authority handoff appears only on scoped pages."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P122.7 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add a P122.7 final validation checker using shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Update the P122.5 and P122.6 checkers to accept final parent closure and P122.7/P123 handoff wording.",
+        "Update OS phase status checker to recognize P123 as the planned next phase.",
+        "Validate parent closure, all P122 subphase completion, P123 planned handoff, P122.5 UX safety, forbidden paths, no dashboard source/test edits, and unsafe claim prevention."
+      ],
+      "docsRoadmap": "Update P122 plan, README, platform roadmap, OS status, generated reports, and P122 contract for P122.7 final validation.",
+      "phaseStatusUpdate": "P122 complete; P122.7 complete; current phase P122.7; previous P122.6; next P123 planned.",
+      "validationCommands": [
+        "npm run check:p1227-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1226-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P122.7 files>",
-        "git commit -m \"feat(nexus): implement p1227 approval application authority handoff\"",
+        "git commit -m \"feat(nexus): implement p1227 approval application authority final validation\"",
+        "stamp P122/P122.7 status with the implementation commit",
+        "git add <allowed P122.7 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1227 approval application authority final validation\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval decision application, DB writes, or runtime execution authority is enabled."
+        "Confirm no project/CareLoop/generated project paths changed.",
+        "Confirm no Command Center source or dashboard test files changed.",
+        "Confirm no DB/runtime provider, tool, worker, deploy, release, export, package, local runtime state, or env paths changed.",
+        "Confirm no approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
         "What was implemented",
-        "Command Center UX changes",
+        "Command Center UX preservation",
         "Tests/checkers run",
+        "Dashboard build/unit/page results",
         "Docs/README/roadmap updates",
         "OS phase status update",
         "Safety confirmations",
@@ -827,10 +887,11 @@
       ],
       "nextPhase": "P123",
       "previousPhase": "P122.6",
-      "order": 158.7
+      "order": 158.7,
+      "expectedBaseCommit": "4705f59e"
     }
   ],
-  "summary": "P122 continues the approval decision application authority handoff track with browser-safe metadata, a local authority intent model, a safe dry-run preview, scoped Command Center UX, and validation/docs closure while all live authority remains blocked.",
-  "updatedAt": "2026-05-29T14:12:06.907Z",
+  "summary": "P122 is complete. It closes the approval decision application authority handoff track with browser-safe metadata, a local authority intent model, a safe dry-run preview, scoped Command Center UX, validation/docs closure, and final validation while all live authority remains blocked.",
+  "updatedAt": "2026-05-29T14:21:13.358Z",
   "expectedBaseCommit": "afb30703"
 }
