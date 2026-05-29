@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P123.4
-- Generated at: 2026-05-29T14:57:07.473Z
+- Generated at: 2026-05-29T14:58:13.252Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 29a7bfab
+- Validation HEAD: 4ecde18e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,8 +39,8 @@
 | README records P123.4 | PASS |  |
 | platform roadmap records P123.4 | PASS |  |
 | phase status advanced | PASS | P123.4/P123.3/P123.5 |
-| changed files stay in P123.4 allowed scope | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1234-founder-runtime-approval-application-authority-activation-boundary.js, shared/founderApprovalApplicationAuthorityActivationPreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1234-founder-runtime-approval-application-authority-activation-boundary.js, shared/founderApprovalApplicationAuthorityActivationPreview.js |
+| changed files stay in P123.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw activation table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |

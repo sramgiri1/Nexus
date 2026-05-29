@@ -8373,7 +8373,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "4ecde18e",
       "commandCenterVisible": true,
       "label": "Activation Boundary",
       "detail": "P123.4 activation safe dry run complete; P123.5 scoped Command Center UX is next.",
@@ -8494,7 +8494,7 @@
       "order": 159.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "4ecde18e",
       "commandCenterVisible": true,
       "detail": "P123.4 activation safe dry run complete; P123.5 scoped Command Center UX is next.",
       "summary": "Added a hidden local result-envelope activation safe dry-run preview that reuses P123.3 intent and P123.2 metadata with display-safe sections, rows, blockers, zero unsafe counts, and cost posture without enabling live authority.",
@@ -17528,7 +17528,7 @@
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "4ecde18e",
     "commandCenterVisible": true,
     "label": "Activation Boundary",
     "detail": "P123.4 activation safe dry run complete; P123.5 scoped Command Center UX is next.",
