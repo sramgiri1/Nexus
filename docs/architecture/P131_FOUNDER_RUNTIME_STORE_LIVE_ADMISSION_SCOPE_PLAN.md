@@ -19,6 +19,196 @@ P131 is split into seven implementation-grade subphases:
 - P131.6 Validation / Docs
 - P131.7 Final Validation
 
+## P131.4 Write Boundary Admission Dry Run
+
+Status: complete
+Phase: P131
+Subphase: P131.4
+Goal: Model write-boundary admission as blocked dry-run results without
+enabling DB/runtime writes, request persistence, approval capture, decision
+persistence, live CRUD, provider calls, agent dispatch, or project mutation.
+Why this is needed: P131.3 resolved approval evidence readiness as blocked
+local rows. P131.4 turns those rows into explicit dry-run write-boundary
+outcomes for later scoped Command Center UX.
+User/operator impact: Operators get deterministic dry-run rows for request
+persistence, decision persistence, rollback, audit, live CRUD, DB write, and
+runtime write boundaries. The model is hidden from primary UX and cannot
+perform work.
+Command Center impact: No dashboard source changes. The existing Business Build
+and Agent Flow Store Live Readiness Gate remains scoped. Chat with NEXUS and
+Lite stay clean.
+Safety impact: P131.4 is dry-run-only. It does not capture approvals, persist
+decisions, submit requests, persist requests, create DB schemas, run
+migrations, read or write DB/runtime records, persist approval or acceptance
+decisions, run CRUD actions, capture handoff acceptance, hand off authority,
+grant authority, activate authority, unlock execution, call providers/models,
+dispatch agents, mutate projects, deploy, release, export, package, use network
+calls, or spend.
+Cost impact: Local code, checkers, docs, build, and tests only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `dbc9a686`
+
+Files expected to change:
+- `shared/founderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun.js`
+- `contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json`
+- `docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md`
+- `scripts/check-p1313-founder-runtime-store-live-admission-scope.js`
+- `scripts/check-p1314-founder-runtime-store-live-admission-scope.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1313-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1314-founder-runtime-store-live-admission-scope-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `shared/founderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun.js`.
+- Create `scripts/check-p1314-founder-runtime-store-live-admission-scope.js`.
+- Update P131.3 checker so it accepts the P131.4 handoff.
+- Update P131 contract, README, platform roadmap, package script, OS status,
+  roadmap, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_WRITE_BOUNDARY_ADMISSION_DRY_RUN_PHASE`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_WRITE_BOUNDARY_ADMISSION_DRY_RUN_VERSION`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_WRITE_BOUNDARY_ADMISSION_DRY_RUN_NAMES`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_WRITE_BOUNDARY_ADMISSION_DRY_RUN_FLAGS`.
+- Export `buildFounderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun`.
+- Export `validateFounderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun`.
+- Data shape: local dry-run model with source P131.3 lineage, blocked dry-run
+  rows, blockers, next action, owner capability, evidence/activity labels, and
+  no runnable candidates. No DB schema, query, migration file, runtime record,
+  live CRUD executor, provider envelope, dispatch packet, raw private ID, raw
+  table name, or project data.
+
+Reuse check:
+- Reuse P131.3 approval evidence readiness resolver builder and validator.
+- Reuse P131.2/P130 lineage already carried through P131.3.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI components, or
+  evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Preserve the P130.5 scoped Store Live Readiness Gate on Business Build and
+  Agent Flow.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw table names, raw
+  report paths, internal helper IDs, internal phase labels outside OS Roadmap,
+  or private project IDs in primary UX.
+- No provider/tool/project mutation, DB writes, live CRUD, migration execution,
+  or deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run the scoped route coverage that guards the store live readiness gate
+  placement.
+
+Tests to add/update/remove:
+- Add `check:p1314-founder-runtime-store-live-admission-scope`.
+- Update P131.3 checker for P131.4 compatibility.
+- Do not add, remove, or edit dashboard source or route tests in P131.4.
+
+Checker updates:
+- Validate P131.4 dry-run exports, lineage, blocked counts, and safe wording.
+- Validate P131.3 accepts the P131.4 handoff.
+- Validate forbidden paths and safe wording.
+
+Docs to update:
+- This P131 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P131.3 report.
+- P131.4 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P131 in progress.
+- P131.4 complete.
+- Current phase P131.4.
+- Previous phase P131.3.
+- Next phase P131.5.
+
+Known risks:
+- P131.4 can be mistaken for write admission. It is a local dry-run model only
+  and keeps every runnable and writable flag false.
+
+Rollback plan:
+- Revert only the P131.4 implementation and stamp commits. P131.3 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1314-founder-runtime-store-live-admission-scope`
+- `npm run check:p1313-founder-runtime-store-live-admission-scope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P131.4 allowed files>`
+- `git commit -m "feat(nexus): implement p1314 write boundary dry run"`
+- `git add <P131.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1314 write boundary dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Store CRUD execution, DB schemas, migrations, DB/runtime reads or writes,
+  live capture, handoff acceptance, authority grant handoff, execution,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P131.3 Approval Evidence Readiness Resolver
 
 Status: complete
