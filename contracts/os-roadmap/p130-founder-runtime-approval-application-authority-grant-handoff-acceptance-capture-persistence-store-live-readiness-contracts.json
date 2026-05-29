@@ -478,7 +478,7 @@
       "knownLimitations": [
         "P130.4 is safe dry-run modeling only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "commit": "pending-final-commit",
+      "commit": "f3d73552",
       "completedAt": "2026-05-29T22:20:00.816Z"
     },
     {
@@ -741,7 +741,7 @@
     "title": "Store Live Admission Safe Dry Run",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "f3d73552",
     "completedAt": "2026-05-29T22:20:00.816Z",
     "summary": "Added browser-safe blocked result envelopes for store live admission safe dry run while approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend remain blocked.",
     "checksRun": [
