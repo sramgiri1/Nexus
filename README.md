@@ -1682,6 +1682,17 @@ The Command Center and local operator surface have:
   unlock, provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
   package, network call, and provider spend remain unavailable.
+- P129.1 persistence store contract/policy: P129 capture persistence store work
+  has started with an implementation-grade contract, seven-subphase split,
+  safety rules, checker, docs, and status handoff. P129.2 is next for
+  browser-safe store record schema metadata. Store CRUD, DB schemas,
+  migrations, DB/runtime writes, live acceptance capture, handoff acceptance,
+  authority handoff, authority grant, activation, approval application,
+  approval capture, approval persistence, approve/reject decision recording,
+  runtime execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

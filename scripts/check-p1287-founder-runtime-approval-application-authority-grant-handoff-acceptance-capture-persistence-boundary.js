@@ -131,18 +131,24 @@ addCheck("docs record P128.7 complete", /P128\.7 Final Validation[\s\S]*Status:\
 addCheck("docs record P129 planned-only", /P129[\s\S]*planned-only/i.test(readme) && /P129[\s\S]*planned-only/i.test(platformRoadmap));
 addCheck(
   "phase status closed",
-  status.currentPhase === "P128.7"
+  ((status.currentPhase === "P128.7"
     && status.previousPhase === "P128.6"
     && status.nextPhase === "P129"
     && roadmap.currentPhase === "P128.7"
     && roadmap.previousPhase === "P128.6"
-    && roadmap.nextPhase === "P129"
+    && roadmap.nextPhase === "P129")
+    || (status.currentPhase === "P129.1"
+      && status.previousPhase === "P128.7"
+      && status.nextPhase === "P129.2"
+      && roadmap.currentPhase === "P129.1"
+      && roadmap.previousPhase === "P128.7"
+      && roadmap.nextPhase === "P129.2"))
     && statusById.get("P128")?.status === "complete"
     && statusById.get("P128.7")?.status === "complete"
-    && statusById.get("P129")?.status === "planned"
+    && ["planned", "in_progress"].includes(statusById.get("P129")?.status)
     && roadmapById.get("P128")?.status === "complete"
     && roadmapById.get("P128.7")?.status === "complete"
-    && roadmapById.get("P129")?.status === "planned",
+    && ["planned", "in_progress"].includes(roadmapById.get("P129")?.status),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(

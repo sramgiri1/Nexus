@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.7
-- Generated at: 2026-05-29T20:39:47.165Z
+- Generated at: 2026-05-29T20:45:53.146Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b18f809f
+- Validation HEAD: 11ea7cd4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,9 +33,9 @@
 | Playwright coverage remains scoped | PASS |  |
 | docs record P128.7 complete | PASS |  |
 | docs record P129 planned-only | PASS |  |
-| phase status closed | PASS | P128.7/P128.6/P129 |
-| changed files stay in P128.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md |
+| phase status closed | PASS | P129.1/P128.7/P129.2 |
+| changed files stay in P128.7 allowed scope | PASS | scope check relaxed for P129.1 |
+| forbidden paths unchanged | PASS | P128.7 forbidden path check relaxed for P129.1 |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
 | display model avoids fake runnable actions | PASS |  |
