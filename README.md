@@ -1816,6 +1816,17 @@ The Command Center and local operator surface have:
   unlock, provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
   package, network call, and provider spend remain unavailable.
+- P130.6 store live readiness validation/docs: Aggregated P130.1-P130.5
+  evidence, reports, docs, scoped route coverage, checker handoffs, and OS
+  status while preserving the P130.5 scoped Command Center UX. P130.7 is next
+  for final validation. Approval capture, decision persistence, store CRUD
+  execution, DB schemas, migrations, DB/runtime reads or writes, live
+  acceptance capture, handoff acceptance, authority handoff, authority grant,
+  activation, approval application, approve/reject decision recording, runtime
+  execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

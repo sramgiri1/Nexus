@@ -70,6 +70,26 @@ const model = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapt
   founderIdeaSummary: "Build a simple iOS Snake game for the App Store",
 });
 const serializedModel = JSON.stringify(model);
+const p1305ContractState = contract.status === "in_progress"
+  && contract.currentSubphase === "P130.5"
+  && contract.previousSubphase === "P130.4"
+  && contract.nextSubphase === "P130.6";
+const p1306ContractState = contract.status === "in_progress"
+  && contract.currentSubphase === "P130.6"
+  && contract.previousSubphase === "P130.5"
+  && contract.nextSubphase === "P130.7";
+const p1305CurrentState = status.currentPhase === "P130.5"
+  && status.previousPhase === "P130.4"
+  && status.nextPhase === "P130.6"
+  && roadmap.currentPhase === "P130.5"
+  && roadmap.previousPhase === "P130.4"
+  && roadmap.nextPhase === "P130.6";
+const p1306StartedState = status.currentPhase === "P130.6"
+  && status.previousPhase === "P130.5"
+  && status.nextPhase === "P130.7"
+  && roadmap.currentPhase === "P130.6"
+  && roadmap.previousPhase === "P130.5"
+  && roadmap.nextPhase === "P130.7";
 const readmeP130Slice = readme.match(/- P130\.1[\s\S]*?## CareLoop Project Progress/)?.[0] || readme;
 const roadmapP130Slice = platformRoadmap.match(/P130\.1 is complete[\s\S]*?Implementation follows/)?.[0] || platformRoadmap;
 const docsBundle = `${plan}\n${readmeP130Slice}\n${roadmapP130Slice}`;
@@ -108,9 +128,9 @@ const rowLabels = new Set((model.readinessRows || []).map((row) => row.label));
 const safetyLabels = new Set((model.safetyRows || []).map((row) => row.label));
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck("contract marks P130.5 complete", contract.status === "in_progress" && contract.currentSubphase === "P130.5" && contract.previousSubphase === "P130.4" && contract.nextSubphase === "P130.6" && p1305.status === "complete");
+addCheck("contract marks P130.5 complete", (p1305ContractState || p1306ContractState) && p1305.status === "complete");
 addCheck("P130.5 records expected base commit", p1305.expectedBaseCommit === "6e11709d");
-addCheck("P130.6 remains planned", p1306.status === "planned");
+addCheck("P130.6 remains planned or complete", ["planned", "complete"].includes(p1306.status));
 addCheck("P130.5 allowed files include dashboard and checker", [DATA_PATH, PAGE_PATH, ROUTE_TEST_PATH, "scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js"].every((file) => p1305.allowedFiles?.includes(file)));
 addCheck("P130.5 forbids project/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1305.forbiddenFiles?.includes(path)));
 addCheck("P130.5 records validation commands", validationCommands.every((command) => p1305.validationCommands?.includes(command)));
@@ -130,12 +150,7 @@ addCheck("README records P130.5", /P130\.5 Command Center store live gate UX/i.t
 addCheck("platform roadmap records P130.5", /P130\.5 is complete/i.test(platformRoadmap) && /P130\.6\s+is next/i.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P130.5"
-    && status.previousPhase === "P130.4"
-    && status.nextPhase === "P130.6"
-    && roadmap.currentPhase === "P130.5"
-    && roadmap.previousPhase === "P130.4"
-    && roadmap.nextPhase === "P130.6"
+  (p1305CurrentState || p1306StartedState)
     && statusById.get("P130")?.status === "in_progress"
     && roadmapById.get("P130")?.status === "in_progress"
     && statusById.get("P130.4")?.status === "complete"

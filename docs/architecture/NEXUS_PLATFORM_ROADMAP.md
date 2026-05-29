@@ -3016,6 +3016,18 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P130.6 is complete. NEXUS now has aggregate P130.1-P130.5 evidence, reports,
+docs, scoped route coverage, checker handoffs, and OS status aligned before
+final validation. The P130.5 scoped Command Center Store Live Readiness Gate
+remains the only UX change, and P130.7 is next for final validation. Approval
+capture, decision persistence, store CRUD execution, DB schemas, migrations,
+DB/runtime reads or writes, live acceptance capture, handoff acceptance,
+authority handoff, authority grant, activation, approval application,
+approve/reject decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store Live Readiness Gate",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P130.5",
-  "previousSubphase": "P130.4",
-  "nextSubphase": "P130.6",
+  "currentSubphase": "P130.6",
+  "previousSubphase": "P130.5",
+  "nextSubphase": "P130.7",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "54a628bd",
   "owner": "NEXUS OS",
@@ -578,10 +578,10 @@
     {
       "phaseId": "P130.6",
       "title": "Store Live Readiness Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1305-stamp",
+      "expectedBaseCommit": "ebda5611",
       "narrowGoal": "Aggregate P130.1-P130.5 evidence, docs, route coverage, checker handoffs, and OS status before final validation.",
       "allowedFiles": [
         "contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json",
@@ -656,7 +656,14 @@
       ],
       "previousPhase": "P130.5",
       "nextPhase": "P130.7",
-      "order": 166.6
+      "order": 166.6,
+      "detail": "P130.6 store live readiness validation/docs complete; P130.7 final validation is next.",
+      "summary": "Aggregated P130.1-P130.5 evidence, reports, docs, scoped route coverage, checker handoffs, and OS status while all live store actions remain blocked.",
+      "knownLimitations": [
+        "P130.6 is validation/docs closure only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T22:38:36.934Z"
     },
     {
       "phaseId": "P130.7",
@@ -744,16 +751,16 @@
     }
   ],
   "current": {
-    "phaseId": "P130.5",
-    "title": "Command Center Store Live Gate UX",
+    "phaseId": "P130.6",
+    "title": "Store Live Readiness Validation / Docs",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "58db4872",
-    "completedAt": "2026-05-29T22:28:43.104Z",
-    "summary": "Rendered a scoped display-safe Store Live Readiness Gate on Business Build and Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and unrelated pages remain clean.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T22:38:36.934Z",
+    "summary": "Aggregated P130.1-P130.5 evidence, reports, docs, scoped route coverage, checker handoffs, and OS status while all live store actions remain blocked.",
     "checksRun": [
+      "npm run check:p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -762,9 +769,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P130.5 is display-only UX. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P130.6 is validation/docs closure only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P130.6",
+    "nextPhase": "P130.7",
     "commandCenterVisible": true
   }
 }
