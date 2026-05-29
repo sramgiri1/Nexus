@@ -3706,25 +3706,39 @@ handoff intent model now reuses P125.2 handoff metadata and exposes blocked
 readiness rows, blockers, disabled reason, owner capability, evidence/activity
 labels, zero unsafe candidate counts, and no-spend cost posture while rejecting
 handed-off, granted, write, execution, provider, dispatch, mutation, network,
-and spend states. P125.4 is complete with a safe handoff dry-run, and P125.5 is
-next for scoped Command Center handoff UX. Grant handoff, authority grant,
-activation, approval application, approval capture, approval persistence,
-approve/reject decision recording, DB/runtime writes, runtime execution,
-execution unlock, provider/model calls, agent dispatch, worker/tool execution,
-project mutation, hosted DB mutation, raw SQL interface, deploy, release,
-export, package action, network call, and provider spend remain blocked.
+and spend states. P125.4 safe dry-run and P125.5 scoped Command Center handoff
+UX are complete; P125.6 is next for validation/docs closure. Grant handoff,
+authority grant, activation, approval application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
 
 P125.4 is complete. The local approval application authority grant handoff dry
 run now produces a result envelope from P125.3/P125.2/P124.2 context with
 display-safe sections, blocked rows, owner/evidence/activity/cost labels, zero
 unsafe candidate counts, and all handoff, grant, write, execution, provider,
-dispatch, mutation, network, and spend flags false. P125.5 is next for scoped
-Command Center handoff UX. Grant handoff, authority grant, activation, approval
-application, approval capture, approval persistence, approve/reject decision
-recording, DB/runtime writes, runtime execution, execution unlock,
-provider/model calls, agent dispatch, worker/tool execution, project mutation,
-hosted DB mutation, raw SQL interface, deploy, release, export, package action,
-network call, and provider spend remain blocked.
+dispatch, mutation, network, and spend flags false. P125.5 is complete with
+scoped Command Center handoff UX, and P125.6 is next for validation/docs
+closure. Grant handoff, authority grant, activation, approval application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
+P125.5 is complete. Business Build and Agent Flow now show the approval
+application authority grant handoff dry-run through the existing read-only
+boundary card with founder idea, readiness counts, blocked rows, owner
+capability, next action, disabled reason, evidence, activity, and cost posture.
+Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and unrelated pages stay
+clean. P125.6 is next for validation/docs closure. Grant handoff, authority
+grant, activation, approval application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)

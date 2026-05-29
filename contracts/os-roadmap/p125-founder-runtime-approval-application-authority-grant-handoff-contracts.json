@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant handoff contract before any live authority handoff can be considered, while keeping grant handoff, grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P125.4",
-  "previousSubphase": "P125.3",
-  "nextSubphase": "P125.5",
+  "currentSubphase": "P125.5",
+  "previousSubphase": "P125.4",
+  "nextSubphase": "P125.6",
   "safetyRules": [
     "Do not enable approval application authority grant handoff in P125.1.",
     "Do not enable live authority grant, activation, approval application, approval capture, approval persistence, or approve/reject decision recording in P125.1.",
@@ -33,9 +33,9 @@
     "P125 does not yet hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
   ],
   "completedAt": "",
-  "summary": "P125 is in progress with contract/policy, browser-safe metadata, governed handoff intent modeling, and local handoff safe dry-run complete. Live authority handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+  "summary": "P125 is in progress with contract/policy, browser-safe metadata, governed handoff intent modeling, local handoff safe dry-run, and scoped Command Center handoff UX complete. Live authority handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
   "previousPhase": "P124.7",
-  "nextPhase": "P125.5",
+  "nextPhase": "P125.6",
   "subphases": [
     {
       "phaseId": "P125.1",
@@ -567,40 +567,46 @@
     {
       "phaseId": "P125.5",
       "title": "Command Center Handoff UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "b82a9181",
-      "narrowGoal": "Command Center Handoff UX for P125 without enabling live authority grant handoff.",
+      "expectedBaseCommit": "5110f30f",
+      "narrowGoal": "Expose the P125.4 handoff dry-run in scoped Command Center pages using existing cards while keeping all live handoff and execution paths disabled.",
       "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "shared/founderApprovalApplicationAuthorityGrantHandoffSafeDryRun.js",
         "contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json",
         "docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md",
-        "scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js",
-        "scripts/check-p1251-founder-runtime-approval-application-authority-grant-handoff.js",
-        "scripts/check-os-phase-status.js",
+        "scripts/check-p1254-founder-runtime-approval-application-authority-grant-handoff.js",
+        "scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md",
-        "reports/p1251-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1254-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1255-founder-runtime-approval-application-authority-grant-handoff-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
       "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "shared/founderApprovalApplicationAuthorityGrantHandoffSafeDryRun.js",
         "contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json",
         "docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md",
-        "scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js",
-        "scripts/check-p1251-founder-runtime-approval-application-authority-grant-handoff.js",
-        "scripts/check-os-phase-status.js",
+        "scripts/check-p1254-founder-runtime-approval-application-authority-grant-handoff.js",
+        "scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md",
-        "reports/p1251-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1254-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1255-founder-runtime-approval-application-authority-grant-handoff-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -608,8 +614,8 @@
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
+        "dashboard/src/** except dashboard/src/data/businessBuild.js and dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/** except dashboard/tests/routes.spec.js",
         "db/**",
         "live-ready/**",
         "local-state/runtime/**",
@@ -622,49 +628,52 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime exports. Contract, checker, status, docs, and report evidence only.",
-      "commandCenterUx": "Scoped display-only UX, only if the subphase explicitly updates Command Center. No mutation controls or fake runnable actions.",
+      "expectedExports": [
+        "buildFounderApprovalApplicationAuthorityGrantHandoffDisplayModel"
+      ],
+      "dataShape": "Browser-safe display model derived from the P125.4 dry-run preview with summary rows, readiness sections, blocked rows, disabled reason, owner capability, evidence/activity labels, cost impact, and zero unsafe handoff/grant/write/execution/provider/dispatch/mutation/network/spend counts.",
+      "commandCenterUx": "Render approval application authority grant handoff status only on Business Build and Agent Flow using existing boundary cards. Do not expose it on Chat with NEXUS, Lite, OS Roadmap, Live Readiness, or unrelated pages. Preserve System/Dark/Light theme.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test is added in P125.1 because primary UX does not change.",
-        "Run the existing focused scoped grant route test to preserve Command Center safety.",
-        "Preserve no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
+        "Add focused route coverage: Approval application authority grant handoff appears only on scoped pages.",
+        "Verify Business Build and Agent Flow visibility, excluded route absence, dark/light/system themes, no DemoApp leakage, no raw dumps, no raw/private IDs, no raw schema/table names, and no fake runnable actions.",
+        "Preserve route-wide safety coverage for no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
       ],
       "checkerUpdates": [
-        "Add or update the scoped P125 checker for this subphase.",
+        "Add scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js.",
+        "Update the P125.4 checker to accept P125.5 handoff.",
         "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden paths, docs/status/report updates, safe wording, and no unsafe runtime imports or URLs."
+        "Validate display model shape, scoped rendering, Playwright coverage, forbidden paths, safe wording, status, docs, reports, and no unsafe imports or URLs."
       ],
-      "docsRoadmap": "Update P125 plan, README, platform roadmap, P125 contract, OS roadmap/status, and generated reports.",
+      "docsRoadmap": "Update P125 plan, README, platform roadmap, P125 contract, OS roadmap/status, generated reports, and P125.6 planned handoff.",
       "phaseStatusUpdate": "P125 in progress; P125.5 complete; current phase P125.5; previous P125.4; next P125.6.",
       "validationCommands": [
-        "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
-        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1255-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:p1254-founder-runtime-approval-application-authority-grant-handoff",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
-        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
-        "git add <allowed P125 files>",
-        "git commit -m \"feat(nexus): implement p1251 approval authority grant handoff\"",
-        "stamp P125/P125.1 status with the implementation commit",
-        "git add <allowed P125 status/report files>",
-        "git commit -m \"chore(nexus): stamp p1251 approval authority grant handoff\"",
+        "git add <allowed P125.5 files>",
+        "git commit -m \"feat(nexus): implement p1255 approval authority grant handoff\"",
+        "stamp P125/P125.5 status with the implementation commit",
+        "git add <allowed P125.5 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1255 approval authority grant handoff\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
         "Confirm no project/CareLoop/generated project paths changed.",
-        "Confirm no dashboard source/test files changed in P125.1.",
+        "Confirm no unauthorized dashboard source/test files changed.",
         "Confirm no DB/runtime provider, tool, worker, deploy, release, export, package, local runtime state, or env paths changed.",
-        "Confirm authority grant handoff, grant, activation, approval application, approval capture, persistence, approve/reject recording, writes, execution, provider/model calls, agent dispatch, project mutation, network calls, and spend remain blocked unless explicitly allowed by a later subphase.",
+        "Confirm authority handoff, grant, activation, approval application, approval capture, persistence, approve/reject recording, writes, execution, provider/model calls, agent dispatch, project mutation, network calls, and spend remain blocked.",
         "Confirm no stale pending-final-commit remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
@@ -685,11 +694,12 @@
       "previousPhase": "P125.4",
       "nextPhase": "P125.6",
       "order": 161.5,
-      "detail": "P125.5 is planned.",
-      "summary": "P125.5 planned.",
+      "detail": "P125.5 Command Center handoff UX complete; P125.6 Handoff Validation / Docs is next.",
+      "summary": "Added scoped display-only Command Center handoff UX for Business Build and Agent Flow using the P125.4 dry-run and existing boundary cards. Live handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "knownLimitations": [
-        "Planned only. This subphase is not implemented in P125.1."
-      ]
+        "P125.5 is display-only scoped UX. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T17:05:20.035Z"
     },
     {
       "phaseId": "P125.6",
@@ -812,8 +822,8 @@
       "previousPhase": "P125.5",
       "nextPhase": "P125.7",
       "order": 161.6,
-      "detail": "P125.6 is planned.",
-      "summary": "P125.6 planned.",
+      "detail": "P125.6 is planned after scoped Command Center handoff UX.",
+      "summary": "Planned validation/docs closure. No P125.6 behavior is implemented in P125.5.",
       "knownLimitations": [
         "Planned only. This subphase is not implemented in P125.1."
       ]

@@ -3430,6 +3430,15 @@ function AgentFlowPage() {
         rowAriaSuffix="approval application authority grant row"
         maxRows={4}
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalApplicationAuthorityGrantHandoff}
+        surfaceLabel="Agent Flow Approval Application Authority Grant Handoff"
+        heading="Approval Application Authority Grant Handoff"
+        pillLabel="Handoff read-only"
+        ariaLabel="Founder approval application authority grant handoff"
+        rowAriaSuffix="approval application authority grant handoff row"
+        maxRows={4}
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10269,6 +10278,15 @@ function BusinessBuildPage() {
           pillLabel="Grant read-only"
           ariaLabel="Founder approval application authority grant"
           rowAriaSuffix="approval application authority grant row"
+          maxRows={4}
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalApplicationAuthorityGrantHandoff}
+          surfaceLabel="Business Build Approval Application Authority Grant Handoff"
+          heading="Approval Application Authority Grant Handoff"
+          pillLabel="Handoff read-only"
+          ariaLabel="Founder approval application authority grant handoff"
+          rowAriaSuffix="approval application authority grant handoff row"
           maxRows={4}
         />
 

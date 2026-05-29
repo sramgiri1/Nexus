@@ -1383,9 +1383,10 @@ The Command Center and local operator surface have:
   readiness rows, blockers, disabled reason, owner capability,
   evidence/activity labels, zero unsafe candidate counts, and no-spend posture
   while rejecting handed-off, granted, write, execution, provider, dispatch,
-  mutation, network, and spend states. P125.4 is complete with a safe handoff
-  dry-run, and P125.5 is next for scoped Command Center handoff UX. Grant
-  handoff, authority grant, activation, approval application, approval capture,
+  mutation, network, and spend states. P125.4 safe dry-run and P125.5 scoped
+  Command Center handoff UX are complete; P125.6 is next for validation/docs
+  closure. Grant handoff, authority grant, activation, approval application,
+  approval capture,
   approval persistence, approve/reject decision recording, DB/runtime writes,
   runtime execution, execution unlock, provider/model call, agent dispatch,
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
@@ -1396,8 +1397,21 @@ The Command Center and local operator surface have:
   context with display-safe sections, blocked rows, zero unsafe candidate
   counts, owner/evidence/activity/cost labels, and all handoff/grant/write/
   execution/provider/dispatch/mutation/network/spend flags false. P125.5 is
-  next for scoped Command Center handoff UX. Grant handoff, authority grant,
-  activation, approval application,
+  complete with scoped Command Center handoff UX, and P125.6 is next for
+  validation/docs closure. Grant handoff, authority grant, activation,
+  approval application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
+- P125.5 scoped approval application authority grant handoff Command Center UX:
+  Business Build and Agent Flow now show the local handoff dry-run through the
+  existing read-only boundary card with founder idea, readiness counts,
+  blocked rows, owner capability, next action, disabled reason, evidence,
+  activity, and cost posture. Chat with NEXUS, Lite, OS Roadmap, Live
+  Readiness, and unrelated pages stay clean. P125.6 is next for validation/docs
+  closure. Grant handoff, authority grant, activation, approval application,
   approval capture, approval persistence, approve/reject decision recording,
   DB/runtime writes, runtime execution, execution unlock, provider/model call,
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,

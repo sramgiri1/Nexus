@@ -374,10 +374,96 @@ current phase to P125.3.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P125.5 Command Center Handoff UX
 
-P125.5 Command Center Handoff UX: scoped display-only UX if explicitly allowed
-by that subphase. No mutation controls or fake runnable actions.
+Phase: P125 Founder Runtime Approval Application Authority Grant Handoff
+Subphase: P125.5 Command Center Handoff UX
+
+Goal: render the P125.4 handoff dry-run as scoped, display-only Command Center
+UX on Business Build and Agent Flow only.
+
+Why this is needed: P125.4 created a safe handoff preview artifact. Founder
+work pages need to show the handoff current state, next action, blockers,
+owner, evidence/activity, and cost posture without enabling live authority.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `shared/founderApprovalApplicationAuthorityGrantHandoffSafeDryRun.js`
+- `contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json`
+- `docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md`
+- `scripts/check-p1254-founder-runtime-approval-application-authority-grant-handoff.js`
+- `scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1254-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/p1255-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/** except dashboard/src/data/businessBuild.js and dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/** except dashboard/tests/routes.spec.js`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `buildFounderApprovalApplicationAuthorityGrantHandoffDisplayModel`
+
+Data shape: browser-safe display model with current state, founder idea,
+preview mode, readiness counts, handoff/grant/activation/application/write/
+execution/dispatch/mutation/network/spend candidate counts, summary rows,
+readiness sections, readiness rows, safety rows, blockers, next action,
+disabled reason, owner capability, evidence/activity labels, and cost impact.
+
+Command Center UX requirements: render approval application authority grant
+handoff status only on Business Build and Agent Flow using the existing
+boundary card. Do not expose it on Chat with NEXUS, Lite, OS Roadmap, Live
+Readiness, or unrelated pages. Do not add mutation controls or fake runnable
+actions.
+
+Validation commands:
+- `npm run check:p1255-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:p1254-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P125 in progress, P125.5 complete, current phase
+P125.5, previous phase P125.4, next phase P125.6.
+
+Known risks: adding another Command Center card can clutter founder pages.
+P125.5 keeps the UX scoped to two work pages and reuses the existing compact
+boundary card.
+
+Rollback plan: remove the P125.5 checker/report/package script, revert the
+Business Build data model, Command Center card wiring, route test, docs/status
+updates, restore P125.5 to planned, and return current phase to P125.4.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P125.6 Handoff Validation / Docs: validation/docs closure only.
 

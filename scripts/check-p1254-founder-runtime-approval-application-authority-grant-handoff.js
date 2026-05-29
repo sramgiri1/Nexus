@@ -231,7 +231,11 @@ addCheck("contract records expected exports", [
 ].every((name) => p1254.expectedExports?.includes(name)));
 addCheck("P125.3 checker accepts P125.4 handoff", p1253Checker.includes("P125.4") && p1253Checker.includes("P125.5") && p1253Checker.includes("p1254StartedState"));
 addCheck("docs record P125.4", /P125\.4 Handoff Safe Dry Run[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P125.4", /P125\.4 approval application authority grant handoff safe dry run/i.test(readme) && /P125\.5\s+is\s+next/.test(readme));
+addCheck(
+  "README records P125.4",
+  /P125\.4 approval application authority grant handoff safe dry run/i.test(readme)
+    && (/P125\.5\s+is\s+next/.test(readme) || /P125\.5\s+is\s+complete/.test(readme)),
+);
 addCheck(
   "platform roadmap records P125.4",
   /P125\.4 is complete/.test(platformRoadmap)
