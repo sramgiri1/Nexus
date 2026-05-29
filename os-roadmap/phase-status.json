@@ -15986,7 +15986,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b01d9a45",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
       "detail": "P117.6 approval gate validation/docs complete; P117.7 final validation is next.",
@@ -16155,7 +16155,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b01d9a45",
       "commandCenterVisible": true,
       "label": "Approval Gate Validation",
       "detail": "Approval gate aggregate validation/docs complete; final validation is next.",
