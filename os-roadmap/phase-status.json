@@ -16440,7 +16440,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fa370694",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
       "detail": "P119.2 approval decision schema metadata complete; P119.3 intent model is next.",
@@ -16495,7 +16495,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fa370694",
       "commandCenterVisible": true,
       "label": "Approval Decision Schema",
       "detail": "Approval decision schema metadata complete without DB files or writes.",
@@ -16622,7 +16622,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T06:06:42.865Z",
+  "updatedAt": "2026-05-29T06:07:47.353Z",
   "currentPhase": "P119.2",
   "previousPhase": "P119.1",
   "nextPhase": "P119.3",
