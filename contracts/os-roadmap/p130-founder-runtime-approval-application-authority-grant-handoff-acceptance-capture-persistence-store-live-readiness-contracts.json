@@ -156,7 +156,7 @@
       "knownLimitations": [
         "P130.1 is contract/policy only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "commit": "pending-final-commit",
+      "commit": "1d630fbb",
       "completedAt": "2026-05-29T21:53:32.341Z"
     },
     {
@@ -682,7 +682,7 @@
     "title": "Live Readiness Contract / Policy",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "1d630fbb",
     "completedAt": "2026-05-29T21:53:32.341Z",
     "summary": "Created the P130 store live readiness contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping DB/runtime writes and live CRUD blocked.",
     "checksRun": [

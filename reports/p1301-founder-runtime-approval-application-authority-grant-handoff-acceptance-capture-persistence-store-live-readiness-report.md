@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P130.1
-- Generated at: 2026-05-29T21:53:51.400Z
+- Generated at: 2026-05-29T21:55:13.001Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 98b2d8da
+- Validation HEAD: 1d630fbb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | phase status advanced | PASS | P130.1/P129.7/P130.2 |
 | P130.1 command center visibility recorded | PASS |  |
 | completed P130.1 entries have required fields | PASS |  |
-| changed files stay in P130.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js, contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md, scripts/check-p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js, contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md, scripts/check-p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js |
+| changed files stay in P130.1 allowed scope | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P130.1 contract avoids forbidden allowed scope | PASS |  |
 | public docs avoid raw store table names | PASS |  |
 | checker has no unsafe imports or URLs | PASS |  |
