@@ -276,3 +276,164 @@ models, and Command Center UX are not complete until later P115 subphases.
 Rollback plan: remove P115.2 schema/checker/docs/status/package/report updates,
 restore P115 to P115.1 complete with P115.2 planned, and keep P115.1 contract
 unchanged.
+
+## P115.3 Governed Local Admission CRUD Model
+
+Status: complete
+
+Phase: P115 Founder Live Runtime Admission Readiness
+Subphase: P115.3 Governed Local Admission CRUD Model
+Goal: add approval-gated local CRUD helpers for runtime admission readiness
+records while keeping runtime admission, execution, dispatch, provider calls,
+and project mutation blocked.
+
+Why this is needed: P115.2 created schema metadata only. P115.3 gives later
+preview and UX phases a governed local persistence boundary for readiness
+records without granting runtime authority.
+
+User/operator impact: operators get a deterministic local readiness record
+model with explicit approval, rollback, audit, validation, sqlite-live, and
+local-write gates.
+
+Command Center impact: no Command Center source change in P115.3. Later P115.5
+UX must summarize the readiness state, next action, blockers, owner
+capability, evidence/activity location, and cost posture on the relevant page
+without cluttering Chat with NEXUS.
+
+Safety impact: P115.3 allows only local SQLite create/read/update/upsert/list
+against allowlisted OS readiness records after explicit operator evidence.
+Delete, raw SQL, hosted DB mutation, runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy/release/export/package, network calls, and provider spend remain
+blocked.
+
+Cost impact: local SQLite CRUD only after approval. No provider/model/network
+calls, deploy/package actions, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit: branch
+`codex/nexus-e2e-phase-validation`; expected base commit `d848fc6b`.
+
+Allowed files:
+- `live-ready/founderLiveRuntimeAdmissionReadiness.js`
+- `scripts/check-p1151-founder-live-runtime-admission-contract.js`
+- `reports/p1151-founder-live-runtime-admission-contract-report.md`
+- `scripts/check-p1152-founder-live-runtime-admission-readiness.js`
+- `reports/p1152-founder-live-runtime-admission-readiness-report.md`
+- `scripts/check-p1153-founder-live-runtime-admission-readiness.js`
+- `contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json`
+- `docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1153-founder-live-runtime-admission-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- `local-state/runtime/**`
+
+Exact files/modules changed: added
+`live-ready/founderLiveRuntimeAdmissionReadiness.js`; added
+`scripts/check-p1153-founder-live-runtime-admission-readiness.js`; updated the
+P115.1/P115.2 compatibility checkers; registered the package script; updated
+P115 contract/status/docs; and regenerated reports.
+
+Expected exports, schemas, and data shapes:
+- `P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PHASE`
+- `P115_RUNTIME_ADMISSION_DB_ENTITIES`
+- `buildFounderLiveRuntimeAdmissionReadinessContract`
+- `buildSafeRuntimeAdmissionDbRecord`
+- `executeApprovedRuntimeAdmissionDbCrudRequest`
+- `validateFounderLiveRuntimeAdmissionReadinessContract`
+
+The data shape is an approval-gated local CRUD contract with readiness item,
+event, evidence reference, request envelope, allowed local CRUD operations,
+forbidden operations, mutation gate, next action, blockers, disabled reason,
+owner capability, evidence/activity references, cost impact, and all unsafe
+runtime authority flags false.
+
+Command Center UX requirements: preserve existing Command Center UX. No raw
+table names, raw IDs, raw logs, raw policy dumps, DemoApp exposure, mutation
+buttons, or fake live run controls are introduced.
+
+Dark/light/system theme requirements: preserve existing theme behavior. No UI
+source changes are made.
+
+Playwright tests: no new Playwright test is added because P115.3 has no UI
+source changes. Existing route-wide safety tests remain in place.
+
+Checker updates: P115.3 adds a dedicated local CRUD checker that validates
+blocked default execution, blocked unapproved execution, blocked delete,
+blocked outside-allowlist access, approved create/read/update/upsert/list in an
+isolated SQLite database, helper reuse, docs/status, and safety wording.
+P115.1 and P115.2 compatibility checkers accept the P115.3/P115.4 handoff.
+
+Docs/README/roadmap updates: P115.3 is recorded in this plan, README, platform
+roadmap, P115 contract, OS roadmap/status, and generated reports. P115.4 is
+next for safe dry-run runtime admission readiness preview modeling.
+
+OS phase status update: P115 is in progress; P115.3 is complete; current phase
+P115.3; previous P115.2; next P115.4.
+
+Validation commands:
+- `npm run check:p1153-founder-live-runtime-admission-readiness`
+- `npm run check:p1152-founder-live-runtime-admission-readiness`
+- `npm run check:p1151-founder-live-runtime-admission-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no DB schema/runtime
+files changed in P115.3; no runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package, network, or
+provider spend authority is enabled; no DemoApp exposure, raw private IDs, raw
+DB table names, raw JSON/log/policy dumps, or fake actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P115.3 files>`
+- `git commit -m "feat(nexus): implement p1153 runtime admission readiness"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: P115.3 local CRUD could be misread as live runtime admission.
+The helper, checker, docs, and reports keep runtime admission and execution
+blocked and use readiness-only language.
+
+Rollback plan: remove P115.3 helper/checker/docs/status/package/report
+updates, restore P115 to P115.2 complete with P115.3 planned, and keep P115.2
+schema metadata intact.

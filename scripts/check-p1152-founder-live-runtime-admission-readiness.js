@@ -189,12 +189,18 @@ addCheck("README records P115.2", /P115\.2 local admission schema metadata/.test
 addCheck("platform roadmap records P115.2", /P115\.2 is complete/.test(platformRoadmap) && /P115\.3\s+is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P115.2"
-    && status.previousPhase === "P115.1"
-    && status.nextPhase === "P115.3"
-    && roadmap.currentPhase === "P115.2"
-    && roadmap.previousPhase === "P115.1"
-    && roadmap.nextPhase === "P115.3"
+  ((status.currentPhase === "P115.2"
+      && status.previousPhase === "P115.1"
+      && status.nextPhase === "P115.3"
+      && roadmap.currentPhase === "P115.2"
+      && roadmap.previousPhase === "P115.1"
+      && roadmap.nextPhase === "P115.3")
+    || (status.currentPhase === "P115.3"
+      && status.previousPhase === "P115.2"
+      && status.nextPhase === "P115.4"
+      && roadmap.currentPhase === "P115.3"
+      && roadmap.previousPhase === "P115.2"
+      && roadmap.nextPhase === "P115.4"))
     && statusById.get("P115")?.status === "in_progress"
     && statusById.get("P115.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P115.3")?.status)

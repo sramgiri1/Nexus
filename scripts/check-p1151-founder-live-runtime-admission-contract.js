@@ -101,6 +101,7 @@ addCheck(
     && (
       (contract.currentSubphase === "P115.1" && contract.previousSubphase === "P114.7" && contract.nextSubphase === "P115.2")
       || (contract.currentSubphase === "P115.2" && contract.previousSubphase === "P115.1" && contract.nextSubphase === "P115.3")
+      || (contract.currentSubphase === "P115.3" && contract.previousSubphase === "P115.2" && contract.nextSubphase === "P115.4")
     ),
 );
 addCheck("contract splits seven subphases", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && (contract.subphases || []).length === 7);
@@ -136,7 +137,13 @@ addCheck(
       && status.nextPhase === "P115.3"
       && roadmap.currentPhase === "P115.2"
       && roadmap.previousPhase === "P115.1"
-      && roadmap.nextPhase === "P115.3"))
+      && roadmap.nextPhase === "P115.3")
+    || (status.currentPhase === "P115.3"
+      && status.previousPhase === "P115.2"
+      && status.nextPhase === "P115.4"
+      && roadmap.currentPhase === "P115.3"
+      && roadmap.previousPhase === "P115.2"
+      && roadmap.nextPhase === "P115.4"))
     && statusById.get("P115")?.status === "in_progress"
     && statusById.get("P115.1")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P115.2")?.status)

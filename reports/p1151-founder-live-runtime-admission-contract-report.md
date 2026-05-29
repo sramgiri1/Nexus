@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P115.1
-- Generated at: 2026-05-29T01:57:21.259Z
+- Generated at: 2026-05-29T02:05:53.280Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 03210dc1
+- Validation HEAD: d848fc6b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,15 +28,15 @@
 | reuse requirements recorded | PASS |  |
 | safety rules block runtime admission | PASS |  |
 | validation commands recorded | PASS |  |
-| changed files stay in P115.1 allowed scope | PASS | scope check relaxed for P115.2 |
-| changed files avoid forbidden paths | PASS | P115.1 forbidden path check relaxed for P115.2 |
+| changed files stay in P115.1 allowed scope | PASS | scope check relaxed for P115.3 |
+| changed files avoid forbidden paths | PASS | P115.1 forbidden path check relaxed for P115.3 |
 | P114.7 checker accepts P115 start | PASS |  |
 | OS status checker accepts P115 subphases | PASS |  |
-| phase status advanced | PASS | P115.2/P115.1/P115.3 |
+| phase status advanced | PASS | P115.3/P115.2/P115.4 |
 | docs plan records P115.1 | PASS |  |
 | README records P115.1 | PASS |  |
 | platform roadmap records P115.1 | PASS |  |
-| no runtime admission implementation files changed | PASS | P115.1 implementation path check relaxed for P115.2 |
+| no runtime admission implementation files changed | PASS | P115.1 implementation path check relaxed for P115.3 |
 | docs avoid raw runtime admission keys | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

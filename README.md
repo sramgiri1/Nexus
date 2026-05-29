@@ -746,6 +746,14 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P115.3 governed local admission CRUD model: P115 now has approval-gated local
+  CRUD helpers for runtime admission readiness records, with checker coverage
+  for create/read/update/upsert/list and blocked default, unapproved, delete,
+  and outside-allowlist requests. P115.4 is next for safe dry-run runtime
+  admission readiness preview modeling. Runtime admission, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

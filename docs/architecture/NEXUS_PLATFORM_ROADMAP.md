@@ -3041,6 +3041,15 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P115.3 is complete. P115 now has approval-gated local CRUD helpers for runtime
+admission readiness records, with validation for create/read/update/upsert/list
+and blocked default, unapproved, delete, and outside-allowlist requests. P115.4 is next
+for safe dry-run runtime admission readiness preview modeling. Runtime
+admission, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

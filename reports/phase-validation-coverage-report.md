@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T01:57:25.591Z
+- Generated at: 2026-05-29T02:05:57.634Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 03210dc1
+- Validation HEAD: d848fc6b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -423,28 +423,23 @@
 | P114.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P115 validation coverage | PASS | 6 checkers, 2 reports |
+| P115 validation coverage | PASS | 8 checkers, 3 reports |
 | P115.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P115.2 validation coverage | PASS | 4 checkers, 1 reports |
-| P115.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P115.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P115.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P115.5 validation coverage | PASS | 2 checkers, 2 reports |
 | P115.6 validation coverage | PASS | dedicated_checker, validation_report |
 | P115.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P115.2; next=P115.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P115.3; next=P115.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P115.3 Governed Local Admission CRUD Model
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P115.4 Runtime Admission Preview / Safe Dry Run
   - status: planned
   - checkers: 0
