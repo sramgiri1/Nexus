@@ -559,6 +559,198 @@ Rollback plan: remove the P118.3 helper/checker/docs/status/report changes,
 restore P118.3 to planned, set current phase back to P118.2, and keep P118.2
 complete.
 
+## P118.4 Approval Capture Safe Dry Run
+
+Status: complete
+
+Phase: P118 Founder Runtime Approval Capture Boundary
+
+Subphase: P118.4 Approval Capture Safe Dry Run
+
+Goal: add a display-safe local dry-run preview for approval capture readiness
+and blockers without accepting approvals, writing records, recording
+approve/reject decisions, or unlocking runtime execution.
+
+Why this is needed: P118.3 can model local approval intent. P118.4 creates the
+UI-ready preview shape that P118.5 can render on scoped non-chat pages while
+the approval capture boundary remains blocked.
+
+User/operator impact: operators can inspect preview rows for current state,
+next action, blocker, disabled reason, owner capability, evidence/activity
+location, and cost posture before any approval capture UI exists.
+
+Command Center impact: no UI source changes in P118.4. Chat with NEXUS and
+Lite remain clean; P118.5 owns scoped Command Center rendering.
+
+Safety impact: P118.4 is local dry-run only. It does not add DB files, DB
+writes, local runtime artifacts, approval capture, approval persistence,
+approve/reject recording, runtime execution, execution unlock, provider/model
+calls, agent dispatch, worker/tool execution, project mutation, hosted DB
+mutation, raw SQL, deploy, release, export, package, network calls, or spend.
+
+Cost impact: local checker/docs only. No provider/model/network/spend path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `3dc38112`.
+
+Allowed files:
+- `shared/founderApprovalCapturePreview.js`
+- `shared/founderApprovalCaptureIntentModel.js`
+- `shared/founderApprovalCaptureSchemaMetadata.js`
+- `scripts/check-p1184-founder-runtime-approval-capture-boundary.js`
+- `scripts/check-p1183-founder-runtime-approval-capture-boundary.js`
+- `contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json`
+- `docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- generated P118.3/P118.4/OS/coverage reports
+
+Files expected to change:
+- approval capture preview helper
+- P118.4 checker
+- P118.3 checker handoff acceptance
+- P118 contract and plan
+- package script registration
+- README and platform roadmap
+- OS roadmap/status and generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `shared/founderApprovalCapturePreview.js`
+- add `scripts/check-p1184-founder-runtime-approval-capture-boundary.js`
+- update `shared/founderApprovalCaptureIntentModel.js`
+- update `scripts/check-p1183-founder-runtime-approval-capture-boundary.js`
+- update P118 contract/docs/status/reports
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_CAPTURE_PREVIEW_PHASE`
+- `FOUNDER_APPROVAL_CAPTURE_PREVIEW_VERSION`
+- `FOUNDER_APPROVAL_CAPTURE_PREVIEW_STATES`
+- `buildFounderApprovalCapturePreview`
+- `validateFounderApprovalCapturePreview`
+
+The data shape is a `resultEnvelope` with schema version, preview mode, dry-run
+flag, hidden-from-Command-Center flag, source P118.3/P118.2 phases, founder
+question, requested decision label, summary counts, preview sections, preview
+rows, blockers, next action, disabled reason, owner capability,
+evidence/activity/cost labels, and explicit false authority flags for approval
+capture, persistence, decision recording, writes, execution, providers,
+dispatch, project mutation, deploy, release, export, package, network, and
+spend.
+
+Reuse check: reuse `shared/founderApprovalCaptureIntentModel.js`,
+`shared/founderApprovalCaptureSchemaMetadata.js`, `shared/resultEnvelope.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`, P118.3 checker
+patterns, existing OS phase status validation, and existing phase coverage
+reporting. Do not duplicate schema metadata, intent model helpers, report
+writers, checker formatters, phase status updaters, redaction helpers, mode
+guards, route matrices, UI components, or audit/activity appenders.
+
+Command Center UX requirements: no UI source change. Do not add submit buttons,
+approval buttons, reject buttons, run controls, route labels, raw
+JSON/log/policy dumps, raw private IDs, raw DB table names, internal phase
+labels in primary UX, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: no new Playwright test is added in P118.4 because there is no
+UI source change. Existing route-wide safety tests remain the required UX
+backstop.
+
+Checker updates: add a dedicated P118.4 checker for preview envelope shape,
+state allowlist, P118.3/P118.2 helper reuse, zero unsafe counts, blocked
+authority flags, docs/status alignment, allowed file scope, and safety wording.
+Update the P118.3 checker to accept P118.4/P118.5 handoff.
+
+Docs/README/roadmap updates: P118.4 is recorded in this plan, README, platform
+roadmap, P118 contract, OS roadmap/status, and generated reports. P118.5 is
+next for Command Center approval capture boundary UX.
+
+OS phase status update: P118 is in progress; P118.4 is complete; current phase
+P118.4; previous P118.3; next P118.5.
+
+Reports to regenerate:
+- `reports/p1183-founder-runtime-approval-capture-boundary-report.md`
+- `reports/p1184-founder-runtime-approval-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1184-founder-runtime-approval-capture-boundary`
+- `npm run check:p1183-founder-runtime-approval-capture-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+- `find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+dashboard test files changed; no DB/runtime provider, tool, worker, deploy,
+release, export, package, or env paths changed; no approval capture, approval
+persistence, approval decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+spend authority is enabled; no DemoApp exposure, raw private IDs, raw DB table
+names, raw JSON/log/policy dumps, internal primary UX phase labels, or fake
+actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P118.4 files>`
+- `git commit -m "feat(nexus): implement p1184 approval capture dry run"`
+- stamp P118/P118.4 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1184 approval capture dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: dry-run approval readiness can look like live approval capture if
+the UI later adds action wording too early. P118.4 keeps every write,
+approval, decision, execution, dispatch, project, hosted DB, deploy, package,
+network, and spend flag false and remains hidden from Command Center until
+P118.5.
+
+Rollback plan: remove the P118.4 helper/checker/docs/status/report changes,
+restore P118.4 to planned, set current phase back to P118.3, and keep P118.3
+complete.
+
 ## Planned Subphase Controls
 
 P118.2 Approval Capture Schema Metadata is complete. The metadata helper is
@@ -569,10 +761,10 @@ P118.3 Governed Local Approval Intent Model is complete. The pure local model is
 available for P118.4 preview work, while approve/reject decision recording
 remains unavailable.
 
-P118.4 Approval Capture Safe Dry Run: build preview output for capture readiness
-and blockers without accepting approvals or writing records. Reuse P118 model
-helpers. Validation must prove all write, execution, provider, dispatch, and
-project mutation counts remain zero.
+P118.4 Approval Capture Safe Dry Run is complete. The preview helper is
+available for P118.5 scoped UX work, while approval capture, persistence,
+approve/reject decision recording, writes, execution, provider dispatch, and
+project mutation remain unavailable.
 
 P118.5 Command Center Approval Capture Boundary UX: if implemented, scoped
 non-chat pages must show current state, next action, blockers, disabled reason,

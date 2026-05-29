@@ -53,6 +53,7 @@ export function buildFounderApprovalCaptureIntentModel(input = {}) {
       : "Approval capture unavailable",
     founderQuestion,
     requestedDecisionLabel,
+    blockers,
     nextAction: cleanText(input.nextAction, "Preview the capture boundary in P118.4 before any UI control exists."),
     disabledReason: cleanText(input.disabledReason, "P118.3 models approval intent only; it does not capture or persist decisions."),
     ownerCapability: cleanText(input.ownerCapability, "NEXUS Approval Capture Boundary"),

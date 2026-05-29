@@ -110,7 +110,7 @@ addCheck("invalid model is rejected", invalidValidation.valid === false && inval
 addCheck("models are local and hidden", defaultModel.modelOnly === true && defaultModel.commandCenterVisible === false && readyModel.modelOnly === true && readyModel.commandCenterVisible === false);
 addCheck("models reuse P118.2 schema metadata", defaultModel.sourceSchemaPhase === "P118.2" && readyModel.schemaEntityNames?.includes("founderApprovalCaptureRequests"));
 addCheck("models are founder-useful", Boolean(readyModel.founderQuestion) && Boolean(readyModel.nextAction) && Boolean(readyModel.disabledReason) && Boolean(readyModel.ownerCapability));
-addCheck("models keep evidence/activity/cost labels", readyModel.evidenceLabels.length > 0 && readyModel.activityLabels.length > 0 && readyModel.costImpactLabel === "No provider spend");
+addCheck("models keep blockers and evidence/activity/cost labels", readyModel.blockers.length > 0 && readyModel.evidenceLabels.length > 0 && readyModel.activityLabels.length > 0 && readyModel.costImpactLabel === "No provider spend");
 addCheck("approval decisions are not recorded", defaultModel.approvalDecisionRecorded === false && defaultModel.approvalIntentRecorded === false && readyModel.approvalDecisionRecorded === false && readyModel.approvalIntentRecorded === false);
 addCheck("authority flags stay blocked", allFlagsFalse(defaultModel) && allFlagsFalse(readyModel));
 addCheck("model has no DB/runtime/provider imports", !/from\s+["']\.\.\/db|from\s+["']\.\.\/local-state|from\s+["']\.\.\/providers|from\s+["']\.\.\/tools|sqlite|CREATE TABLE|INSERT INTO|UPDATE\s+/i.test(modelSource));
@@ -120,18 +120,31 @@ addCheck("P118.2 checker accepts P118.3 handoff", p1182Checker.includes("P118.3"
 addCheck("docs record P118.3", /P118\.3 Governed Local Approval Intent Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P118.3", /P118\.3 governed local approval intent model/i.test(readme) && /P118\.4\s+is\s+next/.test(readme));
 addCheck("platform roadmap records P118.3", /P118\.3 is complete/.test(platformRoadmap) && /P118\.4\s+is\s+next/.test(platformRoadmap));
+const p1183HandoffAccepted = (status.currentPhase === "P118.3"
+  && status.previousPhase === "P118.2"
+  && status.nextPhase === "P118.4"
+  && roadmap.currentPhase === "P118.3"
+  && roadmap.previousPhase === "P118.2"
+  && roadmap.nextPhase === "P118.4")
+  || (status.currentPhase === "P118.4"
+    && status.previousPhase === "P118.3"
+    && status.nextPhase === "P118.5"
+    && roadmap.currentPhase === "P118.4"
+    && roadmap.previousPhase === "P118.3"
+    && roadmap.nextPhase === "P118.5")
+  || (status.currentPhase === "P118.5"
+    && status.previousPhase === "P118.4"
+    && status.nextPhase === "P118.6"
+    && roadmap.currentPhase === "P118.5"
+    && roadmap.previousPhase === "P118.4"
+    && roadmap.nextPhase === "P118.6");
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P118.3"
-    && status.previousPhase === "P118.2"
-    && status.nextPhase === "P118.4"
-    && roadmap.currentPhase === "P118.3"
-    && roadmap.previousPhase === "P118.2"
-    && roadmap.nextPhase === "P118.4"
+  p1183HandoffAccepted
     && statusById.get("P118")?.status === "in_progress"
     && statusById.get("P118.2")?.status === "complete"
     && statusById.get("P118.3")?.status === "complete"
-    && statusById.get("P118.4")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P118.4")?.status)
     && roadmapById.get("P118.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

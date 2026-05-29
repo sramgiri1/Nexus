@@ -16215,27 +16215,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "68e6b499",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P118.3 approval intent model complete; P118.4 safe dry run is next.",
+      "detail": "P118.4 approval capture safe dry run complete; P118.5 scoped UX is next.",
       "phaseId": "P118",
       "title": "Founder Runtime Approval Capture Boundary",
       "order": 154,
       "status": "in_progress",
-      "summary": "P118 is in progress with the approval capture boundary contract, browser-safe schema metadata, and governed local approval intent model complete. Approval capture, approval persistence, approve/reject decision recording, runtime execution, and execution unlock remain blocked.",
-      "nextPhase": "P118.4",
-      "previousPhase": "P118.2",
+      "summary": "P118 is in progress with the approval capture boundary contract, browser-safe schema metadata, governed local approval intent model, and local dry-run preview complete. Approval capture, approval persistence, approve/reject decision recording, runtime execution, and execution unlock remain blocked.",
+      "nextPhase": "P118.5",
+      "previousPhase": "P118.3",
       "checksRun": [
+        "npm run check:p1184-founder-runtime-approval-capture-boundary",
         "npm run check:p1183-founder-runtime-approval-capture-boundary",
-        "npm run check:p1182-founder-runtime-approval-capture-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
-        "git diff --check"
+        "git diff --check",
+        "find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print"
       ],
       "knownLimitations": [
-        "P118.3 is a pure local model only; it does not create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P118.4 is next for approval capture safe dry run."
+        "P118.4 is a local dry-run preview only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P118.5 is next for scoped Command Center approval capture boundary UX."
       ],
       "completedAt": ""
     },
@@ -16322,23 +16323,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Approval Capture Dry Run",
-      "detail": "Planned safe dry-run preview for approval capture readiness.",
+      "detail": "Local approval capture safe dry-run preview complete without approvals or writes.",
       "phaseId": "P118.4",
       "title": "Approval Capture Safe Dry Run",
       "order": 154.4,
-      "status": "planned",
-      "summary": "Planned dry-run preview only; no approval capture, persistence, decision recording, or execution unlock.",
+      "status": "complete",
+      "summary": "Added a local dry-run approval capture preview that reuses the P118.3 intent model and P118.2 schema metadata to show display-safe readiness rows, blockers, next action, owner, evidence/activity location, and cost posture without approval capture, persistence, approve/reject decision recording, DB writes, or runtime execution.",
       "nextPhase": "P118.5",
       "previousPhase": "P118.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. No write path or live action is enabled."
+      "checksRun": [
+        "npm run check:p1184-founder-runtime-approval-capture-boundary",
+        "npm run check:p1183-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check",
+        "find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P118.4 is local dry-run preview only; it does not accept approvals, create DB tables, write DB/runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "No Command Center source change is included in P118.4; P118.5 is the scoped UX subphase."
+      ],
+      "completedAt": "2026-05-29T05:23:18.794Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16402,9 +16411,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T05:15:40.518Z",
-  "currentPhase": "P118.3",
-  "previousPhase": "P118.2",
-  "nextPhase": "P118.4",
+  "updatedAt": "2026-05-29T05:23:18.794Z",
+  "currentPhase": "P118.4",
+  "previousPhase": "P118.3",
+  "nextPhase": "P118.5",
   "currentPhaseStatus": "complete"
 }

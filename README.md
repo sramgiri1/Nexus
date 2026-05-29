@@ -923,6 +923,16 @@ The Command Center and local operator surface have:
   unlock, provider/model call, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
   package, network call, and provider spend remain unavailable.
+- P118.4 approval capture safe dry run: a local preview now turns the P118.3
+  approval intent model and P118.2 schema metadata into display-safe readiness
+  rows, blocker summaries, next action, owner, evidence/activity location, and
+  cost posture without accepting approvals or writing decisions. P118.5 is
+  next for scoped Command Center approval capture boundary UX. Approval
+  capture, approval persistence, approve/reject decision recording, runtime
+  execution, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider
+  spend remain unavailable.
 
 ## CareLoop Project Progress
 

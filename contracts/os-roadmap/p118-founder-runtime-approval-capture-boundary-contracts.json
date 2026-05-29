@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval capture boundary while keeping approval capture, approval persistence, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P118.3",
-  "previousSubphase": "P118.2",
-  "nextSubphase": "P118.4",
+  "currentSubphase": "P118.4",
+  "previousSubphase": "P118.3",
+  "nextSubphase": "P118.5",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P118.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -29,6 +29,7 @@
     "P118.1 is contract/policy only.",
     "P118.2 is schema metadata only.",
     "P118.3 is a pure in-memory model only.",
+    "P118.4 is a local dry-run preview only.",
     "Approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "subphases": [
@@ -376,13 +377,17 @@
     {
       "phaseId": "P118.4",
       "title": "Approval Capture Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "3dc38112",
       "narrowGoal": "Preview approval capture readiness and blockers without accepting or writing approval decisions.",
       "allowedFiles": [
-        "shared/founderApprovalCaptureBoundary.js",
+        "shared/founderApprovalCapturePreview.js",
+        "shared/founderApprovalCaptureIntentModel.js",
+        "shared/founderApprovalCaptureSchemaMetadata.js",
         "scripts/check-p1184-founder-runtime-approval-capture-boundary.js",
+        "scripts/check-p1183-founder-runtime-approval-capture-boundary.js",
         "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
         "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -390,11 +395,29 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p1183-founder-runtime-approval-capture-boundary-report.md",
         "reports/p1184-founder-runtime-approval-capture-boundary-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "shared/founderApprovalCapturePreview.js",
+        "shared/founderApprovalCaptureIntentModel.js",
+        "shared/founderApprovalCaptureSchemaMetadata.js",
+        "scripts/check-p1184-founder-runtime-approval-capture-boundary.js",
+        "scripts/check-p1183-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1183-founder-runtime-approval-capture-boundary-report.md",
+        "reports/p1184-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -414,7 +437,11 @@
         ".env*"
       ],
       "expectedExports": [
-        "buildFounderApprovalCapturePreview"
+        "FOUNDER_APPROVAL_CAPTURE_PREVIEW_PHASE",
+        "FOUNDER_APPROVAL_CAPTURE_PREVIEW_VERSION",
+        "FOUNDER_APPROVAL_CAPTURE_PREVIEW_STATES",
+        "buildFounderApprovalCapturePreview",
+        "validateFounderApprovalCapturePreview"
       ],
       "dataShape": "Browser-safe preview rows with current state, next action, blocker, owner, evidence/activity label, and cost posture.",
       "commandCenterUx": "No Command Center source change in P118.4; P118.5 owns UX.",
@@ -436,7 +463,8 @@
         "npm run check:p1183-founder-runtime-approval-capture-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
-        "git diff --check"
+        "git diff --check",
+        "find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print"
       ],
       "gitCommands": [
         "git add <allowed P118.4 files>",
@@ -731,5 +759,5 @@
       "previousPhase": "P118.6"
     }
   ],
-  "summary": "P118 is in progress. P118.1 defines the approval-capture boundary contract and implementation-grade subphase split, P118.2 adds browser-safe approval capture schema metadata, and P118.3 adds a governed local approval intent model without DB files, DB writes, approval capture, approval persistence, approve/reject decision recording, or runtime execution authority."
+  "summary": "P118 is in progress. P118.1 defines the approval-capture boundary contract and implementation-grade subphase split, P118.2 adds browser-safe approval capture schema metadata, P118.3 adds a governed local approval intent model, and P118.4 adds a local safe dry-run preview without DB files, DB writes, approval capture, approval persistence, approve/reject decision recording, or runtime execution authority."
 }

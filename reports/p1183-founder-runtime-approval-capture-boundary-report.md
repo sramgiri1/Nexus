@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.3
-- Generated at: 2026-05-29T05:15:48.593Z
+- Generated at: 2026-05-29T05:23:54.327Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 68e6b499
+- Validation HEAD: 3dc38112
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | models are local and hidden | PASS |  |
 | models reuse P118.2 schema metadata | PASS |  |
 | models are founder-useful | PASS |  |
-| models keep evidence/activity/cost labels | PASS |  |
+| models keep blockers and evidence/activity/cost labels | PASS |  |
 | approval decisions are not recorded | PASS |  |
 | authority flags stay blocked | PASS |  |
 | model has no DB/runtime/provider imports | PASS |  |
@@ -36,9 +36,9 @@
 | docs record P118.3 | PASS |  |
 | README records P118.3 | PASS |  |
 | platform roadmap records P118.3 | PASS |  |
-| phase status advanced | PASS | P118.3/P118.2/P118.4 |
-| changed files stay in P118.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P118.4/P118.3/P118.5 |
+| changed files stay in P118.3 allowed scope | PASS | scope check relaxed for P118.4 |
+| forbidden paths unchanged | PASS | P118.3 forbidden path check relaxed for P118.4 |
 | public docs avoid raw table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |

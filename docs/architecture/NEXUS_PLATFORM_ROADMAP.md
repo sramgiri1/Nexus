@@ -3232,6 +3232,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P118.4 is complete. A local dry-run preview now turns the P118.3 approval
+intent model and P118.2 schema metadata into display-safe readiness rows,
+blocker summaries, next action, owner, evidence/activity location, and cost
+posture without accepting approvals or writing decisions. P118.5 is next for
+scoped Command Center approval capture boundary UX. Approval capture, approval
+persistence, approve/reject decision recording, runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
