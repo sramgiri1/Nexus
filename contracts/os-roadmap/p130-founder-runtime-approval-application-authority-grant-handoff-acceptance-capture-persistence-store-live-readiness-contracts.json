@@ -572,7 +572,7 @@
       "knownLimitations": [
         "P130.5 is display-only UX. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "commit": "pending-final-commit",
+      "commit": "58db4872",
       "completedAt": "2026-05-29T22:28:43.104Z"
     },
     {
@@ -748,7 +748,7 @@
     "title": "Command Center Store Live Gate UX",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "58db4872",
     "completedAt": "2026-05-29T22:28:43.104Z",
     "summary": "Rendered a scoped display-safe Store Live Readiness Gate on Business Build and Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and unrelated pages remain clean.",
     "checksRun": [
