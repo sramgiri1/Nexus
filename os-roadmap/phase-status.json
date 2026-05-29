@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-29T13:32:42.281Z",
+  "generatedAt": "2026-05-29T13:40:44.440Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -17093,28 +17093,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d3970998",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
-      "detail": "P122.1 contract complete; P122.2 eligibility metadata is next.",
+      "detail": "P122.2 metadata complete; P122.3 authority intent is next.",
       "phaseId": "P122",
       "title": "Founder Runtime Approval Decision Application Authority Handoff",
       "order": 158,
       "status": "in_progress",
-      "summary": "P122 is in progress with the approval decision application authority handoff contract and subphase split complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P122.2",
-      "previousPhase": "P122.1",
+      "summary": "P122 is in progress with contract and browser-safe approval decision application authority eligibility metadata complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P122.3",
+      "previousPhase": "P122.2",
       "checksRun": [
+        "npm run check:p1222-founder-runtime-approval-decision-application-authority-handoff",
         "npm run check:p1221-founder-runtime-approval-decision-application-authority-handoff-contract",
-        "npm run check:p1217-founder-runtime-approval-decision-application-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P122.1 is contract-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P122.2 is metadata-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:32:42.281Z"
+      "completedAt": "2026-05-29T13:40:44.440Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17144,23 +17144,29 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Authority Metadata",
-      "detail": "Planned P122 subphase. Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "detail": "Browser-safe authority eligibility metadata complete; P122.3 is next.",
       "phaseId": "P122.2",
       "title": "Application Authority Eligibility Metadata",
       "order": 158.2,
-      "status": "planned",
-      "summary": "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Added browser-safe approval decision application authority handoff eligibility metadata reusing P121.2 metadata for prior boundary, authority scope, runtime guard, and operator evidence without enabling live authority. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P122.3",
       "previousPhase": "P122.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1222-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1221-founder-runtime-approval-decision-application-authority-handoff-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P122.2 is metadata-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T13:40:44.440Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17264,34 +17270,34 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T13:32:42.281Z",
-  "currentPhase": "P122.1",
-  "previousPhase": "P121.7",
-  "nextPhase": "P122.2",
+  "updatedAt": "2026-05-29T13:40:44.440Z",
+  "currentPhase": "P122.2",
+  "previousPhase": "P122.1",
+  "nextPhase": "P122.3",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d3970998",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
-    "detail": "P122.1 contract complete; P122.2 eligibility metadata is next.",
+    "detail": "P122.2 metadata complete; P122.3 authority intent is next.",
     "phaseId": "P122",
     "title": "Founder Runtime Approval Decision Application Authority Handoff",
     "order": 158,
     "status": "in_progress",
-    "summary": "P122 is in progress with the approval decision application authority handoff contract and subphase split complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-    "nextPhase": "P122.2",
-    "previousPhase": "P122.1",
+    "summary": "P122 is in progress with contract and browser-safe approval decision application authority eligibility metadata complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+    "nextPhase": "P122.3",
+    "previousPhase": "P122.2",
     "checksRun": [
+      "npm run check:p1222-founder-runtime-approval-decision-application-authority-handoff",
       "npm run check:p1221-founder-runtime-approval-decision-application-authority-handoff-contract",
-      "npm run check:p1217-founder-runtime-approval-decision-application-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "git diff --check"
     ],
     "knownLimitations": [
-      "P122.1 is contract-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P122.2 is metadata-only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T13:32:42.281Z"
+    "completedAt": "2026-05-29T13:40:44.440Z"
   }
 }

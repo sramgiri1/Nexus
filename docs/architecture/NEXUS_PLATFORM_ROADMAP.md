@@ -3491,6 +3491,17 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 raw SQL interface, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P122.2 is complete. Browser-safe authority handoff eligibility metadata now
+reuses the P121.2 approval decision application eligibility metadata and
+describes prior boundary, authority scope, runtime guard, operator evidence,
+blockers, next action, owner capability, activity/evidence labels, and cost
+posture for later local authority intent modeling. P122.3 is next. Approval
+decision application, approval capture, approval persistence, approve/reject
+decision recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

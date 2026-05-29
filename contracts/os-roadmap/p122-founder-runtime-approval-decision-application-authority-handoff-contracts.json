@@ -3,15 +3,15 @@
   "title": "Founder Runtime Approval Decision Application Authority Handoff",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "objective": "Define a governed authority handoff after P121 so future subphases can reason about approval decision application readiness without enabling live application, DB/runtime writes, execution, dispatch, project mutation, provider calls, deploy, release, export, package, network, or spend authority in P122.1.",
-  "currentSubphase": "P122.1",
-  "previousSubphase": "P121.7",
-  "nextSubphase": "P122.2",
+  "objective": "Define governed authority handoff metadata after P121 so future subphases can reason about approval decision application readiness without enabling live application, DB/runtime writes, execution, dispatch, project mutation, provider calls, deploy, release, export, package, network, or spend authority in P122.2.",
+  "currentSubphase": "P122.2",
+  "previousSubphase": "P122.1",
+  "nextSubphase": "P122.3",
   "safetyRules": [
-    "Do not enable approval decision application in P122.1.",
-    "Do not enable approval capture, approval persistence, or approve/reject decision recording in P122.1.",
-    "Do not enable DB writes, hosted DB mutation, raw SQL, runtime writes, runtime execution, or execution unlock in P122.1.",
-    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend in P122.1.",
+    "Do not enable approval decision application in P122.2.",
+    "Do not enable approval capture, approval persistence, or approve/reject decision recording in P122.2.",
+    "Do not enable DB writes, hosted DB mutation, raw SQL, runtime writes, runtime execution, or execution unlock in P122.2.",
+    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend in P122.2.",
     "Do not expose DemoApp, raw JSON/log/policy dumps, raw private IDs, raw DB names, raw report paths in primary UX, fake runnable actions, or mutation controls.",
     "Future P122 subphases must define narrow authority, validation, UX, and rollback before any later phase can consider live behavior."
   ],
@@ -29,7 +29,7 @@
     "P121 approval decision application boundary evidence"
   ],
   "knownLimitations": [
-    "P122.1 is contract-only and does not enable live authority.",
+    "P122.2 is metadata-only and does not enable live authority.",
     "Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "subphases": [
@@ -151,12 +151,43 @@
     {
       "phaseId": "P122.2",
       "title": "Application Authority Eligibility Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Planned P122 subphase. Implementation requires its own implementation-grade plan before coding.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "expectedBaseCommit": "53428bd5",
+      "narrowGoal": "Add browser-safe authority handoff eligibility metadata that reuses P121 approval decision application eligibility metadata and defines local handoff sections without enabling live authority.",
+      "allowedFiles": [
+        "shared/founderApprovalDecisionApplicationAuthorityEligibilityMetadata.js",
+        "contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json",
+        "docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md",
+        "scripts/check-p1222-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1221-founder-runtime-approval-decision-application-authority-handoff-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1221-founder-runtime-approval-decision-application-authority-handoff-contract-report.md",
+        "reports/p1222-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "shared/founderApprovalDecisionApplicationAuthorityEligibilityMetadata.js",
+        "contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json",
+        "docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md",
+        "scripts/check-p1222-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1221-founder-runtime-approval-decision-application-authority-handoff-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1221-founder-runtime-approval-decision-application-authority-handoff-contract-report.md",
+        "reports/p1222-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -175,28 +206,51 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls until explicitly scoped.",
+      "expectedExports": [
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_ELIGIBILITY_METADATA_PHASE",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_ELIGIBILITY_VERSION",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_STATES",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_FLAGS",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_SECTIONS",
+        "buildFounderApprovalDecisionApplicationAuthorityEligibilityMetadata"
+      ],
+      "dataShape": "Browser-safe metadata only: metadataVersion, phaseId, sourceBoundaryPhase, sourceBoundaryVersion, metadataOnly, localOnly, commandCenterVisible, handoffPolicy, handoffStates, priorBoundary, sections, blockers, nextAction, ownerCapability, and costImpactLabel. All authority flags remain false.",
+      "commandCenterUx": "No Command Center source change in P122.2. Preserve P121 approval decision application boundary UX and keep Chat with NEXUS and Lite chat clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until dashboard source changes are explicitly allowed."
+        "No new Playwright test because P122.2 has no UI source changes; preserve route-wide safety tests."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P122.2 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add a P122.2 metadata checker.",
+        "Verify the P122.1 checker accepts P122.2 handoff.",
+        "Validate P122.2 metadata reuse, blocked authority flags, docs/status, forbidden paths, and unsafe claim prevention."
+      ],
+      "docsRoadmap": "Update P122 plan, README, platform roadmap, OS status, generated reports, and P122 contract for P122.2.",
+      "phaseStatusUpdate": "P122 in progress; P122.2 complete; current phase P122.2; previous P122.1; next P122.3.",
+      "validationCommands": [
+        "npm run check:p1222-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1221-founder-runtime-approval-decision-application-authority-handoff-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P122.2 files>",
-        "git commit -m \"feat(nexus): implement p1222 approval application authority handoff\"",
+        "git commit -m \"feat(nexus): implement p1222 approval application authority eligibility metadata\"",
+        "stamp P122/P122.2 status with the implementation commit",
+        "git add <allowed P122.2 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1222 approval application authority eligibility metadata\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval decision application, DB writes, or runtime execution authority is enabled."
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no dashboard source or dashboard test files changed.",
+        "Confirm no approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw DB table names, raw report paths in primary UX, or fake runnable actions are introduced."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -557,7 +611,7 @@
       "order": 158.7
     }
   ],
-  "summary": "P122 starts the approval decision application authority handoff track as contract-only work. P122.1 defines safety rules, scoped files, subphases, validation, docs, and status handoff while all live authority remains blocked.",
+  "summary": "P122 continues the approval decision application authority handoff track with browser-safe P122.2 metadata that reuses P121.2 eligibility metadata while all live authority remains blocked.",
   "updatedAt": "2026-05-29T13:29:01.230Z",
   "expectedBaseCommit": "afb30703"
 }
