@@ -330,3 +330,130 @@ flag false and requires explicit local approval gates before any local write.
 Rollback plan: remove the P113.3 helper/checker/script/docs/status/report
 updates, restore P113 to P113.2 complete with P113.3 planned, and keep the
 P113.2 schema unchanged.
+
+## P113.4 Assignment Readiness Preview / Safe Dry Run
+
+Phase: P113 Founder Live Agent Work Assignment Readiness
+
+Subphase: P113.4 Assignment Readiness Preview / Safe Dry Run
+
+Goal: build a display-safe assignment readiness view model from local queue and
+assignment context without writing assignment records or dispatching agents.
+
+Why this is needed: P113.3 can model approved local CRUD, but Command Center
+needs a read-only preview layer before any assignment UX can show useful agent
+lanes to a founder/operator.
+
+User/operator impact: operators get a clear assignment candidate list with
+source queue context, owner capability, next action, blockers, disabled reason,
+evidence/activity location, and cost impact without raw DB identifiers.
+
+Command Center impact: no Command Center source change in P113.4. The preview
+view model is intentionally hidden from Command Center until P113.5 renders it
+on the appropriate non-chat founder page.
+
+Safety impact: preview-only. Assignment writes, local CRUD admission, hosted DB
+mutation, raw SQL interface, provider/model calls, agent dispatch,
+worker/tool execution, runtime admission, execution unlock, project mutation,
+deploy, release, export, package creation, network calls, and provider spend
+remain blocked.
+
+Cost impact: local deterministic view model only. No provider/model calls,
+network calls, or provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: `live-ready/founderLiveAgentWorkAssignmentReadiness.js`,
+P113.4 checker, P113.3 compatibility checker/report, P113 contract, this plan,
+README, platform roadmap, package script registry, OS phase status files, and
+generated P113.4/P113.3/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`,
+`generated-projects/*/Sources/**`, `generated-projects/*/Tests/**`,
+`dashboard/src/**`, `dashboard/tests/**`, `local-state/runtime/**`,
+`providers/**`, `tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`,
+`exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: extended
+`live-ready/founderLiveAgentWorkAssignmentReadiness.js` with preview constants,
+`buildAgentWorkAssignmentReadinessViewModel`, and
+`validateAgentWorkAssignmentReadinessViewModel`; added
+`scripts/check-p1134-founder-live-agent-work-assignment-preview.js`;
+registered the package script; updated P113 contract/status/docs; and
+regenerated reports.
+
+Expected exports/data shapes:
+- `P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_PHASE`
+- `P113_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_STATES`
+- `buildAgentWorkAssignmentReadinessViewModel(input)`
+- `validateAgentWorkAssignmentReadinessViewModel(envelope)`
+
+The preview envelope contains display-safe source queue summary, assignment
+readiness counts, assignment sections, assignment rows, forbidden operations,
+next action, blockers, disabled reason, owner capability, evidence/activity
+refs, cost impact, and explicit false flags for writes, dispatch, execution,
+project mutation, hosted DB mutation, deploy/release/export/package, network,
+and spend.
+
+Safety rules: do not write local assignment records, call provider/model APIs,
+dispatch agents, execute tools/workers, mutate projects, use hosted DBs, expose
+raw SQL, admit runtime execution, deploy, release, export, package, use network
+calls, or spend. Do not expose raw private IDs, raw assignment/queue record
+keys, raw DB table names, raw logs, raw policy dumps, DemoApp, or fake runnable
+actions.
+
+Reuse check: P113.4 reuses `shared/resultEnvelope.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`, and the P113.3
+assignment readiness contract/model helpers. It does not duplicate SQLite
+runtime, CRUD repository, report writer, checker formatter, status helper,
+result envelope, mode guard, redaction helper, queue helper, or UI components.
+
+Command Center UX requirements: no UI source change in P113.4. The view model
+contains the fields P113.5 needs: what changed, current state, next action,
+blockers, disabled reason, owner agent/capability, evidence/activity location,
+and cost impact.
+
+Dark/light/system theme requirements: no theme source change in P113.4.
+
+Playwright tests: no new Playwright test in P113.4 because no UI source changes
+are made.
+
+Checker updates: P113.4 adds a dedicated preview checker that validates the
+view model, confirms useful founder assignment rows and sections, verifies
+P113.3 reuse, blocks raw IDs/table names/raw dumps/fake actions, and confirms
+all unsafe authority flags remain false.
+
+Docs/README/roadmap updates: P113.4 is recorded in this plan, README, platform
+roadmap, P113 contract, OS roadmap/status, and generated reports. P113.5 is
+next.
+
+OS phase status update: P113 is in progress; P113.4 is complete; current phase
+P113.4; previous P113.3; next P113.5.
+
+Validation commands:
+- `npm run check:p1134-founder-live-agent-work-assignment-preview`
+- `npm run check:p1133-founder-live-agent-work-assignment-crud-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no forbidden project/dashboard/provider/deploy paths
+changed; no runtime DB artifacts are created; no DemoApp exposure; no raw
+JSON/log/policy dumps; no raw private IDs, raw assignment keys, raw queue keys,
+or raw DB table names in the preview; no fake runnable actions; no local write,
+hosted DB mutation, raw SQL interface, provider/model call, agent dispatch,
+worker/tool execution, project mutation, deploy, release, export, package,
+network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P113.4 files>`
+- `git commit -m "feat(nexus): add p113 assignment preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: preview rows could be confused with runnable work. P113.4 keeps
+Command Center visibility false until P113.5 and stores explicit disabled
+reasons and false safety flags on every preview row.
+
+Rollback plan: remove the P113.4 preview/checker/script/docs/status/report
+updates, restore P113 to P113.3 complete with P113.4 planned, and keep the
+P113.3 CRUD model unchanged.

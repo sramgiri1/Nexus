@@ -641,6 +641,14 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
   SQL interface, runtime admission, deploy, release, export, package, network
   call, and provider spend remain unavailable.
+- P113.4 assignment readiness preview: P113 now has a local-only dry-run view
+  model for display-safe assignment candidates, assignment sections, source
+  queue summary, blockers, next actions, evidence/activity references, and cost
+  impact. P113.5 is next for Command Center agent assignment UX. Assignment
+  writes, provider/model call, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

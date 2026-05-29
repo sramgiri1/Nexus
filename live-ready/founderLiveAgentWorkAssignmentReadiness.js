@@ -10,6 +10,12 @@ import {
 import { buildSafeAgentWorkQueueDbRecord } from "./founderLiveAgentWorkQueueAdmission.js";
 
 export const P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PHASE = "P113.3";
+export const P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_PHASE = "P113.4";
+
+export const P113_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_STATES = Object.freeze({
+  LOCAL_PREVIEW_READY_EXECUTION_BLOCKED: "founder_agent_work_assignment_readiness_preview_ready_execution_blocked",
+  NEEDS_QUEUE_CONTEXT: "founder_agent_work_assignment_readiness_preview_needs_queue_context",
+});
 
 export const P113_AGENT_WORK_ASSIGNMENT_DB_ENTITIES = Object.freeze([
   "founder_agent_work_assignments",
@@ -137,8 +143,140 @@ function sourceQueueRecord(input = {}) {
   return input.queueRecord || buildSafeAgentWorkQueueDbRecord("founder_agent_work_queue_items", input);
 }
 
+function sourceQueueSummary(input = {}) {
+  const queueRecord = sourceQueueRecord(input);
+  return {
+    publicLabel: queueRecord.publicLabel || "Founder agent work queue item",
+    queueLane: queueRecord.queueLane || "Product Strategy",
+    queueState: queueRecord.queueState || "queued locally after operator gate",
+    queueSummary: queueRecord.queueSummary || "Display-safe founder agent work queue admission summary.",
+    nextAction: queueRecord.nextAction || "Review assignment readiness preview before any future dispatch consideration.",
+    ownerCapability: queueRecord.ownerCapability || "NEXUS Founder Agent Work Queue DB",
+  };
+}
+
 function assignmentKey(input = {}) {
   return input.assignmentKey || input.queueKey || "founder-agent-work-assignment";
+}
+
+function previewLanes(input = {}) {
+  return input.previewLanes || [
+    {
+      lane: "Founder Strategy",
+      displayLabel: "Founder strategy assignment",
+      proposedOutcome: "Clarify business feasibility, customer pain, value promise, and PRD readiness.",
+      ownerCapability: "NEXUS Founder Strategy Agent",
+    },
+    {
+      lane: "Product Architecture",
+      displayLabel: "Product architecture assignment",
+      proposedOutcome: "Map product scope, data boundaries, platform constraints, and build risks.",
+      ownerCapability: "NEXUS Product Architecture Agent",
+    },
+    {
+      lane: "Launch Operations",
+      displayLabel: "Launch operations assignment",
+      proposedOutcome: "Plan validation experiments, go-to-market blockers, pricing questions, and launch readiness.",
+      ownerCapability: "NEXUS Launch Operations Agent",
+    },
+  ];
+}
+
+function buildPreviewAssignmentRow(lane, index, input = {}) {
+  const queueSummary = sourceQueueSummary(input);
+  const assignmentRecord = buildSafeAgentWorkAssignmentDbRecord("founder_agent_work_assignments", {
+    ...input,
+    assignmentLane: lane.lane,
+    publicLabel: lane.displayLabel,
+    assignmentSummary: lane.proposedOutcome,
+    assignedAgent: lane.ownerCapability,
+    ownerCapability: lane.ownerCapability,
+  });
+
+  return {
+    displayHandle: `assignment-preview-${index + 1}-${safeSlug(lane.lane)}`,
+    displayLabel: lane.displayLabel,
+    sourceQueueLabel: queueSummary.publicLabel,
+    sourceQueueLane: queueSummary.queueLane,
+    sourceQueueState: queueSummary.queueState,
+    proposedAgentLane: lane.lane,
+    proposedOutcome: lane.proposedOutcome || assignmentRecord.assignmentSummary,
+    assignmentPosition: index + 1,
+    assignmentState: P113_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED,
+    previewMode: "local-only-dry-run",
+    localPreviewReady: true,
+    assignmentSummary: lane.proposedOutcome || assignmentRecord.assignmentSummary,
+    nextAction: "Review this local assignment candidate in Command Center before any later approved dispatch or execution phase.",
+    blockers: [
+      "Assignment readiness preview is local and read-only.",
+      "Local assignment writes require a separate approved CRUD request.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Provider spend remains blocked.",
+    ],
+    disabledReason:
+      "P113.4 previews assignment readiness only. It cannot write assignment records, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    ownerCapability: lane.ownerCapability || assignmentRecord.ownerCapability,
+    evidenceRefs: [
+      "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+      "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+    ],
+    auditRefs: ["reports/os-phase-status-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic assignment readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    assignmentWriteAllowed: false,
+    localCrudAllowed: false,
+    dbWriteAllowed: false,
+    sqliteWriteAllowed: false,
+    hostedDbMutationAllowed: false,
+    dispatchAllowed: false,
+    executionAllowed: false,
+    workerExecutionAllowed: false,
+    toolExecutionAllowed: false,
+    runtimeAdmissionAllowed: false,
+    runtimeTransitionAllowed: false,
+    projectCreationAllowed: false,
+    projectMutationAllowed: false,
+    deployAllowed: false,
+    releaseAllowed: false,
+    exportAllowed: false,
+    packageAllowed: false,
+    spendAllowed: false,
+    ...blockedRuntimeFlags(),
+  };
+}
+
+function buildPreviewAssignmentSections(assignmentRows = []) {
+  return [
+    {
+      sectionHandle: "assignment-candidates",
+      displayLabel: "Assignment candidates",
+      candidateCount: assignmentRows.length,
+      blockedCount: assignmentRows.length,
+      nextAction: "Show these candidates in P113.5 without write, dispatch, execution, provider, project, or deploy controls.",
+      disabledReason: "This section is read-only assignment readiness preview data.",
+    },
+    {
+      sectionHandle: "approval-gates",
+      displayLabel: "Assignment gates",
+      candidateCount: assignmentRows.length,
+      blockedCount: assignmentRows.length,
+      nextAction: "Keep operator approval, rollback, audit, validation, sqlite-live, and local write evidence separate from the preview.",
+      disabledReason: "Preview data cannot satisfy or bypass local CRUD or dispatch gates.",
+    },
+    {
+      sectionHandle: "blocked-authority",
+      displayLabel: "Blocked authority",
+      candidateCount: assignmentRows.length,
+      blockedCount: assignmentRows.length,
+      nextAction: "Keep runtime authority blocked until a later explicitly scoped phase changes the contract.",
+      disabledReason: "Provider/model calls, dispatch, execution, project mutation, hosted DB writes, deploy, release, export, package, network calls, and spend are blocked.",
+    },
+  ];
 }
 
 export function buildSafeAgentWorkAssignmentDbRecord(entityName = "", input = {}) {
@@ -438,5 +576,200 @@ export function validateFounderLiveAgentWorkAssignmentReadinessContract(envelope
   const serialized = JSON.stringify(data);
   if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("Founder agent work assignment CRUD model must not expose raw private IDs");
   if (/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now|execute now/i.test(serialized)) errors.push("Founder agent work assignment CRUD model must not expose fake unsafe runnable actions");
+  return { valid: errors.length === 0, errors };
+}
+
+export function buildAgentWorkAssignmentReadinessViewModel(input = {}) {
+  const contractEnvelope = input.contractEnvelope || buildFounderLiveAgentWorkAssignmentReadinessContract(input);
+  const queueSummary = sourceQueueSummary(input);
+  const assignmentRows = previewLanes(input).map((lane, index) => buildPreviewAssignmentRow(lane, index, input));
+  const assignmentSections = buildPreviewAssignmentSections(assignmentRows);
+  const previewReady = assignmentRows.length > 0;
+
+  return createPassResult({
+    phase: P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_PHASE,
+    mode: "founder-live-agent-work-assignment-readiness-preview",
+    source: "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
+    summary: "Founder live agent work assignment readiness preview is assembled locally from display-safe queue context; assignment writes and live execution remain blocked.",
+    data: {
+      schemaVersion: "1.0",
+      currentState: previewReady
+        ? P113_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED
+        : P113_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_STATES.NEEDS_QUEUE_CONTEXT,
+      sourceContractPhase: contractEnvelope.phase,
+      sourceContractState: contractEnvelope.data?.currentState || "",
+      previewMode: "local-only-dry-run",
+      sourceQueueSummary: queueSummary,
+      assignmentReadinessSummary: {
+        previewReady,
+        candidateCount: assignmentRows.length,
+        blockedCandidateCount: assignmentRows.length,
+        writableCandidateCount: 0,
+        persistedCandidateCount: 0,
+        dispatchableCandidateCount: 0,
+        executableCandidateCount: 0,
+        projectMutationCandidateCount: 0,
+        hostedDbMutationCandidateCount: 0,
+        providerSpendCandidateCount: 0,
+      },
+      assignmentSections,
+      assignmentRows,
+      forbiddenOperations: [...FORBIDDEN_OPERATIONS],
+      nextAction: previewReady
+        ? "Render P113.5 Command Center assignment readiness preview on non-chat founder pages without write or execution controls."
+        : "Complete display-safe founder queue context before assignment readiness preview assembly.",
+      blockers: [
+        "Assignment readiness preview is local and read-only.",
+        "Local assignment writes require explicit operator approval gates in a separate CRUD request.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project creation and mutation remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Deploy, release, export, and package actions remain blocked.",
+        "Network calls and provider spend remain blocked.",
+      ],
+      disabledReason:
+        "P113.4 is a local assignment readiness preview only. It does not write assignment records, unlock execution, admit runtime execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+      ownerCapability: "NEXUS Founder Agent Work Assignment Readiness Preview",
+      evidenceRefs: [
+        "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+        "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+      ],
+      auditRefs: ["reports/os-phase-status-report.md"],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic assignment readiness preview only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      commandCenterVisible: false,
+      assignmentWriteAllowed: false,
+      localCrudAllowed: false,
+      dbWriteAllowed: false,
+      sqliteWriteAllowed: false,
+      hostedDbMutationAllowed: false,
+      runtimeAdmissionAllowed: false,
+      runtimeTransitionAllowed: false,
+      executionAllowed: false,
+      dispatchAllowed: false,
+      workerExecutionAllowed: false,
+      toolExecutionAllowed: false,
+      projectCreationAllowed: false,
+      projectMutationAllowed: false,
+      deployAllowed: false,
+      releaseAllowed: false,
+      exportAllowed: false,
+      packageAllowed: false,
+      spendAllowed: false,
+      ...blockedRuntimeFlags(),
+    },
+    evidence: [
+      "reports/p1134-founder-live-agent-work-assignment-preview-report.md",
+      "reports/p1133-founder-live-agent-work-assignment-crud-model-report.md",
+      "contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json",
+    ],
+    warnings: [
+      "P113.4 does not write assignment records, unlock execution, admit runtime execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, package, or spend.",
+    ],
+  });
+}
+
+export function validateAgentWorkAssignmentReadinessViewModel(envelope = {}) {
+  const errors = [];
+  const data = envelope.data || {};
+  if (envelope.phase !== P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PREVIEW_PHASE) errors.push("phase must be P113.4");
+  for (const field of [
+    "schemaVersion",
+    "currentState",
+    "sourceContractPhase",
+    "sourceContractState",
+    "previewMode",
+    "sourceQueueSummary",
+    "assignmentReadinessSummary",
+    "assignmentSections",
+    "assignmentRows",
+    "forbiddenOperations",
+    "nextAction",
+    "blockers",
+    "disabledReason",
+    "ownerCapability",
+    "evidenceRefs",
+    "auditRefs",
+    "activityLocation",
+    "costImpact",
+  ]) {
+    if (!(field in data)) errors.push(`${field} missing`);
+  }
+  if (data.previewMode !== "local-only-dry-run") errors.push("previewMode must be local-only-dry-run");
+  if (!Array.isArray(data.assignmentRows) || data.assignmentRows.length < 3) errors.push("assignmentRows must include founder agent assignment candidates");
+  if (!Array.isArray(data.assignmentSections) || data.assignmentSections.length < 3) errors.push("assignmentSections must describe candidate, gate, and blocked authority groups");
+  for (const countField of [
+    "writableCandidateCount",
+    "persistedCandidateCount",
+    "dispatchableCandidateCount",
+    "executableCandidateCount",
+    "projectMutationCandidateCount",
+    "hostedDbMutationCandidateCount",
+    "providerSpendCandidateCount",
+  ]) {
+    if (data.assignmentReadinessSummary?.[countField] !== 0) errors.push(`${countField} must be 0`);
+  }
+  for (const flag of [
+    "assignmentWriteAllowed",
+    "localCrudAllowed",
+    "dbWriteAllowed",
+    "sqliteWriteAllowed",
+    "hostedDbMutationAllowed",
+    "runtimeAdmissionAllowed",
+    "runtimeTransitionAllowed",
+    "executionAllowed",
+    "dispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectCreationAllowed",
+    "projectMutationAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageAllowed",
+    "spendAllowed",
+  ]) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const flag of BLOCKED_RUNTIME_FLAGS) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const row of data.assignmentRows || []) {
+    for (const field of ["displayHandle", "displayLabel", "sourceQueueLabel", "proposedAgentLane", "proposedOutcome", "assignmentPosition", "assignmentState", "previewMode", "assignmentSummary", "nextAction", "blockers", "disabledReason", "ownerCapability", "evidenceRefs", "auditRefs", "activityLocation", "costImpact"]) {
+      if (!(field in row)) errors.push(`${row.displayLabel || "row"}.${field} missing`);
+    }
+    if (row.previewMode !== "local-only-dry-run") errors.push(`${row.displayLabel}.previewMode must be local-only-dry-run`);
+    for (const flag of [
+      "assignmentWriteAllowed",
+      "localCrudAllowed",
+      "dbWriteAllowed",
+      "sqliteWriteAllowed",
+      "hostedDbMutationAllowed",
+      "dispatchAllowed",
+      "executionAllowed",
+      "workerExecutionAllowed",
+      "toolExecutionAllowed",
+      "runtimeAdmissionAllowed",
+      "projectCreationAllowed",
+      "projectMutationAllowed",
+      "deployAllowed",
+      "releaseAllowed",
+      "exportAllowed",
+      "packageAllowed",
+      "spendAllowed",
+    ]) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+    for (const flag of BLOCKED_RUNTIME_FLAGS) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+  }
+  const serialized = JSON.stringify(data);
+  if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("assignment readiness preview must not expose raw private IDs");
+  if (/(assignmentId|queueItemId|workOrderId|sqliteEntity|recordRef|requestKey|founder_agent_work_assignments|founder_agent_work_assignment_events|founder_agent_work_assignment_evidence_refs)/.test(serialized)) errors.push("assignment readiness preview must not expose raw assignment record keys or DB table names");
+  if (/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write assignment now/i.test(serialized)) errors.push("assignment readiness preview must not expose fake unsafe runnable actions");
+  if (/raw JSON|raw logs|raw policy dump/i.test(serialized)) errors.push("assignment readiness preview must not expose raw dumps");
   return { valid: errors.length === 0, errors };
 }

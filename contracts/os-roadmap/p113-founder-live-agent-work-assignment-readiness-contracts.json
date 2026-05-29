@@ -387,11 +387,11 @@
     {
       "phaseId": "P113.4",
       "title": "Assignment Readiness Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build a display-safe assignment readiness preview from queue admission candidates without writing assignment records or dispatching agents.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "82d43758297e2cc11be411c1f77c0834f27fc0d5",
       "allowedFiles": [
         "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
         "scripts/check-p1134-founder-live-agent-work-assignment-preview.js",
@@ -445,7 +445,7 @@
         "buildAgentWorkAssignmentReadinessViewModel",
         "validateAgentWorkAssignmentReadinessViewModel"
       ],
-      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
+      "dataShape": "Display-safe local assignment readiness preview view model with sourceQueueSummary, assignmentReadinessSummary, assignmentSections, assignmentRows, forbiddenOperations, blockers, disabledReason, evidence/activity refs, cost impact, and explicit false safety flags. The preview performs no writes and exposes no raw assignment IDs, queue IDs, table names, raw dumps, or fake runnable actions.",
       "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -458,8 +458,8 @@
       "checkerUpdates": [
         "Add or update the dedicated P113.4 checker."
       ],
-      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.4.",
-      "phaseStatusUpdate": "P113 in progress; P113.4 complete when implemented.",
+      "docsRoadmap": "P113.4 is recorded in the P113 plan, README, platform roadmap, OS status, and generated reports. P113.5 is next.",
+      "phaseStatusUpdate": "P113 in progress; P113.4 complete; current P113.4; previous P113.3; next P113.5.",
       "validationCommands": [
         "npm run check:p1134-founder-live-agent-work-assignment-preview",
         "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
@@ -839,12 +839,12 @@
     "buildAgentWorkAssignmentReadinessViewModel"
   ],
   "knownLimitations": [
-    "P113.3 admits local SQLite CRUD only for allowlisted assignment readiness OS records after explicit local approval gates.",
+    "P113.4 is local preview only and does not write assignment records or expose runtime execution controls.",
     "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P113.4 is next for safe assignment readiness preview modeling."
+    "P113.5 is next for Command Center agent assignment UX."
   ],
-  "currentSubphase": "P113.3",
-  "previousSubphase": "P113.2",
-  "nextSubphase": "P113.4",
-  "summary": "P113 is in progress. P113.1-P113.3 define the governed local assignment readiness boundary, local SQLite schema, and approval-gated local assignment CRUD model while unsafe authority remains blocked."
+  "currentSubphase": "P113.4",
+  "previousSubphase": "P113.3",
+  "nextSubphase": "P113.5",
+  "summary": "P113 is in progress. P113.1-P113.4 define assignment readiness contracts, schema, approved local CRUD, and safe read-only preview data while unsafe authority remains blocked."
 }

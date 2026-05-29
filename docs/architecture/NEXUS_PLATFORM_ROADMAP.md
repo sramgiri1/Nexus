@@ -2924,6 +2924,14 @@ execution, project mutation, hosted DB mutation, raw SQL interface, runtime
 admission, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P113.4 is complete. P113 now has a local-only dry-run view model for
+display-safe assignment candidates, source queue summary, blockers, next
+actions, evidence/activity references, and cost impact. P113.5 is next for
+Command Center agent assignment UX. Assignment writes, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, runtime admission, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

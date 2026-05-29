@@ -14593,28 +14593,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "86899eb716e0bbf1d4cfb5d3ea5c7695ec8e580e",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
-      "detail": "P113.3 CRUD model complete; P113.4 safe assignment preview is next.",
+      "detail": "P113.4 safe assignment preview complete; P113.5 Command Center assignment UX is next.",
       "phaseId": "P113",
       "title": "Founder Live Agent Work Assignment Readiness",
       "order": 149,
       "status": "in_progress",
-      "summary": "P113 is in progress. P113.1-P113.3 define the governed local assignment readiness boundary, local SQLite schema, and approval-gated local assignment CRUD model while unsafe authority remains blocked.",
-      "nextPhase": "P113.4",
+      "summary": "P113 is in progress. P113.1-P113.4 define assignment readiness contracts, schema, approved local CRUD, and safe read-only preview data while unsafe authority remains blocked.",
+      "nextPhase": "P113.5",
       "previousPhase": "P112.7",
       "checksRun": [
+        "npm run check:p1134-founder-live-agent-work-assignment-preview",
         "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
-        "npm run check:p1132-founder-live-agent-work-assignment-schema",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P113.3 admits local SQLite CRUD only for allowlisted assignment readiness OS records after explicit local approval gates.",
+        "P113.4 is local preview only and does not write assignment records or expose runtime execution controls.",
         "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P113.4 is next for safe assignment readiness preview modeling."
+        "P113.5 is next for Command Center agent assignment UX."
       ],
       "completedAt": ""
     },
@@ -14704,23 +14704,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Assignment Readiness Preview",
-      "detail": "Planned safe assignment readiness preview.",
+      "detail": "P113.4 local assignment readiness preview complete; P113.5 Command Center assignment UX is next.",
       "phaseId": "P113.4",
       "title": "Assignment Readiness Preview / Safe Dry Run",
       "order": 149.4,
-      "status": "planned",
-      "summary": "Planned display-safe assignment readiness preview without writes or dispatch.",
+      "status": "complete",
+      "summary": "P113.4 adds a local-only display-safe assignment readiness view model and validation while writes, dispatch, execution, project mutation, hosted DB mutation, and spend remain blocked.",
       "nextPhase": "P113.5",
       "previousPhase": "P113.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1134-founder-live-agent-work-assignment-preview",
+        "npm run check:p1133-founder-live-agent-work-assignment-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P113.4 does not write assignment records, unlock runtime admission, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "Preview rows are hidden from Command Center until P113.5 renders them in scoped UX.",
+        "P113.5 is next for Command Center agent assignment UX."
+      ],
+      "completedAt": "2026-05-29T00:09:16.686Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15265,8 +15273,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P113.3",
-  "previousPhase": "P113.2",
-  "nextPhase": "P113.4",
+  "currentPhase": "P113.4",
+  "previousPhase": "P113.3",
+  "nextPhase": "P113.5",
   "currentPhaseStatus": "complete"
 }
