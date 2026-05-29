@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P127.3
-- Generated at: 2026-05-29T18:50:27.523Z
+- Generated at: 2026-05-29T18:51:19.120Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d9538112
+- Validation HEAD: 907ef169
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P127.3 | PASS |  |
 | platform roadmap records P127.3 | PASS |  |
 | phase status advanced | PASS | P127.3/P127.2/P127.4 |
-| changed files stay in P127.3 allowed scope | PASS | README.md, contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel.js |
+| changed files stay in P127.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | public docs avoid raw capture table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
