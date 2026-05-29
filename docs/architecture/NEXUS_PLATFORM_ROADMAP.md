@@ -3050,6 +3050,14 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P115.4 is complete. P115 now has a display-safe local dry-run preview model for
+runtime admission readiness candidates, including readiness sections, candidate
+rows, blockers, owner, evidence/activity, and cost posture. P115.5 is next for
+Command Center runtime admission UX. Runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

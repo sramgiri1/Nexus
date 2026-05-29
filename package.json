@@ -611,7 +611,8 @@
     "check:p1147-founder-live-agent-dispatch-readiness": "node scripts/check-p1147-founder-live-agent-dispatch-readiness.js",
     "check:p1151-founder-live-runtime-admission-contract": "node scripts/check-p1151-founder-live-runtime-admission-contract.js",
     "check:p1152-founder-live-runtime-admission-readiness": "node scripts/check-p1152-founder-live-runtime-admission-readiness.js",
-    "check:p1153-founder-live-runtime-admission-readiness": "node scripts/check-p1153-founder-live-runtime-admission-readiness.js"
+    "check:p1153-founder-live-runtime-admission-readiness": "node scripts/check-p1153-founder-live-runtime-admission-readiness.js",
+    "check:p1154-founder-live-runtime-admission-readiness": "node scripts/check-p1154-founder-live-runtime-admission-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

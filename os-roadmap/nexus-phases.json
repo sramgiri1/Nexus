@@ -10719,29 +10719,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b513aaf77eff4ee1a5127b6d3913eb9b03456533",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Runtime Admission Readiness",
-      "detail": "P115.3 governed local admission CRUD model complete; P115.4 runtime admission preview is next.",
+      "detail": "P115.4 runtime admission readiness preview complete; P115.5 Command Center UX is next.",
       "phaseId": "P115",
       "title": "Founder Live Runtime Admission Readiness",
       "order": 151,
       "status": "in_progress",
-      "summary": "P115 is in progress. P115.1-P115.3 define runtime admission readiness contracts, local schema metadata, and governed local CRUD modeling while runtime admission and execution remain blocked.",
-      "nextPhase": "P115.4",
+      "summary": "P115 is in progress. P115.1-P115.4 define runtime admission readiness contracts, local schema metadata, approved local CRUD, and safe dry-run preview modeling while runtime admission and execution remain blocked.",
+      "nextPhase": "P115.5",
       "previousPhase": "P114.7",
       "checksRun": [
+        "npm run check:p1154-founder-live-runtime-admission-readiness",
         "npm run check:p1153-founder-live-runtime-admission-readiness",
-        "npm run check:p1152-founder-live-runtime-admission-readiness",
-        "npm run check:p1151-founder-live-runtime-admission-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P115.3 admits approval-gated local SQLite CRUD for readiness records only; it does not admit runtime work.",
+        "P115.4 is a local dry-run preview only; it does not admit runtime work or unlock execution.",
         "Runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-        "P115.4 is next for safe dry-run runtime admission readiness preview modeling."
+        "P115.5 is next for Command Center runtime admission readiness UX."
       ],
       "completedAt": "2026-05-29T00:00:00.000Z"
     },
@@ -10828,23 +10827,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Runtime Admission Preview",
-      "detail": "Planned runtime admission preview / safe dry run for P115.",
+      "detail": "P115.4 runtime admission readiness preview complete; P115.5 Command Center UX is next.",
       "phaseId": "P115.4",
       "title": "Runtime Admission Preview / Safe Dry Run",
       "order": 151.4,
-      "status": "planned",
-      "summary": "Planned runtime admission preview / safe dry run for P115.",
+      "status": "complete",
+      "summary": "P115.4 builds a display-safe local dry-run preview model for runtime admission readiness candidates with useful sections, rows, blockers, owner, evidence, activity, and cost context while runtime admission, execution, dispatch, provider calls, project mutation, hosted DB mutation, raw SQL, deploy, network, and spend remain blocked.",
       "nextPhase": "P115.5",
       "previousPhase": "P115.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1154-founder-live-runtime-admission-readiness",
+        "npm run check:p1153-founder-live-runtime-admission-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P115.4 is a local dry-run preview only; it does not admit runtime work or unlock execution.",
+        "Runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+        "P115.5 is next for Command Center runtime admission readiness UX."
+      ],
+      "completedAt": "2026-05-29T00:00:00.000Z"
     },
     {
       "track": "NEXUS_OS",
@@ -10908,8 +10915,8 @@
     }
   ],
   "updatedAt": "2026-05-29T01:39:48.127Z",
-  "currentPhase": "P115.3",
-  "previousPhase": "P115.2",
-  "nextPhase": "P115.4",
+  "currentPhase": "P115.4",
+  "previousPhase": "P115.3",
+  "nextPhase": "P115.5",
   "currentPhaseStatus": "complete"
 }

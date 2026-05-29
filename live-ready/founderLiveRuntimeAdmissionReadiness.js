@@ -10,6 +10,12 @@ import {
 import { buildSafeAgentDispatchDbRecord } from "./founderLiveAgentDispatchReadiness.js";
 
 export const P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PHASE = "P115.3";
+export const P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PREVIEW_PHASE = "P115.4";
+
+export const P115_RUNTIME_ADMISSION_READINESS_PREVIEW_STATES = Object.freeze({
+  LOCAL_PREVIEW_READY_EXECUTION_BLOCKED: "founder_runtime_admission_readiness_preview_ready_execution_blocked",
+  NEEDS_DISPATCH_CONTEXT: "founder_runtime_admission_readiness_preview_needs_dispatch_context",
+});
 
 export const P115_RUNTIME_ADMISSION_DB_ENTITIES = Object.freeze([
   "founder_runtime_admission_readiness_items",
@@ -158,6 +164,128 @@ function sourceDispatchSummary(input = {}) {
     nextAction: dispatchRecord.nextAction || "Review runtime admission readiness before any later explicit runtime phase.",
     ownerCapability: dispatchRecord.ownerCapability || "NEXUS Founder Agent Dispatch Readiness DB",
   };
+}
+
+function runtimeAdmissionPreviewLanes(input = {}) {
+  return input.previewLanes || [
+    {
+      lane: "Founder Runtime Gate",
+      displayLabel: "Founder runtime readiness gate",
+      proposedOutcome: "Review whether the founder intent, PRD readiness, dispatch evidence, and local safety gates are complete enough for a later runtime admission request.",
+      ownerCapability: "NEXUS Founder Runtime Admission Review",
+    },
+    {
+      lane: "Product Scope Gate",
+      displayLabel: "Product scope readiness gate",
+      proposedOutcome: "Check product scope, data boundaries, acceptance criteria, and platform constraints before any later runtime handoff.",
+      ownerCapability: "NEXUS Product Scope Review",
+    },
+    {
+      lane: "Execution Boundary Gate",
+      displayLabel: "Execution boundary readiness gate",
+      proposedOutcome: "Confirm local-only execution boundaries, validation commands, rollback evidence, and blocked mutation authority before any later runtime transition.",
+      ownerCapability: "NEXUS Execution Boundary Review",
+    },
+  ];
+}
+
+function buildPreviewAdmissionRow(lane, index, input = {}) {
+  const dispatchSummary = sourceDispatchSummary(input);
+  const admissionRecord = buildSafeRuntimeAdmissionDbRecord("founder_runtime_admission_readiness_items", {
+    ...input,
+    admissionLane: lane.lane,
+    publicLabel: lane.displayLabel,
+    admissionSummary: lane.proposedOutcome,
+    ownerCapability: lane.ownerCapability,
+  });
+
+  return {
+    displayHandle: `runtime-preview-${index + 1}-${safeSlug(lane.lane)}`,
+    displayLabel: lane.displayLabel,
+    sourceDispatchLabel: dispatchSummary.publicLabel,
+    sourceDispatchLane: dispatchSummary.dispatchLane,
+    sourceDispatchState: dispatchSummary.dispatchState,
+    proposedAdmissionLane: lane.lane,
+    proposedOutcome: lane.proposedOutcome || admissionRecord.admissionSummary,
+    admissionPosition: index + 1,
+    admissionState: P115_RUNTIME_ADMISSION_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED,
+    previewMode: "local-only-dry-run",
+    localPreviewReady: true,
+    admissionSummary: lane.proposedOutcome || admissionRecord.admissionSummary,
+    nextAction: "Review this local runtime admission readiness candidate before any later explicitly approved runtime phase.",
+    blockers: [
+      "Runtime admission readiness preview is local and read-only.",
+      "Local readiness writes require a separate approved CRUD request.",
+      "Runtime admission remains blocked.",
+      "Execution unlock remains blocked.",
+      "Agent dispatch remains blocked.",
+      "Worker/tool execution remains blocked.",
+      "Project creation and mutation remain blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Deploy, release, export, and package actions remain blocked.",
+      "Network calls and provider spend remain blocked.",
+    ],
+    disabledReason:
+      "P115.4 previews runtime admission readiness candidates only. It cannot admit runtime work, unlock execution, dispatch agents, execute workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+    ownerCapability: lane.ownerCapability || admissionRecord.ownerCapability,
+    evidenceRefs: [
+      "reports/p1154-founder-live-runtime-admission-readiness-report.md",
+      "reports/p1153-founder-live-runtime-admission-readiness-report.md",
+    ],
+    auditRefs: ["reports/os-phase-status-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic runtime admission readiness preview only. No runtime admission, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    localCrudAllowed: false,
+    dbWriteAllowed: false,
+    sqliteWriteAllowed: false,
+    hostedDbMutationAllowed: false,
+    runtimeAdmissionAllowed: false,
+    runtimeTransitionAllowed: false,
+    executionAllowed: false,
+    executionUnlockAllowed: false,
+    dispatchAllowed: false,
+    agentDispatchAllowed: false,
+    workerExecutionAllowed: false,
+    toolExecutionAllowed: false,
+    projectCreationAllowed: false,
+    projectMutationAllowed: false,
+    deployAllowed: false,
+    releaseAllowed: false,
+    exportAllowed: false,
+    packageAllowed: false,
+    spendAllowed: false,
+    ...blockedRuntimeFlags(),
+  };
+}
+
+function buildPreviewAdmissionSections(admissionRows = []) {
+  return [
+    {
+      sectionHandle: "runtime-readiness-candidates",
+      displayLabel: "Runtime readiness candidates",
+      candidateCount: admissionRows.length,
+      blockedCount: admissionRows.length,
+      nextAction: "Show these candidates in P115.5 without admission, execution, provider, project, or deploy controls.",
+      disabledReason: "This section is read-only runtime admission readiness preview data.",
+    },
+    {
+      sectionHandle: "approval-gates",
+      displayLabel: "Runtime gates",
+      candidateCount: admissionRows.length,
+      blockedCount: admissionRows.length,
+      nextAction: "Keep operator approval, rollback, audit, validation, sqlite-live, and local write evidence separate from the preview.",
+      disabledReason: "Preview data cannot satisfy or bypass local CRUD or runtime admission gates.",
+    },
+    {
+      sectionHandle: "blocked-authority",
+      displayLabel: "Blocked authority",
+      candidateCount: admissionRows.length,
+      blockedCount: admissionRows.length,
+      nextAction: "Keep runtime authority blocked until a later explicitly scoped phase changes the contract.",
+      disabledReason: "Runtime admission, execution, provider/model calls, dispatch, project mutation, hosted DB writes, deploy, release, export, package, network calls, and spend are blocked.",
+    },
+  ];
 }
 
 export function buildSafeRuntimeAdmissionDbRecord(entityName = "", input = {}) {
@@ -478,5 +606,208 @@ export function validateFounderLiveRuntimeAdmissionReadinessContract(envelope = 
   const serialized = JSON.stringify(data);
   if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("Founder runtime admission readiness CRUD model must not expose raw private IDs");
   if (/admit runtime now|run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now|execute now/i.test(serialized)) errors.push("Founder runtime admission readiness CRUD model must not expose fake unsafe runnable actions");
+  return { valid: errors.length === 0, errors };
+}
+
+export function buildRuntimeAdmissionReadinessViewModel(input = {}) {
+  const contractEnvelope = input.contractEnvelope || buildFounderLiveRuntimeAdmissionReadinessContract(input);
+  const dispatchSummary = sourceDispatchSummary(input);
+  const admissionRows = runtimeAdmissionPreviewLanes(input).map((lane, index) => buildPreviewAdmissionRow(lane, index, input));
+  const admissionSections = buildPreviewAdmissionSections(admissionRows);
+  const previewReady = admissionRows.length > 0;
+
+  return createPassResult({
+    phase: P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PREVIEW_PHASE,
+    mode: "founder-live-runtime-admission-readiness-preview",
+    source: "live-ready/founderLiveRuntimeAdmissionReadiness.js",
+    summary: "Founder live runtime admission readiness preview is assembled locally from display-safe dispatch context; runtime admission and live execution remain blocked.",
+    data: {
+      schemaVersion: "1.0",
+      currentState: previewReady
+        ? P115_RUNTIME_ADMISSION_READINESS_PREVIEW_STATES.LOCAL_PREVIEW_READY_EXECUTION_BLOCKED
+        : P115_RUNTIME_ADMISSION_READINESS_PREVIEW_STATES.NEEDS_DISPATCH_CONTEXT,
+      sourceContractPhase: contractEnvelope.phase,
+      sourceContractState: contractEnvelope.data?.currentState || "",
+      previewMode: "local-only-dry-run",
+      sourceDispatchSummary: dispatchSummary,
+      runtimeAdmissionReadinessSummary: {
+        previewReady,
+        candidateCount: admissionRows.length,
+        blockedCandidateCount: admissionRows.length,
+        writableCandidateCount: 0,
+        persistedCandidateCount: 0,
+        runtimeAdmissibleCandidateCount: 0,
+        executableCandidateCount: 0,
+        dispatchableCandidateCount: 0,
+        projectMutationCandidateCount: 0,
+        hostedDbMutationCandidateCount: 0,
+        providerSpendCandidateCount: 0,
+      },
+      admissionSections,
+      admissionRows,
+      forbiddenOperations: [...FORBIDDEN_OPERATIONS],
+      nextAction: previewReady
+        ? "Render P115.5 Command Center runtime admission readiness preview on non-chat founder pages without admission or execution controls."
+        : "Complete display-safe dispatch readiness context before runtime admission readiness preview assembly.",
+      blockers: [
+        "Runtime admission readiness preview is local and read-only.",
+        "Local readiness writes require explicit operator approval gates in a separate CRUD request.",
+        "Runtime admission remains blocked.",
+        "Execution unlock remains blocked.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project creation and mutation remain blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Provider/model calls remain blocked.",
+        "Deploy, release, export, and package actions remain blocked.",
+        "Network calls and provider spend remain blocked.",
+      ],
+      disabledReason:
+        "P115.4 is a local runtime admission readiness preview only. It does not admit runtime work, unlock execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+      ownerCapability: "NEXUS Founder Runtime Admission Readiness Preview",
+      evidenceRefs: [
+        "reports/p1154-founder-live-runtime-admission-readiness-report.md",
+        "reports/p1153-founder-live-runtime-admission-readiness-report.md",
+      ],
+      auditRefs: ["reports/os-phase-status-report.md"],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic runtime admission readiness preview only. No runtime admission, provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      commandCenterVisible: false,
+      localCrudAllowed: false,
+      dbWriteAllowed: false,
+      sqliteWriteAllowed: false,
+      hostedDbMutationAllowed: false,
+      runtimeAdmissionAllowed: false,
+      runtimeTransitionAllowed: false,
+      executionAllowed: false,
+      executionUnlockAllowed: false,
+      dispatchAllowed: false,
+      agentDispatchAllowed: false,
+      workerExecutionAllowed: false,
+      toolExecutionAllowed: false,
+      projectCreationAllowed: false,
+      projectMutationAllowed: false,
+      deployAllowed: false,
+      releaseAllowed: false,
+      exportAllowed: false,
+      packageAllowed: false,
+      spendAllowed: false,
+      ...blockedRuntimeFlags(),
+    },
+    evidence: [
+      "reports/p1154-founder-live-runtime-admission-readiness-report.md",
+      "reports/p1153-founder-live-runtime-admission-readiness-report.md",
+      "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+    ],
+    warnings: [
+      "P115.4 does not admit runtime work, unlock execution, call providers, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, deploy, package, or spend.",
+    ],
+  });
+}
+
+export function validateRuntimeAdmissionReadinessViewModel(envelope = {}) {
+  const errors = [];
+  const data = envelope.data || {};
+  if (envelope.phase !== P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PREVIEW_PHASE) errors.push("phase must be P115.4");
+  for (const field of [
+    "schemaVersion",
+    "currentState",
+    "sourceContractPhase",
+    "sourceContractState",
+    "previewMode",
+    "sourceDispatchSummary",
+    "runtimeAdmissionReadinessSummary",
+    "admissionSections",
+    "admissionRows",
+    "forbiddenOperations",
+    "nextAction",
+    "blockers",
+    "disabledReason",
+    "ownerCapability",
+    "evidenceRefs",
+    "auditRefs",
+    "activityLocation",
+    "costImpact",
+  ]) {
+    if (!(field in data)) errors.push(`${field} missing`);
+  }
+  if (data.previewMode !== "local-only-dry-run") errors.push("previewMode must be local-only-dry-run");
+  if (!Array.isArray(data.admissionRows) || data.admissionRows.length < 3) errors.push("admissionRows must include runtime admission readiness candidates");
+  if (!Array.isArray(data.admissionSections) || data.admissionSections.length < 3) errors.push("admissionSections must describe candidate, gate, and blocked authority groups");
+  for (const countField of [
+    "writableCandidateCount",
+    "persistedCandidateCount",
+    "runtimeAdmissibleCandidateCount",
+    "executableCandidateCount",
+    "dispatchableCandidateCount",
+    "projectMutationCandidateCount",
+    "hostedDbMutationCandidateCount",
+    "providerSpendCandidateCount",
+  ]) {
+    if (data.runtimeAdmissionReadinessSummary?.[countField] !== 0) errors.push(`${countField} must be 0`);
+  }
+  for (const flag of [
+    "localCrudAllowed",
+    "dbWriteAllowed",
+    "sqliteWriteAllowed",
+    "hostedDbMutationAllowed",
+    "runtimeAdmissionAllowed",
+    "runtimeTransitionAllowed",
+    "executionAllowed",
+    "executionUnlockAllowed",
+    "dispatchAllowed",
+    "agentDispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectCreationAllowed",
+    "projectMutationAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageAllowed",
+    "spendAllowed",
+  ]) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const flag of BLOCKED_RUNTIME_FLAGS) {
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const row of data.admissionRows || []) {
+    for (const field of ["displayHandle", "displayLabel", "sourceDispatchLabel", "proposedAdmissionLane", "proposedOutcome", "admissionPosition", "admissionState", "previewMode", "admissionSummary", "nextAction", "blockers", "disabledReason", "ownerCapability", "evidenceRefs", "auditRefs", "activityLocation", "costImpact"]) {
+      if (!(field in row)) errors.push(`${row.displayLabel || "row"}.${field} missing`);
+    }
+    if (row.previewMode !== "local-only-dry-run") errors.push(`${row.displayLabel}.previewMode must be local-only-dry-run`);
+    for (const flag of [
+      "localCrudAllowed",
+      "dbWriteAllowed",
+      "sqliteWriteAllowed",
+      "hostedDbMutationAllowed",
+      "runtimeAdmissionAllowed",
+      "runtimeTransitionAllowed",
+      "executionAllowed",
+      "executionUnlockAllowed",
+      "dispatchAllowed",
+      "agentDispatchAllowed",
+      "workerExecutionAllowed",
+      "toolExecutionAllowed",
+      "projectCreationAllowed",
+      "projectMutationAllowed",
+      "deployAllowed",
+      "releaseAllowed",
+      "exportAllowed",
+      "packageAllowed",
+      "spendAllowed",
+    ]) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+    for (const flag of BLOCKED_RUNTIME_FLAGS) {
+      if (row[flag] !== false) errors.push(`${row.displayLabel}.${flag} must be false`);
+    }
+  }
+  const serialized = JSON.stringify(data);
+  if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("runtime admission readiness preview must not expose raw private IDs");
+  if (/(runtimeAdmissionId|dispatchReadinessId|assignmentId|queueItemId|workOrderId|sqliteEntity|recordRef|requestKey|founder_runtime_admission_readiness_items|founder_runtime_admission_events|founder_runtime_admission_evidence_refs)/.test(serialized)) errors.push("runtime admission readiness preview must not expose raw record keys or DB table names");
+  if (/run now|execute now|deploy now|apply now|approve now|admit now|call provider now|create project now|dispatch agent now|write sqlite now|write runtime now/i.test(serialized)) errors.push("runtime admission readiness preview must not expose fake unsafe runnable actions");
+  if (/raw JSON|raw logs|raw policy dump/i.test(serialized)) errors.push("runtime admission readiness preview must not expose raw dumps");
   return { valid: errors.length === 0, errors };
 }

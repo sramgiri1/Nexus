@@ -437,3 +437,160 @@ blocked and use readiness-only language.
 Rollback plan: remove P115.3 helper/checker/docs/status/package/report
 updates, restore P115 to P115.2 complete with P115.3 planned, and keep P115.2
 schema metadata intact.
+
+## P115.4 Runtime Admission Preview / Safe Dry Run
+
+Status: complete
+
+Phase: P115 Founder Live Runtime Admission Readiness
+Subphase: P115.4 Runtime Admission Preview / Safe Dry Run
+Goal: build a display-safe local dry-run view model for runtime admission
+readiness candidates without writing readiness records, admitting runtime work,
+or changing Command Center source yet.
+
+Why this is needed: P115.3 can persist approved local readiness records, but
+Command Center needs a clean preview model before P115.5 can show useful
+runtime readiness on founder pages without exposing raw DB details or fake
+actions.
+
+User/operator impact: operators can inspect prepared readiness lanes, current
+blocked state, next action, blockers, owner capability, evidence/activity
+location, and local-only cost impact before any later explicitly scoped runtime
+authority.
+
+Command Center impact: no Command Center source change in P115.4. The preview
+model remains hidden from Command Center until P115.5 renders it on relevant
+non-chat founder pages. Chat with NEXUS remains clean and chat-focused.
+
+Safety impact: P115.4 is local dry-run only. It does not write readiness
+records, unlock execution, admit runtime work, call providers/models, dispatch
+agents, execute workers/tools, mutate projects, use hosted DBs, expose raw SQL,
+deploy, release, export, package, use network calls, or spend.
+
+Cost impact: deterministic local preview only; no provider/model calls, network
+calls, deploy/package work, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit: branch
+`codex/nexus-e2e-phase-validation`; expected base commit `bf5b8c78`.
+
+Allowed files:
+- `live-ready/founderLiveRuntimeAdmissionReadiness.js`
+- `scripts/check-p1154-founder-live-runtime-admission-readiness.js`
+- `contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json`
+- `docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1153-founder-live-runtime-admission-readiness-report.md`
+- `reports/p1154-founder-live-runtime-admission-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- `local-state/runtime/**`
+
+Exact files/modules changed: updated
+`live-ready/founderLiveRuntimeAdmissionReadiness.js`; added
+`scripts/check-p1154-founder-live-runtime-admission-readiness.js`; registered
+the package script; updated P115 contract/status/docs; and regenerated reports.
+
+Expected exports and data shapes:
+- `P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PREVIEW_PHASE`
+- `P115_RUNTIME_ADMISSION_READINESS_PREVIEW_STATES`
+- `buildRuntimeAdmissionReadinessViewModel`
+- `validateRuntimeAdmissionReadinessViewModel`
+
+The preview data shape includes `schemaVersion`, `currentState`,
+`sourceContractPhase`, `sourceContractState`, `previewMode`,
+`sourceDispatchSummary`, readiness summary counts, admission sections,
+admission rows, forbidden operations, next action, blockers, disabled reason,
+owner capability, evidence/audit/activity/cost refs, `commandCenterVisible:
+false`, and all write/runtime/dispatch/project/deploy/package/spend flags
+false.
+
+Command Center UX requirements: no UI source change in P115.4. P115.5 must
+render the display-safe runtime readiness preview on relevant non-chat founder
+pages and continue to hide raw DB details and fake runnable controls.
+
+Dark/light/system theme requirements: preserve existing theme behavior. No UI
+source changes are made.
+
+Playwright tests: no new Playwright test is added because P115.4 has no UI
+source changes. Existing route-wide safety tests remain in place.
+
+Checker updates: P115.4 adds a dedicated preview checker that validates the
+dry-run shape, useful candidate rows/sections, safe dispatch context
+carry-forward, false unsafe flags, docs/status updates, allowed file scope, and
+absence of raw private IDs, raw record keys/table names, raw dumps, or fake
+runnable actions.
+
+Docs/README/roadmap updates: P115.4 is recorded in this plan, README, platform
+roadmap, P115 contract, OS roadmap/status, and generated reports. P115.5 is
+next for Command Center runtime admission readiness UX.
+
+OS phase status update: P115 is in progress; P115.4 is complete; current phase
+P115.4; previous P115.3; next P115.5.
+
+Validation commands:
+- `npm run check:p1154-founder-live-runtime-admission-readiness`
+- `npm run check:p1153-founder-live-runtime-admission-readiness`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no DB schema/runtime
+files or dashboard source files changed; no persistent runtime DB remains; no
+runtime admission, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy,
+release, export, package, network, or provider spend authority is enabled; no
+DemoApp exposure, raw private IDs, raw DB table names, raw JSON/log/policy
+dumps, or fake actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P115.4 files>`
+- `git commit -m "feat(nexus): implement p1154 runtime admission preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: dry-run runtime readiness can be mistaken for live runtime
+admission. P115.4 keeps all write, admission, execution, project mutation,
+hosted DB mutation, and provider spend fields false and marks the model Command
+Center hidden until P115.5.
+
+Rollback plan: remove P115.4 preview exports/checker/docs/status/report
+updates, restore P115 to P115.3 complete with P115.4 planned, and keep P115.3
+CRUD unchanged.
