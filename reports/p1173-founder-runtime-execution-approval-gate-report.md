@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.3
-- Generated at: 2026-05-29T04:12:02.521Z
+- Generated at: 2026-05-29T04:12:48.164Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 7673310e
+- Validation HEAD: e22e6e98
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -45,8 +45,8 @@
 | platform roadmap records P117.3 | PASS |  |
 | P117.2 checker accepts P117.3 handoff | PASS |  |
 | phase status advanced | PASS | P117.3/P117.2/P117.4 |
-| changed files stay in P117.3 allowed scope | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, reports/p1172-founder-runtime-execution-approval-gate-report.md, live-ready/founderRuntimeExecutionApprovalGate.js, reports/p1173-founder-runtime-execution-approval-gate-report.md, scripts/check-p1173-founder-runtime-execution-approval-gate.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, reports/p1172-founder-runtime-execution-approval-gate-report.md, live-ready/founderRuntimeExecutionApprovalGate.js, reports/p1173-founder-runtime-execution-approval-gate-report.md, scripts/check-p1173-founder-runtime-execution-approval-gate.js |
+| changed files stay in P117.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, reports/p1172-founder-runtime-execution-approval-gate-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, reports/p1172-founder-runtime-execution-approval-gate-report.md |
 | public docs avoid raw approval evidence table names | PASS |  |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |
