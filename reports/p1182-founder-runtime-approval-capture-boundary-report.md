@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.2
-- Generated at: 2026-05-29T05:06:34.542Z
+- Generated at: 2026-05-29T05:07:06.069Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e6695c2b
+- Validation HEAD: ad4aade1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | README records P118.2 | PASS |  |
 | platform roadmap records P118.2 | PASS |  |
 | phase status advanced | PASS | P118.2/P118.1/P118.3 |
-| changed files stay in P118.2 allowed scope | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js, reports/p1182-founder-runtime-approval-capture-boundary-report.md, scripts/check-p1182-founder-runtime-approval-capture-boundary.js, shared/founderApprovalCaptureSchemaMetadata.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js, reports/p1182-founder-runtime-approval-capture-boundary-report.md, scripts/check-p1182-founder-runtime-approval-capture-boundary.js, shared/founderApprovalCaptureSchemaMetadata.js |
+| changed files stay in P118.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

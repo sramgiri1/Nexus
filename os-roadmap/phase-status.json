@@ -16215,7 +16215,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ad4aade1",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
       "detail": "P118.2 approval capture schema metadata complete; P118.3 intent model is next.",
@@ -16269,7 +16269,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ad4aade1",
       "commandCenterVisible": true,
       "label": "Approval Capture Schema",
       "detail": "Approval capture schema metadata complete without DB files or writes.",
