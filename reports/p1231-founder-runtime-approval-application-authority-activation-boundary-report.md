@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P123.1
-- Generated at: 2026-05-29T14:33:09.853Z
+- Generated at: 2026-05-29T14:34:24.301Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1f3458f1
+- Validation HEAD: 6b15a785
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | platform roadmap records P123.1 | PASS |  |
 | README records P123.1 | PASS |  |
 | phase status advanced | PASS | P123.1/P122.7/P123.2 |
-| changed files stay in P123.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1227-founder-runtime-approval-decision-application-authority-handoff-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, reports/p1231-founder-runtime-approval-application-authority-activation-boundary-report.md, scripts/check-p1231-founder-runtime-approval-application-authority-activation-boundary.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1227-founder-runtime-approval-decision-application-authority-handoff-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1227-founder-runtime-approval-decision-application-authority-handoff.js, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, reports/p1231-founder-runtime-approval-application-authority-activation-boundary-report.md, scripts/check-p1231-founder-runtime-approval-application-authority-activation-boundary.js |
+| changed files stay in P123.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | P123.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | no unsafe imports or URLs | PASS |  |

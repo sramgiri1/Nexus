@@ -8373,7 +8373,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6b15a785",
       "commandCenterVisible": true,
       "label": "Activation Boundary",
       "detail": "P123.1 activation boundary contract complete; P123.2 activation eligibility metadata is next.",
@@ -8407,7 +8407,7 @@
       "order": 159.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6b15a785",
       "commandCenterVisible": true,
       "detail": "P123.1 activation boundary contract complete; P123.2 activation eligibility metadata is next.",
       "summary": "Created the P123 activation boundary contract, P123.1-P123.7 implementation-grade subphase split, safety rules, reuse rules, validation commands, docs, status handoff, and P122.7 handoff acceptance without enabling live authority.",
@@ -17501,7 +17501,7 @@
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "6b15a785",
     "commandCenterVisible": true,
     "label": "Activation Boundary",
     "detail": "P123.1 activation boundary contract complete; P123.2 activation eligibility metadata is next.",
