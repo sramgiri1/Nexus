@@ -375,9 +375,183 @@ Rollback plan: remove the P120.2 helper/checker/docs/status/report changes,
 restore P120.2 to planned, set current phase back to P120.1, and keep P120.1
 complete.
 
+## P120.3 Governed Local Approval Decision Persistence Intent Model
+
+Phase: P120 Founder Runtime Approval Decision Persistence Boundary
+
+Subphase: P120.3 Governed Local Approval Decision Persistence Intent Model
+
+Status: complete
+
+Classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit: `403b08d7`
+
+Goal: add a local intent model that translates P120.2 persistence schema
+metadata into founder-safe readiness rows, blockers, next action, disabled
+reason, owner capability, evidence/activity labels, and cost impact without
+writing records or enabling approvals.
+
+Why this is needed: P120.2 defines display-safe persistence schema metadata.
+P120.3 gives later P120 preview and UX work a deterministic local model for
+approval decision persistence planning while preserving the boundary that no
+decision is captured, persisted, or used to unlock execution.
+
+User/operator impact: operators can inspect a useful local persistence intent
+shape with clear blockers and next action. The subphase does not create a live
+approval workflow, DB record, runtime record, project mutation, provider call,
+or execution path.
+
+Command Center impact: no Command Center source changes in P120.3. The model
+is display-safe for later P120.4/P120.5 surfaces. Primary UX must not show raw
+JSON, raw logs, raw policy dumps, raw DB table names, private project IDs,
+DemoApp outside demo mode, approve/reject controls, save controls, execution
+controls, or fake runnable actions.
+
+Safety impact: P120.3 remains model-only and local-only. Approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+hosted DB mutation, raw SQL, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy, release, export, package, network calls, and provider spend remain
+blocked.
+
+Cost impact: no provider calls, network calls, hosted services, or provider
+spend.
+
+Project/OS scope: OS-only. No project source, CareLoop source, generated app
+source, dashboard source, DB implementation, provider implementation,
+tool/worker runtime, deploy/release/export/package files, or env files are
+allowed.
+
+Files expected to change:
+- `shared/founderApprovalDecisionPersistenceIntentModel.js`
+- `scripts/check-p1203-founder-runtime-approval-decision-persistence-boundary.js`
+- `contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json`
+- `docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1202-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1203-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_INTENT_MODEL_PHASE`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_INTENT_MODEL_VERSION`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_INTENT_STATES`
+- `buildFounderApprovalDecisionPersistenceIntentModel`
+- `validateFounderApprovalDecisionPersistenceIntentModel`
+- The model shape includes phase/schema/model versions, source schema phase,
+  `modelOnly`, `localOnly`, `commandCenterVisible: false`, display-safe
+  founder summary, readiness rows, blockers, next action, disabled reason,
+  owner capability, evidence/activity labels, cost label, zero
+  persistence/write/execution/spend counts, and all authority flags false.
+
+Command Center UX requirements:
+- Preserve existing full Command Center and Lite UX.
+- Do not expose P120.3 as a live control.
+- Do not expose DemoApp in full Command Center.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw DB table names,
+  private IDs, approve/reject controls, save controls, execution controls, or
+  fake runnable actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- No CSS or route change is included in P120.3.
+
+Playwright tests: no new Playwright test is added because P120.3 does not
+modify dashboard source. Existing route-wide safety tests remain in scope for
+future UX subphases.
+
+Checker updates: add a dedicated P120.3 checker that verifies model exports,
+P120.2 schema reuse, local-only hidden status, zero candidate counts, blocked
+readiness rows, all authority flags false, no DB/runtime/provider imports,
+docs/status updates, allowed diff scope, forbidden path safety, and no fake
+runnable claims.
+
+Docs/README/roadmap updates: P120.3 is recorded in this plan, README, platform
+roadmap, P120 contract, OS roadmap/status, and generated reports. P120.4 is
+next for safe dry-run planning.
+
+OS phase status update: P120 is in progress; P120.3 is complete; current phase
+P120.3; previous P120.2; next P120.4.
+
+Validation commands:
+- `npm run check:p1203-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1202-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P120.3 files>`
+- `git commit -m "feat(nexus): implement p1203 approval decision persistence intent"`
+- stamp P120/P120.3 status with the implementation commit
+- `git add <allowed P120.3 status/report files>`
+- `git commit -m "chore(nexus): stamp p1203 approval decision persistence intent"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- Confirm no approval capture, approval persistence, or approve/reject decision
+  recording authority is enabled.
+- Confirm no DB/runtime write, hosted DB mutation, raw SQL, provider/model
+  call, agent dispatch, worker/tool execution, project mutation, deploy,
+  release, export, package, network call, or provider spend authority exists.
+- Confirm no project-owned, CareLoop, generated app, dashboard, DB, provider,
+  tool, worker, deploy, release, export, package, or env path changed.
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: P120.3 could be misread as live persistence. The model and checker
+keep `modelOnly: true`, `localOnly: true`, `commandCenterVisible: false`, zero
+candidate counts, blocked readiness rows, and all authority flags false.
+
+Rollback plan: remove the P120.3 helper/checker/docs/status/report changes,
+restore P120.3 to planned, set current phase back to P120.2, and keep P120.2
+complete.
+
 ## Planned Subphase Controls
 
-P120.2 Approval Decision Persistence Schema Metadata is complete. P120.3 is
-next for a governed local persistence intent model, with approval persistence,
-DB/runtime writes, approve/reject decision recording, and execution still
-blocked unless a future subphase explicitly grants narrow authority.
+P120.3 Governed Local Approval Decision Persistence Intent Model is complete.
+P120.4 is next for safe dry-run planning, with approval persistence, DB/runtime
+writes, approve/reject decision recording, and execution still blocked unless a
+future subphase explicitly grants narrow authority.

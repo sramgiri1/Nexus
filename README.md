@@ -1040,6 +1040,16 @@ The Command Center and local operator surface have:
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   raw SQL interface, deploy, release, export, package, network call, and
   provider spend remain unavailable.
+- P120.3 governed local approval decision persistence intent model: local-only
+  intent modeling now maps P120.2 metadata into display-safe readiness rows,
+  blockers, next action, disabled reason, owner capability, evidence/activity
+  labels, and cost impact while keeping all persistence/write/execution counts
+  at zero. P120.4 is next for a safe dry-run preview. Approval capture,
+  approval persistence, approve/reject decision recording, DB/runtime writes,
+  runtime execution, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 
