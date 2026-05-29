@@ -16440,7 +16440,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b1641e3a",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
       "detail": "P119.1 approval decision recording contract complete; P119.2 schema metadata is next.",
@@ -16467,7 +16467,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b1641e3a",
       "commandCenterVisible": true,
       "label": "Approval Decision Contract",
       "detail": "Approval decision recording boundary contract and policy are recorded; decision recording remains unavailable.",
@@ -16613,7 +16613,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T05:59:39.070Z",
+  "updatedAt": "2026-05-29T06:00:51.594Z",
   "currentPhase": "P119.1",
   "previousPhase": "P118.7",
   "nextPhase": "P119.2",

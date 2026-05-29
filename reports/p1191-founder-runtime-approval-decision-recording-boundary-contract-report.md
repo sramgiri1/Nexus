@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P119.1
-- Generated at: 2026-05-29T05:59:49.603Z
+- Generated at: 2026-05-29T06:00:58.701Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8ad466c0
+- Validation HEAD: b1641e3a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | README records P119.1 | PASS |  |
 | platform roadmap records P119.1 | PASS |  |
 | phase status advanced | PASS | P119.1/P118.7/P119.2 |
-| changed files stay in P119.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1187-founder-runtime-approval-capture-boundary.js, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, scripts/check-p1191-founder-runtime-approval-decision-recording-boundary-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1187-founder-runtime-approval-capture-boundary.js, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, scripts/check-p1191-founder-runtime-approval-decision-recording-boundary-contract.js |
+| changed files stay in P119.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw approval keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
