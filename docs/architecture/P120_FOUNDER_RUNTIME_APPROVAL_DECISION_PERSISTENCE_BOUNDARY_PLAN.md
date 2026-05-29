@@ -549,9 +549,181 @@ Rollback plan: remove the P120.3 helper/checker/docs/status/report changes,
 restore P120.3 to planned, set current phase back to P120.2, and keep P120.2
 complete.
 
+## P120.4 Approval Decision Persistence Safe Dry Run
+
+Phase: P120 Founder Runtime Approval Decision Persistence Boundary
+
+Subphase: P120.4 Approval Decision Persistence Safe Dry Run
+
+Status: complete
+
+Classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit: `9b76d00f`
+
+Goal: add a local safe-dry-run preview that assembles approval decision
+persistence readiness from P120.3 intent and P120.2 metadata without saving
+decisions, writing DB/runtime records, or unlocking execution.
+
+Why this is needed: P120.3 gives the local intent model. P120.4 turns it into
+a deterministic preview envelope that later Command Center UX can render as
+useful status without granting live persistence authority.
+
+User/operator impact: operators get a structured preview of persistence
+readiness, blocked rows, disabled reasons, owner capability, evidence/activity
+locations, and cost impact. There is still no live approve/reject, save,
+DB write, runtime write, or agent execution path.
+
+Command Center impact: no Command Center source changes in P120.4. The preview
+is `commandCenterVisible: false` until the scoped UX subphase. Primary UX must
+not show raw JSON, raw logs, raw policy dumps, raw DB table names, private
+project IDs, DemoApp outside demo mode, fake runnable actions, save controls,
+approve/reject controls, or execution controls.
+
+Safety impact: P120.4 remains dry-run-only and local-only. Approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+hosted DB mutation, raw SQL, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy, release, export, package, network calls, and provider spend remain
+blocked.
+
+Cost impact: no provider calls, network calls, hosted services, or provider
+spend.
+
+Project/OS scope: OS-only. No project source, CareLoop source, generated app
+source, dashboard source, DB implementation, provider implementation,
+tool/worker runtime, deploy/release/export/package files, or env files are
+allowed.
+
+Files expected to change:
+- `shared/founderApprovalDecisionPersistencePreview.js`
+- `scripts/check-p1204-founder-runtime-approval-decision-persistence-boundary.js`
+- `contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json`
+- `docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1203-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1204-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_PREVIEW_PHASE`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_PREVIEW_VERSION`
+- `FOUNDER_APPROVAL_DECISION_PERSISTENCE_PREVIEW_STATES`
+- `buildFounderApprovalDecisionPersistencePreview`
+- `validateFounderApprovalDecisionPersistencePreview`
+- The preview shape is a PASS result envelope with phase P120.4,
+  `previewMode: local-only-persistence-dry-run`, `dryRunOnly: true`,
+  `commandCenterVisible: false`, source phases P120.3/P120.2, display-safe
+  preview rows and sections, evidence/activity/cost labels, zero
+  persistence/write/execution/spend counts, and all authority flags false.
+
+Command Center UX requirements:
+- Preserve existing full Command Center and Lite UX.
+- Do not expose the preview as a live control.
+- Do not expose DemoApp in full Command Center.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw DB table names,
+  private IDs, approve/reject controls, save controls, execution controls, or
+  fake runnable actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- No CSS or route change is included in P120.4.
+
+Playwright tests: no new Playwright test is added because P120.4 does not
+modify dashboard source. Existing route-wide safety tests remain in scope for
+future UX subphases.
+
+Checker updates: add a dedicated P120.4 checker that verifies preview exports,
+P120.3/P120.2 reuse, result envelope shape, dry-run-only status, hidden UX,
+blocked rows, zero unsafe counts, all authority flags false, no unsafe imports,
+docs/status updates, allowed diff scope, forbidden path safety, and no fake
+runnable claims.
+
+Docs/README/roadmap updates: P120.4 is recorded in this plan, README, platform
+roadmap, P120 contract, OS roadmap/status, and generated reports. P120.5 is
+next for the scoped Command Center persistence boundary UX.
+
+OS phase status update: P120 is in progress; P120.4 is complete; current phase
+P120.4; previous P120.3; next P120.5.
+
+Validation commands:
+- `npm run check:p1204-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1203-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P120.4 files>`
+- `git commit -m "feat(nexus): implement p1204 approval decision persistence preview"`
+- stamp P120/P120.4 status with the implementation commit
+- `git add <allowed P120.4 status/report files>`
+- `git commit -m "chore(nexus): stamp p1204 approval decision persistence preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- Confirm no approval capture, approval persistence, or approve/reject decision
+  recording authority is enabled.
+- Confirm no DB/runtime write, hosted DB mutation, raw SQL, provider/model
+  call, agent dispatch, worker/tool execution, project mutation, deploy,
+  release, export, package, network call, or provider spend authority exists.
+- Confirm no project-owned, CareLoop, generated app, dashboard, DB, provider,
+  tool, worker, deploy, release, export, package, or env path changed.
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: P120.4 could be mistaken for live persistence. The preview and
+checker keep `dryRunOnly: true`, `commandCenterVisible: false`, zero unsafe
+counts, blocked preview rows, and all authority flags false.
+
+Rollback plan: remove the P120.4 helper/checker/docs/status/report changes,
+restore P120.4 to planned, set current phase back to P120.3, and keep P120.3
+complete.
+
 ## Planned Subphase Controls
 
-P120.3 Governed Local Approval Decision Persistence Intent Model is complete.
-P120.4 is next for safe dry-run planning, with approval persistence, DB/runtime
-writes, approve/reject decision recording, and execution still blocked unless a
-future subphase explicitly grants narrow authority.
+P120.4 Approval Decision Persistence Safe Dry Run is complete. P120.5 is next
+for scoped Command Center persistence boundary UX, with approval persistence,
+DB/runtime writes, approve/reject decision recording, and execution still
+blocked unless a future subphase explicitly grants narrow authority.

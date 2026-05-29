@@ -11853,27 +11853,27 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "45c8823b",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Decision Persistence",
-      "detail": "P120.3 persistence intent model complete; P120.4 safe dry run is next.",
+      "detail": "P120.4 persistence safe dry run complete; P120.5 Command Center UX is next.",
       "phaseId": "P120",
       "title": "Founder Runtime Approval Decision Persistence Boundary",
       "order": 156,
       "status": "in_progress",
-      "summary": "P120 is in progress with the approval decision persistence boundary contract, browser-safe schema metadata, and governed local persistence intent model complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P120.4",
-      "previousPhase": "P120.3",
+      "summary": "P120 is in progress with the approval decision persistence boundary contract, browser-safe schema metadata, governed local persistence intent model, and local safe dry-run preview complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P120.5",
+      "previousPhase": "P120.4",
       "checksRun": [
+        "npm run check:p1204-founder-runtime-approval-decision-persistence-boundary",
         "npm run check:p1203-founder-runtime-approval-decision-persistence-boundary",
-        "npm run check:p1202-founder-runtime-approval-decision-persistence-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P120.3 is local intent modeling only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P120.4 is next for safe dry-run planning without persistence authority."
+        "P120.4 is local dry-run preview only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P120.5 is next for scoped Command Center persistence boundary UX without persistence authority."
       ],
       "completedAt": ""
     },
@@ -11957,23 +11957,29 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Persistence Safe Dry Run",
-      "detail": "Planned P120 subphase. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "detail": "Approval decision persistence safe dry-run preview complete.",
       "phaseId": "P120.4",
       "title": "Approval Decision Persistence Safe Dry Run",
       "order": 156.4,
-      "status": "planned",
-      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Assembled P120.3 intent and P120.2 metadata into a local result-envelope dry-run preview with display-safe preview rows, blocked sections, evidence/activity labels, cost impact, zero persistence/write/execution/spend counts, and all authority flags false. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P120.5",
       "previousPhase": "P120.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1204-founder-runtime-approval-decision-persistence-boundary",
+        "npm run check:p1203-founder-runtime-approval-decision-persistence-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P120.4 is dry-run-only and local-only; it does not capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T11:56:49.964Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12037,8 +12043,8 @@
     }
   ],
   "updatedAt": "2026-05-29T06:07:47.353Z",
-  "currentPhase": "P120.3",
-  "previousPhase": "P120.2",
-  "nextPhase": "P120.4",
+  "currentPhase": "P120.4",
+  "previousPhase": "P120.3",
+  "nextPhase": "P120.5",
   "currentPhaseStatus": "complete"
 }
