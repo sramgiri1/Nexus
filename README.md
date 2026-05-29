@@ -1296,6 +1296,16 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P124.2 approval application authority grant eligibility metadata:
+  browser-safe metadata now reuses the P123 activation boundary metadata and
+  defines prior activation boundary, grant scope, runtime write guard, and
+  operator evidence sections for local grant intent planning. P124.3 is next
+  for the governed grant intent model. Authority grant, activation, approval
+  application, approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

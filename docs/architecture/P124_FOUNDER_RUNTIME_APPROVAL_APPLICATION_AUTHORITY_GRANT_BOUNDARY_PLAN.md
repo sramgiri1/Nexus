@@ -181,17 +181,143 @@ P124.1-P124.7 OS checker recognition, and return current phase to P123.7.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P124.2 Grant Eligibility Metadata
 
-P124.2 Grant Eligibility Metadata: metadata-only, allowed files are the planned
-shared grant eligibility metadata module plus P124 contract/docs/checker/status
-and reports. It forbids project, CareLoop, generated project, dashboard source,
-dashboard tests, DB/runtime, provider/tool/worker, deploy/release/export/package,
-local runtime state, and env files. Expected exports are
-`FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_ELIGIBILITY_METADATA` and
-`getFounderApprovalApplicationAuthorityGrantEligibilityMetadata`. It must
-preserve Command Center UX, theme behavior, checker coverage, docs, reports,
-status, validation commands, safety checks, and commit/push flow.
+Phase: P124
+Subphase: P124.2
+Goal: add browser-safe grant eligibility metadata that reuses P123 activation
+metadata and defines local grant readiness sections for P124.3 without granting
+authority.
+Why this is needed: P124.1 defined the grant boundary contract. P124.2 adds the
+deterministic metadata layer for later local intent and safe dry-run work
+without runtime behavior.
+User/operator impact: operators get display-safe grant metadata for prior
+activation boundary, grant scope, runtime write guard, operator evidence,
+blockers, next action, owner capability, activity/evidence labels, and cost
+impact.
+Command Center impact: no Command Center source change in P124.2. Preserve the
+current Business Build and Agent Flow activation boundary UX. Chat with NEXUS
+and Lite remain focused on chat.
+Safety impact: metadata-only. Authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package, network calls,
+and provider spend remain blocked.
+Cost impact: none; no provider, model, network, worker, deploy, package, or
+spend path is used.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantEligibilityMetadata.js`
+- `contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json`
+- `docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md`
+- `scripts/check-p1241-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1241-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1242-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_ELIGIBILITY_METADATA_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_ELIGIBILITY_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_STATES`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_FLAGS`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SECTIONS`
+- `buildFounderApprovalApplicationAuthorityGrantEligibilityMetadata`
+- No schemas, DB tables, runtime records, provider requests, or persistence.
+
+Reuse check: reuse P123 activation eligibility metadata and existing checker
+report helpers. Do not duplicate report writers, redaction helpers, result
+envelopes, mode guards, UI components, route matrices, or activity/evidence
+helpers.
+
+Command Center UX requirements: no source changes. Primary UX must not show raw
+JSON, raw logs, raw policy dumps, raw private IDs, raw report paths, fake
+runnable actions, DemoApp, or mutation controls.
+
+Dark/light/system theme requirements: no theme source changes. Run existing
+focused Playwright coverage as regression.
+
+Playwright tests: no dashboard test edits. Run the scoped activation boundary
+Playwright test.
+
+Tests to add/update/remove: add P124.2 checker and package script. Update no
+dashboard tests.
+
+Checker updates: validate metadata shape, P123 metadata reuse, blocked grant
+flags, docs/status/report alignment, P124.1 checker handoff acceptance,
+forbidden paths, safe wording, and no unsafe imports or URLs.
+
+Docs to update: this P124 plan, `README.md`, platform roadmap, P124 contract,
+OS roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1241-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1242-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P124 is in progress. P124.2 is complete. Current phase
+is P124.2, previous phase is P124.1, and next phase is P124.3.
+
+Validation commands:
+- `npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority activation appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P124.2 files>`
+- `git commit -m "feat(nexus): implement p1242 approval authority grant metadata"`
+- stamp P124/P124.2 status with the implementation commit
+- `git add <allowed P124.2 status/report files>`
+- `git commit -m "chore(nexus): stamp p1242 approval authority grant metadata"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks: confirm no forbidden paths changed, no runtime/provider/
+project/deploy/package/env paths changed, no authority grant/write/execution/
+spend behavior is enabled, and no stale `pending-final-commit` remains after
+the status stamp commit.
+
+Known risks: metadata naming can imply authority is live. P124.2 keeps every
+grant flag false and grant behavior blocked.
+
+Rollback plan: remove the grant metadata helper, P124.2 checker/report/package
+script, contract/docs/status/report updates, restore P124.2 to planned, and
+return current phase to P124.1.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P124.3 Governed Grant Intent Model: model-only, allowed files are the planned
 shared grant intent module, P124.2 metadata, P124 contract/docs/checker/status,

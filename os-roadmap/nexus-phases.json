@@ -12750,15 +12750,15 @@
       "order": 160,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5437cf53",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P124.1 grant boundary contract complete; P124.2 grant eligibility metadata is next.",
-      "summary": "P124.1 created the approval application authority grant boundary contract, seven-subphase implementation plan, safety rules, reuse requirements, validation commands, docs, reports, and status handoff while keeping live grants, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
-      "previousPhase": "P123.7",
-      "nextPhase": "P124.2",
+      "detail": "P124.2 grant eligibility metadata complete; P124.3 governed grant intent model is next.",
+      "summary": "P124.2 added browser-safe authority grant eligibility metadata that reuses P123 activation metadata for local grant intent planning while keeping live grants, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
+      "previousPhase": "P124.1",
+      "nextPhase": "P124.3",
       "checksRun": [
+        "npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
-        "npm run check:p1237-founder-runtime-approval-application-authority-activation-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -12767,9 +12767,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P124.1 is contract/policy only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P124.2 is metadata-only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T15:41:56.882Z"
+      "completedAt": "2026-05-29T15:48:14.761Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12806,19 +12806,28 @@
       "title": "Grant Eligibility Metadata",
       "label": "Grant Eligibility Metadata",
       "order": 160.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "Planned grant eligibility metadata subphase. No P124.2 behavior is implemented in P124.1.",
-      "summary": "Planned grant eligibility metadata subphase. No P124.2 behavior is implemented in P124.1.",
+      "detail": "P124.2 grant eligibility metadata complete; P124.3 governed grant intent model is next.",
+      "summary": "Added browser-safe grant eligibility metadata with prior activation boundary, grant scope, runtime write guard, and operator evidence sections, plus checker/docs/status/report updates, without enabling authority grants or runtime behavior.",
       "previousPhase": "P124.1",
       "nextPhase": "P124.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. This subphase is not implemented in P124.1."
+      "checksRun": [
+        "npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P124.2 is metadata-only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T15:48:14.761Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12830,13 +12839,13 @@
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned governed grant intent model subphase. No P124.3 behavior is implemented in P124.1.",
-      "summary": "Planned governed grant intent model subphase. No P124.3 behavior is implemented in P124.1.",
+      "detail": "Planned governed grant intent model subphase. No P124.3 behavior is implemented in P124.2.",
+      "summary": "Planned governed grant intent model subphase. No P124.3 behavior is implemented in P124.2.",
       "previousPhase": "P124.2",
       "nextPhase": "P124.4",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. This subphase is not implemented in P124.1."
+        "Planned only. This subphase is not implemented in P124.2."
       ],
       "completedAt": ""
     },
@@ -12921,27 +12930,28 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T15:41:56.882Z",
-  "currentPhase": "P124.1",
-  "previousPhase": "P123.7",
-  "nextPhase": "P124.2",
+  "updatedAt": "2026-05-29T15:48:14.761Z",
+  "currentPhase": "P124.2",
+  "previousPhase": "P124.1",
+  "nextPhase": "P124.3",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P124.1",
-    "title": "Grant Boundary Contract / Policy",
-    "label": "Grant Contract",
-    "order": 160.1,
+    "phaseId": "P124.2",
+    "title": "Grant Eligibility Metadata",
+    "label": "Grant Eligibility Metadata",
+    "order": 160.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "5437cf53",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P124.1 grant boundary contract complete; P124.2 grant eligibility metadata is next.",
-    "summary": "Created the P124 grant boundary contract and implementation-grade subphase split, updated P123.7 handoff acceptance, OS status checker recognition, docs, README, roadmap, and generated reports without enabling authority grants or runtime behavior.",
-    "previousPhase": "P123.7",
-    "nextPhase": "P124.2",
+    "completedAt": "2026-05-29T15:48:14.761Z",
+    "detail": "P124.2 grant eligibility metadata complete; P124.3 governed grant intent model is next.",
+    "summary": "Added browser-safe grant eligibility metadata with prior activation boundary, grant scope, runtime write guard, and operator evidence sections, plus checker/docs/status/report updates, without enabling authority grants or runtime behavior.",
+    "previousPhase": "P124.1",
+    "nextPhase": "P124.3",
     "checksRun": [
+      "npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
-      "npm run check:p1237-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -12950,9 +12960,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P124.1 is contract/policy only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-29T15:41:56.882Z"
+      "P124.2 is metadata-only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+    ]
   },
   "generatedAt": "2026-05-29T14:02:08.266Z"
 }

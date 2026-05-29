@@ -3616,6 +3616,17 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P124.2 is complete. Browser-safe approval application authority grant
+eligibility metadata now reuses P123 activation metadata and defines prior
+activation boundary, grant scope, runtime write guard, and operator evidence
+sections for later local grant intent modeling. P124.3 is next for the governed
+grant intent model. Authority grant, activation, approval application, approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

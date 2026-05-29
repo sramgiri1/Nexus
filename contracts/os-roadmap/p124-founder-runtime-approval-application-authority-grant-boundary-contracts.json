@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant boundary before any live authority grant can be considered, while keeping grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P124.1",
-  "previousSubphase": "P123.7",
-  "nextSubphase": "P124.2",
+  "currentSubphase": "P124.2",
+  "previousSubphase": "P124.1",
+  "nextSubphase": "P124.3",
   "safetyRules": [
     "Do not enable approval application authority grant in P124.1.",
     "Do not enable approval application, approval capture, approval persistence, or approve/reject decision recording in P124.1.",
@@ -167,7 +167,7 @@
     {
       "phaseId": "P124.2",
       "title": "Grant Eligibility Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Add browser-safe approval application authority grant eligibility metadata that reuses P123 activation boundary evidence without enabling live authority grants, runtime behavior, writes, execution, providers, project mutation, network calls, or spend.",
@@ -222,8 +222,12 @@
         ".env*"
       ],
       "expectedExports": [
-        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_ELIGIBILITY_METADATA",
-        "getFounderApprovalApplicationAuthorityGrantEligibilityMetadata"
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_ELIGIBILITY_METADATA_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_ELIGIBILITY_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_STATES",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_FLAGS",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SECTIONS",
+        "buildFounderApprovalApplicationAuthorityGrantEligibilityMetadata"
       ],
       "dataShape": "Browser-safe metadata rows for prior activation boundary, grant scope, runtime write guard, operator evidence, blockers, next action, owner capability, activity/evidence labels, and cost impact. No DB schema or runtime records.",
       "commandCenterUx": "No Command Center source changes. Preserve existing scoped activation UX while Chat with NEXUS and Lite remain focused on chat.",
@@ -237,26 +241,29 @@
         "Preserve route-wide safety coverage for no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
       ],
       "checkerUpdates": [
-        "Add scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js or update the prior checker handoff as needed.",
+        "Add scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js.",
+        "Confirm the P124.1 checker accepts P124.2 handoff.",
         "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden paths, safe wording, status, docs, reports, and no unsafe imports or URLs."
+        "Validate grant metadata shape, P123 activation metadata reuse, blocked flags, docs/status/reports, forbidden paths, and unsafe claim prevention."
       ],
-      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, and generated reports.",
+      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, generated reports, and P124.3 planned handoff.",
       "phaseStatusUpdate": "P124 in progress; P124.2 complete; current phase P124.2; previous P124.1; next P124.3.",
       "validationCommands": [
         "npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
         "git add <allowed P124.2 files>",
-        "git commit -m \"feat(nexus): implement p1242 approval authority grant boundary\"",
+        "git commit -m \"feat(nexus): implement p1242 approval authority grant metadata\"",
         "stamp P124/P124.2 status with the implementation commit",
         "git add <allowed P124.2 status/report files>",
-        "git commit -m \"chore(nexus): stamp p1242 approval authority grant boundary\"",
+        "git commit -m \"chore(nexus): stamp p1242 approval authority grant metadata\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
@@ -283,7 +290,8 @@
       ],
       "previousPhase": "P124.1",
       "nextPhase": "P124.3",
-      "order": 160.2
+      "order": 160.2,
+      "expectedBaseCommit": "e10ddea6"
     },
     {
       "phaseId": "P124.3",
@@ -891,7 +899,7 @@
     }
   ],
   "completedAt": "2026-05-29T15:38:15.699Z",
-  "summary": "P124.1 creates the authority grant boundary contract and implementation-grade subphase plan. Live grants remain blocked.",
+  "summary": "P124.2 adds browser-safe authority grant eligibility metadata that reuses P123 activation metadata. Live grants remain blocked.",
   "previousPhase": "P123.7",
-  "nextPhase": "P124.2"
+  "nextPhase": "P124.3"
 }
