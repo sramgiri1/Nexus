@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.4
-- Generated at: 2026-05-29T16:06:34.690Z
+- Generated at: 2026-05-29T16:07:31.967Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a9a9fd66
+- Validation HEAD: d052d3b0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,8 +39,8 @@
 | README records P124.4 | PASS |  |
 | platform roadmap records P124.4 | PASS |  |
 | phase status advanced | PASS | P124.4/P124.3/P124.5 |
-| changed files stay in P124.4 allowed scope | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js, reports/p1244-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js, shared/founderApprovalApplicationAuthorityGrantSafeDryRun.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js, reports/p1244-founder-runtime-approval-application-authority-grant-boundary-report.md, scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js, shared/founderApprovalApplicationAuthorityGrantSafeDryRun.js |
+| changed files stay in P124.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw grant table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |
