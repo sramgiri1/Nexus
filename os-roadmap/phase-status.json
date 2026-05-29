@@ -16440,7 +16440,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "16533711",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
       "detail": "P119.3 approval decision intent model complete; P119.4 safe dry run is next.",
@@ -16523,7 +16523,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "16533711",
       "commandCenterVisible": true,
       "label": "Approval Decision Intent",
       "detail": "Approval decision intent model complete without decision recording or writes.",
