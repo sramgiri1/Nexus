@@ -1704,6 +1704,17 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P129.3 store repository intent model: Added browser-safe local repository
+  intent rows for future store create, read, modify, remove, list, and
+  evidence-link operations while keeping every operation blocked and display
+  safe. P129.4 is next for store migration preview. Store CRUD, DB schemas,
+  migrations, DB/runtime reads or writes, live acceptance capture, handoff
+  acceptance, authority handoff, authority grant, activation, approval
+  application, approval capture, approval persistence, approve/reject decision
+  recording, runtime execution, execution unlock, provider/model calls, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, deploy, release, export, package, network call, and provider
+  spend remain unavailable.
 
 ## CareLoop Project Progress
 

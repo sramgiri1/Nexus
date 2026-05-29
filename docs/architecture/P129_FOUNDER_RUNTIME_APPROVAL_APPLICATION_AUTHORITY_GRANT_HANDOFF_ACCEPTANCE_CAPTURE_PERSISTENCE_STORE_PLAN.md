@@ -19,6 +19,195 @@ P129 is split into seven implementation-grade subphases:
 - P129.6 Command Center Store UX
 - P129.7 Final Validation
 
+## P129.3 Store Repository Intent Model
+
+Status: complete
+Phase: P129
+Subphase: P129.3
+Goal: Add browser-safe local repository intent rows for future acceptance
+capture persistence store operations while keeping DB schemas, migrations,
+CRUD, reads, writes, runtime records, providers, dispatch, mutation, network,
+and spend blocked.
+Why this is needed: P129.2 defined the store record vocabulary. P129.3 defines
+the future operation intent surface before any migration preview, safe dry run,
+or local persistence implementation can be considered.
+User/operator impact: Operators can see the future store create, read, modify,
+remove, list, and evidence-link intents as blocked readiness rows with disabled
+reason, owner, next action, evidence, activity, and cost labels.
+Command Center impact: No dashboard source or route test changes. Existing
+read-only persistence cards stay scoped to Business Build and Agent Flow; Chat
+with NEXUS and Lite stay clean.
+Safety impact: P129.3 is model-only and intent-only. It does not create DB
+schemas, migrations, tables, indexes, raw SQL interfaces, reads, writes, runtime
+records, CRUD actions, acceptance capture, handoff acceptance, authority
+handoff, authority grant, activation, approval application, approve/reject
+recording, runtime execution, provider/model calls, agent dispatch, project
+mutation, deploy, release, export, package, network calls, or spend.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `ce6f29be`
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreRepositoryIntent.js`
+- `contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json`
+- `docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md`
+- `scripts/check-p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`
+- `scripts/check-p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md`
+- `reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreRepositoryIntent.js`.
+- Create `scripts/check-p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`.
+- Update P129 docs, contract, status, package script, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_REPOSITORY_INTENT_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_REPOSITORY_INTENT_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_REPOSITORY_OPERATION_NAMES`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_REPOSITORY_FLAGS`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_REPOSITORY_INTENT_ROWS`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreRepositoryIntentModel`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreRepositoryIntentModel`
+- Data shape: browser-safe repository intent model only, with display-safe
+  operation rows, blocked authority flags, P129.2/P128.2/P127.2 lineage,
+  blockers, next action, owner, evidence/activity labels, and cost label. No DB
+  schema, query, migration, runtime record, CRUD executor, read/write envelope,
+  provider envelope, dispatch packet, raw private ID, or project data.
+
+Reuse check:
+- Reuse P129.2 store metadata.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, mode guards, redaction
+  helpers, route matrices, status helpers, or UI components.
+
+Command Center UX requirements:
+- Preserve current scoped read-only persistence UX on Business Build and Agent
+  Flow.
+- Do not add new Chat with NEXUS or Lite page information.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw table names, DemoApp,
+  raw report paths, or private project IDs in primary UX.
+- No provider/tool/project mutation, DB writes, or deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Do not change dashboard source, CSS, theme tokens, or route layout in P129.3.
+
+Tests to add/update/remove:
+- Add the P129.3 checker.
+- Do not add or remove Playwright tests in P129.3 because primary UX does not
+  change.
+- Run existing scoped Playwright coverage for the P128/P129 persistence route
+  guard.
+
+Checker updates:
+- Validate P129.3 exported repository intent model and source lineage.
+- Validate blocked repository CRUD, DB reads/writes, migrations, raw SQL,
+  runtime writes, execution, providers, dispatch, mutation, network, and spend.
+- Validate allowed file scope, forbidden path scope, safe docs, and status
+  handoff.
+
+Docs to update:
+- This P129 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P129.2 report.
+- P129.3 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P129 in progress.
+- P129.3 complete.
+- Current phase P129.3.
+- Previous phase P129.2.
+- Next phase P129.4.
+- P129.4 remains planned.
+
+Known risks:
+- Repository intent wording can imply live CRUD exists. The checker blocks
+  unsafe positive claims, raw table names, raw SQL wording, and fake runnable
+  action phrases.
+- Future migration preview and local persistence implementation must be split
+  into their own subphases before any DB/runtime files are allowed.
+
+Rollback plan:
+- Revert only the P129.3 implementation and stamp commits. P129.2 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store`
+- `npm run check:p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance capture persistence appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P129.3 allowed files>`
+- `git commit -m "feat(nexus): implement p1293 capture persistence store intent model"`
+- `git add <P129.3 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1293 capture persistence store intent model"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Store CRUD, DB schemas, migrations, DB/runtime reads or writes, live capture,
+  handoff acceptance, authority grant handoff, execution, provider/model calls,
+  agent dispatch, project mutation, network calls, and spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P129.2 Store Record Schema Metadata
 
 Status: complete

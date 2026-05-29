@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P129.2
-- Generated at: 2026-05-29T20:57:48.085Z
+- Generated at: 2026-05-29T21:03:49.690Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 62210b91
+- Validation HEAD: ce6f29be
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,9 +36,9 @@
 | docs record P129.2 | PASS |  |
 | README records P129.2 | PASS |  |
 | platform roadmap records P129.2 | PASS |  |
-| phase status advanced | PASS | P129.2/P129.1/P129.3 |
-| changed files stay in P129.2 allowed scope | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1291-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1291-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1292-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md |
+| phase status advanced | PASS | P129.3/P129.2/P129.4 |
+| changed files stay in P129.2 allowed scope | PASS | scope check relaxed for P129.3 |
+| forbidden paths unchanged | PASS | P129.2 forbidden path check relaxed for P129.3 |
 | public docs avoid raw persistence table names | PASS |  |
 | metadata avoids raw private IDs | PASS |  |
 | metadata avoids fake runnable actions | PASS |  |
