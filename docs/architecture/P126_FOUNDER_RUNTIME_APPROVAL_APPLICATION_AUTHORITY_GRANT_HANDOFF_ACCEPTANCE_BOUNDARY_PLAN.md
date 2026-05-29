@@ -91,11 +91,95 @@ and return current phase to P125.7.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P126.2 Acceptance Eligibility Metadata
 
-P126.2 Acceptance Eligibility Metadata: browser-safe local metadata only. No
-handoff acceptance, writes, execution, providers, dispatch, mutation, network,
-or spend.
+Phase: P126 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Boundary
+Subphase: P126.2 Acceptance Eligibility Metadata
+
+Goal: add browser-safe local acceptance eligibility metadata that reuses P125.2
+handoff metadata and keeps acceptance blocked.
+
+Why this is needed: P126.1 created the contract. P126.2 provides the local
+metadata source that later acceptance intent, dry-run, and scoped UX work can
+consume without creating live acceptance state.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata.js`
+- `scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json`
+- `docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_METADATA_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_METADATA_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_STATES`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_FLAGS`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SECTIONS`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata`
+
+Data shape: browser-safe metadata object with metadata version, phase id,
+source P125.2 handoff metadata, metadataOnly/localOnly/hidden flags, acceptance
+policy, allowlisted states, prior handoff boundary summary, section rows,
+blockers, next action, owner capability, and no-spend label.
+
+Command Center UX requirements: no new UI. Do not show acceptance metadata on
+Chat, Lite, OS Roadmap, Live Readiness, or unrelated pages.
+
+Validation commands:
+- `npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P126 in progress, P126.2 complete, current phase
+P126.2, previous phase P126.1, next phase P126.3.
+
+Known risks: metadata can look like authorization. P126.2 keeps all acceptance,
+write, execution, provider, dispatch, mutation, network, and spend flags false.
+
+Rollback plan: remove the P126.2 metadata helper/checker/report/package script,
+revert docs/status updates, restore P126.2 to planned, and return current phase
+to P126.1.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P126.3 Governed Acceptance Intent Model: local readiness model only. No handoff
 acceptance, writes, execution, providers, dispatch, mutation, network, or spend.

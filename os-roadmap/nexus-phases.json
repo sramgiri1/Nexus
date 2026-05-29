@@ -13215,15 +13215,15 @@
       "order": 162,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "12b547a6f55bd0bbd8ce73c8bfc4116f0fdebb33",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P126.1 acceptance boundary contract/policy complete; P126.2 acceptance eligibility metadata is next.",
-      "summary": "P126 is in progress with acceptance boundary contract/policy complete. Live handoff acceptance, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "detail": "P126.2 acceptance eligibility metadata complete; P126.3 governed acceptance intent model is next.",
+      "summary": "P126 is in progress with acceptance boundary contract/policy and browser-safe acceptance eligibility metadata complete. Live handoff acceptance, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P125.7",
-      "nextPhase": "P126.2",
+      "nextPhase": "P126.3",
       "checksRun": [
+        "npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
         "npm run check:p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
-        "npm run check:p1257-founder-runtime-approval-application-authority-grant-handoff",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -13232,9 +13232,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P126.1 is contract/policy only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+        "P126.2 is metadata-only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T17:35:21.904Z"
+      "completedAt": "2026-05-29T17:42:03.389Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13269,21 +13269,30 @@
       "track": "NEXUS_OS",
       "phaseId": "P126.2",
       "title": "Acceptance Eligibility Metadata",
-      "label": "Acceptance Eligibility Metadat",
+      "label": "Acceptance Eligibility",
       "order": 162.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "Planned acceptance eligibility metadata.",
-      "summary": "Planned browser-safe acceptance eligibility metadata. No P126.2 behavior is implemented in P126.1.",
+      "detail": "P126.2 acceptance eligibility metadata complete; P126.3 governed acceptance intent model is next.",
+      "summary": "Added browser-safe local acceptance eligibility metadata that reuses P125.2 handoff metadata, exposes display-safe acceptance sections, blockers, owner/next action/cost posture, validates blocked flags, and keeps live acceptance unavailable.",
       "previousPhase": "P126.1",
       "nextPhase": "P126.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+      "checksRun": [
+        "npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P126.2 is metadata-only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T17:42:03.389Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13295,8 +13304,8 @@
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned governed acceptance intent model.",
-      "summary": "Planned local acceptance intent model. No P126.3 behavior is implemented in P126.1.",
+      "detail": "P126.3 governed acceptance intent model is planned after P126.2 metadata.",
+      "summary": "Planned local acceptance intent model. No P126.3 behavior is implemented in P126.2.",
       "previousPhase": "P126.2",
       "nextPhase": "P126.4",
       "checksRun": [],
@@ -13387,9 +13396,9 @@
     }
   ],
   "updatedAt": "2026-05-29T17:12:28.540Z",
-  "currentPhase": "P126.1",
-  "previousPhase": "P125.7",
-  "nextPhase": "P126.2",
+  "currentPhase": "P126.2",
+  "previousPhase": "P126.1",
+  "nextPhase": "P126.3",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "phaseId": "P125.3",
@@ -13422,21 +13431,21 @@
   "generatedAt": "2026-05-29T16:47:51.312Z",
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P126.1",
-    "title": "Acceptance Boundary Contract / Policy",
-    "label": "Acceptance Boundary Contract ",
-    "order": 162.1,
+    "phaseId": "P126.2",
+    "title": "Acceptance Eligibility Metadata",
+    "label": "Acceptance Eligibility",
+    "order": 162.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "12b547a6f55bd0bbd8ce73c8bfc4116f0fdebb33",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P126.1 acceptance boundary contract/policy complete; P126.2 acceptance eligibility metadata is next.",
-    "summary": "Created the P126 acceptance boundary contract/policy, seven-subphase split, status handoff, safety rules, checker, docs, and report while keeping live handoff acceptance blocked.",
-    "previousPhase": "P125.7",
-    "nextPhase": "P126.2",
+    "detail": "P126.2 acceptance eligibility metadata complete; P126.3 governed acceptance intent model is next.",
+    "summary": "Added browser-safe local acceptance eligibility metadata that reuses P125.2 handoff metadata, exposes display-safe acceptance sections, blockers, owner/next action/cost posture, validates blocked flags, and keeps live acceptance unavailable.",
+    "previousPhase": "P126.1",
+    "nextPhase": "P126.3",
     "checksRun": [
+      "npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
       "npm run check:p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
-      "npm run check:p1257-founder-runtime-approval-application-authority-grant-handoff",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13445,8 +13454,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P126.1 is contract/policy only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      "P126.2 is metadata-only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T17:35:21.904Z"
+    "completedAt": "2026-05-29T17:42:03.389Z"
   }
 }

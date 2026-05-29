@@ -3773,6 +3773,18 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P126.2 is complete. The browser-safe local acceptance eligibility metadata now
+reuses P125.2 handoff metadata and exposes acceptance states, display-safe
+sections, blockers, owner capability, next action, cost posture, and validation
+while remaining hidden from primary Command Center UX. P126.3 is next for
+governed acceptance intent modeling. Handoff acceptance, acceptance capture,
+grant handoff, authority grant, activation, approval application, approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

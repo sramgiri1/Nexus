@@ -1450,6 +1450,18 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P126.2 approval application authority grant handoff acceptance eligibility
+  metadata: the browser-safe local metadata now reuses P125.2 handoff metadata
+  and exposes acceptance states, display-safe sections, blockers, owner
+  capability, next action, cost posture, and validation while remaining hidden
+  from primary Command Center UX. P126.3 is next for governed acceptance intent
+  modeling. Handoff acceptance, acceptance capture, grant handoff, authority
+  grant, activation, approval application, approval capture, approval
+  persistence, approve/reject decision recording, DB/runtime writes, runtime
+  execution, execution unlock, provider/model call, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P126.1",
-  "previousSubphase": "P125.7",
-  "nextSubphase": "P126.2",
+  "currentSubphase": "P126.2",
+  "previousSubphase": "P126.1",
+  "nextSubphase": "P126.3",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "67d3198576e324c0db5ea3f15455931098fb53fa",
   "owner": "NEXUS OS",
@@ -162,15 +162,15 @@
     {
       "phaseId": "P126.2",
       "title": "Acceptance Eligibility Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P126.1-stamp",
+      "expectedBaseCommit": "abc1b337",
       "narrowGoal": "Add browser-safe local metadata describing acceptance eligibility without accepting or persisting handoff state.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata.js",
-        "scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
         "scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
         "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
         "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
         "package.json",
@@ -183,7 +183,22 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata.js",
+        "scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -205,11 +220,14 @@
       "expectedExports": [
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_METADATA_PHASE",
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_METADATA_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_STATES",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_FLAGS",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SECTIONS",
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata",
         "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata"
       ],
-      "dataShape": "Browser-safe metadata object with metadataVersion, phaseId, sourceHandoffPhase, localOnly, commandCenterVisible, acceptancePolicy, acceptanceStates, blockers, nextAction, ownerCapability, and costImpactLabel. No runtime writes.",
-      "commandCenterUx": "No dashboard source changes. Metadata remains available to later scoped UX only.",
+      "dataShape": "Browser-safe metadata object with metadataVersion, phaseId, sourceHandoffPhase, sourceHandoffVersion, metadataOnly, localOnly, commandCenterVisible, acceptancePolicy, acceptanceStates, priorHandoffBoundary, sections, blockers, nextAction, ownerCapability, and costImpactLabel. No runtime writes.",
+      "commandCenterUx": "No dashboard source changes. Metadata remains hidden from primary UX until a later scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -219,9 +237,12 @@
         "Run existing scoped handoff route regression test."
       ],
       "checkerUpdates": [
-        "Add P126.2 checker reusing shared report helpers and update P126.1 checker to accept P126.2 handoff."
+        "Create scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Update scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js to accept P126.2 handoff.",
+        "Validate metadata shape, blocked flags, safe wording, docs/status/report updates, and no unsafe runtime imports or URLs."
       ],
-      "docsRoadmap": "Update P126 plan, README, platform roadmap, status, and reports.",
+      "docsRoadmap": "Update P126 plan, README, platform roadmap, P126 contract, OS roadmap/status, and generated reports.",
       "phaseStatusUpdate": "P126 in progress; P126.2 complete; current phase P126.2; previous P126.1; next P126.3.",
       "validationCommands": [
         "npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
@@ -236,11 +257,17 @@
       "gitCommands": [
         "git add <allowed P126.2 files>",
         "git commit -m \"feat(nexus): implement p1262 approval authority handoff acceptance\"",
-        "stamp P126/P126.2 status",
+        "stamp P126/P126.2 status with the implementation commit",
+        "git add <allowed P126.2 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1262 approval authority handoff acceptance\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no live acceptance, writes, execution, providers, dispatch, mutation, network, or spend are enabled."
+        "Confirm no project/CareLoop/generated project paths changed.",
+        "Confirm no dashboard source/test files changed in P126.2.",
+        "Confirm no DB/runtime provider, tool, worker, deploy, release, export, package, local runtime state, or env paths changed.",
+        "Confirm handoff acceptance, acceptance capture, authority handoff, authority grant, activation, approval application, approval capture, persistence, approve/reject recording, writes, execution, provider/model calls, agent dispatch, project mutation, network calls, and spend remain blocked unless explicitly allowed by a later subphase.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -253,10 +280,10 @@
       "previousPhase": "P126.1",
       "nextPhase": "P126.3",
       "order": 162.2,
-      "detail": "Planned acceptance eligibility metadata.",
-      "summary": "Planned browser-safe acceptance eligibility metadata. No P126.2 behavior is implemented in P126.1.",
+      "detail": "P126.2 acceptance eligibility metadata complete; P126.3 governed acceptance intent model is next.",
+      "summary": "Added browser-safe local acceptance eligibility metadata that reuses P125.2 handoff metadata, exposes display-safe acceptance sections, blockers, owner/next action/cost posture, validates blocked flags, and keeps live acceptance unavailable.",
       "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+        "P126.2 is metadata-only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -674,5 +701,5 @@
       ]
     }
   ],
-  "nextPhase": "P126.2"
+  "nextPhase": "P126.3"
 }
