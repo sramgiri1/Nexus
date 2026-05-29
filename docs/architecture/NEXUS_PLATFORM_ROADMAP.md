@@ -3833,6 +3833,16 @@ worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
 deploy, release, export, package action, network call, and provider spend remain
 blocked.
 
+P126.7 is complete. P126 is complete with final validation across P126.1-P126.7
+scripts, reports, docs, OS status, scoped Command Center acceptance UX evidence,
+safe wording, and the planned-only P127 handoff marker. P127 is planned next.
+Handoff acceptance, acceptance capture, grant handoff, authority grant,
+activation, approval application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

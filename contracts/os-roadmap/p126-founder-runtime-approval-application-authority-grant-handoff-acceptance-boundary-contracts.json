@@ -1,13 +1,13 @@
 {
   "phaseId": "P126",
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P126.6",
-  "previousSubphase": "P126.5",
-  "nextSubphase": "P126.7",
+  "currentSubphase": "P126.7",
+  "previousSubphase": "P126.6",
+  "nextSubphase": "P127",
   "branch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "after-P126.5-stamp",
+  "expectedBaseCommit": "after-P126.6-stamp",
   "owner": "NEXUS OS",
   "goal": "Define governed local acceptance boundaries for approval application authority grant handoff without enabling live acceptance, writes, execution, providers, dispatch, mutation, network, or spend.",
   "safetyRules": [
@@ -757,15 +757,41 @@
     {
       "phaseId": "P126.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "after-P126.6-stamp",
-      "narrowGoal": "Close P126 with final validation evidence and create the next planned handoff.",
+      "narrowGoal": "Close P126 with final validation evidence and create a planned-only P127 handoff marker without changing dashboard source/tests or enabling live authority.",
       "allowedFiles": [
-        "scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js"
+        "scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -785,21 +811,22 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "Final validation/status/report evidence only. No runtime exports.",
-      "commandCenterUx": "No dashboard source changes; preserve scoped P126.5 UX.",
+      "dataShape": "Final validation/status/report evidence only. No runtime exports, schemas, acceptance records, DB write shapes, provider envelopes, dispatch packets, or project data.",
+      "commandCenterUx": "No dashboard source changes; preserve scoped P126.5 read-only Business Build and Agent Flow acceptance UX while Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and unrelated pages stay clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Run scoped acceptance UX route test after P126.5 exists."
+        "Run scoped acceptance UX route test after P126.5 exists; do not add or change dashboard tests in P126.7."
       ],
       "checkerUpdates": [
-        "Add P126.7 checker and update P126.6 checker."
+        "Add P126.7 final validation checker using shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Update check-os-phase-status.js to recognize the planned-only P127 handoff marker."
       ],
-      "docsRoadmap": "Update P126 docs/status/reports and next planned phase marker.",
-      "phaseStatusUpdate": "P126 complete; P126.7 complete; current phase P126.7; previous P126.6; next P127.",
+      "docsRoadmap": "Update P126 plan, README, platform roadmap, OS status, P126.6/P126.7 reports, OS report, and validation coverage report; add planned-only P127 status marker.",
+      "phaseStatusUpdate": "P126 complete; P126.7 complete; current phase P126.7; previous P126.6; next P127. P127 is planned-only.",
       "validationCommands": [
         "npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
         "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
@@ -807,12 +834,15 @@
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
         "git add <allowed P126.7 files>",
         "git commit -m \"feat(nexus): implement p1267 approval authority handoff acceptance\"",
-        "stamp P126/P126.7 status",
+        "stamp P126/P126.7 status with the implementation commit",
+        "git add <allowed P126.7 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1267 approval authority handoff acceptance\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
@@ -829,12 +859,12 @@
       "previousPhase": "P126.6",
       "nextPhase": "P127",
       "order": 162.7,
-      "detail": "Planned final validation after P126.6.",
-      "summary": "Planned final validation closure. No P126.7 behavior is implemented in P126.1.",
+      "detail": "P126.7 final validation complete; P126 is complete and P127 is planned next.",
+      "summary": "Closed P126 with final validation across P126.1-P126.7 scripts, reports, docs, status, scoped Command Center acceptance UX evidence, safe wording, and a planned-only P127 marker. Live handoff acceptance, acceptance capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+        "P126.7 is final validation only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P127 is planned-only until its own implementation-grade contract is written."
       ]
     }
   ],
-  "nextPhase": "P126.7"
+  "nextPhase": "P127"
 }

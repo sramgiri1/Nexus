@@ -579,6 +579,110 @@ planned, and return current phase to P126.5.
 
 Status: complete.
 
+## P126.7 Final Validation
+
+Phase: P126 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Boundary
+Subphase: P126.7 Final Validation
+
+Goal: close P126 with final validation evidence and create a planned-only P127
+handoff marker without changing dashboard source/tests or enabling live
+authority.
+
+Why this is needed: P126.1-P126.6 completed the implementation, UX, and
+aggregate validation/docs closure. P126.7 verifies every subphase, report,
+status entry, scoped UX guarantee, and next-phase handoff before P126 can be
+marked complete.
+
+User/operator impact: OS Roadmap now shows P126 complete with P127 planned
+next, while operators can still inspect the scoped acceptance boundary UX and
+see that live acceptance remains unavailable.
+
+Command Center impact: no dashboard source changes. P126.5 scoped read-only
+Business Build and Agent Flow acceptance cards are preserved. Chat with NEXUS,
+Lite, OS Roadmap, Live Readiness, and unrelated pages stay clean.
+
+Safety impact: final-validation-only. Handoff acceptance, acceptance capture,
+authority handoff, authority grant, activation, approval application, approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package, network call, and provider spend
+remain blocked.
+
+Cost impact: no provider calls, model calls, network calls, worker runtime,
+deploy/package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json`
+- `docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports: none.
+
+Data shape: final validation/status/report evidence only. P127 is added as a
+planned-only OS phase marker. No runtime exports, schemas, acceptance records,
+DB write shapes, provider envelopes, dispatch packets, or project data are
+created.
+
+Command Center UX requirements: preserve P126.5 scoped read-only acceptance
+cards on Business Build and Agent Flow only. Do not add chat clutter, raw
+reports, raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp exposure, or
+fake runnable action text.
+
+Validation commands:
+- `npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P126 complete, P126.7 complete, current phase P126.7,
+previous phase P126.6, next phase P127. P127 is planned-only.
+
+Known risks: adding P127 can imply acceptance capture is enabled. P126.7 keeps
+P127 planned-only and repeats that acceptance capture, writes, execution,
+providers, dispatch, mutation, network, and spend remain blocked.
+
+Rollback plan: remove the P126.7 checker/report/package script, remove the
+P127 planned marker and OS checker addition, revert docs/status/report updates,
+restore P126 to in progress, and return current phase to P126.6.
+
+Status: complete.
+
 ## Planned Subphase Contracts
 
 P126.4 Acceptance Safe Dry Run: complete. Local dry-run envelope only. No
@@ -593,5 +697,10 @@ P126.6 Acceptance Validation / Docs: complete. Aggregate validation/docs
 closure only. No handoff acceptance, writes, execution, providers, dispatch,
 mutation, network, or spend.
 
-P126.7 Final Validation: final validation only, closes P126, stamps real
-commits, creates the next planned handoff, and keeps live acceptance blocked.
+P126.7 Final Validation: complete. Final validation only, closes P126, stamps
+real commits, creates the P127 planned-only handoff, and keeps live acceptance
+blocked.
+
+P127 Acceptance Capture Boundary: planned-only until its own
+implementation-grade contract is written. No acceptance capture, writes,
+execution, providers, dispatch, mutation, network, or spend is enabled here.
