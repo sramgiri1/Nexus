@@ -1,0 +1,555 @@
+{
+  "phaseId": "P127",
+  "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Boundary",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "currentSubphase": "P127.1",
+  "previousSubphase": "P126.7",
+  "nextSubphase": "P127.2",
+  "branch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "after-P126.7-stamp",
+  "owner": "NEXUS OS",
+  "goal": "Plan and validate the approval application authority grant handoff acceptance capture boundary without enabling live acceptance capture, writes, execution, providers, dispatch, mutation, network, or spend.",
+  "safetyRules": [
+    "Do not capture acceptance or accept handoff in P127.1.",
+    "Do not create DB/runtime records, schemas, migrations, or hosted DB writes.",
+    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend.",
+    "Do not expose DemoApp, raw JSON/logs/policy dumps, raw private IDs, raw SQL, or fake runnable actions in primary UX.",
+    "Preserve Chat with NEXUS and Lite cleanliness unless a scoped UX subphase explicitly allows a change."
+  ],
+  "reuseCheck": [
+    "Reuse shared/reportWriter.js.",
+    "Reuse shared/checkResultFormatter.js.",
+    "Reuse os-roadmap/updatePhaseStatus.js patterns when status helpers are needed.",
+    "Reuse existing dashboard cards/routes/tests; do not duplicate UI components.",
+    "Reuse existing evidence/activity/audit/cost terminology; do not create new appenders in P127.1."
+  ],
+  "commandCenterUx": "P127.1 adds no UI. Existing P126.5 scoped read-only acceptance UX stays on Business Build and Agent Flow only.",
+  "costImpact": "No provider calls, model calls, network calls, runtime execution, deploy/package creation, or provider spend.",
+  "subphases": [
+    {
+      "phaseId": "P127.1",
+      "title": "Acceptance Capture Boundary Contract / Policy",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.7-stamp",
+      "narrowGoal": "Create the P127 implementation-grade contract, seven-subphase split, safety rules, docs, status handoff, and checker while keeping acceptance capture blocked.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json",
+        "docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md",
+        "scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json",
+        "docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md",
+        "scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Contract/status/report evidence only. No runtime exports, schemas, acceptance capture records, DB write shapes, provider envelopes, dispatch packets, or project data.",
+      "commandCenterUx": "No new cards, routes, controls, or dashboard source/test changes. Preserve existing scoped P126.5 acceptance boundary UX only.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run existing scoped P126 acceptance route regression test; do not add or change dashboard tests in P127.1."
+      ],
+      "checkerUpdates": [
+        "Add P127.1 checker using shared/reportWriter.js.",
+        "Use shared/checkResultFormatter.js.",
+        "Update P126.7 checker to accept P127.1 handoff.",
+        "Update check-os-phase-status.js for P127.1-P127.7."
+      ],
+      "docsRoadmap": "Create P127 plan, update README, platform roadmap, OS status, P126.7/P127.1 reports, OS report, and validation coverage report.",
+      "phaseStatusUpdate": "P127 in progress; P127.1 complete; current phase P127.1; previous P126.7; next P127.2.",
+      "validationCommands": [
+        "npm run check:p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P127.1 files>",
+        "git commit -m \"feat(nexus): implement p1271 approval authority acceptance capture\"",
+        "stamp P127/P127.1 status with the implementation commit",
+        "git add <allowed P127.1 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1271 approval authority acceptance capture\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.7",
+      "nextPhase": "P127.2",
+      "order": 163.1,
+      "detail": "P127.1 acceptance capture boundary contract/policy complete; P127.2 acceptance capture eligibility metadata is next.",
+      "summary": "Created the P127 acceptance capture boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping live acceptance capture blocked.",
+      "knownLimitations": [
+        "P127.1 is contract/policy only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
+    },
+    {
+      "phaseId": "P127.2",
+      "title": "Acceptance Capture Eligibility Metadata",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P127.1-stamp",
+      "narrowGoal": "Add browser-safe local acceptance capture eligibility metadata without creating capture records.",
+      "allowedFiles": [
+        "scripts/check-p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
+      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Planned scoped route coverage if UX changes are later allowed."
+      ],
+      "checkerUpdates": [
+        "Planned checker for the subphase."
+      ],
+      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P127 in progress; P127.2 complete when implemented; previous P127.1; next P127.3.",
+      "validationCommands": [],
+      "gitCommands": [],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P127.1",
+      "nextPhase": "P127.3",
+      "order": 163.2,
+      "detail": "Planned Acceptance Capture Eligibility Metadata.",
+      "summary": "Planned Acceptance Capture Eligibility Metadata. No P127.2 behavior is implemented in P127.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ]
+    },
+    {
+      "phaseId": "P127.3",
+      "title": "Governed Acceptance Capture Intent Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P127.2-stamp",
+      "narrowGoal": "Model acceptance capture intent locally while keeping capture/write/execution paths blocked.",
+      "allowedFiles": [
+        "scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
+      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Planned scoped route coverage if UX changes are later allowed."
+      ],
+      "checkerUpdates": [
+        "Planned checker for the subphase."
+      ],
+      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P127 in progress; P127.3 complete when implemented; previous P127.2; next P127.4.",
+      "validationCommands": [],
+      "gitCommands": [],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P127.2",
+      "nextPhase": "P127.4",
+      "order": 163.3,
+      "detail": "Planned Governed Acceptance Capture Intent Model.",
+      "summary": "Planned Governed Acceptance Capture Intent Model. No P127.3 behavior is implemented in P127.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ]
+    },
+    {
+      "phaseId": "P127.4",
+      "title": "Acceptance Capture Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P127.3-stamp",
+      "narrowGoal": "Create a local-only safe dry-run envelope for acceptance capture readiness.",
+      "allowedFiles": [
+        "scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
+      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Planned scoped route coverage if UX changes are later allowed."
+      ],
+      "checkerUpdates": [
+        "Planned checker for the subphase."
+      ],
+      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P127 in progress; P127.4 complete when implemented; previous P127.3; next P127.5.",
+      "validationCommands": [],
+      "gitCommands": [],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P127.3",
+      "nextPhase": "P127.5",
+      "order": 163.4,
+      "detail": "Planned Acceptance Capture Safe Dry Run.",
+      "summary": "Planned Acceptance Capture Safe Dry Run. No P127.4 behavior is implemented in P127.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ]
+    },
+    {
+      "phaseId": "P127.5",
+      "title": "Command Center Acceptance Capture UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P127.4-stamp",
+      "narrowGoal": "Surface scoped read-only acceptance capture readiness only where founder work is coordinated.",
+      "allowedFiles": [
+        "scripts/check-p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
+      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Planned scoped route coverage if UX changes are later allowed."
+      ],
+      "checkerUpdates": [
+        "Planned checker for the subphase."
+      ],
+      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P127 in progress; P127.5 complete when implemented; previous P127.4; next P127.6.",
+      "validationCommands": [],
+      "gitCommands": [],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P127.4",
+      "nextPhase": "P127.6",
+      "order": 163.5,
+      "detail": "Planned Command Center Acceptance Capture UX.",
+      "summary": "Planned Command Center Acceptance Capture UX. No P127.5 behavior is implemented in P127.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ]
+    },
+    {
+      "phaseId": "P127.6",
+      "title": "Acceptance Capture Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P127.5-stamp",
+      "narrowGoal": "Validate P127.1-P127.5 evidence and docs before final validation.",
+      "allowedFiles": [
+        "scripts/check-p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
+      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Planned scoped route coverage if UX changes are later allowed."
+      ],
+      "checkerUpdates": [
+        "Planned checker for the subphase."
+      ],
+      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P127 in progress; P127.6 complete when implemented; previous P127.5; next P127.7.",
+      "validationCommands": [],
+      "gitCommands": [],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P127.5",
+      "nextPhase": "P127.7",
+      "order": 163.6,
+      "detail": "Planned Acceptance Capture Validation / Docs.",
+      "summary": "Planned Acceptance Capture Validation / Docs. No P127.6 behavior is implemented in P127.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ]
+    },
+    {
+      "phaseId": "P127.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P127.6-stamp",
+      "narrowGoal": "Close P127 with final validation evidence and create the next planned handoff.",
+      "allowedFiles": [
+        "scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only evidence for later implementation. No runtime exports.",
+      "commandCenterUx": "No dashboard changes until the scoped UX subphase explicitly allows them.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Planned scoped route coverage if UX changes are later allowed."
+      ],
+      "checkerUpdates": [
+        "Planned checker for the subphase."
+      ],
+      "docsRoadmap": "Update P127 docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P127 in progress; P127.7 complete when implemented; previous P127.6; next P128.",
+      "validationCommands": [],
+      "gitCommands": [],
+      "finalSafetyChecks": [
+        "Confirm no acceptance capture, writes, execution, providers, dispatch, mutation, network, deploy, package, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P127.6",
+      "nextPhase": "P128",
+      "order": 163.7,
+      "detail": "Planned Final Validation.",
+      "summary": "Planned Final Validation. No P127.7 behavior is implemented in P127.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ]
+    }
+  ],
+  "nextPhase": "P127.2"
+}

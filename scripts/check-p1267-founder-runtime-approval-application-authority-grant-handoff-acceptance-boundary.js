@@ -101,8 +101,17 @@ const finalState =
   && roadmap.currentPhase === "P126.7"
   && roadmap.previousPhase === "P126.6"
   && roadmap.nextPhase === "P127";
+const p1271StartedState =
+  status.currentPhase === "P127.1"
+  && status.previousPhase === "P126.7"
+  && status.nextPhase === "P127.2"
+  && roadmap.currentPhase === "P127.1"
+  && roadmap.previousPhase === "P126.7"
+  && roadmap.nextPhase === "P127.2";
 const p126Entries = [statusById.get("P126"), ...p126Subphases.map((phaseId) => statusById.get(phaseId))].filter(Boolean);
 const stalePending = p126Entries.filter((entry) => entry.commit === "pending-final-commit" && !["P126", "P126.7"].includes(entry.phaseId));
+const p127PlannedState = p127Status.status === "planned" && p127Roadmap.status === "planned" && /planned-only/i.test(p127Status.knownLimitations?.join(" ") || "");
+const p127ActiveState = p127Status.status === "in_progress" && p127Roadmap.status === "in_progress" && statusById.get("P127.1")?.status === "complete" && roadmapById.get("P127.1")?.status === "complete";
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("P126 prior reports exist", priorReports.every((path) => existsSync(join(ROOT, path))), priorReports.join(", "));
@@ -126,7 +135,7 @@ addCheck("platform roadmap records P126.7 and parent completion", /P126\.7 is co
 addCheck("README records P126.7 and parent completion", /P126\.7 approval application authority grant handoff acceptance final\s+validation/i.test(readme) && /P126\s+is\s+complete/i.test(readme) && /P127\s+is\s+planned next/i.test(readme));
 addCheck(
   "phase status advanced",
-  finalState
+  (finalState || p1271StartedState)
     && statusById.get("P126")?.status === "complete"
     && roadmapById.get("P126")?.status === "complete"
     && p126Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
@@ -135,11 +144,9 @@ addCheck(
 );
 addCheck(
   "P127 handoff exists",
-  p127Status.status === "planned"
-    && p127Roadmap.status === "planned"
+  (p127PlannedState || p127ActiveState)
     && p127Status.commandCenterVisible === true
-    && p127Roadmap.commandCenterVisible === true
-    && /planned-only/i.test(p127Status.knownLimitations?.join(" ") || ""),
+    && p127Roadmap.commandCenterVisible === true,
 );
 addCheck("completed P126 entries have commits", p126Entries.length === 8 && p126Entries.every((entry) => Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary)) && stalePending.length === 0, stalePending.map((entry) => entry.phaseId).join(", "));
 addCheck(

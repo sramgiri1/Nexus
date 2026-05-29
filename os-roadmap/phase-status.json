@@ -18252,26 +18252,184 @@
       "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Boundary",
       "label": "Acceptance Capture",
       "order": 163,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P127.1 acceptance capture boundary contract/policy complete; P127.2 eligibility metadata is next.",
+      "summary": "P127 is in progress with an acceptance capture boundary contract, seven-subphase split, checker, docs, status handoff, and report. Live acceptance capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "previousPhase": "P126.7",
+      "nextPhase": "P127.2",
+      "checksRun": [
+        "npm run check:p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P127.1 is contract/policy only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T18:33:04.255Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.1",
+      "title": "Acceptance Capture Boundary Contract / Policy",
+      "label": "Capture Contract",
+      "order": 163.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P127.1 acceptance capture boundary contract/policy complete; P127.2 eligibility metadata is next.",
+      "summary": "Created the P127 acceptance capture boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping live acceptance capture blocked.",
+      "previousPhase": "P126.7",
+      "nextPhase": "P127.2",
+      "checksRun": [
+        "npm run check:p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P127.1 is contract/policy only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T18:33:04.255Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.2",
+      "title": "Acceptance Capture Eligibility Metadata",
+      "label": "Capture Metadata",
+      "order": 163.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned acceptance capture boundary after P126 final validation.",
-      "summary": "P127 is planned next for approval application authority grant handoff acceptance capture boundary work. No P127 behavior is implemented in P126.7.",
-      "previousPhase": "P126.7",
-      "nextPhase": "P127.1",
+      "detail": "Planned Acceptance Capture Eligibility Metadata.",
+      "summary": "Planned Acceptance Capture Eligibility Metadata. No P127.2 behavior is implemented in P127.1.",
+      "previousPhase": "P127.1",
+      "nextPhase": "P127.3",
       "checksRun": [],
       "knownLimitations": [
-        "P127 is planned-only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "Planned only. Not implemented in P127.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.3",
+      "title": "Governed Acceptance Capture Intent Model",
+      "label": "Capture Intent",
+      "order": 163.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned Governed Acceptance Capture Intent Model.",
+      "summary": "Planned Governed Acceptance Capture Intent Model. No P127.3 behavior is implemented in P127.1.",
+      "previousPhase": "P127.2",
+      "nextPhase": "P127.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.4",
+      "title": "Acceptance Capture Safe Dry Run",
+      "label": "Capture Dry Run",
+      "order": 163.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned Acceptance Capture Safe Dry Run.",
+      "summary": "Planned Acceptance Capture Safe Dry Run. No P127.4 behavior is implemented in P127.1.",
+      "previousPhase": "P127.3",
+      "nextPhase": "P127.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.5",
+      "title": "Command Center Acceptance Capture UX",
+      "label": "Capture UX",
+      "order": 163.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned Command Center Acceptance Capture UX.",
+      "summary": "Planned Command Center Acceptance Capture UX. No P127.5 behavior is implemented in P127.1.",
+      "previousPhase": "P127.4",
+      "nextPhase": "P127.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.6",
+      "title": "Acceptance Capture Validation / Docs",
+      "label": "Capture Validation",
+      "order": 163.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned Acceptance Capture Validation / Docs.",
+      "summary": "Planned Acceptance Capture Validation / Docs. No P127.6 behavior is implemented in P127.1.",
+      "previousPhase": "P127.5",
+      "nextPhase": "P127.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P127.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 163.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned Final Validation.",
+      "summary": "Planned Final Validation. No P127.7 behavior is implemented in P127.1.",
+      "previousPhase": "P127.6",
+      "nextPhase": "P128",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Not implemented in P127.1."
       ],
       "completedAt": ""
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T17:12:28.540Z",
-  "currentPhase": "P126.7",
-  "previousPhase": "P126.6",
-  "nextPhase": "P127",
+  "currentPhase": "P127.1",
+  "previousPhase": "P126.7",
+  "nextPhase": "P127.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "phaseId": "P125.3",
@@ -18303,21 +18461,21 @@
   },
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P126.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 162.7,
+    "phaseId": "P127.1",
+    "title": "Acceptance Capture Boundary Contract / Policy",
+    "label": "Capture Contract",
+    "order": 163.1,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "826b657d",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P126.7 final validation complete; P126 is complete and P127 is planned next.",
-    "summary": "Closed P126 with final validation across P126.1-P126.7 scripts, reports, docs, status, scoped Command Center acceptance UX evidence, safe wording, and a planned-only P127 marker. Live handoff acceptance, acceptance capture, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
-    "previousPhase": "P126.6",
-    "nextPhase": "P127",
+    "detail": "P127.1 acceptance capture boundary contract/policy complete; P127.2 eligibility metadata is next.",
+    "summary": "Created the P127 acceptance capture boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping live acceptance capture blocked.",
+    "previousPhase": "P126.7",
+    "nextPhase": "P127.2",
     "checksRun": [
+      "npm run check:p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
-      "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -18326,8 +18484,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P126.7 is final validation only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P127 is planned-only until its own implementation-grade contract is written."
+      "P127.1 is contract/policy only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T18:25:56.374Z"
+    "completedAt": "2026-05-29T18:33:04.255Z"
   }
 }
