@@ -1,12 +1,12 @@
 {
   "phaseId": "P119",
   "title": "Founder Runtime Approval Decision Recording Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision recording boundary while keeping approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P119.6",
-  "previousSubphase": "P119.5",
-  "nextSubphase": "P119.7",
+  "currentSubphase": "P119.7",
+  "previousSubphase": "P119.6",
+  "nextSubphase": "P120",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P119.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -694,12 +694,13 @@
     {
       "phaseId": "P119.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Close P119 and hand off to the next planned phase without enabling approval decision recording or runtime execution.",
+      "narrowGoal": "Close P119 and hand off to the planned P120 placeholder without enabling approval decision recording or runtime execution.",
       "allowedFiles": [
         "scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js",
+        "scripts/check-os-phase-status.js",
         "contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json",
         "docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -707,11 +708,26 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md",
         "reports/p1197-founder-runtime-approval-decision-recording-boundary-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1197-founder-runtime-approval-decision-recording-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json",
+        "docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/p1197-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -732,7 +748,7 @@
       ],
       "expectedExports": [],
       "dataShape": "Markdown validation report only.",
-      "commandCenterUx": "Preserve P119.5 UX when implemented and avoid new controls.",
+      "commandCenterUx": "Preserve P119.5 scoped UX and avoid new controls, primary UX raw dumps, raw private IDs, raw DB names, DemoApp exposure, or fake actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -742,10 +758,11 @@
         "Preserve P119.5 coverage when implemented."
       ],
       "checkerUpdates": [
-        "Add a P119.7 final validation checker."
+        "Add a P119.7 final validation checker.",
+        "Update the OS phase status checker to recognize the planned P120 handoff placeholder."
       ],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P119 complete when implemented.",
+      "docsRoadmap": "Record P119.7 final validation, P119 complete, and P120 planned handoff in docs/status/reports.",
+      "phaseStatusUpdate": "P119 complete; P119.7 complete; current P119.7; previous P119.6; next P120 planned placeholder.",
       "validationCommands": [
         "npm run check:p1197-founder-runtime-approval-decision-recording-boundary",
         "npm run check:p1196-founder-runtime-approval-decision-recording-boundary",
@@ -759,7 +776,9 @@
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval decision recording or runtime execution authority is enabled."
+        "Confirm no approval decision recording or runtime execution authority is enabled.",
+        "Confirm no project, CareLoop, dashboard source/test, DB/runtime/provider/tool/worker/deploy/release/export/package/env files are changed.",
+        "Confirm P120 remains planned-only with no checksRun evidence or implementation behavior."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -776,8 +795,9 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P120",
-      "previousPhase": "P119.6"
+      "previousPhase": "P119.6",
+      "expectedBaseCommit": "4c759ed5"
     }
   ],
-  "summary": "P119 is in progress. P119.1-P119.5 define the approval-decision recording boundary contract, browser-safe schema metadata, governed local intent model, safe dry-run preview, and scoped Command Center UX while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
+  "summary": "P119 is complete. P119.1-P119.7 define and validate the approval-decision recording boundary, browser-safe schema metadata, governed local intent model, safe dry-run preview, scoped Command Center UX, aggregate validation, and final handoff while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
 }
