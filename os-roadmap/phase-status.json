@@ -8373,18 +8373,19 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "4a44919a",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Activation Boundary",
-      "detail": "P123.5 scoped Command Center activation boundary UX complete; P123.6 activation validation and docs is next.",
+      "detail": "P123.6 activation validation/docs complete; P123.7 final validation is next.",
       "phaseId": "P123",
       "title": "Founder Runtime Approval Application Authority Activation Boundary",
       "order": 159,
       "status": "in_progress",
-      "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, local activation intent model, hidden activation dry-run preview, and scoped Command Center activation boundary UX complete. Activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-      "nextPhase": "P123.6",
-      "previousPhase": "P123.5",
+      "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, local activation intent model, hidden activation dry-run preview, scoped Command Center activation boundary UX, and aggregate validation/docs closure complete. Activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+      "nextPhase": "P123.7",
+      "previousPhase": "P123.6",
       "checksRun": [
+        "npm run check:p1236-founder-runtime-approval-application-authority-activation-boundary",
         "npm run check:p1235-founder-runtime-approval-application-authority-activation-boundary",
         "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
         "npm run check:os-phase-status",
@@ -8395,7 +8396,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P123 remains activation boundary work only. It does not activate authority, grant authority, apply approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+        "P123.6 is validation/docs closure only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
       "completedAt": "2026-05-29T14:57:00.319Z"
     },
@@ -8550,19 +8551,29 @@
       "title": "Activation Validation / Docs",
       "label": "Activation Validation Docs",
       "order": 159.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P123.6 will aggregate activation validation, docs, reports, and handoff evidence without enabling live authority.",
-      "summary": "Planned validation/docs only. Activation, authority grant, approval decision application, DB/runtime writes, execution, provider calls, mutation, deploy, package, network calls, and spend remain unavailable.",
+      "detail": "P123.1-P123.5 activation boundary evidence validated; no dashboard source or test files changed.",
+      "summary": "Added aggregate P123 activation boundary validation/docs closure across P123.1-P123.5 scripts, reports, docs, status, route coverage, and scoped Command Center activation UX without changing dashboard source or tests, while keeping activation, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
       "previousPhase": "P123.5",
       "nextPhase": "P123.7",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1236-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1235-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P123.6 is validation/docs closure only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T15:16:45.531Z"
     },
     {
       "track": "NEXUS_OS",
@@ -8574,8 +8585,8 @@
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
-      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "detail": "P123.7 will close final validation and handoff without enabling live authority.",
+      "summary": "Planned final validation only. Activation, authority grant, approval decision application, DB/runtime writes, execution, provider calls, mutation, deploy, package, network calls, and spend remain unavailable.",
       "previousPhase": "P123.6",
       "nextPhase": "P124",
       "checksRun": [],
@@ -17530,25 +17541,26 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T15:11:05.860Z",
-  "currentPhase": "P123.5",
-  "previousPhase": "P123.4",
-  "nextPhase": "P123.6",
+  "updatedAt": "2026-05-29T15:16:45.531Z",
+  "currentPhase": "P123.6",
+  "previousPhase": "P123.5",
+  "nextPhase": "P123.7",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P123.5",
-    "title": "Command Center Activation Boundary UX",
-    "label": "Command Center Activation Boundary UX",
-    "order": 159.5,
+    "phaseId": "P123.6",
+    "title": "Activation Validation / Docs",
+    "label": "Activation Validation Docs",
+    "order": 159.6,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "4a44919a",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "Business Build and Agent Flow show display-safe approval application authority activation readiness; no activation or execution controls are enabled.",
-    "summary": "Added scoped Command Center approval application authority activation UX on Business Build and Agent Flow using the P123.4 dry-run preview with display-safe readiness rows, blockers, disabled reason, owner capability, evidence/activity labels, zero unsafe counts, and cost posture while keeping activation, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
-    "previousPhase": "P123.4",
-    "nextPhase": "P123.6",
+    "detail": "P123.1-P123.5 activation boundary evidence validated; no dashboard source or test files changed.",
+    "summary": "Added aggregate P123 activation boundary validation/docs closure across P123.1-P123.5 scripts, reports, docs, status, route coverage, and scoped Command Center activation UX without changing dashboard source or tests, while keeping activation, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
+    "previousPhase": "P123.5",
+    "nextPhase": "P123.7",
     "checksRun": [
+      "npm run check:p1236-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:p1235-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:os-phase-status",
@@ -17559,8 +17571,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P123.5 is display-only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P123.6 is validation/docs closure only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T15:07:21.574Z"
+    "completedAt": "2026-05-29T15:16:45.531Z"
   }
 }

@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority activation boundary before any live authority can be considered, while keeping activation, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P123.5",
-  "previousSubphase": "P123.4",
-  "nextSubphase": "P123.6",
+  "currentSubphase": "P123.6",
+  "previousSubphase": "P123.5",
+  "nextSubphase": "P123.7",
   "safetyRules": [
     "Do not enable approval application authority activation in P123.1.",
     "Do not enable approval decision application, approval capture, approval persistence, or approve/reject decision recording in P123.1.",
@@ -35,6 +35,7 @@
     "P123.3 is model-only and does not enable live authority.",
     "P123.4 is dry-run preview only and does not enable live authority.",
     "P123.5 is scoped Command Center display-only UX and does not enable live authority.",
+    "P123.6 is validation/docs closure only and does not enable live authority.",
     "Approval application authority activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "subphases": [
@@ -671,12 +672,40 @@
     {
       "phaseId": "P123.6",
       "title": "Activation Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Planned P123 subphase. Implementation requires its own implementation-grade plan before coding.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "narrowGoal": "Add validation/docs closure for P123.1-P123.5 activation boundary work without changing dashboard source, dashboard tests, runtime behavior, DB/runtime writes, provider calls, project mutation, deploy, package, network calls, or spend.",
+      "allowedFiles": [
+        "scripts/check-p1236-founder-runtime-approval-application-authority-activation-boundary.js",
+        "package.json",
+        "contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json",
+        "docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1234-founder-runtime-approval-application-authority-activation-boundary-report.md",
+        "reports/p1235-founder-runtime-approval-application-authority-activation-boundary-report.md",
+        "reports/p1236-founder-runtime-approval-application-authority-activation-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "scripts/check-p1236-founder-runtime-approval-application-authority-activation-boundary.js",
+        "package.json",
+        "contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json",
+        "docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1234-founder-runtime-approval-application-authority-activation-boundary-report.md",
+        "reports/p1235-founder-runtime-approval-application-authority-activation-boundary-report.md",
+        "reports/p1236-founder-runtime-approval-application-authority-activation-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -696,27 +725,51 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls until explicitly scoped.",
+      "dataShape": "No runtime exports. P123.6 writes validation/docs/status/report evidence only.",
+      "commandCenterUx": "Preserve the P123.5 activation boundary card on Business Build and Agent Flow. Do not add UI, controls, routes, raw reports, raw JSON/log/policy dumps, private IDs, DemoApp, or fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
-        "Preserve Light theme."
+        "Preserve Light theme.",
+        "Run existing focused Playwright coverage for dark, light, and system modes."
       ],
       "playwrightTests": [
-        "No new Playwright test until dashboard source changes are explicitly allowed."
+        "No Playwright test file edits in P123.6.",
+        "Run dashboard/tests/routes.spec.js coverage for \"Approval application authority activation appears only on scoped pages\"."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P123.6 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add scripts/check-p1236-founder-runtime-approval-application-authority-activation-boundary.js.",
+        "Register the P123.6 package script.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Confirm the P123.5 checker accepts P123.6 handoff."
+      ],
+      "docsRoadmap": "Update P123 plan, README, platform roadmap, P123 contract, OS roadmap/status, generated reports, and P123.5 handoff validation.",
+      "phaseStatusUpdate": "P123 in progress; P123.6 complete; current phase P123.6; previous P123.5; next P123.7.",
+      "validationCommands": [
+        "npm run check:p1236-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1235-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P123.6 files>",
-        "git commit -m \"feat(nexus): implement p1236 approval authority activation boundary\"",
+        "git commit -m \"feat(nexus): implement p1236 approval authority activation validation docs\"",
+        "stamp P123/P123.6 status with the implementation commit",
+        "git add <allowed P123.6 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1236 approval authority activation validation docs\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval authority activation, DB writes, or runtime execution authority is enabled."
+        "Confirm no project/CareLoop/generated project paths changed.",
+        "Confirm no dashboard source or test files changed.",
+        "Confirm no DB/runtime/provider/tool/worker/deploy/release/export/package/local runtime state/env paths changed.",
+        "Confirm no activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, network calls, deploy, release, export, package, or spend authority is enabled.",
+        "Confirm no DemoApp exposure, raw private IDs, raw DB/schema names, raw report paths in primary UX, JSON/log/policy dumps, internal primary UX phase labels, or fake actions are introduced."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -725,6 +778,7 @@
         "What was implemented",
         "Command Center UX changes",
         "Tests/checkers run",
+        "Dashboard build/unit/page results",
         "Docs/README/roadmap updates",
         "OS phase status update",
         "Safety confirmations",
@@ -734,7 +788,9 @@
       ],
       "nextPhase": "P123.7",
       "previousPhase": "P123.5",
-      "order": 159.6
+      "order": 159.6,
+      "expectedBaseCommit": "5adfdd30",
+      "completedAt": "2026-05-29T15:16:45.531Z"
     },
     {
       "phaseId": "P123.7",
@@ -805,8 +861,8 @@
       "order": 159.7
     }
   ],
-  "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, local activation intent model, hidden activation dry-run preview, and scoped Command Center activation boundary UX complete. Live activation remains blocked.",
-  "updatedAt": "2026-05-29T15:07:21.574Z",
+  "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, local activation intent model, hidden activation dry-run preview, scoped Command Center activation boundary UX, and aggregate validation/docs closure complete. Live activation remains blocked.",
+  "updatedAt": "2026-05-29T15:16:45.531Z",
   "previousPhase": "P122.7",
-  "nextPhase": "P123.6"
+  "nextPhase": "P123.7"
 }
