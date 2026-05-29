@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P125.7
-- Generated at: 2026-05-29T17:28:53.355Z
+- Generated at: 2026-05-29T17:29:39.868Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9d761514
+- Validation HEAD: 38924dbd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | phase status advanced | PASS | P125.7/P125.6/P126 |
 | P126 planned handoff exists | PASS |  |
 | completed P125 entries have commits | PASS |  |
-| changed files stay in P125.7 allowed scope | PASS | README.md, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1256-founder-runtime-approval-application-authority-grant-handoff-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1256-founder-runtime-approval-application-authority-grant-handoff.js, reports/p1257-founder-runtime-approval-application-authority-grant-handoff-report.md, scripts/check-p1257-founder-runtime-approval-application-authority-grant-handoff.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1256-founder-runtime-approval-application-authority-grant-handoff-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1256-founder-runtime-approval-application-authority-grant-handoff.js, reports/p1257-founder-runtime-approval-application-authority-grant-handoff-report.md, scripts/check-p1257-founder-runtime-approval-application-authority-grant-handoff.js |
+| changed files stay in P125.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P125.7 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw handoff table names | PASS |  |
