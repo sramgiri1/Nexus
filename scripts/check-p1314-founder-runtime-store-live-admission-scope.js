@@ -62,6 +62,8 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1314 = subphaseById.get("P131.4") || {};
 const p1315 = subphaseById.get("P131.5") || {};
+const p1316 = subphaseById.get("P131.6") || {};
+const p1317 = subphaseById.get("P131.7") || {};
 const p1314ContractState = contract.status === "in_progress"
   && contract.currentSubphase === "P131.4"
   && contract.previousSubphase === "P131.3"
@@ -70,6 +72,13 @@ const p1315ContractState = contract.status === "in_progress"
   && contract.currentSubphase === "P131.5"
   && contract.previousSubphase === "P131.4"
   && contract.nextSubphase === "P131.6";
+const p1316ContractState = contract.status === "in_progress"
+  && contract.currentSubphase === "P131.6"
+  && contract.previousSubphase === "P131.5"
+  && contract.nextSubphase === "P131.7";
+const p1317FinalState = contract.status === "complete"
+  && contract.currentSubphase === "P131.7"
+  && contract.previousSubphase === "P131.6";
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
@@ -117,7 +126,7 @@ const validationCommands = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck("contract marks P131.4 complete", (p1314ContractState || p1315ContractState) && p1314.status === "complete");
+addCheck("contract marks P131.4 complete", (p1314ContractState || p1315ContractState || p1316ContractState || p1317FinalState) && p1314.status === "complete");
 addCheck("P131.4 records expected base commit", p1314.expectedBaseCommit === "dbc9a686");
 addCheck("P131.5 remains planned or complete", ["planned", "complete"].includes(p1315.status));
 addCheck("P131.4 allowed files include dry-run model and checker", p1314.allowedFiles?.includes(MODEL_PATH) && p1314.allowedFiles?.includes("scripts/check-p1314-founder-runtime-store-live-admission-scope.js") && p1314.allowedFiles?.includes(REPORT_PATH));
@@ -146,22 +155,45 @@ addCheck("README records P131.4", /P131\.4 write boundary admission dry run/i.te
 addCheck("platform roadmap records P131.4", /P131\.4 is complete/i.test(platformRoadmap) && (/P131\.5\s+is\s+next/i.test(platformRoadmap) || /P131\.5 is complete/i.test(platformRoadmap)));
 addCheck("Command Center UX remains unchanged and scoped", pageSource.includes("Business Build Store Live Readiness Gate") && pageSource.includes("Agent Flow Store Live Readiness Gate") && !pageSource.includes("Lite Store Live Readiness Gate") && !pageSource.includes("Chat Store Live Readiness Gate") && !pageSource.includes("DemoApp"));
 addCheck("Playwright scoped store readiness coverage remains", routeTests.includes("store live readiness gate appears only on scoped pages"));
-addCheck(
-  "phase status advanced",
-  ((status.currentPhase === "P131.4"
+const p1314StatusState =
+  status.currentPhase === "P131.4"
     && status.previousPhase === "P131.3"
     && status.nextPhase === "P131.5"
     && roadmap.currentPhase === "P131.4"
     && roadmap.previousPhase === "P131.3"
-    && roadmap.nextPhase === "P131.5")
-    || (status.currentPhase === "P131.5"
-      && status.previousPhase === "P131.4"
-      && status.nextPhase === "P131.6"
-      && roadmap.currentPhase === "P131.5"
-      && roadmap.previousPhase === "P131.4"
-      && roadmap.nextPhase === "P131.6"))
-    && statusById.get("P131")?.status === "in_progress"
-    && roadmapById.get("P131")?.status === "in_progress"
+    && roadmap.nextPhase === "P131.5";
+const p1315StatusState =
+  status.currentPhase === "P131.5"
+    && status.previousPhase === "P131.4"
+    && status.nextPhase === "P131.6"
+    && roadmap.currentPhase === "P131.5"
+    && roadmap.previousPhase === "P131.4"
+    && roadmap.nextPhase === "P131.6";
+const p1316StatusState =
+  status.currentPhase === "P131.6"
+    && status.previousPhase === "P131.5"
+    && status.nextPhase === "P131.7"
+    && roadmap.currentPhase === "P131.6"
+    && roadmap.previousPhase === "P131.5"
+    && roadmap.nextPhase === "P131.7"
+    && p1316.status === "complete"
+    && statusById.get("P131.6")?.status === "complete"
+    && roadmapById.get("P131.6")?.status === "complete";
+const p1317StatusState =
+  status.currentPhase === "P131.7"
+    && status.previousPhase === "P131.6"
+    && status.nextPhase === "P132"
+    && roadmap.currentPhase === "P131.7"
+    && roadmap.previousPhase === "P131.6"
+    && roadmap.nextPhase === "P132"
+    && p1317.status === "complete"
+    && statusById.get("P131.7")?.status === "complete"
+    && roadmapById.get("P131.7")?.status === "complete";
+addCheck(
+  "phase status advanced",
+  (p1314StatusState || p1315StatusState || p1316StatusState || p1317StatusState)
+    && ["in_progress", "complete"].includes(statusById.get("P131")?.status)
+    && ["in_progress", "complete"].includes(roadmapById.get("P131")?.status)
     && statusById.get("P131.3")?.status === "complete"
     && roadmapById.get("P131.3")?.status === "complete"
     && statusById.get("P131.4")?.status === "complete"
@@ -183,7 +215,19 @@ addCheck(
       && status.next?.phaseId === "P131.6"
       && roadmap.current?.phaseId === "P131.5"
       && roadmap.previous?.phaseId === "P131.4"
-      && roadmap.next?.phaseId === "P131.6"),
+      && roadmap.next?.phaseId === "P131.6")
+    || (status.current?.phaseId === "P131.6"
+      && status.previous?.phaseId === "P131.5"
+      && status.next?.phaseId === "P131.7"
+      && roadmap.current?.phaseId === "P131.6"
+      && roadmap.previous?.phaseId === "P131.5"
+      && roadmap.next?.phaseId === "P131.7")
+    || (status.current?.phaseId === "P131.7"
+      && status.previous?.phaseId === "P131.6"
+      && status.next?.phaseId === "P132"
+      && roadmap.current?.phaseId === "P131.7"
+      && roadmap.previous?.phaseId === "P131.6"
+      && roadmap.next?.phaseId === "P132"),
 );
 addCheck("completed P131.4 entries have required fields", [statusById.get("P131"), statusById.get("P131.4"), roadmapById.get("P131.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck(

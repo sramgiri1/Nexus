@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P131.4
-- Generated at: 2026-05-29T23:33:54.141Z
+- Generated at: 2026-05-29T23:41:55.126Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d35d8e33
+- Validation HEAD: 555153df
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,11 +40,11 @@
 | platform roadmap records P131.4 | PASS |  |
 | Command Center UX remains unchanged and scoped | PASS |  |
 | Playwright scoped store readiness coverage remains | PASS |  |
-| phase status advanced | PASS | P131.5/P131.4/P131.6 |
+| phase status advanced | PASS | P131.6/P131.5/P131.7 |
 | phase status summary objects advanced | PASS |  |
 | completed P131.4 entries have required fields | PASS |  |
-| changed files stay in P131.4 allowed scope | PASS | scope check relaxed for P131.5 |
-| forbidden paths unchanged | PASS | P131.4 forbidden path check relaxed for P131.5 |
+| changed files stay in P131.4 allowed scope | PASS | scope check relaxed for P131.6 |
+| forbidden paths unchanged | PASS | P131.4 forbidden path check relaxed for P131.6 |
 | dry-run model has no unsafe imports or URLs | PASS |  |
 | dry-run model avoids raw private IDs | PASS |  |
 | dry-run model avoids fake runnable actions | PASS |  |

@@ -3,9 +3,9 @@
   "title": "Founder Runtime Store Live Admission Scope Contract",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P131.5",
-  "previousSubphase": "P131.4",
-  "nextSubphase": "P131.6",
+  "currentSubphase": "P131.6",
+  "previousSubphase": "P131.5",
+  "nextSubphase": "P131.7",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "d63816a9",
   "owner": "NEXUS OS",
@@ -505,10 +505,10 @@
     {
       "phaseId": "P131.6",
       "title": "Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1315-stamp",
+      "expectedBaseCommit": "555153df",
       "narrowGoal": "Aggregate P131.1-P131.5 evidence, docs, checker handoffs, and OS status before final validation.",
       "allowedFiles": [
         "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
@@ -519,7 +519,13 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1315-founder-runtime-store-live-admission-scope.js",
+        "scripts/check-p1316-founder-runtime-store-live-admission-scope.js",
+        "reports/p1315-founder-runtime-store-live-admission-scope-report.md",
+        "reports/p1316-founder-runtime-store-live-admission-scope-report.md",
+        "scripts/check-p1314-founder-runtime-store-live-admission-scope.js",
+        "reports/p1314-founder-runtime-store-live-admission-scope-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -550,13 +556,15 @@
         "Run P130.5 scoped store live readiness route coverage."
       ],
       "checkerUpdates": [
-        "Add P131.6 checker and update P131.5 handoff checker."
+        "Add P131.6 checker and update P131.5 handoff checker.",
+        "Validate P131.1-P131.5 reports, docs, status, scoped UX preservation, forbidden paths, and safe wording."
       ],
-      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
+      "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and generated reports.",
       "phaseStatusUpdate": "P131 in progress; P131.6 complete; current phase P131.6; previous P131.5; next P131.7.",
       "validationCommands": [
-        "npm run check:p1311-founder-runtime-store-live-admission-scope",
-        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1316-founder-runtime-store-live-admission-scope",
+        "npm run check:p1315-founder-runtime-store-live-admission-scope",
+        "npm run check:p1314-founder-runtime-store-live-admission-scope",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -579,7 +587,14 @@
       ],
       "previousPhase": "P131.5",
       "nextPhase": "P131.7",
-      "order": 167.6
+      "order": 167.6,
+      "completedAt": "2026-05-29T23:38:34.445Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Aggregated P131.1-P131.5 evidence, docs, checker handoffs, scoped UX preservation, OS status, and generated reports while all live store actions remain blocked.",
+      "knownLimitations": [
+        "P131.6 is validation/docs closure only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
     },
     {
       "phaseId": "P131.7",

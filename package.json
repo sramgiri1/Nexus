@@ -725,7 +725,8 @@
     "check:p1312-founder-runtime-store-live-admission-scope": "node scripts/check-p1312-founder-runtime-store-live-admission-scope.js",
     "check:p1313-founder-runtime-store-live-admission-scope": "node scripts/check-p1313-founder-runtime-store-live-admission-scope.js",
     "check:p1314-founder-runtime-store-live-admission-scope": "node scripts/check-p1314-founder-runtime-store-live-admission-scope.js",
-    "check:p1315-founder-runtime-store-live-admission-scope": "node scripts/check-p1315-founder-runtime-store-live-admission-scope.js"
+    "check:p1315-founder-runtime-store-live-admission-scope": "node scripts/check-p1315-founder-runtime-store-live-admission-scope.js",
+    "check:p1316-founder-runtime-store-live-admission-scope": "node scripts/check-p1316-founder-runtime-store-live-admission-scope.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

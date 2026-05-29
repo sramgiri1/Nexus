@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P131.5
-- Generated at: 2026-05-29T23:33:54.156Z
+- Generated at: 2026-05-29T23:42:06.936Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d35d8e33
+- Validation HEAD: 555153df
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -18,9 +18,9 @@
 | Check | Status | Details |
 | --- | --- | --- |
 | package script registered | PASS |  |
-| contract marks P131.5 current | PASS |  |
+| contract marks P131.5 complete | PASS |  |
 | P131.5 records expected base commit | PASS |  |
-| P131.6 remains planned | PASS |  |
+| P131.6 remains planned or complete | PASS |  |
 | P131.5 allowed files include dashboard and checker | PASS |  |
 | P131.5 forbids project/db/runtime/provider paths | PASS |  |
 | P131.5 records validation commands | PASS |  |
@@ -42,11 +42,11 @@
 | plan records P131.5 implementation | PASS |  |
 | README records P131.5 | PASS |  |
 | platform roadmap records P131.5 | PASS |  |
-| phase status advanced | PASS | P131.5/P131.4/P131.6 |
+| phase status advanced | PASS | P131.6/P131.5/P131.7 |
 | phase status summary objects advanced | PASS |  |
 | completed P131.5 entries have required fields | PASS |  |
-| changed files stay in P131.5 allowed scope | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P131.5 allowed scope | PASS | scope check relaxed for P131.6 |
+| forbidden paths unchanged | PASS | P131.5 forbidden path check relaxed for P131.6 |
 | public docs avoid raw store table names | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |

@@ -19,6 +19,200 @@ P131 is split into seven implementation-grade subphases:
 - P131.6 Validation / Docs
 - P131.7 Final Validation
 
+## P131.6 Validation / Docs
+
+Status: complete
+Phase: P131
+Subphase: P131.6
+Goal: Aggregate P131.1-P131.5 evidence, add P131.6 checker/report coverage,
+update docs/status, and preserve the scoped Command Center admission-scope UX
+before final validation.
+Why this is needed: P131 now has a contract, local request model, evidence
+readiness resolver, write-boundary dry run, and scoped Command Center UX.
+P131.6 consolidates that evidence and documentation before P131.7 closes the
+phase.
+User/operator impact: Operators get a clear validation/docs report confirming
+which admission-scope layers are complete, where the UX appears, and which live
+actions remain blocked.
+Command Center impact: No dashboard source changes. The Business Build and
+Agent Flow Store Live Admission Scope cards remain scoped. Chat with NEXUS,
+Lite, OS Roadmap, and Live Readiness remain clean.
+Safety impact: P131.6 is validation/docs-only. It does not capture approvals,
+persist decisions, submit requests, persist requests, create DB schemas, run
+migrations, read or write DB/runtime records, persist approval or acceptance
+decisions, run CRUD actions, capture handoff acceptance, hand off authority,
+grant authority, activate authority, unlock execution, call providers/models,
+dispatch agents, mutate projects, deploy, release, export, package, use network
+calls, or spend.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `555153df`
+
+Files expected to change:
+- `contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json`
+- `docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+- `scripts/check-p1314-founder-runtime-store-live-admission-scope.js`
+- `scripts/check-p1315-founder-runtime-store-live-admission-scope.js`
+- `scripts/check-p1316-founder-runtime-store-live-admission-scope.js`
+- `reports/p1314-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1315-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1316-founder-runtime-store-live-admission-scope-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `scripts/check-p1316-founder-runtime-store-live-admission-scope.js`.
+- Create `reports/p1316-founder-runtime-store-live-admission-scope-report.md`.
+- Update P131.4 checker so it accepts the P131.6 handoff.
+- Update P131.5 checker so it accepts the P131.6 handoff.
+- Update P131 contract, README, platform roadmap, package script, OS status,
+  roadmap, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- No runtime exports.
+- Data shape: validation evidence only, including completed subphase checks,
+  report pass checks, docs wording checks, status checks, scoped UX preservation
+  checks, forbidden path checks, and safe wording checks.
+- No DB schema, query, migration file, runtime record, live CRUD executor,
+  provider envelope, dispatch packet, raw private ID, raw table name, raw report
+  dump, or project data.
+
+Reuse check:
+- Reuse P131.5 checker handoff patterns.
+- Reuse existing P131 reports and scoped route coverage.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Preserve P131.5 Store Live Admission Scope cards on Business Build and Agent
+  Flow.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- OS Roadmap remains the only surface for OS phase labels.
+- Primary UX does not expose raw JSON, raw logs, raw policy dumps, raw table
+  names, raw report paths, internal helper IDs, internal phase labels outside OS
+  Roadmap, or private project IDs.
+- No provider/tool/project mutation, DB writes, live CRUD, migration execution,
+  approval capture, acceptance capture, handoff acceptance, authority grant, or
+  deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run existing scoped route coverage.
+
+Tests to add/update/remove:
+- Add `check:p1316-founder-runtime-store-live-admission-scope`.
+- Update P131.4 and P131.5 checkers for P131.6 compatibility.
+- Run the existing Playwright scoped route coverage without editing dashboard
+  tests.
+
+Checker updates:
+- Validate P131.1-P131.5 reports pass.
+- Validate P131.5 checker accepts the P131.6 handoff.
+- Validate P131.5 scoped data, page labels, and route coverage remain intact.
+- Validate docs, status, forbidden paths, and safe wording.
+
+Docs to update:
+- This P131 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P131.5 report.
+- P131.6 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P131 in progress.
+- P131.6 complete.
+- Current phase P131.6.
+- Previous phase P131.5.
+- Next phase P131.7.
+
+Known risks:
+- Validation/docs work can drift into dashboard edits. P131.6 forbids dashboard
+  source and dashboard test edits.
+- Evidence aggregation can accidentally imply live admission. The checker keeps
+  every runnable and writable action described as blocked.
+
+Rollback plan:
+- Revert only the P131.6 implementation and stamp commits. P131.5 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1316-founder-runtime-store-live-admission-scope`
+- `npm run check:p1315-founder-runtime-store-live-admission-scope`
+- `npm run check:p1314-founder-runtime-store-live-admission-scope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P131.6 allowed files>`
+- `git commit -m "chore(nexus): implement p1316 validation docs"`
+- `git add <P131.6 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1316 validation docs"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or dashboard test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Request persistence, approval capture, decision persistence, live admission,
+  Store CRUD execution, DB schemas, migrations, DB/runtime reads or writes,
+  acceptance capture, handoff acceptance, authority grant handoff, execution,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P131.5 Command Center Admission Scope UX
 
 Status: complete

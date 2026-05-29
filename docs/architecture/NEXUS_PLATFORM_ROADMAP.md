@@ -3090,10 +3090,21 @@ Live Readiness stay clean. The scoped cards show what changed, current blocked
 state, next action, blockers, disabled reason, owner capability,
 evidence/activity wording, and no-spend cost impact without raw report paths,
 raw helper IDs, raw JSON, raw logs, raw table names, or private project
-identifiers. P131.6 is next for validation and docs consolidation. Approval
-capture, decision persistence, request persistence, store CRUD
-execution, DB schemas, migrations, DB/runtime reads or writes, live acceptance
-capture, handoff acceptance, authority handoff, authority grant, activation,
+identifiers. Approval capture, decision persistence, request persistence, store
+CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
+acceptance capture, handoff acceptance, authority handoff, authority grant,
+activation, approval application, approve/reject decision recording, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
+P131.6 is complete. NEXUS now has aggregate validation/docs evidence for
+P131.1-P131.5, P131.6 checker coverage, P131.5 handoff compatibility, scoped UX
+preservation checks, and refreshed OS phase reports. P131.7 is next for final
+validation. Approval capture, decision persistence, request persistence, store
+CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
+acceptance capture, handoff acceptance, authority handoff, authority grant, activation,
 approval application, approve/reject decision recording, runtime execution,
 execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
