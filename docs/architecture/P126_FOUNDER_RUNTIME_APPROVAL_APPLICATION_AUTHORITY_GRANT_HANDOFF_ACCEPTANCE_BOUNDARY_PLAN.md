@@ -267,10 +267,114 @@ to P126.2.
 
 Status: complete.
 
+## P126.4 Acceptance Safe Dry Run
+
+Goal: create a local-only result-envelope dry-run preview for approval
+application authority grant handoff acceptance readiness without accepting
+handoff or writing state.
+
+Why this is needed: P126.3 modeled acceptance intent. P126.4 turns that intent
+into display-safe preview rows and sections that P126.5 can surface in scoped
+Command Center UX while keeping all live acceptance paths unavailable.
+
+User/operator impact: operators can see what acceptance would require, the
+current blocked state, next action, owner capability, evidence/activity
+locations, and cost posture before any live authority exists.
+
+Command Center impact: no dashboard source changes. The dry run remains hidden
+from primary UX until P126.5 adds scoped read-only display.
+
+Safety impact: local-only dry run. Handoff acceptance, acceptance capture,
+authority handoff, authority grant, activation, approval application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package, network call, and provider
+spend remain blocked.
+
+Cost impact: no provider calls, model calls, network calls, worker runtime,
+deploy/package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js`
+- `scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `scripts/check-p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json`
+- `docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_STATES`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun`
+
+Data shape: result envelope with schema version, P126.4 phase, localOnly,
+dryRunOnly, hidden Command Center state, P126.3/P126.2/P125.2 lineage,
+acceptance summary, blocked preview sections, blocked preview rows, owner,
+next action, disabled reason, evidence/activity references, no-spend cost
+posture, all-false action booleans, and zero unsafe candidate counts.
+
+Command Center UX requirements: no new UI. Do not expose safe-dry-run data in
+Chat, Lite, OS Roadmap, Live Readiness, or unrelated pages.
+
+Validation commands:
+- `npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P126 in progress, P126.4 complete, current phase
+P126.4, previous phase P126.3, next phase P126.5.
+
+Known risks: dry-run rows could imply acceptance is runnable. P126.4 keeps
+candidate counts at zero and all acceptance, write, execution, provider,
+dispatch, mutation, network, and spend booleans false.
+
+Rollback plan: remove the P126.4 safe-dry-run helper/checker/report/package
+script, revert P126.3 checker updates, restore P126.4 to planned, and return
+current phase to P126.3.
+
+Status: complete.
+
 ## Planned Subphase Contracts
 
-P126.4 Acceptance Safe Dry Run: local dry-run envelope only. No handoff
-acceptance, writes, execution, providers, dispatch, mutation, network, or spend.
+P126.4 Acceptance Safe Dry Run: complete. Local dry-run envelope only. No
+handoff acceptance, writes, execution, providers, dispatch, mutation, network,
+or spend.
 
 P126.5 Command Center Acceptance Boundary UX: scoped read-only Business Build
 and Agent Flow UX only. No Chat/Lite/OS Roadmap leakage and no runnable

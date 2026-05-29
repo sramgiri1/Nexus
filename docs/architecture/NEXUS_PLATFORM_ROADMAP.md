@@ -3797,6 +3797,19 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P126.4 is complete. The local result-envelope acceptance safe dry-run preview
+now reuses P126.3 intent, P126.2 acceptance metadata, and P125.2 handoff
+metadata while staying hidden from primary Command Center UX. It exposes blocked
+preview sections/rows, zero unsafe candidate counts, disabled reasons, owner
+capability, evidence/activity locations, and no-spend posture. P126.5 is next
+for scoped read-only Command Center acceptance UX. Handoff acceptance,
+acceptance capture, grant handoff, authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

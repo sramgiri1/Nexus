@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P126.3",
-  "previousSubphase": "P126.2",
-  "nextSubphase": "P126.4",
+  "currentSubphase": "P126.4",
+  "previousSubphase": "P126.3",
+  "nextSubphase": "P126.5",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "67d3198576e324c0db5ea3f15455931098fb53fa",
   "owner": "NEXUS OS",
@@ -414,15 +414,43 @@
     {
       "phaseId": "P126.4",
       "title": "Acceptance Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "after-P126.3-stamp",
       "narrowGoal": "Create a local acceptance safe dry-run envelope without accepting or writing handoff state.",
       "allowedFiles": [
-        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js"
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js",
+        "scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js",
+        "scripts/check-p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -442,11 +470,14 @@
         ".env*"
       ],
       "expectedExports": [
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_SAFE_DRY_RUN_STATES",
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun",
         "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun"
       ],
-      "dataShape": "Result envelope with localOnly, dryRunOnly, blocked rows, zero unsafe candidates, and all action booleans false.",
-      "commandCenterUx": "No dashboard source changes.",
+      "dataShape": "Result envelope with localOnly, dryRunOnly, hidden Command Center state, blocked preview rows/sections, zero unsafe candidates, and all action booleans false.",
+      "commandCenterUx": "No dashboard source changes. Existing scoped route safety test must pass before commit.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -456,9 +487,10 @@
         "Run existing scoped handoff route regression test."
       ],
       "checkerUpdates": [
-        "Add P126.4 checker and update P126.3 checker."
+        "Add P126.4 checker.",
+        "Update P126.3 checker to accept P126.4/P126.5 handoff state."
       ],
-      "docsRoadmap": "Update P126 docs/status/reports.",
+      "docsRoadmap": "Update P126 plan, README, platform roadmap, OS status, and P126.3/P126.4 reports.",
       "phaseStatusUpdate": "P126 in progress; P126.4 complete; current phase P126.4; previous P126.3; next P126.5.",
       "validationCommands": [
         "npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
@@ -467,6 +499,7 @@
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
@@ -489,10 +522,10 @@
       "previousPhase": "P126.3",
       "nextPhase": "P126.5",
       "order": 162.4,
-      "detail": "Planned acceptance safe dry run.",
-      "summary": "Planned safe dry-run envelope. No P126.4 behavior is implemented in P126.1.",
+      "detail": "P126.4 acceptance safe dry-run envelope complete; P126.5 scoped Command Center acceptance UX is next.",
+      "summary": "Added a local-only acceptance safe dry-run envelope that reuses P126.3 intent and P126.2/P125.2 metadata while keeping acceptance, writes, execution, providers, dispatch, mutation, network, and spend blocked.",
       "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+        "P126.4 is a local dry-run preview only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -742,5 +775,5 @@
       ]
     }
   ],
-  "nextPhase": "P126.4"
+  "nextPhase": "P126.5"
 }

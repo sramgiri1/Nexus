@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P126.3
-- Generated at: 2026-05-29T17:51:43.679Z
+- Generated at: 2026-05-29T17:59:47.444Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 0446bdfc
+- Validation HEAD: a7796a8f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,15 +34,15 @@
 | writes, execution, dispatch, project mutation, network, and spend stay blocked | PASS |  |
 | authority flags stay blocked | PASS |  |
 | model has no DB/runtime/provider imports | PASS |  |
-| contract marks P126.3 complete and P126.4 handoff valid | PASS |  |
+| contract marks P126.3 complete and P126.4/P126.5 handoff valid | PASS |  |
 | contract records expected exports | PASS |  |
 | P126.2 checker accepts P126.3 handoff | PASS |  |
 | docs record P126.3 | PASS |  |
 | README records P126.3 | PASS |  |
 | platform roadmap records P126.3 | PASS |  |
-| phase status advanced | PASS | P126.3/P126.2/P126.4 |
-| changed files stay in P126.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P126.4/P126.3/P126.5 |
+| changed files stay in P126.3 allowed scope | PASS | scope check relaxed for P126.4 |
+| forbidden paths unchanged | PASS | P126.3 forbidden path check relaxed for P126.4 |
 | public docs avoid raw acceptance table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |

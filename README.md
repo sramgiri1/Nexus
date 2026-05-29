@@ -1475,6 +1475,19 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P126.4 approval application authority grant handoff acceptance safe dry run:
+  the local result-envelope preview now reuses P126.3 intent, P126.2
+  acceptance metadata, and P125.2 handoff metadata while staying hidden from
+  primary Command Center UX. It exposes blocked preview sections/rows, zero
+  unsafe candidate counts, disabled reasons, owner capability,
+  evidence/activity locations, and no-spend posture. P126.5 is next for scoped
+  read-only Command Center acceptance UX. Handoff acceptance, acceptance
+  capture, grant handoff, authority grant, activation, approval application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

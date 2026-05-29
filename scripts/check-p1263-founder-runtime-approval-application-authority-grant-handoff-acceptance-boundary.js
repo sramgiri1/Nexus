@@ -54,6 +54,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1263 = subphaseById.get("P126.3") || {};
 const p1264 = subphaseById.get("P126.4") || {};
+const p1265 = subphaseById.get("P126.5") || {};
 const plan = readText("docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
@@ -144,6 +145,12 @@ const p1264StartedState = status.currentPhase === "P126.4"
   && roadmap.currentPhase === "P126.4"
   && roadmap.previousPhase === "P126.3"
   && roadmap.nextPhase === "P126.5";
+const p1265StartedState = status.currentPhase === "P126.5"
+  && status.previousPhase === "P126.4"
+  && status.nextPhase === "P126.6"
+  && roadmap.currentPhase === "P126.5"
+  && roadmap.previousPhase === "P126.4"
+  && roadmap.nextPhase === "P126.6";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary"]));
 addCheck("phase export is P126.3", FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_MODEL_PHASE === "P126.3" && FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_MODEL_VERSION === "1.0");
@@ -162,7 +169,7 @@ addCheck("approval application is not performed", defaultModel.approvalDecisionA
 addCheck("writes, execution, dispatch, project mutation, network, and spend stay blocked", defaultModel.dbWritePerformed === false && defaultModel.runtimeWritePerformed === false && defaultModel.executionUnlocked === false && defaultModel.providerCallPerformed === false && defaultModel.agentDispatchPerformed === false && defaultModel.projectMutationPerformed === false && defaultModel.networkCallPerformed === false && defaultModel.providerSpendPerformed === false);
 addCheck("authority flags stay blocked", allFlagsFalse(defaultModel) && allFlagsFalse(dryRunModel));
 addCheck("model has no DB/runtime/provider imports", !/from\s+["']\.\.\/db|from\s+["']\.\.\/local-state|from\s+["']\.\.\/providers|from\s+["']\.\.\/tools|sqlite|CREATE TABLE|INSERT INTO|UPDATE\s+/i.test(modelSource));
-addCheck("contract marks P126.3 complete and P126.4 handoff valid", p1263.status === "complete" && ["planned", "complete"].includes(p1264.status));
+addCheck("contract marks P126.3 complete and P126.4/P126.5 handoff valid", p1263.status === "complete" && p1264.status === "complete" && ["planned", "complete"].includes(p1265.status));
 addCheck("contract records expected exports", [
   "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_MODEL_PHASE",
   "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_MODEL_VERSION",
@@ -180,11 +187,12 @@ addCheck(
 addCheck("platform roadmap records P126.3", /P126\.3 is complete/.test(platformRoadmap) && (/P126\.4\s+is\s+next/.test(platformRoadmap) || /P126\.4 is complete/.test(platformRoadmap)));
 addCheck(
   "phase status advanced",
-  (p1263CurrentState || p1264StartedState)
+  (p1263CurrentState || p1264StartedState || p1265StartedState)
     && statusById.get("P126")?.status === "in_progress"
     && statusById.get("P126.2")?.status === "complete"
     && statusById.get("P126.3")?.status === "complete"
-    && ["planned", "complete"].includes(statusById.get("P126.4")?.status)
+    && statusById.get("P126.4")?.status === "complete"
+    && ["planned", "complete"].includes(statusById.get("P126.5")?.status)
     && roadmapById.get("P126.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
