@@ -112,6 +112,21 @@ const requiredCommands = [
   "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
   "git diff --check",
 ];
+const p1301StartedState =
+  status.currentPhase === "P130.1"
+  && status.previousPhase === "P129.7"
+  && status.nextPhase === "P130.2"
+  && roadmap.currentPhase === "P130.1"
+  && roadmap.previousPhase === "P129.7"
+  && roadmap.nextPhase === "P130.2"
+  && statusById.get("P129")?.status === "complete"
+  && roadmapById.get("P129")?.status === "complete"
+  && statusById.get("P129.7")?.status === "complete"
+  && roadmapById.get("P129.7")?.status === "complete"
+  && statusById.get("P130")?.status === "in_progress"
+  && roadmapById.get("P130")?.status === "in_progress"
+  && statusById.get("P130.1")?.status === "complete"
+  && roadmapById.get("P130.1")?.status === "complete";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store"]));
 addCheck("contract final state set", contract.status === "complete" && contract.currentSubphase === "P129.7" && contract.previousSubphase === "P129.6" && contract.nextSubphase === "P130" && contract.expectedBaseCommit === "16f5cb5a" && contract.nextPhase === "P130");
@@ -129,10 +144,10 @@ addCheck("Command Center scoped UX remains in place", pageSource.includes("Busin
 addCheck("Chat and Lite remain clean", !pageSource.includes("Lite Capture Persistence Store Readiness") && !pageSource.includes("Chat Capture Persistence Store Readiness") && !pageSource.includes("Ask NEXUS Capture Persistence Store Readiness"));
 addCheck("Playwright coverage remains scoped", routeTests.includes("capture persistence store readiness appears only on scoped pages") && routeTests.includes("/command-center/business-build") && routeTests.includes("/command-center/agent-flow") && routeTests.includes("/command-center/lite") && routeTests.includes("/command-center/os-roadmap") && routeTests.includes("/command-center/live-readiness"));
 addCheck("docs record P129.7 complete", /## P129\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan) && /P129\.7 final validation/i.test(readme) && /P129\.7 is complete/i.test(platformRoadmap));
-addCheck("docs record P130 planned-only", /P130[\s\S]*planned-only/i.test(readme) && /P130[\s\S]*planned-only/i.test(platformRoadmap));
+addCheck("docs record P130 handoff", (/P130[\s\S]*planned-only/i.test(readme) && /P130[\s\S]*planned-only/i.test(platformRoadmap)) || (/P130\.1 live readiness contract\/policy/i.test(readme) && /P130\.1 is complete/i.test(platformRoadmap)));
 addCheck(
   "phase status closed",
-  status.currentPhase === "P129.7"
+  (status.currentPhase === "P129.7"
     && status.previousPhase === "P129.6"
     && status.nextPhase === "P130"
     && roadmap.currentPhase === "P129.7"
@@ -143,7 +158,8 @@ addCheck(
     && statusById.get("P130")?.status === "planned"
     && roadmapById.get("P129")?.status === "complete"
     && roadmapById.get("P129.7")?.status === "complete"
-    && roadmapById.get("P130")?.status === "planned",
+    && roadmapById.get("P130")?.status === "planned")
+    || p1301StartedState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(

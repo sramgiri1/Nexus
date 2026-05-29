@@ -18959,25 +18959,82 @@
       "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store Live Readiness Gate",
       "label": "Store Live Readiness",
       "order": 166,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P130 is in progress; P130.1 live readiness contract/policy complete and P130.2 is next.",
+      "summary": "P130 started the capture persistence store live readiness gate with contract, seven-subphase split, checker, docs, status handoff, and report while DB/runtime writes and live CRUD remain blocked.",
+      "previousPhase": "P129.7",
+      "nextPhase": "P130.2",
+      "checksRun": [
+        "npm run check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P130.1 is contract/policy only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P130.1",
+      "title": "Live Readiness Contract / Policy",
+      "label": "Store Live Contract",
+      "order": 166.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P130.1 live readiness contract/policy complete; P130.2 live prerequisite model is next.",
+      "summary": "Created the P130 store live readiness contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping DB/runtime writes and live CRUD blocked.",
+      "previousPhase": "P129.7",
+      "nextPhase": "P130.2",
+      "checksRun": [
+        "npm run check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P130.1 is contract/policy only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T21:53:32.341Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P130.2",
+      "title": "Store Live Prerequisite Model",
+      "label": "Store Live Prerequisites",
+      "order": 166.2,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P130 is planned-only. It needs its own implementation-grade contract before any live store readiness work starts.",
-      "summary": "Planned live readiness gate for the capture persistence store. It has no implementation-grade subphase work yet.",
-      "previousPhase": "P129.7",
-      "nextPhase": "P130.1",
+      "detail": "P130.2 is planned next for a browser-safe live prerequisite model.",
+      "summary": "Planned live prerequisite model for the capture persistence store readiness gate. It has no implementation yet.",
+      "previousPhase": "P130.1",
+      "nextPhase": "P130.3",
       "checksRun": [],
       "knownLimitations": [
-        "P130 is planned-only. It has no implementation-grade contract yet and must not enable DB schemas, migrations, DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until a future P130.1 contract allows a narrow scope."
+        "P130.2 is planned-only until its own implementation-grade plan is written. It must not enable DB schemas, migrations, DB/runtime reads or writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ]
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T21:39:41.951Z",
-  "currentPhase": "P129.7",
-  "previousPhase": "P129.6",
-  "nextPhase": "P130",
+  "updatedAt": "2026-05-29T21:53:32.341Z",
+  "currentPhase": "P130.1",
+  "previousPhase": "P129.7",
+  "nextPhase": "P130.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "phaseId": "P129.7",
@@ -19010,6 +19067,35 @@
   },
   "current": {
     "track": "NEXUS_OS",
+    "phaseId": "P130.1",
+    "title": "Live Readiness Contract / Policy",
+    "label": "Store Live Contract",
+    "order": 166.1,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P130.1 live readiness contract/policy complete; P130.2 live prerequisite model is next.",
+    "summary": "Created the P130 store live readiness contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping DB/runtime writes and live CRUD blocked.",
+    "previousPhase": "P129.7",
+    "nextPhase": "P130.2",
+    "checksRun": [
+      "npm run check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+      "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P130.1 is contract/policy only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-29T21:53:32.341Z"
+  },
+  "previous": {
+    "track": "NEXUS_OS",
     "phaseId": "P129.7",
     "title": "Final Validation",
     "label": "Store Final Validation",
@@ -19037,5 +19123,24 @@
       "P129.7 is final validation only. P129 does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P130 is planned-only until its own implementation-grade contract is written."
     ],
     "completedAt": "2026-05-29T21:39:41.951Z"
+  },
+  "next": {
+    "track": "NEXUS_OS",
+    "phaseId": "P130.2",
+    "title": "Store Live Prerequisite Model",
+    "label": "Store Live Prerequisites",
+    "order": 166.2,
+    "status": "planned",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "",
+    "commandCenterVisible": true,
+    "detail": "P130.2 is planned next for a browser-safe live prerequisite model.",
+    "summary": "Planned live prerequisite model for the capture persistence store readiness gate. It has no implementation yet.",
+    "previousPhase": "P130.1",
+    "nextPhase": "P130.3",
+    "checksRun": [],
+    "knownLimitations": [
+      "P130.2 is planned-only until its own implementation-grade plan is written. It must not enable DB schemas, migrations, DB/runtime reads or writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+    ]
   }
 }

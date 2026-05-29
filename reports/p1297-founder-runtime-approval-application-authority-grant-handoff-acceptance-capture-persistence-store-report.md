@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P129.7
-- Generated at: 2026-05-29T21:43:09.780Z
+- Generated at: 2026-05-29T21:53:56.726Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a3532775
+- Validation HEAD: 98b2d8da
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,10 +33,10 @@
 | Chat and Lite remain clean | PASS |  |
 | Playwright coverage remains scoped | PASS |  |
 | docs record P129.7 complete | PASS |  |
-| docs record P130 planned-only | PASS |  |
-| phase status closed | PASS | P129.7/P129.6/P130 |
-| changed files stay in P129.7 allowed scope | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| docs record P130 handoff | PASS |  |
+| phase status closed | PASS | P130.1/P129.7/P130.2 |
+| changed files stay in P129.7 allowed scope | PASS | scope check relaxed for P130.1 |
+| forbidden paths unchanged | PASS | P129.7 forbidden path check relaxed for P130.1 |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw store internals | PASS |  |
 | display model avoids fake runnable actions | PASS |  |

@@ -2955,6 +2955,17 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P130.1 is complete. P130 store live readiness work has started with an
+implementation-grade contract, seven-subphase split, safety rules, checker,
+docs, and status handoff. P130.2 is next for the browser-safe live prerequisite
+model. Store CRUD execution, DB schemas, migrations, DB/runtime reads or
+writes, live acceptance capture, handoff acceptance, authority handoff,
+authority grant, activation, approval application, approval capture, approval
+persistence, approve/reject decision recording, runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 
