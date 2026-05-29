@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P113.7
-- Generated at: 2026-05-29T00:28:38.637Z
+- Generated at: 2026-05-29T00:29:34.076Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: dd149b44
+- Validation HEAD: 28bc6067
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | contract handoff points to P114 | PASS |  |
 | P113.7 records final validation commands | PASS |  |
 | P113.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P113.7 allowed scope | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1137-founder-live-agent-work-assignment-final-report.md, scripts/check-p1137-founder-live-agent-work-assignment-final.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1137-founder-live-agent-work-assignment-final-report.md, scripts/check-p1137-founder-live-agent-work-assignment-final.js |
+| changed files stay in P113.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P113.6 checker accepts final handoff | PASS |  |
 | OS status checker accepts P114 handoff | PASS |  |
 | phase status closed | PASS | P113.7/P113.6/P114 |

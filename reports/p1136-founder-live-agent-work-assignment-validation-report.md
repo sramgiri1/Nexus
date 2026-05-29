@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P113.6
-- Generated at: 2026-05-29T00:28:46.775Z
+- Generated at: 2026-05-29T00:29:34.055Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: dd149b44
+- Validation HEAD: 28bc6067
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,7 +34,7 @@
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
 | changed files stay in P113.6 allowed scope | PASS | scope check relaxed for P113.7 |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1137-founder-live-agent-work-assignment-final-report.md, scripts/check-p1137-founder-live-agent-work-assignment-final.js |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 ## Validation Commands
 
 - npm run check:p1136-founder-live-agent-work-assignment-validation

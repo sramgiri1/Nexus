@@ -14593,7 +14593,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "28bc6067d82c",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
       "detail": "P113.7 final validation complete; P114 is next.",
@@ -14790,7 +14790,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "28bc6067d82c",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "P113.7 final validation complete; P114 is next.",
