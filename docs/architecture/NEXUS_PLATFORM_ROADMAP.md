@@ -3157,6 +3157,15 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P117.3 is complete. Local approval evidence review metadata can now be modeled
+through allowlisted SQLite CRUD after explicit local review gates, while
+approve/reject decisions are not recorded. P117.4 is next for approval gate
+safe dry-run preview. Approval capture, approval persistence, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

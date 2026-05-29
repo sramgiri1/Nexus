@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.1
-- Generated at: 2026-05-29T04:04:19.392Z
+- Generated at: 2026-05-29T04:11:38.003Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fb9bdf87
+- Validation HEAD: 7673310e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,9 +33,9 @@
 | docs plan records P117.1 | PASS |  |
 | README records P117.1 | PASS |  |
 | platform roadmap records P117.1 | PASS |  |
-| phase status advanced | PASS | P117.2/P117.1/P117.3 |
-| changed files stay in P117.1 allowed scope | PASS | scope check relaxed for P117.2 |
-| forbidden paths unchanged | PASS | P117.1 forbidden path check relaxed for P117.2 |
+| phase status advanced | PASS | P117.3/P117.2/P117.4 |
+| changed files stay in P117.1 allowed scope | PASS | scope check relaxed for P117.3 |
+| forbidden paths unchanged | PASS | P117.1 forbidden path check relaxed for P117.3 |
 | docs avoid raw approval keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

@@ -15986,18 +15986,19 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fb9bdf87",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
-      "detail": "P117.2 schema metadata complete; P117.3 approval decision model is next.",
+      "detail": "P117.3 approval evidence review model complete; P117.4 safe preview is next.",
       "phaseId": "P117",
       "title": "Founder Runtime Execution Approval Gate",
       "order": 153,
       "status": "in_progress",
-      "summary": "P117 is in progress with contract and local approval evidence schema metadata complete. Approval capture, approval persistence, and runtime execution remain blocked.",
-      "nextPhase": "P117.3",
-      "previousPhase": "P117.1",
+      "summary": "P117 is in progress with contract, local approval evidence schema metadata, and governed local approval evidence review model complete. Approval capture, approval persistence, approve/reject decision recording, and runtime execution remain blocked.",
+      "nextPhase": "P117.4",
+      "previousPhase": "P117.2",
       "checksRun": [
+        "npm run check:p1173-founder-runtime-execution-approval-gate",
         "npm run check:p1172-founder-runtime-execution-approval-gate",
         "npm run check:p1171-founder-runtime-execution-approval-gate-contract",
         "npm run check:os-phase-status",
@@ -16005,8 +16006,8 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P117.2 is schema-only; it does not capture approvals, persist approvals, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P117.3 must model governed local approval decisions before preview or Command Center UX work begins."
+        "P117.3 admits only governed local SQLite CRUD for allowlisted approval evidence records after local review gates; it does not capture approvals, persist approval decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P117.4 must add safe dry-run preview before Command Center UX work begins."
       ],
       "completedAt": ""
     },
@@ -16066,23 +16067,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
-      "label": "Governed Local Approval Decision Model",
-      "detail": "Planned governed local approval decision model without approval capture or execution unlock.",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Approval Review Model",
+      "detail": "Governed local approval evidence review model complete; approval capture remains unavailable.",
       "phaseId": "P117.3",
       "title": "Governed Local Approval Decision Model",
       "order": 153.3,
-      "status": "planned",
-      "summary": "Planned governed local approval decision model without approval capture or execution unlock.",
+      "status": "complete",
+      "summary": "Added governed local approval evidence review modeling and allowlisted SQLite CRUD helper for runtime execution approval evidence records without capturing approvals, persisting approval decisions, or enabling runtime execution.",
       "nextPhase": "P117.4",
       "previousPhase": "P117.2",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval capture, approval persistence, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1173-founder-runtime-execution-approval-gate",
+        "npm run check:p1172-founder-runtime-execution-approval-gate",
+        "npm run check:p1171-founder-runtime-execution-approval-gate-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P117.3 is local review modeling only; it does not capture approvals, persist approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "No Command Center source change is included in P117.3; P117.5 is the scoped UX subphase."
+      ],
+      "completedAt": "2026-05-29T04:11:26.063Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16090,12 +16099,12 @@
       "commit": "planned",
       "commandCenterVisible": false,
       "label": "Approval Gate Preview / Safe Dry Run",
-      "detail": "Planned safe preview for approval-gate decisions without live approval capture or runtime execution.",
+      "detail": "Planned safe dry-run approval gate preview without approval capture or execution unlock.",
       "phaseId": "P117.4",
       "title": "Approval Gate Preview / Safe Dry Run",
       "order": 153.4,
       "status": "planned",
-      "summary": "Planned safe preview for approval-gate decisions without live approval capture or runtime execution.",
+      "summary": "Planned safe dry-run approval gate preview without approval capture or execution unlock.",
       "nextPhase": "P117.5",
       "previousPhase": "P117.3",
       "checksRun": [],
@@ -16166,9 +16175,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T04:04:08.485Z",
-  "currentPhase": "P117.2",
-  "previousPhase": "P117.1",
-  "nextPhase": "P117.3",
+  "updatedAt": "2026-05-29T04:11:26.063Z",
+  "currentPhase": "P117.3",
+  "previousPhase": "P117.2",
+  "nextPhase": "P117.4",
   "currentPhaseStatus": "complete"
 }

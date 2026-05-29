@@ -855,6 +855,14 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P117.3 governed local approval decision model: local approval evidence review
+  metadata can now be modeled through allowlisted SQLite CRUD after explicit
+  local review gates, while approve/reject decisions are not recorded. P117.4
+  is next for approval gate safe dry-run preview. Approval capture, approval
+  persistence, runtime execution, execution unlock, provider/model call, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, deploy, release, export, package, network call, and provider
+  spend remain unavailable.
 
 ## CareLoop Project Progress
 
