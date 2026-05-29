@@ -10719,7 +10719,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a9a20e60",
       "commandCenterVisible": true,
       "label": "Founder Live Runtime Admission Readiness",
       "detail": "P115.5 Command Center runtime admission UX complete; P115.6 validation is next.",
@@ -10858,7 +10858,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a9a20e60",
       "commandCenterVisible": true,
       "label": "Command Center Runtime Admission UX",
       "detail": "P115.5 Command Center runtime admission UX complete; P115.6 validation is next.",
