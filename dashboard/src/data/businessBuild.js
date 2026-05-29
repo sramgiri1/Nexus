@@ -7,6 +7,7 @@ import { buildFounderApprovalDecisionPreview } from "../../../shared/founderAppr
 import { buildFounderApprovalDecisionPersistencePreview } from "../../../shared/founderApprovalDecisionPersistencePreview.js";
 import { buildFounderApprovalDecisionApplicationPreview } from "../../../shared/founderApprovalDecisionApplicationPreview.js";
 import { buildFounderApprovalDecisionApplicationAuthorityPreview } from "../../../shared/founderApprovalDecisionApplicationAuthorityPreview.js";
+import { buildFounderApprovalApplicationAuthorityActivationPreview } from "../../../shared/founderApprovalApplicationAuthorityActivationPreview.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -2139,6 +2140,157 @@ export function buildFounderApprovalDecisionApplicationAuthorityBoundaryDisplayM
   };
 }
 
+export function buildFounderApprovalApplicationAuthorityActivationBoundaryDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  activationPreview,
+} = {}) {
+  const preview = activationPreview || buildFounderApprovalApplicationAuthorityActivationPreview({
+    intentState: "ready_for_safe_activation_dry_run",
+    founderIdeaSummary,
+    nextAction: "Review approval application authority activation readiness on scoped founder work pages while activation, writes, and execution controls remain unavailable.",
+  });
+  const data = preview.data || {};
+  const summary = data.activationSummary || {};
+  const disabledReason =
+    "Approval application authority activation is display-only. It cannot activate authority, grant authority, apply approvals, accept approvals, persist approvals, record approve/reject decisions, write DB records, write runtime records, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const rowNextAction =
+    "Review this activation readiness row on scoped founder work pages while activation, grant, write, and execution controls remain unavailable.";
+  const sectionNextAction =
+    "Keep this activation readiness section in local review while activation, grant, write, and execution controls remain unavailable.";
+  const rows = (data.previewRows || []).map((row, index) => ({
+    label: row.rowLabel || `Approval application authority activation readiness ${index + 1}`,
+    decisionPosition: index + 1,
+    decisionState: row.currentState || "Dry-run only; activation blocked",
+    nextAction: rowNextAction,
+    blocker: row.blocker || "Approval application authority activation remains blocked.",
+    disabledReason,
+    ownerCapability: row.ownerCapability || data.ownerCapability || "NEXUS Approval Application Authority Activation Guard",
+    evidenceLocation: "Approval application authority activation safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: row.costImpactLabel || "Local dry-run only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    authorityActivationAllowed: "Blocked",
+    authorityGrantAllowed: "Blocked",
+    approvalApplicationAuthorityAllowed: "Blocked",
+    approvalDecisionApplicationAllowed: "Blocked",
+    approvalCaptureAllowed: "Blocked",
+    approvalPersistenceAllowed: "Blocked",
+    approvalDecisionRecordingAllowed: "Blocked",
+    approveDecisionAllowed: "Blocked",
+    rejectDecisionAllowed: "Blocked",
+    dbWriteAllowed: "Blocked",
+    runtimeWriteAllowed: "Blocked",
+    runtimeExecutionAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    agentDispatchAllowed: "Blocked",
+    workerExecutionAllowed: "Blocked",
+    toolExecutionAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    networkCallAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+  const sections = (data.previewSections || []).map((section) => ({
+    label: section.sectionLabel,
+    currentState: section.currentState,
+    rowCount: section.rowCount,
+    blockedCount: section.blockedCount,
+    nextAction: sectionNextAction,
+    disabledReason,
+  }));
+  const model = {
+    currentState: "Approval Application Authority Activation Preview Ready Activation Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: toTitle(data.previewMode || "local-only-authority-activation-dry-run"),
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    activationCandidateCount: summary.activationCandidateCount || 0,
+    authorityGrantCandidateCount: summary.authorityGrantCandidateCount || 0,
+    applicationCandidateCount: summary.applicationCandidateCount || 0,
+    approvalApplicationCandidateCount: summary.approvalApplicationCandidateCount || 0,
+    decisionRecordableCandidateCount: summary.decisionRecordableCandidateCount || 0,
+    approvalDecisionRecordableCandidateCount: summary.approvalDecisionRecordableCandidateCount || 0,
+    dbWritableCandidateCount: summary.dbWritableCandidateCount || 0,
+    runtimeWritableCandidateCount: summary.runtimeWritableCandidateCount || 0,
+    runtimeExecutableCandidateCount: summary.runtimeExecutableCandidateCount || 0,
+    executionUnlockCandidateCount: summary.executionUnlockCandidateCount || 0,
+    agentDispatchCandidateCount: summary.agentDispatchCandidateCount || 0,
+    workerExecutionCandidateCount: summary.workerExecutionCandidateCount || 0,
+    toolExecutionCandidateCount: summary.toolExecutionCandidateCount || 0,
+    projectMutationCandidateCount: summary.projectMutationCandidateCount || 0,
+    hostedDbMutationCandidateCount: summary.hostedDbMutationCandidateCount || 0,
+    networkCallCandidateCount: summary.networkCallCandidateCount || 0,
+    providerSpendCandidateCount: summary.providerSpendCandidateCount || 0,
+    nextAction: data.nextAction || "Review activation readiness on scoped founder work pages while approval application authority activation remains blocked.",
+    blockers: Array.isArray(data.blockers) ? data.blockers : [
+      "Approval application authority activation remains blocked.",
+      "Authority grant and approval decision application remain blocked.",
+      "DB and runtime writes remain blocked.",
+      "Runtime execution remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: data.ownerCapability || "NEXUS Approval Application Authority Activation Guard",
+    evidenceLocation: "Approval application authority activation safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: "Local deterministic approval application authority activation preview only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    readinessSections: sections,
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Authority activation", value: "Blocked" },
+      { label: "Authority grant", value: "Blocked" },
+      { label: "Approval application", value: "Blocked" },
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Approval persistence", value: "Blocked" },
+      { label: "Approval decision recording", value: "Blocked" },
+      { label: "Approve decision", value: "Blocked" },
+      { label: "Reject decision", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime writes", value: "Blocked" },
+      { label: "Runtime execution", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Network", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    summaryRows: [
+      { label: "Founder idea", value: model.founderIdea },
+      { label: "Preview mode", value: model.previewMode },
+      { label: "Readiness rows", value: model.readinessRowCount },
+      { label: "Blocked rows", value: model.blockedReadinessRowCount },
+      { label: "Activation candidates", value: model.activationCandidateCount },
+      { label: "Authority grant candidates", value: model.authorityGrantCandidateCount },
+      { label: "Application candidates", value: model.applicationCandidateCount },
+      { label: "Approval application candidates", value: model.approvalApplicationCandidateCount },
+      { label: "Decision-recordable candidates", value: model.decisionRecordableCandidateCount },
+      { label: "Approval decision recordable candidates", value: model.approvalDecisionRecordableCandidateCount },
+      { label: "DB-writable candidates", value: model.dbWritableCandidateCount },
+      { label: "Runtime-writable candidates", value: model.runtimeWritableCandidateCount },
+      { label: "Executable candidates", value: model.runtimeExecutableCandidateCount },
+      { label: "Execution unlock candidates", value: model.executionUnlockCandidateCount },
+      { label: "Agent-dispatch candidates", value: model.agentDispatchCandidateCount },
+      { label: "Worker-execution candidates", value: model.workerExecutionCandidateCount },
+      { label: "Tool-execution candidates", value: model.toolExecutionCandidateCount },
+      { label: "Project-mutation candidates", value: model.projectMutationCandidateCount },
+      { label: "Hosted DB candidates", value: model.hostedDbMutationCandidateCount },
+      { label: "Network-call candidates", value: model.networkCallCandidateCount },
+      { label: "Provider-spend candidates", value: model.providerSpendCandidateCount },
+      { label: "Owner capability", value: model.ownerCapability },
+      { label: "Next action", value: model.nextAction },
+      { label: "Disabled reason", value: model.disabledReason },
+      { label: "Evidence", value: model.evidenceLocation },
+      { label: "Activity", value: model.activityLocation },
+      { label: "Cost impact", value: model.costImpact },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -3305,6 +3457,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderApprovalDecisionApplicationAuthorityBoundary = buildFounderApprovalDecisionApplicationAuthorityBoundaryDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderApprovalApplicationAuthorityActivationBoundary = buildFounderApprovalApplicationAuthorityActivationBoundaryDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -3454,6 +3609,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderApprovalDecisionPersistenceBoundary,
     founderApprovalDecisionApplicationBoundary,
     founderApprovalDecisionApplicationAuthorityBoundary,
+    founderApprovalApplicationAuthorityActivationBoundary,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

@@ -1258,6 +1258,17 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P123.5 Command Center approval application authority activation UX: Business
+  Build and Agent Flow now show display-safe activation readiness, blockers,
+  disabled reason, owner capability, evidence/activity labels, and cost posture
+  while Chat with NEXUS, Lite, Command Center home, OS Roadmap, and Live
+  Readiness stay clean. P123.6 is next for activation validation and docs.
+  Activation, authority grant, approval decision application, approval capture,
+  approval persistence, approve/reject decision recording, DB/runtime writes,
+  runtime execution, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

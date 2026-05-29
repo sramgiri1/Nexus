@@ -706,12 +706,184 @@ phase to P123.3.
 
 Status: complete.
 
+## P123.5 Command Center Activation Boundary UX
+
+Phase: P123 Founder Runtime Approval Application Authority Activation Boundary
+Subphase: P123.5 Command Center Activation Boundary UX
+Goal: render the P123.4 activation dry-run boundary on scoped founder work
+pages without adding activation or mutation controls.
+Why this is needed: operators need display-safe activation readiness, blockers,
+owner, evidence, activity, and cost posture before any later authority
+activation work can be considered.
+User/operator impact: Business Build and Agent Flow now show the activation
+boundary state for the founder idea and explain why activation, writes, and
+execution remain unavailable.
+Command Center impact: adds an Approval Application Authority Activation card
+to Business Build and Agent Flow only. Chat with NEXUS, Lite, Command Center
+home, OS Roadmap, and Live Readiness do not show this card. The card reuses the
+existing approval boundary component and preserves route-wide navigation.
+Safety impact: display-only. It cannot activate authority, grant authority,
+apply approvals, accept approvals, persist approvals, record approve/reject
+decisions, write DB/runtime records, unlock execution, dispatch agents, run
+workers/tools, mutate projects, call providers/models, use hosted DBs, deploy,
+release, export, package, use network calls, or spend.
+Cost impact: local deterministic preview only. No provider calls, model calls,
+network calls, worker runtime, deploy, package creation, or provider spend.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1234-founder-runtime-approval-application-authority-activation-boundary.js`
+- `scripts/check-p1235-founder-runtime-approval-application-authority-activation-boundary.js`
+- `contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json`
+- `docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1234-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/p1235-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+- `package.json`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalApplicationAuthorityActivationBoundaryDisplayModel`
+
+The display model shape is browser-safe: `currentState`, `founderIdea`,
+`previewMode`, readiness counts, zero activation/authority/write/execution
+candidate counts, `nextAction`, `blockers`, `disabledReason`,
+`ownerCapability`, display-safe evidence/activity labels, `costImpact`,
+`readinessSections`, `readinessRows`, `safetyRows`, and `summaryRows`.
+
+Reuse check: reuse P123.4
+`shared/founderApprovalApplicationAuthorityActivationPreview.js`, P123.3 intent
+model, P123.2 metadata, existing `FounderApprovalDecisionBoundaryCard`, route
+safety tests, `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+`shared/reportMetadata.js`, `shared/resultEnvelope.js`,
+`os-roadmap/updatePhaseStatus.js`, existing dashboard badges/cards, and OS
+phase status records. Do not duplicate UI cards, report writers, mode guards,
+redaction helpers, checker formatters, result envelopes, route matrices, phase
+status updaters, or evidence/activity appenders.
+
+Command Center UX requirements: Business Build and Agent Flow show what
+changed, current state, next action, blockers, disabled reason, owner
+capability, display-safe evidence/activity labels, and cost impact for the
+activation boundary. Primary UX must not show raw JSON, raw logs, raw policy
+dumps, raw report paths, raw private IDs, internal phase labels outside OS
+Roadmap, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior through the existing card styles and focused Playwright coverage.
+
+Playwright tests: add scoped coverage for the activation card on Business Build
+and Agent Flow, verify absence from Lite, Command Center home, OS Roadmap, and
+Live Readiness, cover dark/light/system themes, and assert no raw dumps,
+private IDs, raw report paths, DemoApp, or fake runnable actions leak.
+
+Tests to add/update/remove: add P123.5 checker and package script; add focused
+route test. No tests are removed.
+
+Checker updates: validate display model shape, P123.4 preview reuse, scoped
+Command Center placement, route coverage, docs/status updates, allowed file
+scope, forbidden path boundaries, safe labels, zero unsafe counts, and unsafe
+positive claim prevention.
+
+Docs to update: this P123 plan, README, platform roadmap, P123 contract, OS
+roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1234-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/p1235-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P123 is in progress; P123.5 is complete; current phase
+P123.5; previous P123.4; next P123.6.
+
+Validation commands:
+- `npm run check:p1235-founder-runtime-approval-application-authority-activation-boundary`
+- `npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority activation appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P123.5 files>`
+- `git commit -m "feat(nexus): implement p1235 approval authority activation command center ux"`
+- stamp P123/P123.5 status with the implementation commit
+- `git add <allowed P123.5 status/report files>`
+- `git commit -m "chore(nexus): stamp p1235 approval authority activation command center ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop/generated project paths changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, local runtime state, or env paths changed
+- confirm no activation, authority grant, approval decision application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL, network, deploy, release, export, package, or spend authority is
+  enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB/schema names, raw report
+  paths in primary UX, JSON/log/policy dumps, internal primary UX phase labels,
+  or fake actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: the reused boundary card is dense. The activation card is scoped
+to founder work pages, limits row count, and uses display-safe labels instead
+of raw records or raw reports.
+
+Rollback plan: remove the activation display model, scoped card placements,
+Playwright test, checker, report, package script, docs/status updates, restore
+P123.5 to planned, and return current phase to P123.4.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
 P123.1 Activation Boundary Contract / Policy, P123.2 Activation Eligibility
-Metadata, P123.3 Governed Activation Intent Model, and P123.4 Activation Safe
-Dry Run are complete. P123.5 is next for scoped Command Center activation
-boundary UX. Activation, authority grant, approval decision application,
+Metadata, P123.3 Governed Activation Intent Model, P123.4 Activation Safe Dry
+Run, and P123.5 Command Center Activation Boundary UX are complete. P123.6 is
+next for activation validation and docs. Activation, authority grant, approval
+decision application,
 approval capture, approval persistence, approve/reject decision recording,
 DB/runtime writes, runtime execution, execution unlock, provider/model calls,
 agent dispatch, worker/tool execution, project mutation, hosted DB mutation,

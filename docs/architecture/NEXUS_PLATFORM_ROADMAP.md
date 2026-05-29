@@ -3575,6 +3575,17 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 raw SQL interface, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P123.5 is complete. Business Build and Agent Flow now show display-safe
+approval application authority activation readiness, blockers, disabled reason,
+owner capability, evidence/activity labels, and cost posture while Chat with
+NEXUS, Lite, Command Center home, OS Roadmap, and Live Readiness stay clean.
+P123.6 is next for activation validation and docs. Activation, authority grant,
+approval decision application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
