@@ -1,0 +1,682 @@
+{
+  "phaseId": "P118",
+  "title": "Founder Runtime Approval Capture Boundary",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Define and validate the founder approval capture boundary while keeping approval capture, approval persistence, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
+  "currentSubphase": "P118.1",
+  "previousSubphase": "P117.7",
+  "nextSubphase": "P118.2",
+  "safetyRules": [
+    "Do not enable approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P118.1.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show raw private project IDs, approval record keys, raw DB table names, raw JSON, raw logs, or raw policy dumps in primary UX.",
+    "Do not invent fake working actions, approval buttons, reject buttons, or live run controls."
+  ],
+  "reuseRequirements": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "existing dashboard tabs/cards/badges",
+    "existing route matrix",
+    "existing evidence/audit/activity helpers"
+  ],
+  "knownLimitations": [
+    "P118.1 is contract/policy only.",
+    "Approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
+  ],
+  "subphases": [
+    {
+      "phaseId": "P118.1",
+      "title": "Approval Capture Contract / Policy",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "5a78ec28",
+      "narrowGoal": "Define the P118 approval-capture boundary contract, subphase split, safety policy, reuse rules, validation commands, and OS handoff records without implementation behavior.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js",
+        "scripts/check-p1177-founder-runtime-execution-approval-gate.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1177-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js",
+        "scripts/check-p1177-founder-runtime-execution-approval-gate.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1177-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No approval capture data shape is implemented in P118.1. Future subphases may define browser-safe metadata and local schema descriptions only after explicit scoped plans.",
+      "commandCenterUx": "No Command Center source change in P118.1. Preserve P117 approval-gate UX and keep Chat with NEXUS and Lite chat clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test because P118.1 has no UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add a P118.1 contract checker.",
+        "Update P117.7 final checker to accept P118.1 started handoff.",
+        "Update OS phase status checker to recognize P118.1-P118.7."
+      ],
+      "docsRoadmap": "Update P118 plan, README, platform roadmap, OS status, generated reports, and P118 contract for P118.1.",
+      "phaseStatusUpdate": "P118 in progress; P118.1 complete; current phase P118.1; previous P117.7; next P118.2.",
+      "validationCommands": [
+        "npm run check:p1181-founder-runtime-approval-capture-boundary-contract",
+        "npm run check:p1177-founder-runtime-execution-approval-gate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.1 files>",
+        "git commit -m \"feat(nexus): implement p1181 approval capture contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P118.2",
+      "previousPhase": "P117.7"
+    },
+    {
+      "phaseId": "P118.2",
+      "title": "Approval Capture Schema Metadata",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Define approval capture schema metadata without DB writes, persistence, or approval decision recording.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "scripts/check-p1182-founder-runtime-approval-capture-boundary.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1182-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Schema metadata descriptions only; no DB schema file or persisted approval data is introduced unless a later scoped plan explicitly allows it.",
+      "commandCenterUx": "No Command Center source change. Preserve P117 approval-gate UX and avoid capture controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright test unless UI source changes are explicitly planned."
+      ],
+      "checkerUpdates": [
+        "Add a P118.2 schema metadata checker."
+      ],
+      "docsRoadmap": "Update P118 plan, README, platform roadmap, OS status, and reports.",
+      "phaseStatusUpdate": "P118 in progress; P118.2 complete; current P118.2; previous P118.1; next P118.3.",
+      "validationCommands": [
+        "npm run check:p1182-founder-runtime-approval-capture-boundary",
+        "npm run check:p1181-founder-runtime-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.2 files>",
+        "git commit -m \"feat(nexus): implement p1182 approval capture schema\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no DB write path, approval capture, approval persistence, approve/reject recording, or runtime execution is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P118.3",
+      "previousPhase": "P118.1"
+    },
+    {
+      "phaseId": "P118.3",
+      "title": "Governed Local Approval Intent Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Model local approval intent states and guardrails without recording approve/reject decisions.",
+      "allowedFiles": [
+        "shared/founderApprovalCaptureBoundary.js",
+        "scripts/check-p1183-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1183-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "buildFounderApprovalCaptureBoundary",
+        "FOUNDER_APPROVAL_CAPTURE_STATES"
+      ],
+      "dataShape": "Pure in-memory approval intent model with display-safe fields only; no persisted approval decision data.",
+      "commandCenterUx": "No Command Center source change. Future UX must stay out of Chat with NEXUS unless the subphase explicitly scopes chat interaction.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright test unless UI source changes are explicitly planned."
+      ],
+      "checkerUpdates": [
+        "Add a P118.3 local model checker."
+      ],
+      "docsRoadmap": "Update P118 plan, README, platform roadmap, OS status, and reports.",
+      "phaseStatusUpdate": "P118 in progress; P118.3 complete; current P118.3; previous P118.2; next P118.4.",
+      "validationCommands": [
+        "npm run check:p1183-founder-runtime-approval-capture-boundary",
+        "npm run check:p1182-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.3 files>",
+        "git commit -m \"feat(nexus): implement p1183 approval intent model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval decision recording, persistence, DB write, runtime execution, provider/model call, agent dispatch, or project mutation is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P118.4",
+      "previousPhase": "P118.2"
+    },
+    {
+      "phaseId": "P118.4",
+      "title": "Approval Capture Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Preview approval capture readiness and blockers without accepting or writing approval decisions.",
+      "allowedFiles": [
+        "shared/founderApprovalCaptureBoundary.js",
+        "scripts/check-p1184-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1184-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "buildFounderApprovalCapturePreview"
+      ],
+      "dataShape": "Browser-safe preview rows with current state, next action, blocker, owner, evidence/activity label, and cost posture.",
+      "commandCenterUx": "No Command Center source change in P118.4; P118.5 owns UX.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright test because P118.4 has no UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add a P118.4 dry-run preview checker."
+      ],
+      "docsRoadmap": "Update P118 plan, README, platform roadmap, OS status, and reports.",
+      "phaseStatusUpdate": "P118 in progress; P118.4 complete; current P118.4; previous P118.3; next P118.5.",
+      "validationCommands": [
+        "npm run check:p1184-founder-runtime-approval-capture-boundary",
+        "npm run check:p1183-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.4 files>",
+        "git commit -m \"feat(nexus): implement p1184 approval capture dry run\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm preview output cannot accept approvals, write records, unlock execution, call providers/models, dispatch agents, or mutate projects."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P118.5",
+      "previousPhase": "P118.3"
+    },
+    {
+      "phaseId": "P118.5",
+      "title": "Command Center Approval Capture Boundary UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Expose approval capture readiness on scoped Command Center pages without submit, approve, reject, or execution controls.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1185-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1185-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "buildFounderApprovalCaptureBoundaryDisplayModel"
+      ],
+      "dataShape": "Browser-safe display model only. No raw IDs, raw DB names, raw JSON, raw logs, raw policy dumps, approval decision payloads, or write handles.",
+      "commandCenterUx": "Show current state, next action, blockers, disabled reason, owner/capability, evidence/activity location, and cost impact on scoped non-chat pages. Keep Chat with NEXUS clean and do not expose DemoApp.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add focused route coverage for scoped approval capture boundary UX and absence from Chat/Lite/OS Roadmap."
+      ],
+      "checkerUpdates": [
+        "Add a P118.5 Command Center UX checker."
+      ],
+      "docsRoadmap": "Update P118 plan, README, platform roadmap, OS status, and reports.",
+      "phaseStatusUpdate": "P118 in progress; P118.5 complete; current P118.5; previous P118.4; next P118.6.",
+      "validationCommands": [
+        "npm run check:p1185-founder-runtime-approval-capture-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval capture boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.5 files>",
+        "git commit -m \"feat(nexus): implement p1185 approval capture ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no submit/approve/reject/run controls, approval writes, execution unlock, provider/model calls, agent dispatch, project mutation, or raw/private identifiers are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P118.6",
+      "previousPhase": "P118.4"
+    },
+    {
+      "phaseId": "P118.6",
+      "title": "Approval Capture Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Validate P118.1-P118.5 together and close docs/status alignment before final validation.",
+      "allowedFiles": [
+        "scripts/check-p1186-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1185-founder-runtime-approval-capture-boundary-report.md",
+        "reports/p1186-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Markdown validation report only.",
+      "commandCenterUx": "Preserve P118.5 UX without adding new UI or controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Preserve and rerun P118.5 route coverage."
+      ],
+      "checkerUpdates": [
+        "Add a P118.6 aggregate validation checker."
+      ],
+      "docsRoadmap": "Update P118 plan, README, platform roadmap, OS status, and reports.",
+      "phaseStatusUpdate": "P118 in progress; P118.6 complete; current P118.6; previous P118.5; next P118.7.",
+      "validationCommands": [
+        "npm run check:p1186-founder-runtime-approval-capture-boundary",
+        "npm run check:p1185-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.6 files>",
+        "git commit -m \"feat(nexus): implement p1186 approval capture validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm validation does not add approval capture, persistence, execution, provider/model calls, agent dispatch, project mutation, DB writes, or spend."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P118.7",
+      "previousPhase": "P118.5"
+    },
+    {
+      "phaseId": "P118.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Close P118 and hand off to the next planned phase without enabling approval capture or runtime execution.",
+      "allowedFiles": [
+        "scripts/check-p1187-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1187-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Markdown validation report only.",
+      "commandCenterUx": "Preserve P118.5 UX when implemented and avoid new controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Preserve P118.5 coverage when implemented."
+      ],
+      "checkerUpdates": [
+        "Add a P118.7 final validation checker."
+      ],
+      "docsRoadmap": "Update docs/status/reports when implemented.",
+      "phaseStatusUpdate": "P118 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1187-founder-runtime-approval-capture-boundary",
+        "npm run check:p1186-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P118.7 files>",
+        "git commit -m \"feat(nexus): finalize p118 approval capture boundary\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval capture or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P119",
+      "previousPhase": "P118.6"
+    }
+  ],
+  "summary": "P118 is in progress. P118.1 defines the approval-capture boundary contract and implementation-grade subphase split without approval capture, approval persistence, approve/reject decision recording, or runtime execution authority."
+}

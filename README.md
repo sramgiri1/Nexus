@@ -899,6 +899,13 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
   SQL interface, deploy, release, export, package, network call, and provider
   spend remain unavailable.
+- P118.1 approval capture contract: P118 is now split into implementation-grade
+  subphases for the founder runtime approval capture boundary. P118.2 is next
+  for approval capture schema metadata. Approval capture, approval persistence,
+  approve/reject decision recording, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

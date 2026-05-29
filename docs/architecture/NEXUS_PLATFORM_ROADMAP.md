@@ -3206,6 +3206,14 @@ worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
 deploy, release, export, package action, network call, and provider spend
 remain blocked.
 
+P118.1 is complete. P118 is split into implementation-grade subphases for the
+founder runtime approval capture boundary. P118.2 is next for approval capture
+schema metadata. Approval capture, approval persistence, approve/reject decision
+recording, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
