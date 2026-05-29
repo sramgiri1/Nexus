@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.4
-- Generated at: 2026-05-29T12:55:34.435Z
+- Generated at: 2026-05-29T12:56:22.380Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6e5843d3
+- Validation HEAD: 457c8113
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,8 +39,8 @@
 | README records P121.4 | PASS |  |
 | platform roadmap records P121.4 | PASS |  |
 | phase status advanced | PASS | P121.4/P121.3/P121.5 |
-| changed files stay in P121.4 allowed scope | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1213-founder-runtime-approval-decision-application-boundary.js, scripts/check-p1214-founder-runtime-approval-decision-application-boundary.js, shared/founderApprovalDecisionApplicationPreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1213-founder-runtime-approval-decision-application-boundary.js, scripts/check-p1214-founder-runtime-approval-decision-application-boundary.js, shared/founderApprovalDecisionApplicationPreview.js |
+| changed files stay in P121.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw application table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |

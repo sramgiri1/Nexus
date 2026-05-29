@@ -16872,7 +16872,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "457c8113",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121.4 safe dry-run preview complete; P121.5 scoped Command Center UX is next.",
@@ -16893,7 +16893,7 @@
       "knownLimitations": [
         "P121.4 is preview-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:55:29.361Z"
+      "completedAt": "2026-05-29T12:56:18.333Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16977,7 +16977,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "457c8113",
       "commandCenterVisible": true,
       "label": "Application Dry Run",
       "detail": "Approval decision application safe dry-run preview complete.",
@@ -16998,7 +16998,7 @@
       "knownLimitations": [
         "P121.4 is preview-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:55:29.361Z"
+      "completedAt": "2026-05-29T12:56:18.333Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17062,7 +17062,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T12:55:29.361Z",
+  "updatedAt": "2026-05-29T12:56:18.333Z",
   "currentPhase": "P121.4",
   "previousPhase": "P121.3",
   "nextPhase": "P121.5",
