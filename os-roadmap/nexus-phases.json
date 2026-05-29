@@ -10950,7 +10950,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6244c697",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
       "detail": "P116.3 governed local execution CRUD model complete; P116.4 is next.",
@@ -11034,7 +11034,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6244c697",
       "commandCenterVisible": true,
       "label": "Governed Local Execution CRUD Model",
       "detail": "P116.3 governed local execution CRUD model complete; P116.4 is next.",

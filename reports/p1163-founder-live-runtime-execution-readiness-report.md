@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.3
-- Generated at: 2026-05-29T03:12:57.742Z
+- Generated at: 2026-05-29T03:14:12.107Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 40f0b099
+- Validation HEAD: 6244c697
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -43,8 +43,8 @@
 | platform roadmap records P116.3 | PASS |  |
 | P116.2 checker accepts P116.3 handoff | PASS |  |
 | phase status advanced | PASS | P116.3/P116.2/P116.4 |
-| changed files stay in P116.3 allowed scope | PASS | README.md, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1162-founder-live-runtime-execution-readiness.js, live-ready/founderLiveRuntimeExecutionReadiness.js, scripts/check-p1163-founder-live-runtime-execution-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1162-founder-live-runtime-execution-readiness.js, live-ready/founderLiveRuntimeExecutionReadiness.js, scripts/check-p1163-founder-live-runtime-execution-readiness.js |
+| changed files stay in P116.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
 | public docs avoid raw runtime execution table names | PASS |  |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |
