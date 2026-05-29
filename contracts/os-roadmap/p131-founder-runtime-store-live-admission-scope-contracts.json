@@ -1,11 +1,11 @@
 {
   "phaseId": "P131",
   "title": "Founder Runtime Store Live Admission Scope Contract",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P131.6",
-  "previousSubphase": "P131.5",
-  "nextSubphase": "P131.7",
+  "currentSubphase": "P131.7",
+  "previousSubphase": "P131.6",
+  "nextSubphase": "P132",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "d63816a9",
   "owner": "NEXUS OS",
@@ -599,10 +599,10 @@
     {
       "phaseId": "P131.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1316-stamp",
+      "expectedBaseCommit": "875b1228",
       "narrowGoal": "Close P131 with final validation evidence and planned-only next-phase handoff while unsafe live actions remain blocked unless later explicitly admitted.",
       "allowedFiles": [
         "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
@@ -612,8 +612,14 @@
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "scripts/check-os-phase-status.js",
+        "scripts/check-p1317-founder-runtime-store-live-admission-scope.js",
+        "reports/p1316-founder-runtime-store-live-admission-scope-report.md",
+        "reports/p1317-founder-runtime-store-live-admission-scope-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "reports/p1314-founder-runtime-store-live-admission-scope-report.md",
+        "reports/p1315-founder-runtime-store-live-admission-scope-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -644,13 +650,16 @@
         "Run P130.5 scoped store live readiness route coverage."
       ],
       "checkerUpdates": [
-        "Add P131.7 checker and update P131.6 handoff checker."
+        "Add P131.7 checker.",
+        "Validate P131.1-P131.6 reports, P131.6 handoff support, scoped UX preservation, OS status, P132 planned-only handoff, forbidden paths, and safe wording."
       ],
       "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
-      "phaseStatusUpdate": "P131 complete; P131.7 complete; current phase P131.7; previous P131.6; next phase planned-only.",
+      "phaseStatusUpdate": "P131 complete; P131.7 complete; current phase P131.7; previous P131.6; next phase P132 planned-only.",
       "validationCommands": [
-        "npm run check:p1311-founder-runtime-store-live-admission-scope",
-        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
+        "npm run check:p1316-founder-runtime-store-live-admission-scope",
+        "npm run check:p1315-founder-runtime-store-live-admission-scope",
+        "npm run check:p1314-founder-runtime-store-live-admission-scope",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -673,7 +682,14 @@
       ],
       "previousPhase": "P131.6",
       "nextPhase": "P132",
-      "order": 167.7
+      "order": 167.7,
+      "completedAt": "2026-05-29T23:47:33.019Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Closed P131 with final validation evidence, completed phase status, scoped UX preservation checks, and the planned-only P132 handoff while all live store actions remain blocked.",
+      "knownLimitations": [
+        "P131.7 is final validation closure only and P132 is planned-only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
     }
   ],
   "current": {

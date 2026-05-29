@@ -3101,14 +3101,25 @@ blocked.
 
 P131.6 is complete. NEXUS now has aggregate validation/docs evidence for
 P131.1-P131.5, P131.6 checker coverage, P131.5 handoff compatibility, scoped UX
-preservation checks, and refreshed OS phase reports. P131.7 is next for final
-validation. Approval capture, decision persistence, request persistence, store
-CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
-acceptance capture, handoff acceptance, authority handoff, authority grant, activation,
-approval application, approve/reject decision recording, runtime execution,
-execution unlock, provider/model calls, agent dispatch, worker/tool execution,
-project mutation, hosted DB mutation, raw SQL interface, deploy, release,
-export, package action, network call, and provider spend remain blocked.
+preservation checks, and refreshed OS phase reports. Approval capture, decision
+persistence, request persistence, store CRUD execution, DB schemas, migrations,
+DB/runtime reads or writes, live acceptance capture, handoff acceptance,
+authority handoff, authority grant, activation, approval application,
+approve/reject decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
+P131.7 is complete. NEXUS closed P131 with final validation evidence, completed
+phase status, scoped UX preservation checks, and a planned-only P132 handoff.
+P132 is planned-only and has no implementation yet. Approval capture, decision
+persistence, request persistence, store CRUD execution, DB schemas, migrations,
+DB/runtime reads or writes, live acceptance capture, handoff acceptance,
+authority handoff, authority grant, activation, approval application,
+approve/reject decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

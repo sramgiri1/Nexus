@@ -19191,15 +19191,16 @@
       "title": "Founder Runtime Store Live Admission Scope Contract",
       "label": "Store Live Admission Scope",
       "order": 167,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8ec3b68f",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P131 is in progress; P131.6 validation/docs is complete and P131.7 final validation is next.",
-      "summary": "P131 store live admission scope now has aggregate validation/docs evidence through P131.6 while scoped Command Center admission scope UX remains on Business Build and Agent Flow and all live actions remain blocked.",
+      "detail": "P131 complete; P131.7 final validation is complete and P132 is planned-only next.",
+      "summary": "Closed P131 with final validation evidence, completed phase status, scoped UX preservation checks, and the planned-only P132 handoff while all live store actions remain blocked.",
       "previousPhase": "P130.7",
-      "nextPhase": "P131.7",
+      "nextPhase": "P132",
       "checksRun": [
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
         "npm run check:p1316-founder-runtime-store-live-admission-scope",
         "npm run check:p1315-founder-runtime-store-live-admission-scope",
         "npm run check:p1314-founder-runtime-store-live-admission-scope",
@@ -19211,9 +19212,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P131.6 is validation/docs closure only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P131.7 is final validation closure only and P132 is planned-only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T23:38:34.445Z"
+      "completedAt": "2026-05-29T23:47:33.019Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19396,27 +19397,89 @@
       "title": "Final Validation",
       "label": "Final Validation",
       "order": 167.7,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P131.7 final validation complete; P132 is planned-only next.",
+      "summary": "Closed P131 with final validation evidence, completed phase status, scoped UX preservation checks, and the planned-only P132 handoff while all live store actions remain blocked.",
+      "previousPhase": "P131.6",
+      "nextPhase": "P132",
+      "checksRun": [
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
+        "npm run check:p1316-founder-runtime-store-live-admission-scope",
+        "npm run check:p1315-founder-runtime-store-live-admission-scope",
+        "npm run check:p1314-founder-runtime-store-live-admission-scope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P131.7 is final validation closure only and P132 is planned-only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T23:47:33.019Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P132",
+      "title": "Founder Runtime Store Live Admission Execution Contract",
+      "label": "Store Live Execution Contract",
+      "order": 168,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P131.7 is planned next for final validation. It has no implementation yet.",
-      "summary": "Planned final validation work only. It has no implementation yet and does not enable live store actions.",
-      "previousPhase": "P131.6",
-      "nextPhase": "P132",
+      "detail": "P132 is planned-only. It has no implementation yet and does not enable live store actions.",
+      "summary": "Planned-only next phase for future store live admission execution contract work. No implementation exists yet.",
+      "previousPhase": "P131.7",
+      "nextPhase": "",
       "checksRun": [],
       "knownLimitations": [
-        "P131.7 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "P132 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ]
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T23:38:34.445Z",
-  "currentPhase": "P131.6",
-  "previousPhase": "P131.5",
-  "nextPhase": "P131.7",
+  "updatedAt": "2026-05-29T23:47:33.019Z",
+  "currentPhase": "P131.7",
+  "previousPhase": "P131.6",
+  "nextPhase": "P132",
   "currentPhaseStatus": "complete",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P131.7",
+    "title": "Final Validation",
+    "label": "Final Validation",
+    "order": 167.7,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P131.7 final validation complete; P132 is planned-only next.",
+    "summary": "Closed P131 with final validation evidence, completed phase status, scoped UX preservation checks, and the planned-only P132 handoff while all live store actions remain blocked.",
+    "previousPhase": "P131.6",
+    "nextPhase": "P132",
+    "checksRun": [
+      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:p1316-founder-runtime-store-live-admission-scope",
+      "npm run check:p1315-founder-runtime-store-live-admission-scope",
+      "npm run check:p1314-founder-runtime-store-live-admission-scope",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P131.7 is final validation closure only and P132 is planned-only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-29T23:47:33.019Z"
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P131.6",
     "title": "Validation / Docs",
@@ -19446,52 +19509,23 @@
     ],
     "completedAt": "2026-05-29T23:38:34.445Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P131.5",
-    "title": "Command Center Admission Scope UX",
-    "label": "Admission Scope UX",
-    "order": 167.5,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d35d8e33",
-    "commandCenterVisible": true,
-    "detail": "P131.5 Command Center admission scope UX complete; P131.6 validation/docs is next.",
-    "summary": "Added scoped display-safe Store Live Admission Scope UX to Business Build and Agent Flow while keeping Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
-    "previousPhase": "P131.4",
-    "nextPhase": "P131.6",
-    "checksRun": [
-      "npm run check:p1315-founder-runtime-store-live-admission-scope",
-      "npm run check:p1314-founder-runtime-store-live-admission-scope",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P131.5 is display-safe Command Center UX only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-29T23:26:49.873Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P131.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 167.7,
+    "phaseId": "P132",
+    "title": "Founder Runtime Store Live Admission Execution Contract",
+    "label": "Store Live Execution Contract",
+    "order": 168,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P131.7 is planned next for final validation. It has no implementation yet.",
-    "summary": "Planned final validation work only. It has no implementation yet and does not enable live store actions.",
-    "previousPhase": "P131.6",
-    "nextPhase": "P132",
+    "detail": "P132 is planned-only. It has no implementation yet and does not enable live store actions.",
+    "summary": "Planned-only next phase for future store live admission execution contract work. No implementation exists yet.",
+    "previousPhase": "P131.7",
+    "nextPhase": "",
     "checksRun": [],
     "knownLimitations": [
-      "P131.7 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "P132 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
     ]
   }
 }

@@ -19,6 +19,200 @@ P131 is split into seven implementation-grade subphases:
 - P131.6 Validation / Docs
 - P131.7 Final Validation
 
+## P131.7 Final Validation
+
+Status: complete
+Phase: P131
+Subphase: P131.7
+Goal: Close P131 with final validation evidence, mark P131 complete, and add a
+planned-only P132 handoff while all live store actions remain blocked.
+Why this is needed: P131 is complete only after its final validation checker,
+status records, docs, reports, and planned-only next-phase handoff are aligned.
+User/operator impact: Operators can see P131 as complete, P131.7 as current
+final validation, and P132 as planned-only with no runnable or writable
+capability.
+Command Center impact: No dashboard source changes. Business Build and Agent
+Flow keep the scoped Store Live Admission Scope cards. Chat with NEXUS, Lite,
+OS Roadmap, and Live Readiness remain clean.
+Safety impact: P131.7 is final-validation-only. It does not capture approvals,
+persist decisions, submit requests, persist requests, create DB schemas, run
+migrations, read or write DB/runtime records, persist approval or acceptance
+decisions, run CRUD actions, capture handoff acceptance, hand off authority,
+grant authority, activate authority, unlock execution, call providers/models,
+dispatch agents, mutate projects, deploy, release, export, package, use network
+calls, or spend. P132 is planned-only.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `875b1228`
+
+Files expected to change:
+- `contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json`
+- `docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `scripts/check-os-phase-status.js`
+- `scripts/check-p1317-founder-runtime-store-live-admission-scope.js`
+- `reports/p1314-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1315-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1316-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1317-founder-runtime-store-live-admission-scope-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `scripts/check-p1317-founder-runtime-store-live-admission-scope.js`.
+- Create `reports/p1317-founder-runtime-store-live-admission-scope-report.md`.
+- Update `scripts/check-os-phase-status.js` so P132 planned-only handoff is
+  recognized.
+- Update P131 contract, README, platform roadmap, package script, OS status,
+  roadmap, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- No runtime exports.
+- Data shape: final validation evidence only, including completed subphase
+  checks, report pass checks, status closure, planned-only P132 handoff,
+  scoped UX preservation checks, forbidden path checks, and safe wording checks.
+- No DB schema, query, migration file, runtime record, live CRUD executor,
+  provider envelope, dispatch packet, raw private ID, raw table name, raw report
+  dump, or project data.
+
+Reuse check:
+- Reuse P131.6 handoff checker behavior.
+- Reuse existing P131 reports and scoped route coverage.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Preserve P131.5 Store Live Admission Scope cards on Business Build and Agent
+  Flow.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- OS Roadmap remains the only surface for OS phase labels.
+- Primary UX does not expose raw JSON, raw logs, raw policy dumps, raw table
+  names, raw report paths, internal helper IDs, internal phase labels outside OS
+  Roadmap, or private project IDs.
+- No provider/tool/project mutation, DB writes, live CRUD, migration execution,
+  approval capture, acceptance capture, handoff acceptance, authority grant, or
+  deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run existing scoped route coverage.
+
+Tests to add/update/remove:
+- Add `check:p1317-founder-runtime-store-live-admission-scope`.
+- Run P131.6, P131.5, and P131.4 checkers for handoff coverage.
+- Run the existing Playwright scoped route coverage without editing dashboard
+  tests.
+
+Checker updates:
+- Validate P131.1-P131.6 reports pass.
+- Validate P131.6 checker accepts the P131.7 final state.
+- Validate P131.5 scoped data, page labels, and route coverage remain intact.
+- Validate P131 closes as complete and P132 remains planned-only.
+- Validate docs, status, forbidden paths, and safe wording.
+
+Docs to update:
+- This P131 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P131.6 report.
+- P131.7 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P131 complete.
+- P131.7 complete.
+- Current phase P131.7.
+- Previous phase P131.6.
+- Next phase P132 planned-only.
+
+Known risks:
+- Final validation can imply live admission readiness. P131.7 keeps P132
+  planned-only and states that all live actions remain blocked.
+- P132 handoff can be mistaken for implementation. P132 has no checks run,
+  commit, or implementation details.
+
+Rollback plan:
+- Revert only the P131.7 implementation and stamp commits. P131.6 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1317-founder-runtime-store-live-admission-scope`
+- `npm run check:p1316-founder-runtime-store-live-admission-scope`
+- `npm run check:p1315-founder-runtime-store-live-admission-scope`
+- `npm run check:p1314-founder-runtime-store-live-admission-scope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P131.7 allowed files>`
+- `git commit -m "chore(nexus): implement p1317 final validation"`
+- `git add <P131.7 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1317 final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or dashboard test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Request persistence, approval capture, decision persistence, live admission,
+  Store CRUD execution, DB schemas, migrations, DB/runtime reads or writes,
+  acceptance capture, handoff acceptance, authority grant handoff, execution,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- P132 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P131.6 Validation / Docs
 
 Status: complete
