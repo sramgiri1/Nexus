@@ -60,6 +60,7 @@ const plan = readText("docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATI
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
 const p1271Checker = readText("scripts/check-p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js");
+const p1273Checker = readText("scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js");
 const helperSource = readText("shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata.js");
 const routeTests = readText("dashboard/tests/routes.spec.js");
 const metadata = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata();
@@ -154,6 +155,7 @@ addCheck("contract records expected exports", [
   "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata",
 ].every((name) => p1272.expectedExports?.includes(name)));
 addCheck("P127.1 checker accepts P127.2 handoff", p1271Checker.includes("P127.2") && p1271Checker.includes("P127.3") && p1271Checker.includes("p1272StartedState"));
+addCheck("P127.3 checker validates intent handoff", !p1273StartedState || (p1273Checker.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel") && p1273Checker.includes("P127.4")));
 addCheck("P126.5 route regression coverage remains present", routeTests.includes("Approval application authority grant handoff acceptance appears only on scoped pages") && routeTests.includes("Acceptance read-only") && routeTests.includes("/command-center/lite"));
 addCheck("docs record P127.2", /P127\.2 Acceptance Capture Eligibility Metadata[\s\S]*Status:\s+complete/.test(plan));
 addCheck(

@@ -3864,6 +3864,18 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P127.3 is complete. The governed local acceptance capture intent model now
+reuses P127.2 capture metadata, exposes zero candidate counts, blocked
+readiness rows, owner, next action, evidence/activity/cost labels, and rejects
+unsafe capture states. P127.4 is next for acceptance capture safe dry-run
+preview. Acceptance capture, handoff acceptance, grant handoff, authority
+grant, activation, approval application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
