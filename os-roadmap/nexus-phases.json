@@ -12981,15 +12981,15 @@
       "order": 161,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "21613883f563d6724af2c665a6037016715c5846",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P125.1 contract/policy complete; P125.2 handoff eligibility metadata is next.",
-      "summary": "P125 is in progress with the grant handoff contract/policy complete. P125.1 defines the implementation-grade subphase split, safety rules, reuse requirements, validation commands, docs, and status handoff while keeping live authority handoff blocked.",
-      "previousPhase": "P125.1",
-      "nextPhase": "P125.2",
+      "detail": "P125.2 handoff eligibility metadata complete; P125.3 governed handoff intent model is next.",
+      "summary": "P125 is in progress with contract/policy and browser-safe grant handoff eligibility metadata complete. Live authority handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "previousPhase": "P125.2",
+      "nextPhase": "P125.3",
       "checksRun": [
+        "npm run check:p1252-founder-runtime-approval-application-authority-grant-handoff",
         "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
-        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -12998,9 +12998,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P125.1 is contract/policy only. It does not hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+        "P125.2 is metadata-only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T16:36:00.439Z"
+      "completedAt": "2026-05-29T16:42:25.041Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13037,19 +13037,28 @@
       "title": "Handoff Eligibility Metadata",
       "label": "Handoff Metadata",
       "order": 161.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "Planned next P125 subphase.",
-      "summary": "Planned handoff eligibility metadata subphase. No P125.2 behavior is implemented in P125.1.",
+      "detail": "P125.2 handoff eligibility metadata complete; P125.3 governed handoff intent model is next.",
+      "summary": "Added P125.2 browser-safe grant handoff eligibility metadata that reuses P124.2 grant metadata and keeps all handoff/write/execution/provider/mutation/spend flags blocked.",
       "previousPhase": "P125.1",
       "nextPhase": "P125.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "checksRun": [
+        "npm run check:p1252-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P125.2 is metadata-only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T16:42:25.041Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13152,27 +13161,27 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T16:36:00.439Z",
-  "currentPhase": "P125.1",
-  "previousPhase": "P124.7",
-  "nextPhase": "P125.2",
+  "updatedAt": "2026-05-29T16:42:25.041Z",
+  "currentPhase": "P125.2",
+  "previousPhase": "P125.1",
+  "nextPhase": "P125.3",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P125.1",
-    "title": "Handoff Contract / Policy",
-    "label": "Handoff Contract",
-    "order": 161.1,
+    "phaseId": "P125.2",
+    "title": "Handoff Eligibility Metadata",
+    "label": "Handoff Metadata",
+    "order": 161.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "21613883f563d6724af2c665a6037016715c5846",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P125.1 contract/policy complete; P125.2 handoff eligibility metadata is next.",
-    "summary": "Created the P125 grant handoff contract/policy, seven-subphase split, checker, docs, reports, and OS status handoff while keeping live authority handoff blocked.",
-    "previousPhase": "P124.7",
-    "nextPhase": "P125.2",
+    "detail": "P125.2 handoff eligibility metadata complete; P125.3 governed handoff intent model is next.",
+    "summary": "Added P125.2 browser-safe grant handoff eligibility metadata that reuses P124.2 grant metadata and keeps all handoff/write/execution/provider/mutation/spend flags blocked.",
+    "previousPhase": "P125.1",
+    "nextPhase": "P125.3",
     "checksRun": [
+      "npm run check:p1252-founder-runtime-approval-application-authority-grant-handoff",
       "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
-      "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13181,9 +13190,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P125.1 is contract/policy only. It does not hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      "P125.2 is metadata-only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T16:36:00.439Z"
+    "completedAt": "2026-05-29T16:42:25.041Z"
   },
-  "generatedAt": "2026-05-29T16:36:00.439Z"
+  "generatedAt": "2026-05-29T16:42:25.041Z"
 }

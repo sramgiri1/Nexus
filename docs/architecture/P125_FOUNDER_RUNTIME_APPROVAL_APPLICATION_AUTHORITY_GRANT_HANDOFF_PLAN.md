@@ -139,11 +139,81 @@ and return current phase to P124.7.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P125.2 Handoff Eligibility Metadata
 
-P125.2 Handoff Eligibility Metadata: browser-safe metadata only. No live grant
-handoff, DB writes, runtime writes, provider calls, dispatch, mutation, network,
-or spend.
+Phase: P125 Founder Runtime Approval Application Authority Grant Handoff
+Subphase: P125.2 Handoff Eligibility Metadata
+
+Goal: add browser-safe, local-only approval application authority grant handoff
+eligibility metadata that reuses P124.2 grant metadata and keeps every
+handoff/write/execution/provider/mutation/spend flag blocked.
+
+Why this is needed: P125.1 created the contract. P125.2 gives later local
+handoff intent modeling a safe metadata source without creating handoff records,
+runtime events, DB writes, or primary UX controls.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffEligibilityMetadata.js`
+- `scripts/check-p1252-founder-runtime-approval-application-authority-grant-handoff.js`
+- `contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json`
+- `docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1252-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change: `projects/**`, `careloop/**`,
+`generated-projects/**`, `dashboard/src/**`, `dashboard/tests/**`, `db/**`,
+`live-ready/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ELIGIBILITY_METADATA_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ELIGIBILITY_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_STATES`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_FLAGS`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_SECTIONS`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffEligibilityMetadata`
+
+Data shape: local metadata with `metadataVersion`, `phaseId`,
+`sourceGrantPhase`, `sourceGrantVersion`, `metadataOnly`, `localOnly`,
+`commandCenterVisible`, `handoffPolicy`, `handoffStates`,
+`priorGrantBoundary`, `sections`, `blockers`, `nextAction`,
+`ownerCapability`, and `costImpactLabel`.
+
+Command Center UX requirements: no source/test changes and no primary UX
+surface. Metadata remains hidden until a later scoped UX subphase.
+
+Validation commands:
+- `npm run check:p1252-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P125 in progress, P125.2 complete, current phase
+P125.2, previous phase P125.1, next phase P125.3.
+
+Known risks: metadata names can imply live handoff. P125.2 keeps all flags
+false and all docs/checkers explicit that handoff remains blocked.
+
+Rollback plan: remove the P125.2 helper/checker/report/package script, revert
+contract/docs/status/report updates, restore P125.2 to planned, and return
+current phase to P125.1.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P125.3 Governed Handoff Intent Model: local model only. No live grant handoff,
 DB writes, runtime execution, provider calls, dispatch, mutation, network, or
