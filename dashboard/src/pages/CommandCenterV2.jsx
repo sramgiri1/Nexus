@@ -3367,6 +3367,10 @@ function AgentFlowPage() {
         dispatchReadiness={businessBuild.founderLiveAgentDispatchReadiness}
         surfaceLabel="Agent Flow Agent Dispatch Readiness"
       />
+      <FounderLiveRuntimeAdmissionReadinessCard
+        runtimeReadiness={businessBuild.founderLiveRuntimeAdmissionReadiness}
+        surfaceLabel="Agent Flow Runtime Admission Readiness"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10145,6 +10149,10 @@ function BusinessBuildPage() {
           dispatchReadiness={build.founderLiveAgentDispatchReadiness}
           surfaceLabel="Business Build Agent Dispatch Readiness"
         />
+        <FounderLiveRuntimeAdmissionReadinessCard
+          runtimeReadiness={build.founderLiveRuntimeAdmissionReadiness}
+          surfaceLabel="Business Build Runtime Admission Readiness"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -11465,6 +11473,83 @@ function FounderLiveAgentDispatchReadinessCard({ dispatchReadiness, surfaceLabel
           >
             <div className="ccv2-section-heading">{row.proposedDispatchLane}</div>
             <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.dispatchState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {row.evidenceLocation}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {sections.map((section) => (
+          <div className="ccv2-safety-row" key={section.label}>
+            <span className="ccv2-safety-row__label">{section.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{section.blockedCount} blocked</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FounderLiveRuntimeAdmissionReadinessCard({ runtimeReadiness, surfaceLabel = "Runtime Admission Readiness" }) {
+  if (!runtimeReadiness) return null;
+
+  const rows = Array.isArray(runtimeReadiness.runtimeAdmissionRows) ? runtimeReadiness.runtimeAdmissionRows.slice(0, 3) : [];
+  const sections = Array.isArray(runtimeReadiness.runtimeAdmissionSections) ? runtimeReadiness.runtimeAdmissionSections.slice(0, 3) : [];
+  const blockers = Array.isArray(runtimeReadiness.blockers) ? runtimeReadiness.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(runtimeReadiness.safetyRows) ? runtimeReadiness.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder runtime admission readiness">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Runtime Admission Readiness</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {runtimeReadiness.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Admission blocked</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{runtimeReadiness.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview mode</span><span className="ccv2-page-summary-value">{runtimeReadiness.previewMode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime candidates</span><span className="ccv2-page-summary-value">{runtimeReadiness.candidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked candidates</span><span className="ccv2-page-summary-value">{runtimeReadiness.blockedCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Writable candidates</span><span className="ccv2-page-summary-value">{runtimeReadiness.writableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persisted candidates</span><span className="ccv2-page-summary-value">{runtimeReadiness.persistedCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Admissible candidates</span><span className="ccv2-page-summary-value">{runtimeReadiness.runtimeAdmissibleCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable candidates</span><span className="ccv2-page-summary-value">{runtimeReadiness.executableCandidateCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{runtimeReadiness.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{runtimeReadiness.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{runtimeReadiness.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{runtimeReadiness.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{runtimeReadiness.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{runtimeReadiness.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div
+            key={`${row.proposedAdmissionLane}-${row.admissionPosition}`}
+            aria-label={`${row.proposedAdmissionLane} runtime admission readiness row`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{row.proposedAdmissionLane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.admissionState}</div>
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.proposedOutcome}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.nextAction}</div>
             <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.blocker}</div>

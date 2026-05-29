@@ -762,6 +762,14 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P115.5 Command Center runtime admission UX: Business Build and Agent Flow now
+  show display-safe Runtime Admission Readiness cards with runtime gates,
+  blocked counts, owner, next action, disabled reason, evidence/activity, and
+  cost posture. Chat with NEXUS, Lite, full home, and Live Readiness stay clean.
+  P115.6 is next for runtime admission validation. Runtime admission, execution
+  unlock, provider/model call, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

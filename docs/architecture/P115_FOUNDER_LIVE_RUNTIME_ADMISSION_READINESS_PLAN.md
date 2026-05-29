@@ -594,3 +594,158 @@ Center hidden until P115.5.
 Rollback plan: remove P115.4 preview exports/checker/docs/status/report
 updates, restore P115 to P115.3 complete with P115.4 planned, and keep P115.3
 CRUD unchanged.
+
+## P115.5 Command Center Runtime Admission UX
+
+Status: complete
+
+Phase: P115 Founder Live Runtime Admission Readiness
+Subphase: P115.5 Command Center Runtime Admission UX
+Goal: render display-safe runtime admission readiness on Business Build and
+Agent Flow without exposing runtime controls, fake actions, raw record details,
+or chat-page clutter.
+
+Why this is needed: P115.4 creates the safe dry-run model, but founders need to
+see runtime readiness gates in useful Command Center pages instead of buried
+phase/report metadata.
+
+User/operator impact: founders can see which runtime readiness gates are
+prepared for review, why each gate is blocked, what the next action is, the
+owner capability, and where evidence/activity/cost context lives.
+
+Command Center impact: Business Build and Agent Flow now show a Runtime
+Admission Readiness card. Chat with NEXUS, Lite, full Command Center home, and
+Live Readiness do not show the card.
+
+Safety impact: P115.5 is UI-only. It does not add runtime admission, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, SQLite
+writes, hosted DB mutation, project mutation, raw SQL, deploy/release/export/
+package, network calls, or spend.
+
+Cost impact: no provider/model calls, network calls, runtime execution, or
+provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit: branch
+`codex/nexus-e2e-phase-validation`; expected base commit `5727d512`.
+
+Allowed files:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1155-founder-live-runtime-admission-readiness.js`
+- `contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json`
+- `docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1154-founder-live-runtime-admission-readiness-report.md`
+- `reports/p1155-founder-live-runtime-admission-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules changed: updated `dashboard/src/data/businessBuild.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`, and `dashboard/tests/routes.spec.js`;
+added `scripts/check-p1155-founder-live-runtime-admission-readiness.js`;
+registered the package script; updated P115 contract/status/docs; and
+regenerated reports.
+
+Expected exports and data shapes:
+- `buildFounderLiveRuntimeAdmissionReadinessDisplayModel`
+- `businessBuild.founderLiveRuntimeAdmissionReadiness`
+- `FounderLiveRuntimeAdmissionReadinessCard`
+
+The display data shape includes current state, founder idea, preview mode,
+runtime candidate counts, runtime admission sections, runtime admission rows,
+safety rows, next action, blockers, disabled reason, owner capability,
+evidence/activity/cost refs, and all runtime/write/project/deploy/package/spend
+states blocked.
+
+Command Center UX requirements: show what changed, current state, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact on Business Build and Agent Flow. Keep Chat with NEXUS clean and
+chat-only. Preserve route-wide navigation and no DemoApp leakage.
+
+Dark/light/system theme requirements: Playwright covers the card on Business
+Build under dark, light, and system themes. The card uses existing CSS classes.
+
+Playwright tests: P115.5 adds focused route coverage for Business Build and
+Agent Flow visibility, absence from Lite/full home/Live Readiness, theme
+coverage, and raw-ID/fake-action guards.
+
+Checker updates: P115.5 adds a dedicated Command Center UX checker that
+validates the browser-safe display model, card placement, Playwright coverage,
+docs/status updates, allowed file scope, and safety wording.
+
+Docs/README/roadmap updates: P115.5 is recorded in this plan, README, platform
+roadmap, P115 contract, OS roadmap/status, and generated reports. P115.6 is
+next.
+
+OS phase status update: P115 is in progress; P115.5 is complete; current phase
+P115.5; previous P115.4; next P115.6.
+
+Validation commands:
+- `npm run check:p1155-founder-live-runtime-admission-readiness`
+- `npm run check:p1154-founder-live-runtime-admission-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Runtime admission readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no temporary local
+runtime DB remains; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw runtime/dispatch/assignment/queue table names in primary UX;
+no fake runnable actions; no runtime admission, execution unlock, hosted DB
+mutation, raw SQL interface, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, deploy, release, export, package,
+network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P115.5 files>`
+- `git commit -m "feat(nexus): implement p1155 runtime admission ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: another dense card can crowd Business Build and Agent Flow.
+P115.5 keeps it focused on runtime gates and safety state, and P115.6 can
+consolidate or tune surrounding phase evidence if needed.
+
+Rollback plan: remove the P115.5 display model/card/test/checker/docs/status/
+report updates, restore P115 to P115.4 complete with P115.5 planned, and keep
+P115.4 preview modeling unchanged.

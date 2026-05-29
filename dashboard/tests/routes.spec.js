@@ -4162,6 +4162,59 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Runtime admission readiness appears only on Business Build and Agent Flow", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder runtime admission readiness").filter({ hasText: "Business Build Runtime Admission Readiness" });
+      await expect(themedCard).toContainText("Runtime Admission Readiness");
+      await expect(themedCard).toContainText("Admission blocked");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Runtime Admission Readiness"],
+      ["/command-center/agent-flow", "Agent Flow Runtime Admission Readiness"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder runtime admission readiness").filter({ hasText: label });
+      await expect(card).toContainText("Runtime Admission Readiness");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Preview mode");
+      await expect(card).toContainText("Runtime candidates");
+      await expect(card).toContainText("Blocked candidates");
+      await expect(card).toContainText("Writable candidates");
+      await expect(card).toContainText("Persisted candidates");
+      await expect(card).toContainText("Admissible candidates");
+      await expect(card).toContainText("Executable candidates");
+      await expect(card).toContainText("NEXUS Founder Runtime Admission Readiness Preview");
+      await expect(card).toContainText("Founder Runtime Gate");
+      await expect(card).toContainText("Product Scope Gate");
+      await expect(card).toContainText("Execution Boundary Gate");
+      await expect(card).toContainText("Runtime admission");
+      await expect(card).toContainText("Execution unlock");
+      await expect(card).toContainText("reports/p1154-founder-live-runtime-admission-readiness-report.md");
+      await expect(card).toContainText("No runtime admission");
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Founder runtime admission readiness")).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|runtimeAdmissionId|dispatchReadinessId|assignmentId|queueItemId|workOrderId|founder_runtime_admission_/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|admit now|call provider now|create project now|dispatch agent now|write sqlite now|write runtime now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Founder live approval capture boundary appears on non-chat founder routes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
