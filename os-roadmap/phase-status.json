@@ -16440,7 +16440,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c92589ee",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
       "detail": "P119.7 final validation complete; P119 is complete and P120 is planned-only.",
@@ -16633,7 +16633,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c92589ee",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "P119 final validation complete with P120 planned handoff.",
