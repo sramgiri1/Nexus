@@ -14593,30 +14593,30 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1cbd0442d21f4cec7ae825817ec2cfd96a725aa5",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Work Assignment Readiness",
-      "detail": "P113.6 validation and docs closure complete; P113.7 final validation is next.",
+      "detail": "P113.7 final validation complete; P114 is next.",
       "phaseId": "P113",
       "title": "Founder Live Agent Work Assignment Readiness",
       "order": 149,
-      "status": "in_progress",
-      "summary": "P113 is in progress. P113.1-P113.6 define assignment readiness contracts, schema, approved local CRUD, safe preview data, scoped Command Center UX, and aggregate validation closure while unsafe authority remains blocked.",
-      "nextPhase": "P113.7",
+      "status": "complete",
+      "summary": "P113 is complete. Assignment readiness now has contracts, local schema metadata, approved local CRUD, safe preview data, scoped Command Center UX, aggregate validation, and final closure while unsafe authority remains blocked.",
+      "nextPhase": "P114",
       "previousPhase": "P112.7",
       "checksRun": [
+        "npm run check:p1137-founder-live-agent-work-assignment-final",
         "npm run check:p1136-founder-live-agent-work-assignment-validation",
-        "npm run check:p1135-command-center-work-assignment-ux",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P113.6 is validation/docs closure only and does not add runtime or UI behavior.",
+        "P113 closes assignment readiness only and does not unlock runtime execution authority.",
         "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P113.7 is next for final validation and P114 handoff."
+        "P114 is next and must start with its own implementation-grade contract before any further scoped work."
       ],
-      "completedAt": ""
+      "completedAt": "2026-05-29T00:28:09.801Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14789,23 +14789,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned final validation and handoff for P113.",
+      "detail": "P113.7 final validation complete; P114 is next.",
       "phaseId": "P113.7",
       "title": "Final Validation",
       "order": 149.7,
-      "status": "planned",
-      "summary": "Planned final validation and handoff for P113.",
+      "status": "complete",
+      "summary": "P113.7 final validation closes P113, verifies prior reports/scripts/docs/status, confirms Command Center assignment readiness remains scoped to Business Build and Agent Flow, and records the P114 handoff placeholder.",
       "nextPhase": "P114",
       "previousPhase": "P113.6",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1137-founder-live-agent-work-assignment-final",
+        "npm run check:p1136-founder-live-agent-work-assignment-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P113.7 is final validation/docs/status closure only and does not add runtime or UI behavior.",
+        "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P114 is a handoff placeholder until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-29T00:28:09.801Z"
     },
     {
       "phaseId": "P83",
@@ -15290,8 +15298,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P113.6",
-  "previousPhase": "P113.5",
-  "nextPhase": "P113.7",
+  "currentPhase": "P113.7",
+  "previousPhase": "P113.6",
+  "nextPhase": "P114",
   "currentPhaseStatus": "complete"
 }

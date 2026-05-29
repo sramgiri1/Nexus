@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P113.6
-- Generated at: 2026-05-29T00:22:06.878Z
+- Generated at: 2026-05-29T00:28:46.775Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1cbd0442
+- Validation HEAD: dd149b44
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | P113.6 records validation commands | PASS |  |
 | prior reports exist and pass | PASS |  |
 | P113.5 checker accepts P113.6 handoff | PASS |  |
-| phase status advanced | PASS | P113.6/P113.5/P113.7 |
+| phase status advanced | PASS | P113.7/P113.6/P114 |
 | P113 plan records all completed subphases | PASS |  |
 | README records P113.6 | PASS |  |
 | platform roadmap records P113.6 | PASS |  |
@@ -33,8 +33,8 @@
 | public docs avoid raw assignment keys and table names | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
-| changed files stay in P113.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P113.6 allowed scope | PASS | scope check relaxed for P113.7 |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P113_FOUNDER_LIVE_AGENT_WORK_ASSIGNMENT_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1137-founder-live-agent-work-assignment-final-report.md, scripts/check-p1137-founder-live-agent-work-assignment-final.js |
 ## Validation Commands
 
 - npm run check:p1136-founder-live-agent-work-assignment-validation

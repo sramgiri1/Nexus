@@ -689,3 +689,115 @@ stale handoff state and unsafe wording through the dedicated checker.
 Rollback plan: remove the P113.6 checker/script/docs/status/report updates,
 restore P113 to P113.5 complete with P113.6 planned, and keep the P113.5 UX
 unchanged.
+
+## P113.7 Final Validation
+
+Phase: P113 Founder Live Agent Work Assignment Readiness
+
+Subphase: P113.7 Final Validation
+
+Goal: close P113 with final validation evidence, mark the parent phase and
+P113.7 complete, and hand off to P114.
+
+Why this is needed: P113.1-P113.6 are implemented, but the parent phase needs a
+final closure check proving contracts, local schema metadata, governed local
+CRUD helpers, safe preview data, scoped Command Center UX, aggregate
+validation, docs, and OS status all remain aligned.
+
+User/operator impact: operators can treat P113 as complete with explicit
+evidence that assignment readiness is local, governed, and read-only from the
+founder-facing perspective.
+
+Command Center impact: no Command Center source change in P113.7. Business
+Build and Agent Flow retain the P113.5 assignment readiness card. Chat with
+NEXUS, Lite, and Live Readiness remain clean.
+
+Safety impact: validation/docs/status only. Assignment writes, hosted DB
+mutation, raw SQL interface, runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+deploy, release, export, package creation, network calls, and provider spend
+remain blocked.
+
+Cost impact: no provider/model calls, network calls, or provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: P113.7 checker, P113.6 compatibility checker/report,
+OS status checker if needed, P113 contract, this plan, README, platform
+roadmap, package script registry, OS phase status files, and generated
+P113.7/P113.6/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`, `db/**`,
+`live-ready/**`, `dashboard/src/**`, `dashboard/tests/**`,
+`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added
+`scripts/check-p1137-founder-live-agent-work-assignment-final.js`; registered
+the package script; updated P113 contract/status/docs; and regenerated reports.
+
+Expected exports/data shapes: no runtime exports and no new data shapes.
+
+Safety rules: do not modify DB schema, live-ready helpers, dashboard source,
+dashboard tests, runtime state, provider/tool/worker/deploy/release/export/
+package paths, project files, or CareLoop files. Do not claim assignment
+writes, agent dispatch, execution, project mutation, hosted DB mutation, raw
+SQL, network calls, or spend are enabled.
+
+Reuse check: P113.7 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing package scripts, existing P113
+reports, existing P113 checkers, existing OS roadmap/status files, and existing
+Command Center assignment display sources for validation. It does not duplicate
+report writers, checker formatters, status helpers, result envelopes,
+redaction helpers, mode guards, route matrices, or UI components.
+
+Command Center UX requirements: preserve P113.5 UX exactly. The final checker
+verifies Business Build and Agent Flow still show assignment readiness while
+Chat with NEXUS, Lite, and Live Readiness do not.
+
+Dark/light/system theme requirements: no theme source change in P113.7. P113.5
+Playwright coverage remains the theme proof for assignment UX.
+
+Playwright tests: no new Playwright test in P113.7 because no UI source changes
+are made. The final checker verifies existing Playwright coverage remains in
+place.
+
+Checker updates: P113.7 adds a final checker that verifies all P113 scripts,
+prior reports, contract closure, P113.6 compatibility, OS status handoff,
+Command Center assignment UX retention, route coverage retention, public docs
+safety, raw ID/table-name exclusions, and forbidden path protection.
+
+Docs/README/roadmap updates: P113.7 is recorded in this plan, README, platform
+roadmap, P113 contract, OS roadmap/status, and generated reports. P114 is next.
+
+OS phase status update: P113 is complete; P113.7 is complete; current phase
+P113.7; previous P113.6; next P114.
+
+Validation commands:
+- `npm run check:p1137-founder-live-agent-work-assignment-final`
+- `npm run check:p1136-founder-live-agent-work-assignment-validation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no DB/live-ready/
+dashboard/runtime source changes; no runtime DB artifacts are created; no
+DemoApp exposure; no raw JSON/log/policy dumps; no raw private IDs, raw
+assignment keys, raw queue keys, or raw DB table names in primary UX or public
+docs; no fake runnable actions; no local write, hosted DB mutation, raw SQL
+interface, provider/model call, agent dispatch, worker/tool execution, project
+mutation, deploy, release, export, package, network, or provider spend
+authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P113.7 files>`
+- `git commit -m "chore(nexus): finalize p113 assignment readiness"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: final closure can be mistaken for execution readiness. P113.7
+keeps the parent phase complete while explicitly handing off to P114 without
+unlocking runtime authority.
+
+Rollback plan: remove the P113.7 checker/script/docs/status/report updates,
+restore P113 to P113.6 complete with P113.7 planned, and keep all P113.1-P113.6
+implementation unchanged.

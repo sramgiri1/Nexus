@@ -1,7 +1,7 @@
 {
   "phaseId": "P113",
   "title": "Founder Live Agent Work Assignment Readiness",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move governed queue admission candidates into local, operator-reviewed agent work assignment readiness records so founder-facing agent flow can show prepared assignment lanes without dispatching agents, running workers/tools, mutating projects, calling providers, using hosted DB writes, deploying, networking, packaging, or spending.",
   "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -717,11 +717,11 @@
     {
       "phaseId": "P113.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P113 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "dd149b44b57c",
       "allowedFiles": [
         "scripts/check-p1137-founder-live-agent-work-assignment-final.js",
         "scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
@@ -774,8 +774,8 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "No runtime data shape is implemented in this final validation subphase.",
+      "commandCenterUx": "Preserve the P113.5 Business Build and Agent Flow assignment readiness UX while keeping Chat with NEXUS, Lite, and Live Readiness clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -785,10 +785,12 @@
         "No new Playwright test until UI source changes."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P113.7 checker."
+        "Added check:p1137-founder-live-agent-work-assignment-final.",
+        "Confirmed P113.6 accepts the P113.7/P114 final handoff.",
+        "Confirmed check:os-phase-status accepts the P114 handoff."
       ],
-      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.7.",
-      "phaseStatusUpdate": "P113 in progress; P113.7 complete when implemented.",
+      "docsRoadmap": "P113.7 is recorded in the P113 plan, README, platform roadmap, OS status, and generated reports. P114 is next.",
+      "phaseStatusUpdate": "P113 complete; P113.7 complete; current P113.7; previous P113.6; next P114.",
       "validationCommands": [
         "npm run check:p1137-founder-live-agent-work-assignment-final",
         "npm run check:p1136-founder-live-agent-work-assignment-validation",
@@ -839,12 +841,12 @@
     "buildAgentWorkAssignmentReadinessViewModel"
   ],
   "knownLimitations": [
-    "P113.6 is validation/docs closure only and does not add runtime or UI behavior.",
+    "P113 closes assignment readiness only and does not unlock runtime execution authority.",
     "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P113.7 is next for final validation and P114 handoff."
+    "P114 is next and must start with its own implementation-grade contract before any further scoped work."
   ],
-  "currentSubphase": "P113.6",
-  "previousSubphase": "P113.5",
-  "nextSubphase": "P113.7",
-  "summary": "P113 is in progress. P113.1-P113.6 define assignment readiness contracts, schema, approved local CRUD, safe preview data, scoped Command Center UX, and aggregate validation closure while unsafe authority remains blocked."
+  "currentSubphase": "P113.7",
+  "previousSubphase": "P113.6",
+  "nextSubphase": "P114",
+  "summary": "P113 is complete. Assignment readiness now has contracts, local schema metadata, approved local CRUD, safe preview data, scoped Command Center UX, aggregate validation, and final closure while unsafe authority remains blocked."
 }
