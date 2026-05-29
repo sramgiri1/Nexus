@@ -384,7 +384,7 @@
       "knownLimitations": [
         "P130.3 is an approval evidence gate model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "commit": "pending-final-commit",
+      "commit": "d6c60a43",
       "completedAt": "2026-05-29T22:08:11.952Z"
     },
     {
@@ -734,7 +734,7 @@
     "title": "Store Live Approval Evidence Gate",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d6c60a43",
     "completedAt": "2026-05-29T22:08:11.952Z",
     "summary": "Added a browser-safe local store live approval evidence gate that reuses P130.2 prerequisites and keeps approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
     "checksRun": [
