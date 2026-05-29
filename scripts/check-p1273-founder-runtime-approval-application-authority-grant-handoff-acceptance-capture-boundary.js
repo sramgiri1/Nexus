@@ -59,6 +59,7 @@ const plan = readText("docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATI
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
 const p1272Checker = readText("scripts/check-p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js");
+const p1274Checker = readText("scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js");
 const modelSource = readText("shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel.js");
 const defaultModel = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel();
 const dryRunModel = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel({
@@ -180,6 +181,7 @@ addCheck("contract records expected exports", [
   "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryIntentModel",
 ].every((name) => p1273.expectedExports?.includes(name)));
 addCheck("P127.2 checker accepts P127.3 handoff", p1272Checker.includes("P127.3") && p1272Checker.includes("P127.4") && p1272Checker.includes("p1273StartedState"));
+addCheck("P127.4 checker validates dry-run handoff", !p1274StartedState || (p1274Checker.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun") && p1274Checker.includes("P127.5")));
 addCheck("docs record P127.3", /P127\.3 Governed Acceptance Capture Intent Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck(
   "README records P127.3",

@@ -338,11 +338,116 @@ current phase to P127.2 with P127.3 planned.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P127.4 Acceptance Capture Safe Dry Run
 
-P127.4 Acceptance Capture Safe Dry Run: planned. Local dry-run envelope only.
-No acceptance capture, writes, execution, providers, dispatch, mutation,
-network, or spend.
+Phase: P127 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Capture Boundary
+Subphase: P127.4 Acceptance Capture Safe Dry Run
+
+Goal: create a local-only safe dry-run envelope for acceptance capture
+readiness without capture records, writes, execution paths, provider calls,
+dispatch, mutation, network calls, or spend.
+
+Why this is needed: P127.3 proves capture intent can be modeled safely. P127.4
+packages that model into a result-envelope preview for later scoped UX work
+without enabling any runtime action.
+
+User/operator impact: OS Roadmap shows capture safe dry-run preview complete
+with P127.5 next, while live acceptance capture remains unavailable.
+
+Command Center impact: no dashboard source or route test changes. Existing
+P126.5 scoped read-only acceptance boundary UX remains on Business Build and
+Agent Flow only. Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and
+unrelated pages stay clean.
+
+Safety impact: preview-only. Acceptance capture, handoff acceptance, authority
+handoff, authority grant, activation, approval application, approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+runtime execution, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
+deploy, release, export, package, network call, and provider spend remain
+blocked.
+
+Cost impact: no provider calls, model calls, network calls, worker runtime,
+deploy/package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun.js`
+- `scripts/check-p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `scripts/check-p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json`
+- `docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_SAFE_DRY_RUN_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_SAFE_DRY_RUN_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_SAFE_DRY_RUN_STATES`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundarySafeDryRun`
+
+Data shape: result envelope with `dryRunOnly`, `localOnly`, hidden Command
+Center state, blocked preview rows/sections, zero unsafe candidate counts,
+owner/evidence/activity/cost labels, all action booleans false, and no DB
+schema, runtime schema, capture record shape, provider envelope, dispatch
+packet, or project data.
+
+Command Center UX requirements: no new cards, routes, controls, dashboard
+source, or dashboard test changes. Do not show raw reports, raw IDs, raw JSON,
+raw logs, raw policy dumps, DemoApp, or fake runnable actions.
+
+Validation commands:
+- `npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary`
+- `npm run check:p1273-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P127 in progress, P127.4 complete, current phase
+P127.4, previous phase P127.3, next phase P127.5. P127.5-P127.7 remain
+planned-only.
+
+Known risks: dry-run preview language can imply execution. P127.4 keeps the
+preview local-only, hidden from primary UX, and all action booleans false.
+
+Rollback plan: remove the P127.4 safe dry-run helper, checker, package script,
+and report; revert P127.3 checker and P127 contract/docs/status updates; return
+current phase to P127.3 with P127.4 planned.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P127.5 Command Center Acceptance Capture UX: planned. Scoped read-only UX only
 if explicitly implemented later. No Chat/Lite leakage and no runnable capture

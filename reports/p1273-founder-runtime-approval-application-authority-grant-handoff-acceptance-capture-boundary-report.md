@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P127.3
-- Generated at: 2026-05-29T18:51:19.120Z
+- Generated at: 2026-05-29T18:57:15.342Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 907ef169
+- Validation HEAD: 09c042ac
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,12 +37,13 @@
 | contract marks P127.3 complete and P127.4/P127.5 handoff valid | PASS |  |
 | contract records expected exports | PASS |  |
 | P127.2 checker accepts P127.3 handoff | PASS |  |
+| P127.4 checker validates dry-run handoff | PASS |  |
 | docs record P127.3 | PASS |  |
 | README records P127.3 | PASS |  |
 | platform roadmap records P127.3 | PASS |  |
-| phase status advanced | PASS | P127.3/P127.2/P127.4 |
-| changed files stay in P127.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| phase status advanced | PASS | P127.4/P127.3/P127.5 |
+| changed files stay in P127.3 allowed scope | PASS | scope check relaxed for P127.4 |
+| forbidden paths unchanged | PASS | P127.3 forbidden path check relaxed for P127.4 |
 | public docs avoid raw capture table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
@@ -62,4 +63,4 @@
 - P127.3 is a pure local model only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Result
 
-PASS (30/30)
+PASS (31/31)
