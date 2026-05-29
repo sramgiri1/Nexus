@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P119.6
-- Generated at: 2026-05-29T06:41:24.752Z
+- Generated at: 2026-05-29T06:42:12.909Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f2a62938
+- Validation HEAD: e1a3ce6b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,8 +32,8 @@
 | platform roadmap records P119.6 | PASS |  |
 | phase status advanced | PASS | P119.6/P119.5/P119.7 |
 | contract handoff points to final validation | PASS |  |
-| changed files stay in P119.6 allowed scope | PASS | README.md, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1195-founder-runtime-approval-decision-recording-boundary-report.md, reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md, scripts/check-p1196-founder-runtime-approval-decision-recording-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1195-founder-runtime-approval-decision-recording-boundary-report.md, reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md, scripts/check-p1196-founder-runtime-approval-decision-recording-boundary.js |
+| changed files stay in P119.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P119.6 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | primary UX avoids raw schema names and record refs | PASS |  |
