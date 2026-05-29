@@ -783,6 +783,13 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P116.1 runtime execution contract: P116 now has an implementation-grade
+  runtime execution readiness contract split into seven subphases, with safety
+  gates, reuse requirements, checker coverage, OS status entries, and docs.
+  P116.2 is next for local execution schema metadata. Runtime execution,
+  execution unlock, provider/model call, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

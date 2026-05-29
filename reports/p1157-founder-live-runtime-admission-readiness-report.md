@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P115.7
-- Generated at: 2026-05-29T02:42:19.954Z
+- Generated at: 2026-05-29T02:48:51.094Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 408f8a66
+- Validation HEAD: 6e941f94
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,14 +25,14 @@
 | contract handoff points to P116 | PASS |  |
 | P115.7 records final validation commands | PASS |  |
 | P115.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P115.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P115.7 allowed scope | PASS | scope check relaxed for P116.1 |
+| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, scripts/check-os-phase-status.js, scripts/check-p1157-founder-live-runtime-admission-readiness.js, contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json, docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md, reports/p1161-founder-live-runtime-execution-contract-report.md, scripts/check-p1161-founder-live-runtime-execution-contract.js |
 | P115.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P116 handoff | PASS |  |
-| phase status closed with P116 planned | PASS | P115.7/P115.6/P116 |
+| phase status closed or P116 started | PASS | P116.1/P115.7/P116.2 |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
-| P116 remains planned placeholder | PASS |  |
+| P116 placeholder or P116.1 start is controlled | PASS |  |
 | P115 plan records final validation | PASS |  |
 | platform roadmap records P115 complete | PASS |  |
 | README records P115 complete | PASS |  |

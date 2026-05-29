@@ -3081,6 +3081,14 @@ calls, agent dispatch, worker/tool execution, project mutation, hosted DB
 mutation, raw SQL interface, deploy, release, export, package action, network
 call, and provider spend remain blocked.
 
+P116.1 is complete. P116 now has an implementation-grade runtime execution
+readiness contract split into seven subphases, with safety gates, reuse
+requirements, checker coverage, OS status entries, and docs. P116.2 is next for
+local execution schema metadata. Runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

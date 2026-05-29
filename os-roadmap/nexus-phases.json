@@ -10949,28 +10949,184 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "label": "Runtime Execution Readiness",
-      "detail": "Planned next NEXUS OS phase after P115; implementation contract not written yet.",
+      "label": "Founder Live Execution Readiness",
+      "detail": "P116.1 runtime execution contract complete; P116.2 is next.",
       "phaseId": "P116",
       "title": "Founder Live Runtime Execution Readiness",
       "order": 152,
-      "status": "planned",
-      "summary": "Planned follow-on NEXUS OS phase for founder live runtime execution readiness. P116 is not implemented in P115.7.",
-      "nextPhase": "P116.1",
+      "status": "in_progress",
+      "summary": "P116 is in progress. P116.1 defines the runtime execution readiness contract, safety gates, subphase split, checker coverage, docs, and OS status while runtime execution remains blocked.",
+      "nextPhase": "P116.2",
       "previousPhase": "P115.7",
+      "checksRun": [
+        "npm run check:p1161-founder-live-runtime-execution-contract",
+        "npm run check:p1157-founder-live-runtime-admission-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P116.1 is contract/docs/checker/status only; it does not enable runtime execution or execution unlock.",
+        "Runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+        "P116.2 is next for local execution schema metadata."
+      ],
+      "completedAt": "2026-05-29T02:46:22.000Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Execution Contract / Policy",
+      "detail": "P116.1 runtime execution contract complete; P116.2 is next.",
+      "phaseId": "P116.1",
+      "title": "Runtime Execution Contract / Policy",
+      "order": 152.1,
+      "status": "complete",
+      "summary": "P116.1 defines the implementation-grade runtime execution readiness contract, seven-subphase split, reuse requirements, safety rules, checker coverage, docs, and OS status without enabling runtime execution.",
+      "nextPhase": "P116.2",
+      "previousPhase": "P115.7",
+      "checksRun": [
+        "npm run check:p1161-founder-live-runtime-execution-contract",
+        "npm run check:p1157-founder-live-runtime-admission-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P116.1 is contract/docs/checker/status only; it does not enable runtime execution or execution unlock.",
+        "Runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+        "P116.2 is next for local execution schema metadata."
+      ],
+      "completedAt": "2026-05-29T02:46:22.000Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Local Execution Schema Metadata",
+      "detail": "Planned Local Execution Schema Metadata for P116.",
+      "phaseId": "P116.2",
+      "title": "Local Execution Schema Metadata",
+      "order": 152.2,
+      "status": "planned",
+      "summary": "Planned Local Execution Schema Metadata for P116.",
+      "nextPhase": "P116.3",
+      "previousPhase": "P116.1",
       "checksRun": [],
       "knownLimitations": [
-        "Planned placeholder only; no P116 implementation, runtime admission, execution unlock, provider/model calls, agent dispatch, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or spend."
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Governed Local Execution CRUD Model",
+      "detail": "Planned Governed Local Execution CRUD Model for P116.",
+      "phaseId": "P116.3",
+      "title": "Governed Local Execution CRUD Model",
+      "order": 152.3,
+      "status": "planned",
+      "summary": "Planned Governed Local Execution CRUD Model for P116.",
+      "nextPhase": "P116.4",
+      "previousPhase": "P116.2",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Execution Readiness Preview / Safe Dry Run",
+      "detail": "Planned Execution Readiness Preview / Safe Dry Run for P116.",
+      "phaseId": "P116.4",
+      "title": "Execution Readiness Preview / Safe Dry Run",
+      "order": 152.4,
+      "status": "planned",
+      "summary": "Planned Execution Readiness Preview / Safe Dry Run for P116.",
+      "nextPhase": "P116.5",
+      "previousPhase": "P116.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Command Center Execution Readiness UX",
+      "detail": "Planned Command Center Execution Readiness UX for P116.",
+      "phaseId": "P116.5",
+      "title": "Command Center Execution Readiness UX",
+      "order": 152.5,
+      "status": "planned",
+      "summary": "Planned Command Center Execution Readiness UX for P116.",
+      "nextPhase": "P116.6",
+      "previousPhase": "P116.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Execution Readiness Validation / Docs",
+      "detail": "Planned Execution Readiness Validation / Docs for P116.",
+      "phaseId": "P116.6",
+      "title": "Execution Readiness Validation / Docs",
+      "order": 152.6,
+      "status": "planned",
+      "summary": "Planned Execution Readiness Validation / Docs for P116.",
+      "nextPhase": "P116.7",
+      "previousPhase": "P116.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned Final Validation for P116.",
+      "phaseId": "P116.7",
+      "title": "Final Validation",
+      "order": 152.7,
+      "status": "planned",
+      "summary": "Planned Final Validation for P116.",
+      "nextPhase": "P117",
+      "previousPhase": "P116.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
       ],
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T02:38:30.000Z",
-  "currentPhase": "P115.7",
-  "previousPhase": "P115.6",
-  "nextPhase": "P116",
+  "updatedAt": "2026-05-29T02:46:22.000Z",
+  "currentPhase": "P116.1",
+  "previousPhase": "P115.7",
+  "nextPhase": "P116.2",
   "currentPhaseStatus": "complete"
 }

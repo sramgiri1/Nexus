@@ -1,0 +1,622 @@
+{
+  "phaseId": "P116",
+  "title": "Founder Live Runtime Execution Readiness",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Move approved runtime admission readiness toward governed runtime execution readiness while keeping actual execution blocked until explicitly allowed.",
+  "currentSubphase": "P116.1",
+  "previousSubphase": "P115.7",
+  "nextSubphase": "P116.2",
+  "safetyRules": [
+    "Do not enable runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P116.1.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show raw private project IDs, runtime execution record keys, raw DB table names, raw JSON, raw logs, or raw policy dumps in primary UX.",
+    "Do not invent fake working actions or live run buttons."
+  ],
+  "reuseRequirements": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "existing dashboard tabs/cards/badges",
+    "existing route matrix",
+    "existing evidence/audit/activity helpers"
+  ],
+  "subphases": [
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "scripts/check-p1161-founder-live-runtime-execution-contract.js",
+        "scripts/check-p1157-founder-live-runtime-admission-readiness.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1161-founder-live-runtime-execution-contract-report.md",
+        "reports/p1157-founder-live-runtime-admission-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "scripts/check-p1161-founder-live-runtime-execution-contract.js",
+        "scripts/check-p1157-founder-live-runtime-admission-readiness.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1161-founder-live-runtime-execution-contract-report.md",
+        "reports/p1157-founder-live-runtime-admission-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "dataShape": "No runtime execution data shape is added. P116.1 records the implementation-grade contract for future execution-readiness work only.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, chat-page clutter, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test because no UI source changes are allowed; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add dedicated P116.1 contract checker.",
+        "Update P115.7 checker and OS phase status checker to accept P116.1/P116.2 handoff."
+      ],
+      "docsRoadmap": "P116.1 is recorded in the P116 plan, README, platform roadmap, OS status, and generated reports. P116.2 is next for local execution schema metadata.",
+      "phaseStatusUpdate": "P116 in progress; P116.1 complete; current P116.1; previous P115.7; next P116.2.",
+      "validationCommands": [
+        "npm run check:p1161-founder-live-runtime-execution-contract",
+        "npm run check:p1157-founder-live-runtime-admission-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.1 files>",
+        "git commit -m \"feat(nexus): implement p1161 runtime execution contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.1",
+      "title": "Runtime Execution Contract / Policy",
+      "status": "complete",
+      "narrowGoal": "Define P116 runtime execution readiness contract, subphase safety gates, reuse requirements, status entries, docs, and checker coverage without adding runtime execution code.",
+      "expectedBaseCommit": "6e941f94dcdd6da0e17cc81a25a9d0cb474f21c9",
+      "nextPhase": "P116.2",
+      "previousPhase": "P115.7"
+    },
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [],
+      "exactFiles": [],
+      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated checker for this subphase."
+      ],
+      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.2.",
+      "phaseStatusUpdate": "P116 in progress; P116.2 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1162-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.2 files>",
+        "git commit -m \"feat(nexus): implement p1162 runtime execution readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.2",
+      "title": "Local Execution Schema Metadata",
+      "status": "planned",
+      "narrowGoal": "Add local execution readiness schema metadata without runtime execution or hosted DB mutation.",
+      "nextPhase": "P116.3",
+      "previousPhase": "P116.1"
+    },
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [],
+      "exactFiles": [],
+      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated checker for this subphase."
+      ],
+      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.3.",
+      "phaseStatusUpdate": "P116 in progress; P116.3 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1163-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.3 files>",
+        "git commit -m \"feat(nexus): implement p1163 runtime execution readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.3",
+      "title": "Governed Local Execution CRUD Model",
+      "status": "planned",
+      "narrowGoal": "Add approval-gated local CRUD helpers for execution readiness records without admitting runtime execution.",
+      "nextPhase": "P116.4",
+      "previousPhase": "P116.2"
+    },
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [],
+      "exactFiles": [],
+      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated checker for this subphase."
+      ],
+      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.4.",
+      "phaseStatusUpdate": "P116 in progress; P116.4 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1164-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.4 files>",
+        "git commit -m \"feat(nexus): implement p1164 runtime execution readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.4",
+      "title": "Execution Readiness Preview / Safe Dry Run",
+      "status": "planned",
+      "narrowGoal": "Build a display-safe execution readiness preview while execution remains blocked.",
+      "nextPhase": "P116.5",
+      "previousPhase": "P116.3"
+    },
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [],
+      "exactFiles": [],
+      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated checker for this subphase."
+      ],
+      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.5.",
+      "phaseStatusUpdate": "P116 in progress; P116.5 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1165-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.5 files>",
+        "git commit -m \"feat(nexus): implement p1165 runtime execution readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.5",
+      "title": "Command Center Execution Readiness UX",
+      "status": "planned",
+      "narrowGoal": "Render execution readiness state in the appropriate founder-facing Command Center pages without live controls.",
+      "nextPhase": "P116.6",
+      "previousPhase": "P116.4"
+    },
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [],
+      "exactFiles": [],
+      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated checker for this subphase."
+      ],
+      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.6.",
+      "phaseStatusUpdate": "P116 in progress; P116.6 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1166-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.6 files>",
+        "git commit -m \"feat(nexus): implement p1166 runtime execution readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.6",
+      "title": "Execution Readiness Validation / Docs",
+      "status": "planned",
+      "narrowGoal": "Validate P116.1-P116.5 together and close docs/status alignment before final validation.",
+      "nextPhase": "P116.7",
+      "previousPhase": "P116.5"
+    },
+    {
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "allowedFiles": [],
+      "exactFiles": [],
+      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "playwrightTests": [
+        "No new Playwright test until UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated checker for this subphase."
+      ],
+      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.7.",
+      "phaseStatusUpdate": "P116 in progress; P116.7 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1167-founder-live-runtime-execution-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P116.7 files>",
+        "git commit -m \"feat(nexus): implement p1167 runtime execution readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "phaseId": "P116.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "narrowGoal": "Run final P116 validation and hand off to the next planned phase without enabling execution.",
+      "nextPhase": "P117",
+      "previousPhase": "P116.6"
+    }
+  ],
+  "summary": "P116 is in progress. P116.1 defines runtime execution readiness contracts and safety gates while runtime execution and execution unlock remain blocked.",
+  "knownLimitations": [
+    "Runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+    "P116.1 is contract/docs/checker/status only and does not change Command Center source, runtime behavior, DB schema, or project files.",
+    "P116.2 is next for local execution schema metadata."
+  ]
+}
