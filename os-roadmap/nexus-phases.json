@@ -12286,20 +12286,20 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1fa74560",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
-      "detail": "P122.5 scoped authority UX complete; P122.6 validation is next.",
+      "detail": "P122.6 validation/docs closure complete; P122.7 final validation is next.",
       "phaseId": "P122",
       "title": "Founder Runtime Approval Decision Application Authority Handoff",
       "order": 158,
       "status": "in_progress",
-      "summary": "P122 is in progress with contract, authority eligibility metadata, local authority intent model, safe dry-run preview, and scoped Command Center authority UX complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P122.6",
-      "previousPhase": "P122.5",
+      "summary": "P122 is in progress with contract, authority eligibility metadata, local authority intent model, safe dry-run preview, scoped Command Center authority UX, and validation/docs closure complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P122.7",
+      "previousPhase": "P122.6",
       "checksRun": [
+        "npm run check:p1226-founder-runtime-approval-decision-application-authority-handoff",
         "npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff",
-        "npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
         "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
@@ -12308,9 +12308,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P122.5 is scoped Command Center UX only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P122.6 is validation/docs closure only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T14:02:08.266Z"
+      "completedAt": "2026-05-29T14:12:06.907Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12447,23 +12447,32 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Authority Validation",
-      "detail": "Planned P122 subphase. Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "detail": "P122.6 validation/docs closure complete; P122.7 final validation is next.",
       "phaseId": "P122.6",
       "title": "Authority Handoff Validation / Docs",
       "order": 158.6,
-      "status": "planned",
-      "summary": "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "P122.6 validation/docs closure is complete. The P122 contract, plan, README, roadmap, OS status, generated reports, and P122.5 checker handoff are aligned while Command Center source/tests remain unchanged and all live authority remains blocked.",
       "nextPhase": "P122.7",
       "previousPhase": "P122.5",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1226-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P122.6 is validation/docs closure only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T14:12:06.907Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12471,42 +12480,42 @@
       "commit": "planned",
       "commandCenterVisible": false,
       "label": "Final Validation",
-      "detail": "Planned P122 subphase. Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "detail": "Planned final validation only. Live authority remains blocked until explicitly implemented by a later phase.",
       "phaseId": "P122.7",
       "title": "Final Validation",
       "order": 158.7,
       "status": "planned",
-      "summary": "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "summary": "Planned P122 final validation only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
       "nextPhase": "P123",
       "previousPhase": "P122.6",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. Approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+        "Planned final validation only. Live authority remains blocked."
       ],
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T14:02:08.266Z",
-  "currentPhase": "P122.5",
-  "previousPhase": "P122.4",
-  "nextPhase": "P122.6",
+  "updatedAt": "2026-05-29T14:12:06.907Z",
+  "currentPhase": "P122.6",
+  "previousPhase": "P122.5",
+  "nextPhase": "P122.7",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "1fa74560",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
-    "detail": "P122.5 scoped authority UX complete; P122.6 validation is next.",
+    "detail": "P122.6 validation/docs closure complete; P122.7 final validation is next.",
     "phaseId": "P122",
     "title": "Founder Runtime Approval Decision Application Authority Handoff",
     "order": 158,
     "status": "in_progress",
-    "summary": "P122 is in progress with contract, authority eligibility metadata, local authority intent model, safe dry-run preview, and scoped Command Center authority UX complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-    "nextPhase": "P122.6",
-    "previousPhase": "P122.5",
+    "summary": "P122 is in progress with contract, authority eligibility metadata, local authority intent model, safe dry-run preview, scoped Command Center authority UX, and validation/docs closure complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+    "nextPhase": "P122.7",
+    "previousPhase": "P122.6",
     "checksRun": [
+      "npm run check:p1226-founder-runtime-approval-decision-application-authority-handoff",
       "npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff",
-      "npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
       "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
@@ -12515,9 +12524,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P122.5 is scoped Command Center UX only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P122.6 is validation/docs closure only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T14:02:08.266Z"
+    "completedAt": "2026-05-29T14:12:06.907Z"
   },
   "generatedAt": "2026-05-29T14:02:08.266Z"
 }

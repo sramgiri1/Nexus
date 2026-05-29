@@ -1201,8 +1201,20 @@ The Command Center and local operator surface have:
   Build and Agent Flow now show a scoped read-only authority handoff card with
   current state, readiness rows, blockers, next action, disabled reason, owner,
   evidence/activity labels, safety rows, and cost impact. Chat with NEXUS,
-  Lite, OS Roadmap, and Live Readiness stay clean. P122.6 is next for
-  validation and docs closure. Approval decision application, approval capture,
+  Lite, OS Roadmap, and Live Readiness stay clean. P122.6 is complete for
+  validation/docs closure and P122.7 is next for final validation. Approval
+  decision application, approval capture,
+  approval persistence, approve/reject decision recording, DB/runtime writes,
+  runtime execution, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
+- P122.6 approval application authority validation/docs closure: the P122
+  contract, plan, README, roadmap, OS status, generated reports, and P122.5
+  checker handoff now agree that P122.1-P122.5 are complete, P122.6 is
+  validation/docs only, and P122.7 is next for final validation. Command Center
+  source and dashboard tests are unchanged in this subphase. Approval decision
+  application, approval capture,
   approval persistence, approve/reject decision recording, DB/runtime writes,
   runtime execution, execution unlock, provider/model call, agent dispatch,
   worker/tool execution, project mutation, hosted DB mutation, raw SQL

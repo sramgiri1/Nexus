@@ -128,8 +128,8 @@ addCheck("contract marks P122.5 complete", p1225.status === "complete" && ["plan
 addCheck("contract records expected export", p1225.expectedExports?.includes("buildFounderApprovalDecisionApplicationAuthorityBoundaryDisplayModel"));
 addCheck("P122.4 checker accepts P122.5 handoff", p1224Checker.includes("P122.5") && p1224Checker.includes("P122.6") && p1224Checker.includes("p1224HandoffAccepted"));
 addCheck("docs record P122.5", /P122\.5 Command Center Authority Handoff UX[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P122.5", /P122\.5 is complete/.test(platformRoadmap) && /P122\.6\s+is\s+next/.test(platformRoadmap));
-addCheck("README records P122.5", /P122\.5 Command Center approval application authority handoff UX/.test(readme) && /P122\.6\s+is\s+next/.test(readme));
+addCheck("platform roadmap records P122.5", /P122\.5 is complete/.test(platformRoadmap) && (/P122\.6\s+is\s+next/.test(platformRoadmap) || /P122\.6\s+is\s+complete/.test(platformRoadmap)));
+addCheck("README records P122.5", /P122\.5 Command Center approval application authority handoff UX/.test(readme) && (/P122\.6\s+is\s+next/.test(readme) || /P122\.6\s+is\s+complete/.test(readme)));
 addCheck(
   "phase status advanced",
   p1225HandoffAccepted

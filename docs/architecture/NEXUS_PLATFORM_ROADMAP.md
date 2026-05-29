@@ -3529,8 +3529,13 @@ P122.5 is complete. Business Build and Agent Flow now show a scoped read-only
 Approval Application Authority Handoff card with current state, readiness rows,
 blockers, next action, disabled reason, owner capability, evidence/activity
 labels, safety rows, and cost impact while Chat with NEXUS, Lite, OS Roadmap,
-and Live Readiness stay clean. P122.6 is next for authority handoff validation
-and docs closure. Approval decision application, approval capture, approval
+and Live Readiness stay clean.
+
+P122.6 is complete. The P122 contract, plan, README, roadmap, OS phase status,
+generated reports, and P122.5 checker handoff now agree that P122.1-P122.5 are
+complete, P122.6 is validation/docs closure only, and P122.7 is next for final
+validation. Command Center source and dashboard tests remain unchanged in this
+subphase. Approval decision application, approval capture, approval
 persistence, approve/reject decision recording, DB/runtime writes, runtime
 execution, execution unlock, provider/model calls, agent dispatch, worker/tool
 execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
