@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.5
-- Generated at: 2026-05-29T04:28:56.381Z
+- Generated at: 2026-05-29T04:30:48.461Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1c478184
+- Validation HEAD: 08542fa5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | platform roadmap records P117.5 | PASS |  |
 | README records P117.5 | PASS |  |
 | phase status advanced | PASS | P117.5/P117.4/P117.6 |
-| changed files stay in P117.5 allowed scope | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1175-founder-runtime-execution-approval-gate.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1175-founder-runtime-execution-approval-gate.js |
+| changed files stay in P117.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P117.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw approval/runtime keys and table names | PASS |  |
