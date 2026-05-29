@@ -54,6 +54,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1192 = subphaseById.get("P119.2") || {};
 const p1193 = subphaseById.get("P119.3") || {};
+const p1194 = subphaseById.get("P119.4") || {};
 const plan = readText("docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
@@ -100,7 +101,7 @@ const requiredFieldsPresent = metadata.entities.every((entity) => (
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1192-founder-runtime-approval-decision-recording-boundary"]));
 addCheck("contract marks P119.2 complete", p1192.status === "complete" && p1192.allowedFiles?.includes("shared/founderApprovalDecisionSchemaMetadata.js"));
-addCheck("P119.3 remains planned or complete", ["planned", "complete"].includes(p1193.status));
+addCheck("P119.3/P119.4 handoff remains planned or complete", ["planned", "complete"].includes(p1193.status) && ["planned", "complete"].includes(p1194.status));
 addCheck("schema metadata phase and version", FOUNDER_APPROVAL_DECISION_SCHEMA_METADATA_PHASE === "P119.2" && FOUNDER_APPROVAL_DECISION_SCHEMA_VERSION === "1.0" && metadata.phaseId === "P119.2" && metadata.schemaVersion === "1.0");
 addCheck("schema metadata is metadata-only", metadata.schemaOnly === true && metadata.commandCenterVisible === false && metadata.writePolicy?.mode === "metadata-only");
 addCheck("schema entity names are stable", entityNamesMatch && FOUNDER_APPROVAL_DECISION_ENTITY_NAMES.length === 3 && FOUNDER_APPROVAL_DECISION_SCHEMA_ENTITIES.length === 3);
@@ -165,7 +166,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates P119.2 browser-safe founder runtime approval decision recording schema metadata.",
-        "- Confirms the metadata is reusable by later P119 subphases without DB files, DB writes, approval capture, approval persistence, or approve/reject decision recording.",
+        "- Confirms the metadata is reusable by later P119.3/P119.4 handoff subphases without DB files, DB writes, approval capture, approval persistence, or approve/reject decision recording.",
         "- Does not enable runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend.",
       ].join("\n"),
     },

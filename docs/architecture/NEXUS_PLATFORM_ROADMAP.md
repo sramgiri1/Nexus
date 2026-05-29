@@ -3287,6 +3287,17 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P119.3 is complete. A pure local approval decision intent model now reuses
+P119.2 schema metadata to describe future founder decision review intent,
+current disabled state, next action, owner capability, evidence, activity, and
+cost labels without recording or persisting approve/reject decisions. P119.4 is
+next for approval decision safe dry run. Approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

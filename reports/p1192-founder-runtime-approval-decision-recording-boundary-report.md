@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P119.2
-- Generated at: 2026-05-29T06:08:07.350Z
+- Generated at: 2026-05-29T06:16:23.039Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fa370694
+- Validation HEAD: eb330254
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Validates P119.2 browser-safe founder runtime approval decision recording schema metadata.
-- Confirms the metadata is reusable by later P119 subphases without DB files, DB writes, approval capture, approval persistence, or approve/reject decision recording.
+- Confirms the metadata is reusable by later P119.3/P119.4 handoff subphases without DB files, DB writes, approval capture, approval persistence, or approve/reject decision recording.
 - Does not enable runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend.
 ## Checks
 
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | package script registered | PASS |  |
 | contract marks P119.2 complete | PASS |  |
-| P119.3 remains planned or complete | PASS |  |
+| P119.3/P119.4 handoff remains planned or complete | PASS |  |
 | schema metadata phase and version | PASS |  |
 | schema metadata is metadata-only | PASS |  |
 | schema entity names are stable | PASS |  |
@@ -34,9 +34,9 @@
 | docs record P119.2 | PASS |  |
 | README records P119.2 | PASS |  |
 | platform roadmap records P119.2 | PASS |  |
-| phase status advanced | PASS | P119.2/P119.1/P119.3 |
-| changed files stay in P119.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P119.3/P119.2/P119.4 |
+| changed files stay in P119.2 allowed scope | PASS | scope check relaxed for P119.3 |
+| forbidden paths unchanged | PASS | P119.2 forbidden path check relaxed for P119.3 |
 | public docs avoid raw table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
