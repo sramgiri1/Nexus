@@ -2959,11 +2959,22 @@ project mutation, hosted DB mutation, raw SQL interface, runtime admission,
 deploy, release, export, package action, network call, and provider spend
 remain blocked.
 
+P114.1 is complete. P114 is split into seven implementation-grade subphases for
+moving approved assignment readiness toward governed local dispatch readiness.
+P114.1 records the future local schema work, future exports, reuse
+requirements, safety rules, checker coverage, and OS status while leaving DB
+schema, runtime helpers, dashboard source, and runtime data untouched. P114.2
+is next for local dispatch schema work. Agent dispatch, provider/model calls,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
+runtime admission, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
 [`p112-founder-live-agent-work-queue-admission-contracts.json`](../../contracts/os-roadmap/p112-founder-live-agent-work-queue-admission-contracts.json).
 [`p113-founder-live-agent-work-assignment-readiness-contracts.json`](../../contracts/os-roadmap/p113-founder-live-agent-work-assignment-readiness-contracts.json).
+[`p114-founder-live-agent-dispatch-readiness-contracts.json`](../../contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json).
 
 The detailed plan lives in
 [`P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md`](P111_FOUNDER_LIVE_AGENT_WORK_ORDER_PERSISTENCE_PLAN.md).

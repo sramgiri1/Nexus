@@ -673,6 +673,15 @@ The Command Center and local operator surface have:
   mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P114.1 dispatch readiness contract: P114 is split into seven
+  implementation-grade subphases for moving assignment readiness toward
+  governed local dispatch readiness. P114.1 documents future local schema work,
+  future exports, reuse requirements, safety rules, checker coverage, and OS
+  status while leaving DB schema, runtime helpers, dashboard source, and
+  runtime data untouched. P114.2 is next for local dispatch schema work. Agent
+  dispatch, provider/model call, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

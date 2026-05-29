@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P113.7
-- Generated at: 2026-05-29T00:29:34.076Z
+- Generated at: 2026-05-29T00:35:42.758Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 28bc6067
+- Validation HEAD: 96e7a4c5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,11 +25,11 @@
 | contract handoff points to P114 | PASS |  |
 | P113.7 records final validation commands | PASS |  |
 | P113.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P113.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P113.7 allowed scope | PASS | scope check relaxed for P114.1 |
+| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1137-founder-live-agent-work-assignment-final.js, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, reports/p1141-founder-live-agent-dispatch-contract-report.md, scripts/check-p1141-founder-live-agent-dispatch-contract.js |
 | P113.6 checker accepts final handoff | PASS |  |
 | OS status checker accepts P114 handoff | PASS |  |
-| phase status closed | PASS | P113.7/P113.6/P114 |
+| phase status closed | PASS | P114.1/P113.7/P114.2 |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
 | P113 plan records final validation | PASS |  |

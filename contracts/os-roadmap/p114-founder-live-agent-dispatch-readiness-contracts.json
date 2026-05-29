@@ -1,0 +1,852 @@
+{
+  "phaseId": "P114",
+  "title": "Founder Live Agent Dispatch Readiness",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Move approved local assignment readiness records into governed local dispatch readiness records so founder-facing agent flow can show prepared dispatch lanes without dispatching agents, running workers/tools, mutating projects, calling providers, using hosted DB writes, deploying, networking, packaging, or spending.",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "96e7a4c5e720",
+  "safetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated project sources/tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P114.1 is contract-only and must not modify db/**, live-ready/**, dashboard/src/**, dashboard/tests/**, local-state/runtime/**, or runtime data.",
+    "Later P114 subphases may only add governed local SQLite CRUD for allowlisted NEXUS OS dispatch readiness records where explicitly scoped.",
+    "Do not enable hosted DB mutation, raw SQL, provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, runtime admission, execution unlock, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "db/sqliteRuntime.js",
+    "db/sqliteCrudRepository.js",
+    "live-ready/founderLiveAgentWorkAssignmentReadiness.js",
+    "live-ready/founderLiveAgentWorkQueueAdmission.js",
+    "live-ready/founderLiveAgentWorkOrderPersistence.js",
+    "existing Command Center route matrix, tabs, cards, badges, evidence, audit, and activity helpers"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P114.1",
+      "title": "Dispatch Readiness Contract / Policy / Schema Plan",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define the governed local dispatch readiness contract for approved founder agent assignment candidates without changing DB schema, runtime models, Command Center source, or runtime data.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "96e7a4c5e720",
+      "allowedFiles": [
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1141-founder-live-agent-dispatch-contract.js",
+        "scripts/check-p1137-founder-live-agent-work-assignment-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1137-founder-live-agent-work-assignment-final-report.md",
+        "reports/p1141-founder-live-agent-dispatch-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "scripts/check-p1141-founder-live-agent-dispatch-contract.js",
+        "scripts/check-p1137-founder-live-agent-work-assignment-final.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1137-founder-live-agent-work-assignment-final-report.md",
+        "reports/p1141-founder-live-agent-dispatch-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "package script check:p1141-founder-live-agent-dispatch-contract"
+      ],
+      "dataShape": "Contract-only. Documents future dispatch item/event/evidence records with display-safe fields for currentState, nextAction, blockers, disabledReason, ownerCapability, sourceAssignmentCandidate, dispatchLane, evidenceRefs, auditRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add check:p1141-founder-live-agent-dispatch-contract.",
+        "Update check:os-phase-status to accept P114.1-P114.7 and P115.",
+        "Update P113.7 checker to accept P114.1/P114.2 handoff."
+      ],
+      "docsRoadmap": "Add the P114 plan, README and platform roadmap entry, OS status entries, and generated reports for P114.1.",
+      "phaseStatusUpdate": "P114 in progress; P114.1 complete; current P114.1; previous P113.7; next P114.2.",
+      "validationCommands": [
+        "npm run check:p1141-founder-live-agent-dispatch-contract",
+        "npm run check:p1137-founder-live-agent-work-assignment-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.1 files>",
+        "git commit -m \"feat(nexus): implement p1141 dispatch readiness contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "futureSchemas": [
+        "founder_agent_dispatch_readiness_items",
+        "founder_agent_dispatch_readiness_events",
+        "founder_agent_dispatch_readiness_evidence_refs"
+      ],
+      "futureExports": [
+        "P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PHASE",
+        "P114_AGENT_DISPATCH_DB_ENTITIES",
+        "buildFounderLiveAgentDispatchReadinessContract",
+        "validateFounderLiveAgentDispatchReadinessContract",
+        "buildSafeAgentDispatchDbRecord",
+        "executeApprovedAgentDispatchReadinessDbCrudRequest",
+        "buildAgentDispatchReadinessViewModel"
+      ]
+    },
+    {
+      "phaseId": "P114.2",
+      "title": "Agent Dispatch SQLite Schema",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add local SQLite schema metadata and isolated validation for dispatch readiness items, dispatch events, and dispatch evidence references without runtime dispatch.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1141-founder-live-agent-dispatch-contract.js",
+        "reports/p1141-founder-live-agent-dispatch-contract-report.md",
+        "scripts/check-p1142-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1142-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1141-founder-live-agent-dispatch-contract.js",
+        "reports/p1141-founder-live-agent-dispatch-contract-report.md",
+        "scripts/check-p1142-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1142-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P114.2 checker."
+      ],
+      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.2.",
+      "phaseStatusUpdate": "P114 in progress; P114.2 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1142-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.2 files>",
+        "git commit -m \"feat(nexus): implement p1142 dispatch readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P114.3",
+      "previousPhase": "P114.1"
+    },
+    {
+      "phaseId": "P114.3",
+      "title": "Governed Local Dispatch CRUD Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Add approval-gated local SQLite CRUD helpers for allowlisted dispatch readiness records without delete, dispatch, project mutation, hosted DB mutation, or execution.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentDispatchReadiness.js",
+        "scripts/check-p1142-founder-live-agent-dispatch-schema.js",
+        "reports/p1142-founder-live-agent-dispatch-schema-report.md",
+        "scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentDispatchReadiness.js",
+        "scripts/check-p1142-founder-live-agent-dispatch-schema.js",
+        "reports/p1142-founder-live-agent-dispatch-schema-report.md",
+        "scripts/check-p1143-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1143-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P114.3 checker."
+      ],
+      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.3.",
+      "phaseStatusUpdate": "P114 in progress; P114.3 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1143-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.3 files>",
+        "git commit -m \"feat(nexus): implement p1143 dispatch readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P114.4",
+      "previousPhase": "P114.2"
+    },
+    {
+      "phaseId": "P114.4",
+      "title": "Dispatch Readiness Preview / Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build a display-safe local dry-run view model for dispatch readiness candidates without writing dispatch records or dispatching agents.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "live-ready/founderLiveAgentDispatchReadiness.js",
+        "scripts/check-p1143-founder-live-agent-dispatch-crud-model.js",
+        "reports/p1143-founder-live-agent-dispatch-crud-model-report.md",
+        "scripts/check-p1144-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveAgentDispatchReadiness.js",
+        "scripts/check-p1143-founder-live-agent-dispatch-crud-model.js",
+        "reports/p1143-founder-live-agent-dispatch-crud-model-report.md",
+        "scripts/check-p1144-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1144-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P114.4 checker."
+      ],
+      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.4.",
+      "phaseStatusUpdate": "P114 in progress; P114.4 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1144-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.4 files>",
+        "git commit -m \"feat(nexus): implement p1144 dispatch readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P114.5",
+      "previousPhase": "P114.3"
+    },
+    {
+      "phaseId": "P114.5",
+      "title": "Command Center Agent Dispatch UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Render display-safe dispatch readiness on relevant Command Center pages without exposing dispatch controls or fake runnable actions.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1144-founder-live-agent-dispatch-preview.js",
+        "reports/p1144-founder-live-agent-dispatch-preview-report.md",
+        "scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1145-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1144-founder-live-agent-dispatch-preview.js",
+        "reports/p1144-founder-live-agent-dispatch-preview-report.md",
+        "scripts/check-p1145-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1145-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P114.5 checker."
+      ],
+      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.5.",
+      "phaseStatusUpdate": "P114 in progress; P114.5 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1145-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.5 files>",
+        "git commit -m \"feat(nexus): implement p1145 dispatch readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P114.6",
+      "previousPhase": "P114.4"
+    },
+    {
+      "phaseId": "P114.6",
+      "title": "Dispatch Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Validate P114.1-P114.5 together and close docs, README, roadmap, and status alignment before final validation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1145-command-center-agent-dispatch-ux.js",
+        "reports/p1145-command-center-agent-dispatch-ux-report.md",
+        "scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1146-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1145-command-center-agent-dispatch-ux.js",
+        "reports/p1145-command-center-agent-dispatch-ux-report.md",
+        "scripts/check-p1146-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1146-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P114.6 checker."
+      ],
+      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.6.",
+      "phaseStatusUpdate": "P114 in progress; P114.6 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1146-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.6 files>",
+        "git commit -m \"feat(nexus): implement p1146 dispatch readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P114.7",
+      "previousPhase": "P114.5"
+    },
+    {
+      "phaseId": "P114.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P114 validation and hand off to the next planned phase without enabling non-scoped unsafe authority.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "planned-after-previous-subphase",
+      "allowedFiles": [
+        "scripts/check-p1146-founder-live-agent-dispatch-validation.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1146-founder-live-agent-dispatch-validation-report.md",
+        "scripts/check-p1147-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1147-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "live-ready/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "local-state/runtime/**"
+      ],
+      "exactFiles": [
+        "scripts/check-p1146-founder-live-agent-dispatch-validation.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1146-founder-live-agent-dispatch-validation-report.md",
+        "scripts/check-p1147-founder-live-agent-dispatch-readiness.js",
+        "contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json",
+        "docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1147-founder-live-agent-dispatch-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime data shape is implemented in this planned subphase until explicitly scoped.",
+      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add or update the dedicated P114.7 checker."
+      ],
+      "docsRoadmap": "Update P114 plan, README, platform roadmap, OS status, and generated reports for P114.7.",
+      "phaseStatusUpdate": "P114 in progress; P114.7 complete when implemented.",
+      "validationCommands": [
+        "npm run check:p1147-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, or fake runnable actions are introduced."
+      ],
+      "gitCommands": [
+        "git add <allowed P114.7 files>",
+        "git commit -m \"feat(nexus): implement p1147 dispatch readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P115",
+      "previousPhase": "P114.6"
+    }
+  ],
+  "futureSchemas": [
+    "founder_agent_dispatch_readiness_items",
+    "founder_agent_dispatch_readiness_events",
+    "founder_agent_dispatch_readiness_evidence_refs"
+  ],
+  "futureExports": [
+    "P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PHASE",
+    "P114_AGENT_DISPATCH_DB_ENTITIES",
+    "buildFounderLiveAgentDispatchReadinessContract",
+    "validateFounderLiveAgentDispatchReadinessContract",
+    "buildSafeAgentDispatchDbRecord",
+    "executeApprovedAgentDispatchReadinessDbCrudRequest",
+    "buildAgentDispatchReadinessViewModel"
+  ],
+  "knownLimitations": [
+    "P114.1 is contract-only and does not add runtime or UI behavior.",
+    "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+    "P114.2 is next for local dispatch schema work."
+  ],
+  "currentSubphase": "P114.1",
+  "previousSubphase": "P113.7",
+  "nextSubphase": "P114.2",
+  "summary": "P114 is in progress. P114.1 defines dispatch readiness contracts, future schema, future exports, reuse requirements, safety rules, validation, docs, and OS status while unsafe authority remains blocked."
+}

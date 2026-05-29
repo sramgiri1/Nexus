@@ -15294,12 +15294,188 @@
       ],
       "nextPhase": "P85.4",
       "commandCenterVisible": true
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Founder Live Agent Dispatch Readiness",
+      "detail": "P114.1 dispatch readiness contract complete; P114.2 local dispatch schema is next.",
+      "phaseId": "P114",
+      "title": "Founder Live Agent Dispatch Readiness",
+      "order": 150,
+      "status": "in_progress",
+      "summary": "P114 is in progress. P114.1 defines dispatch readiness contracts, future schema, future exports, reuse requirements, safety rules, validation, docs, and OS status while unsafe authority remains blocked.",
+      "nextPhase": "P114.2",
+      "previousPhase": "P113.7",
+      "checksRun": [
+        "npm run check:p1141-founder-live-agent-dispatch-contract",
+        "npm run check:p1137-founder-live-agent-work-assignment-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P114.1 is contract-only and does not add runtime or UI behavior.",
+        "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P114.2 is next for local dispatch schema work."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Dispatch Contract",
+      "detail": "P114.1 contract complete; P114.2 local dispatch schema is next.",
+      "phaseId": "P114.1",
+      "title": "Dispatch Readiness Contract / Policy / Schema Plan",
+      "order": 150.1,
+      "status": "complete",
+      "summary": "P114.1 defines the governed local dispatch readiness boundary, future schemas, future exports, reuse rules, safety rules, validation, docs, and OS status without changing runtime or DB source.",
+      "nextPhase": "P114.2",
+      "previousPhase": "P113.7",
+      "checksRun": [
+        "npm run check:p1141-founder-live-agent-dispatch-contract",
+        "npm run check:p1137-founder-live-agent-work-assignment-final",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P114.1 is contract-only and does not change DB schema, runtime helpers, dashboard source, or runtime data.",
+        "Agent dispatch, provider/model calls, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P114.2 is next for local dispatch schema work."
+      ],
+      "completedAt": "2026-05-29T00:35:14.704Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Agent Dispatch SQLite Schema",
+      "detail": "Planned agent dispatch sqlite schema for P114.",
+      "phaseId": "P114.2",
+      "title": "Agent Dispatch SQLite Schema",
+      "order": 150.2,
+      "status": "planned",
+      "summary": "Planned agent dispatch sqlite schema for P114.",
+      "nextPhase": "P114.3",
+      "previousPhase": "P114.1",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Governed Local Dispatch CRUD Model",
+      "detail": "Planned governed local dispatch crud model for P114.",
+      "phaseId": "P114.3",
+      "title": "Governed Local Dispatch CRUD Model",
+      "order": 150.29999999999998,
+      "status": "planned",
+      "summary": "Planned governed local dispatch crud model for P114.",
+      "nextPhase": "P114.4",
+      "previousPhase": "P114.2",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Dispatch Readiness Preview",
+      "detail": "Planned dispatch readiness preview / safe dry run for P114.",
+      "phaseId": "P114.4",
+      "title": "Dispatch Readiness Preview / Safe Dry Run",
+      "order": 150.39999999999998,
+      "status": "planned",
+      "summary": "Planned dispatch readiness preview / safe dry run for P114.",
+      "nextPhase": "P114.5",
+      "previousPhase": "P114.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Command Center Agent Dispatch UX",
+      "detail": "Planned command center agent dispatch ux for P114.",
+      "phaseId": "P114.5",
+      "title": "Command Center Agent Dispatch UX",
+      "order": 150.5,
+      "status": "planned",
+      "summary": "Planned command center agent dispatch ux for P114.",
+      "nextPhase": "P114.6",
+      "previousPhase": "P114.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Dispatch Validation",
+      "detail": "Planned dispatch validation / docs for P114.",
+      "phaseId": "P114.6",
+      "title": "Dispatch Validation / Docs",
+      "order": 150.6,
+      "status": "planned",
+      "summary": "Planned dispatch validation / docs for P114.",
+      "nextPhase": "P114.7",
+      "previousPhase": "P114.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation for P114.",
+      "phaseId": "P114.7",
+      "title": "Final Validation",
+      "order": 150.7,
+      "status": "planned",
+      "summary": "Planned final validation for P114.",
+      "nextPhase": "P115",
+      "previousPhase": "P114.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-28T23:32:51.847Z",
-  "currentPhase": "P113.7",
-  "previousPhase": "P113.6",
-  "nextPhase": "P114",
+  "currentPhase": "P114.1",
+  "previousPhase": "P113.7",
+  "nextPhase": "P114.2",
   "currentPhaseStatus": "complete"
 }
