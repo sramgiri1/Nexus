@@ -590,7 +590,7 @@
       "order": 167.6,
       "completedAt": "2026-05-29T23:38:34.445Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8ec3b68f",
       "summary": "Aggregated P131.1-P131.5 evidence, docs, checker handoffs, scoped UX preservation, OS status, and generated reports while all live store actions remain blocked.",
       "knownLimitations": [
         "P131.6 is validation/docs closure only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."

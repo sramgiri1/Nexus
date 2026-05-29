@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P131.6
-- Generated at: 2026-05-29T23:42:43.715Z
+- Generated at: 2026-05-29T23:43:29.240Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 555153df
+- Validation HEAD: 8ec3b68f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | phase status advanced | PASS | P131.6/P131.5/P131.7 |
 | phase status summary objects advanced | PASS |  |
 | completed P131.6 entries have required fields | PASS |  |
-| changed files stay in P131.6 allowed scope | PASS | README.md, contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1314-founder-runtime-store-live-admission-scope-report.md, reports/p1315-founder-runtime-store-live-admission-scope-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1314-founder-runtime-store-live-admission-scope.js, scripts/check-p1315-founder-runtime-store-live-admission-scope.js, reports/p1316-founder-runtime-store-live-admission-scope-report.md, scripts/check-p1316-founder-runtime-store-live-admission-scope.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1314-founder-runtime-store-live-admission-scope-report.md, reports/p1315-founder-runtime-store-live-admission-scope-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1314-founder-runtime-store-live-admission-scope.js, scripts/check-p1315-founder-runtime-store-live-admission-scope.js, reports/p1316-founder-runtime-store-live-admission-scope-report.md, scripts/check-p1316-founder-runtime-store-live-admission-scope.js |
+| changed files stay in P131.6 allowed scope | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P131.6 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | primary UX avoids DemoApp leakage | PASS |  |
