@@ -1601,6 +1601,17 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P128.1 capture persistence boundary contract/policy: P128 is now in
+  progress with an implementation-grade persistence boundary contract,
+  seven-subphase split, checker, docs, and OS phase handoff. P128.2 is next for
+  capture persistence schema metadata. Acceptance capture persistence, DB
+  schemas, migrations, DB/runtime writes, live acceptance capture, handoff
+  acceptance, authority handoff, authority grant, activation, approval
+  application, approval capture, approval persistence, approve/reject decision
+  recording, runtime execution, execution unlock, provider/model calls, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

@@ -18489,45 +18489,81 @@
       "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
       "label": "Capture Persistence",
       "order": 164,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P128 is planned next after P127 final validation. No P128 implementation exists until its implementation-grade contract is written.",
-      "summary": "Planned next NEXUS OS phase for the approval application authority grant handoff acceptance capture persistence boundary. P128 is planned-only and does not enable acceptance capture persistence, DB/runtime writes, execution, providers, dispatch, mutation, network, or spend.",
+      "detail": "P128 is in progress; P128.1 capture persistence boundary contract/policy is complete and P128.2 persistence schema metadata is next.",
+      "summary": "P128 acceptance capture persistence boundary work has started with contract, seven-subphase split, safety rules, checker, docs, and OS phase handoff. Persistence, DB/runtime writes, live capture, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P127.7",
-      "nextPhase": "P128.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "P128 is planned-only. No P128 contract, subphase implementation, persistence path, DB/runtime write, provider/model call, dispatch, project mutation, deploy, release, export, package, network call, or spend is enabled."
+      "nextPhase": "P128.2",
+      "checksRun": [
+        "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P128 is in progress. P128.1 is contract/policy only. P128 does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T19:42:12.725Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P128.1",
+      "title": "Capture Persistence Boundary Contract / Policy",
+      "label": "Capture Persistence Policy",
+      "order": 164.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P128.1 capture persistence boundary contract/policy complete; P128.2 persistence schema metadata is next.",
+      "summary": "Created the P128 acceptance capture persistence boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping persistence, DB/runtime writes, and live capture blocked.",
+      "previousPhase": "P127.7",
+      "nextPhase": "P128.2",
+      "checksRun": [
+        "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T19:42:12.725Z"
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T19:23:58.575Z",
-  "currentPhase": "P127.7",
-  "previousPhase": "P127.6",
-  "nextPhase": "P128",
+  "updatedAt": "2026-05-29T19:42:12.725Z",
+  "currentPhase": "P128.1",
+  "previousPhase": "P127.7",
+  "nextPhase": "P128.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P127.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 163.7,
+    "phaseId": "P128.1",
+    "title": "Capture Persistence Boundary Contract / Policy",
+    "label": "Capture Persistence Policy",
+    "order": 164.1,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "a09444ef",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P127.7 final validation is complete; P128 is planned next.",
-    "summary": "Closed P127 with final validation across P127.1-P127.7 evidence, docs, reports, status, package scripts, scoped Command Center UX preservation, and P128 planned handoff.",
-    "previousPhase": "P127.6",
-    "nextPhase": "P128",
+    "detail": "P128.1 capture persistence boundary contract/policy complete; P128.2 persistence schema metadata is next.",
+    "summary": "Created the P128 acceptance capture persistence boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping persistence, DB/runtime writes, and live capture blocked.",
+    "previousPhase": "P127.7",
+    "nextPhase": "P128.2",
     "checksRun": [
+      "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
-      "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
-      "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
-      "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -18536,29 +18572,27 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
+      "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T19:23:58.575Z"
+    "completedAt": "2026-05-29T19:42:12.725Z"
   },
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P127.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 163.7,
+    "phaseId": "P128.1",
+    "title": "Capture Persistence Boundary Contract / Policy",
+    "label": "Capture Persistence Policy",
+    "order": 164.1,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "a09444ef",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P127.7 final validation is complete; P128 is planned next.",
-    "summary": "Closed P127 with final validation across P127.1-P127.7 evidence, docs, reports, status, package scripts, scoped Command Center UX preservation, and P128 planned handoff.",
-    "previousPhase": "P127.6",
-    "nextPhase": "P128",
+    "detail": "P128.1 capture persistence boundary contract/policy complete; P128.2 persistence schema metadata is next.",
+    "summary": "Created the P128 acceptance capture persistence boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping persistence, DB/runtime writes, and live capture blocked.",
+    "previousPhase": "P127.7",
+    "nextPhase": "P128.2",
     "checksRun": [
+      "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
-      "npm run check:p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
-      "npm run check:p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
-      "npm run check:p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -18567,8 +18601,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P127.7 is final validation only. It does not capture acceptance, record acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, persist decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P128 is planned-only until its own implementation-grade contract is written."
+      "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T19:23:58.575Z"
+    "completedAt": "2026-05-29T19:42:12.725Z"
   }
 }

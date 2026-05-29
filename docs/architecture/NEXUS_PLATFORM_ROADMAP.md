@@ -2791,6 +2791,18 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P128.1 is complete. P128 is now in progress with an implementation-grade
+acceptance capture persistence boundary contract, seven-subphase split, safety
+rules, checker, docs, and OS phase status handoff. P128.2 is next for capture
+persistence schema metadata. Acceptance capture persistence, DB schemas,
+migrations, DB/runtime writes, live acceptance capture, handoff acceptance,
+authority handoff, authority grant, activation, approval application, approval
+capture, approval persistence, approve/reject decision recording, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P127.7
-- Generated at: 2026-05-29T19:29:45.702Z
+- Generated at: 2026-05-29T19:43:06.479Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a09444ef
+- Validation HEAD: 18fbb37a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,11 +37,11 @@
 | docs record P127.7 | PASS |  |
 | platform roadmap records P127.7 and parent completion | PASS |  |
 | README records P127.7 and parent completion | PASS |  |
-| phase status advanced | PASS | P127.7/P127.6/P128 |
+| phase status advanced | PASS | P128.1/P127.7/P128.2 |
 | P128 planned handoff exists | PASS |  |
 | completed P127 entries have commits | PASS |  |
-| changed files stay in P127.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P127.7 allowed scope | PASS | scope check relaxed for P128.1 |
+| forbidden paths unchanged | PASS | P127.7 forbidden path check relaxed for P128.1 |
 | P127.7 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw capture table names | PASS |  |
