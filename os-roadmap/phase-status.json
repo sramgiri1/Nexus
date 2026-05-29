@@ -18727,7 +18727,7 @@
       "order": 165,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "23850bab",
       "commandCenterVisible": true,
       "detail": "P129 is in progress; P129.3 store repository intent model is complete and P129.4 store migration preview is next.",
       "summary": "P129 capture persistence store work now includes contract/policy, browser-safe store schema metadata, and blocked local repository intent rows while DB/runtime writes and live CRUD remain blocked.",
@@ -18746,7 +18746,7 @@
       "knownLimitations": [
         "P129.3 is repository intent modeling only. It does not create DB schemas, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:03:39.823Z"
+      "completedAt": "2026-05-29T21:04:56.865Z"
     },
     {
       "track": "NEXUS_OS",
@@ -18814,7 +18814,7 @@
       "order": 165.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "23850bab",
       "commandCenterVisible": true,
       "detail": "P129.3 store repository intent model complete; P129.4 store migration preview is next.",
       "summary": "Added browser-safe local repository intent rows for future acceptance capture persistence store operations while keeping all CRUD, DB/runtime, execution, provider, dispatch, mutation, network, and spend actions blocked.",
@@ -18833,7 +18833,7 @@
       "knownLimitations": [
         "P129.3 is repository intent modeling only. It does not create DB schemas, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:03:39.823Z"
+      "completedAt": "2026-05-29T21:04:56.865Z"
     },
     {
       "track": "NEXUS_OS",
@@ -18856,7 +18856,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T21:03:39.823Z",
+  "updatedAt": "2026-05-29T21:04:56.865Z",
   "currentPhase": "P129.3",
   "previousPhase": "P129.2",
   "nextPhase": "P129.4",
@@ -18868,7 +18868,7 @@
     "order": 165.3,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "23850bab",
     "commandCenterVisible": true,
     "detail": "P129.3 store repository intent model complete; P129.4 store migration preview is next.",
     "summary": "Added browser-safe local repository intent rows for future acceptance capture persistence store operations while keeping all CRUD, DB/runtime, execution, provider, dispatch, mutation, network, and spend actions blocked.",
@@ -18887,7 +18887,7 @@
     "knownLimitations": [
       "P129.3 is repository intent modeling only. It does not create DB schemas, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:03:39.823Z"
+    "completedAt": "2026-05-29T21:04:56.865Z"
   },
   "current": {
     "track": "NEXUS_OS",
@@ -18897,7 +18897,7 @@
     "order": 165.3,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "23850bab",
     "commandCenterVisible": true,
     "detail": "P129.3 store repository intent model complete; P129.4 store migration preview is next.",
     "summary": "Added browser-safe local repository intent rows for future acceptance capture persistence store operations while keeping all CRUD, DB/runtime, execution, provider, dispatch, mutation, network, and spend actions blocked.",
@@ -18916,6 +18916,6 @@
     "knownLimitations": [
       "P129.3 is repository intent modeling only. It does not create DB schemas, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:03:39.823Z"
+    "completedAt": "2026-05-29T21:04:56.865Z"
   }
 }

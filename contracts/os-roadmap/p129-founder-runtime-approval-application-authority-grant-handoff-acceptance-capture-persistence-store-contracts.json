@@ -359,7 +359,9 @@
       "summary": "Added a browser-safe local repository intent model for future acceptance capture persistence store operations while keeping all CRUD, DB/runtime, execution, provider, dispatch, mutation, network, and spend actions blocked.",
       "knownLimitations": [
         "P129.3 is repository intent modeling only. It does not create DB schemas, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-      ]
+      ],
+      "commit": "23850bab",
+      "completedAt": "2026-05-29T21:04:56.865Z"
     },
     {
       "phaseId": "P129.4",
@@ -707,8 +709,8 @@
     "title": "Store Repository Intent Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
-    "completedAt": "2026-05-29T21:02:13.374Z",
+    "commit": "23850bab",
+    "completedAt": "2026-05-29T21:04:56.865Z",
     "summary": "Added a browser-safe local repository intent model for future acceptance capture persistence store operations, with every CRUD, DB, runtime, execution, provider, dispatch, mutation, network, and spend action blocked.",
     "checksRun": [
       "npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
