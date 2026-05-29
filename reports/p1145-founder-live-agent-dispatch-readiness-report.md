@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.5
-- Generated at: 2026-05-29T01:08:00.185Z
+- Generated at: 2026-05-29T01:10:44.365Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 4b1f41cb
+- Validation HEAD: 8baf3179
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,8 +32,8 @@
 | platform roadmap records P114.5 | PASS |  |
 | README records P114.5 | PASS |  |
 | phase status advanced | PASS | P114.5/P114.4/P114.6 |
-| changed files stay in P114.5 allowed scope | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1145-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1145-founder-live-agent-dispatch-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1145-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1145-founder-live-agent-dispatch-readiness.js |
+| changed files stay in P114.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P114.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw dispatch keys and table names | PASS |  |

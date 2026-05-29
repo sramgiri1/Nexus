@@ -10491,7 +10491,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8baf31793c47c07cfc9b6fd0e636e66160af2350",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
       "detail": "P114.5 Command Center dispatch UX complete; P114.6 validation and docs are next.",
@@ -10632,7 +10632,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8baf31793c47c07cfc9b6fd0e636e66160af2350",
       "commandCenterVisible": true,
       "label": "Command Center Agent Dispatch UX",
       "detail": "P114.5 Command Center dispatch UX complete; P114.6 validation and docs are next.",
