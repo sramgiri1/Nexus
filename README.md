@@ -1378,6 +1378,18 @@ The Command Center and local operator surface have:
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   raw SQL interface, deploy, release, export, package, network call, and
   provider spend remain unavailable.
+- P125.3 governed approval application authority grant handoff intent model:
+  the local model now reuses P125.2 handoff metadata and exposes blocked
+  readiness rows, blockers, disabled reason, owner capability,
+  evidence/activity labels, zero unsafe candidate counts, and no-spend posture
+  while rejecting handed-off, granted, write, execution, provider, dispatch,
+  mutation, network, and spend states. P125.4 is next for the safe handoff
+  dry-run. Grant handoff, authority grant, activation, approval application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

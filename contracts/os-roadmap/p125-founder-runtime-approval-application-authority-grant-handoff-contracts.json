@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant handoff contract before any live authority handoff can be considered, while keeping grant handoff, grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P125.2",
-  "previousSubphase": "P125.1",
-  "nextSubphase": "P125.3",
+  "currentSubphase": "P125.3",
+  "previousSubphase": "P125.2",
+  "nextSubphase": "P125.4",
   "safetyRules": [
     "Do not enable approval application authority grant handoff in P125.1.",
     "Do not enable live authority grant, activation, approval application, approval capture, approval persistence, or approve/reject decision recording in P125.1.",
@@ -40,9 +40,9 @@
     "Approval application authority grant handoff, authority grant, activation, approval application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "completedAt": "",
-  "summary": "P125.2 adds browser-safe approval application authority grant handoff eligibility metadata while keeping live handoff and all writes/execution/spend blocked.",
+  "summary": "P125.3 adds a governed local approval application authority grant handoff intent model while keeping live handoff and all writes/execution/spend blocked.",
   "previousPhase": "P124.7",
-  "nextPhase": "P125.3",
+  "nextPhase": "P125.4",
   "subphases": [
     {
       "phaseId": "P125.1",
@@ -309,40 +309,36 @@
     {
       "phaseId": "P125.3",
       "title": "Governed Handoff Intent Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "b82a9181",
-      "narrowGoal": "Governed Handoff Intent Model for P125 without enabling live authority grant handoff.",
+      "expectedBaseCommit": "1b36d6c8",
+      "narrowGoal": "Add a governed local approval application authority grant handoff intent model that reuses P125.2 metadata without enabling live handoff.",
       "allowedFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffIntentModel.js",
+        "scripts/check-p1253-founder-runtime-approval-application-authority-grant-handoff.js",
         "contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json",
         "docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md",
-        "scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js",
-        "scripts/check-p1251-founder-runtime-approval-application-authority-grant-handoff.js",
-        "scripts/check-os-phase-status.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md",
-        "reports/p1251-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1253-founder-runtime-approval-application-authority-grant-handoff-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
       "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffIntentModel.js",
+        "scripts/check-p1253-founder-runtime-approval-application-authority-grant-handoff.js",
         "contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json",
         "docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md",
-        "scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js",
-        "scripts/check-p1251-founder-runtime-approval-application-authority-grant-handoff.js",
-        "scripts/check-os-phase-status.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md",
-        "reports/p1251-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1253-founder-runtime-approval-application-authority-grant-handoff-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -364,9 +360,15 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Local governed handoff intent model only. No execution, dispatch, DB writes, or live handoff.",
-      "commandCenterUx": "No Command Center source changes. Preserve existing scoped P124 grant UX and route-wide safety.",
+      "expectedExports": [
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_INTENT_MODEL_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_INTENT_MODEL_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_INTENT_STATES",
+        "buildFounderApprovalApplicationAuthorityGrantHandoffIntentModel",
+        "validateFounderApprovalApplicationAuthorityGrantHandoffIntentModel"
+      ],
+      "dataShape": "Local model object with schemaVersion, phaseId, sourceMetadataPhase, sourceMetadataVersion, modelOnly, localOnly, commandCenterVisible, intentState, currentState, zero candidate counts, readinessRows, blockers, nextAction, disabledReason, ownerCapability, evidenceLabels, activityLabels, costImpactLabel, all-false action booleans, authorityFlags, and metadataSectionLabels.",
+      "commandCenterUx": "No Command Center source/test changes. Model remains hidden from primary UX until a later scoped UX subphase.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -385,8 +387,8 @@
       "docsRoadmap": "Update P125 plan, README, platform roadmap, P125 contract, OS roadmap/status, and generated reports.",
       "phaseStatusUpdate": "P125 in progress; P125.3 complete; current phase P125.3; previous P125.2; next P125.4.",
       "validationCommands": [
-        "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
-        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1253-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:p1252-founder-runtime-approval-application-authority-grant-handoff",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -427,11 +429,12 @@
       "previousPhase": "P125.2",
       "nextPhase": "P125.4",
       "order": 161.3,
-      "detail": "P125.3 is planned.",
-      "summary": "P125.3 planned.",
+      "detail": "P125.3 governed handoff intent model complete; P125.4 handoff safe dry-run is next.",
+      "summary": "Added a governed local handoff intent model reusing P125.2 metadata, with zero unsafe candidate counts and all handoff, grant, write, execution, provider, dispatch, mutation, network, and spend flags blocked.",
       "knownLimitations": [
-        "Planned only. This subphase is not implemented in P125.1."
-      ]
+        "P125.3 is a pure local model only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T16:47:51.312Z"
     },
     {
       "phaseId": "P125.4",
