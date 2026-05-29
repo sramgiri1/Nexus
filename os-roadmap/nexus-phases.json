@@ -11633,7 +11633,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9b15dc5f",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
       "detail": "P119.4 approval decision safe dry run complete; P119.5 scoped UX is next.",
@@ -11744,7 +11744,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9b15dc5f",
       "commandCenterVisible": true,
       "label": "Approval Decision Dry Run",
       "detail": "Approval decision safe dry-run preview complete without decisions or writes.",

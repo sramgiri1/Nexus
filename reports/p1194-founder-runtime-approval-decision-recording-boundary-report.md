@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P119.4
-- Generated at: 2026-05-29T06:22:18.491Z
+- Generated at: 2026-05-29T06:22:48.015Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 4885f32d
+- Validation HEAD: 9b15dc5f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | README records P119.4 | PASS |  |
 | platform roadmap records P119.4 | PASS |  |
 | phase status advanced | PASS | P119.4/P119.3/P119.5 |
-| changed files stay in P119.4 allowed scope | PASS | README.md, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1193-founder-runtime-approval-decision-recording-boundary.js, scripts/check-p1194-founder-runtime-approval-decision-recording-boundary.js, shared/founderApprovalDecisionPreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1193-founder-runtime-approval-decision-recording-boundary.js, scripts/check-p1194-founder-runtime-approval-decision-recording-boundary.js, shared/founderApprovalDecisionPreview.js |
+| changed files stay in P119.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |
