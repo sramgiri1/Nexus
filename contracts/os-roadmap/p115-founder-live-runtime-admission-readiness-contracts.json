@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move approved dispatch readiness toward governed runtime admission readiness while keeping actual runtime admission and execution blocked until explicitly allowed.",
-  "currentSubphase": "P115.1",
-  "previousSubphase": "P114.7",
-  "nextSubphase": "P115.2",
+  "currentSubphase": "P115.2",
+  "previousSubphase": "P115.1",
+  "nextSubphase": "P115.3",
   "safetyRules": [
     "Do not enable runtime admission, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P115.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -141,12 +141,28 @@
     {
       "phaseId": "P115.2",
       "title": "Local Admission Schema Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add local schema metadata and isolated validation for runtime admission readiness records without persistent runtime data writes or hosted DB mutation.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
-      "allowedFiles": [],
+      "expectedBaseCommit": "13036839",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1151-founder-live-runtime-admission-contract.js",
+        "reports/p1151-founder-live-runtime-admission-contract-report.md",
+        "scripts/check-p1152-founder-live-runtime-admission-readiness.js",
+        "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+        "docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1152-founder-live-runtime-admission-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -160,16 +176,31 @@
         "exports/**",
         "packages/**",
         ".env*",
-        "db/**",
         "live-ready/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "local-state/runtime/**"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1151-founder-live-runtime-admission-contract.js",
+        "reports/p1151-founder-live-runtime-admission-contract-report.md",
+        "scripts/check-p1152-founder-live-runtime-admission-readiness.js",
+        "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+        "docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1152-founder-live-runtime-admission-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime admission controls, chat-page clutter, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "dataShape": "Local schema metadata for runtime admission readiness items, runtime admission events, and runtime admission evidence references. The schema records blocked admission/execution/project/provider authority flags only; no runtime admission is enabled.",
+      "commandCenterUx": "No dashboard source change in P115.2. Future Command Center UX must keep raw runtime admission table names and private IDs out of primary UX.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -179,12 +210,14 @@
         "No new Playwright test until UI source changes; preserve route-wide safety tests."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated P115.2 checker."
+        "Add dedicated P115.2 schema checker.",
+        "Update P115.1 checker to accept the P115.2/P115.3 handoff state."
       ],
-      "docsRoadmap": "Update P115 plan, README, platform roadmap, OS status, and generated reports for P115.2.",
-      "phaseStatusUpdate": "P115 in progress; P115.2 complete when implemented.",
+      "docsRoadmap": "P115.2 is recorded in the P115 plan, README, platform roadmap, OS status, and generated reports. P115.3 is next for governed local admission CRUD modeling.",
+      "phaseStatusUpdate": "P115 in progress; P115.2 complete; current P115.2; previous P115.1; next P115.3.",
       "validationCommands": [
         "npm run check:p1152-founder-live-runtime-admission-readiness",
+        "npm run check:p1151-founder-live-runtime-admission-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -196,7 +229,7 @@
       ],
       "gitCommands": [
         "git add <allowed P115.2 files>",
-        "git commit -m \"feat(nexus): implement p1152 runtime admission readiness\"",
+        "git commit -m \"feat(nexus): implement p1152 runtime admission schema\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalResponseChecklist": [

@@ -95,9 +95,16 @@ const docsBundle = [JSON.stringify(contract), plan, platformRoadmap, readme].joi
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1151-founder-live-runtime-admission-contract"]));
 addCheck("contract identifies P115", contract.phaseId === "P115" && contract.title === "Founder Live Runtime Admission Readiness");
-addCheck("contract status and handoff", contract.status === "in_progress" && contract.currentSubphase === "P115.1" && contract.previousSubphase === "P114.7" && contract.nextSubphase === "P115.2");
+addCheck(
+  "contract status and handoff",
+  contract.status === "in_progress"
+    && (
+      (contract.currentSubphase === "P115.1" && contract.previousSubphase === "P114.7" && contract.nextSubphase === "P115.2")
+      || (contract.currentSubphase === "P115.2" && contract.previousSubphase === "P115.1" && contract.nextSubphase === "P115.3")
+    ),
+);
 addCheck("contract splits seven subphases", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && (contract.subphases || []).length === 7);
-addCheck("P115.1 complete and P115.2 planned", p1151.status === "complete" && p1152.status === "planned");
+addCheck("P115.1 complete and P115.2 planned or complete", p1151.status === "complete" && ["planned", "complete"].includes(p1152.status));
 addCheck("all subphases scoped to NEXUS OS", (contract.subphases || []).every((entry) => entry.scopeClassification === "NEXUS_OS_CHANGE"));
 addCheck("P115.1 allowed files exact", p1151.allowedFiles?.length === p1151.exactFiles?.length && p1151.allowedFiles?.every((file) => p1151.exactFiles.includes(file)));
 addCheck("P115.1 avoids forbidden file scope", !(p1151.allowedFiles || []).some((file) => forbiddenPrefixes.some((prefix) => file.startsWith(prefix))));
@@ -109,20 +116,30 @@ addCheck(
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
   enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
 );
-addCheck("changed files avoid forbidden paths", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck(
+  "changed files avoid forbidden paths",
+  !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))),
+  enforceCurrentDiffScope ? changed.join(", ") : `P115.1 forbidden path check relaxed for ${status.currentPhase}`,
+);
 addCheck("P114.7 checker accepts P115 start", p1147Checker.includes("p115StartedState") && p1147Checker.includes("P115.1") && p1147Checker.includes("P115.2"));
 addCheck("OS status checker accepts P115 subphases", ["P115", ...expectedSubphases, "P116"].every((phaseId) => osStatusChecker.includes(`\"${phaseId}\"`)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P115.1"
-    && status.previousPhase === "P114.7"
-    && status.nextPhase === "P115.2"
-    && roadmap.currentPhase === "P115.1"
-    && roadmap.previousPhase === "P114.7"
-    && roadmap.nextPhase === "P115.2"
+  ((status.currentPhase === "P115.1"
+      && status.previousPhase === "P114.7"
+      && status.nextPhase === "P115.2"
+      && roadmap.currentPhase === "P115.1"
+      && roadmap.previousPhase === "P114.7"
+      && roadmap.nextPhase === "P115.2")
+    || (status.currentPhase === "P115.2"
+      && status.previousPhase === "P115.1"
+      && status.nextPhase === "P115.3"
+      && roadmap.currentPhase === "P115.2"
+      && roadmap.previousPhase === "P115.1"
+      && roadmap.nextPhase === "P115.3"))
     && statusById.get("P115")?.status === "in_progress"
     && statusById.get("P115.1")?.status === "complete"
-    && statusById.get("P115.2")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P115.2")?.status)
     && roadmapById.get("P115")?.status === "in_progress"
     && roadmapById.get("P115.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
@@ -130,7 +147,11 @@ addCheck(
 addCheck("docs plan records P115.1", /P115\.1 Runtime Admission Contract \/ Policy[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P115.1", /P115\.1 runtime admission contract/i.test(readme) && /P115\.2 is next/i.test(readme));
 addCheck("platform roadmap records P115.1", /P115\.1 is complete/.test(platformRoadmap) && /P115\.2\s+is\s+next/.test(platformRoadmap));
-addCheck("no runtime admission implementation files changed", !changed.some((file) => ["db/", "live-ready/", "dashboard/src/", "dashboard/tests/", "local-state/runtime/", "worker-runtime/", "providers/", "tools/"].some((prefix) => file.startsWith(prefix))));
+addCheck(
+  "no runtime admission implementation files changed",
+  !enforceCurrentDiffScope || !changed.some((file) => ["db/", "live-ready/", "dashboard/src/", "dashboard/tests/", "local-state/runtime/", "worker-runtime/", "providers/", "tools/"].some((prefix) => file.startsWith(prefix))),
+  enforceCurrentDiffScope ? changed.join(", ") : `P115.1 implementation path check relaxed for ${status.currentPhase}`,
+);
 addCheck("docs avoid raw runtime admission keys", !/(runtimeAdmissionId|dispatchId|assignmentId|queueItemId|workOrderId|sqliteEntity|recordRef|requestKey|founder_runtime_admission_|founder_agent_dispatch_readiness_)/.test(docsBundle));
 addCheck("docs avoid fake runnable actions", !/run now|execute now|deploy now|apply now|approve now|admit now|call provider now|create project now|dispatch agent now|write sqlite now|write runtime now/i.test(docsBundle));
 addCheck(

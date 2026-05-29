@@ -1497,6 +1497,155 @@
       "retentionClass": "founder_agent_dispatch_readiness_evidence",
       "redactionRequired": true,
       "fileFallbackSource": "reports/p1141-founder-live-agent-dispatch-contract-report.md"
+    },
+    {
+      "name": "founder_runtime_admission_readiness_items",
+      "purpose": "Durable local runtime admission readiness items derived from governed founder agent dispatch readiness candidates without runtime admission, worker execution, or project mutation authority.",
+      "primaryKey": "runtimeAdmissionId",
+      "fields": {
+        "runtimeAdmissionId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "publicLabel": "string",
+        "admissionLane": "string",
+        "admissionState": "string",
+        "admissionSummary": "string",
+        "runtimeTarget": "string",
+        "ownerCapability": "string",
+        "nextAction": "string",
+        "disabledReason": "string",
+        "operatorApprovalRequired": "boolean",
+        "operatorApproved": "boolean",
+        "localCrudAllowed": "boolean",
+        "dbWriteAllowed": "boolean",
+        "hostedDbMutationAllowed": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "providerCallAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "providerSpendAllowed": "boolean",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "runtimeAdmissionId",
+        "dispatchReadinessId",
+        "publicLabel",
+        "admissionState"
+      ],
+      "indexes": [
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "admissionState",
+        "admissionLane",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+        "reports/p1147-founder-live-agent-dispatch-readiness-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_admission_readiness_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1151-founder-live-runtime-admission-contract-report.md"
+    },
+    {
+      "name": "founder_runtime_admission_events",
+      "purpose": "Durable local audit event rows for founder runtime admission readiness transitions without runtime admission, worker execution, or project mutation authority.",
+      "primaryKey": "runtimeAdmissionEventId",
+      "fields": {
+        "runtimeAdmissionEventId": "string",
+        "runtimeAdmissionId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "eventType": "string",
+        "eventState": "string",
+        "actorLabel": "string",
+        "eventSummary": "string",
+        "rollbackAvailable": "boolean",
+        "runtimeAdmissionAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "runtimeAdmissionEventId",
+        "runtimeAdmissionId",
+        "eventType",
+        "eventState"
+      ],
+      "indexes": [
+        "runtimeAdmissionId",
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "eventType",
+        "eventState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json",
+        "reports/p1151-founder-live-runtime-admission-contract-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_admission_readiness_audit",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1151-founder-live-runtime-admission-contract-report.md"
+    },
+    {
+      "name": "founder_runtime_admission_evidence_refs",
+      "purpose": "Display-safe evidence references attached to local founder runtime admission readiness items.",
+      "primaryKey": "runtimeAdmissionEvidenceRefId",
+      "fields": {
+        "runtimeAdmissionEvidenceRefId": "string",
+        "runtimeAdmissionId": "string",
+        "dispatchReadinessId": "string",
+        "assignmentId": "string",
+        "queueItemId": "string",
+        "workOrderId": "string",
+        "evidenceLabel": "string",
+        "evidenceType": "string",
+        "evidenceLocation": "string",
+        "redactionRequired": "boolean",
+        "retainedForAudit": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": [
+        "runtimeAdmissionEvidenceRefId",
+        "runtimeAdmissionId",
+        "evidenceLabel",
+        "evidenceLocation"
+      ],
+      "indexes": [
+        "runtimeAdmissionId",
+        "dispatchReadinessId",
+        "assignmentId",
+        "queueItemId",
+        "workOrderId",
+        "evidenceType",
+        "evidenceLocation"
+      ],
+      "sourceMapping": [
+        "reports/p1151-founder-live-runtime-admission-contract-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_admission_readiness_evidence",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/p1151-founder-live-runtime-admission-contract-report.md"
     }
   ]
 }

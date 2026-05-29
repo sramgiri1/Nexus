@@ -738,6 +738,14 @@ The Command Center and local operator surface have:
   execution unlock, provider/model call, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, raw SQL interface, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P115.2 local admission schema metadata: P115 now has local schema metadata and
+  isolated SQLite validation for runtime admission readiness items, runtime
+  admission events, and runtime admission evidence references. P115.3 is next
+  for governed local admission CRUD modeling. Persistent runtime writes,
+  runtime admission, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

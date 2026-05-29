@@ -15526,28 +15526,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "f9e091545c42b9fdf12774a92ebd9e5574c308d0",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Runtime Admission Readiness",
-      "detail": "P115.1 runtime admission contract complete; P115.2 local admission schema metadata is next.",
+      "detail": "P115.2 local admission schema metadata complete; P115.3 governed local admission CRUD is next.",
       "phaseId": "P115",
       "title": "Founder Live Runtime Admission Readiness",
       "order": 151,
       "status": "in_progress",
-      "summary": "P115 is in progress. P115.1 defines the implementation-grade runtime admission readiness contract, safety rules, reuse requirements, checker coverage, and OS status while runtime admission and execution remain blocked.",
-      "nextPhase": "P115.2",
+      "summary": "P115 is in progress. P115.1-P115.2 define runtime admission readiness contracts and local schema metadata while runtime admission and execution remain blocked.",
+      "nextPhase": "P115.3",
       "previousPhase": "P114.7",
       "checksRun": [
+        "npm run check:p1152-founder-live-runtime-admission-readiness",
         "npm run check:p1151-founder-live-runtime-admission-contract",
-        "npm run check:p1147-founder-live-agent-dispatch-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P115.1 is contract, docs, checker, and status only.",
+        "P115.2 is local schema metadata and isolated validation only.",
         "Runtime admission, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network, and provider spend remain blocked.",
-        "P115.2 is next for local schema metadata."
+        "P115.3 is next for governed local admission CRUD modeling."
       ],
       "completedAt": ""
     },
@@ -15579,23 +15579,29 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Local Admission Schema Metadata",
-      "detail": "Planned local admission schema metadata for P115.",
+      "detail": "P115.2 local admission schema metadata complete; P115.3 governed local admission CRUD is next.",
       "phaseId": "P115.2",
       "title": "Local Admission Schema Metadata",
       "order": 151.2,
-      "status": "planned",
-      "summary": "Planned local admission schema metadata for P115.",
+      "status": "complete",
+      "summary": "P115.2 adds local schema metadata and isolated SQLite validation for runtime admission readiness items, events, and evidence references without enabling runtime admission.",
       "nextPhase": "P115.3",
       "previousPhase": "P115.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1152-founder-live-runtime-admission-readiness",
+        "npm run check:p1151-founder-live-runtime-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "Schema metadata and isolated local SQLite validation only; no persistent runtime writes, runtime admission, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network, or spend."
+      ],
+      "completedAt": "2026-05-29T01:39:48.127Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15699,9 +15705,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T01:36:28.934Z",
-  "currentPhase": "P115.1",
-  "previousPhase": "P114.7",
-  "nextPhase": "P115.2",
+  "updatedAt": "2026-05-29T01:39:48.127Z",
+  "currentPhase": "P115.2",
+  "previousPhase": "P115.1",
+  "nextPhase": "P115.3",
   "currentPhaseStatus": "complete"
 }

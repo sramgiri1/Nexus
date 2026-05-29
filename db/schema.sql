@@ -804,3 +804,98 @@ CREATE INDEX IF NOT EXISTS idx_founder_agent_dispatch_readiness_evidence_refs_qu
 CREATE INDEX IF NOT EXISTS idx_founder_agent_dispatch_readiness_evidence_refs_work_order_id         ON founder_agent_dispatch_readiness_evidence_refs (work_order_id);
 CREATE INDEX IF NOT EXISTS idx_founder_agent_dispatch_readiness_evidence_refs_evidence_type         ON founder_agent_dispatch_readiness_evidence_refs (evidence_type);
 CREATE INDEX IF NOT EXISTS idx_founder_agent_dispatch_readiness_evidence_refs_evidence_location     ON founder_agent_dispatch_readiness_evidence_refs (evidence_location);
+
+-- founder_runtime_admission_readiness_items
+CREATE TABLE IF NOT EXISTS founder_runtime_admission_readiness_items (
+  runtime_admission_id     TEXT        NOT NULL,
+  dispatch_readiness_id    TEXT        NOT NULL,
+  assignment_id            TEXT,
+  queue_item_id            TEXT,
+  work_order_id            TEXT,
+  public_label             TEXT        NOT NULL,
+  admission_lane           TEXT,
+  admission_state          TEXT        NOT NULL,
+  admission_summary        TEXT,
+  runtime_target           TEXT,
+  owner_capability         TEXT,
+  next_action              TEXT,
+  disabled_reason          TEXT,
+  operator_approval_required BOOLEAN   NOT NULL DEFAULT true,
+  operator_approved        BOOLEAN     NOT NULL DEFAULT false,
+  local_crud_allowed       BOOLEAN     NOT NULL DEFAULT false,
+  db_write_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  hosted_db_mutation_allowed BOOLEAN   NOT NULL DEFAULT false,
+  runtime_admission_allowed BOOLEAN    NOT NULL DEFAULT false,
+  execution_allowed        BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed BOOLEAN     NOT NULL DEFAULT false,
+  provider_call_allowed    BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed BOOLEAN     NOT NULL DEFAULT false,
+  provider_spend_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs            JSONB,
+  activity_refs            JSONB,
+  created_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (runtime_admission_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_dispatch_readiness_id ON founder_runtime_admission_readiness_items (dispatch_readiness_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_assignment_id         ON founder_runtime_admission_readiness_items (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_queue_item_id         ON founder_runtime_admission_readiness_items (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_work_order_id         ON founder_runtime_admission_readiness_items (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_admission_state       ON founder_runtime_admission_readiness_items (admission_state);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_admission_lane        ON founder_runtime_admission_readiness_items (admission_lane);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_owner_capability      ON founder_runtime_admission_readiness_items (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_readiness_items_updated_at            ON founder_runtime_admission_readiness_items (updated_at);
+
+-- founder_runtime_admission_events
+CREATE TABLE IF NOT EXISTS founder_runtime_admission_events (
+  runtime_admission_event_id TEXT       NOT NULL,
+  runtime_admission_id       TEXT       NOT NULL,
+  dispatch_readiness_id      TEXT,
+  assignment_id              TEXT,
+  queue_item_id              TEXT,
+  work_order_id              TEXT,
+  event_type                 TEXT       NOT NULL,
+  event_state                TEXT       NOT NULL,
+  actor_label                TEXT,
+  event_summary              TEXT,
+  rollback_available         BOOLEAN    NOT NULL DEFAULT false,
+  runtime_admission_allowed  BOOLEAN    NOT NULL DEFAULT false,
+  execution_allowed          BOOLEAN    NOT NULL DEFAULT false,
+  worker_execution_allowed   BOOLEAN    NOT NULL DEFAULT false,
+  project_mutation_allowed   BOOLEAN    NOT NULL DEFAULT false,
+  evidence_refs              JSONB,
+  created_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (runtime_admission_event_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_runtime_admission_id    ON founder_runtime_admission_events (runtime_admission_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_dispatch_readiness_id   ON founder_runtime_admission_events (dispatch_readiness_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_assignment_id           ON founder_runtime_admission_events (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_queue_item_id           ON founder_runtime_admission_events (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_work_order_id           ON founder_runtime_admission_events (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_event_type              ON founder_runtime_admission_events (event_type);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_event_state             ON founder_runtime_admission_events (event_state);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_events_created_at              ON founder_runtime_admission_events (created_at);
+
+-- founder_runtime_admission_evidence_refs
+CREATE TABLE IF NOT EXISTS founder_runtime_admission_evidence_refs (
+  runtime_admission_evidence_ref_id TEXT        NOT NULL,
+  runtime_admission_id              TEXT        NOT NULL,
+  dispatch_readiness_id             TEXT,
+  assignment_id                     TEXT,
+  queue_item_id                     TEXT,
+  work_order_id                     TEXT,
+  evidence_label                    TEXT        NOT NULL,
+  evidence_type                     TEXT,
+  evidence_location                 TEXT        NOT NULL,
+  redaction_required                BOOLEAN     NOT NULL DEFAULT true,
+  retained_for_audit                BOOLEAN     NOT NULL DEFAULT true,
+  created_at                        TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (runtime_admission_evidence_ref_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_runtime_admission_id    ON founder_runtime_admission_evidence_refs (runtime_admission_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_dispatch_readiness_id   ON founder_runtime_admission_evidence_refs (dispatch_readiness_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_assignment_id           ON founder_runtime_admission_evidence_refs (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_queue_item_id           ON founder_runtime_admission_evidence_refs (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_work_order_id           ON founder_runtime_admission_evidence_refs (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_evidence_type           ON founder_runtime_admission_evidence_refs (evidence_type);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_admission_evidence_refs_evidence_location       ON founder_runtime_admission_evidence_refs (evidence_location);

@@ -3033,6 +3033,14 @@ project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend blocked. P115.2 is
 next for local admission schema metadata.
 
+P115.2 is complete. P115 now has local schema metadata and isolated SQLite
+validation for runtime admission readiness items, runtime admission events, and
+runtime admission evidence references. P115.3 is next for governed local
+admission CRUD modeling. Persistent runtime writes, runtime admission,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
