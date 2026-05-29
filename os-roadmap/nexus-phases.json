@@ -14386,15 +14386,15 @@
       "order": 167,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d0079eef",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P131 is in progress; P131.1 contract/safety boundary is complete and P131.2 is next.",
-      "summary": "P131 store live admission scope has started with contract, safety boundary, checker, docs, and status handoff while live admission and DB/runtime mutation remain blocked.",
+      "detail": "P131 is in progress; P131.2 request model is complete and P131.3 is next.",
+      "summary": "P131 store live admission scope has progressed through the local request model while live admission, CRUD, DB/runtime mutation, provider calls, dispatch, project mutation, network, and spend remain blocked.",
       "previousPhase": "P130.7",
-      "nextPhase": "P131.2",
+      "nextPhase": "P131.3",
       "checksRun": [
+        "npm run check:p1312-founder-runtime-store-live-admission-scope",
         "npm run check:p1311-founder-runtime-store-live-admission-scope",
-        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -14403,9 +14403,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P131.1 is contract/checker/docs/status only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P131.2 is a request model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T22:53:37.897Z"
+      "completedAt": "2026-05-29T23:02:06.271Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14442,27 +14442,85 @@
       "title": "Live Admission Request Model",
       "label": "Admission Request Model",
       "order": 167.2,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P131.2 live admission request model complete; P131.3 approval evidence readiness resolver is next.",
+      "summary": "Added a browser-safe local request model for store live admission intent, evidence requirements, blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
+      "previousPhase": "P131.1",
+      "nextPhase": "P131.3",
+      "checksRun": [
+        "npm run check:p1312-founder-runtime-store-live-admission-scope",
+        "npm run check:p1311-founder-runtime-store-live-admission-scope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P131.2 is a request model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T23:02:06.271Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P131.3",
+      "title": "Approval Evidence Readiness Resolver",
+      "label": "Approval Evidence Readiness",
+      "order": 167.3,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P131.2 is planned next for a browser-safe live admission request model. It has no implementation yet.",
-      "summary": "Planned request model only. It has no implementation yet and does not enable live store actions.",
-      "previousPhase": "P131.1",
-      "nextPhase": "P131.3",
+      "detail": "P131.3 is planned next for approval evidence readiness resolution. It has no implementation yet.",
+      "summary": "Planned readiness resolver only. It has no implementation yet and does not enable live store actions.",
+      "previousPhase": "P131.2",
+      "nextPhase": "P131.4",
       "checksRun": [],
       "knownLimitations": [
-        "P131.2 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "P131.3 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ]
     }
   ],
-  "updatedAt": "2026-05-29T22:53:37.897Z",
-  "currentPhase": "P131.1",
-  "previousPhase": "P130.7",
-  "nextPhase": "P131.2",
+  "updatedAt": "2026-05-29T23:02:06.271Z",
+  "currentPhase": "P131.2",
+  "previousPhase": "P131.1",
+  "nextPhase": "P131.3",
   "currentPhaseStatus": "complete",
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P131.2",
+    "title": "Live Admission Request Model",
+    "label": "Admission Request Model",
+    "order": 167.2,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P131.2 live admission request model complete; P131.3 approval evidence readiness resolver is next.",
+    "summary": "Added a browser-safe local request model for store live admission intent, evidence requirements, blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
+    "previousPhase": "P131.1",
+    "nextPhase": "P131.3",
+    "checksRun": [
+      "npm run check:p1312-founder-runtime-store-live-admission-scope",
+      "npm run check:p1311-founder-runtime-store-live-admission-scope",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P131.2 is a request model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-29T23:02:06.271Z"
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P131.1",
     "title": "Store Live Admission Contract / Safety Boundary",
@@ -14491,52 +14549,23 @@
     ],
     "completedAt": "2026-05-29T22:53:37.897Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P130.7",
-    "title": "Store Live Readiness Final Validation",
-    "label": "Store Live Final Validation",
-    "order": 166.7,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "51d9d077",
-    "commandCenterVisible": true,
-    "detail": "P130.7 store live readiness final validation complete; P131 is planned only.",
-    "summary": "Closed P130 with final validation evidence, OS status, reports, and the planned-only P131 handoff while all live store actions remain blocked.",
-    "previousPhase": "P130.6",
-    "nextPhase": "P131",
-    "checksRun": [
-      "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P130.7 is final validation only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P131 is planned-only until its own implementation-grade contract is written."
-    ],
-    "completedAt": "2026-05-29T22:46:45.914Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P131.2",
-    "title": "Live Admission Request Model",
-    "label": "Admission Request Model",
-    "order": 167.2,
+    "phaseId": "P131.3",
+    "title": "Approval Evidence Readiness Resolver",
+    "label": "Approval Evidence Readiness",
+    "order": 167.3,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P131.2 is planned next for a browser-safe live admission request model. It has no implementation yet.",
-    "summary": "Planned request model only. It has no implementation yet and does not enable live store actions.",
-    "previousPhase": "P131.1",
-    "nextPhase": "P131.3",
+    "detail": "P131.3 is planned next for approval evidence readiness resolution. It has no implementation yet.",
+    "summary": "Planned readiness resolver only. It has no implementation yet and does not enable live store actions.",
+    "previousPhase": "P131.2",
+    "nextPhase": "P131.4",
     "checksRun": [],
     "knownLimitations": [
-      "P131.2 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "P131.3 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
     ]
   }
 }

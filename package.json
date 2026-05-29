@@ -721,7 +721,8 @@
     "check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
     "check:p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1306-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
     "check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
-    "check:p1311-founder-runtime-store-live-admission-scope": "node scripts/check-p1311-founder-runtime-store-live-admission-scope.js"
+    "check:p1311-founder-runtime-store-live-admission-scope": "node scripts/check-p1311-founder-runtime-store-live-admission-scope.js",
+    "check:p1312-founder-runtime-store-live-admission-scope": "node scripts/check-p1312-founder-runtime-store-live-admission-scope.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

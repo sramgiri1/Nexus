@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P131.1
-- Generated at: 2026-05-29T22:54:55.929Z
+- Generated at: 2026-05-29T23:03:38.564Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d0079eef
+- Validation HEAD: 2f6dd27f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -18,10 +18,10 @@
 | Check | Status | Details |
 | --- | --- | --- |
 | package script registered | PASS |  |
-| contract marks P131.1 current | PASS |  |
+| contract marks P131.1 complete | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract has seven implementation-grade subphases | PASS |  |
-| P131.1 complete and P131.2 planned | PASS |  |
+| P131.1 complete and P131.2 planned or complete | PASS |  |
 | P131.1 allowed files include contract, checker, docs, reports | PASS |  |
 | P131.1 forbids dashboard/project/db/runtime paths | PASS |  |
 | P131.1 records validation commands | PASS |  |
@@ -34,11 +34,11 @@
 | plan records P131.1 implementation | PASS |  |
 | README records P131.1 | PASS |  |
 | platform roadmap records P131.1 | PASS |  |
-| phase status advanced | PASS | P131.1/P130.7/P131.2 |
+| phase status advanced | PASS | P131.2/P131.1/P131.3 |
 | phase status summary objects advanced | PASS |  |
 | completed P131.1 entries have required fields | PASS |  |
-| changed files stay in P131.1 allowed scope | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P131.1 allowed scope | PASS | scope check relaxed for P131.2 |
+| forbidden paths unchanged | PASS | P131.1 forbidden path check relaxed for P131.2 |
 | public docs avoid raw store table names | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |

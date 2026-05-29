@@ -3,9 +3,9 @@
   "title": "Founder Runtime Store Live Admission Scope Contract",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P131.1",
-  "previousSubphase": "P130.7",
-  "nextSubphase": "P131.2",
+  "currentSubphase": "P131.2",
+  "previousSubphase": "P131.1",
+  "nextSubphase": "P131.3",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "d63816a9",
   "owner": "NEXUS OS",
@@ -120,19 +120,24 @@
     {
       "phaseId": "P131.2",
       "title": "Live Admission Request Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1311-stamp",
+      "expectedBaseCommit": "2f6dd27f",
       "narrowGoal": "Define a browser-safe live admission request model without executing admission or mutating DB/runtime state.",
       "allowedFiles": [
+        "shared/founderRuntimeStoreLiveAdmissionScopeRequestModel.js",
         "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
         "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
+        "scripts/check-p1311-founder-runtime-store-live-admission-scope.js",
+        "scripts/check-p1312-founder-runtime-store-live-admission-scope.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p1311-founder-runtime-store-live-admission-scope-report.md",
+        "reports/p1312-founder-runtime-store-live-admission-scope-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -153,8 +158,15 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "expectedExports": [
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_REQUEST_MODEL_PHASE",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_REQUEST_MODEL_VERSION",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_REQUEST_FIELD_NAMES",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_REQUEST_FLAGS",
+        "buildFounderRuntimeStoreLiveAdmissionScopeRequestModel",
+        "validateFounderRuntimeStoreLiveAdmissionScopeRequestModel"
+      ],
+      "dataShape": "Local request model with source lineage, blocked request fields, blockers, next action, owner capability, evidence/activity labels, and no runnable candidates. No DB schema, query, migration file, runtime record, live CRUD executor, provider envelope, dispatch packet, raw private ID, raw table name, or project data.",
       "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -170,8 +182,8 @@
       "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
       "phaseStatusUpdate": "P131 in progress; P131.2 complete; current phase P131.2; previous P131.1; next P131.3.",
       "validationCommands": [
+        "npm run check:p1312-founder-runtime-store-live-admission-scope",
         "npm run check:p1311-founder-runtime-store-live-admission-scope",
-        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -194,7 +206,14 @@
       ],
       "previousPhase": "P131.1",
       "nextPhase": "P131.3",
-      "order": 167.2
+      "order": 167.2,
+      "detail": "P131.2 live admission request model complete; P131.3 approval evidence readiness resolver is next.",
+      "summary": "Added a browser-safe local request model for store live admission intent, evidence requirements, blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
+      "knownLimitations": [
+        "P131.2 is a request model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T23:02:06.271Z"
     },
     {
       "phaseId": "P131.3",
@@ -593,16 +612,16 @@
     }
   ],
   "current": {
-    "phaseId": "P131.1",
-    "title": "Store Live Admission Contract / Safety Boundary",
+    "phaseId": "P131.2",
+    "title": "Live Admission Request Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d0079eef",
-    "completedAt": "2026-05-29T22:53:37.897Z",
-    "summary": "Started P131 with an implementation-grade store live admission scope contract, seven-subphase split, safety boundary, checker, docs, and status handoff while all live store actions remain blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T23:02:06.271Z",
+    "summary": "Added a browser-safe local request model for store live admission intent, evidence requirements, blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
     "checksRun": [
+      "npm run check:p1312-founder-runtime-store-live-admission-scope",
       "npm run check:p1311-founder-runtime-store-live-admission-scope",
-      "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -611,9 +630,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P131.1 is contract/checker/docs/status only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P131.2 is a request model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P131.2",
+    "nextPhase": "P131.3",
     "commandCenterVisible": true
   }
 }
