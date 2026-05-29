@@ -16660,7 +16660,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e3ed309d",
       "commandCenterVisible": true,
       "label": "Approval Decision Persistence",
       "detail": "P120.6 aggregate validation and docs alignment complete; P120.7 final validation is next.",
@@ -16819,7 +16819,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e3ed309d",
       "commandCenterVisible": true,
       "label": "Persistence Validation",
       "detail": "Aggregate approval decision persistence boundary validation and docs alignment complete.",
@@ -16841,7 +16841,7 @@
       "knownLimitations": [
         "P120.6 is validation/docs only; it does not capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:18:16.347Z"
+      "completedAt": "2026-05-29T12:21:01.500Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16865,7 +16865,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T12:18:16.347Z",
+  "updatedAt": "2026-05-29T12:21:01.500Z",
   "currentPhase": "P120.6",
   "previousPhase": "P120.5",
   "nextPhase": "P120.7",
