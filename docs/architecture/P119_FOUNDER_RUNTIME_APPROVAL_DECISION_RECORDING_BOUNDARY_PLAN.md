@@ -567,15 +567,202 @@ Rollback plan: remove the P119.3 helper/checker/docs/status/report changes,
 restore P119.3 to planned, set current phase back to P119.2, and keep P119.2
 complete.
 
+## P119.4 Approval Decision Safe Dry Run
+
+Status: complete
+
+Phase: P119 Founder Runtime Approval Decision Recording Boundary
+
+Subphase: P119.4 Approval Decision Safe Dry Run
+
+Goal: build a local-only approval decision preview that summarizes
+decision-readiness rows and blockers while keeping approve/reject decisions,
+persistence, DB/runtime writes, execution unlock, and provider/model calls
+blocked.
+
+Why this is needed: P119.3 models decision intent. P119.4 turns it into a
+reusable preview envelope for P119.5 scoped Command Center UX without exposing
+live controls.
+
+User/operator impact: operators get a validated dry-run summary of what would
+be reviewed, why it is blocked, who owns it, where evidence/activity lives, and
+cost impact. No founder-facing approve/reject/save action is enabled.
+
+Command Center impact: no dashboard source change in P119.4. P119.5 owns the
+scoped Business Build and Agent Flow UX. Chat with NEXUS stays clean.
+
+Safety impact: P119.4 is local dry-run only and hidden from primary UX. It does
+not enable approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, hosted DB mutation, runtime execution, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, raw SQL, deploy, release, export, package, network calls, or spend.
+
+Cost impact: local helper/checkers/docs/report generation only. No
+provider/model/network/spend path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `4885f32d`.
+
+Allowed files:
+- `shared/founderApprovalDecisionPreview.js`
+- `contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json`
+- `docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md`
+- `scripts/check-p1194-founder-runtime-approval-decision-recording-boundary.js`
+- `scripts/check-p1193-founder-runtime-approval-decision-recording-boundary.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1193-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/p1194-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files expected to change:
+- P119.4 preview helper
+- P119.4 checker
+- P119.3 checker handoff acceptance
+- P119 contract and plan
+- package script registration
+- README and platform roadmap
+- OS roadmap/status and generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `shared/founderApprovalDecisionPreview.js`
+- add `scripts/check-p1194-founder-runtime-approval-decision-recording-boundary.js`
+- update `scripts/check-p1193-founder-runtime-approval-decision-recording-boundary.js`
+- update P119 contract/docs/status/reports
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_PREVIEW_PHASE`
+- `FOUNDER_APPROVAL_DECISION_PREVIEW_VERSION`
+- `FOUNDER_APPROVAL_DECISION_PREVIEW_STATES`
+- `buildFounderApprovalDecisionPreview`
+- `validateFounderApprovalDecisionPreview`
+
+The data shape is a `resultEnvelope` pass result with schema version,
+allowlisted current state, local-only dry-run mode, hidden-from-Command-Center
+flag, source P119.3/P119.2 phases, founder question, requested/proposed
+decision labels, decision-readiness summary with all unsafe candidate counts
+zero, preview sections and rows, blockers, next action, disabled reason, owner,
+evidence/activity labels, cost impact, and false decision/write/execution/
+dispatch/provider/project/deploy/package/network/spend flags.
+
+Reuse check: reuse `shared/founderApprovalDecisionIntentModel.js`,
+`shared/founderApprovalDecisionSchemaMetadata.js`, `shared/resultEnvelope.js`,
+`shared/reportWriter.js`, `shared/checkResultFormatter.js`, P119.3 checker
+patterns, existing OS phase status validation, and existing phase coverage
+reporting. Do not duplicate schema metadata, result envelopes, report writers,
+checker formatters, phase status updaters, redaction helpers, mode guards,
+route matrices, UI components, or audit/activity appenders.
+
+Command Center UX requirements: no UI source change. Do not add submit buttons,
+approval buttons, reject buttons, save decision buttons, run controls, route
+labels, raw JSON/log/policy dumps, raw private IDs, raw DB table names, internal
+phase labels in primary UX, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: no new Playwright test is added in P119.4 because there is no
+UI source change. Existing route-wide safety tests remain the required UX
+backstop.
+
+Checker updates: add a dedicated P119.4 checker for preview envelope shape,
+state allowlist, P119.3/P119.2 helper reuse, zero unsafe counts, blocked
+authority flags, docs/status alignment, allowed file scope, and safety wording.
+Update the P119.3 checker to keep P119.4/P119.5 handoff acceptance explicit.
+
+Docs/README/roadmap updates: P119.4 is recorded in this plan, README, platform
+roadmap, P119 contract, OS roadmap/status, and generated reports. P119.5 is
+next for scoped Command Center approval decision boundary UX.
+
+OS phase status update: P119 is in progress; P119.4 is complete; current phase
+P119.4; previous P119.3; next P119.5.
+
+Reports to regenerate:
+- `reports/p1193-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/p1194-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1194-founder-runtime-approval-decision-recording-boundary`
+- `npm run check:p1193-founder-runtime-approval-decision-recording-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+- `find local-state/runtime -maxdepth 1 -name 'check-p119*.sqlite' -print`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+dashboard test files changed; no DB/runtime provider, tool, worker, deploy,
+release, export, package, or env paths changed; no approval capture, approval
+persistence, approval decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+spend authority is enabled; no DemoApp exposure, raw private IDs, raw DB table
+names, raw JSON/log/policy dumps, internal primary UX phase labels, or fake
+actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P119.4 files>`
+- `git commit -m "feat(nexus): implement p1194 approval decision dry run"`
+- stamp P119/P119.4 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1194 approval decision dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: preview rows can look like action rows if the labels are loose.
+P119.4 keeps every unsafe count zero, every row `would*` flag false, and the
+preview hidden from primary Command Center UX.
+
+Rollback plan: remove the P119.4 helper/checker/docs/status/report changes,
+restore P119.4 to planned, set current phase back to P119.3, and keep P119.3
+complete.
+
 ## Planned Subphase Controls
 
-P119.3 Governed Local Approval Decision Intent Model is complete. A pure local
-model now describes future approval decision review intent while recording no
-decision.
-
-P119.4 Approval Decision Safe Dry Run: produce a local preview that summarizes
-decision readiness while keeping approve/reject decisions, persistence, writes,
-and runtime execution blocked.
+P119.4 Approval Decision Safe Dry Run is complete. A local preview now
+summarizes decision readiness while keeping approve/reject decisions,
+persistence, writes, and runtime execution blocked.
 
 P119.5 Command Center Approval Decision Boundary UX: show scoped readiness on
 Business Build and Agent Flow only, with no approve/reject or save controls.

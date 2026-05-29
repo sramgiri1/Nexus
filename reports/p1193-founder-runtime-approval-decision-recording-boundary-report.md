@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P119.3
-- Generated at: 2026-05-29T06:16:54.971Z
+- Generated at: 2026-05-29T06:22:18.682Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 16533711
+- Validation HEAD: 4885f32d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,15 +31,15 @@
 | approve/reject and execution unlock stay blocked | PASS |  |
 | authority flags stay blocked | PASS |  |
 | model has no DB/runtime/provider imports | PASS |  |
-| contract marks P119.3 complete | PASS |  |
+| contract marks P119.3 complete and P119.4/P119.5 handoff valid | PASS |  |
 | contract records expected exports | PASS |  |
 | P119.2 checker accepts P119.3 handoff | PASS |  |
 | docs record P119.3 | PASS |  |
 | README records P119.3 | PASS |  |
 | platform roadmap records P119.3 | PASS |  |
-| phase status advanced | PASS | P119.3/P119.2/P119.4 |
-| changed files stay in P119.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P119.4/P119.3/P119.5 |
+| changed files stay in P119.3 allowed scope | PASS | scope check relaxed for P119.4 |
+| forbidden paths unchanged | PASS | P119.3 forbidden path check relaxed for P119.4 |
 | public docs avoid raw table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
