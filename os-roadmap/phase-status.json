@@ -15298,7 +15298,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a1b96c5f98182f9c49ed09ada122353424e24ae0",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
       "detail": "P114.6 dispatch validation and docs complete; P114.7 final validation is next.",
@@ -15467,7 +15467,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a1b96c5f98182f9c49ed09ada122353424e24ae0",
       "commandCenterVisible": true,
       "label": "Dispatch Validation",
       "detail": "P114.6 dispatch validation and docs complete; P114.7 final validation is next.",
@@ -15514,7 +15514,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T01:17:54.677Z",
+  "updatedAt": "2026-05-29T01:21:53.127Z",
   "currentPhase": "P114.6",
   "previousPhase": "P114.5",
   "nextPhase": "P114.7",
