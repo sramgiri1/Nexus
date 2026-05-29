@@ -12748,17 +12748,17 @@
       "title": "Founder Runtime Approval Application Authority Grant Boundary",
       "label": "Authority Grant Boundary",
       "order": 160,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8d3099b004bd8f0f88f3f8887a3af8582c947466",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P124.6 grant validation/docs complete; P124.7 final validation is next.",
-      "summary": "P124.6 validated P124.1-P124.5 checkers, reports, docs, status, package scripts, and scoped Business Build/Agent Flow grant UX evidence while keeping live grants, writes, execution, providers, mutation, network, and spend blocked.",
-      "previousPhase": "P124.5",
-      "nextPhase": "P124.7",
+      "detail": "P124 final validation complete; P125 is planned next.",
+      "summary": "P124 is complete with grant boundary contract/policy, browser-safe grant eligibility metadata, governed local grant intent model, hidden grant safe dry-run preview, scoped Business Build/Agent Flow grant boundary UX, aggregate validation/docs closure, and final validation complete. Authority grant, activation, approval application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+      "previousPhase": "P124.7",
+      "nextPhase": "P125",
       "checksRun": [
+        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary",
-        "npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -12767,9 +12767,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P124.6 is validation/docs only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P124.7 is final validation only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P125 is planned-only until its own implementation-grade contract is written."
       ],
-      "completedAt": "2026-05-29T16:21:53.952Z"
+      "completedAt": "2026-05-29T16:29:55.423Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12950,42 +12950,71 @@
       "title": "Final Validation",
       "label": "Final Validation",
       "order": 160.7,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P124.7 final validation complete; P125 is planned next.",
+      "summary": "Closed P124 final validation, verified P124.1-P124.7 reports/checkers/status/docs, preserved scoped grant UX, and created the planned P125 handoff while keeping live authority and execution blocked.",
+      "previousPhase": "P124.6",
+      "nextPhase": "P125",
+      "checksRun": [
+        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P124.7 is final validation only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P125 is planned-only until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-29T16:29:55.423Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125",
+      "title": "Founder Runtime Approval Application Authority Grant Handoff",
+      "label": "Grant Handoff",
+      "order": 161,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned final validation subphase. No P124.7 behavior is implemented in P124.6.",
-      "summary": "Planned final validation subphase. No P124.7 behavior is implemented in P124.6.",
-      "previousPhase": "P124.6",
-      "nextPhase": "P125",
+      "detail": "Planned next NEXUS OS phase. No P125 behavior is implemented in P124.7.",
+      "summary": "P125 is planned-only after P124 final validation. It must receive its own implementation-grade phase contract before any grant handoff behavior can be built.",
+      "previousPhase": "P124.7",
+      "nextPhase": "P125.1",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. This subphase is not implemented in P124.6."
+        "Planned only. P125 does not grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend in P124.7."
       ],
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T15:55:44.535Z",
-  "currentPhase": "P124.6",
-  "previousPhase": "P124.5",
-  "nextPhase": "P124.7",
+  "updatedAt": "2026-05-29T16:29:55.423Z",
+  "currentPhase": "P124.7",
+  "previousPhase": "P124.6",
+  "nextPhase": "P125",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P124.6",
-    "title": "Grant Validation / Docs",
-    "label": "Grant Validation",
-    "order": 160.6,
+    "phaseId": "P124.7",
+    "title": "Final Validation",
+    "label": "Final Validation",
+    "order": 160.7,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "8d3099b004bd8f0f88f3f8887a3af8582c947466",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P124.6 grant validation/docs complete; P124.7 final validation is next.",
-    "summary": "Added validation/docs closure for P124.1-P124.5 checkers, reports, status, package scripts, and scoped UX evidence while keeping the grant path display-only and blocked.",
-    "previousPhase": "P124.5",
-    "nextPhase": "P124.7",
+    "detail": "P124.7 final validation complete; P125 is planned next.",
+    "summary": "Closed P124 final validation, verified P124.1-P124.7 reports/checkers/status/docs, preserved scoped grant UX, and created the planned P125 handoff while keeping live authority and execution blocked.",
+    "previousPhase": "P124.6",
+    "nextPhase": "P125",
     "checksRun": [
+      "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary",
-      "npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -12994,9 +13023,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P124.6 is validation/docs only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P124.7 is final validation only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P125 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T16:21:53.952Z"
+    "completedAt": "2026-05-29T16:29:55.423Z"
   },
-  "generatedAt": "2026-05-29T14:02:08.266Z"
+  "generatedAt": "2026-05-29T16:29:55.423Z"
 }

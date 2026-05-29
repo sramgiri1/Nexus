@@ -92,6 +92,14 @@ const p1247StartedState = status.currentPhase === "P124.7"
   && roadmap.currentPhase === "P124.7"
   && roadmap.previousPhase === "P124.6"
   && roadmap.nextPhase === "P125";
+const p1247FinalState = p1247StartedState
+  && statusById.get("P124")?.status === "complete"
+  && roadmapById.get("P124")?.status === "complete"
+  && statusById.get("P124.7")?.status === "complete"
+  && roadmapById.get("P124.7")?.status === "complete";
+const p124ParentOpenState = (p1246CurrentState || p1247StartedState)
+  && !p1247FinalState
+  && statusById.get("P124")?.status === "in_progress";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1246-founder-runtime-approval-application-authority-grant-boundary"]));
 addCheck("P124.1-P124.5 package scripts exist", p124Subphases.every((phaseId) => Boolean(packageJson.scripts?.[`check:${phaseId.toLowerCase().replace(".", "")}-founder-runtime-approval-application-authority-grant-boundary`])));
@@ -109,12 +117,19 @@ addCheck("README records P124.6", /P124\.6 approval application authority grant 
 addCheck("platform roadmap records P124.6", /P124\.6 is complete/.test(platformRoadmap) && /P124\.7\s+is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  (p1246CurrentState || p1247StartedState)
-    && statusById.get("P124")?.status === "in_progress"
-    && statusById.get("P124.5")?.status === "complete"
-    && statusById.get("P124.6")?.status === "complete"
-    && ["planned", "complete"].includes(statusById.get("P124.7")?.status)
-    && roadmapById.get("P124.6")?.status === "complete",
+  (
+    p124ParentOpenState
+      && statusById.get("P124.5")?.status === "complete"
+      && statusById.get("P124.6")?.status === "complete"
+      && ["planned", "complete"].includes(statusById.get("P124.7")?.status)
+      && roadmapById.get("P124.6")?.status === "complete"
+  )
+    || (
+      p1247FinalState
+      && statusById.get("P124.5")?.status === "complete"
+      && statusById.get("P124.6")?.status === "complete"
+      && roadmapById.get("P124.6")?.status === "complete"
+    ),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(

@@ -1,12 +1,12 @@
 {
   "phaseId": "P124",
   "title": "Founder Runtime Approval Application Authority Grant Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant boundary before any live authority grant can be considered, while keeping grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P124.6",
-  "previousSubphase": "P124.5",
-  "nextSubphase": "P124.7",
+  "currentSubphase": "P124.7",
+  "previousSubphase": "P124.6",
+  "nextSubphase": "P125",
   "safetyRules": [
     "Do not enable approval application authority grant in P124.1.",
     "Do not enable approval application, approval capture, approval persistence, or approve/reject decision recording in P124.1.",
@@ -816,7 +816,7 @@
     {
       "phaseId": "P124.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Close P124 final validation, mark P124.1-P124.7 complete, preserve scoped grant boundary UX, and create the next planned handoff without enabling live authority.",
@@ -891,10 +891,12 @@
       "phaseStatusUpdate": "P124 in progress; P124.7 complete; current phase P124.7; previous P124.6; next P125.",
       "validationCommands": [
         "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
@@ -930,15 +932,16 @@
       "previousPhase": "P124.6",
       "nextPhase": "P125",
       "order": 160.7,
-      "detail": "Planned final validation subphase. No P124.7 behavior is implemented in P124.6.",
-      "summary": "Planned final validation subphase. No P124.7 behavior is implemented in P124.6.",
+      "detail": "P124.7 final validation complete; P125 is planned next.",
+      "summary": "Closed P124 final validation, verified P124.1-P124.7 reports/checkers/status/docs, preserved scoped grant UX, and created the planned P125 handoff while keeping live authority and execution blocked.",
       "knownLimitations": [
-        "Planned only. This subphase is not implemented in P124.6."
-      ]
+        "P124.7 is final validation only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P125 is planned-only until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-29T16:29:55.423Z"
     }
   ],
-  "completedAt": "2026-05-29T15:38:15.699Z",
-  "summary": "P124.6 validates P124.1-P124.5 grant boundary evidence and scoped UX. Live grants remain blocked.",
-  "previousPhase": "P123.7",
-  "nextPhase": "P124.7"
+  "completedAt": "2026-05-29T16:29:55.423Z",
+  "summary": "P124 is complete with grant boundary contract/policy, browser-safe grant eligibility metadata, governed local grant intent model, hidden grant safe dry-run preview, scoped Business Build/Agent Flow grant boundary UX, aggregate validation/docs closure, and final validation complete. Authority grant, activation, approval application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+  "previousPhase": "P124.7",
+  "nextPhase": "P125"
 }

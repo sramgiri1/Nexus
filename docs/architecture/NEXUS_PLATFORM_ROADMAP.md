@@ -3667,6 +3667,17 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P124.7 is complete. The final validation now closes P124, verifies
+P124.1-P124.7 reports/checkers/status/docs, preserves the scoped Business
+Build/Agent Flow grant UX, and creates the planned P125 handoff. P124 is
+complete. P125 is planned next and must receive its own implementation-grade
+contract before any grant handoff behavior can be built. Authority grant,
+activation, approval application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

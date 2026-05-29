@@ -893,9 +893,92 @@ current phase to P124.5.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P124.7 Final Validation
 
-P124.7 Final Validation: final validation only, allowed files are P124.6/P124.7
-checkers, OS phase status checker, P124 contract/docs/status, README, roadmap,
-package script, and reports. It must close P124, stamp real commits, create the
-next planned handoff, and keep live grants blocked.
+Phase: P124 Founder Runtime Approval Application Authority Grant Boundary
+Subphase: P124.7 Final Validation
+
+Goal: close P124 final validation, mark P124.1-P124.7 complete, preserve the
+scoped grant boundary UX, and create the planned P125 handoff without enabling
+live authority.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `c83501af`.
+
+Files expected to change:
+- `scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-p1246-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json`
+- `docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1246-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1247-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Tests to add/update/remove: add the P124.7 checker, update the P124.6 handoff
+checker so it accepts final P124 closure, update OS phase status checker
+recognition for P125, and run the existing focused Playwright route test for
+the scoped grant UX.
+
+Docs to update: P124 plan, README, platform roadmap, P124 contract, OS roadmap,
+phase status, P124.6 report if regenerated, P124.7 report, OS status report,
+and phase validation coverage report.
+
+Reports to regenerate: P124.6 report, P124.7 report, OS phase status report,
+and phase validation coverage report.
+
+OS phase status update: P124 is complete, P124.7 is complete, current phase is
+P124.7, previous phase is P124.6, next phase is P125, and P125 is planned-only.
+
+Validation commands:
+- `npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant appears only on scoped pages"`
+- `git diff --check`
+
+Known risks: final validation can accidentally imply live grant behavior. P124.7
+keeps all claims scoped to validation and explicitly leaves P125 planned-only.
+
+Rollback plan: revert the P124.7 implementation and stamp commits, remove the
+P124.7 checker/report/package script, restore P124/P124.7 to the P124.6
+handoff state, and remove the planned P125 handoff entry until a future phase
+contract reintroduces it.
+
+Status: complete.
+
+## Next Planned Phase Handoff
+
+P125 Founder Runtime Approval Application Authority Grant Handoff: planned-only
+next NEXUS OS phase. No P125 behavior is implemented in P124.7. P125 must
+receive its own implementation-grade contract before any grant handoff behavior
+can be built.

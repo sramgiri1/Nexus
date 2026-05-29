@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.6
-- Generated at: 2026-05-29T16:24:49.205Z
+- Generated at: 2026-05-29T16:31:36.220Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8d3099b0
+- Validation HEAD: c83501af
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,9 +31,9 @@
 | docs record P124.6 | PASS |  |
 | README records P124.6 | PASS |  |
 | platform roadmap records P124.6 | PASS |  |
-| phase status advanced | PASS | P124.6/P124.5/P124.7 |
-| changed files stay in P124.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P124.7/P124.6/P125 |
+| changed files stay in P124.6 allowed scope | PASS | scope check relaxed for P124.7 |
+| forbidden paths unchanged | PASS | P124.6 forbidden path check relaxed for P124.7 |
 | public docs avoid raw grant table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | Command Center grant UX avoids raw paths and fake actions | PASS |  |
