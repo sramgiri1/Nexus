@@ -2978,6 +2978,19 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P130.3 is complete. NEXUS now has a browser-safe local approval evidence gate
+model that reuses P130.2 prerequisites and keeps every approval, decision, live
+admission, CRUD, DB/runtime, provider, dispatch, mutation, network, and spend
+candidate blocked. P130.4 is next for store live admission safe dry-run
+modeling. Approval capture, decision persistence, store CRUD execution, DB
+schemas, migrations, DB/runtime reads or writes, live acceptance capture,
+handoff acceptance, authority handoff, authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

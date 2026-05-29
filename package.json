@@ -715,7 +715,8 @@
     "check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store": "node scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
     "check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store": "node scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
     "check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
-    "check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js"
+    "check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js",
+    "check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness": "node scripts/check-p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

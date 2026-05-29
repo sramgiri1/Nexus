@@ -19,6 +19,197 @@ P130 is split into seven implementation-grade subphases:
 - P130.6 Store Live Readiness Validation / Docs
 - P130.7 Store Live Readiness Final Validation
 
+## P130.3 Store Live Approval Evidence Gate
+
+Status: complete
+Phase: P130
+Subphase: P130.3
+Goal: Add a browser-safe local approval evidence gate model for store live
+readiness, reusing P130.2 prerequisites and keeping approval capture,
+decision persistence, live CRUD, DB/runtime writes, providers, dispatch,
+mutation, network, and spend blocked.
+Why this is needed: P130.2 listed the live-readiness prerequisites. P130.3
+turns those prerequisite categories into a deterministic evidence gate for
+approval, rollback, audit, validation, sqlite-live mode, local-write flags, and
+safe dry-run review.
+User/operator impact: Operators can see the exact evidence categories that
+must be reviewed before any future live store admission can be considered.
+Command Center impact: No dashboard source or route test changes. Business
+Build and Agent Flow keep the P129.6 Capture Persistence Store Readiness card;
+Chat with NEXUS and Lite stay clean.
+Safety impact: P130.3 is model-only. It does not capture approvals, persist
+decisions, create DB schemas, create migration files, expose raw SQL, read DB
+records, write DB/runtime records, run CRUD actions, capture acceptance, accept
+handoff, hand off authority, grant authority, activate authority, apply
+approvals, record approve/reject decisions, unlock runtime execution, call
+providers/models, dispatch agents, mutate projects, deploy, release, export,
+package, use network calls, or spend.
+Cost impact: Local code, checkers, docs, build, and tests only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `54a628bd`
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessApprovalGate.js`
+- `contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json`
+- `docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md`
+- `scripts/check-p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js`
+- `scripts/check-p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md`
+- `reports/p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessApprovalGate.js`.
+- Create `scripts/check-p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js`.
+- Update P130.2 checker compatibility, package script, P130 contract, docs,
+  status, roadmap, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_APPROVAL_GATE_PHASE`.
+- Export `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_APPROVAL_GATE_VERSION`.
+- Export `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_APPROVAL_EVIDENCE_NAMES`.
+- Export `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_APPROVAL_GATE_FLAGS`.
+- Export `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessApprovalGate`.
+- Export `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessApprovalGate`.
+- Data shape: browser-safe evidence rows with evidence name, label, evidence
+  state, blocker, disabled reason, owner capability, evidence/activity labels,
+  next action, cost impact, and all approval/write/live/action booleans false.
+- No approval decision, DB schema, query, migration file, runtime record, live
+  CRUD executor, provider envelope, dispatch packet, raw private ID, raw table
+  name, or project data.
+
+Reuse check:
+- Reuse P130.2 `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessPrerequisites`.
+- Reuse P130.2 `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessPrerequisites`.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI components, or
+  evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- No dashboard source/test changes in P130.3.
+- Preserve P129.6 Capture Persistence Store Readiness only on Business Build
+  and Agent Flow.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw table names, DemoApp,
+  raw report paths, internal phase labels, or private project IDs in primary UX.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run existing scoped route coverage that verifies all three themes for the
+  store readiness card.
+
+Tests to add/update/remove:
+- Add `check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness`.
+- Update P130.2 checker compatibility for the P130.3 handoff.
+- Do not add or remove dashboard source or route tests in P130.3.
+
+Checker updates:
+- Validate exported approval evidence gate model and P130.2 reuse.
+- Validate source lineage from P130.2, P129.5, P129.4, P129.3, P129.2,
+  P128.2, and P127.2.
+- Validate all approval/write/live/action booleans and candidate counts remain
+  false or zero.
+- Validate forbidden paths and safe wording.
+
+Docs to update:
+- This P130 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P130.2 report.
+- P130.3 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P130 in progress.
+- P130.3 complete.
+- Current phase P130.3.
+- Previous phase P130.2.
+- Next phase P130.4.
+
+Known risks:
+- Evidence gate labels could be mistaken for approval capture. P130.3 records
+  every gate row as blocked and all approval/live candidate counts as zero.
+
+Rollback plan:
+- Revert only the P130.3 implementation and stamp commits. P130.2 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness`
+- `npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "capture persistence store readiness appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P130.3 allowed files>`
+- `git commit -m "feat(nexus): implement p1303 store live approval gate"`
+- `git add <P130.3 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1303 store live approval gate"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Approval capture, decision persistence, store CRUD execution, DB schemas,
+  migrations, DB/runtime reads or writes, live capture, handoff acceptance,
+  authority grant handoff, execution, provider/model calls, agent dispatch,
+  project mutation, network calls, and spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P130.2 Store Live Prerequisite Model
 
 Status: complete

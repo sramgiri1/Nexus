@@ -107,11 +107,26 @@ const validationCommands = [
   "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
   "git diff --check",
 ];
+const p1303StartedState =
+  status.currentPhase === "P130.3"
+  && status.previousPhase === "P130.2"
+  && status.nextPhase === "P130.4"
+  && roadmap.currentPhase === "P130.3"
+  && roadmap.previousPhase === "P130.2"
+  && roadmap.nextPhase === "P130.4"
+  && statusById.get("P130")?.status === "in_progress"
+  && roadmapById.get("P130")?.status === "in_progress"
+  && statusById.get("P130.1")?.status === "complete"
+  && roadmapById.get("P130.1")?.status === "complete"
+  && statusById.get("P130.2")?.status === "complete"
+  && roadmapById.get("P130.2")?.status === "complete"
+  && statusById.get("P130.3")?.status === "complete"
+  && roadmapById.get("P130.3")?.status === "complete";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck("contract marks P130.2 complete", contract.status === "in_progress" && contract.currentSubphase === "P130.2" && contract.previousSubphase === "P130.1" && contract.nextSubphase === "P130.3" && p1302.status === "complete");
+addCheck("contract marks P130.2 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P130.2" && contract.previousSubphase === "P130.1" && contract.nextSubphase === "P130.3") || (contract.currentSubphase === "P130.3" && contract.previousSubphase === "P130.2" && contract.nextSubphase === "P130.4")) && p1302.status === "complete");
 addCheck("P130.2 records expected base commit", p1302.expectedBaseCommit === "8c3a4b65");
-addCheck("P130.3 remains planned", p1303.status === "planned");
+addCheck("P130.3 remains planned or complete", ["planned", "complete"].includes(p1303.status));
 addCheck("P130.2 allowed files include model and checker", p1302.allowedFiles?.includes(MODEL_PATH) && p1302.allowedFiles?.includes("scripts/check-p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js"));
 addCheck("P130.2 forbids project/dashboard/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "dashboard/tests/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1302.forbiddenFiles?.includes(path)));
 addCheck("P130.2 records validation commands", validationCommands.every((command) => p1302.validationCommands?.includes(command)));
@@ -140,7 +155,7 @@ addCheck("Command Center UX remains unchanged and scoped", pageSource.includes("
 addCheck("Playwright scoped store readiness coverage remains", routeTests.includes("capture persistence store readiness appears only on scoped pages"));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P130.2"
+  (status.currentPhase === "P130.2"
     && status.previousPhase === "P130.1"
     && status.nextPhase === "P130.3"
     && roadmap.currentPhase === "P130.2"
@@ -151,7 +166,8 @@ addCheck(
     && statusById.get("P130.1")?.status === "complete"
     && roadmapById.get("P130.1")?.status === "complete"
     && statusById.get("P130.2")?.status === "complete"
-    && roadmapById.get("P130.2")?.status === "complete",
+    && roadmapById.get("P130.2")?.status === "complete")
+    || p1303StartedState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("completed P130.2 entries have required fields", [statusById.get("P130"), statusById.get("P130.2"), roadmapById.get("P130.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));

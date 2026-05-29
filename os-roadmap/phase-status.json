@@ -18961,15 +18961,15 @@
       "order": 166,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3b2a3dcb",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P130 is in progress; P130.2 store live prerequisite model complete and P130.3 is next.",
-      "summary": "P130 continued the capture persistence store live readiness gate with a browser-safe prerequisite model while DB/runtime writes and live CRUD remain blocked.",
+      "detail": "P130 is in progress; P130.3 store live approval evidence gate complete and P130.4 is next.",
+      "summary": "P130 continued the capture persistence store live readiness gate with a browser-safe approval evidence gate while approval capture, decision persistence, DB/runtime writes, and live CRUD remain blocked.",
       "previousPhase": "P129.7",
-      "nextPhase": "P130.3",
+      "nextPhase": "P130.4",
       "checksRun": [
+        "npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
         "npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-        "npm run check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -18978,7 +18978,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P130.2 is a prerequisite model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P130.3 is an approval evidence gate model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -19045,25 +19045,54 @@
       "title": "Store Live Approval Evidence Gate",
       "label": "Store Live Evidence Gate",
       "order": 166.3,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P130.3 store live approval evidence gate complete; P130.4 safe dry run is next.",
+      "summary": "Added a browser-safe local store live approval evidence gate that reuses P130.2 prerequisites and keeps approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
+      "previousPhase": "P130.2",
+      "nextPhase": "P130.4",
+      "checksRun": [
+        "npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P130.3 is an approval evidence gate model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T22:08:11.952Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P130.4",
+      "title": "Store Live Admission Safe Dry Run",
+      "label": "Store Live Dry Run",
+      "order": 166.4,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P130.3 is planned next for approval, rollback, audit, validation, sqlite-live, and local-write evidence gate modeling.",
-      "summary": "Planned approval evidence gate for the capture persistence store live readiness lane. It has no implementation yet.",
-      "previousPhase": "P130.2",
-      "nextPhase": "P130.4",
+      "detail": "P130.4 is planned next for blocked store live admission safe dry-run modeling.",
+      "summary": "Planned safe dry-run model for store live admission. It has no implementation yet.",
+      "previousPhase": "P130.3",
+      "nextPhase": "P130.5",
       "checksRun": [],
       "knownLimitations": [
-        "P130.3 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "P130.4 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ]
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T22:01:02.263Z",
-  "currentPhase": "P130.2",
-  "previousPhase": "P130.1",
-  "nextPhase": "P130.3",
+  "updatedAt": "2026-05-29T22:08:11.952Z",
+  "currentPhase": "P130.3",
+  "previousPhase": "P130.2",
+  "nextPhase": "P130.4",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "phaseId": "P129.7",
@@ -19096,6 +19125,35 @@
   },
   "current": {
     "track": "NEXUS_OS",
+    "phaseId": "P130.3",
+    "title": "Store Live Approval Evidence Gate",
+    "label": "Store Live Evidence Gate",
+    "order": 166.3,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P130.3 store live approval evidence gate complete; P130.4 safe dry run is next.",
+    "summary": "Added a browser-safe local store live approval evidence gate that reuses P130.2 prerequisites and keeps approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
+    "previousPhase": "P130.2",
+    "nextPhase": "P130.4",
+    "checksRun": [
+      "npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+      "npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P130.3 is an approval evidence gate model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-29T22:08:11.952Z"
+  },
+  "previous": {
+    "track": "NEXUS_OS",
     "phaseId": "P130.2",
     "title": "Store Live Prerequisite Model",
     "label": "Store Live Prerequisites",
@@ -19123,52 +19181,23 @@
     ],
     "completedAt": "2026-05-29T22:01:02.263Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P130.1",
-    "title": "Live Readiness Contract / Policy",
-    "label": "Store Live Contract",
-    "order": 166.1,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "1d630fbb",
-    "commandCenterVisible": true,
-    "detail": "P130.1 live readiness contract/policy complete; P130.2 live prerequisite model is next.",
-    "summary": "Created the P130 store live readiness contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping DB/runtime writes and live CRUD blocked.",
-    "previousPhase": "P129.7",
-    "nextPhase": "P130.2",
-    "checksRun": [
-      "npm run check:p1301-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P130.1 is contract/policy only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-29T21:53:32.341Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P130.3",
-    "title": "Store Live Approval Evidence Gate",
-    "label": "Store Live Evidence Gate",
-    "order": 166.3,
+    "phaseId": "P130.4",
+    "title": "Store Live Admission Safe Dry Run",
+    "label": "Store Live Dry Run",
+    "order": 166.4,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P130.3 is planned next for approval, rollback, audit, validation, sqlite-live, and local-write evidence gate modeling.",
-    "summary": "Planned approval evidence gate for the capture persistence store live readiness lane. It has no implementation yet.",
-    "previousPhase": "P130.2",
-    "nextPhase": "P130.4",
+    "detail": "P130.4 is planned next for blocked store live admission safe dry-run modeling.",
+    "summary": "Planned safe dry-run model for store live admission. It has no implementation yet.",
+    "previousPhase": "P130.3",
+    "nextPhase": "P130.5",
     "checksRun": [],
     "knownLimitations": [
-      "P130.3 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "P130.4 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
     ]
   }
 }
