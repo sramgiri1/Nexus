@@ -1111,6 +1111,185 @@ checks and reruns the focused Playwright route coverage and dashboard build.
 Rollback plan: remove the P118.6 checker/docs/status/report changes, restore
 P118.6 to planned, set current phase back to P118.5, and keep P118.5 complete.
 
+## P118.7 Final Validation
+
+Status: complete
+
+Phase: P118 Founder Runtime Approval Capture Boundary
+
+Subphase: P118.7 Final Validation
+
+Goal: close P118, validate P118.1-P118.6 together, preserve scoped Command
+Center approval capture UX, and hand off to planned P119 without enabling
+approval capture or runtime execution.
+
+Why this is needed: P118 has completed its contract, schema metadata, local
+intent model, safe dry-run preview, scoped UX, and aggregate validation. P118.7
+removes stale status, records final evidence, and creates the controlled next
+phase handoff.
+
+User/operator impact: founders keep the same Business Build and Agent Flow
+approval capture boundary card. OS Roadmap now shows P118 complete and P119
+planned.
+
+Command Center impact: no UI source changes. Preserve the P118.5 card only on
+Business Build and Agent Flow. Do not add Chat/Lite clutter, DemoApp exposure,
+raw dumps, raw identifiers, or fake actions.
+
+Safety impact: P118.7 is final validation only. It does not add approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL,
+deploy, release, export, package, network calls, or provider spend.
+
+Cost impact: local deterministic validation only. No provider/model calls,
+network calls, deploy/package actions, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `44830e65`.
+
+Allowed files:
+- `scripts/check-p1187-founder-runtime-approval-capture-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json`
+- `docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1186-founder-runtime-approval-capture-boundary-report.md`
+- `reports/p1187-founder-runtime-approval-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files expected to change:
+- `scripts/check-p1187-founder-runtime-approval-capture-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `package.json`
+- P118 contract, this plan, README, platform roadmap, OS roadmap/status, and
+  generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `scripts/check-p1187-founder-runtime-approval-capture-boundary.js`
+- add `check:p1187-founder-runtime-approval-capture-boundary` to
+  `package.json`
+- add P119 handoff recognition to `scripts/check-os-phase-status.js`
+- update the P118 contract, this plan, README, platform roadmap, OS
+  roadmap/status, and generated reports
+
+Expected exports, schemas, and data shapes: no runtime exports and no schema
+changes. P118.7 creates only a final markdown validation report.
+
+Reuse check: reuse the P118.6 aggregate validation checker/report, P118.5
+display model evidence, existing route coverage, `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing OS status checks, and existing phase
+validation coverage. Do not duplicate report writers, formatters, redaction
+helpers, result envelopes, UI cards, route matrices, or phase status updaters.
+
+Command Center UX requirements: preserve P118.5 exactly. The approval capture
+boundary appears only on Business Build and Agent Flow. Do not show raw JSON,
+raw logs, raw policy dumps, raw private IDs, raw DB table names, internal phase
+labels in primary UX, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: no UI source changes. Rerun the P118.5
+focused route coverage that verifies the scoped card through System, Dark, and
+Light themes.
+
+Playwright tests: preserve and rerun the focused route test for `Approval
+capture boundary appears only on scoped pages`.
+
+Checker updates: add a dedicated P118.7 final validation checker that validates
+all P118 scripts/reports, P118.6 handoff, P119 status recognition, scoped
+Command Center UX evidence, final docs/status, allowed file scope, and absence
+of unsafe authority.
+
+Docs/README/roadmap updates: mark P118 complete, P118.7 complete, and P119
+planned in this plan, README, platform roadmap, P118 contract, OS
+roadmap/status, and generated reports.
+
+OS phase status update: P118 is complete; P118.7 is complete; current phase
+P118.7; previous P118.6; next P119.
+
+Reports to regenerate:
+- `reports/p1186-founder-runtime-approval-capture-boundary-report.md`
+- `reports/p1187-founder-runtime-approval-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1187-founder-runtime-approval-capture-boundary`
+- `npm run check:p1186-founder-runtime-approval-capture-boundary`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Approval capture boundary appears only on scoped pages"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+test files changed; no DB/runtime provider, tool, worker, deploy, release,
+export, package, or env paths changed; no approval capture, approval
+persistence, approval decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+spend authority is enabled; no DemoApp exposure, raw private IDs, raw DB table
+names, raw JSON/log/policy dumps, internal primary UX phase labels, or fake
+actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P118.7 files>`
+- `git commit -m "feat(nexus): finalize p118 approval capture boundary"`
+- stamp P118/P118.7 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p118 final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: final validation can accidentally imply live approval capture. The
+P118.7 checker requires P119 to remain planned-only and revalidates that
+approval capture, persistence, decisions, writes, execution, dispatch, project
+mutation, deploy/package, network, and spend remain blocked.
+
+Rollback plan: remove the P118.7 checker/docs/status/report changes, restore
+P118 to in progress, set current phase back to P118.6, and keep P118.6
+complete.
+
 ## Planned Subphase Controls
 
 P118.2 Approval Capture Schema Metadata is complete. The metadata helper is
@@ -1134,7 +1313,7 @@ P118.6 Approval Capture Validation / Docs is complete. It validates
 P118.1-P118.5 together, regenerates reports, and preserves UX without adding
 new UI or controls. No approval capture or runtime authority is added.
 
-P118.7 Final Validation: close P118, record a planned next phase, rerun
-aggregate checks, ensure no stale phase status remains, and keep approval
-capture/persistence/execution blocked unless a future phase explicitly grants
-narrow authority.
+P118.7 Final Validation is complete. P118 is closed, P119 is planned next,
+aggregate checks are rerun, no stale phase status remains, and approval
+capture/persistence/execution remain blocked unless a future phase explicitly
+grants narrow authority.

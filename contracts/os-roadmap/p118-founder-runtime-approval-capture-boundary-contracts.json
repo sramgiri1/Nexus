@@ -1,12 +1,12 @@
 {
   "phaseId": "P118",
   "title": "Founder Runtime Approval Capture Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval capture boundary while keeping approval capture, approval persistence, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P118.6",
-  "previousSubphase": "P118.5",
-  "nextSubphase": "P118.7",
+  "currentSubphase": "P118.7",
+  "previousSubphase": "P118.6",
+  "nextSubphase": "P119",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P118.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -708,12 +708,13 @@
     {
       "phaseId": "P118.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Close P118 and hand off to the next planned phase without enabling approval capture or runtime execution.",
+      "narrowGoal": "Close P118, validate P118.1-P118.6 together, preserve scoped Command Center approval-capture UX, and hand off to planned P119 without enabling approval capture or runtime execution.",
       "allowedFiles": [
         "scripts/check-p1187-founder-runtime-approval-capture-boundary.js",
+        "scripts/check-os-phase-status.js",
         "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
         "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
@@ -721,11 +722,26 @@
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p1186-founder-runtime-approval-capture-boundary-report.md",
         "reports/p1187-founder-runtime-approval-capture-boundary-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1187-founder-runtime-approval-capture-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1186-founder-runtime-approval-capture-boundary-report.md",
+        "reports/p1187-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -746,23 +762,25 @@
       ],
       "expectedExports": [],
       "dataShape": "Markdown validation report only.",
-      "commandCenterUx": "Preserve P118.5 UX when implemented and avoid new controls.",
+      "commandCenterUx": "Preserve P118.5 UX and avoid new UI or controls.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Preserve P118.5 coverage when implemented."
+        "Preserve and rerun P118.5 approval capture route coverage."
       ],
       "checkerUpdates": [
         "Add a P118.7 final validation checker."
       ],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P118 complete when implemented.",
+      "docsRoadmap": "Mark P118 complete, P118.7 complete, and P119 planned in docs/status/reports.",
+      "phaseStatusUpdate": "P118 complete; P118.7 complete; current P118.7; previous P118.6; next P119.",
       "validationCommands": [
         "npm run check:p1187-founder-runtime-approval-capture-boundary",
         "npm run check:p1186-founder-runtime-approval-capture-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval capture boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -773,7 +791,7 @@
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval capture or runtime execution authority is enabled."
+        "Confirm no approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend authority is enabled."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -790,8 +808,9 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P119",
-      "previousPhase": "P118.6"
+      "previousPhase": "P118.6",
+      "expectedBaseCommit": "44830e65"
     }
   ],
-  "summary": "P118 is in progress. P118.1 defines the approval-capture boundary contract and implementation-grade subphase split, P118.2 adds browser-safe approval capture schema metadata, P118.3 adds a governed local approval intent model, P118.4 adds a local safe dry-run preview, and P118.5 adds scoped Command Center display without DB files, DB writes, approval capture, approval persistence, approve/reject decision recording, or runtime execution authority."
+  "summary": "P118 is complete. It defines and validates the founder runtime approval capture boundary across contract, browser-safe schema metadata, governed local approval intent model, local safe dry-run preview, scoped Command Center display, aggregate validation, and final validation. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked. P119 is planned next."
 }
