@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P125.3
-- Generated at: 2026-05-29T16:48:43.292Z
+- Generated at: 2026-05-29T16:49:29.753Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1b36d6c8
+- Validation HEAD: 73030eae
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P125.3 | PASS |  |
 | platform roadmap records P125.3 | PASS |  |
 | phase status advanced | PASS | P125.3/P125.2/P125.4 |
-| changed files stay in P125.3 allowed scope | PASS | README.md, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1253-founder-runtime-approval-application-authority-grant-handoff.js, shared/founderApprovalApplicationAuthorityGrantHandoffIntentModel.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1253-founder-runtime-approval-application-authority-grant-handoff.js, shared/founderApprovalApplicationAuthorityGrantHandoffIntentModel.js |
+| changed files stay in P125.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw handoff table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
