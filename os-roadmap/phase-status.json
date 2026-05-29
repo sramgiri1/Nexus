@@ -15298,7 +15298,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8a720b41ebfe",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
       "detail": "P114.2 local dispatch schema complete; P114.3 governed local dispatch CRUD is next.",
@@ -15354,7 +15354,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8a720b41ebfe",
       "commandCenterVisible": true,
       "label": "Agent Dispatch SQLite Schema",
       "detail": "P114.2 schema complete; P114.3 governed local dispatch CRUD is next.",

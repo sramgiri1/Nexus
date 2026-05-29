@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.2
-- Generated at: 2026-05-29T00:41:52.945Z
+- Generated at: 2026-05-29T00:42:38.743Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: abda78fb
+- Validation HEAD: 8a720b41
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | README records P114.2 | PASS |  |
 | platform roadmap records P114.2 | PASS |  |
 | phase status advanced | PASS | P114.2/P114.1/P114.3 |
-| changed files stay in P114.2 allowed scope | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1142-founder-live-agent-dispatch-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1142-founder-live-agent-dispatch-readiness.js |
+| changed files stay in P114.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1141-founder-live-agent-dispatch-contract-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1141-founder-live-agent-dispatch-contract-report.md |
 | public docs avoid raw dispatch table names | PASS |  |
 | no unsafe runtime imports or URLs | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
