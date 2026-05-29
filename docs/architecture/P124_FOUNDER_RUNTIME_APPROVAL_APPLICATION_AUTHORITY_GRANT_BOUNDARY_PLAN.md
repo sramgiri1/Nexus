@@ -449,14 +449,162 @@ return current phase to P124.2.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P124.4 Grant Safe Dry Run
 
-P124.4 Grant Safe Dry Run: preview-only, allowed files are the planned safe
-dry-run module, P124.3 intent model, P124 contract/docs/checker/status, and
-reports. It forbids unsafe runtime and project paths. Expected export is
-`buildFounderApprovalApplicationAuthorityGrantSafeDryRun`. It must reuse result
-envelopes and keep persistence, execution, provider calls, network calls, and
-spend blocked.
+Phase: P124 Founder Runtime Approval Application Authority Grant Boundary
+
+Subphase: P124.4
+
+Goal: add a hidden local approval application authority grant safe dry-run
+result envelope that reuses the P124.3 intent model and proves grant readiness
+can be previewed without granting authority.
+
+Why this is needed: P124.3 models grant intent. P124.4 provides the reusable
+safe dry-run envelope that P124.5 can display in scoped Command Center pages
+without introducing live authority, persistence, execution, provider calls, or
+spend.
+
+User/operator impact: operators can inspect display-safe grant dry-run rows,
+blocked counts, owner capability, disabled reason, next action, blockers,
+evidence labels, activity location, and cost impact before any live path exists.
+
+Command Center impact: no primary Command Center source change in P124.4. Chat
+with NEXUS stays clean. Business Build and Agent Flow scoped display work is
+reserved for P124.5.
+
+Safety impact: approval application authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package, network calls,
+and provider spend remain blocked.
+
+Cost impact: local dry-run validation only. No provider calls, model calls,
+network calls, worker runtime, package creation, deploy, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantSafeDryRun.js`
+- `shared/founderApprovalApplicationAuthorityGrantIntentModel.js`
+- `contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json`
+- `docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md`
+- `scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1244-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SAFE_DRY_RUN_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SAFE_DRY_RUN_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SAFE_DRY_RUN_STATES`
+- `buildFounderApprovalApplicationAuthorityGrantSafeDryRun`
+- `validateFounderApprovalApplicationAuthorityGrantSafeDryRun`
+- Result envelope fields from `shared/resultEnvelope.js`: `ok`, `status`,
+  `phase`, `mode`, `source`, `summary`, `data`, `warnings`, `errors`,
+  `evidence`, and `metadata`.
+- `data` fields include display-safe `previewMode`, `dryRunOnly`,
+  `commandCenterVisible: false`, source phases, `grantSummary`,
+  `previewSections`, `previewRows`, blockers, next action, disabled reason,
+  owner capability, evidence/activity/cost labels, and all unsafe booleans and
+  counts false or zero.
+
+Command Center UX requirements: no new Command Center route, card, tab, button,
+mutation control, or sidebar label in P124.4. P124.5 owns scoped UX. Primary UX
+must not show DemoApp, raw JSON, raw logs, raw policy dumps, raw private IDs,
+raw report paths, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light themes.
+No theme or CSS change is allowed in P124.4.
+
+Playwright tests: no dashboard test edits in P124.4 because dashboard source and
+test paths are forbidden. Run dashboard build and unit tests as regression.
+
+Tests to add/update/remove: add P124.4 checker and package script. Update no
+Playwright tests in this subphase. Preserve route-wide safety coverage for no
+DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap
+scope, and project milestone separation.
+
+Checker updates: add
+`scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js`.
+Reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`, and
+`shared/resultEnvelope.js`. Validate result-envelope shape, P124.3/P124.2 reuse,
+blocked flags, zero counts, safe docs/status/report state, allowed file scope,
+and forbidden paths.
+
+Docs to update: update this plan, README, platform roadmap, P124 contract, OS
+roadmap/status, generated P124.4 report, OS phase status report, and phase
+validation coverage report.
+
+Reports to regenerate:
+- `reports/p1244-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+- `reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md`
+  if the handoff checker refreshes it.
+
+OS phase status update: P124 is in progress. P124.4 is complete. Current phase
+is P124.4, previous phase is P124.3, and next phase is P124.5.
+
+Validation commands:
+- `npm run check:p1244-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:p1243-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P124.4 files>`
+- `git commit -m "feat(nexus): implement p1244 approval authority grant boundary"`
+- stamp P124/P124.4 status with the implementation commit
+- `git add <allowed P124.4 status/report files>`
+- `git commit -m "chore(nexus): stamp p1244 approval authority grant boundary"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks: confirm no forbidden paths changed, no unauthorized
+dashboard source/test files changed, no runtime/provider/project/deploy/package/
+env paths changed, no authority grant/write/execution/spend behavior is
+enabled, no raw UX dumps or fake runnable actions are introduced, and no stale
+`pending-final-commit` remains after the status stamp commit.
+
+Known risks: safe dry-run wording can still sound live. P124.4 keeps
+`dryRunOnly` true, `commandCenterVisible` false, all grant/write/execution
+flags false, and all unsafe candidate counts zero.
+
+Rollback plan: remove the safe dry-run helper, P124.4 checker/report/package
+script, contract/docs/status/report updates, restore P124.4 to planned, and
+return current phase to P124.3.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P124.5 Command Center Grant Boundary UX: scoped UX only, allowed files are the
 existing Command Center data/page/test files, the P124.4 dry-run module, P124

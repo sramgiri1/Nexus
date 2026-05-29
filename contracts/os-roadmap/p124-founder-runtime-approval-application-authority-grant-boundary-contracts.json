@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant boundary before any live authority grant can be considered, while keeping grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P124.3",
-  "previousSubphase": "P124.2",
-  "nextSubphase": "P124.4",
+  "currentSubphase": "P124.4",
+  "previousSubphase": "P124.3",
+  "nextSubphase": "P124.5",
   "safetyRules": [
     "Do not enable approval application authority grant in P124.1.",
     "Do not enable approval application, approval capture, approval persistence, or approve/reject decision recording in P124.1.",
@@ -426,13 +426,13 @@
     {
       "phaseId": "P124.4",
       "title": "Grant Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Add a hidden local safe dry-run preview for grant readiness that reuses the P124.3 intent model and result envelopes without enabling grants, writes, execution, provider calls, project mutation, network calls, or spend.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantSafeDryRun.js",
-        "shared/founderApprovalApplicationAuthorityGrantIntent.js",
+        "shared/founderApprovalApplicationAuthorityGrantIntentModel.js",
         "contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json",
         "docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md",
         "scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js",
@@ -449,7 +449,7 @@
       ],
       "exactFiles": [
         "shared/founderApprovalApplicationAuthorityGrantSafeDryRun.js",
-        "shared/founderApprovalApplicationAuthorityGrantIntent.js",
+        "shared/founderApprovalApplicationAuthorityGrantIntentModel.js",
         "contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json",
         "docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md",
         "scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js",
@@ -483,10 +483,14 @@
         ".env*"
       ],
       "expectedExports": [
-        "buildFounderApprovalApplicationAuthorityGrantSafeDryRun"
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SAFE_DRY_RUN_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SAFE_DRY_RUN_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_SAFE_DRY_RUN_STATES",
+        "buildFounderApprovalApplicationAuthorityGrantSafeDryRun",
+        "validateFounderApprovalApplicationAuthorityGrantSafeDryRun"
       ],
-      "dataShape": "Result-envelope dry-run preview with display-safe sections, rows, blockers, disabled reason, owner capability, evidence labels, and zero unsafe counts. No persistence or runtime records.",
-      "commandCenterUx": "No primary Command Center exposure in P124.4. Preserve existing scoped activation UX.",
+      "dataShape": "Result-envelope dry-run preview with display-safe sections, rows, blockers, disabled reason, owner capability, evidence labels, activity labels, cost impact, and zero unsafe counts. No persistence or runtime records.",
+      "commandCenterUx": "No primary Command Center exposure in P124.4. Preserve existing scoped activation UX and keep grant display work for P124.5.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -497,14 +501,16 @@
         "Preserve route-wide safety coverage for no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
       ],
       "checkerUpdates": [
-        "Add scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js or update the prior checker handoff as needed.",
-        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden paths, safe wording, status, docs, reports, and no unsafe imports or URLs."
+        "Add scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js.",
+        "Confirm the P124.3 checker accepts P124.4 handoff.",
+        "Reuse shared/reportWriter.js, shared/checkResultFormatter.js, and shared/resultEnvelope.js.",
+        "Validate grant safe dry-run envelope shape, P124.3/P124.2 reuse, blocked flags, zero counts, docs/status/reports, forbidden paths, and unsafe claim prevention."
       ],
-      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, and generated reports.",
+      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, generated reports, and P124.5 planned handoff.",
       "phaseStatusUpdate": "P124 in progress; P124.4 complete; current phase P124.4; previous P124.3; next P124.5.",
       "validationCommands": [
         "npm run check:p1244-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1243-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -543,7 +549,8 @@
       ],
       "previousPhase": "P124.3",
       "nextPhase": "P124.5",
-      "order": 160.4
+      "order": 160.4,
+      "expectedBaseCommit": "a9a9fd66"
     },
     {
       "phaseId": "P124.5",
@@ -669,7 +676,12 @@
       ],
       "previousPhase": "P124.4",
       "nextPhase": "P124.6",
-      "order": 160.5
+      "order": 160.5,
+      "detail": "Planned scoped Command Center grant boundary UX subphase. No P124.5 behavior is implemented in P124.4.",
+      "summary": "Planned scoped Command Center grant boundary UX subphase. No P124.5 behavior is implemented in P124.4.",
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.4."
+      ]
     },
     {
       "phaseId": "P124.6",
@@ -907,7 +919,7 @@
     }
   ],
   "completedAt": "2026-05-29T15:38:15.699Z",
-  "summary": "P124.3 adds a pure local authority grant intent model that reuses P124.2 grant metadata. Live grants remain blocked.",
+  "summary": "P124.4 adds a hidden local authority grant safe dry-run result envelope that reuses P124.3 grant intent model data. Live grants remain blocked.",
   "previousPhase": "P123.7",
-  "nextPhase": "P124.4"
+  "nextPhase": "P124.5"
 }

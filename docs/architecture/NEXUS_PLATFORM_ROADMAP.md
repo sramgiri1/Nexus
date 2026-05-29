@@ -3632,12 +3632,18 @@ intent model now reuses P124.2 grant metadata and exposes blocked readiness
 rows, blockers, disabled reason, owner capability, evidence/activity labels,
 zero unsafe candidate counts, and no-spend cost posture while rejecting granted,
 write, execution, provider, dispatch, mutation, network, and spend states.
-P124.4 is next for the grant safe dry-run preview. Authority grant, activation,
-approval application, approval capture, approval persistence, approve/reject
-decision recording, DB/runtime writes, runtime execution, execution unlock,
-provider/model calls, agent dispatch, worker/tool execution, project mutation,
-hosted DB mutation, raw SQL interface, deploy, release, export, package action,
-network call, and provider spend remain blocked.
+
+P124.4 is complete. The hidden local approval application authority grant safe
+dry-run result envelope now reuses the P124.3 intent model and P124.2 metadata
+to produce display-safe grant dry-run sections, rows, blockers, disabled
+reasons, owner capability, evidence/activity labels, zero unsafe counts, and
+no-spend cost posture while keeping Command Center primary UX unchanged. P124.5
+is next for scoped Command Center grant boundary UX. Authority grant,
+activation, approval application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)

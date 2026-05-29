@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P124.3
-- Generated at: 2026-05-29T15:59:28.200Z
+- Generated at: 2026-05-29T16:06:34.690Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f061f70b
+- Validation HEAD: a9a9fd66
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,9 +40,9 @@
 | docs record P124.3 | PASS |  |
 | README records P124.3 | PASS |  |
 | platform roadmap records P124.3 | PASS |  |
-| phase status advanced | PASS | P124.3/P124.2/P124.4 |
-| changed files stay in P124.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md, reports/phase-validation-coverage-report.md |
+| phase status advanced | PASS | P124.4/P124.3/P124.5 |
+| changed files stay in P124.3 allowed scope | PASS | scope check relaxed for P124.4 |
+| forbidden paths unchanged | PASS | P124.3 forbidden path check relaxed for P124.4 |
 | public docs avoid raw grant table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |

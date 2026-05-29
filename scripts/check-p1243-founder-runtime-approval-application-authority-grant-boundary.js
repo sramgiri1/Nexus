@@ -167,7 +167,11 @@ addCheck("contract records expected exports", [
 addCheck("P124.2 checker accepts P124.3 handoff", p1242Checker.includes("P124.3") && p1242Checker.includes("P124.4") && p1242Checker.includes("p1243StartedState"));
 addCheck("docs record P124.3", /P124\.3 Governed Grant Intent Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P124.3", /P124\.3 governed approval application authority grant intent model/i.test(readme) && /P124\.4\s+is\s+next/.test(readme));
-addCheck("platform roadmap records P124.3", /P124\.3 is complete/.test(platformRoadmap) && /P124\.4\s+is\s+next/.test(platformRoadmap));
+addCheck(
+  "platform roadmap records P124.3",
+  /P124\.3 is complete/.test(platformRoadmap)
+    && (/P124\.4\s+is\s+next/.test(platformRoadmap) || /P124\.4 is complete/.test(platformRoadmap)),
+);
 addCheck(
   "phase status advanced",
   (p1243CurrentState || p1244StartedState)
