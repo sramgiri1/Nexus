@@ -19,6 +19,200 @@ P130 is split into seven implementation-grade subphases:
 - P130.6 Store Live Readiness Validation / Docs
 - P130.7 Store Live Readiness Final Validation
 
+## P130.5 Command Center Store Live Gate UX
+
+Status: complete
+Phase: P130
+Subphase: P130.5
+Goal: Render a scoped display-safe store live readiness gate on Business Build
+and Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and unrelated pages
+stay clean.
+Why this is needed: P130.4 created blocked store live admission safe dry-run
+envelopes. P130.5 turns that model into a useful founder/operator view without
+exposing raw envelopes or any live action.
+User/operator impact: Operators can see current state, next action, blockers,
+disabled reason, owner capability, evidence/activity labels, and cost impact
+for store live readiness from the two work pages where it is relevant.
+Command Center impact: Business Build shows `Business Build Store Live
+Readiness Gate`; Agent Flow shows `Agent Flow Store Live Readiness Gate`.
+Chat with NEXUS and Lite remain chat-focused and clean.
+Safety impact: P130.5 is display-only. It does not capture approvals, persist
+decisions, create DB schemas, create migration files, expose raw SQL, read DB
+records, write DB/runtime records, run CRUD actions, capture acceptance, accept
+handoff, hand off authority, grant authority, activate authority, apply
+approvals, record approve/reject decisions, unlock runtime execution, call
+providers/models, dispatch agents, mutate projects, deploy, release, export,
+package, use network calls, or spend.
+Cost impact: Local code, checkers, docs, build, and tests only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `6e11709d`
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p130-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-contracts.json`
+- `docs/architecture/P130_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_LIVE_READINESS_PLAN.md`
+- `scripts/check-p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js`
+- `scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md`
+- `reports/p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Update `dashboard/src/data/businessBuild.js` with
+  `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessDisplayModel`.
+- Update `dashboard/src/pages/CommandCenterV2.jsx` to render the display model
+  only on Business Build and Agent Flow.
+- Update `dashboard/tests/routes.spec.js` with scoped route coverage.
+- Create `scripts/check-p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js`.
+- Update P130.4 checker compatibility, package script, P130 contract, docs,
+  status, roadmap, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessDisplayModel`.
+- Data shape: display-safe `summaryRows`, `readinessRows`,
+  `readinessSections`, `safetyRows`, `blockers`, `currentState`, `nextAction`,
+  `disabledReason`, `ownerCapability`, `evidenceLocation`, `activityLocation`,
+  and `costImpact`.
+- No raw result envelope, raw report path, private ID, raw table name, raw
+  policy dump, live action button, or project data.
+
+Reuse check:
+- Reuse P130.4 `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun`.
+- Reuse existing `FounderApprovalDecisionBoundaryCard`.
+- Reuse existing route-scoped Playwright coverage style.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate UI cards, report writers, checker formatters, result
+  envelopes, mode guards, redaction helpers, route matrices, status helpers, or
+  evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Business Build renders `Business Build Store Live Readiness Gate`.
+- Agent Flow renders `Agent Flow Store Live Readiness Gate`.
+- Chat with NEXUS, Lite, OS Roadmap, and Live Readiness do not render this gate.
+- The gate shows current state, next action, blockers, disabled reason, owner
+  capability, evidence/activity labels, and cost impact.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw table names, raw
+  report paths, internal helper names, private project IDs, or fake working
+  actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Playwright must validate the scoped gate in all three themes.
+
+Tests to add/update/remove:
+- Add Playwright test `store live readiness gate appears only on scoped pages`.
+- Add `check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness`.
+- Update P130.4 checker compatibility for the P130.5 handoff.
+
+Checker updates:
+- Validate display model export and P130.4 reuse.
+- Validate Business Build and Agent Flow labels are present.
+- Validate Chat with NEXUS, Lite, OS Roadmap, and Live Readiness stay clean.
+- Validate all live/action/write/provider/project/spend candidate counts remain
+  zero.
+- Validate safe wording and forbidden path scope.
+
+Docs to update:
+- This P130 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P130.4 report.
+- P130.5 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P130 in progress.
+- P130.5 complete.
+- Current phase P130.5.
+- Previous phase P130.4.
+- Next phase P130.6.
+
+Known risks:
+- Store live readiness may sound executable. P130.5 labels the gate as blocked,
+  displays every live candidate count as zero, and does not render action
+  controls.
+
+Rollback plan:
+- Revert only the P130.5 implementation and stamp commits. P130.4 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness`
+- `npm run check:p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P130.5 allowed files>`
+- `git commit -m "feat(nexus): implement p1305 store live gate ux"`
+- `git add <P130.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1305 store live gate ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Chat with NEXUS and Lite stay clean.
+- No live action controls, raw envelopes, raw table names, raw report paths,
+  raw logs, raw JSON, raw policy dumps, or private IDs in primary UX.
+- Approval capture, decision persistence, store CRUD execution, DB schemas,
+  migrations, DB/runtime reads or writes, live capture, handoff acceptance,
+  authority grant handoff, execution, provider/model calls, agent dispatch,
+  project mutation, network calls, and spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX changes.
+- Tests/checkers run.
+- Dashboard build/unit/page/browser results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P130.4 Store Live Admission Safe Dry Run
 
 Status: complete

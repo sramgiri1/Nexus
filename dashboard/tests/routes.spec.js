@@ -5710,4 +5710,62 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toMatch(/persist now|save now|write now|run now|execute now|deploy now|activate now|accept handoff now|capture acceptance now|record acceptance now|handoff authority now|grant authority now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i);
     expect(errors).toEqual([]);
   });
+
+  test("store live readiness gate appears only on scoped pages", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Store live readiness gate", { exact: true }).filter({ hasText: "Business Build Store Live Readiness Gate" });
+      await expect(themedCard).toContainText("Store Live Readiness Gate");
+      await expect(themedCard).toContainText("Store live gate display-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Store Live Readiness Gate"],
+      ["/command-center/agent-flow", "Agent Flow Store Live Readiness Gate"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Store live readiness gate", { exact: true }).filter({ hasText: label });
+      await expect(card).toContainText("Store Live Readiness Gate");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Store live state");
+      await expect(card).toContainText("Admission envelopes");
+      await expect(card).toContainText("Live admission candidates");
+      await expect(card).toContainText("Live CRUD candidates");
+      await expect(card).toContainText("Approval-capture candidates");
+      await expect(card).toContainText("Decision-persistence candidates");
+      await expect(card).toContainText("DB-readable candidates");
+      await expect(card).toContainText("DB-writable candidates");
+      await expect(card).toContainText("Runtime-writable candidates");
+      await expect(card).toContainText("Provider-spend candidates");
+      await expect(card).toContainText("NEXUS Store Live Readiness Gate");
+      await expect(card).toContainText("Store live admission review");
+      await expect(card).toContainText("Approval evidence admission");
+      await expect(card).toContainText("Write boundary admission");
+      await expect(card).toContainText("Admission safe dry-run envelopes");
+      await expect(card).toContainText("Approval evidence gate");
+      await expect(card).toContainText("Live storage boundary");
+      await expect(card).toContainText("No provider spend");
+      const cardText = await card.innerText();
+      expect(cardText).not.toMatch(/P130|reports\/p130|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|dryRunStoreLiveAdmissionReview|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Store live readiness gate", { exact: true })).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|dryRunStoreLiveAdmissionReview|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
+    expect(body).not.toMatch(/persist now|save now|write now|run now|execute now|deploy now|activate now|accept handoff now|capture acceptance now|record acceptance now|handoff authority now|grant authority now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now|admit live store now/i);
+    expect(errors).toEqual([]);
+  });
 });

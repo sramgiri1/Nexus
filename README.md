@@ -1804,6 +1804,18 @@ The Command Center and local operator surface have:
   unlock, provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
   package, network call, and provider spend remain unavailable.
+- P130.5 Command Center store live gate UX: Business Build and Agent Flow now
+  show a scoped display-safe Store Live Readiness Gate with current state, next
+  action, blockers, disabled reason, owner capability, evidence/activity labels,
+  and no-spend cost impact. Chat with NEXUS, Lite, OS Roadmap, and unrelated
+  pages stay clean. P130.6 is next for aggregate validation and docs closure.
+  Approval capture, decision persistence, store CRUD execution, DB schemas,
+  migrations, DB/runtime reads or writes, live acceptance capture, handoff
+  acceptance, authority handoff, authority grant, activation, approval
+  application, approve/reject decision recording, runtime execution, execution
+  unlock, provider/model calls, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+  package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

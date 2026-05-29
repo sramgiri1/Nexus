@@ -3475,6 +3475,15 @@ function AgentFlowPage() {
         rowAriaSuffix="approval application authority grant handoff acceptance capture persistence store row"
         maxRows={3}
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness}
+        surfaceLabel="Agent Flow Store Live Readiness Gate"
+        heading="Store Live Readiness Gate"
+        pillLabel="Live gate blocked"
+        ariaLabel="Store live readiness gate"
+        rowAriaSuffix="store live readiness row"
+        maxRows={4}
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10360,6 +10369,15 @@ function BusinessBuildPage() {
           ariaLabel="Founder approval application authority grant handoff acceptance capture persistence store"
           rowAriaSuffix="approval application authority grant handoff acceptance capture persistence store row"
           maxRows={3}
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness}
+          surfaceLabel="Business Build Store Live Readiness Gate"
+          heading="Store Live Readiness Gate"
+          pillLabel="Live gate blocked"
+          ariaLabel="Store live readiness gate"
+          rowAriaSuffix="store live readiness row"
+          maxRows={4}
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">

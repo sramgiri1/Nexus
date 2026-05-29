@@ -18961,26 +18961,26 @@
       "order": 166,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "f3d73552",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P130 is in progress; P130.4 store live admission safe dry run is complete and P130.5 is next.",
-      "summary": "P130 continued the capture persistence store live readiness gate with blocked local result envelopes for store live admission while approval capture, decision persistence, DB/runtime writes, and live CRUD remain blocked.",
+      "detail": "P130 is in progress; P130.5 Command Center store live gate UX is complete and P130.6 is next.",
+      "summary": "P130 continued the capture persistence store live readiness gate with scoped display-safe Command Center UX while approval capture, decision persistence, DB/runtime writes, and live CRUD remain blocked.",
       "previousPhase": "P129.7",
-      "nextPhase": "P130.5",
+      "nextPhase": "P130.6",
       "checksRun": [
+        "npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
         "npm run check:p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-        "npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
-        "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P130.4 is safe dry-run modeling only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P130.5 is display-only UX. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T22:20:00.816Z"
+      "completedAt": "2026-05-29T22:28:43.104Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19104,27 +19104,85 @@
       "title": "Command Center Store Live Gate UX",
       "label": "Store Live Gate UX",
       "order": 166.5,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P130.5 Command Center store live gate UX complete; P130.6 aggregate validation and docs is next.",
+      "summary": "Rendered a scoped display-safe Store Live Readiness Gate on Business Build and Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and unrelated pages remain clean.",
+      "previousPhase": "P130.4",
+      "nextPhase": "P130.6",
+      "checksRun": [
+        "npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P130.5 is display-only UX. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T22:28:43.104Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P130.6",
+      "title": "Store Live Readiness Validation / Docs",
+      "label": "Store Live Validation",
+      "order": 166.6,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P130.5 is planned next for scoped Command Center store live gate UX on Business Build and Agent Flow.",
-      "summary": "Planned display-safe Command Center store live gate UX. It has no implementation yet.",
-      "previousPhase": "P130.4",
-      "nextPhase": "P130.6",
+      "detail": "P130.6 is planned next for aggregate validation, docs, route coverage, checker handoffs, and OS status closure.",
+      "summary": "Planned aggregate validation and docs closure. It has no implementation yet.",
+      "previousPhase": "P130.5",
+      "nextPhase": "P130.7",
       "checksRun": [],
       "knownLimitations": [
-        "P130.5 is planned-only until its own implementation-grade plan is written. It must not expose raw JSON, raw logs, raw policy dumps, raw table names, private IDs, demo surface leakage, live actions, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "P130.6 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ]
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T22:20:00.816Z",
-  "currentPhase": "P130.4",
-  "previousPhase": "P130.3",
-  "nextPhase": "P130.5",
+  "updatedAt": "2026-05-29T22:28:43.104Z",
+  "currentPhase": "P130.5",
+  "previousPhase": "P130.4",
+  "nextPhase": "P130.6",
   "currentPhaseStatus": "complete",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P130.5",
+    "title": "Command Center Store Live Gate UX",
+    "label": "Store Live Gate UX",
+    "order": 166.5,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P130.5 Command Center store live gate UX complete; P130.6 aggregate validation and docs is next.",
+    "summary": "Rendered a scoped display-safe Store Live Readiness Gate on Business Build and Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and unrelated pages remain clean.",
+    "previousPhase": "P130.4",
+    "nextPhase": "P130.6",
+    "checksRun": [
+      "npm run check:p1305-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+      "npm run check:p1304-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P130.5 is display-only UX. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-29T22:28:43.104Z"
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P130.4",
     "title": "Store Live Admission Safe Dry Run",
@@ -19153,52 +19211,23 @@
     ],
     "completedAt": "2026-05-29T22:20:00.816Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P130.3",
-    "title": "Store Live Approval Evidence Gate",
-    "label": "Store Live Evidence Gate",
-    "order": 166.3,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d6c60a43",
-    "commandCenterVisible": true,
-    "detail": "P130.3 store live approval evidence gate complete; P130.4 safe dry run is next.",
-    "summary": "Added a browser-safe local store live approval evidence gate that reuses P130.2 prerequisites and keeps approval capture, decision persistence, live admission, CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
-    "previousPhase": "P130.2",
-    "nextPhase": "P130.4",
-    "checksRun": [
-      "npm run check:p1303-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:p1302-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P130.3 is an approval evidence gate model only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-29T22:08:11.952Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P130.5",
-    "title": "Command Center Store Live Gate UX",
-    "label": "Store Live Gate UX",
-    "order": 166.5,
+    "phaseId": "P130.6",
+    "title": "Store Live Readiness Validation / Docs",
+    "label": "Store Live Validation",
+    "order": 166.6,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P130.5 is planned next for scoped Command Center store live gate UX on Business Build and Agent Flow.",
-    "summary": "Planned display-safe Command Center store live gate UX. It has no implementation yet.",
-    "previousPhase": "P130.4",
-    "nextPhase": "P130.6",
+    "detail": "P130.6 is planned next for aggregate validation, docs, route coverage, checker handoffs, and OS status closure.",
+    "summary": "Planned aggregate validation and docs closure. It has no implementation yet.",
+    "previousPhase": "P130.5",
+    "nextPhase": "P130.7",
     "checksRun": [],
     "knownLimitations": [
-      "P130.5 is planned-only until its own implementation-grade plan is written. It must not expose raw JSON, raw logs, raw policy dumps, raw table names, private IDs, demo surface leakage, live actions, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "P130.6 is planned-only until its own implementation-grade plan is written. It must not capture approvals, persist decisions, enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
     ]
   }
 }
