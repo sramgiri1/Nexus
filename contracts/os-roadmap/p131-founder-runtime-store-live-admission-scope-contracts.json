@@ -3,9 +3,9 @@
   "title": "Founder Runtime Store Live Admission Scope Contract",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P131.2",
-  "previousSubphase": "P131.1",
-  "nextSubphase": "P131.3",
+  "currentSubphase": "P131.3",
+  "previousSubphase": "P131.2",
+  "nextSubphase": "P131.4",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "d63816a9",
   "owner": "NEXUS OS",
@@ -218,12 +218,15 @@
     {
       "phaseId": "P131.3",
       "title": "Approval Evidence Readiness Resolver",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1312-stamp",
-      "narrowGoal": "Resolve approval evidence readiness from existing safe evidence without capturing approvals or persisting decisions.",
+      "expectedBaseCommit": "4a43c992",
+      "narrowGoal": "Resolve approval evidence readiness from the P131.2 request model without capturing approvals or persisting decisions.",
       "allowedFiles": [
+        "shared/founderRuntimeStoreLiveAdmissionScopeApprovalEvidenceReadinessResolver.js",
+        "scripts/check-p1312-founder-runtime-store-live-admission-scope.js",
+        "scripts/check-p1313-founder-runtime-store-live-admission-scope.js",
         "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
         "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
         "package.json",
@@ -232,6 +235,8 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/os-phase-status-report.md",
+        "reports/p1312-founder-runtime-store-live-admission-scope-report.md",
+        "reports/p1313-founder-runtime-store-live-admission-scope-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
@@ -251,8 +256,15 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
+      "expectedExports": [
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_APPROVAL_EVIDENCE_READINESS_RESOLVER_PHASE",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_APPROVAL_EVIDENCE_READINESS_RESOLVER_VERSION",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_APPROVAL_EVIDENCE_READINESS_NAMES",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_APPROVAL_EVIDENCE_READINESS_FLAGS",
+        "buildFounderRuntimeStoreLiveAdmissionScopeApprovalEvidenceReadinessResolver",
+        "validateFounderRuntimeStoreLiveAdmissionScopeApprovalEvidenceReadinessResolver"
+      ],
+      "dataShape": "Browser-safe local approval evidence readiness resolver with source P131.2 lineage, readiness names, readiness rows, blocker/owner/next-action/cost labels, zero candidate counts, commandCenterVisible false, and all unsafe runtime/write/provider/dispatch/mutation/spend flags false.",
       "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -268,8 +280,8 @@
       "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
       "phaseStatusUpdate": "P131 in progress; P131.3 complete; current phase P131.3; previous P131.2; next P131.4.",
       "validationCommands": [
-        "npm run check:p1311-founder-runtime-store-live-admission-scope",
-        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1313-founder-runtime-store-live-admission-scope",
+        "npm run check:p1312-founder-runtime-store-live-admission-scope",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -292,7 +304,14 @@
       ],
       "previousPhase": "P131.2",
       "nextPhase": "P131.4",
-      "order": 167.3
+      "order": 167.3,
+      "completedAt": "2026-05-29T23:10:20.949Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Added a browser-safe local resolver that maps P131.2 request fields to unresolved approval evidence readiness rows with blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
+      "knownLimitations": [
+        "P131.3 is an approval evidence readiness resolver only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
     },
     {
       "phaseId": "P131.4",
@@ -634,5 +653,6 @@
     ],
     "nextPhase": "P131.3",
     "commandCenterVisible": true
-  }
+  },
+  "summary": "P131 store live admission scope has progressed through approval evidence readiness resolution while live admission, CRUD, DB/runtime mutation, provider calls, dispatch, project mutation, network, and spend remain blocked."
 }

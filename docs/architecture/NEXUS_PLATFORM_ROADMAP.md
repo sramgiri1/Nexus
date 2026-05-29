@@ -3052,8 +3052,20 @@ package action, network call, and provider spend remain blocked.
 
 P131.2 is complete. NEXUS now has a browser-safe local request model for store
 live admission intent, evidence requirements, blockers, next action, owner
-capability, and no-spend cost impact. P131.3 is next for approval evidence
-readiness resolution. Approval capture, decision persistence, store CRUD
+capability, and no-spend cost impact. Approval capture, decision persistence,
+store CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
+acceptance capture, handoff acceptance, authority handoff, authority grant,
+activation, approval application, approve/reject decision recording, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
+P131.3 is complete. NEXUS now has a browser-safe local approval evidence
+readiness resolver that maps P131.2 request fields to unresolved evidence rows,
+blockers, next action, owner capability, and no-spend cost impact. P131.4 is
+next for write boundary admission dry-run modeling. Approval capture, decision
+persistence, store CRUD
 execution, DB schemas, migrations, DB/runtime reads or writes, live acceptance
 capture, handoff acceptance, authority handoff, authority grant, activation,
 approval application, approve/reject decision recording, runtime execution,
