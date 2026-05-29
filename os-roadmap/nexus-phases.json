@@ -10950,7 +10950,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d72bc9ec",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
       "detail": "P116.6 validation/docs aggregation complete; P116.7 is next.",
@@ -11119,7 +11119,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d72bc9ec",
       "commandCenterVisible": true,
       "label": "Execution Readiness Validation / Docs",
       "detail": "Runtime execution readiness validation/docs aggregation complete.",
