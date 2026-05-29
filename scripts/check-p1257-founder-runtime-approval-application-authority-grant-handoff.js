@@ -101,6 +101,13 @@ const finalState =
   && roadmap.currentPhase === "P125.7"
   && roadmap.previousPhase === "P125.6"
   && roadmap.nextPhase === "P126";
+const p1261StartedState =
+  status.currentPhase === "P126.1"
+  && status.previousPhase === "P125.7"
+  && status.nextPhase === "P126.2"
+  && roadmap.currentPhase === "P126.1"
+  && roadmap.previousPhase === "P125.7"
+  && roadmap.nextPhase === "P126.2";
 const p125Entries = [statusById.get("P125"), ...p125Subphases.map((phaseId) => statusById.get(phaseId))].filter(Boolean);
 const stalePending = p125Entries.filter((entry) => entry.commit === "pending-final-commit" && !["P125", "P125.7"].includes(entry.phaseId));
 
@@ -126,14 +133,20 @@ addCheck("platform roadmap records P125.7 and parent completion", /P125\.7 is co
 addCheck("README records P125.7 and parent completion", /P125\.7 approval application authority grant handoff final validation/i.test(readme) && /P125\s+is\s+complete/i.test(readme) && /P126\s+is\s+planned next/i.test(readme));
 addCheck(
   "phase status advanced",
-  finalState
+  (finalState || p1261StartedState)
     && statusById.get("P125")?.status === "complete"
     && roadmapById.get("P125")?.status === "complete"
     && p125Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
     && p125Subphases.every((phaseId) => roadmapById.get(phaseId)?.status === "complete"),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P126 planned handoff exists", p126Status.status === "planned" && p126Roadmap.status === "planned" && p126Status.commandCenterVisible === true && p126Roadmap.commandCenterVisible === true);
+addCheck(
+  "P126 handoff exists",
+  ["planned", "in_progress"].includes(p126Status.status)
+    && ["planned", "in_progress"].includes(p126Roadmap.status)
+    && p126Status.commandCenterVisible === true
+    && p126Roadmap.commandCenterVisible === true,
+);
 addCheck("completed P125 entries have commits", p125Entries.length === 8 && p125Entries.every((entry) => Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary)) && stalePending.length === 0, stalePending.map((entry) => entry.phaseId).join(", "));
 addCheck(
   "changed files stay in P125.7 allowed scope",

@@ -1,0 +1,678 @@
+{
+  "phaseId": "P126",
+  "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Boundary",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "currentSubphase": "P126.1",
+  "previousSubphase": "P125.7",
+  "nextSubphase": "P126.2",
+  "branch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "67d3198576e324c0db5ea3f15455931098fb53fa",
+  "owner": "NEXUS OS",
+  "goal": "Define governed local acceptance boundaries for approval application authority grant handoff without enabling live acceptance, writes, execution, providers, dispatch, mutation, network, or spend.",
+  "safetyRules": [
+    "Do not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend unless a later subphase explicitly allows it.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs, raw JSON, raw logs, or raw policy dumps in primary UX.",
+    "Do not modify project, CareLoop, or generated project files.",
+    "Do not duplicate report writers, result envelopes, mode guards, redaction helpers, checker formatters, phase status updaters, route matrices, card components, or activity/evidence helpers."
+  ],
+  "reuseCheck": [
+    "shared/reportWriter.js",
+    "shared/checkResultFormatter.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "existing dashboard tabs/cards/badges",
+    "existing route matrix"
+  ],
+  "commandCenterUx": "P126.1 does not change Command Center UX. Later UX must stay scoped, read-only, theme-safe, and free of raw IDs/dumps/fake actions.",
+  "costImpact": "No provider spend. Local checks/build/tests only.",
+  "subphases": [
+    {
+      "phaseId": "P126.1",
+      "title": "Acceptance Boundary Contract / Policy",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "67d3198576e324c0db5ea3f15455931098fb53fa",
+      "narrowGoal": "Create the P126 implementation-grade acceptance boundary contract, subphase split, safety rules, reuse requirements, validation commands, docs, and status handoff without accepting live authority handoff.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "scripts/check-p1257-founder-runtime-approval-application-authority-grant-handoff.js",
+        "scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1257-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "scripts/check-p1257-founder-runtime-approval-application-authority-grant-handoff.js",
+        "scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1257-founder-runtime-approval-application-authority-grant-handoff-report.md",
+        "reports/p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "No runtime exports. P126.1 creates contract, checker, status, docs, and report evidence only.",
+      "commandCenterUx": "No new cards, controls, routes, actions, or dashboard source/test changes. Preserve existing scoped P125 handoff UX.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test is added in P126.1 because primary UX does not change.",
+        "Run the existing focused scoped handoff route test to preserve Command Center safety.",
+        "Preserve no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
+      ],
+      "checkerUpdates": [
+        "Create scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Update scripts/check-p1257-founder-runtime-approval-application-authority-grant-handoff.js to accept P126.1 handoff.",
+        "Update scripts/check-os-phase-status.js to recognize P126.1-P126.7.",
+        "Validate forbidden paths, docs/status/report updates, safe wording, and no unsafe runtime imports or URLs."
+      ],
+      "docsRoadmap": "Create P126 plan, update README, platform roadmap, P126 contract, OS roadmap/status, and generated reports.",
+      "phaseStatusUpdate": "P126 in progress; P126.1 complete; current phase P126.1; previous P125.7; next P126.2.",
+      "validationCommands": [
+        "npm run check:p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1257-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.1 files>",
+        "git commit -m \"feat(nexus): implement p1261 approval authority handoff acceptance\"",
+        "stamp P126/P126.1 status with the implementation commit",
+        "git add <allowed P126.1 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1261 approval authority handoff acceptance\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no project/CareLoop/generated project paths changed.",
+        "Confirm no dashboard source/test files changed in P126.1.",
+        "Confirm no DB/runtime provider, tool, worker, deploy, release, export, package, local runtime state, or env paths changed.",
+        "Confirm handoff acceptance, acceptance capture, authority grant handoff, grant, activation, approval application, approval capture, persistence, approve/reject recording, writes, execution, provider/model calls, agent dispatch, project mutation, network calls, and spend remain blocked unless explicitly allowed by a later subphase.",
+        "Confirm no stale pending-final-commit remains after the status stamp commit."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation or changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P125.7",
+      "nextPhase": "P126.2",
+      "order": 162.1,
+      "detail": "P126.1 acceptance boundary contract/policy complete; P126.2 acceptance eligibility metadata is next.",
+      "summary": "Created the P126 acceptance boundary contract/policy, seven-subphase split, status handoff, safety rules, checker, docs, and report while keeping live handoff acceptance blocked.",
+      "knownLimitations": [
+        "P126.1 is contract/policy only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      ]
+    },
+    {
+      "phaseId": "P126.2",
+      "title": "Acceptance Eligibility Metadata",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.1-stamp",
+      "narrowGoal": "Add browser-safe local metadata describing acceptance eligibility without accepting or persisting handoff state.",
+      "allowedFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata.js",
+        "scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "scripts/check-p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js",
+        "contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json",
+        "docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_METADATA_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_METADATA_VERSION",
+        "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata",
+        "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryMetadata"
+      ],
+      "dataShape": "Browser-safe metadata object with metadataVersion, phaseId, sourceHandoffPhase, localOnly, commandCenterVisible, acceptancePolicy, acceptanceStates, blockers, nextAction, ownerCapability, and costImpactLabel. No runtime writes.",
+      "commandCenterUx": "No dashboard source changes. Metadata remains available to later scoped UX only.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run existing scoped handoff route regression test."
+      ],
+      "checkerUpdates": [
+        "Add P126.2 checker reusing shared report helpers and update P126.1 checker to accept P126.2 handoff."
+      ],
+      "docsRoadmap": "Update P126 plan, README, platform roadmap, status, and reports.",
+      "phaseStatusUpdate": "P126 in progress; P126.2 complete; current phase P126.2; previous P126.1; next P126.3.",
+      "validationCommands": [
+        "npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1261-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.2 files>",
+        "git commit -m \"feat(nexus): implement p1262 approval authority handoff acceptance\"",
+        "stamp P126/P126.2 status",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no live acceptance, writes, execution, providers, dispatch, mutation, network, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.1",
+      "nextPhase": "P126.3",
+      "order": 162.2,
+      "detail": "Planned acceptance eligibility metadata.",
+      "summary": "Planned browser-safe acceptance eligibility metadata. No P126.2 behavior is implemented in P126.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P126.1."
+      ]
+    },
+    {
+      "phaseId": "P126.3",
+      "title": "Governed Acceptance Intent Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.2-stamp",
+      "narrowGoal": "Build a local governed acceptance intent model from P126.2 metadata without accepting handoff.",
+      "allowedFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryModel.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryModel",
+        "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryModel"
+      ],
+      "dataShape": "Local model with readiness rows, blocked acceptance states, owner/evidence/activity labels, zero unsafe candidate counts, and all mutation flags false.",
+      "commandCenterUx": "No dashboard source changes.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run existing scoped handoff route regression test."
+      ],
+      "checkerUpdates": [
+        "Add P126.3 checker and update P126.2 checker."
+      ],
+      "docsRoadmap": "Update P126 docs/status/reports.",
+      "phaseStatusUpdate": "P126 in progress; P126.3 complete; current phase P126.3; previous P126.2; next P126.4.",
+      "validationCommands": [
+        "npm run check:p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.3 files>",
+        "git commit -m \"feat(nexus): implement p1263 approval authority handoff acceptance\"",
+        "stamp P126/P126.3 status",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no acceptance, writes, execution, providers, dispatch, mutation, network, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.2",
+      "nextPhase": "P126.4",
+      "order": 162.3,
+      "detail": "Planned governed acceptance intent model.",
+      "summary": "Planned local acceptance intent model. No P126.3 behavior is implemented in P126.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P126.1."
+      ]
+    },
+    {
+      "phaseId": "P126.4",
+      "title": "Acceptance Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.3-stamp",
+      "narrowGoal": "Create a local acceptance safe dry-run envelope without accepting or writing handoff state.",
+      "allowedFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun",
+        "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundarySafeDryRun"
+      ],
+      "dataShape": "Result envelope with localOnly, dryRunOnly, blocked rows, zero unsafe candidates, and all action booleans false.",
+      "commandCenterUx": "No dashboard source changes.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run existing scoped handoff route regression test."
+      ],
+      "checkerUpdates": [
+        "Add P126.4 checker and update P126.3 checker."
+      ],
+      "docsRoadmap": "Update P126 docs/status/reports.",
+      "phaseStatusUpdate": "P126 in progress; P126.4 complete; current phase P126.4; previous P126.3; next P126.5.",
+      "validationCommands": [
+        "npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.4 files>",
+        "git commit -m \"feat(nexus): implement p1264 approval authority handoff acceptance\"",
+        "stamp P126/P126.4 status",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no acceptance, writes, execution, providers, dispatch, mutation, network, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.3",
+      "nextPhase": "P126.5",
+      "order": 162.4,
+      "detail": "Planned acceptance safe dry run.",
+      "summary": "Planned safe dry-run envelope. No P126.4 behavior is implemented in P126.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P126.1."
+      ]
+    },
+    {
+      "phaseId": "P126.5",
+      "title": "Command Center Acceptance Boundary UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.4-stamp",
+      "narrowGoal": "Surface local acceptance readiness in scoped Command Center pages without runnable acceptance controls.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryDisplayModel"
+      ],
+      "dataShape": "Browser-safe display model with readiness counts, blockers, disabled reason, owner/evidence/activity labels, cost posture, and no raw IDs.",
+      "commandCenterUx": "Render scoped read-only acceptance boundary cards only on Business Build and Agent Flow. Do not expose on Chat with NEXUS, Lite, OS Roadmap, Live Readiness, or unrelated pages.",
+      "themeRequirements": [
+        "System theme must render.",
+        "Dark theme must render.",
+        "Light theme must render."
+      ],
+      "playwrightTests": [
+        "Add scoped route test for acceptance boundary card visibility and exclusions."
+      ],
+      "checkerUpdates": [
+        "Add P126.5 checker and update P126.4 checker."
+      ],
+      "docsRoadmap": "Update P126 docs/status/reports.",
+      "phaseStatusUpdate": "P126 in progress; P126.5 complete; current phase P126.5; previous P126.4; next P126.6.",
+      "validationCommands": [
+        "npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.5 files>",
+        "git commit -m \"feat(nexus): implement p1265 approval authority handoff acceptance\"",
+        "stamp P126/P126.5 status",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no acceptance controls, fake actions, raw dumps, DemoApp leakage, private IDs, writes, execution, providers, dispatch, mutation, network, or spend."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.4",
+      "nextPhase": "P126.6",
+      "order": 162.5,
+      "detail": "Planned scoped Command Center acceptance UX.",
+      "summary": "Planned scoped read-only acceptance UX. No P126.5 behavior is implemented in P126.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P126.1."
+      ]
+    },
+    {
+      "phaseId": "P126.6",
+      "title": "Acceptance Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.5-stamp",
+      "narrowGoal": "Validate P126.1-P126.5 evidence and docs before final validation.",
+      "allowedFiles": [
+        "scripts/check-p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Validation/docs/report evidence only.",
+      "commandCenterUx": "No dashboard source changes; preserve P126.5 scoped UX.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run scoped acceptance UX route test after P126.5 exists."
+      ],
+      "checkerUpdates": [
+        "Add P126.6 checker and update P126.5 checker."
+      ],
+      "docsRoadmap": "Update P126 docs/status/reports.",
+      "phaseStatusUpdate": "P126 in progress; P126.6 complete; current phase P126.6; previous P126.5; next P126.7.",
+      "validationCommands": [
+        "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.6 files>",
+        "git commit -m \"feat(nexus): implement p1266 approval authority handoff acceptance\"",
+        "stamp P126/P126.6 status",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no acceptance, writes, execution, providers, dispatch, mutation, network, or spend are enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.5",
+      "nextPhase": "P126.7",
+      "order": 162.6,
+      "detail": "Planned acceptance validation/docs closure.",
+      "summary": "Planned validation/docs closure. No P126.6 behavior is implemented in P126.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P126.1."
+      ]
+    },
+    {
+      "phaseId": "P126.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "after-P126.6-stamp",
+      "narrowGoal": "Close P126 with final validation evidence and create the next planned handoff.",
+      "allowedFiles": [
+        "scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js"
+      ],
+      "exactFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Final validation/status/report evidence only. No runtime exports.",
+      "commandCenterUx": "No dashboard source changes; preserve scoped P126.5 UX.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run scoped acceptance UX route test after P126.5 exists."
+      ],
+      "checkerUpdates": [
+        "Add P126.7 checker and update P126.6 checker."
+      ],
+      "docsRoadmap": "Update P126 docs/status/reports and next planned phase marker.",
+      "phaseStatusUpdate": "P126 complete; P126.7 complete; current phase P126.7; previous P126.6; next P127.",
+      "validationCommands": [
+        "npm run check:p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P126.7 files>",
+        "git commit -m \"feat(nexus): implement p1267 approval authority handoff acceptance\"",
+        "stamp P126/P126.7 status",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no stale pending-final-commit and no acceptance, writes, execution, providers, dispatch, mutation, network, or spend."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Validation results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P126.6",
+      "nextPhase": "P127",
+      "order": 162.7,
+      "detail": "Planned final validation after P126.6.",
+      "summary": "Planned final validation closure. No P126.7 behavior is implemented in P126.1.",
+      "knownLimitations": [
+        "Planned only. Not implemented in P126.1."
+      ]
+    }
+  ],
+  "nextPhase": "P126.2"
+}
