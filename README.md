@@ -1287,6 +1287,15 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P124.1 approval application authority grant boundary contract: P124 is now
+  split into implementation-grade grant boundary subphases with contract,
+  safety, reuse, validation, docs, status, and handoff rules. P124.2 is next
+  for browser-safe grant eligibility metadata. Authority grant, activation,
+  approval application, approval capture, approval persistence, approve/reject
+  decision recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

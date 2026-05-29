@@ -17555,44 +17555,201 @@
       "title": "Founder Runtime Approval Application Authority Grant Boundary",
       "label": "Authority Grant Boundary",
       "order": 160,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P124.1 grant boundary contract complete; P124.2 grant eligibility metadata is next.",
+      "summary": "P124.1 created the approval application authority grant boundary contract, seven-subphase implementation plan, safety rules, reuse requirements, validation commands, docs, reports, and status handoff while keeping live grants, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
+      "previousPhase": "P123.7",
+      "nextPhase": "P124.2",
+      "checksRun": [
+        "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1237-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P124.1 is contract/policy only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T15:41:56.882Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.1",
+      "title": "Grant Boundary Contract / Policy",
+      "label": "Grant Contract",
+      "order": 160.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P124.1 grant boundary contract complete; P124.2 grant eligibility metadata is next.",
+      "summary": "Created the P124 grant boundary contract and implementation-grade subphase split, updated P123.7 handoff acceptance, OS status checker recognition, docs, README, roadmap, and generated reports without enabling authority grants or runtime behavior.",
+      "previousPhase": "P123.7",
+      "nextPhase": "P124.2",
+      "checksRun": [
+        "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1237-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P124.1 is contract/policy only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T15:41:56.882Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.2",
+      "title": "Grant Eligibility Metadata",
+      "label": "Grant Eligibility Metadata",
+      "order": 160.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned handoff only. P124 has no implementation until a separate implementation-grade phase contract is written.",
-      "summary": "Planned next NEXUS OS phase for approval application authority grant boundary work. Activation, authority grant, DB/runtime writes, execution, provider calls, mutation, deploy, package, network calls, and spend remain unavailable.",
-      "previousPhase": "P123.7",
-      "nextPhase": "P124.1",
+      "detail": "Planned grant eligibility metadata subphase. No P124.2 behavior is implemented in P124.1.",
+      "summary": "Planned grant eligibility metadata subphase. No P124.2 behavior is implemented in P124.1.",
+      "previousPhase": "P124.1",
+      "nextPhase": "P124.3",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. No P124 behavior is implemented in P123.7."
+        "Planned only. This subphase is not implemented in P124.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.3",
+      "title": "Governed Grant Intent Model",
+      "label": "Grant Intent Model",
+      "order": 160.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned governed grant intent model subphase. No P124.3 behavior is implemented in P124.1.",
+      "summary": "Planned governed grant intent model subphase. No P124.3 behavior is implemented in P124.1.",
+      "previousPhase": "P124.2",
+      "nextPhase": "P124.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.4",
+      "title": "Grant Safe Dry Run",
+      "label": "Grant Safe Dry Run",
+      "order": 160.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned grant safe dry-run subphase. No P124.4 behavior is implemented in P124.1.",
+      "summary": "Planned grant safe dry-run subphase. No P124.4 behavior is implemented in P124.1.",
+      "previousPhase": "P124.3",
+      "nextPhase": "P124.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.5",
+      "title": "Command Center Grant Boundary UX",
+      "label": "Grant Boundary UX",
+      "order": 160.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned scoped Command Center grant boundary UX subphase. No P124.5 behavior is implemented in P124.1.",
+      "summary": "Planned scoped Command Center grant boundary UX subphase. No P124.5 behavior is implemented in P124.1.",
+      "previousPhase": "P124.4",
+      "nextPhase": "P124.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.6",
+      "title": "Grant Validation / Docs",
+      "label": "Grant Validation",
+      "order": 160.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned grant validation/docs closure subphase. No P124.6 behavior is implemented in P124.1.",
+      "summary": "Planned grant validation/docs closure subphase. No P124.6 behavior is implemented in P124.1.",
+      "previousPhase": "P124.5",
+      "nextPhase": "P124.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.1."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P124.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 160.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P124 final validation subphase. No P124.7 behavior is implemented in P124.1.",
+      "summary": "Planned P124 final validation subphase. No P124.7 behavior is implemented in P124.1.",
+      "previousPhase": "P124.6",
+      "nextPhase": "P125",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P124.1."
       ],
       "completedAt": ""
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T15:24:51.475Z",
-  "currentPhase": "P123.7",
-  "previousPhase": "P123.6",
-  "nextPhase": "P124",
+  "updatedAt": "2026-05-29T15:41:56.882Z",
+  "currentPhase": "P124.1",
+  "previousPhase": "P123.7",
+  "nextPhase": "P124.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P123.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 159.7,
+    "phaseId": "P124.1",
+    "title": "Grant Boundary Contract / Policy",
+    "label": "Grant Contract",
+    "order": 160.1,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "07233757",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P123 final validation complete; P124 is planned next.",
-    "summary": "Closed P123 final validation across activation boundary contract, metadata, intent model, safe dry run, scoped Command Center UX, aggregate validation/docs, reports, status records, and P124 planned handoff while keeping activation, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
-    "previousPhase": "P123.6",
-    "nextPhase": "P124",
+    "detail": "P124.1 grant boundary contract complete; P124.2 grant eligibility metadata is next.",
+    "summary": "Created the P124 grant boundary contract and implementation-grade subphase split, updated P123.7 handoff acceptance, OS status checker recognition, docs, README, roadmap, and generated reports without enabling authority grants or runtime behavior.",
+    "previousPhase": "P123.7",
+    "nextPhase": "P124.2",
     "checksRun": [
+      "npm run check:p1241-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:p1237-founder-runtime-approval-application-authority-activation-boundary",
-      "npm run check:p1236-founder-runtime-approval-application-authority-activation-boundary",
-      "npm run check:p1235-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -17601,8 +17758,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P123.7 is final validation only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P124.1 is contract/policy only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T15:24:51.475Z"
+    "completedAt": "2026-05-29T15:41:56.882Z"
   }
 }

@@ -50,6 +50,8 @@ const p123Subphases = ["P123.1", "P123.2", "P123.3", "P123.4", "P123.5", "P123.6
 const p1237 = subphaseById.get("P123.7") || {};
 const p124Status = statusById.get("P124") || {};
 const p124Roadmap = roadmapById.get("P124") || {};
+const p1241Status = statusById.get("P124.1") || {};
+const p1241Roadmap = roadmapById.get("P124.1") || {};
 const plan = readText("docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
@@ -113,6 +115,16 @@ const p1237StatusAccepted = status.currentPhase === "P123.7"
   && roadmap.currentPhase === "P123.7"
   && roadmap.previousPhase === "P123.6"
   && roadmap.nextPhase === "P124";
+const p1241StatusAccepted = status.currentPhase === "P124.1"
+  && status.previousPhase === "P123.7"
+  && status.nextPhase === "P124.2"
+  && roadmap.currentPhase === "P124.1"
+  && roadmap.previousPhase === "P123.7"
+  && roadmap.nextPhase === "P124.2"
+  && p124Status.status === "in_progress"
+  && p124Roadmap.status === "in_progress"
+  && p1241Status.status === "complete"
+  && p1241Roadmap.status === "complete";
 const p124HandoffAccepted = (p124Status.status === "planned" && p124Roadmap.status === "planned")
   || (p124Status.status === "in_progress" && p124Roadmap.status === "in_progress");
 
@@ -136,7 +148,7 @@ addCheck("platform roadmap records P123.7 and parent completion", /P123\.7 is co
 addCheck("README records P123.7 and parent completion", /P123\.7 approval application authority activation final validation/.test(readme) && /P123\s+is\s+complete/.test(readme) && /P124\s+is\s+next/.test(readme));
 addCheck(
   "phase status advanced",
-  p1237StatusAccepted
+  (p1237StatusAccepted || p1241StatusAccepted)
     && statusById.get("P123")?.status === "complete"
     && statusById.get("P123.7")?.status === "complete"
     && p123Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
