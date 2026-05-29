@@ -10491,7 +10491,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "aea19bea0c7f4ae8b06984f81e2f1d8793dda1f0",
       "commandCenterVisible": true,
       "label": "Founder Live Agent Dispatch Readiness",
       "detail": "P114.3 local dispatch CRUD model complete; P114.4 safe dispatch preview is next.",
@@ -10575,7 +10575,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "aea19bea0c7f4ae8b06984f81e2f1d8793dda1f0",
       "commandCenterVisible": true,
       "label": "Governed Local Dispatch CRUD Model",
       "detail": "P114.3 governed local dispatch CRUD model complete; P114.4 safe dispatch preview is next.",

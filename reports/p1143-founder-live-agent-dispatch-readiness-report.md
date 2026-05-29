@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.3
-- Generated at: 2026-05-29T00:50:17.938Z
+- Generated at: 2026-05-29T00:51:06.553Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fe78cb03
+- Validation HEAD: aea19bea
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P114.3 | PASS |  |
 | platform roadmap records P114.3 | PASS |  |
 | phase status advanced | PASS | P114.3/P114.2/P114.4 |
-| changed files stay in P114.3 allowed scope | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1142-founder-live-agent-dispatch-readiness-report.md, reports/phase-validation-coverage-report.md, live-ready/founderLiveAgentDispatchReadiness.js, reports/p1143-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1143-founder-live-agent-dispatch-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1142-founder-live-agent-dispatch-readiness-report.md, reports/phase-validation-coverage-report.md, live-ready/founderLiveAgentDispatchReadiness.js, reports/p1143-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1143-founder-live-agent-dispatch-readiness.js |
+| changed files stay in P114.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | no raw private IDs exposed | PASS |  |
 | no fake runnable actions | PASS |  |
 | no unsafe imports or URLs | PASS |  |
