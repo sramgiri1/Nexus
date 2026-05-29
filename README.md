@@ -1396,10 +1396,10 @@ The Command Center and local operator surface have:
   result envelope now previews handoff readiness from P125.3/P125.2/P124.2
   context with display-safe sections, blocked rows, zero unsafe candidate
   counts, owner/evidence/activity/cost labels, and all handoff/grant/write/
-  execution/provider/dispatch/mutation/network/spend flags false. P125.5 is
-  complete with scoped Command Center handoff UX, and P125.6 is next for
-  validation/docs closure. Grant handoff, authority grant, activation,
-  approval application,
+  execution/provider/dispatch/mutation/network/spend flags false. P125.5
+  scoped Command Center handoff UX and P125.6 validation/docs closure are
+  complete; P125.7 is next for final validation. Grant handoff, authority
+  grant, activation, approval application,
   approval capture, approval persistence, approve/reject decision recording,
   DB/runtime writes, runtime execution, execution unlock, provider/model call,
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
@@ -1410,13 +1410,24 @@ The Command Center and local operator surface have:
   existing read-only boundary card with founder idea, readiness counts,
   blocked rows, owner capability, next action, disabled reason, evidence,
   activity, and cost posture. Chat with NEXUS, Lite, OS Roadmap, Live
-  Readiness, and unrelated pages stay clean. P125.6 is next for validation/docs
-  closure. Grant handoff, authority grant, activation, approval application,
+  Readiness, and unrelated pages stay clean. P125.6 is complete with
+  validation/docs closure, and P125.7 is next for final validation. Grant
+  handoff, authority grant, activation, approval application,
   approval capture, approval persistence, approve/reject decision recording,
   DB/runtime writes, runtime execution, execution unlock, provider/model call,
   agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
   raw SQL interface, deploy, release, export, package, network call, and
   provider spend remain unavailable.
+- P125.6 approval application authority grant handoff validation: the closure
+  checker now verifies P125.1-P125.5 scripts, reports, package scripts, scoped
+  Command Center handoff UX evidence, route coverage, docs, roadmap/status, and
+  safe wording. P125.7 is next for final validation. Grant handoff, authority
+  grant, activation, approval application, approval capture, approval
+  persistence, approve/reject decision recording, DB/runtime writes, runtime
+  execution, execution unlock, provider/model call, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

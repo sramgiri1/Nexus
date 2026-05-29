@@ -12981,15 +12981,15 @@
       "order": 161,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2c4dfb306c65fe487e09999f3b8a025747032f9a",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P125.5 Command Center handoff UX complete; P125.6 Handoff Validation / Docs is next.",
-      "summary": "P125 is in progress with contract/policy, browser-safe metadata, governed handoff intent modeling, local handoff safe dry-run, and scoped Command Center handoff UX complete. Live authority handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "detail": "P125.6 Handoff Validation / Docs complete; P125.7 final validation is next.",
+      "summary": "P125 is in progress with contract/policy, browser-safe metadata, governed handoff intent modeling, local handoff safe dry-run, scoped Command Center handoff UX, and validation/docs closure complete. Live authority handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P124.7",
-      "nextPhase": "P125.6",
+      "nextPhase": "P125.7",
       "checksRun": [
+        "npm run check:p1256-founder-runtime-approval-application-authority-grant-handoff",
         "npm run check:p1255-founder-runtime-approval-application-authority-grant-handoff",
-        "npm run check:p1254-founder-runtime-approval-application-authority-grant-handoff",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -12998,7 +12998,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P125.5 is display-only scoped UX. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P125.6 is validation/docs only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "completedAt": "2026-05-29T16:47:51.312Z"
     },
@@ -13153,19 +13153,28 @@
       "title": "Handoff Validation / Docs",
       "label": "Handoff Validation",
       "order": 161.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P125.6 is planned after scoped Command Center handoff UX.",
-      "summary": "Planned validation/docs closure. No P125.6 behavior is implemented in P125.5.",
+      "detail": "P125.6 Handoff Validation / Docs complete; P125.7 final validation is next.",
+      "summary": "Added validation/docs closure for P125.1-P125.5 checkers, reports, scoped Command Center handoff UX evidence, docs, status, and safety posture. Live handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P125.5",
       "nextPhase": "P125.7",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "checksRun": [
+        "npm run check:p1256-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:p1255-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P125.6 is validation/docs only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T17:12:28.540Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13177,8 +13186,8 @@
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned P125 final validation.",
-      "summary": "Planned final validation subphase. No P125.7 behavior is implemented in P125.1.",
+      "detail": "P125.7 final validation is planned after P125.6 validation/docs closure.",
+      "summary": "Planned final validation closure. No P125.7 behavior is implemented in P125.6.",
       "previousPhase": "P125.6",
       "nextPhase": "P126",
       "checksRun": [],
@@ -13188,10 +13197,10 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T17:06:39.399Z",
-  "currentPhase": "P125.5",
-  "previousPhase": "P125.4",
-  "nextPhase": "P125.6",
+  "updatedAt": "2026-05-29T17:12:28.540Z",
+  "currentPhase": "P125.6",
+  "previousPhase": "P125.5",
+  "nextPhase": "P125.7",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "phaseId": "P125.3",
@@ -13223,17 +13232,17 @@
   },
   "generatedAt": "2026-05-29T16:47:51.312Z",
   "current": {
-    "phaseId": "P125.5",
-    "title": "Command Center Handoff UX",
+    "phaseId": "P125.6",
+    "title": "Handoff Validation / Docs",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "2c4dfb306c65fe487e09999f3b8a025747032f9a",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P125.5 Command Center handoff UX complete; P125.6 Handoff Validation / Docs is next.",
-    "summary": "Added scoped display-only Command Center handoff UX for Business Build and Agent Flow using the P125.4 dry-run and existing boundary cards. Live handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+    "detail": "P125.6 Handoff Validation / Docs complete; P125.7 final validation is next.",
+    "summary": "Added validation/docs closure for P125.1-P125.5 checkers, reports, scoped Command Center handoff UX evidence, docs, status, and safety posture. Live handoff, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
     "checksRun": [
+      "npm run check:p1256-founder-runtime-approval-application-authority-grant-handoff",
       "npm run check:p1255-founder-runtime-approval-application-authority-grant-handoff",
-      "npm run check:p1254-founder-runtime-approval-application-authority-grant-handoff",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13242,11 +13251,11 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P125.5 is display-only scoped UX. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P125.6 is validation/docs only. It does not hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T17:06:39.399Z",
-    "previousPhase": "P125.4",
-    "nextPhase": "P125.6",
-    "order": 161.5
+    "completedAt": "2026-05-29T17:12:28.540Z",
+    "previousPhase": "P125.5",
+    "nextPhase": "P125.7",
+    "order": 161.6
   }
 }

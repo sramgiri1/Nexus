@@ -147,7 +147,11 @@ addCheck("contract marks P125.5 complete and P125.6 handoff valid", p1255.status
 addCheck("contract records expected export", p1255.expectedExports?.includes("buildFounderApprovalApplicationAuthorityGrantHandoffDisplayModel"));
 addCheck("P125.4 checker accepts P125.5 handoff", p1254Checker.includes("P125.5") && p1254Checker.includes("P125.6") && p1254Checker.includes("p1255StartedState"));
 addCheck("docs record P125.5", /P125\.5 Command Center Handoff UX[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P125.5", /P125\.5 scoped approval application authority grant handoff Command Center UX/i.test(readme) && /P125\.6\s+is\s+next/.test(readme));
+addCheck(
+  "README records P125.5",
+  /P125\.5 scoped approval application authority grant handoff Command Center UX/i.test(readme)
+    && (/P125\.6\s+is\s+next/.test(readme) || /P125\.6\s+is\s+complete/.test(readme)),
+);
 addCheck(
   "platform roadmap records P125.5",
   /P125\.5 is complete/.test(platformRoadmap)

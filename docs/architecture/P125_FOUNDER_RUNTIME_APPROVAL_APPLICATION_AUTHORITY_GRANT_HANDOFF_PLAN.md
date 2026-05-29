@@ -463,9 +463,84 @@ updates, restore P125.5 to planned, and return current phase to P125.4.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P125.6 Handoff Validation / Docs
 
-P125.6 Handoff Validation / Docs: validation/docs closure only.
+Phase: P125 Founder Runtime Approval Application Authority Grant Handoff
+Subphase: P125.6 Handoff Validation / Docs
+
+Goal: validate P125.1-P125.5 evidence, docs, reports, status, and scoped
+Command Center handoff UX without changing runtime behavior.
+
+Why this is needed: P125 has policy, metadata, intent model, safe dry-run, and
+scoped UX. A validation/docs closure is required before final validation.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1256-founder-runtime-approval-application-authority-grant-handoff.js`
+- `scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js`
+- `contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json`
+- `docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1255-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/p1256-founder-runtime-approval-application-authority-grant-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports: none.
+
+Data shape: validation/docs/report evidence only for P125.1-P125.5 checkers,
+reports, scoped UX, docs, status, and safety posture.
+
+Command Center UX requirements: preserve P125.5 scoped UX. No new controls,
+routes, mutation actions, raw dumps, or theme changes.
+
+Validation commands:
+- `npm run check:p1256-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:p1255-founder-runtime-approval-application-authority-grant-handoff`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P125 in progress, P125.6 complete, current phase
+P125.6, previous phase P125.5, next phase P125.7.
+
+Known risks: validation can go stale if it only checks docs. P125.6 checks
+P125.1-P125.5 scripts/reports, scoped UX evidence, route coverage, docs,
+status, and safe wording.
+
+Rollback plan: remove the P125.6 checker/report/package script, revert
+contract/docs/status/report updates, restore P125.6 to planned, and return
+current phase to P125.5.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P125.7 Final Validation: final validation only, closes P125, stamps real
 commits, creates the next planned handoff, and keeps live handoff blocked.
