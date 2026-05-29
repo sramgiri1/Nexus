@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P128.1",
-  "previousSubphase": "P127.7",
-  "nextSubphase": "P128.2",
+  "currentSubphase": "P128.2",
+  "previousSubphase": "P128.1",
+  "nextSubphase": "P128.3",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "18fbb37a",
   "owner": "NEXUS OS",
@@ -161,15 +161,33 @@
     {
       "phaseId": "P128.2",
       "title": "Capture Persistence Schema Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P128.1-stamp",
+      "expectedBaseCommit": "251f2004",
       "narrowGoal": "Add browser-safe local metadata for the acceptance capture persistence record shape without creating DB tables, migrations, writes, or runtime state.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryMetadata.js",
         "scripts/check-p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
         "scripts/check-p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
+        "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryMetadata.js",
+        "scripts/check-p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-os-phase-status.js",
         "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
         "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
         "package.json",
@@ -202,7 +220,9 @@
       "expectedExports": [
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_METADATA_PHASE",
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_METADATA_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_ENTITY_NAMES",
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_FLAGS",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_ENTITIES",
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryMetadata",
         "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryMetadata"
       ],
@@ -219,6 +239,7 @@
       "checkerUpdates": [
         "Add P128.2 checker.",
         "Update P128.1 checker to accept P128.2 handoff.",
+        "Update check-os-phase-status.js to allow the P128.3 next-subphase placeholder.",
         "Validate metadata shape, blocked flags, safe wording, and no unsafe imports."
       ],
       "docsRoadmap": "Update P128 plan, README, platform roadmap, OS status, and generated reports.",
@@ -243,6 +264,14 @@
         "Validation results",
         "Safety confirmations",
         "Next phase/subphase"
+      ],
+      "previousPhase": "P128.1",
+      "nextPhase": "P128.3",
+      "order": 164.2,
+      "detail": "P128.2 capture persistence schema metadata complete; P128.3 persistence intent model is next.",
+      "summary": "Added browser-safe local acceptance capture persistence schema metadata that reuses P127.2 capture metadata and keeps persistence, DB/runtime writes, migrations, live capture, execution, dispatch, provider calls, mutation, network, and spend blocked.",
+      "knownLimitations": [
+        "P128.2 is schema metadata only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -665,19 +694,19 @@
     }
   ],
   "currentStatus": {
-    "phaseId": "P128.1",
+    "phaseId": "P128.2",
     "status": "complete",
-    "previousPhase": "P127.7",
-    "nextPhase": "P128.2",
-    "detail": "P128.1 capture persistence boundary contract/policy complete; P128.2 persistence schema metadata is next.",
-    "summary": "Created the P128 acceptance capture persistence boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping persistence, DB/runtime writes, and live capture blocked.",
+    "previousPhase": "P128.1",
+    "nextPhase": "P128.3",
+    "detail": "P128.2 capture persistence schema metadata complete; P128.3 persistence intent model is next.",
+    "summary": "Added browser-safe local acceptance capture persistence schema metadata that reuses P127.2 capture metadata and keeps persistence, DB/runtime writes, migrations, live capture, execution, dispatch, provider calls, mutation, network, and spend blocked.",
     "knownLimitations": [
-      "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      "P128.2 is schema metadata only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
     ]
   },
-  "nextPhase": "P128.2",
+  "nextPhase": "P128.3",
   "knownLimitations": [
-    "P128.1 is contract/policy only. Persistence metadata, intent, dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
+    "P128.2 is schema metadata only. Intent, dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
   ],
-  "summary": "P128 is in progress. P128.1 defines the acceptance capture persistence boundary and implementation-grade subphase plan while all persistence and execution paths remain blocked."
+  "summary": "P128 is in progress. P128.2 defines browser-safe local acceptance capture persistence schema metadata while all persistence and execution paths remain blocked."
 }

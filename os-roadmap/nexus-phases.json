@@ -13684,15 +13684,15 @@
       "order": 164,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "683aea9d",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P128 is in progress; P128.1 capture persistence boundary contract/policy is complete and P128.2 persistence schema metadata is next.",
-      "summary": "P128 acceptance capture persistence boundary work has started with contract, seven-subphase split, safety rules, checker, docs, and OS phase handoff. Persistence, DB/runtime writes, live capture, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "detail": "P128 is in progress; P128.2 capture persistence schema metadata is complete and P128.3 persistence intent model is next.",
+      "summary": "P128 acceptance capture persistence boundary now includes contract and browser-safe local schema metadata. Persistence, DB/runtime writes, live capture, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P127.7",
-      "nextPhase": "P128.2",
+      "nextPhase": "P128.3",
       "checksRun": [
+        "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
         "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
-        "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -13701,9 +13701,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P128 is in progress. P128.1 is contract/policy only. P128 does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P128 is in progress. P128.2 is schema metadata only. P128 does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T19:42:12.725Z"
+      "completedAt": "2026-05-29T19:51:16.760Z"
     },
     {
       "track": "NEXUS_OS",
@@ -13733,29 +13733,58 @@
         "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "completedAt": "2026-05-29T19:42:12.725Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P128.2",
+      "title": "Capture Persistence Schema Metadata",
+      "label": "Capture Persistence Metadata",
+      "order": 164.2,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P128.2 capture persistence schema metadata complete; P128.3 persistence intent model is next.",
+      "summary": "Added browser-safe local acceptance capture persistence schema metadata that reuses P127.2 capture metadata and keeps persistence, DB/runtime writes, migrations, live capture, execution, dispatch, provider calls, mutation, network, and spend blocked.",
+      "previousPhase": "P128.1",
+      "nextPhase": "P128.3",
+      "checksRun": [
+        "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P128.2 is schema metadata only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T19:51:16.760Z"
     }
   ],
-  "updatedAt": "2026-05-29T19:42:12.725Z",
-  "currentPhase": "P128.1",
-  "previousPhase": "P127.7",
-  "nextPhase": "P128.2",
+  "updatedAt": "2026-05-29T19:51:16.760Z",
+  "currentPhase": "P128.2",
+  "previousPhase": "P128.1",
+  "nextPhase": "P128.3",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P128.1",
-    "title": "Capture Persistence Boundary Contract / Policy",
-    "label": "Capture Persistence Policy",
-    "order": 164.1,
+    "phaseId": "P128.2",
+    "title": "Capture Persistence Schema Metadata",
+    "label": "Capture Persistence Metadata",
+    "order": 164.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "683aea9d",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P128.1 capture persistence boundary contract/policy complete; P128.2 persistence schema metadata is next.",
-    "summary": "Created the P128 acceptance capture persistence boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping persistence, DB/runtime writes, and live capture blocked.",
-    "previousPhase": "P127.7",
-    "nextPhase": "P128.2",
+    "detail": "P128.2 capture persistence schema metadata complete; P128.3 persistence intent model is next.",
+    "summary": "Added browser-safe local acceptance capture persistence schema metadata that reuses P127.2 capture metadata and keeps persistence, DB/runtime writes, migrations, live capture, execution, dispatch, provider calls, mutation, network, and spend blocked.",
+    "previousPhase": "P128.1",
+    "nextPhase": "P128.3",
     "checksRun": [
+      "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
-      "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13764,28 +13793,28 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P128.2 is schema metadata only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T19:42:12.725Z"
+    "completedAt": "2026-05-29T19:51:16.760Z"
   },
   "generatedAt": "2026-05-29T16:47:51.312Z",
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P128.1",
-    "title": "Capture Persistence Boundary Contract / Policy",
-    "label": "Capture Persistence Policy",
-    "order": 164.1,
+    "phaseId": "P128.2",
+    "title": "Capture Persistence Schema Metadata",
+    "label": "Capture Persistence Metadata",
+    "order": 164.2,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "683aea9d",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P128.1 capture persistence boundary contract/policy complete; P128.2 persistence schema metadata is next.",
-    "summary": "Created the P128 acceptance capture persistence boundary contract, seven-subphase split, safety rules, checker, docs, status handoff, and report while keeping persistence, DB/runtime writes, and live capture blocked.",
-    "previousPhase": "P127.7",
-    "nextPhase": "P128.2",
+    "detail": "P128.2 capture persistence schema metadata complete; P128.3 persistence intent model is next.",
+    "summary": "Added browser-safe local acceptance capture persistence schema metadata that reuses P127.2 capture metadata and keeps persistence, DB/runtime writes, migrations, live capture, execution, dispatch, provider calls, mutation, network, and spend blocked.",
+    "previousPhase": "P128.1",
+    "nextPhase": "P128.3",
     "checksRun": [
+      "npm run check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
       "npm run check:p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary",
-      "npm run check:p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13794,8 +13823,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P128.1 is contract/policy only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P128.2 is schema metadata only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T19:42:12.725Z"
+    "completedAt": "2026-05-29T19:51:16.760Z"
   }
 }

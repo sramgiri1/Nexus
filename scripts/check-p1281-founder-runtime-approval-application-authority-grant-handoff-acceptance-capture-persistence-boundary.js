@@ -92,10 +92,19 @@ const p128Status = statusById.get("P128") || {};
 const p128Roadmap = roadmapById.get("P128") || {};
 const p1281Status = statusById.get("P128.1") || {};
 const p1281Roadmap = roadmapById.get("P128.1") || {};
+const p1282StartedState =
+  status.currentPhase === "P128.2"
+  && status.previousPhase === "P128.1"
+  && status.nextPhase === "P128.3"
+  && roadmap.currentPhase === "P128.2"
+  && roadmap.previousPhase === "P128.1"
+  && roadmap.nextPhase === "P128.3"
+  && p128Status.status === "in_progress"
+  && p128Roadmap.status === "in_progress";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
 addCheck("contract exists", existsSync(join(ROOT, CONTRACT_PATH)) && contract.phaseId === "P128");
-addCheck("contract marks P128 in progress", contract.status === "in_progress" && contract.currentSubphase === "P128.1" && contract.previousSubphase === "P127.7" && contract.nextSubphase === "P128.2");
+addCheck("contract marks P128 in progress", contract.status === "in_progress" && ["P128.1", "P128.2"].includes(contract.currentSubphase) && ["P127.7", "P128.1"].includes(contract.previousSubphase) && ["P128.2", "P128.3"].includes(contract.nextSubphase));
 addCheck("contract splits P128 into seven subphases", p128Subphases.every((phaseId) => subphaseById.has(phaseId)));
 addCheck("P128.1 contract is complete", p1281.status === "complete" && p1281.scopeClassification === "NEXUS_OS_CHANGE" && p1281.expectedExports?.length === 0);
 addCheck("P128.1 records narrow scope", /contract/i.test(p1281.narrowGoal || "") && /acceptance capture persistence blocked/i.test(p1281.narrowGoal || ""));
@@ -109,12 +118,14 @@ addCheck("README records P128.1", /P128\.1 capture persistence boundary contract
 addCheck("platform roadmap records P128.1", /P128\.1 is complete/i.test(platformRoadmap) && /P128\.2 is next/i.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P128.1"
+  ((
+    status.currentPhase === "P128.1"
     && status.previousPhase === "P127.7"
     && status.nextPhase === "P128.2"
     && roadmap.currentPhase === "P128.1"
     && roadmap.previousPhase === "P127.7"
     && roadmap.nextPhase === "P128.2"
+  ) || p1282StartedState)
     && p128Status.status === "in_progress"
     && p128Roadmap.status === "in_progress"
     && p1281Status.status === "complete"

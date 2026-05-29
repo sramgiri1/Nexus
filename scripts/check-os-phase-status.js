@@ -781,6 +781,7 @@ check(
     || phaseStatus.nextPhase === "P118"
     || phaseStatus.nextPhase === "P119"
     || phaseStatus.nextPhase === "P128.2"
+    || phaseStatus.nextPhase === "P128.3"
     || statusById.has(phaseStatus.nextPhase),
   "nextPhase",
   "nextPhase entry must exist unless it is a handoff placeholder",

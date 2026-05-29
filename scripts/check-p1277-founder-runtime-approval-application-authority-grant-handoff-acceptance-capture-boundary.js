@@ -118,6 +118,14 @@ const p1281HandoffState =
   && roadmap.nextPhase === "P128.2"
   && p128Status.status === "in_progress"
   && p128Roadmap.status === "in_progress";
+const p128ProgressState =
+  /^P128\.[1-7]$/.test(status.currentPhase || "")
+  && /^P128\.[2-7]$/.test(status.nextPhase || "")
+  && roadmap.currentPhase === status.currentPhase
+  && roadmap.previousPhase === status.previousPhase
+  && roadmap.nextPhase === status.nextPhase
+  && p128Status.status === "in_progress"
+  && p128Roadmap.status === "in_progress";
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("P127 prior reports exist", priorReports.every((path) => existsSync(join(ROOT, path))), priorReports.join(", "));
@@ -141,7 +149,7 @@ addCheck("platform roadmap records P127.7 and parent completion", /P127\.7 is co
 addCheck("README records P127.7 and parent completion", /P127\.7 acceptance capture final validation/i.test(readme) && /P127\s+is\s+complete/i.test(readme) && /P128\s+is\s+planned next/i.test(readme));
 addCheck(
   "phase status advanced",
-  (finalState || p1281HandoffState)
+  (finalState || p1281HandoffState || p128ProgressState)
     && statusById.get("P127")?.status === "complete"
     && roadmapById.get("P127")?.status === "complete"
     && p127Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
@@ -150,7 +158,7 @@ addCheck(
 );
 addCheck(
   "P128 planned handoff exists",
-  (p128PlannedState || p1281HandoffState)
+  (p128PlannedState || p1281HandoffState || p128ProgressState)
     && p128Status.commandCenterVisible === true
     && p128Roadmap.commandCenterVisible === true,
 );
