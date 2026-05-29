@@ -5724,6 +5724,9 @@ test.describe("Command Center route-wide UX", () => {
       const themedCard = page.getByLabel("Store live readiness gate", { exact: true }).filter({ hasText: "Business Build Store Live Readiness Gate" });
       await expect(themedCard).toContainText("Store Live Readiness Gate");
       await expect(themedCard).toContainText("Store live gate display-only");
+      const themedScopeCard = page.getByLabel("Store live admission scope", { exact: true }).filter({ hasText: "Business Build Store Live Admission Scope" });
+      await expect(themedScopeCard).toContainText("Store Live Admission Scope");
+      await expect(themedScopeCard).toContainText("Admission scope display-only");
     }
 
     for (const [path, label] of [
@@ -5754,17 +5757,42 @@ test.describe("Command Center route-wide UX", () => {
       await expect(card).toContainText("No provider spend");
       const cardText = await card.innerText();
       expect(cardText).not.toMatch(/P130|reports\/p130|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|dryRunStoreLiveAdmissionReview|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
+
+      const scopeLabel = label.replace("Store Live Readiness Gate", "Store Live Admission Scope");
+      const scopeCard = page.getByLabel("Store live admission scope", { exact: true }).filter({ hasText: scopeLabel });
+      await expect(scopeCard).toContainText("Store Live Admission Scope");
+      await expect(scopeCard).toContainText("Admission scope display-only");
+      await expect(scopeCard).toContainText("What changed");
+      await expect(scopeCard).toContainText("Admission scope rows");
+      await expect(scopeCard).toContainText("Request-persistence candidates");
+      await expect(scopeCard).toContainText("Decision-persistence candidates");
+      await expect(scopeCard).toContainText("Live CRUD candidates");
+      await expect(scopeCard).toContainText("DB-writable candidates");
+      await expect(scopeCard).toContainText("Runtime-writable candidates");
+      await expect(scopeCard).toContainText("NEXUS Store Live Admission Scope Guard");
+      await expect(scopeCard).toContainText("Request persistence boundary");
+      await expect(scopeCard).toContainText("Decision persistence boundary");
+      await expect(scopeCard).toContainText("DB write boundary");
+      await expect(scopeCard).toContainText("Runtime write boundary");
+      await expect(scopeCard).toContainText("Admission scope boundaries");
+      await expect(scopeCard).toContainText("Write boundary dry run");
+      await expect(scopeCard).toContainText("Founder-visible blockers");
+      await expect(scopeCard).toContainText("Admission scope UX evidence");
+      await expect(scopeCard).toContainText("No provider spend");
+      const scopeCardText = await scopeCard.innerText();
+      expect(scopeCardText).not.toMatch(/P131|reports\/p131|founderRuntimeStoreLiveAdmissionScope|requestPersistenceBoundaryDryRun|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
     }
 
     for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
       await expect(page.getByLabel("Store live readiness gate", { exact: true })).toHaveCount(0);
+      await expect(page.getByLabel("Store live admission scope", { exact: true })).toHaveCount(0);
     }
 
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
-    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|dryRunStoreLiveAdmissionReview|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|founderRuntimeStoreLiveAdmissionScope|dryRunStoreLiveAdmissionReview|requestPersistenceBoundaryDryRun|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
     expect(body).not.toMatch(/persist now|save now|write now|run now|execute now|deploy now|activate now|accept handoff now|capture acceptance now|record acceptance now|handoff authority now|grant authority now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now|admit live store now/i);
     expect(errors).toEqual([]);
   });

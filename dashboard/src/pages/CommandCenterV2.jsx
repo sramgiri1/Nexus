@@ -3484,6 +3484,15 @@ function AgentFlowPage() {
         rowAriaSuffix="store live readiness row"
         maxRows={4}
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderRuntimeStoreLiveAdmissionScope}
+        surfaceLabel="Agent Flow Store Live Admission Scope"
+        heading="Store Live Admission Scope"
+        pillLabel="Admission scope blocked"
+        ariaLabel="Store live admission scope"
+        rowAriaSuffix="store live admission scope row"
+        maxRows={7}
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10378,6 +10387,15 @@ function BusinessBuildPage() {
           ariaLabel="Store live readiness gate"
           rowAriaSuffix="store live readiness row"
           maxRows={4}
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderRuntimeStoreLiveAdmissionScope}
+          surfaceLabel="Business Build Store Live Admission Scope"
+          heading="Store Live Admission Scope"
+          pillLabel="Admission scope blocked"
+          ariaLabel="Store live admission scope"
+          rowAriaSuffix="store live admission scope row"
+          maxRows={7}
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">

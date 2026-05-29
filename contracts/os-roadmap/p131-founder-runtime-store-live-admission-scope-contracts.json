@@ -3,9 +3,9 @@
   "title": "Founder Runtime Store Live Admission Scope Contract",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P131.4",
-  "previousSubphase": "P131.3",
-  "nextSubphase": "P131.5",
+  "currentSubphase": "P131.5",
+  "previousSubphase": "P131.4",
+  "nextSubphase": "P131.6",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "d63816a9",
   "owner": "NEXUS OS",
@@ -414,12 +414,17 @@
     {
       "phaseId": "P131.5",
       "title": "Command Center Admission Scope UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1314-stamp",
-      "narrowGoal": "Add scoped display-safe admission scope UX only if needed, while Chat with NEXUS and Lite stay clean.",
+      "expectedBaseCommit": "093d69f4",
+      "narrowGoal": "Add scoped display-safe admission scope UX to Business Build and Agent Flow while Chat with NEXUS and Lite stay clean.",
       "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1314-founder-runtime-store-live-admission-scope.js",
+        "scripts/check-p1315-founder-runtime-store-live-admission-scope.js",
         "contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json",
         "docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md",
         "package.json",
@@ -428,14 +433,14 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/os-phase-status-report.md",
+        "reports/p1314-founder-runtime-store-live-admission-scope-report.md",
+        "reports/p1315-founder-runtime-store-live-admission-scope-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -448,8 +453,8 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "Validation, contract, docs, status, and report evidence only. No runtime exports or DB/runtime mutation.",
-      "commandCenterUx": "Preserve the scoped P130.5 Store Live Readiness Gate and keep Chat with NEXUS/Lite clean.",
+      "dataShape": "Business Build view-model admission scope UX data with currentState, previewMode, summaryRows, readinessRows, readinessSections, safetyRows, blockers, disabledReason, ownerCapability, nextAction, evidenceLocation, activityLocation, costImpact, and zero candidate counts. No DB/runtime mutation.",
+      "commandCenterUx": "Render display-safe Store Live Admission Scope only on Business Build and Agent Flow. Keep Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -464,8 +469,8 @@
       "docsRoadmap": "Update P131 plan, README, platform roadmap, contract, status, and reports.",
       "phaseStatusUpdate": "P131 in progress; P131.5 complete; current phase P131.5; previous P131.4; next P131.6.",
       "validationCommands": [
-        "npm run check:p1311-founder-runtime-store-live-admission-scope",
-        "npm run check:p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness",
+        "npm run check:p1315-founder-runtime-store-live-admission-scope",
+        "npm run check:p1314-founder-runtime-store-live-admission-scope",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -488,7 +493,14 @@
       ],
       "previousPhase": "P131.4",
       "nextPhase": "P131.6",
-      "order": 167.5
+      "order": 167.5,
+      "completedAt": "2026-05-29T23:26:49.873Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Added scoped display-safe Store Live Admission Scope UX to Business Build and Agent Flow while keeping Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
+      "knownLimitations": [
+        "P131.5 is display-safe Command Center UX only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
     },
     {
       "phaseId": "P131.6",
@@ -673,5 +685,5 @@
     "nextPhase": "P131.3",
     "commandCenterVisible": true
   },
-  "summary": "P131 store live admission scope has progressed through blocked write-boundary admission dry-run modeling while live admission, CRUD, DB/runtime mutation, provider calls, dispatch, project mutation, network, and spend remain blocked."
+  "summary": "P131 store live admission scope now has scoped Command Center admission scope UX on Business Build and Agent Flow while Chat with NEXUS and Lite remain clean and all live actions remain blocked."
 }

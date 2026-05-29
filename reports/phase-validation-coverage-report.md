@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T23:21:09.762Z
+- Generated at: 2026-05-29T23:32:59.741Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c8df47e3
+- Validation HEAD: 093d69f4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -547,30 +547,27 @@
 | P130.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.3 validation coverage | PASS | 4 checkers, 1 reports |
-| P130.4 validation coverage | PASS | 8 checkers, 5 reports |
+| P130.4 validation coverage | PASS | 9 checkers, 6 reports |
 | P130.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.6 validation coverage | PASS | 11 checkers, 7 reports |
 | P130.7 validation coverage | PASS | 11 checkers, 7 reports |
-| P131 validation coverage | PASS | 8 checkers, 4 reports |
-| P131.1 validation coverage | PASS | 8 checkers, 4 reports |
+| P131 validation coverage | PASS | 9 checkers, 5 reports |
+| P131.1 validation coverage | PASS | 9 checkers, 5 reports |
 | P131.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P131.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P131.4 validation coverage | PASS | 4 checkers, 1 reports |
-| P131.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P131.5 validation coverage | PASS | 4 checkers, 1 reports |
+| P131.6 validation coverage | PASS | 1 checkers, 1 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P131.4; next=P131.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P131.5; next=P131.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P131.5 Command Center Admission Scope UX
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
-PASS (544/544)
+PASS (545/545)

@@ -19,6 +19,211 @@ P131 is split into seven implementation-grade subphases:
 - P131.6 Validation / Docs
 - P131.7 Final Validation
 
+## P131.5 Command Center Admission Scope UX
+
+Status: complete
+Phase: P131
+Subphase: P131.5
+Goal: Add display-safe Store Live Admission Scope cards to Business Build and
+Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain
+clean.
+Why this is needed: P131.4 produced local dry-run write-boundary rows. P131.5
+makes those blocked admission-scope results visible only where operators plan
+business build and agent work, without exposing raw helper IDs, raw report
+paths, private project identifiers, raw logs, or raw JSON.
+User/operator impact: Operators can see what changed, the current blocked
+state, next action, blockers, owner capability, evidence/activity wording, and
+no-spend cost impact from the relevant workflow pages. Founder chat remains
+focused on conversation.
+Command Center impact: Business Build and Agent Flow show Store Live Admission
+Scope cards after the existing Store Live Readiness Gate. Chat with NEXUS,
+Lite, OS Roadmap, and Live Readiness do not show the admission-scope card.
+Safety impact: P131.5 is display-only UX. It does not capture approvals,
+persist decisions, submit requests, persist requests, create DB schemas, run
+migrations, read or write DB/runtime records, persist approval or acceptance
+decisions, run CRUD actions, capture handoff acceptance, hand off authority,
+grant authority, activate authority, unlock execution, call providers/models,
+dispatch agents, mutate projects, deploy, release, export, package, use network
+calls, or spend.
+Cost impact: Local code, checkers, docs, build, and tests only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `093d69f4`
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1314-founder-runtime-store-live-admission-scope.js`
+- `scripts/check-p1315-founder-runtime-store-live-admission-scope.js`
+- `contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json`
+- `docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1314-founder-runtime-store-live-admission-scope-report.md`
+- `reports/p1315-founder-runtime-store-live-admission-scope-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `scripts/check-p1315-founder-runtime-store-live-admission-scope.js`.
+- Update `dashboard/src/data/businessBuild.js` with
+  `buildFounderRuntimeStoreLiveAdmissionScopeDisplayModel`.
+- Update `dashboard/src/pages/CommandCenterV2.jsx` to render the scoped card on
+  Business Build and Agent Flow only.
+- Update `dashboard/tests/routes.spec.js` with scoped presence and absence
+  coverage.
+- Update P131.4 checker so it accepts the P131.5 handoff.
+- Update P131 contract, README, platform roadmap, package script, OS status,
+  roadmap, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `buildFounderRuntimeStoreLiveAdmissionScopeDisplayModel` from
+  `dashboard/src/data/businessBuild.js`.
+- Data shape: display-safe admission scope model with current state, display
+  mode, summary rows, readiness rows, readiness sections, safety rows, blockers,
+  disabled reason, owner capability, next action, evidence/activity labels,
+  no-spend cost impact, and zero runnable/writable candidate counts.
+- No DB schema, query, migration file, runtime record, live CRUD executor,
+  provider envelope, dispatch packet, raw private ID, raw table name, raw report
+  path, raw helper ID, or project data.
+
+Reuse check:
+- Reuse P131.4 write-boundary admission dry-run builder.
+- Reuse existing `FounderApprovalDecisionBoundaryCard`.
+- Reuse existing Business Build view-model plumbing.
+- Reuse existing route coverage pattern for scoped Command Center cards.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Business Build and Agent Flow show a Store Live Admission Scope card with what
+  changed, current state, next action, blockers, disabled reason, owner
+  capability, evidence/activity wording, and cost impact.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- OS Roadmap remains the only surface for OS phase labels.
+- Primary UX does not expose raw JSON, raw logs, raw policy dumps, raw table
+  names, raw report paths, internal helper IDs, internal phase labels outside OS
+  Roadmap, or private project IDs.
+- No provider/tool/project mutation, DB writes, live CRUD, migration execution,
+  approval capture, acceptance capture, handoff acceptance, authority grant, or
+  deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run scoped route coverage across the existing theme loop.
+
+Tests to add/update/remove:
+- Add `check:p1315-founder-runtime-store-live-admission-scope`.
+- Update P131.4 checker for P131.5 compatibility.
+- Update Playwright route coverage for scoped presence on Business Build and
+  Agent Flow.
+- Update Playwright route coverage for absence on Chat with NEXUS, Lite, OS
+  Roadmap, and Live Readiness.
+
+Checker updates:
+- Validate P131.5 display model fields, zero runnable/writable counts, safe
+  wording, and no raw report paths or private IDs.
+- Validate scoped Command Center rendering and clean Chat/Lite placement.
+- Validate P131.4 accepts the P131.5 handoff.
+- Validate forbidden paths and safe wording.
+
+Docs to update:
+- This P131 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P131.4 report.
+- P131.5 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P131 in progress.
+- P131.5 complete.
+- Current phase P131.5.
+- Previous phase P131.4.
+- Next phase P131.6.
+
+Known risks:
+- Admission-scope details can clutter founder chat if routed to the wrong page.
+  The route tests keep Chat with NEXUS and Lite clean.
+- Dry-run admission details can be mistaken for live action. The UI labels and
+  candidate counts keep every runnable and writable action blocked.
+
+Rollback plan:
+- Revert only the P131.5 implementation and stamp commits. P131.4 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1315-founder-runtime-store-live-admission-scope`
+- `npm run check:p1314-founder-runtime-store-live-admission-scope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P131.5 allowed files>`
+- `git commit -m "feat(nexus): implement p1315 admission scope ux"`
+- `git add <P131.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1315 admission scope ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Request persistence, approval capture, decision persistence, live admission,
+  Store CRUD execution, DB schemas, migrations, DB/runtime reads or writes,
+  acceptance capture, handoff acceptance, authority grant handoff, execution,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX changes.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P131.4 Write Boundary Admission Dry Run
 
 Status: complete

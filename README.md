@@ -1873,7 +1873,21 @@ The Command Center and local operator surface have:
 - P131.4 write boundary admission dry run: Added a browser-safe local dry-run
   model that maps P131.3 readiness rows to blocked request persistence,
   decision persistence, rollback, audit, live CRUD, DB write, and runtime write
-  boundary results. P131.5 is next for scoped Command Center admission scope UX.
+  boundary results. Approval capture, decision persistence, request persistence,
+  store CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
+  acceptance capture, handoff acceptance, authority handoff, authority grant,
+  activation, approval application, approve/reject decision recording, runtime
+  execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
+- P131.5 Command Center admission scope UX: Added display-safe Store Live
+  Admission Scope cards to Business Build and Agent Flow while Chat with NEXUS,
+  Lite, OS Roadmap, and Live Readiness stay clean. The cards show what changed,
+  current blocked state, next action, blockers, disabled reason, owner
+  capability, evidence/activity wording, and no-spend cost impact without raw
+  report paths, raw helper IDs, raw JSON, raw logs, raw table names, or private
+  project identifiers. P131.6 is next for validation and docs consolidation.
   Approval capture, decision persistence, request persistence, store
   CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
   acceptance capture, handoff acceptance, authority handoff, authority grant,

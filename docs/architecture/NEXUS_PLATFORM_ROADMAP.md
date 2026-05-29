@@ -3075,8 +3075,23 @@ network call, and provider spend remain blocked.
 P131.4 is complete. NEXUS now has a browser-safe local write-boundary admission
 dry-run model that maps P131.3 readiness rows to blocked request persistence,
 decision persistence, rollback, audit, live CRUD, DB write, and runtime write
-boundary results. P131.5 is next for scoped Command Center admission scope UX.
-Approval capture, decision persistence, request persistence, store CRUD
+boundary results. Approval capture, decision persistence, request persistence,
+store CRUD execution, DB schemas, migrations, DB/runtime reads or writes, live
+acceptance capture, handoff acceptance, authority handoff, authority grant,
+activation, approval application, approve/reject decision recording, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
+P131.5 is complete. NEXUS now has display-safe Store Live Admission Scope cards
+on Business Build and Agent Flow while Chat with NEXUS, Lite, OS Roadmap, and
+Live Readiness stay clean. The scoped cards show what changed, current blocked
+state, next action, blockers, disabled reason, owner capability,
+evidence/activity wording, and no-spend cost impact without raw report paths,
+raw helper IDs, raw JSON, raw logs, raw table names, or private project
+identifiers. P131.6 is next for validation and docs consolidation. Approval
+capture, decision persistence, request persistence, store CRUD
 execution, DB schemas, migrations, DB/runtime reads or writes, live acceptance
 capture, handoff acceptance, authority handoff, authority grant, activation,
 approval application, approve/reject decision recording, runtime execution,

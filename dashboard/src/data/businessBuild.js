@@ -15,6 +15,7 @@ import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBo
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun.js";
+import { buildFounderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun } from "../../../shared/founderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -3397,6 +3398,145 @@ export function buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCa
   };
 }
 
+export function buildFounderRuntimeStoreLiveAdmissionScopeDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  writeBoundaryDryRun,
+} = {}) {
+  const dryRun = writeBoundaryDryRun || buildFounderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun();
+  const dryRunRows = Array.isArray(dryRun.dryRunRows) ? dryRun.dryRunRows : [];
+  const disabledReason =
+    "Admission scope is display-only. It cannot persist requests, capture approvals, persist decisions, admit live storage, run CRUD, read or write DB records, write runtime records, dispatch agents, mutate projects, call providers/models, deploy, release, export, package, use network calls, or spend.";
+  const ownerCapability = "NEXUS Store Live Admission Scope Guard";
+  const nextAction = "Review the blocked admission scope boundaries before any future explicitly approved live storage request can be considered.";
+  const evidenceLocation = "Admission scope UX evidence";
+  const activityLocation = "OS phase status evidence";
+  const costImpact = "No provider spend. Display-only admission scope with no provider calls, model calls, network calls, worker runtime, deploy, package creation, or DB/runtime writes.";
+  const rows = dryRunRows.map((row, index) => ({
+    label: row.publicLabel || toTitle(row.dryRunName || `Admission scope row ${index + 1}`),
+    decisionPosition: index + 1,
+    decisionState: "Admission scope blocked",
+    nextAction: "Review this blocked boundary before any future admission request can be considered.",
+    blocker: row.blocker || "Admission scope remains blocked.",
+    disabledReason,
+    ownerCapability,
+    evidenceLocation,
+    activityLocation,
+    costImpact: row.costImpactLabel || "No provider spend",
+    requestPersistenceAllowed: "Blocked",
+    approvalCaptureAllowed: "Blocked",
+    decisionPersistenceAllowed: "Blocked",
+    liveAdmissionAllowed: "Blocked",
+    liveCrudAllowed: "Blocked",
+    dbReadAllowed: "Blocked",
+    dbWriteAllowed: "Blocked",
+    runtimeWriteAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+  const model = {
+    currentState: "Store Live Admission Scope Ready For Review Writes Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Admission scope display-only",
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    dryRunRowCount: dryRun.dryRunRowCount || rows.length,
+    requestPersistenceCandidateCount: 0,
+    approvalCaptureCandidateCount: 0,
+    decisionPersistenceCandidateCount: 0,
+    liveAdmissionCandidateCount: 0,
+    liveCrudCandidateCount: 0,
+    dbReadableCandidateCount: 0,
+    dbWritableCandidateCount: 0,
+    runtimeWritableCandidateCount: 0,
+    runtimeExecutableCandidateCount: 0,
+    agentDispatchCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    networkCallCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    whatChanged: "Admission scope now turns the write-boundary dry run into founder-readable blockers for Business Build and Agent Flow.",
+    nextAction,
+    blockers: [
+      "Admission scope is display-only.",
+      "Request persistence, approval capture, and approve/reject decision persistence remain blocked.",
+      "Live admission, live CRUD, DB reads, DB writes, runtime writes, migrations, and raw SQL remain blocked.",
+      "Runtime execution, providers, agent dispatch, project mutation, network calls, deploy, package, and spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability,
+    evidenceLocation,
+    activityLocation,
+    costImpact,
+    readinessSections: [
+      {
+        label: "Admission scope boundaries",
+        currentState: "Modeled locally",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+      {
+        label: "Write boundary dry run",
+        currentState: "Writes blocked",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+      {
+        label: "Founder-visible blockers",
+        currentState: "Display-only",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+    ],
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Request persistence", value: "Blocked" },
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Decision persistence", value: "Blocked" },
+      { label: "Live admission", value: "Blocked" },
+      { label: "Live CRUD actions", value: "Blocked" },
+      { label: "DB reads", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime writes", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Network", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    summaryRows: [
+      { label: "Founder idea", value: model.founderIdea },
+      { label: "What changed", value: model.whatChanged },
+      { label: "Current state", value: model.previewMode },
+      { label: "Admission scope rows", value: model.readinessRowCount },
+      { label: "Blocked rows", value: model.blockedReadinessRowCount },
+      { label: "Request-persistence candidates", value: model.requestPersistenceCandidateCount },
+      { label: "Approval-capture candidates", value: model.approvalCaptureCandidateCount },
+      { label: "Decision-persistence candidates", value: model.decisionPersistenceCandidateCount },
+      { label: "Live admission candidates", value: model.liveAdmissionCandidateCount },
+      { label: "Live CRUD candidates", value: model.liveCrudCandidateCount },
+      { label: "DB-readable candidates", value: model.dbReadableCandidateCount },
+      { label: "DB-writable candidates", value: model.dbWritableCandidateCount },
+      { label: "Runtime-writable candidates", value: model.runtimeWritableCandidateCount },
+      { label: "Owner capability", value: model.ownerCapability },
+      { label: "Next action", value: model.nextAction },
+      { label: "Disabled reason", value: model.disabledReason },
+      { label: "Evidence", value: model.evidenceLocation },
+      { label: "Activity", value: model.activityLocation },
+      { label: "Cost impact", value: model.costImpact },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -4587,6 +4727,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness = buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderRuntimeStoreLiveAdmissionScope = buildFounderRuntimeStoreLiveAdmissionScopeDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -4744,6 +4887,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundary,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStore,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness,
+    founderRuntimeStoreLiveAdmissionScope,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,
