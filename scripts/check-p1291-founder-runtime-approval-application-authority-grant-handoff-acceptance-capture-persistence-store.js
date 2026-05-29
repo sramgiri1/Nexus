@@ -115,7 +115,7 @@ addCheck("contract exists", existsSync(join(ROOT, CONTRACT_PATH)) && contract.ph
 addCheck("contract marks P129 in progress", contract.status === "in_progress" && ["P129.1", "P129.2", "P129.3"].includes(contract.currentSubphase) && ["P128.7", "P129.1", "P129.2"].includes(contract.previousSubphase) && ["P129.2", "P129.3", "P129.4"].includes(contract.nextSubphase));
 addCheck("contract splits P129 into seven subphases", p129Subphases.every((phaseId) => subphaseById.has(phaseId)));
 addCheck("P129.1 contract is complete", p1291.status === "complete" && p1291.scopeClassification === "NEXUS_OS_CHANGE" && p1291.expectedExports?.length === 0);
-addCheck("P129.2 remains planned", p1292.status === "planned");
+addCheck("P129.2 remains planned or complete", ["planned", "complete"].includes(p1292.status));
 addCheck("P129.1 records narrow scope", /contract/i.test(p1291.narrowGoal || "") && /DB\/runtime writes blocked|store CRUD/i.test(p1291.narrowGoal || ""));
 addCheck("P129.1 forbids project/dashboard/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "dashboard/tests/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1291.forbiddenFiles?.includes(path)));
 addCheck("P129.1 records validation commands", validationCommands.every((command) => p1291.validationCommands?.includes(command)));
