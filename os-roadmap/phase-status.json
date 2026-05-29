@@ -18725,15 +18725,16 @@
       "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store",
       "label": "Capture Persistence Store",
       "order": 165,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "473f8cc5",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P129 is in progress; P129.6 scoped Command Center store UX is complete and P129.7 final validation is next.",
-      "summary": "P129 capture persistence store work now includes contract/policy, schema metadata, repository intent rows, migration preview rows, blocked safe dry-run envelopes, and scoped Command Center store readiness while DB/runtime writes and live CRUD remain blocked.",
+      "detail": "P129 is complete; P130 store live readiness gate is planned-only next.",
+      "summary": "P129 completed the capture persistence store with contract, schema metadata, repository intent, migration preview, safe CRUD dry-run envelopes, scoped Command Center store readiness, and final validation while DB/runtime writes and live CRUD remain blocked.",
       "previousPhase": "P128.7",
-      "nextPhase": "P129.7",
+      "nextPhase": "P130",
       "checksRun": [
+        "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:os-phase-status",
@@ -18744,9 +18745,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P129.6 renders display-safe store readiness only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P129.7 is final validation only. P129 does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P130 is planned-only until its own implementation-grade contract is written."
       ],
-      "completedAt": "2026-05-29T21:28:08.632Z"
+      "completedAt": "2026-05-29T21:39:41.951Z"
     },
     {
       "track": "NEXUS_OS",
@@ -18928,40 +18929,71 @@
       "title": "Final Validation",
       "label": "Store Final Validation",
       "order": 165.7,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P129.7 final validation complete; P130 store live readiness gate is planned-only next.",
+      "summary": "Closed P129 with final validation across P129.1-P129.6 evidence, scoped Command Center store readiness safety, OS status, docs, checker handoffs, and the planned-only P130 handoff.",
+      "previousPhase": "P129.6",
+      "nextPhase": "P130",
+      "checksRun": [
+        "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"capture persistence store readiness appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P129.7 is final validation only. P129 does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P130 is planned-only until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-29T21:39:41.951Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P130",
+      "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store Live Readiness Gate",
+      "label": "Store Live Readiness",
+      "order": 166,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P129.7 will close P129 with final validation evidence and a planned-only P130 handoff.",
-      "summary": "Planned final validation for P129 capture persistence store work across contract, helpers, scoped UX, checkers, docs, reports, and status.",
-      "previousPhase": "P129.6",
-      "nextPhase": "P130",
+      "detail": "P130 is planned-only. It needs its own implementation-grade contract before any live store readiness work starts.",
+      "summary": "Planned live readiness gate for the capture persistence store. It has no implementation-grade subphase work yet.",
+      "previousPhase": "P129.7",
+      "nextPhase": "P130.1",
       "checksRun": [],
       "knownLimitations": [
-        "P129.7 is planned final validation only. It must not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, call providers/models, dispatch agents, mutate projects, use network calls, deploy, release, export, package, or spend."
+        "P130 is planned-only. It has no implementation-grade contract yet and must not enable DB schemas, migrations, DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until a future P130.1 contract allows a narrow scope."
       ]
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T21:28:08.632Z",
-  "currentPhase": "P129.6",
-  "previousPhase": "P129.5",
-  "nextPhase": "P129.7",
+  "updatedAt": "2026-05-29T21:39:41.951Z",
+  "currentPhase": "P129.7",
+  "previousPhase": "P129.6",
+  "nextPhase": "P130",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P129.6",
-    "title": "Command Center Store UX",
-    "label": "Store UX",
-    "order": 165.6,
+    "phaseId": "P129.7",
+    "title": "Final Validation",
+    "label": "Store Final Validation",
+    "order": 165.7,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "473f8cc5",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P129.6 scoped Command Center store UX complete; P129.7 final validation is next.",
-    "summary": "Rendered capture persistence store readiness only on Business Build and Agent Flow with display-safe current state, next action, blockers, disabled reason, owner capability, evidence/activity labels, and cost impact while keeping live actions blocked.",
-    "previousPhase": "P129.5",
-    "nextPhase": "P129.7",
+    "detail": "P129.7 final validation complete; P130 store live readiness gate is planned-only next.",
+    "summary": "Closed P129 with final validation across P129.1-P129.6 evidence, scoped Command Center store readiness safety, OS status, docs, checker handoffs, and the planned-only P130 handoff.",
+    "previousPhase": "P129.6",
+    "nextPhase": "P130",
     "checksRun": [
+      "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
@@ -18972,25 +19004,26 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P129.6 renders display-safe store readiness only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P129.7 is final validation only. P129 does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P130 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T21:28:08.632Z"
+    "completedAt": "2026-05-29T21:39:41.951Z"
   },
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P129.6",
-    "title": "Command Center Store UX",
-    "label": "Store UX",
-    "order": 165.6,
+    "phaseId": "P129.7",
+    "title": "Final Validation",
+    "label": "Store Final Validation",
+    "order": 165.7,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "473f8cc5",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P129.6 scoped Command Center store UX complete; P129.7 final validation is next.",
-    "summary": "Rendered capture persistence store readiness only on Business Build and Agent Flow with display-safe current state, next action, blockers, disabled reason, owner capability, evidence/activity labels, and cost impact while keeping live actions blocked.",
-    "previousPhase": "P129.5",
-    "nextPhase": "P129.7",
+    "detail": "P129.7 final validation complete; P130 store live readiness gate is planned-only next.",
+    "summary": "Closed P129 with final validation across P129.1-P129.6 evidence, scoped Command Center store readiness safety, OS status, docs, checker handoffs, and the planned-only P130 handoff.",
+    "previousPhase": "P129.6",
+    "nextPhase": "P130",
     "checksRun": [
+      "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
@@ -19001,8 +19034,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P129.6 renders display-safe store readiness only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P129.7 is final validation only. P129 does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P130 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T21:28:08.632Z"
+    "completedAt": "2026-05-29T21:39:41.951Z"
   }
 }

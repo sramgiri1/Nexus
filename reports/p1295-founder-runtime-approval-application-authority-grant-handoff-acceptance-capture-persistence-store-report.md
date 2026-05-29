@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P129.5
-- Generated at: 2026-05-29T21:34:21.253Z
+- Generated at: 2026-05-29T21:40:59.521Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e0863b41
+- Validation HEAD: 16f5cb5a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,9 +36,9 @@
 | docs record P129.5 | PASS |  |
 | README records P129.5 | PASS |  |
 | platform roadmap records P129.5 | PASS |  |
-| phase status advanced | PASS | P129.6/P129.5/P129.7 |
-| changed files stay in P129.5 allowed scope | PASS | scope check relaxed for P129.6 |
-| forbidden paths unchanged | PASS | P129.5 forbidden path check relaxed for P129.6 |
+| phase status advanced | PASS | P129.7/P129.6/P130 |
+| changed files stay in P129.5 allowed scope | PASS | scope check relaxed for P129.7 |
+| forbidden paths unchanged | PASS | P129.5 forbidden path check relaxed for P129.7 |
 | public docs avoid raw persistence table names | PASS |  |
 | safe dry run avoids raw private IDs | PASS |  |
 | safe dry run avoids fake runnable actions | PASS |  |

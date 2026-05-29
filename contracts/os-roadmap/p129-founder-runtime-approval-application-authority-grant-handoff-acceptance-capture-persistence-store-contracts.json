@@ -1,15 +1,15 @@
 {
   "phaseId": "P129",
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Store",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P129.6",
-  "previousSubphase": "P129.5",
-  "nextSubphase": "P129.7",
+  "currentSubphase": "P129.7",
+  "previousSubphase": "P129.6",
+  "nextSubphase": "P130",
   "branch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "3f25d2d4",
+  "expectedBaseCommit": "16f5cb5a",
   "owner": "NEXUS OS",
-  "goal": "Render scoped Command Center capture persistence store readiness using P129.5 safe dry-run envelopes without enabling live CRUD, DB/runtime writes, providers, dispatch, mutation, network, or spend.",
+  "goal": "Close P129 with final validation evidence for capture persistence store readiness while keeping live CRUD, DB/runtime writes, providers, dispatch, mutation, network, and spend blocked.",
   "safetyRules": [
     "Do not create DB schemas, migrations, tables, indexes, raw SQL interfaces, or DB/runtime writes in P129.1.",
     "Do not persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, or record approve/reject decisions in P129.1.",
@@ -26,7 +26,7 @@
     "Reuse existing dashboard cards/routes/tests; do not duplicate UI components.",
     "Reuse existing evidence/activity/audit/cost terminology; do not create new appenders in P129.1."
   ],
-  "commandCenterUx": "P129.6 renders display-safe store readiness only on Business Build and Agent Flow. Chat with NEXUS and Lite stay chat-focused and clean.",
+  "commandCenterUx": "P129 is complete. P129.6 scoped store readiness remains visible only on Business Build and Agent Flow. Chat with NEXUS and Lite stay clean.",
   "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
   "subphases": [
     {
@@ -693,15 +693,16 @@
     {
       "phaseId": "P129.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P129.6-stamp",
-      "narrowGoal": "Close P129 with final validation evidence and create the next planned handoff.",
+      "expectedBaseCommit": "16f5cb5a",
+      "narrowGoal": "Close P129 with final validation evidence and create a planned-only P130 handoff.",
       "allowedFiles": [
         "contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json",
         "docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md",
-        "scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
+        "scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
         "scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js",
         "scripts/check-os-phase-status.js",
         "package.json",
@@ -709,11 +710,11 @@
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
+        "reports/p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
         "reports/p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md",
-        "scripts/check-p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js"
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -733,23 +734,25 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "Contract/status/report evidence only. No runtime exports, DB schemas, migrations, CRUD envelopes, write envelopes, provider envelopes, dispatch packets, or project data.",
-      "commandCenterUx": "No dashboard source/test changes. Preserve existing scoped read-only P128 persistence boundary UX only on Business Build and Agent Flow.",
+      "dataShape": "Validation/report/status evidence only. No runtime exports, DB schemas, migrations, CRUD envelopes, write envelopes, provider envelopes, dispatch packets, raw private IDs, raw table names, or project data.",
+      "commandCenterUx": "No dashboard source/test changes. Preserve P129.6 scoped store readiness only on Business Build and Agent Flow; Chat with NEXUS and Lite stay clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Run existing scoped P128 capture persistence route coverage as applicable."
+        "Run existing scoped P129.6 store readiness route coverage across dark, light, and system themes."
       ],
       "checkerUpdates": [
-        "Add or update the phase checker for this subphase.",
+        "Create scripts/check-p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js.",
+        "Update P129.5 and P129.6 checkers to accept P129.7 final state.",
+        "Update scripts/check-os-phase-status.js to recognize P130 planned-only handoff.",
         "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden scope and safe wording."
+        "Validate P129.1-P129.6 reports, status closure, safe wording, scoped UX, forbidden paths, and P130 planned-only handoff."
       ],
       "docsRoadmap": "Update P129 plan, README, platform roadmap, OS status, and generated reports.",
-      "phaseStatusUpdate": "P129 complete after final validation; previous P129.6; next P130 planned-only.",
+      "phaseStatusUpdate": "P129 complete; P129.7 complete; current phase P129.7; previous P129.6; next P130 planned-only.",
       "validationCommands": [
         "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
@@ -763,7 +766,8 @@
       ],
       "finalSafetyChecks": [
         "Confirm no provider/model calls, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network, or spend.",
-        "Confirm no project, CareLoop, generated project, dashboard source/test, DB, runtime, provider, tool, worker, deploy, release, export, package, or env paths changed unless explicitly allowed."
+        "Confirm no project, CareLoop, generated project, dashboard source/test, DB, runtime, provider, tool, worker, deploy, release, export, package, or env paths changed.",
+        "Confirm P130 is planned-only and no future phase implementation is started early."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -775,18 +779,21 @@
       ],
       "order": 165.7,
       "previousPhase": "P129.6",
-      "nextPhase": "P130"
+      "nextPhase": "P130",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T21:39:41.951Z"
     }
   ],
   "currentStatus": {
-    "phaseId": "P129.6",
-    "title": "Command Center Store UX",
+    "phaseId": "P129.7",
+    "title": "Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "473f8cc5",
-    "completedAt": "2026-05-29T21:28:08.632Z",
-    "summary": "Rendered display-safe capture persistence store readiness on scoped Command Center founder-work pages while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T21:39:41.951Z",
+    "summary": "Closed P129 with final validation across P129.1-P129.6 evidence, scoped Command Center store readiness safety, OS status, docs, checker handoffs, and the planned-only P130 handoff.",
     "checksRun": [
+      "npm run check:p1297-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
@@ -797,10 +804,10 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P129.6 renders display-safe store readiness only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P129.7 is final validation only. P129 does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P130 is planned-only until its own implementation-grade contract is written."
     ],
-    "nextPhase": "P129.7",
+    "nextPhase": "P130",
     "commandCenterVisible": true
   },
-  "nextPhase": "P129.7"
+  "nextPhase": "P130"
 }

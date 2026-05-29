@@ -136,6 +136,12 @@ const p1296StartedState = status.currentPhase === "P129.6"
   && roadmap.currentPhase === "P129.6"
   && roadmap.previousPhase === "P129.5"
   && roadmap.nextPhase === "P129.7";
+const p1297FinalState = status.currentPhase === "P129.7"
+  && status.previousPhase === "P129.6"
+  && status.nextPhase === "P130"
+  && roadmap.currentPhase === "P129.7"
+  && roadmap.previousPhase === "P129.6"
+  && roadmap.nextPhase === "P130";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store"]));
 addCheck("phase export is P129.5", FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_CRUD_SAFE_DRY_RUN_PHASE === "P129.5" && FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_CRUD_SAFE_DRY_RUN_VERSION === "1.0");
@@ -165,8 +171,8 @@ addCheck("README records P129.5", /P129\.5 store CRUD safe dry run/i.test(readme
 addCheck("platform roadmap records P129.5", /P129\.5 is complete/i.test(platformRoadmap) && /P129\.6 is next/i.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  (p1295CurrentState || p1296StartedState)
-    && statusById.get("P129")?.status === "in_progress"
+  (p1295CurrentState || p1296StartedState || p1297FinalState)
+    && ["in_progress", "complete"].includes(statusById.get("P129")?.status)
     && statusById.get("P129.4")?.status === "complete"
     && statusById.get("P129.5")?.status === "complete"
     && roadmapById.get("P129.5")?.status === "complete",

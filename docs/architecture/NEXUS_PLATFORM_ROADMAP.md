@@ -2943,6 +2943,18 @@ unlock, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
 package action, network call, and provider spend remain blocked.
 
+P129.7 is complete. NEXUS closed P129 across contract, metadata, repository
+intent, migration preview, safe CRUD dry-run envelopes, scoped Command Center
+store readiness, docs, status, and reports. P130 is the planned-only next
+handoff for a future store live readiness gate. Store CRUD execution, DB
+schemas, migrations, DB/runtime reads or writes, live acceptance capture,
+handoff acceptance, authority handoff, authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

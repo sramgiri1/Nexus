@@ -102,8 +102,10 @@ const p1296CurrentState = status.currentPhase === "P129.6"
   && roadmap.nextPhase === "P129.7";
 const p1297StartedState = status.currentPhase === "P129.7"
   && status.previousPhase === "P129.6"
+  && status.nextPhase === "P130"
   && roadmap.currentPhase === "P129.7"
-  && roadmap.previousPhase === "P129.6";
+  && roadmap.previousPhase === "P129.6"
+  && roadmap.nextPhase === "P130";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1296-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store"]));
 addCheck("dry-run source remains valid", dryRunValidation.valid === true && dryRun.safeDryRunOnly === true && dryRun.localOnly === true);
@@ -140,7 +142,7 @@ addCheck("platform roadmap records P129.6", /P129\.6 is complete/i.test(platform
 addCheck(
   "phase status advanced",
   (p1296CurrentState || p1297StartedState)
-    && statusById.get("P129")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P129")?.status)
     && statusById.get("P129.5")?.status === "complete"
     && statusById.get("P129.6")?.status === "complete"
     && roadmapById.get("P129.6")?.status === "complete",
