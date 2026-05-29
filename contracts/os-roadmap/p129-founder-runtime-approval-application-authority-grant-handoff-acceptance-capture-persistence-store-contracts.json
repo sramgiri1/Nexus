@@ -687,7 +687,7 @@
       "order": 165.6,
       "previousPhase": "P129.5",
       "nextPhase": "P129.7",
-      "commit": "pending-final-commit",
+      "commit": "473f8cc5",
       "completedAt": "2026-05-29T21:28:08.632Z"
     },
     {
@@ -783,7 +783,7 @@
     "title": "Command Center Store UX",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "473f8cc5",
     "completedAt": "2026-05-29T21:28:08.632Z",
     "summary": "Rendered display-safe capture persistence store readiness on scoped Command Center founder-work pages while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
     "checksRun": [
