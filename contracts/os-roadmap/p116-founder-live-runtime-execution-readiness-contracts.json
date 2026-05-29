@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Move approved runtime admission readiness toward governed runtime execution readiness while keeping actual execution blocked until explicitly allowed.",
-  "currentSubphase": "P116.2",
-  "previousSubphase": "P116.1",
-  "nextSubphase": "P116.3",
+  "currentSubphase": "P116.3",
+  "previousSubphase": "P116.2",
+  "nextSubphase": "P116.4",
   "safetyRules": [
     "Do not enable runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P116.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -270,6 +270,9 @@
         "careloop/**",
         "generated-projects/*/Sources/**",
         "generated-projects/*/Tests/**",
+        "db/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -278,13 +281,16 @@
         "exports/**",
         "packages/**",
         ".env*",
-        "db/**",
-        "live-ready/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "local-state/runtime/**"
       ],
-      "expectedExports": [],
+      "expectedExports": [
+        "P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PHASE",
+        "P116_RUNTIME_EXECUTION_DB_ENTITIES",
+        "buildFounderLiveRuntimeExecutionReadinessContract",
+        "buildSafeRuntimeExecutionDbRecord",
+        "executeApprovedRuntimeExecutionDbCrudRequest",
+        "validateFounderLiveRuntimeExecutionReadinessContract"
+      ],
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -311,20 +317,57 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "allowedFiles": [],
-      "exactFiles": [],
-      "dataShape": "No runtime data shape is implemented until this subphase is explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX. Do not add runtime execution controls, raw IDs, raw logs, raw policy dumps, or fake actions.",
+      "allowedFiles": [
+        "live-ready/founderLiveRuntimeExecutionReadiness.js",
+        "scripts/check-p1161-founder-live-runtime-execution-contract.js",
+        "reports/p1161-founder-live-runtime-execution-contract-report.md",
+        "scripts/check-p1162-founder-live-runtime-execution-readiness.js",
+        "reports/p1162-founder-live-runtime-execution-readiness-report.md",
+        "scripts/check-p1163-founder-live-runtime-execution-readiness.js",
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1163-founder-live-runtime-execution-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "live-ready/founderLiveRuntimeExecutionReadiness.js",
+        "scripts/check-p1161-founder-live-runtime-execution-contract.js",
+        "reports/p1161-founder-live-runtime-execution-contract-report.md",
+        "scripts/check-p1162-founder-live-runtime-execution-readiness.js",
+        "reports/p1162-founder-live-runtime-execution-readiness-report.md",
+        "scripts/check-p1163-founder-live-runtime-execution-readiness.js",
+        "contracts/os-roadmap/p116-founder-live-runtime-execution-readiness-contracts.json",
+        "docs/architecture/P116_FOUNDER_LIVE_RUNTIME_EXECUTION_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1163-founder-live-runtime-execution-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "dataShape": "Approval-gated local CRUD contract with execution readiness item, event, evidence reference, request envelope, allowed local CRUD operations, forbidden operations, mutation gate, next action, blockers, disabled reason, owner capability, evidence/activity references, cost impact, and all unsafe runtime authority flags false.",
+      "commandCenterUx": "No dashboard source change in P116.3. Future Command Center UX must summarize execution readiness state without raw runtime execution table names, raw IDs, raw logs, raw policy dumps, DemoApp exposure, mutation buttons, or fake live run controls.",
       "playwrightTests": [
         "No new Playwright test until UI source changes; preserve route-wide safety tests."
       ],
       "checkerUpdates": [
-        "Add or update the dedicated checker for this subphase."
+        "Add dedicated P116.3 local CRUD checker.",
+        "Update P116.2 checker to accept the P116.3/P116.4 handoff state."
       ],
-      "docsRoadmap": "Update P116 plan, README, platform roadmap, OS status, and generated reports for P116.3.",
-      "phaseStatusUpdate": "P116 in progress; P116.3 complete when implemented.",
+      "docsRoadmap": "P116.3 is recorded in the P116 plan, README, platform roadmap, OS status, and generated reports. P116.4 is next for runtime execution readiness preview modeling.",
+      "phaseStatusUpdate": "P116 in progress; P116.3 complete; current P116.3; previous P116.2; next P116.4.",
       "validationCommands": [
         "npm run check:p1163-founder-live-runtime-execution-readiness",
+        "npm run check:p1162-founder-live-runtime-execution-readiness",
+        "npm run check:p1161-founder-live-runtime-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -336,10 +379,11 @@
       ],
       "phaseId": "P116.3",
       "title": "Governed Local Execution CRUD Model",
-      "status": "planned",
+      "status": "complete",
       "narrowGoal": "Add approval-gated local CRUD helpers for execution readiness records without admitting runtime execution.",
       "nextPhase": "P116.4",
-      "previousPhase": "P116.2"
+      "previousPhase": "P116.2",
+      "expectedBaseCommit": "40f0b099"
     },
     {
       "scopeClassification": "NEXUS_OS_CHANGE",

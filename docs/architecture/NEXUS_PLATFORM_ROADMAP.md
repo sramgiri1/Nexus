@@ -3097,6 +3097,15 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P116.3 is complete. P116 now has approval-gated local CRUD helpers for runtime
+execution readiness records, with checker coverage for create/read/update,
+upsert/list, and blocked default, unapproved, delete, and outside-allowlist
+requests. P116.4 is next for safe dry-run runtime execution readiness preview
+modeling. Runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

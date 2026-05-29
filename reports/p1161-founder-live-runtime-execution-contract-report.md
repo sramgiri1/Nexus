@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.1
-- Generated at: 2026-05-29T03:03:49.106Z
+- Generated at: 2026-05-29T03:13:08.056Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 7a94edf4
+- Validation HEAD: 40f0b099
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,16 +28,16 @@
 | reuse requirements recorded | PASS |  |
 | safety rules block runtime execution | PASS |  |
 | validation commands recorded | PASS |  |
-| changed files stay in P116.1 allowed scope | PASS | scope check relaxed for P116.2 |
-| changed files avoid forbidden paths | PASS | P116.1 forbidden path check relaxed for P116.2 |
+| changed files stay in P116.1 allowed scope | PASS | scope check relaxed for P116.3 |
+| changed files avoid forbidden paths | PASS | P116.1 forbidden path check relaxed for P116.3 |
 | P115.7 checker accepts P116 start | PASS |  |
 | OS status checker accepts P116 subphases | PASS |  |
-| phase status advanced | PASS | P116.2/P116.1/P116.3 |
+| phase status advanced | PASS | P116.3/P116.2/P116.4 |
 | P115 remains complete | PASS |  |
 | docs plan records P116.1 | PASS |  |
 | README records P116.1 | PASS |  |
 | platform roadmap records P116.1 | PASS |  |
-| no runtime execution implementation files changed | PASS | P116.1 implementation path check relaxed for P116.2 |
+| no runtime execution implementation files changed | PASS | P116.1 implementation path check relaxed for P116.3 |
 | docs avoid raw runtime execution keys | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |

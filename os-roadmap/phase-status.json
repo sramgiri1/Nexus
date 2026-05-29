@@ -15757,18 +15757,19 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7a94edf4",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Founder Live Execution Readiness",
-      "detail": "P116.2 local execution schema metadata complete; P116.3 is next.",
+      "detail": "P116.3 governed local execution CRUD model complete; P116.4 is next.",
       "phaseId": "P116",
       "title": "Founder Live Runtime Execution Readiness",
       "order": 152,
       "status": "in_progress",
-      "summary": "P116 is in progress. P116.2 adds local schema metadata and isolated SQLite validation for founder runtime execution readiness records while runtime execution remains blocked.",
-      "nextPhase": "P116.3",
-      "previousPhase": "P116.1",
+      "summary": "P116 is in progress. P116.3 adds approval-gated local CRUD helpers for founder runtime execution readiness records while runtime execution remains blocked.",
+      "nextPhase": "P116.4",
+      "previousPhase": "P116.2",
       "checksRun": [
+        "npm run check:p1163-founder-live-runtime-execution-readiness",
         "npm run check:p1162-founder-live-runtime-execution-readiness",
         "npm run check:p1161-founder-live-runtime-execution-contract",
         "npm run check:os-phase-status",
@@ -15776,11 +15777,11 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P116.2 is schema-only; it does not enable runtime execution or execution unlock.",
+        "P116.3 allows local SQLite CRUD only for allowlisted execution-readiness metadata after explicit local approval gates.",
         "Runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-        "P116.3 is next for governed local execution CRUD modeling."
+        "P116.4 is next for safe dry-run runtime execution readiness preview modeling."
       ],
-      "completedAt": "2026-05-29T02:57:48.305Z"
+      "completedAt": "2026-05-29T03:11:50.557Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15839,23 +15840,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Governed Local Execution CRUD Model",
-      "detail": "Planned Governed Local Execution CRUD Model for P116.",
+      "detail": "P116.3 governed local execution CRUD model complete; P116.4 is next.",
       "phaseId": "P116.3",
       "title": "Governed Local Execution CRUD Model",
       "order": 152.3,
-      "status": "planned",
-      "summary": "Planned Governed Local Execution CRUD Model for P116.",
+      "status": "complete",
+      "summary": "P116.3 adds approval-gated local CRUD helpers for founder runtime execution readiness records, with blocked defaults, blocked unapproved requests, blocked delete, blocked outside-allowlist access, and isolated SQLite validation.",
       "nextPhase": "P116.4",
       "previousPhase": "P116.2",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only; not implemented yet."
+      "checksRun": [
+        "npm run check:p1163-founder-live-runtime-execution-readiness",
+        "npm run check:p1162-founder-live-runtime-execution-readiness",
+        "npm run check:p1161-founder-live-runtime-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P116.3 does not wire Command Center to DB records, unlock execution, run workers/tools, dispatch agents, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.",
+        "P116.4 is next for safe dry-run runtime execution readiness preview modeling."
+      ],
+      "completedAt": "2026-05-29T03:11:50.557Z"
     },
     {
       "track": "NEXUS_OS",
@@ -15939,9 +15948,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T02:57:48.305Z",
-  "currentPhase": "P116.2",
-  "previousPhase": "P116.1",
-  "nextPhase": "P116.3",
+  "updatedAt": "2026-05-29T03:11:50.557Z",
+  "currentPhase": "P116.3",
+  "previousPhase": "P116.2",
+  "nextPhase": "P116.4",
   "currentPhaseStatus": "complete"
 }

@@ -60,6 +60,7 @@ const entityByName = new Map((schema.entities || []).map((entry) => [entry.name,
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1162 = subphaseById.get("P116.2") || {};
 const p1163 = subphaseById.get("P116.3") || {};
+const p1164 = subphaseById.get("P116.4") || {};
 const p1161Checker = readText("scripts/check-p1161-founder-live-runtime-execution-contract.js");
 const descriptions = Object.fromEntries(RUNTIME_EXECUTION_ENTITIES.map((entity) => [entity, describeSqliteCrudEntity(entity)]));
 const cliAvailable = isSqliteCliAvailable();
@@ -185,6 +186,7 @@ const unsafeSource = `${schemaSql}\n${readText("db/schema.json")}`;
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1162-founder-live-runtime-execution-readiness"]));
 addCheck("contract marks P116.2 complete", p1162.status === "complete" && p1162.allowedFiles?.includes("db/schema.json") && p1162.allowedFiles?.includes("db/schema.sql"));
 addCheck("P116.3 remains planned or complete", ["planned", "complete"].includes(p1163.status));
+addCheck("P116.4 remains planned or complete", ["planned", "complete"].includes(p1164.status));
 addCheck("runtime execution entities exist in schema", RUNTIME_EXECUTION_ENTITIES.every((entity) => entityByName.has(entity)));
 addCheck("runtime execution entities are redacted low-risk local state", RUNTIME_EXECUTION_ENTITIES.every((entity) => entityByName.get(entity)?.redactionRequired === true && entityByName.get(entity)?.piiRisk === "low" && /^founder_runtime_execution_/.test(entityByName.get(entity)?.retentionClass || "")));
 addCheck("runtime execution item shape is complete", entityByName.get("founder_runtime_execution_readiness_items")?.primaryKey === "runtimeExecutionId" && entityByName.get("founder_runtime_execution_readiness_items")?.fields?.executionState === "string" && entityByName.get("founder_runtime_execution_readiness_items")?.fields?.operatorApproved === "boolean" && entityByName.get("founder_runtime_execution_readiness_items")?.fields?.runtimeExecutionAllowed === "boolean" && entityByName.get("founder_runtime_execution_readiness_items")?.fields?.executionUnlockAllowed === "boolean");
@@ -218,10 +220,17 @@ addCheck(
       && status.nextPhase === "P116.4"
       && roadmap.currentPhase === "P116.3"
       && roadmap.previousPhase === "P116.2"
-      && roadmap.nextPhase === "P116.4"))
+      && roadmap.nextPhase === "P116.4")
+    || (status.currentPhase === "P116.4"
+      && status.previousPhase === "P116.3"
+      && status.nextPhase === "P116.5"
+      && roadmap.currentPhase === "P116.4"
+      && roadmap.previousPhase === "P116.3"
+      && roadmap.nextPhase === "P116.5"))
     && statusById.get("P116")?.status === "in_progress"
     && statusById.get("P116.2")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P116.3")?.status)
+    && ["planned", "complete"].includes(statusById.get("P116.4")?.status)
     && roadmapById.get("P116.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

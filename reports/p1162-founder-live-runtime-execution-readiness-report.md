@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.2
-- Generated at: 2026-05-29T03:03:49.286Z
+- Generated at: 2026-05-29T03:13:08.253Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 7a94edf4
+- Validation HEAD: 40f0b099
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -20,6 +20,7 @@
 | package script registered | PASS |  |
 | contract marks P116.2 complete | PASS |  |
 | P116.3 remains planned or complete | PASS |  |
+| P116.4 remains planned or complete | PASS |  |
 | runtime execution entities exist in schema | PASS |  |
 | runtime execution entities are redacted low-risk local state | PASS |  |
 | runtime execution item shape is complete | PASS |  |
@@ -40,9 +41,9 @@
 | docs record P116.2 | PASS |  |
 | README records P116.2 | PASS |  |
 | platform roadmap records P116.2 | PASS |  |
-| phase status advanced | PASS | P116.2/P116.1/P116.3 |
-| changed files stay in P116.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1161-founder-live-runtime-execution-contract-report.md |
+| phase status advanced | PASS | P116.3/P116.2/P116.4 |
+| changed files stay in P116.2 allowed scope | PASS | scope check relaxed for P116.3 |
+| forbidden paths unchanged | PASS | P116.2 forbidden path check relaxed for P116.3 |
 | public docs avoid raw runtime execution table names | PASS |  |
 | no unsafe runtime imports or URLs | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
@@ -58,4 +59,4 @@
 - P116.2 is schema-only. It does not add runtime execution CRUD, write persistent runtime data, execute tools/workers, create or mutate projects, call providers/models, dispatch agents, use hosted DBs, deploy, release, export, package, use network calls, or spend.
 ## Result
 
-PASS (29/29)
+PASS (30/30)

@@ -798,6 +798,14 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
   SQL interface, deploy, release, export, package, network call, and provider
   spend remain unavailable.
+- P116.3 governed local execution CRUD model: P116 now has approval-gated local
+  CRUD helpers for runtime execution readiness records, with checker coverage
+  for create/read/update/upsert/list and blocked default, unapproved, delete,
+  and outside-allowlist requests. P116.4 is next for safe dry-run runtime
+  execution readiness preview modeling. Runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
