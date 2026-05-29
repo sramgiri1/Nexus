@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.3
-- Generated at: 2026-05-29T19:59:41.083Z
+- Generated at: 2026-05-29T20:02:18.528Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c5c52c73
+- Validation HEAD: cf097c89
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P128.3 | PASS |  |
 | platform roadmap records P128.3 | PASS |  |
 | phase status advanced | PASS | P128.3/P128.2/P128.4 |
-| changed files stay in P128.3 allowed scope | PASS | README.md, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, scripts/check-p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryIntentModel.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, scripts/check-p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryIntentModel.js |
+| changed files stay in P128.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw persistence table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
