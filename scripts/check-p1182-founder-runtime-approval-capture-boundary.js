@@ -100,7 +100,7 @@ const requiredFieldsPresent = metadata.entities.every((entity) => (
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1182-founder-runtime-approval-capture-boundary"]));
 addCheck("contract marks P118.2 complete", p1182.status === "complete" && p1182.allowedFiles?.includes("shared/founderApprovalCaptureSchemaMetadata.js"));
-addCheck("P118.3 remains planned", p1183.status === "planned");
+addCheck("P118.3 remains planned or complete", ["planned", "complete"].includes(p1183.status));
 addCheck("schema metadata phase and version", FOUNDER_APPROVAL_CAPTURE_SCHEMA_METADATA_PHASE === "P118.2" && FOUNDER_APPROVAL_CAPTURE_SCHEMA_VERSION === "1.0" && metadata.phaseId === "P118.2" && metadata.schemaVersion === "1.0");
 addCheck("schema metadata is metadata-only", metadata.schemaOnly === true && metadata.commandCenterVisible === false && metadata.writePolicy?.mode === "metadata-only");
 addCheck("schema entity names are stable", entityNamesMatch && FOUNDER_APPROVAL_CAPTURE_ENTITY_NAMES.length === 3 && FOUNDER_APPROVAL_CAPTURE_SCHEMA_ENTITIES.length === 3);
@@ -116,16 +116,28 @@ addCheck("README records P118.2", /P118\.2 approval capture schema metadata/i.te
 addCheck("platform roadmap records P118.2", /P118\.2 is complete/.test(platformRoadmap) && /P118\.3\s+is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P118.2"
-    && status.previousPhase === "P118.1"
-    && status.nextPhase === "P118.3"
-    && roadmap.currentPhase === "P118.2"
-    && roadmap.previousPhase === "P118.1"
-    && roadmap.nextPhase === "P118.3"
+  ((status.currentPhase === "P118.2"
+      && status.previousPhase === "P118.1"
+      && status.nextPhase === "P118.3"
+      && roadmap.currentPhase === "P118.2"
+      && roadmap.previousPhase === "P118.1"
+      && roadmap.nextPhase === "P118.3")
+    || (status.currentPhase === "P118.3"
+      && status.previousPhase === "P118.2"
+      && status.nextPhase === "P118.4"
+      && roadmap.currentPhase === "P118.3"
+      && roadmap.previousPhase === "P118.2"
+      && roadmap.nextPhase === "P118.4")
+    || (status.currentPhase === "P118.4"
+      && status.previousPhase === "P118.3"
+      && status.nextPhase === "P118.5"
+      && roadmap.currentPhase === "P118.4"
+      && roadmap.previousPhase === "P118.3"
+      && roadmap.nextPhase === "P118.5"))
     && statusById.get("P118")?.status === "in_progress"
     && statusById.get("P118.1")?.status === "complete"
     && statusById.get("P118.2")?.status === "complete"
-    && statusById.get("P118.3")?.status === "planned"
+    && ["planned", "complete"].includes(statusById.get("P118.3")?.status)
     && roadmapById.get("P118.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

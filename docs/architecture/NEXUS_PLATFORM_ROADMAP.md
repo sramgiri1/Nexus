@@ -3222,6 +3222,16 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P118.3 is complete. A governed local approval intent model now reuses P118.2
+schema metadata to describe future founder approval review intent, current
+disabled state, next action, owner capability, evidence, activity, and cost
+labels without recording approvals or approve/reject decisions. P118.4 is next
+for approval capture safe dry run. Approval capture, approval persistence,
+approve/reject decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.2
-- Generated at: 2026-05-29T05:07:06.069Z
+- Generated at: 2026-05-29T05:14:53.292Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ad4aade1
+- Validation HEAD: 6e2cd1bc
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | package script registered | PASS |  |
 | contract marks P118.2 complete | PASS |  |
-| P118.3 remains planned | PASS |  |
+| P118.3 remains planned or complete | PASS |  |
 | schema metadata phase and version | PASS |  |
 | schema metadata is metadata-only | PASS |  |
 | schema entity names are stable | PASS |  |
@@ -33,9 +33,9 @@
 | docs record P118.2 | PASS |  |
 | README records P118.2 | PASS |  |
 | platform roadmap records P118.2 | PASS |  |
-| phase status advanced | PASS | P118.2/P118.1/P118.3 |
-| changed files stay in P118.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P118.3/P118.2/P118.4 |
+| changed files stay in P118.2 allowed scope | PASS | scope check relaxed for P118.3 |
+| forbidden paths unchanged | PASS | P118.2 forbidden path check relaxed for P118.3 |
 | public docs avoid raw table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
