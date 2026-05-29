@@ -8373,7 +8373,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3dc22172",
       "commandCenterVisible": true,
       "label": "Activation Boundary",
       "detail": "P123.2 activation eligibility metadata complete; P123.3 governed activation intent model is next.",
@@ -8436,7 +8436,7 @@
       "order": 159.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3dc22172",
       "commandCenterVisible": true,
       "detail": "P123.2 activation eligibility metadata complete; P123.3 governed activation intent model is next.",
       "summary": "Added browser-safe approval application authority activation eligibility metadata that reuses P122.2 authority handoff metadata and defines prior handoff, activation scope, runtime write guard, and operator evidence sections without enabling live authority.",
@@ -17510,7 +17510,7 @@
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "3dc22172",
     "commandCenterVisible": true,
     "label": "Activation Boundary",
     "detail": "P123.2 activation eligibility metadata complete; P123.3 governed activation intent model is next.",

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P123.2
-- Generated at: 2026-05-29T14:41:31.427Z
+- Generated at: 2026-05-29T14:42:41.245Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 4da11184
+- Validation HEAD: 3dc22172
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | README records P123.2 | PASS |  |
 | platform roadmap records P123.2 | PASS |  |
 | phase status advanced | PASS | P123.2/P123.1/P123.3 |
-| changed files stay in P123.2 allowed scope | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1231-founder-runtime-approval-application-authority-activation-boundary.js, scripts/check-p1232-founder-runtime-approval-application-authority-activation-boundary.js, shared/founderApprovalApplicationAuthorityActivationEligibilityMetadata.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1231-founder-runtime-approval-application-authority-activation-boundary.js, scripts/check-p1232-founder-runtime-approval-application-authority-activation-boundary.js, shared/founderApprovalApplicationAuthorityActivationEligibilityMetadata.js |
+| changed files stay in P123.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw activation table names | PASS |  |
 | metadata avoids raw private IDs | PASS |  |
 | metadata avoids fake runnable actions | PASS |  |
