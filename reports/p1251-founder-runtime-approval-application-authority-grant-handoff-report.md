@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P125.1
-- Generated at: 2026-05-29T16:38:09.925Z
+- Generated at: 2026-05-29T16:38:55.170Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b82a9181
+- Validation HEAD: 21613883
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | platform roadmap records P125.1 | PASS |  |
 | README records P125.1 | PASS |  |
 | phase status advanced | PASS | P125.1/P124.7/P125.2 |
-| changed files stay in P125.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, scripts/check-p1251-founder-runtime-approval-application-authority-grant-handoff.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1247-founder-runtime-approval-application-authority-grant-boundary.js, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, scripts/check-p1251-founder-runtime-approval-application-authority-grant-handoff.js |
+| changed files stay in P125.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P125.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw handoff table names | PASS |  |
