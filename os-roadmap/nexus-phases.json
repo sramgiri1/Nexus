@@ -12286,7 +12286,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1fa74560",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
       "detail": "P122.5 scoped authority UX complete; P122.6 validation is next.",
@@ -12419,7 +12419,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1fa74560",
       "commandCenterVisible": true,
       "label": "Authority UX",
       "detail": "Scoped Command Center authority handoff UX complete; P122.6 is next.",
@@ -12493,7 +12493,7 @@
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "1fa74560",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
     "detail": "P122.5 scoped authority UX complete; P122.6 validation is next.",
