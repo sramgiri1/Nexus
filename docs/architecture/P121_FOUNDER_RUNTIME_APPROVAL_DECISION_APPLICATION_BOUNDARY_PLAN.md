@@ -543,9 +543,181 @@ and P121.2 complete.
 
 Status: complete.
 
+## P121.4 Application Safe Dry Run
+
+Phase: P121 Founder Runtime Approval Decision Application Boundary
+Subphase: P121.4 Application Safe Dry Run
+Scope classification: NEXUS_OS_CHANGE
+Starting branch: `codex/nexus-e2e-phase-validation`
+Expected base commit: `6e5843d3`
+
+Goal: define a local-only approval-decision application safe dry-run preview
+that reuses P121.3 intent model and P121.2 eligibility metadata without DB
+files, DB writes, approval application, approval persistence, approval decision
+recording, runtime execution, or execution unlock.
+
+Why this is needed: P121.3 is a hidden intent model. P121.4 produces a
+display-safe preview envelope for later UX work while keeping all live behavior
+blocked.
+
+User/operator impact: operators can inspect a deterministic dry-run payload for
+future approval decision application readiness. No live application action is
+exposed.
+
+Command Center impact: no Command Center source changes in P121.4. Chat with
+NEXUS, Lite, OS Roadmap, Live Readiness, Business Build, and Agent Flow keep
+their existing behavior. No apply, approve, reject, save, run, or execution
+control is introduced.
+
+Safety impact: all application/write/execution/provider/dispatch/project
+mutation authority flags remain false, all unsafe candidate counts remain
+zero, the preview stays hidden from primary UX, and the checker validates no
+DB/runtime/provider/tool/worker/project/deploy imports or URLs are introduced.
+
+Cost impact: no provider calls, model calls, network calls, or provider spend.
+
+Project/OS scope: OS-only. No project-owned files, CareLoop files, generated
+project files, dashboard source/test files, DB/runtime/provider/tool/worker
+files, deploy/release/export/package files, or env files are allowed.
+
+Files expected to change:
+- `shared/founderApprovalDecisionApplicationPreview.js`
+- `scripts/check-p1214-founder-runtime-approval-decision-application-boundary.js`
+- `scripts/check-p1213-founder-runtime-approval-decision-application-boundary.js`
+- `contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json`
+- `docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1213-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/p1214-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_APPLICATION_PREVIEW_PHASE`
+- `FOUNDER_APPROVAL_DECISION_APPLICATION_PREVIEW_VERSION`
+- `FOUNDER_APPROVAL_DECISION_APPLICATION_PREVIEW_STATES`
+- `buildFounderApprovalDecisionApplicationPreview(input?)`
+- `validateFounderApprovalDecisionApplicationPreview(envelope?)`
+- Data shape: result envelope with P121.4 phase, local-only dry-run data,
+  P121.3/P121.2 source phases, display-safe preview sections and rows,
+  blockers, next action, disabled reason, owner capability, evidence/activity
+  labels, cost impact, zero unsafe candidate counts, false action booleans, and
+  false authority flags.
+
+Reuse check: reuse P121.3 intent model, P121.2 eligibility metadata,
+`shared/resultEnvelope.js`, `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, OS phase status records, existing report
+formatting, and existing route safety posture. Do not duplicate report writers,
+mode guards, redaction helpers, result envelopes, phase status updaters, route
+matrices, UI cards, or evidence/audit/activity appenders.
+
+Command Center UX requirements: no dashboard source change in P121.4. Primary
+UX must not show raw JSON, raw logs, raw policy dumps, raw DB names, private
+IDs, internal phase labels outside OS Roadmap, DemoApp, approval application
+buttons, approve/reject/save/run controls, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: no new Playwright test because P121.4 has no UI source
+changes. Preserve route-wide safety tests.
+
+Checker updates: add a dedicated P121.4 safe dry-run preview checker and update
+P121.3 checker handoff acceptance for the P121.4 current state.
+
+Docs/README/roadmap updates: P121.4 is recorded in this plan, README, platform
+roadmap, P121 contract, OS roadmap/status, and generated reports. P121.5 is
+next for scoped Command Center application boundary UX.
+
+OS phase status update: P121 is in progress; P121.4 is complete; current phase
+P121.4; previous P121.3; next P121.5.
+
+Reports to regenerate:
+- `reports/p1213-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/p1214-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1214-founder-runtime-approval-decision-application-boundary`
+- `npm run check:p1213-founder-runtime-approval-decision-application-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P121.4 files>`
+- `git commit -m "feat(nexus): implement p1214 approval decision application preview"`
+- stamp P121/P121.4 status with the implementation commit
+- `git add <allowed P121.4 status/report files>`
+- `git commit -m "chore(nexus): stamp p1214 approval decision application preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop paths changed
+- confirm no dashboard source or dashboard test files changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, or env paths changed
+- confirm no approval decision application, approval capture, approval
+  persistence, approval decision recording, runtime execution, execution unlock,
+  provider/model calls, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+  spend authority is enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB table names, raw
+  JSON/log/policy dumps, internal primary UX phase labels, or fake actions are
+  introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: a dry-run preview can be mistaken for live authority. P121.4 keeps
+the preview hidden from primary UX and checks every application/write/execution
+flag remains false.
+
+Rollback plan: remove the P121.4 helper/checker/docs/status/report changes,
+restore P121.4 to planned, set current phase back to P121.3, and keep
+P121.1-P121.3 complete.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
-P121.3 Governed Application Intent Model is complete. P121.4 is next for a
-safe dry-run preview, with approval decision application, persistence,
-approve/reject decision recording, DB/runtime writes, and execution still
-blocked unless a future subphase explicitly grants narrow authority.
+P121.4 Application Safe Dry Run is complete. P121.5 is next for scoped Command
+Center application boundary UX, with approval decision application,
+persistence, approve/reject decision recording, DB/runtime writes, and execution
+still blocked unless a future subphase explicitly grants narrow authority.

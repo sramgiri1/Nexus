@@ -12065,29 +12065,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "59c3f208",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
-      "detail": "P121.3 governed application intent model complete; P121.4 safe dry-run preview is next.",
+      "detail": "P121.4 safe dry-run preview complete; P121.5 scoped Command Center UX is next.",
       "phaseId": "P121",
       "title": "Founder Runtime Approval Decision Application Boundary",
       "order": 157,
       "status": "in_progress",
-      "summary": "P121 is in progress with the approval decision application boundary contract, browser-safe eligibility metadata, and governed local application intent model complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P121.4",
-      "previousPhase": "P121.3",
+      "summary": "P121 is in progress with the approval decision application boundary contract, browser-safe eligibility metadata, governed local application intent model, and local safe dry-run preview complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P121.5",
+      "previousPhase": "P121.4",
       "checksRun": [
+        "npm run check:p1214-founder-runtime-approval-decision-application-boundary",
         "npm run check:p1213-founder-runtime-approval-decision-application-boundary",
-        "npm run check:p1212-founder-runtime-approval-decision-application-boundary",
-        "npm run check:p1211-founder-runtime-approval-decision-application-boundary-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P121.3 is model-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P121.4 is preview-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:49:06.510Z"
+      "completedAt": "2026-05-29T12:55:29.361Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12170,23 +12169,29 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Application Dry Run",
-      "detail": "Planned P121 subphase. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "detail": "Approval decision application safe dry-run preview complete.",
       "phaseId": "P121.4",
       "title": "Application Safe Dry Run",
       "order": 157.4,
-      "status": "planned",
-      "summary": "Planned only. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Assembled P121.3 intent and P121.2 eligibility metadata into a local result-envelope safe dry-run preview with display-safe rows, blocked sections, evidence/activity labels, cost impact, zero application/write/execution/dispatch/project mutation/spend counts, and all authority flags false. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P121.5",
       "previousPhase": "P121.3",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1214-founder-runtime-approval-decision-application-boundary",
+        "npm run check:p1213-founder-runtime-approval-decision-application-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P121.4 is preview-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T12:55:29.361Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12249,9 +12254,9 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T12:49:06.510Z",
-  "currentPhase": "P121.3",
-  "previousPhase": "P121.2",
-  "nextPhase": "P121.4",
+  "updatedAt": "2026-05-29T12:55:29.361Z",
+  "currentPhase": "P121.4",
+  "previousPhase": "P121.3",
+  "nextPhase": "P121.5",
   "currentPhaseStatus": "complete"
 }

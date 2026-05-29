@@ -3439,6 +3439,17 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P121.4 is complete. A local result-envelope safe dry-run preview now assembles
+the P121.3 intent model and P121.2 eligibility metadata into display-safe
+preview rows, blocked sections, evidence/activity labels, and cost impact while
+keeping all application, write, execution, dispatch, project mutation, and spend
+counts at zero. P121.5 is next for scoped Command Center application boundary
+UX. Approval decision application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

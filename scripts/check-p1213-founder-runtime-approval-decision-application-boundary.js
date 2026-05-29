@@ -145,24 +145,25 @@ addCheck("P121.2 checker accepts P121.3 handoff", p1212Checker.includes("P121.3"
 addCheck("docs record P121.3", /P121\.3 Governed Application Intent Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P121.3", /P121\.3 governed approval decision application intent model/i.test(readme) && /P121\.4\s+is\s+next/.test(readme));
 addCheck("platform roadmap records P121.3", /P121\.3 is complete/.test(platformRoadmap) && /P121\.4\s+is\s+next/.test(platformRoadmap));
-const p1213HandoffAccepted = (status.currentPhase === "P121.3"
+const p1213CurrentState = status.currentPhase === "P121.3"
   && status.previousPhase === "P121.2"
   && status.nextPhase === "P121.4"
   && roadmap.currentPhase === "P121.3"
   && roadmap.previousPhase === "P121.2"
-  && roadmap.nextPhase === "P121.4")
-  || (status.currentPhase === "P121.4"
-    && status.previousPhase === "P121.3"
-    && status.nextPhase === "P121.5"
-    && roadmap.currentPhase === "P121.4"
-    && roadmap.previousPhase === "P121.3"
-    && roadmap.nextPhase === "P121.5")
-  || (status.currentPhase === "P121.5"
-    && status.previousPhase === "P121.4"
-    && status.nextPhase === "P121.6"
-    && roadmap.currentPhase === "P121.5"
-    && roadmap.previousPhase === "P121.4"
-    && roadmap.nextPhase === "P121.6");
+  && roadmap.nextPhase === "P121.4";
+const p1214StartedState = status.currentPhase === "P121.4"
+  && status.previousPhase === "P121.3"
+  && status.nextPhase === "P121.5"
+  && roadmap.currentPhase === "P121.4"
+  && roadmap.previousPhase === "P121.3"
+  && roadmap.nextPhase === "P121.5";
+const p1215StartedState = status.currentPhase === "P121.5"
+  && status.previousPhase === "P121.4"
+  && status.nextPhase === "P121.6"
+  && roadmap.currentPhase === "P121.5"
+  && roadmap.previousPhase === "P121.4"
+  && roadmap.nextPhase === "P121.6";
+const p1213HandoffAccepted = p1213CurrentState || p1214StartedState || p1215StartedState;
 addCheck(
   "phase status advanced",
   p1213HandoffAccepted
