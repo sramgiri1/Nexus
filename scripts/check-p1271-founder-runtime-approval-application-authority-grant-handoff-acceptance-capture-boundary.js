@@ -55,6 +55,7 @@ const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const readme = readText("README.md");
 const osStatusChecker = readText("scripts/check-os-phase-status.js");
 const p1267Checker = readText("scripts/check-p1267-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js");
+const p1272Checker = readText("scripts/check-p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js");
 const commandCenterSource = readText("dashboard/src/pages/CommandCenterV2.jsx");
 const routeTests = readText("dashboard/tests/routes.spec.js");
 const docsBundle = `${plan}\n${platformRoadmap}\n${readme}`;
@@ -128,6 +129,7 @@ addCheck("contract forbids dashboard source edits", (p1271.forbiddenFiles || [])
 addCheck("P127.1 records validation commands", validationCommands.every((command) => p1271.validationCommands?.includes(command)));
 addCheck("OS checker recognizes P127 subphases", p127Subphases.every((phaseId) => osStatusChecker.includes(`\"${phaseId}\"`)));
 addCheck("P126.7 checker accepts P127.1 handoff", p1267Checker.includes("P127.1") && p1267Checker.includes("P127.2") && p1267Checker.includes("p1271StartedState"));
+addCheck("P127.2 checker validates metadata handoff", !p1272StartedState || (p1272Checker.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata") && p1272Checker.includes("P127.3")));
 addCheck("P126.5 route regression coverage remains present", routeTests.includes("Approval application authority grant handoff acceptance appears only on scoped pages") && routeTests.includes("Acceptance read-only") && routeTests.includes("/command-center/lite"));
 addCheck("primary UX keeps capture boundary absent", !/Acceptance Capture Boundary|P127|p127\d|reports\/p127/i.test(commandCenterSource));
 addCheck("primary UX avoids fake runnable actions", !/run now|execute now|deploy now|activate now|capture acceptance now|accept handoff now|grant authority now|handoff now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i.test(commandCenterSource));

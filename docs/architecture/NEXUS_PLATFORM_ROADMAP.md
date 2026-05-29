@@ -3853,6 +3853,17 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P127.2 is complete. The browser-safe local acceptance capture eligibility
+metadata now reuses P126.2 acceptance metadata, exposes display-safe capture
+sections, blockers, owner, next action, and cost posture, and validates blocked
+flags. P127.3 is next for governed acceptance capture intent modeling.
+Acceptance capture, handoff acceptance, grant handoff, authority grant,
+activation, approval application, approval capture, approval persistence,
+approve/reject decision recording, DB/runtime writes, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

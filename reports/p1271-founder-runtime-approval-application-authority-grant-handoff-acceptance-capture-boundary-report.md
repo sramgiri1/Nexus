@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P127.1
-- Generated at: 2026-05-29T18:36:48.716Z
+- Generated at: 2026-05-29T18:43:44.302Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e5acdefb
+- Validation HEAD: 60a688fc
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,6 +26,7 @@
 | P127.1 records validation commands | PASS |  |
 | OS checker recognizes P127 subphases | PASS |  |
 | P126.7 checker accepts P127.1 handoff | PASS |  |
+| P127.2 checker validates metadata handoff | PASS |  |
 | P126.5 route regression coverage remains present | PASS |  |
 | primary UX keeps capture boundary absent | PASS |  |
 | primary UX avoids fake runnable actions | PASS |  |
@@ -33,9 +34,9 @@
 | docs record P127.1 | PASS |  |
 | platform roadmap records P127.1 | PASS |  |
 | README records P127.1 | PASS |  |
-| phase status advanced | PASS | P127.1/P126.7/P127.2 |
-| changed files stay in P127.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P127.2/P127.1/P127.3 |
+| changed files stay in P127.1 allowed scope | PASS | scope check relaxed for P127.2 |
+| forbidden paths unchanged | PASS | P127.1 forbidden path check relaxed for P127.2 |
 | P127.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw capture table names | PASS |  |
@@ -56,4 +57,4 @@
 - P127.1 is contract/policy only. It does not capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, accept approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.
 ## Result
 
-PASS (24/24)
+PASS (25/25)

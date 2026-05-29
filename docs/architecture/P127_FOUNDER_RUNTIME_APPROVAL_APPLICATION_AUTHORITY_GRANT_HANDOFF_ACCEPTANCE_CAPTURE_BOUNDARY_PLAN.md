@@ -109,11 +109,122 @@ return current phase to P126.7.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P127.2 Acceptance Capture Eligibility Metadata
 
-P127.2 Acceptance Capture Eligibility Metadata: planned. Browser-safe metadata
-only. No acceptance capture records, writes, execution, providers, dispatch,
-mutation, network, or spend.
+Phase: P127 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Capture Boundary
+Subphase: P127.2 Acceptance Capture Eligibility Metadata
+
+Goal: add browser-safe local acceptance capture eligibility metadata without
+creating capture records, writes, execution paths, provider calls, dispatch,
+mutation, network calls, or spend.
+
+Why this is needed: P127.1 created the capture boundary contract. P127.2 gives
+later intent, dry-run, and UX subphases a typed local metadata source so they
+can reuse flags, labels, blockers, owner, next action, and cost posture instead
+of duplicating helpers.
+
+User/operator impact: OS Roadmap shows capture eligibility metadata complete
+with P127.3 next, while live acceptance capture remains unavailable.
+
+Command Center impact: no dashboard source or route test changes. Existing
+P126.5 scoped read-only acceptance boundary UX remains on Business Build and
+Agent Flow only. Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and
+unrelated pages stay clean.
+
+Safety impact: metadata-only. Acceptance capture, handoff acceptance, authority
+handoff, authority grant, activation, approval application, approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+runtime execution, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
+deploy, release, export, package, network call, and provider spend remain
+blocked.
+
+Cost impact: no provider calls, model calls, network calls, worker runtime,
+deploy/package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata.js`
+- `scripts/check-p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `scripts/check-p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json`
+- `docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_METADATA_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_METADATA_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_STATES`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_FLAGS`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_SECTIONS`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCaptureBoundaryMetadata`
+
+Data shape: browser-safe metadata with `metadataVersion`, `phaseId`,
+`sourceAcceptancePhase`, `sourceAcceptanceVersion`, `metadataOnly`,
+`localOnly`, `commandCenterVisible`, `capturePolicy`, `captureStates`,
+`priorAcceptanceBoundary`, `sections`, `blockers`, `nextAction`,
+`ownerCapability`, and `costImpactLabel`. No DB schema, runtime schema,
+capture record shape, provider envelope, dispatch packet, or project data are
+created.
+
+Command Center UX requirements: no new cards, routes, controls, dashboard
+source, or dashboard test changes. Do not show raw reports, raw IDs, raw JSON,
+raw logs, raw policy dumps, DemoApp, or fake runnable actions.
+
+Validation commands:
+- `npm run check:p1272-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary`
+- `npm run check:p1271-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P127 in progress, P127.2 complete, current phase
+P127.2, previous phase P127.1, next phase P127.3. P127.3-P127.7 remain
+planned-only.
+
+Known risks: capture language can imply live recording. P127.2 keeps the work
+metadata-only and repeats that capture, writes, execution, providers, dispatch,
+mutation, network, and spend remain blocked.
+
+Rollback plan: remove the P127.2 metadata helper, checker, package script, and
+report; revert P127.1 checker and P127 contract/docs/status updates; return
+current phase to P127.1 with P127.2 planned.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P127.3 Governed Acceptance Capture Intent Model: planned. Local model only.
 No acceptance capture, writes, execution, providers, dispatch, mutation,
