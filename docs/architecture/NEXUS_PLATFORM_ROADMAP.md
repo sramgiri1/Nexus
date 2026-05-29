@@ -3645,6 +3645,18 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P124.5 is complete. Business Build and Agent Flow now render the P124.4
+approval application authority grant safe dry-run through existing boundary
+cards with current blocked state, next action, blockers, disabled reason, owner
+capability, evidence/activity labels, and cost impact. Chat with NEXUS, Lite,
+OS Roadmap, Live Readiness, and unrelated pages do not show the grant card.
+P124.6 is next for validation and docs closure. Authority grant, activation,
+approval application, approval capture, approval persistence, approve/reject
+decision recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

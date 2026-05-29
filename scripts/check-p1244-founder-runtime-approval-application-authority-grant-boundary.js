@@ -223,7 +223,11 @@ addCheck("contract uses actual intent model file", p1244.allowedFiles?.includes(
 addCheck("P124.3 checker accepts P124.4 handoff", p1243Checker.includes("P124.4") && p1243Checker.includes("P124.5") && p1243Checker.includes("p1244StartedState"));
 addCheck("docs record P124.4", /P124\.4 Grant Safe Dry Run[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P124.4", /P124\.4 approval application authority grant safe dry run/i.test(readme) && /P124\.5\s+is\s+next/.test(readme));
-addCheck("platform roadmap records P124.4", /P124\.4 is complete/.test(platformRoadmap) && /P124\.5\s+is\s+next/.test(platformRoadmap));
+addCheck(
+  "platform roadmap records P124.4",
+  /P124\.4 is complete/.test(platformRoadmap)
+    && (/P124\.5\s+is\s+next/.test(platformRoadmap) || /P124\.5 is complete/.test(platformRoadmap)),
+);
 addCheck(
   "phase status advanced",
   (p1244CurrentState || p1245StartedState)

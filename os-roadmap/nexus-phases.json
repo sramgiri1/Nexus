@@ -12750,25 +12750,26 @@
       "order": 160,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d052d3b0",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P124.4 grant safe dry-run preview complete; P124.5 scoped Command Center grant boundary UX is next.",
-      "summary": "P124.4 added a hidden local grant safe dry-run result envelope that reuses the P124.3 intent model and P124.2 metadata while keeping live grants, writes, execution, provider calls, mutation, deploy, package, network, and spend blocked.",
-      "previousPhase": "P124.3",
-      "nextPhase": "P124.5",
+      "detail": "P124.5 scoped Command Center grant boundary UX complete; P124.6 grant validation/docs is next.",
+      "summary": "P124.5 rendered the P124.4 grant safe dry-run on Business Build and Agent Flow using existing boundary cards while keeping Chat, Lite, OS Roadmap, Live Readiness, writes, execution, providers, mutation, network, and spend blocked.",
+      "previousPhase": "P124.4",
+      "nextPhase": "P124.6",
       "checksRun": [
+        "npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:p1244-founder-runtime-approval-application-authority-grant-boundary",
-        "npm run check:p1243-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P124.4 is local dry-run only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P124.5 is display-only scoped UX. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T16:05:51.814Z"
+      "completedAt": "2026-05-29T16:14:56.895Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12891,19 +12892,28 @@
       "title": "Command Center Grant Boundary UX",
       "label": "Grant Boundary UX",
       "order": 160.5,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "Planned scoped Command Center grant boundary UX subphase. No P124.5 behavior is implemented in P124.4.",
-      "summary": "Planned scoped Command Center grant boundary UX subphase. No P124.5 behavior is implemented in P124.4.",
+      "detail": "P124.5 scoped Command Center grant boundary UX complete; P124.6 grant validation/docs is next.",
+      "summary": "Added scoped Business Build and Agent Flow grant boundary cards, a browser-safe display model, focused Playwright coverage, and checker/docs/status/report updates while keeping the grant path display-only and blocked.",
       "previousPhase": "P124.4",
       "nextPhase": "P124.6",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. This subphase is not implemented in P124.4."
+      "checksRun": [
+        "npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1244-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P124.5 is display-only scoped UX. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T16:14:56.895Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12915,13 +12925,13 @@
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned grant validation/docs closure subphase. No P124.6 behavior is implemented in P124.1.",
-      "summary": "Planned grant validation/docs closure subphase. No P124.6 behavior is implemented in P124.1.",
+      "detail": "Planned grant validation/docs subphase. No P124.6 behavior is implemented in P124.5.",
+      "summary": "Planned grant validation/docs subphase. No P124.6 behavior is implemented in P124.5.",
       "previousPhase": "P124.5",
       "nextPhase": "P124.7",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. This subphase is not implemented in P124.1."
+        "Planned only. This subphase is not implemented in P124.5."
       ],
       "completedAt": ""
     },
@@ -12947,36 +12957,37 @@
     }
   ],
   "updatedAt": "2026-05-29T15:55:44.535Z",
-  "currentPhase": "P124.4",
-  "previousPhase": "P124.3",
-  "nextPhase": "P124.5",
+  "currentPhase": "P124.5",
+  "previousPhase": "P124.4",
+  "nextPhase": "P124.6",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P124.4",
-    "title": "Grant Safe Dry Run",
-    "label": "Grant Safe Dry Run",
-    "order": 160.4,
+    "phaseId": "P124.5",
+    "title": "Command Center Grant Boundary UX",
+    "label": "Grant Boundary UX",
+    "order": 160.5,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d052d3b0",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P124.4 grant safe dry-run preview complete; P124.5 scoped Command Center grant boundary UX is next.",
-    "summary": "Added the hidden local grant safe dry-run result envelope and validator with display-safe sections, blocked rows, zero unsafe candidate counts, false authority/write/execution flags, evidence/activity labels, and checker/docs/status/report updates.",
-    "previousPhase": "P124.3",
-    "nextPhase": "P124.5",
+    "detail": "P124.5 scoped Command Center grant boundary UX complete; P124.6 grant validation/docs is next.",
+    "summary": "Added scoped Business Build and Agent Flow grant boundary cards, a browser-safe display model, focused Playwright coverage, and checker/docs/status/report updates while keeping the grant path display-only and blocked.",
+    "previousPhase": "P124.4",
+    "nextPhase": "P124.6",
     "checksRun": [
+      "npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:p1244-founder-runtime-approval-application-authority-grant-boundary",
-      "npm run check:p1243-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
       "git diff --check"
     ],
     "knownLimitations": [
-      "P124.4 is local dry-run only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P124.5 is display-only scoped UX. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T16:05:51.814Z"
+    "completedAt": "2026-05-29T16:14:56.895Z"
   },
   "generatedAt": "2026-05-29T14:02:08.266Z"
 }

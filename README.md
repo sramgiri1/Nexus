@@ -1326,6 +1326,17 @@ The Command Center and local operator surface have:
   execution, execution unlock, provider/model call, agent dispatch, worker/tool
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain unavailable.
+- P124.5 scoped approval application authority grant Command Center UX: Business
+  Build and Agent Flow now show the P124.4 grant safe dry-run through existing
+  boundary cards with current state, next action, blockers, disabled reason,
+  owner capability, evidence/activity labels, and cost impact. P124.6 is next
+  for grant validation and docs closure. Chat with NEXUS, Lite, OS Roadmap, and
+  Live Readiness stay clean. Authority grant, activation, approval application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

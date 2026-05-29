@@ -604,14 +604,158 @@ return current phase to P124.3.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P124.5 Command Center Grant Boundary UX
 
-P124.5 Command Center Grant Boundary UX: scoped UX only, allowed files are the
-existing Command Center data/page/test files, the P124.4 dry-run module, P124
-contract/docs/checker/status, and reports. It must reuse existing cards/tabs and
-route matrix patterns, preserve system/dark/light themes, show useful grant
-state only on Business Build and Agent Flow, and avoid DemoApp, raw IDs, raw
-dumps, fake actions, and mutation controls.
+Phase: P124 Founder Runtime Approval Application Authority Grant Boundary
+
+Subphase: P124.5
+
+Goal: render the P124.4 approval application authority grant safe dry-run as
+scoped Command Center UX on Business Build and Agent Flow only.
+
+Why this is needed: P124.4 creates the local dry-run envelope. P124.5 makes the
+read-only grant boundary useful to founders/operators on the two work pages
+where agent plans and business build readiness are reviewed.
+
+User/operator impact: Business Build and Agent Flow now show grant readiness,
+current blocked state, next action, blockers, disabled reason, owner capability,
+evidence/activity labels, and cost impact without adding executable controls.
+
+Command Center impact: one existing boundary card pattern is reused on Business
+Build and Agent Flow. Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and
+unrelated pages do not show the grant boundary card.
+
+Safety impact: approval application authority grant, activation, approval
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package, network calls,
+and provider spend remain blocked.
+
+Cost impact: local display model and browser tests only. No provider calls,
+model calls, network calls, worker runtime, deploy, package creation, or
+provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `shared/founderApprovalApplicationAuthorityGrantSafeDryRun.js`
+- `contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json`
+- `docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md`
+- `scripts/check-p1244-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1244-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1245-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- any dashboard source/test file except the exact dashboard files listed above
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalApplicationAuthorityGrantBoundaryDisplayModel`
+- `businessBuildViewModel.founderApprovalApplicationAuthorityGrantBoundary`
+- Display model fields include `currentState`, `founderIdea`, `previewMode`,
+  `readinessRowCount`, `blockedReadinessRowCount`, zero unsafe candidate counts,
+  `nextAction`, `blockers`, `disabledReason`, `ownerCapability`,
+  `evidenceLocation`, `activityLocation`, `costImpact`, `readinessSections`,
+  `readinessRows`, `safetyRows`, and `summaryRows`.
+
+Command Center UX requirements: render `Approval Application Authority Grant`
+with a `Grant read-only` pill only on Business Build and Agent Flow. Show current
+state, next action, blockers, disabled reason, owner capability, evidence,
+activity, and cost. Do not show raw report paths, raw private IDs, raw schema or
+table names, raw dumps, internal helper names, DemoApp, mutation controls, or
+fake runnable actions.
+
+Dark/light/system theme requirements: reuse existing card classes and verify
+the new scoped card in dark, light, and system themes. No CSS/theme changes.
+
+Playwright tests: add `Approval application authority grant appears only on
+scoped pages`; verify Business Build and Agent Flow visibility, excluded route
+absence, dark/light/system themes, no DemoApp leakage, no raw dumps, no raw
+private IDs, no raw schema/table names, and no fake runnable action copy.
+
+Tests to add/update/remove: add P124.5 checker and package script. Add the
+focused Playwright route test. Do not remove existing route-wide safety tests.
+
+Checker updates: add
+`scripts/check-p1245-founder-runtime-approval-application-authority-grant-boundary.js`.
+Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`. Validate
+display model shape, scoped Command Center source, route test coverage, status,
+docs, reports, allowed file scope, and forbidden paths.
+
+Docs to update: update this plan, README, platform roadmap, P124 contract, OS
+roadmap/status, generated P124.5 report, OS phase status report, and phase
+validation coverage report.
+
+Reports to regenerate:
+- `reports/p1245-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+- `reports/p1244-founder-runtime-approval-application-authority-grant-boundary-report.md`
+  if the handoff checker refreshes it.
+
+OS phase status update: P124 is in progress. P124.5 is complete. Current phase
+is P124.5, previous phase is P124.4, and next phase is P124.6.
+
+Validation commands:
+- `npm run check:p1245-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:p1244-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P124.5 files>`
+- `git commit -m "feat(nexus): implement p1245 approval authority grant boundary"`
+- stamp P124/P124.5 status with the implementation commit
+- `git add <allowed P124.5 status/report files>`
+- `git commit -m "chore(nexus): stamp p1245 approval authority grant boundary"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks: confirm no project/CareLoop/generated project paths changed,
+no dashboard files outside the exact allowed set changed, no runtime/provider/
+project/deploy/package/env paths changed, no authority grant/write/execution/
+spend behavior is enabled, no raw UX dumps or fake runnable actions are
+introduced, and no stale `pending-final-commit` remains after the status stamp
+commit.
+
+Known risks: adding another page card can add noise. P124.5 keeps the card
+scoped to Business Build and Agent Flow and uses compact existing card styling.
+
+Rollback plan: remove the display model, two render calls, route test, P124.5
+checker/report/package script, contract/docs/status/report updates, restore
+P124.5 to planned, and return current phase to P124.4.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P124.6 Grant Validation / Docs: validation/docs only, allowed files are P124.5
 checker, P124.6 checker, P124 contract/docs/status, README, roadmap, package
