@@ -18022,15 +18022,15 @@
       "order": 162,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1ebe879e",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P126.5 scoped Command Center acceptance boundary UX complete; P126.6 validation/docs closure is next.",
-      "summary": "P126 is in progress with acceptance boundary contract/policy, browser-safe metadata, governed acceptance intent, local safe dry-run preview, and scoped Command Center acceptance UX complete. Live handoff acceptance, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+      "detail": "P126.6 acceptance validation/docs closure complete; P126.7 final validation is next.",
+      "summary": "P126 is in progress with acceptance boundary contract/policy, browser-safe metadata, governed acceptance intent, local safe-dry-run preview, scoped Command Center acceptance UX, and aggregate validation/docs closure complete. Live handoff acceptance, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P125.7",
-      "nextPhase": "P126.6",
+      "nextPhase": "P126.7",
       "checksRun": [
+        "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
         "npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
-        "npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -18039,9 +18039,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P126.5 is display-only scoped UX. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P126.6 is validation/docs only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T18:07:39.906Z"
+      "completedAt": "2026-05-29T18:18:01.410Z"
     },
     {
       "track": "NEXUS_OS",
@@ -18194,19 +18194,28 @@
       "title": "Acceptance Validation / Docs",
       "label": "Acceptance Validation",
       "order": 162.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "Planned acceptance validation/docs closure.",
-      "summary": "Planned validation/docs closure. No P126.6 behavior is implemented in P126.1.",
+      "detail": "P126.6 acceptance validation/docs closure complete; P126.7 final validation is next.",
+      "summary": "Added aggregate validation/docs closure for P126.1-P126.5 checkers, reports, scoped Command Center acceptance UX evidence, docs, status, and safety posture. Live handoff acceptance, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
       "previousPhase": "P126.5",
       "nextPhase": "P126.7",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+      "checksRun": [
+        "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P126.6 is validation/docs only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T18:18:01.410Z"
     },
     {
       "track": "NEXUS_OS",
@@ -18219,21 +18228,21 @@
       "commit": "planned",
       "commandCenterVisible": true,
       "detail": "Planned final validation after P126.6.",
-      "summary": "Planned final validation closure. No P126.7 behavior is implemented in P126.1.",
+      "summary": "Planned final validation closure after P126.6. No P126.7 behavior is implemented in P126.6.",
       "previousPhase": "P126.6",
       "nextPhase": "P127",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. Not implemented in P126.1."
+        "Planned only. Not implemented in P126.6."
       ],
       "completedAt": ""
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T17:12:28.540Z",
-  "currentPhase": "P126.5",
-  "previousPhase": "P126.4",
-  "nextPhase": "P126.6",
+  "currentPhase": "P126.6",
+  "previousPhase": "P126.5",
+  "nextPhase": "P126.7",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "phaseId": "P125.3",
@@ -18265,21 +18274,21 @@
   },
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P126.5",
-    "title": "Command Center Acceptance Boundary UX",
-    "label": "Acceptance Boundary UX",
-    "order": 162.5,
+    "phaseId": "P126.6",
+    "title": "Acceptance Validation / Docs",
+    "label": "Acceptance Validation",
+    "order": 162.6,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "1ebe879e",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P126.5 scoped Command Center acceptance boundary UX complete; P126.6 validation/docs closure is next.",
-    "summary": "Added scoped read-only Business Build and Agent Flow acceptance boundary cards using the P126.4 safe dry-run display model and existing card pattern while keeping Chat, Lite, OS Roadmap, Live Readiness, and unrelated pages clean.",
-    "previousPhase": "P126.4",
-    "nextPhase": "P126.6",
+    "detail": "P126.6 acceptance validation/docs closure complete; P126.7 final validation is next.",
+    "summary": "Added aggregate validation/docs closure for P126.1-P126.5 checkers, reports, scoped Command Center acceptance UX evidence, docs, status, and safety posture. Live handoff acceptance, writes, execution, providers, dispatch, mutation, network, and spend remain blocked.",
+    "previousPhase": "P126.5",
+    "nextPhase": "P126.7",
     "checksRun": [
+      "npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
       "npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
-      "npm run check:p1264-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -18288,8 +18297,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P126.5 is display-only scoped UX. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P126.6 is validation/docs only. It does not accept handoff, capture acceptance, hand off authority, grant authority, activate authority, apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T18:07:39.906Z"
+    "completedAt": "2026-05-29T18:18:01.410Z"
   }
 }

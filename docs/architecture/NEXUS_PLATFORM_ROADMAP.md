@@ -3822,6 +3822,17 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P126.6 is complete. The acceptance validation/docs closure now verifies
+P126.1-P126.5 package scripts, checkers, reports, docs, phase status, scoped
+Command Center acceptance UX evidence, and safety wording before final
+validation. P126.7 is next. Handoff acceptance, acceptance capture, grant
+handoff, authority grant, activation, approval application, approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+runtime execution, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
+deploy, release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

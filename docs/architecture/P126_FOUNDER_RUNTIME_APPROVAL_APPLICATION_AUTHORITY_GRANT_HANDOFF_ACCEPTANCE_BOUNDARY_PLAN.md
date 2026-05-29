@@ -477,6 +477,108 @@ checker updates, restore P126.5 to planned, and return current phase to P126.4.
 
 Status: complete.
 
+## P126.6 Acceptance Validation / Docs
+
+Phase: P126 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Boundary
+Subphase: P126.6 Acceptance Validation / Docs
+
+Goal: add validation/docs closure for P126.1-P126.5 acceptance boundary
+evidence without changing dashboard source/tests or enabling live authority.
+
+Why this is needed: P126.1-P126.5 completed the contract, metadata, local
+acceptance intent model, safe dry run, and scoped Command Center acceptance UX.
+P126.6 verifies those artifacts, reports, docs, status records, and safety
+wording before final validation closes the parent phase.
+
+User/operator impact: operators get one aggregate validation report showing
+that scoped acceptance boundary evidence exists, stays useful, and remains
+blocked before any live handoff acceptance work is considered.
+
+Command Center impact: no dashboard source changes. P126.5 scoped read-only
+Business Build and Agent Flow acceptance cards are preserved. Chat with NEXUS,
+Lite, OS Roadmap, Live Readiness, and unrelated pages stay clean.
+
+Safety impact: validation/docs-only. Handoff acceptance, acceptance capture,
+authority handoff, authority grant, activation, approval application, approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package, network call, and provider spend
+remain blocked.
+
+Cost impact: no provider calls, model calls, network calls, worker runtime,
+deploy/package creation, or provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `scripts/check-p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json`
+- `docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports: none.
+
+Data shape: validation/docs/report evidence only. No runtime exports, schemas,
+acceptance records, DB write shapes, provider envelopes, dispatch packets, or
+project data are created.
+
+Command Center UX requirements: preserve P126.5 scoped read-only acceptance
+cards on Business Build and Agent Flow only. Do not add chat clutter, raw
+reports, raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp exposure, or
+fake runnable action text.
+
+Validation commands:
+- `npm run check:p1266-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:p1265-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P126 in progress, P126.6 complete, current phase
+P126.6, previous phase P126.5, next phase P126.7.
+
+Known risks: validation can go stale if it only checks docs. P126.6 also
+checks prior checker/report existence, scoped UX source/test evidence,
+forbidden scope, unsafe wording, and validation-only imports.
+
+Rollback plan: remove the P126.6 checker/report/package script, revert P126.5
+checker handoff updates, restore docs/status/report updates, restore P126.6 to
+planned, and return current phase to P126.5.
+
+Status: complete.
+
 ## Planned Subphase Contracts
 
 P126.4 Acceptance Safe Dry Run: complete. Local dry-run envelope only. No
@@ -487,7 +589,9 @@ P126.5 Command Center Acceptance Boundary UX: complete. Scoped read-only
 Business Build and Agent Flow UX only. No Chat/Lite/OS Roadmap leakage and no
 runnable acceptance controls.
 
-P126.6 Acceptance Validation / Docs: validation/docs closure only.
+P126.6 Acceptance Validation / Docs: complete. Aggregate validation/docs
+closure only. No handoff acceptance, writes, execution, providers, dispatch,
+mutation, network, or spend.
 
 P126.7 Final Validation: final validation only, closes P126, stamps real
 commits, creates the next planned handoff, and keeps live acceptance blocked.
