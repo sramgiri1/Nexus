@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval capture boundary while keeping approval capture, approval persistence, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P118.5",
-  "previousSubphase": "P118.4",
-  "nextSubphase": "P118.6",
+  "currentSubphase": "P118.6",
+  "previousSubphase": "P118.5",
+  "nextSubphase": "P118.7",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P118.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -604,7 +604,7 @@
     {
       "phaseId": "P118.6",
       "title": "Approval Capture Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Validate P118.1-P118.5 together and close docs/status alignment before final validation.",
@@ -622,7 +622,20 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1186-founder-runtime-approval-capture-boundary.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1185-founder-runtime-approval-capture-boundary-report.md",
+        "reports/p1186-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -660,6 +673,8 @@
       "validationCommands": [
         "npm run check:p1186-founder-runtime-approval-capture-boundary",
         "npm run check:p1185-founder-runtime-approval-capture-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval capture boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -687,7 +702,8 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P118.7",
-      "previousPhase": "P118.5"
+      "previousPhase": "P118.5",
+      "expectedBaseCommit": "df1fafe9"
     },
     {
       "phaseId": "P118.7",
