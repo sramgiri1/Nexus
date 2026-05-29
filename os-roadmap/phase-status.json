@@ -16440,7 +16440,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "35e0a252",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
       "detail": "P119.5 scoped approval decision UX complete; P119.6 validation is next.",
@@ -16579,7 +16579,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "35e0a252",
       "commandCenterVisible": true,
       "label": "Approval Decision UX",
       "detail": "Scoped approval decision boundary UX complete on Business Build and Agent Flow.",
