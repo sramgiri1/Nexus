@@ -1079,6 +1079,15 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P120.7 final validation: P120 is complete and P121 is now a planned-only
+  next-phase placeholder. Final validation confirms all P120 scripts, reports,
+  contracts, status entries, docs, scoped Command Center persistence UX evidence,
+  forbidden paths, and unsafe authority claims remain aligned. P121 has no
+  implementation contract yet. Approval capture, approval persistence,
+  approve/reject decision recording, DB/runtime writes, runtime execution,
+  execution unlock, provider/model call, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

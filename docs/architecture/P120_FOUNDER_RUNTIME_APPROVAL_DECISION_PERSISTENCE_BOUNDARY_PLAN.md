@@ -1046,9 +1046,173 @@ P120.6 to planned, set current phase back to P120.5, and keep P120.5 complete.
 
 Status: complete.
 
+## P120.7 Final Validation
+
+Phase: P120 Founder Runtime Approval Decision Persistence Boundary
+
+Subphase: P120.7 Final Validation
+
+Goal: close P120, prove P120.1-P120.7 are coherent, and hand off to a
+planned-only P121 placeholder without enabling approval persistence or runtime
+execution.
+
+Why this is needed: P120 now has the contract, browser-safe schema metadata,
+local intent model, safe dry-run preview, scoped Command Center display,
+aggregate validation, and docs alignment. The parent phase needs final closure
+evidence and a controlled next-phase marker.
+
+User/operator impact: operators get a final P120 evidence report and a clear
+P121 planned-only handoff. Founder UX stays unchanged.
+
+Command Center impact: preserve the existing scoped Business Build and Agent
+Flow approval decision persistence boundary card. No new UI, no new controls,
+and no Lite/chat clutter.
+
+Safety impact: final-validation only. P120.7 does not enable approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+hosted DB mutation, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, raw SQL, deploy,
+release, export, package actions, network calls, or spend.
+
+Cost impact: local docs/checkers/reports only. No provider/model/network/spend
+path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js`
+- `scripts/check-p1206-founder-runtime-approval-decision-persistence-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json`
+- `docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1206-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1207-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js`
+- update `scripts/check-p1206-founder-runtime-approval-decision-persistence-boundary.js`
+- update `scripts/check-os-phase-status.js`
+- update P120 contract/docs/status/reports
+
+Expected exports, schemas, and data shapes: no runtime exports, UI data shape,
+or schema change. P120.7 produces a markdown final validation report only. P121
+is added as planned-only roadmap/status metadata and has no implementation
+contract yet.
+
+Reuse check: reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+the P120.6 aggregate checker pattern, existing OS phase status validation, and
+existing phase coverage reporting. Do not duplicate report writers, checker
+formatters, phase status updaters, redaction helpers, mode guards, route
+matrices, UI components, or audit/activity appenders.
+
+Command Center UX requirements: preserve P120.5 approval decision persistence
+boundary UX. Do not add UI, approve/reject/save/run controls, raw JSON/log/policy
+dumps, raw private IDs, raw DB table names, internal phase labels in primary UX,
+DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: preserve P120.5 route coverage evidence. No new Playwright
+test is added in P120.7 because dashboard source/test changes are forbidden.
+
+Checker updates: add a dedicated P120.7 final validation checker, update the
+P120.6 checker to accept the final P120.7/P121 handoff, and update the OS phase
+status checker to recognize planned P121.
+
+Docs/README/roadmap updates: P120.7 is recorded in this plan, README, platform
+roadmap, P120 contract, OS roadmap/status, and generated reports. P120 is
+complete. P121 is planned-only.
+
+OS phase status update: P120 is complete; P120.7 is complete; current phase
+P120.7; previous P120.6; next P121 planned-only placeholder.
+
+Reports to regenerate:
+- `reports/p1206-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1207-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1207-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1206-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P120.7 files>`
+- `git commit -m "chore(nexus): finalize p120 approval decision persistence"`
+- stamp P120/P120.7 status with the implementation commit
+- `git add <allowed P120.7 status/report files>`
+- `git commit -m "chore(nexus): stamp p120 final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- no project/CareLoop paths changed
+- no dashboard source or dashboard test files changed
+- no DB/runtime provider, tool, worker, deploy, release, export, package, or env
+  paths changed
+- no approval capture, approval persistence, approval decision recording,
+  runtime execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL, network,
+  deploy, release, export, package, or spend authority is enabled
+- no DemoApp exposure, raw private IDs, raw DB table names, raw JSON/log/policy
+  dumps, internal primary UX phase labels, or fake actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: final validation could accidentally become a feature change. P120.7
+keeps dashboard source/test paths forbidden and validates only existing UX
+evidence plus the planned P121 handoff.
+
+Rollback plan: remove the P120.7 checker/docs/status/report changes, restore
+P120 to in progress, restore P120.7 to planned, set current phase back to
+P120.6, and keep P120.6 complete.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
-P120.6 Approval Decision Persistence Validation / Docs is complete.
-P120.7 is next for final validation, with approval persistence, DB/runtime
-writes, approve/reject decision recording, and execution still blocked unless a
-future subphase explicitly grants narrow authority.
+P120.7 Final Validation is complete. P120 is complete, P121 is planned-only, and
+approval capture/persistence/decision recording/execution remain blocked unless
+a future phase explicitly grants narrow authority.

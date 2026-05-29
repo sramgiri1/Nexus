@@ -3397,6 +3397,16 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P120.7 is complete. P120 is complete and P121 is planned-only. Final validation
+confirms P120 scripts, reports, contracts, status entries, docs, existing scoped
+Command Center persistence UX evidence, forbidden paths, and unsafe authority
+claims remain aligned. P121 has no implementation contract yet. Approval
+capture, approval persistence, approve/reject decision recording, DB/runtime
+writes, runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

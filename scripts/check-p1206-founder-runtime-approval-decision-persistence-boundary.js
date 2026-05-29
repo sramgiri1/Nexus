@@ -119,6 +119,30 @@ const zeroDisplayCounts = [
   "hostedDbMutationCandidateCount",
   "providerSpendCandidateCount",
 ].every((field) => displayModel[field] === 0);
+const p1206CurrentState =
+  status.currentPhase === "P120.6"
+    && status.previousPhase === "P120.5"
+    && status.nextPhase === "P120.7"
+    && roadmap.currentPhase === "P120.6"
+    && roadmap.previousPhase === "P120.5"
+    && roadmap.nextPhase === "P120.7"
+    && statusById.get("P120")?.status === "in_progress"
+    && completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+    && ["planned", "complete"].includes(statusById.get("P120.7")?.status);
+const p1207FinalState =
+  status.currentPhase === "P120.7"
+    && status.previousPhase === "P120.6"
+    && status.nextPhase === "P121"
+    && roadmap.currentPhase === "P120.7"
+    && roadmap.previousPhase === "P120.6"
+    && roadmap.nextPhase === "P121"
+    && statusById.get("P120")?.status === "complete"
+    && roadmapById.get("P120")?.status === "complete"
+    && completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+    && statusById.get("P120.7")?.status === "complete"
+    && roadmapById.get("P120.7")?.status === "complete"
+    && statusById.get("P121")?.status === "planned"
+    && roadmapById.get("P121")?.status === "planned";
 
 addCheck("package scripts registered", packageScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("P120.1-P120.6 contract statuses complete", completedSubphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete") && ["planned", "complete"].includes(p1207.status));
@@ -132,15 +156,7 @@ addCheck("README records P120.6", /P120\.6 approval decision persistence validat
 addCheck("platform roadmap records P120.6", /P120\.6 is complete/.test(platformRoadmap) && /P120\.7\s+is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P120.6"
-    && status.previousPhase === "P120.5"
-    && status.nextPhase === "P120.7"
-    && roadmap.currentPhase === "P120.6"
-    && roadmap.previousPhase === "P120.5"
-    && roadmap.nextPhase === "P120.7"
-    && statusById.get("P120")?.status === "in_progress"
-    && completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
-    && ["planned", "complete"].includes(statusById.get("P120.7")?.status),
+  p1206CurrentState || p1207FinalState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(
