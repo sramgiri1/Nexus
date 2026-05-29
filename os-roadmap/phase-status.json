@@ -8373,20 +8373,20 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d56b4d9d",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Activation Boundary",
-      "detail": "P123.3 governed activation intent model complete; P123.4 activation safe dry run is next.",
+      "detail": "P123.4 activation safe dry run complete; P123.5 scoped Command Center UX is next.",
       "phaseId": "P123",
       "title": "Founder Runtime Approval Application Authority Activation Boundary",
       "order": 159,
       "status": "in_progress",
-      "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, and local activation intent model complete. Activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-      "nextPhase": "P123.4",
-      "previousPhase": "P123.3",
+      "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, local activation intent model, and hidden activation dry-run preview complete. Activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+      "nextPhase": "P123.5",
+      "previousPhase": "P123.4",
       "checksRun": [
+        "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
         "npm run check:p1233-founder-runtime-approval-application-authority-activation-boundary",
-        "npm run check:p1232-founder-runtime-approval-application-authority-activation-boundary",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
         "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
@@ -8395,9 +8395,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P123.3 is model-only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P123.4 is dry-run preview only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T14:48:43.301Z"
+      "completedAt": "2026-05-29T14:57:00.319Z"
     },
     {
       "track": "NEXUS_OS",
@@ -8491,20 +8491,29 @@
       "phaseId": "P123.4",
       "title": "Activation Safe Dry Run",
       "label": "Activation Safe Dry Run",
-      "order": 159.39999999999998,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "order": 159.4,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "Planned P123 subphase. Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
-      "summary": "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable.",
+      "detail": "P123.4 activation safe dry run complete; P123.5 scoped Command Center UX is next.",
+      "summary": "Added a hidden local result-envelope activation safe dry-run preview that reuses P123.3 intent and P123.2 metadata with display-safe sections, rows, blockers, zero unsafe counts, and cost posture without enabling live authority.",
       "previousPhase": "P123.3",
       "nextPhase": "P123.5",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Activation, approval decision application, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
+        "npm run check:p1233-founder-runtime-approval-application-authority-activation-boundary",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P123.4 is dry-run preview only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T14:57:00.319Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17512,27 +17521,27 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T14:48:43.301Z",
-  "currentPhase": "P123.3",
-  "previousPhase": "P123.2",
-  "nextPhase": "P123.4",
+  "updatedAt": "2026-05-29T14:57:00.319Z",
+  "currentPhase": "P123.4",
+  "previousPhase": "P123.3",
+  "nextPhase": "P123.5",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "d56b4d9d",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
     "label": "Activation Boundary",
-    "detail": "P123.3 governed activation intent model complete; P123.4 activation safe dry run is next.",
+    "detail": "P123.4 activation safe dry run complete; P123.5 scoped Command Center UX is next.",
     "phaseId": "P123",
     "title": "Founder Runtime Approval Application Authority Activation Boundary",
     "order": 159,
     "status": "in_progress",
-    "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, and local activation intent model complete. Activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
-    "nextPhase": "P123.4",
-    "previousPhase": "P123.3",
+    "summary": "P123 is in progress with activation boundary contract/policy, browser-safe activation eligibility metadata, local activation intent model, and hidden activation dry-run preview complete. Activation, authority grant, approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked.",
+    "nextPhase": "P123.5",
+    "previousPhase": "P123.4",
     "checksRun": [
+      "npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary",
       "npm run check:p1233-founder-runtime-approval-application-authority-activation-boundary",
-      "npm run check:p1232-founder-runtime-approval-application-authority-activation-boundary",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
       "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
@@ -17541,8 +17550,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P123.3 is model-only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P123.4 is dry-run preview only. It does not activate authority, grant authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T14:48:43.301Z"
+    "completedAt": "2026-05-29T14:57:00.319Z"
   }
 }

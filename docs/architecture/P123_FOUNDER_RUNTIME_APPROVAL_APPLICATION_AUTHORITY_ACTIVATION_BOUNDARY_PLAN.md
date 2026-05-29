@@ -530,14 +530,190 @@ phase to P123.2.
 
 Status: complete.
 
+## P123.4 Activation Safe Dry Run
+
+Phase: P123
+Subphase: P123.4
+Goal: add a local result-envelope safe dry-run preview that reuses P123.3
+activation intent and P123.2 metadata without exposing it in primary UX or
+enabling activation.
+Why this is needed: P123.3 is model-only. P123.4 packages that model into a
+validated preview artifact P123.5 can render as scoped Command Center UX.
+User/operator impact: operators get a future display-safe preview model with
+activation sections, readiness rows, blockers, disabled reasons, next actions,
+owner capability, evidence/activity labels, zero unsafe counts, and cost
+posture.
+Command Center impact: no Command Center source change in P123.4. Preserve the
+current Business Build and Agent Flow authority handoff UX. Chat with NEXUS and
+Lite remain focused on chat.
+Safety impact: dry-run only. Activation, authority grant, approval decision
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package, network calls,
+and provider spend remain blocked.
+Cost impact: none; no provider, model, network, worker, deploy, package, or
+spend path is used.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityActivationPreview.js`
+- `contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json`
+- `docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md`
+- `scripts/check-p1233-founder-runtime-approval-application-authority-activation-boundary.js`
+- `scripts/check-p1234-founder-runtime-approval-application-authority-activation-boundary.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1233-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/p1234-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_PREVIEW_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_PREVIEW_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_PREVIEW_STATES`
+- `buildFounderApprovalApplicationAuthorityActivationPreview`
+- `validateFounderApprovalApplicationAuthorityActivationPreview`
+
+The preview shape is a result envelope: `phase`, `mode`, `summary`,
+`data.schemaVersion`, `currentState`, `previewMode`, `dryRunOnly`,
+`commandCenterVisible`, source phases, `activationSummary`, `previewSections`,
+`previewRows`, blockers, next action, disabled reason, owner, evidence,
+activity, cost labels, and false authority flags.
+
+Reuse check: reuse P123.3
+`shared/founderApprovalApplicationAuthorityActivationIntentModel.js`, P123.2
+`shared/founderApprovalApplicationAuthorityActivationEligibilityMetadata.js`,
+`shared/resultEnvelope.js`, `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, `shared/reportMetadata.js`,
+`shared/modeGuard.js`, `shared/redaction.js`, `os-roadmap/updatePhaseStatus.js`,
+existing dashboard cards/routes, route safety tests, OS phase status records,
+and P123.3 evidence. Do not duplicate report writers, mode guards, redaction
+helpers, result envelopes, phase status updaters, route matrices, UI cards, or
+evidence/audit/activity appenders.
+
+Command Center UX requirements: no source changes in P123.4. Preserve Business
+Build and Agent Flow authority handoff display. Do not add activation buttons,
+authority grant controls, approval application controls, mutation controls,
+fake actions, raw report paths, raw JSON/log/policy dumps, raw private IDs,
+DemoApp exposure, or primary UX phase labels. Chat with NEXUS and Lite remain
+chat-only.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior. No CSS or theme tokens change in P123.4.
+
+Playwright tests: no new Playwright test is added because dashboard source is
+not in scope. Run the existing focused authority handoff route regression.
+
+Tests to add/update/remove: add the dedicated P123.4 safe dry-run checker and
+package script. Confirm the P123.3 checker accepts the P123.4 handoff state.
+No tests are removed.
+
+Checker updates: validate P123.4 result envelope shape, P123.3/P123.2 reuse,
+blocked activation flags, zero unsafe counts, docs/status updates, allowed file
+scope, forbidden path boundaries, and unsafe positive claim prevention.
+
+Docs to update: this P123 plan, README, platform roadmap, P123 contract, OS
+roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1233-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/p1234-founder-runtime-approval-application-authority-activation-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P123 is in progress; P123.4 is complete; current phase
+P123.4; previous P123.3; next P123.5.
+
+Validation commands:
+- `npm run check:p1234-founder-runtime-approval-application-authority-activation-boundary`
+- `npm run check:p1233-founder-runtime-approval-application-authority-activation-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority handoff appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P123.4 files>`
+- `git commit -m "feat(nexus): implement p1234 approval authority activation safe dry run"`
+- stamp P123/P123.4 status with the implementation commit
+- `git add <allowed P123.4 status/report files>`
+- `git commit -m "chore(nexus): stamp p1234 approval authority activation safe dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop/generated project paths changed
+- confirm no dashboard source or test files changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, local runtime state, or env paths changed
+- confirm no activation, authority grant, approval decision application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL, network, deploy, release, export, package, or spend authority is
+  enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB/schema names, raw report
+  paths in primary UX, JSON/log/policy dumps, internal primary UX phase labels,
+  or fake actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: preview rows may be mistaken for runnable controls. The preview is
+hidden from primary UX, validates every unsafe `would*` field as false, and has
+no action labels that imply execution.
+
+Rollback plan: remove the P123.4 helper, checker, report, package script,
+contract/docs/status updates, restore P123.4 to planned, and return current
+phase to P123.3.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
 P123.1 Activation Boundary Contract / Policy, P123.2 Activation Eligibility
-Metadata, and P123.3 Governed Activation Intent Model are complete. P123.4 is
-next for activation safe dry-run preview. Activation, authority grant, approval
-decision application, approval capture, approval persistence, approve/reject
-decision recording, DB/runtime writes, runtime execution, execution unlock,
-provider/model calls, agent dispatch, worker/tool execution, project mutation,
-hosted DB mutation, raw SQL, deploy, release, export, package, network calls,
-and provider spend remain blocked unless a future subphase explicitly grants
-narrow authority.
+Metadata, P123.3 Governed Activation Intent Model, and P123.4 Activation Safe
+Dry Run are complete. P123.5 is next for scoped Command Center activation
+boundary UX. Activation, authority grant, approval decision application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL, deploy, release, export, package, network calls, and provider spend
+remain blocked unless a future subphase explicitly grants narrow authority.

@@ -3561,12 +3561,19 @@ P123.3 is complete. A pure local activation intent model now reuses P123.2
 metadata to describe activation intent, readiness rows, blockers, disabled
 reasons, next actions, owner capability, evidence/activity labels, zero unsafe
 candidate counts, and cost posture while staying hidden from primary UX. P123.4
-is next for safe dry-run preview. Activation, authority grant, approval decision
-application, approval capture, approval persistence, approve/reject decision
-recording, DB/runtime writes, runtime execution, execution unlock,
-provider/model calls, agent dispatch, worker/tool execution, project mutation,
-hosted DB mutation, raw SQL interface, deploy, release, export, package action,
-network call, and provider spend remain blocked.
+is next for safe dry-run preview and is now complete.
+
+P123.4 is complete. A local result-envelope safe dry-run preview now reuses the
+P123.3 intent model and P123.2 metadata to show activation sections, preview
+rows, blockers, disabled reasons, next actions, owner capability,
+evidence/activity labels, zero unsafe counts, and cost posture while staying
+hidden from primary UX. P123.5 is next for scoped Command Center activation
+boundary UX. Activation, authority grant, approval decision application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
