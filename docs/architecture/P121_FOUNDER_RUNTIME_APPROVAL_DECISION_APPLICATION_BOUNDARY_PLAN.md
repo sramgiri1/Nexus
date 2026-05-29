@@ -886,9 +886,154 @@ P121.1-P121.4 complete.
 
 Status: complete.
 
+## P121.6 Application Validation / Docs
+
+Phase: P121
+Subphase: P121.6
+Goal: validate P121.1-P121.5 approval decision application boundary evidence,
+docs, reports, package scripts, scoped Command Center UX, and OS phase status
+before final validation.
+Why this is needed: P121 now has the contract, eligibility metadata, local
+intent model, safe dry-run preview, and scoped Command Center card. P121.6
+aggregates that evidence so final validation can close the phase without
+turning validation artifacts into live authority.
+User/operator impact: operators get one validation report showing the approval
+decision application boundary is still read-only, locally validated, and useful
+on Business Build and Agent Flow.
+Command Center impact: preserve the existing Business Build and Agent Flow
+approval decision application boundary cards. Do not add routes, cards,
+controls, submit/apply/approve/reject/save/run actions, or dashboard source
+changes.
+Safety impact: validation and docs only. Approval decision application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL, deploy, release, export, package, network calls, and provider spend
+remain blocked.
+Cost impact: none; no provider, model, network, worker, deploy, package, or
+spend path is used.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1216-founder-runtime-approval-decision-application-boundary.js`
+- `package.json`
+- `contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json`
+- `docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1215-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/p1216-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes: no new runtime export or schema is
+introduced. The P121.6 checker validates the existing P121.2 metadata shape,
+P121.3 intent model shape, P121.4 preview envelope shape, and P121.5 Command
+Center display model shape.
+
+Reuse check: reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+existing P121.2-P121.5 shared models, the Business Build display model, route
+test coverage, OS phase status records, and generated report conventions. Do
+not duplicate report writers, mode guards, redaction helpers, result envelopes,
+phase status updaters, route matrices, UI cards, or evidence/audit/activity
+appenders.
+
+Tests to add/update/remove: add the dedicated P121.6 checker and package
+script. Do not edit dashboard tests in this subphase; rerun the focused P121.5
+Playwright route test to prove scoped UX and theme coverage still pass.
+
+Docs to update: this P121 plan, README, platform roadmap, P121 contract, OS
+roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1215-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/p1216-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P121 remains in progress; P121.6 is complete; current
+phase P121.6; previous P121.5; next P121.7.
+
+Validation commands:
+- `npm run check:p1216-founder-runtime-approval-decision-application-boundary`
+- `npm run check:p1215-founder-runtime-approval-decision-application-boundary`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval decision application boundary appears only on scoped pages"`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P121.6 files>`
+- `git commit -m "feat(nexus): implement p1216 approval decision application validation"`
+- stamp P121/P121.6 status with the implementation commit
+- `git add <allowed P121.6 status/report files>`
+- `git commit -m "chore(nexus): stamp p1216 approval decision application validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop/generated project paths changed
+- confirm no dashboard source or test files changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, local runtime state, or env paths changed
+- confirm no approval decision application, approval capture, approval
+  persistence, approve/reject decision recording, DB/runtime writes, runtime
+  execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL, network,
+  deploy, release, export, package, or spend authority is enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB/schema names, raw report
+  paths, JSON/log/policy dumps, internal primary UX phase labels, or fake
+  actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: the aggregate checker can become too brittle if it asserts large
+body text. It focuses on stable model shapes, safety flags, status handoff,
+report presence, scoped UX evidence, and validation command registration.
+
+Rollback plan: remove the P121.6 checker, report, package script, docs/status
+updates, restore P121.6 to planned, and return current phase to P121.5.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
-P121.5 Command Center Application Boundary UX is complete. P121.6 is next for
-validation/docs hardening, with approval decision application, persistence,
-approve/reject decision recording, DB/runtime writes, and execution still
-blocked unless a future subphase explicitly grants narrow authority.
+P121.6 Application Validation / Docs is complete. P121.7 is next for final
+validation, with approval decision application, persistence, approve/reject
+decision recording, DB/runtime writes, and execution still blocked unless a
+future phase explicitly grants narrow authority.
