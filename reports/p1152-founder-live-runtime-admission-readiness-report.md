@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P115.2
-- Generated at: 2026-05-29T01:42:15.389Z
+- Generated at: 2026-05-29T01:57:21.078Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 13036839
+- Validation HEAD: 03210dc1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | README records P115.2 | PASS |  |
 | platform roadmap records P115.2 | PASS |  |
 | phase status advanced | PASS | P115.2/P115.1/P115.3 |
-| changed files stay in P115.2 allowed scope | PASS | README.md, contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1151-founder-live-runtime-admission-contract.js, scripts/check-p1152-founder-live-runtime-admission-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json, db/schema.json, db/schema.sql, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1151-founder-live-runtime-admission-contract.js, scripts/check-p1152-founder-live-runtime-admission-readiness.js |
+| changed files stay in P115.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw runtime admission table names | PASS |  |
 | no unsafe runtime imports or URLs | PASS |  |
 | docs do not claim unsafe authority live | PASS |  |
