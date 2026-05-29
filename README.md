@@ -766,7 +766,14 @@ The Command Center and local operator surface have:
   show display-safe Runtime Admission Readiness cards with runtime gates,
   blocked counts, owner, next action, disabled reason, evidence/activity, and
   cost posture. Chat with NEXUS, Lite, full home, and Live Readiness stay clean.
-  P115.6 is next for runtime admission validation. Runtime admission, execution
+  Runtime admission, execution unlock, provider/model call, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL
+  interface, deploy, release, export, package, network call, and provider spend
+  remain unavailable.
+- P115.6 runtime admission validation: P115 now has aggregate validation across
+  the runtime admission contract, local schema metadata, governed local CRUD,
+  safe dry-run preview, and Command Center UX evidence. P115.7 is next for
+  final validation. Runtime admission, execution
   unlock, provider/model call, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
   package, network call, and provider spend remain unavailable.

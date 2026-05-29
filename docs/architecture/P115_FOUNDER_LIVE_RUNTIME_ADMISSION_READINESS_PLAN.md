@@ -749,3 +749,152 @@ consolidate or tune surrounding phase evidence if needed.
 Rollback plan: remove the P115.5 display model/card/test/checker/docs/status/
 report updates, restore P115 to P115.4 complete with P115.5 planned, and keep
 P115.4 preview modeling unchanged.
+
+## P115.6 Runtime Admission Validation / Docs
+
+Status: complete.
+
+Narrow goal: validate P115.1-P115.5 together and close docs, README, roadmap,
+contract, OS status, and generated report alignment before final validation.
+
+Why this is needed: P115 now has the runtime admission contract, local schema
+metadata, governed local CRUD model, safe dry-run preview, and Command Center
+visibility. P115.6 proves those pieces stay aligned as a controlled release
+without implying runtime admission or execution is live.
+
+User/operator impact: operators get one aggregate validation report showing the
+runtime admission readiness path is coherent and visible on the right founder
+pages while execution authority remains blocked.
+
+Command Center impact: no source change. Preserve the P115.5 Runtime Admission
+Readiness cards on Business Build and Agent Flow, preserve Chat with NEXUS as a
+chat-only surface, and keep Lite/full home/Live Readiness clean.
+
+Safety impact: validation/docs only. No runtime admission, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, SQLite writes,
+hosted DB mutation, project mutation, raw SQL, deploy/release/export/package,
+network calls, or spend.
+
+Cost impact: no provider/model calls, network calls, runtime execution, or
+provider spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit: branch
+`codex/nexus-e2e-phase-validation`; expected base commit
+`f7ddbc2d53749925b36a45c0795cd6fde3477be1`.
+
+Allowed files:
+- `scripts/check-p1156-founder-live-runtime-admission-readiness.js`
+- `package.json`
+- `contracts/os-roadmap/p115-founder-live-runtime-admission-readiness-contracts.json`
+- `docs/architecture/P115_FOUNDER_LIVE_RUNTIME_ADMISSION_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1155-founder-live-runtime-admission-readiness-report.md`
+- `reports/p1156-founder-live-runtime-admission-readiness-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/*/Sources/**`
+- `generated-projects/*/Tests/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules changed: added
+`scripts/check-p1156-founder-live-runtime-admission-readiness.js`; registered
+the package script; updated P115 contract/status/docs; and regenerated reports.
+No dashboard source or Playwright test files changed.
+
+Expected exports and data shapes: no product runtime export, schema, or
+business data shape is added. The new checker writes
+`reports/p1156-founder-live-runtime-admission-readiness-report.md` with scope,
+check table, validation commands, known limitations, and result sections.
+
+Command Center UX requirements: preserve P115.5 UX exactly. Business Build and
+Agent Flow continue to show runtime admission readiness state, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact. Chat, Lite, full home, and Live Readiness do not gain extra
+runtime admission clutter.
+
+Dark/light/system theme requirements: no styling change. Existing P115.5
+Playwright coverage is re-run to preserve dark, light, and system theme
+coverage for the runtime admission readiness card.
+
+Playwright tests: no new Playwright tests are added because no UI source changes
+are allowed. P115.6 re-runs the focused P115.5 route test for Business Build and
+Agent Flow visibility and clean-route absence.
+
+Checker updates: P115.6 adds a dedicated aggregate validation checker that
+verifies package scripts, prior reports, P115.1-P115.5 completion, P115.5 UX
+preservation, P115.5 checker handoff compatibility, docs/status updates, allowed
+file scope, and safety wording.
+
+Docs/README/roadmap updates: P115.6 is recorded in this plan, README, platform
+roadmap, P115 contract, OS roadmap/status, and generated reports. P115.7 is
+next for final validation.
+
+OS phase status update: P115 is in progress; P115.6 is complete; current phase
+P115.6; previous P115.5; next P115.7.
+
+Validation commands:
+- `npm run check:p1156-founder-live-runtime-admission-readiness`
+- `npm run check:p1155-founder-live-runtime-admission-readiness`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Runtime admission readiness appears only on Business Build and Agent Flow"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no temporary local
+runtime DB remains; no DemoApp exposure; no raw JSON/log/policy dumps; no raw
+private IDs or raw runtime/dispatch/assignment/queue table names in primary UX;
+no fake runnable actions; no runtime admission, execution unlock, hosted DB
+mutation, raw SQL interface, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, deploy, release, export, package,
+network, or provider spend authority is enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P115.6 files>`
+- `git commit -m "feat(nexus): implement p1156 runtime admission validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: aggregate validation can become stale if prior P115 reports drift.
+The P115.6 checker requires the prior P115 reports to exist and pass, and it
+re-runs the P115.5 handoff checker and focused route test.
+
+Rollback plan: remove the P115.6 checker/report/package script/docs/status/
+contract updates, restore P115 to P115.5 complete with P115.6 planned, and keep
+P115.1-P115.5 implementation unchanged.

@@ -3061,11 +3061,18 @@ network call, and provider spend remain blocked.
 P115.5 is complete. Business Build and Agent Flow now show display-safe Runtime
 Admission Readiness cards with runtime gates, blocked counts, owner, next
 action, disabled reason, evidence/activity, and cost posture. Chat with NEXUS,
-Lite, full home, and Live Readiness stay clean. P115.6 is next for runtime
-admission validation. Runtime admission, execution unlock, provider/model
-calls, agent dispatch, worker/tool execution, project mutation, hosted DB
-mutation, raw SQL interface, deploy, release, export, package action, network
-call, and provider spend remain blocked.
+Lite, full home, and Live Readiness stay clean. Runtime admission, execution
+unlock, provider/model calls, agent dispatch, worker/tool execution, project
+mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
+package action, network call, and provider spend remain blocked.
+
+P115.6 is complete. P115 now has aggregate runtime admission validation across
+the contract, local schema metadata, governed local CRUD, safe dry-run preview,
+and Command Center UX evidence. P115.7 is next for final validation. Runtime
+admission, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
