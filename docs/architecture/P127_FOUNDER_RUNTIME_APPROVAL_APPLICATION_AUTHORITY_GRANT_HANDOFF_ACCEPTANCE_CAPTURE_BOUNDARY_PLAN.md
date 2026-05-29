@@ -526,9 +526,77 @@ P127.5 to planned with P127.4 as the current completed handoff.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P127.6 Acceptance Capture Validation / Docs
 
-P127.6 Acceptance Capture Validation / Docs: planned validation/docs closure
-only.
+Phase: P127 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Capture Boundary
+Subphase: P127.6 Acceptance Capture Validation / Docs
+
+Goal: validate P127.1-P127.5 evidence, docs, reports, and scoped UX before
+final validation.
+
+Why this is needed: P127 now has contract, metadata, intent model, safe
+dry-run, and scoped Command Center UX. The phase needs aggregate evidence that
+those layers remain aligned before final closure.
+
+User/operator impact: no new UI surface. Operators keep using the P127.5
+Business Build and Agent Flow acceptance capture cards.
+
+Command Center impact: no dashboard source or test changes. P127.6 preserves
+the P127.5 scoped UX and confirms Chat/Lite, OS Roadmap, and Live Readiness
+remain clean.
+
+Safety impact: validation/docs only. Acceptance capture, record acceptance,
+handoff acceptance, authority handoff, authority grant, activation, DB/runtime
+writes, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, deploy, release, export,
+package, network calls, and spend remain blocked.
+
+Cost impact: local validation only. No provider/model/network calls or spend.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `scripts/check-p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js`
+- `contracts/os-roadmap/p127-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-contracts.json`
+- `docs/architecture/P127_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1274-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1275-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/p1276-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change: `projects/**`, `careloop/**`,
+`generated-projects/**`, `dashboard/src/**`, `dashboard/tests/**`, `db/**`,
+`live-ready/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+`.env*`.
+
+Tests to add/update/remove: add the P127.6 aggregate checker. Do not edit
+dashboard route tests; rerun the existing P127.5 scoped Playwright coverage.
+
+Docs to update: P127 plan, README, platform roadmap, OS phase status, generated
+reports, and P127 contract.
+
+Reports to regenerate: P127.4 report, P127.5 report, P127.6 report, OS phase
+status report, and phase validation coverage report.
+
+OS phase status update: P127 in progress, P127.6 complete, current phase
+P127.6, previous phase P127.5, next phase P127.7. P127.7 remains planned.
+
+Known risks: aggregate validation can drift into broad roadmap language. P127.6
+keeps validation limited to existing P127 artifacts and scoped UX preservation.
+
+Rollback plan: revert the P127.6 implementation and stamp commits, then return
+P127.6 to planned with P127.5 as the current completed handoff.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P127.7 Final Validation: planned final validation only.
