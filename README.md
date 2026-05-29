@@ -1235,8 +1235,12 @@ The Command Center and local operator surface have:
 - P123.1 approval application authority activation boundary contract: P123 now
   has an implementation-grade activation boundary contract and P123.1-P123.7
   subphase split. P123.1 is contract-only and records safety rules, reuse
-  rules, validation commands, docs, status, and the P122.7 handoff. P123.2 is
-  next for activation eligibility metadata. Activation, approval decision
+  rules, validation commands, docs, status, and the P122.7 handoff.
+- P123.2 approval application authority activation eligibility metadata:
+  browser-safe metadata now reuses the P122.2 authority handoff metadata and
+  defines activation sections for prior handoff, activation scope, runtime
+  write guard, and operator evidence. P123.3 is next for governed local
+  activation intent modeling. Activation, authority grant, approval decision
   application, approval capture, approval persistence, approve/reject decision
   recording, DB/runtime writes, runtime execution, execution unlock,
   provider/model call, agent dispatch, worker/tool execution, project mutation,

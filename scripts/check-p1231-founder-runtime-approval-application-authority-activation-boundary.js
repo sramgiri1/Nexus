@@ -49,6 +49,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1231 = subphaseById.get("P123.1") || {};
 const p1232 = subphaseById.get("P123.2") || {};
+const p1233 = subphaseById.get("P123.3") || {};
 const p123Subphases = ["P123.1", "P123.2", "P123.3", "P123.4", "P123.5", "P123.6", "P123.7"];
 const plan = readText("docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
@@ -84,10 +85,38 @@ const forbiddenPrefixes = [
   "packages/",
   ".env",
 ];
+const p1231ContractState = contract.status === "in_progress"
+  && contract.currentSubphase === "P123.1"
+  && contract.previousSubphase === "P122.7"
+  && contract.nextSubphase === "P123.2"
+  && p1231.status === "complete"
+  && p1232.status === "planned";
+const p1232StartedState = contract.status === "in_progress"
+  && contract.currentSubphase === "P123.2"
+  && contract.previousSubphase === "P123.1"
+  && contract.nextSubphase === "P123.3"
+  && p1231.status === "complete"
+  && p1232.status === "complete"
+  && ["planned", "complete"].includes(p1233.status);
+const p1231StatusState = status.currentPhase === "P123.1"
+  && status.previousPhase === "P122.7"
+  && status.nextPhase === "P123.2"
+  && roadmap.currentPhase === "P123.1"
+  && roadmap.previousPhase === "P122.7"
+  && roadmap.nextPhase === "P123.2"
+  && statusById.get("P123.2")?.status === "planned";
+const p1232StatusState = status.currentPhase === "P123.2"
+  && status.previousPhase === "P123.1"
+  && status.nextPhase === "P123.3"
+  && roadmap.currentPhase === "P123.2"
+  && roadmap.previousPhase === "P123.1"
+  && roadmap.nextPhase === "P123.3"
+  && statusById.get("P123.2")?.status === "complete"
+  && ["planned", "complete"].includes(statusById.get("P123.3")?.status);
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1231-founder-runtime-approval-application-authority-activation-boundary"]));
 addCheck("P122 handoff is complete", p122Contract.status === "complete" && statusById.get("P122")?.status === "complete" && roadmapById.get("P122")?.status === "complete");
-addCheck("contract marks P123.1 complete", contract.status === "in_progress" && contract.currentSubphase === "P123.1" && contract.previousSubphase === "P122.7" && contract.nextSubphase === "P123.2" && p1231.status === "complete" && p1232.status === "planned");
+addCheck("contract marks P123.1 complete", p1231ContractState || p1232StartedState);
 addCheck("contract splits P123 into seven subphases", p123Subphases.every((phaseId) => subphaseById.has(phaseId)) && contract.subphases?.length === 7);
 addCheck("contract records contract-only scope", p1231.expectedExports?.length === 0 && p1231.dataShape?.includes("No runtime exports") && p1231.commandCenterUx?.includes("No new cards"));
 addCheck("contract forbids dashboard source edits", (p1231.forbiddenFiles || []).includes("dashboard/src/**") && (p1231.forbiddenFiles || []).includes("dashboard/tests/**"));
@@ -101,19 +130,13 @@ addCheck("primary UX avoids raw schema names and private IDs", !/(approval_appli
 addCheck("primary UX avoids fake runnable actions", !/run now|execute now|deploy now|apply now|approve now|reject now|activate now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i.test(primaryUxSource));
 addCheck("DemoApp not exposed", !pageSource.includes("DemoApp"));
 addCheck("docs record P123.1", /P123\.1 Activation Boundary Contract \/ Policy[\s\S]*Status:\s+complete/.test(plan));
-addCheck("platform roadmap records P123.1", /P123\.1 is complete/.test(platformRoadmap) && /P123\.2\s+is\s+next/.test(platformRoadmap));
-addCheck("README records P123.1", /P123\.1 approval application authority activation boundary contract/.test(readme) && /P123\.2\s+is\s+next/.test(readme));
+addCheck("platform roadmap records P123.1", /P123\.1 is complete/.test(platformRoadmap) && (/P123\.2\s+is\s+next/.test(platformRoadmap) || /P123\.2 is complete/.test(platformRoadmap)));
+addCheck("README records P123.1", /P123\.1 approval application authority activation boundary contract/.test(readme) && (/P123\.2\s+is\s+next/.test(readme) || /P123\.2 approval application authority activation eligibility metadata/i.test(readme)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P123.1"
-    && status.previousPhase === "P122.7"
-    && status.nextPhase === "P123.2"
-    && roadmap.currentPhase === "P123.1"
-    && roadmap.previousPhase === "P122.7"
-    && roadmap.nextPhase === "P123.2"
+  (p1231StatusState || p1232StatusState)
     && statusById.get("P123")?.status === "in_progress"
     && statusById.get("P123.1")?.status === "complete"
-    && statusById.get("P123.2")?.status === "planned"
     && roadmapById.get("P123")?.status === "in_progress"
     && roadmapById.get("P123.1")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,

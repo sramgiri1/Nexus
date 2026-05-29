@@ -3549,12 +3549,18 @@ network call, and provider spend remain blocked.
 P123.1 is complete. P123 now has an implementation-grade activation boundary
 contract and P123.1-P123.7 subphase split. P123.1 is contract-only and records
 safety rules, reuse rules, validation commands, docs, status, and the P122.7
-handoff. P123.2 is next for activation eligibility metadata. Activation,
-approval decision application, approval capture, approval persistence,
-approve/reject decision recording, DB/runtime writes, runtime execution,
-execution unlock, provider/model calls, agent dispatch, worker/tool execution,
-project mutation, hosted DB mutation, raw SQL interface, deploy, release,
-export, package action, network call, and provider spend remain blocked.
+handoff.
+
+P123.2 is complete. Browser-safe approval application authority activation
+eligibility metadata now reuses the P122.2 authority handoff metadata and
+defines activation sections for prior handoff, activation scope, runtime write
+guard, and operator evidence. P123.3 is next for governed local activation
+intent modeling. Activation, authority grant, approval decision application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
 
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
