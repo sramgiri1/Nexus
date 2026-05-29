@@ -15986,7 +15986,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "87eb1d58",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
       "detail": "P117.4 approval gate preview complete; P117.5 Command Center UX is next.",
@@ -16096,7 +16096,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "87eb1d58",
       "commandCenterVisible": true,
       "label": "Approval Gate Preview",
       "detail": "Safe dry-run approval gate preview complete; approval capture remains unavailable.",

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.4
-- Generated at: 2026-05-29T04:19:36.171Z
+- Generated at: 2026-05-29T04:20:15.390Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3519fc6f
+- Validation HEAD: 87eb1d58
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | platform roadmap records P117.4 | PASS |  |
 | README records P117.4 | PASS |  |
 | phase status advanced | PASS | P117.4/P117.3/P117.5 |
-| changed files stay in P117.4 allowed scope | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, live-ready/founderRuntimeExecutionApprovalGate.js, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1172-founder-runtime-execution-approval-gate-report.md, reports/p1173-founder-runtime-execution-approval-gate-report.md, reports/p1174-founder-runtime-execution-approval-gate-report.md, scripts/check-p1174-founder-runtime-execution-approval-gate.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, live-ready/founderRuntimeExecutionApprovalGate.js, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1172-founder-runtime-execution-approval-gate-report.md, reports/p1173-founder-runtime-execution-approval-gate-report.md, reports/p1174-founder-runtime-execution-approval-gate-report.md, scripts/check-p1174-founder-runtime-execution-approval-gate.js |
+| changed files stay in P117.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | approval gate preview stays Command Center hidden | PASS |  |
 | approval gate preview avoids raw private IDs | PASS |  |
 | approval gate preview avoids raw record keys and table names | PASS |  |
