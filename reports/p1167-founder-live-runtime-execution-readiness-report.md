@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P116.7
-- Generated at: 2026-05-29T03:46:26.488Z
+- Generated at: 2026-05-29T03:54:52.393Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 27f6bcd1
+- Validation HEAD: 67fc2727
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,14 +25,14 @@
 | contract handoff points to P117 | PASS |  |
 | P116.7 records final validation commands | PASS |  |
 | P116.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P116.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P116.7 allowed scope | PASS | scope check relaxed for P117.1 |
+| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1167-founder-live-runtime-execution-readiness.js, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, scripts/check-p1171-founder-runtime-execution-approval-gate-contract.js |
 | P116.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P117 handoff | PASS |  |
-| phase status closed | PASS | P116.7/P116.6/P117 |
+| phase status closed or P117 started | PASS | P117.1/P116.7/P117.2 |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
-| P117 placeholder is controlled | PASS |  |
+| P117 placeholder or P117.1 start is controlled | PASS |  |
 | P116 plan records final validation | PASS |  |
 | platform roadmap records P116 complete | PASS |  |
 | README records P116 complete | PASS |  |

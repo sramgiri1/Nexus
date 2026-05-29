@@ -622,7 +622,8 @@
     "check:p1164-founder-live-runtime-execution-readiness": "node scripts/check-p1164-founder-live-runtime-execution-readiness.js",
     "check:p1165-founder-live-runtime-execution-readiness": "node scripts/check-p1165-founder-live-runtime-execution-readiness.js",
     "check:p1166-founder-live-runtime-execution-readiness": "node scripts/check-p1166-founder-live-runtime-execution-readiness.js",
-    "check:p1167-founder-live-runtime-execution-readiness": "node scripts/check-p1167-founder-live-runtime-execution-readiness.js"
+    "check:p1167-founder-live-runtime-execution-readiness": "node scripts/check-p1167-founder-live-runtime-execution-readiness.js",
+    "check:p1171-founder-runtime-execution-approval-gate-contract": "node scripts/check-p1171-founder-runtime-execution-approval-gate-contract.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

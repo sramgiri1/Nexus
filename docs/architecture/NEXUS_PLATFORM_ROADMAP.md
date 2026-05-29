@@ -3140,6 +3140,15 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P117.1 is complete. P117 is split into implementation-grade subphases for the
+governed runtime execution approval gate, with the contract, policy limits,
+allowed files, forbidden files, validation commands, docs, and OS handoff
+recorded. P117.2 is next for approval evidence schema metadata. Approval
+capture, approval persistence, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
