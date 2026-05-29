@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.7
-- Generated at: 2026-05-29T20:39:04.327Z
+- Generated at: 2026-05-29T20:39:47.165Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5df76f71
+- Validation HEAD: b18f809f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | docs record P128.7 complete | PASS |  |
 | docs record P129 planned-only | PASS |  |
 | phase status closed | PASS | P128.7/P128.6/P129 |
-| changed files stay in P128.7 allowed scope | PASS | README.md, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, scripts/check-p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, reports/p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md, scripts/check-os-phase-status.js, scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, scripts/check-p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js, reports/p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js |
+| changed files stay in P128.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
 | display model avoids fake runnable actions | PASS |  |
