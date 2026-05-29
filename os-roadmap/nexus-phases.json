@@ -11408,7 +11408,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "68e6b499",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
       "detail": "P118.3 approval intent model complete; P118.4 safe dry run is next.",
@@ -11489,7 +11489,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "68e6b499",
       "commandCenterVisible": true,
       "label": "Approval Intent Model",
       "detail": "Governed local approval intent model complete without decision recording.",
@@ -11594,7 +11594,7 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T05:14:39.590Z",
+  "updatedAt": "2026-05-29T05:15:40.518Z",
   "currentPhase": "P118.3",
   "previousPhase": "P118.2",
   "nextPhase": "P118.4",
