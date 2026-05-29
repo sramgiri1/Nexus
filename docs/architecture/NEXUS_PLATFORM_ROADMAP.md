@@ -3678,6 +3678,17 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P125.1 is complete. The approval application authority grant handoff phase now
+has an implementation-grade contract, seven-subphase split, safety rules, reuse
+requirements, validation commands, status handoff, docs, checker, and report.
+P125.2 is next for browser-safe handoff eligibility metadata. Grant handoff,
+authority grant, activation, approval application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

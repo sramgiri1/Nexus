@@ -101,6 +101,13 @@ const finalState =
   && roadmap.currentPhase === "P124.7"
   && roadmap.previousPhase === "P124.6"
   && roadmap.nextPhase === "P125";
+const p1251StartedState =
+  status.currentPhase === "P125.1"
+  && status.previousPhase === "P124.7"
+  && status.nextPhase === "P125.2"
+  && roadmap.currentPhase === "P125.1"
+  && roadmap.previousPhase === "P124.7"
+  && roadmap.nextPhase === "P125.2";
 const p124Entries = [statusById.get("P124"), ...p124Subphases.map((phaseId) => statusById.get(phaseId))].filter(Boolean);
 const stalePending = p124Entries.filter((entry) => entry.commit === "pending-final-commit" && !["P124", "P124.7"].includes(entry.phaseId));
 
@@ -126,14 +133,23 @@ addCheck("platform roadmap records P124.7 and parent completion", /P124\.7 is co
 addCheck("README records P124.7 and parent completion", /P124\.7 approval application authority grant final validation/i.test(readme) && /P124\s+is\s+complete/i.test(readme) && /P125\s+is\s+planned next/i.test(readme));
 addCheck(
   "phase status advanced",
-  finalState
-    && statusById.get("P124")?.status === "complete"
-    && roadmapById.get("P124")?.status === "complete"
-    && p124Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
-    && p124Subphases.every((phaseId) => roadmapById.get(phaseId)?.status === "complete"),
+  (
+    finalState
+    || (
+      p1251StartedState
+      && statusById.get("P125")?.status === "in_progress"
+      && roadmapById.get("P125")?.status === "in_progress"
+      && statusById.get("P125.1")?.status === "complete"
+      && roadmapById.get("P125.1")?.status === "complete"
+    )
+  )
+  && statusById.get("P124")?.status === "complete"
+  && roadmapById.get("P124")?.status === "complete"
+  && p124Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete")
+  && p124Subphases.every((phaseId) => roadmapById.get(phaseId)?.status === "complete"),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P125 planned handoff exists", p125Status.status === "planned" && p125Roadmap.status === "planned" && p125Status.commandCenterVisible === true && p125Roadmap.commandCenterVisible === true);
+addCheck("P125 handoff exists", ["planned", "in_progress"].includes(p125Status.status) && ["planned", "in_progress"].includes(p125Roadmap.status) && p125Status.commandCenterVisible === true && p125Roadmap.commandCenterVisible === true);
 addCheck("completed P124 entries have commits", p124Entries.length === 8 && p124Entries.every((entry) => Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary)) && stalePending.length === 0, stalePending.map((entry) => entry.phaseId).join(", "));
 addCheck(
   "changed files stay in P124.7 allowed scope",

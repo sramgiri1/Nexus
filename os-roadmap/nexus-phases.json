@@ -12979,42 +12979,200 @@
       "title": "Founder Runtime Approval Application Authority Grant Handoff",
       "label": "Grant Handoff",
       "order": 161,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P125.1 contract/policy complete; P125.2 handoff eligibility metadata is next.",
+      "summary": "P125 is in progress with the grant handoff contract/policy complete. P125.1 defines the implementation-grade subphase split, safety rules, reuse requirements, validation commands, docs, and status handoff while keeping live authority handoff blocked.",
+      "previousPhase": "P125.1",
+      "nextPhase": "P125.2",
+      "checksRun": [
+        "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P125.1 is contract/policy only. It does not hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T16:36:00.439Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.1",
+      "title": "Handoff Contract / Policy",
+      "label": "Handoff Contract",
+      "order": 161.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P125.1 contract/policy complete; P125.2 handoff eligibility metadata is next.",
+      "summary": "Created the P125 grant handoff contract/policy, seven-subphase split, checker, docs, reports, and OS status handoff while keeping live authority handoff blocked.",
+      "previousPhase": "P124.7",
+      "nextPhase": "P125.2",
+      "checksRun": [
+        "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
+        "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P125.1 is contract/policy only. It does not hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T16:36:00.439Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.2",
+      "title": "Handoff Eligibility Metadata",
+      "label": "Handoff Metadata",
+      "order": 161.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "commandCenterVisible": true,
-      "detail": "Planned next NEXUS OS phase. No P125 behavior is implemented in P124.7.",
-      "summary": "P125 is planned-only after P124 final validation. It must receive its own implementation-grade phase contract before any grant handoff behavior can be built.",
-      "previousPhase": "P124.7",
-      "nextPhase": "P125.1",
+      "detail": "Planned next P125 subphase.",
+      "summary": "Planned handoff eligibility metadata subphase. No P125.2 behavior is implemented in P125.1.",
+      "previousPhase": "P125.1",
+      "nextPhase": "P125.3",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. P125 does not grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend in P124.7."
+        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.3",
+      "title": "Governed Handoff Intent Model",
+      "label": "Handoff Intent",
+      "order": 161.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P125 subphase.",
+      "summary": "Planned governed handoff intent model subphase. No P125.3 behavior is implemented in P125.1.",
+      "previousPhase": "P125.2",
+      "nextPhase": "P125.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.4",
+      "title": "Handoff Safe Dry Run",
+      "label": "Handoff Dry Run",
+      "order": 161.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P125 subphase.",
+      "summary": "Planned handoff safe dry-run subphase. No P125.4 behavior is implemented in P125.1.",
+      "previousPhase": "P125.3",
+      "nextPhase": "P125.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.5",
+      "title": "Command Center Handoff UX",
+      "label": "Handoff UX",
+      "order": 161.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P125 subphase.",
+      "summary": "Planned scoped Command Center handoff UX subphase. No P125.5 behavior is implemented in P125.1.",
+      "previousPhase": "P125.4",
+      "nextPhase": "P125.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.6",
+      "title": "Handoff Validation / Docs",
+      "label": "Handoff Validation",
+      "order": 161.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P125 subphase.",
+      "summary": "Planned handoff validation/docs subphase. No P125.6 behavior is implemented in P125.1.",
+      "previousPhase": "P125.5",
+      "nextPhase": "P125.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P125.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 161.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "detail": "Planned P125 final validation.",
+      "summary": "Planned final validation subphase. No P125.7 behavior is implemented in P125.1.",
+      "previousPhase": "P125.6",
+      "nextPhase": "P126",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. This subphase is not implemented in P125.1 and does not hand off authority, grant authority, activate authority, apply approvals, write DB/runtime records, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T16:29:55.423Z",
-  "currentPhase": "P124.7",
-  "previousPhase": "P124.6",
-  "nextPhase": "P125",
+  "updatedAt": "2026-05-29T16:36:00.439Z",
+  "currentPhase": "P125.1",
+  "previousPhase": "P124.7",
+  "nextPhase": "P125.2",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P124.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 160.7,
+    "phaseId": "P125.1",
+    "title": "Handoff Contract / Policy",
+    "label": "Handoff Contract",
+    "order": 161.1,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "3083e6a6a8b5a878923f2c30c1985c1de0fd9317",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P124.7 final validation complete; P125 is planned next.",
-    "summary": "Closed P124 final validation, verified P124.1-P124.7 reports/checkers/status/docs, preserved scoped grant UX, and created the planned P125 handoff while keeping live authority and execution blocked.",
-    "previousPhase": "P124.6",
-    "nextPhase": "P125",
+    "detail": "P125.1 contract/policy complete; P125.2 handoff eligibility metadata is next.",
+    "summary": "Created the P125 grant handoff contract/policy, seven-subphase split, checker, docs, reports, and OS status handoff while keeping live authority handoff blocked.",
+    "previousPhase": "P124.7",
+    "nextPhase": "P125.2",
     "checksRun": [
+      "npm run check:p1251-founder-runtime-approval-application-authority-grant-handoff",
       "npm run check:p1247-founder-runtime-approval-application-authority-grant-boundary",
-      "npm run check:p1246-founder-runtime-approval-application-authority-grant-boundary",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -13023,9 +13181,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P124.7 is final validation only. It does not grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P125 is planned-only until its own implementation-grade contract is written."
+      "P125.1 is contract/policy only. It does not hand off authority, grant authority, activate authority, apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T16:29:55.423Z"
+    "completedAt": "2026-05-29T16:36:00.439Z"
   },
-  "generatedAt": "2026-05-29T16:29:55.423Z"
+  "generatedAt": "2026-05-29T16:36:00.439Z"
 }
