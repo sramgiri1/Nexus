@@ -3131,6 +3131,15 @@ unlock, provider/model calls, agent dispatch, worker/tool execution, project
 mutation, hosted DB mutation, raw SQL interface, deploy, release, export,
 package action, network call, and provider spend remain blocked.
 
+P116.7 is complete. P116 is complete across runtime execution readiness
+contract, local schema metadata, governed local CRUD, safe preview, Command
+Center UX, validation/docs aggregation, final validation, and P117 planned
+handoff. P117 is planned-only until its own implementation-grade contract is
+written. Runtime execution, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
