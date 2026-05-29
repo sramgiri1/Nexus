@@ -16215,7 +16215,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7107b777",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
       "detail": "P118.6 approval capture validation/docs complete; P118.7 final validation is next.",
@@ -16382,7 +16382,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7107b777",
       "commandCenterVisible": true,
       "label": "Approval Capture Validation",
       "detail": "Approval capture aggregate validation/docs complete without new capture or runtime authority.",
@@ -16430,7 +16430,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T05:42:48.624Z",
+  "updatedAt": "2026-05-29T05:44:45.740Z",
   "currentPhase": "P118.6",
   "previousPhase": "P118.5",
   "nextPhase": "P118.7",
