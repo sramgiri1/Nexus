@@ -11632,18 +11632,172 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
-      "detail": "Planned next phase for founder approval decision recording boundary.",
+      "detail": "P119.1 approval decision recording contract complete; P119.2 schema metadata is next.",
       "phaseId": "P119",
       "title": "Founder Runtime Approval Decision Recording Boundary",
       "order": 155,
-      "status": "planned",
-      "summary": "Planned next NEXUS OS phase. No approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or provider spend are enabled by this placeholder.",
-      "nextPhase": "",
+      "status": "in_progress",
+      "summary": "P119 is in progress with the approval decision recording boundary contract and implementation-grade subphase split complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked.",
+      "nextPhase": "P119.2",
       "previousPhase": "P118.7",
+      "checksRun": [
+        "npm run check:p1191-founder-runtime-approval-decision-recording-boundary-contract",
+        "npm run check:p1187-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P119.1 is contract/policy only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P119.2 is next for approval decision schema metadata."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Approval Decision Contract",
+      "detail": "Approval decision recording boundary contract and policy are recorded; decision recording remains unavailable.",
+      "phaseId": "P119.1",
+      "title": "Approval Decision Recording Contract / Policy",
+      "order": 155.1,
+      "status": "complete",
+      "summary": "Defined the P119 approval-decision recording boundary contract, implementation-grade subphase split, safety policy, reuse requirements, validation commands, documentation, and OS handoff without implementing approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, or runtime execution.",
+      "nextPhase": "P119.2",
+      "previousPhase": "P118.7",
+      "checksRun": [
+        "npm run check:p1191-founder-runtime-approval-decision-recording-boundary-contract",
+        "npm run check:p1187-founder-runtime-approval-capture-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P119.1 is contract-only; it does not accept approvals, create DB tables, write DB/runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "No Command Center source or dashboard route tests were changed in P119.1; P118 approval capture boundary UX is preserved."
+      ],
+      "completedAt": "2026-05-29T05:59:39.070Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Approval Decision Schema",
+      "detail": "Planned browser-safe approval decision schema metadata without DB files or writes.",
+      "phaseId": "P119.2",
+      "title": "Approval Decision Schema Metadata",
+      "order": 155.2,
+      "status": "planned",
+      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P119.3",
+      "previousPhase": "P119.1",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Approval Decision Intent",
+      "detail": "Planned local approval decision intent model without decision recording.",
+      "phaseId": "P119.3",
+      "title": "Governed Local Approval Decision Intent Model",
+      "order": 155.3,
+      "status": "planned",
+      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P119.4",
+      "previousPhase": "P119.2",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Approval Decision Dry Run",
+      "detail": "Planned local approval decision safe dry-run preview without decisions or writes.",
+      "phaseId": "P119.4",
+      "title": "Approval Decision Safe Dry Run",
+      "order": 155.4,
+      "status": "planned",
+      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P119.5",
+      "previousPhase": "P119.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Approval Decision UX",
+      "detail": "Planned scoped Command Center approval decision boundary UX without controls or writes.",
+      "phaseId": "P119.5",
+      "title": "Command Center Approval Decision Boundary UX",
+      "order": 155.5,
+      "status": "planned",
+      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P119.6",
+      "previousPhase": "P119.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Approval Decision Validation",
+      "detail": "Planned aggregate validation and docs for approval decision boundary.",
+      "phaseId": "P119.6",
+      "title": "Approval Decision Validation / Docs",
+      "order": 155.6,
+      "status": "planned",
+      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P119.7",
+      "previousPhase": "P119.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Final Validation",
+      "detail": "Planned final validation and handoff after P119 subphases are complete.",
+      "phaseId": "P119.7",
+      "title": "Final Validation",
+      "order": 155.7,
+      "status": "planned",
+      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P120",
+      "previousPhase": "P119.6",
       "checksRun": [],
       "knownLimitations": [
         "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
@@ -11651,9 +11805,9 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T05:51:58.929Z",
-  "currentPhase": "P118.7",
-  "previousPhase": "P118.6",
-  "nextPhase": "P119",
+  "updatedAt": "2026-05-29T05:59:39.070Z",
+  "currentPhase": "P119.1",
+  "previousPhase": "P118.7",
+  "nextPhase": "P119.2",
   "currentPhaseStatus": "complete"
 }

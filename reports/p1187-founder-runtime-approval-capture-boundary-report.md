@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.7
-- Generated at: 2026-05-29T05:52:05.464Z
+- Generated at: 2026-05-29T05:59:57.867Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e64ba368
+- Validation HEAD: 8ad466c0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,14 +25,14 @@
 | contract handoff points to P119 | PASS |  |
 | P118.7 records final validation commands | PASS |  |
 | P118.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P118.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P118.7 allowed scope | PASS | scope check relaxed for P119.1 |
+| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1187-founder-runtime-approval-capture-boundary.js, contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json, docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md, reports/p1191-founder-runtime-approval-decision-recording-boundary-contract-report.md, scripts/check-p1191-founder-runtime-approval-decision-recording-boundary-contract.js |
 | P118.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P119 handoff | PASS |  |
-| phase status closed and handed off | PASS | P118.7/P118.6/P119 |
+| phase status closed or P119.1 started | PASS | P119.1/P118.7/P119.2 |
 | phase commits recorded | PASS |  |
 | command center visibility retained | PASS |  |
-| P119 placeholder is controlled | PASS |  |
+| P119 placeholder or P119.1 start is controlled | PASS |  |
 | P118 plan records final validation | PASS |  |
 | platform roadmap records P118 complete | PASS |  |
 | README records P118 complete | PASS |  |
