@@ -3,15 +3,15 @@
   "title": "Founder Runtime Approval Decision Application Authority Handoff",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "objective": "Define governed local authority handoff safe dry-run preview after P122.3 so future Command Center UX can explain approval decision application readiness without enabling live application, DB/runtime writes, execution, dispatch, project mutation, provider calls, deploy, release, export, package, network, or spend authority in P122.4.",
-  "currentSubphase": "P122.4",
-  "previousSubphase": "P122.3",
-  "nextSubphase": "P122.5",
+  "objective": "Render governed local authority handoff safe dry-run UX on scoped Command Center founder work pages without enabling live application, DB/runtime writes, execution, dispatch, project mutation, provider calls, deploy, release, export, package, network, or spend authority in P122.5.",
+  "currentSubphase": "P122.5",
+  "previousSubphase": "P122.4",
+  "nextSubphase": "P122.6",
   "safetyRules": [
-    "Do not enable approval decision application in P122.4.",
-    "Do not enable approval capture, approval persistence, or approve/reject decision recording in P122.4.",
-    "Do not enable DB writes, hosted DB mutation, raw SQL, runtime writes, runtime execution, or execution unlock in P122.4.",
-    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend in P122.4.",
+    "Do not enable approval decision application in P122.5.",
+    "Do not enable approval capture, approval persistence, or approve/reject decision recording in P122.5.",
+    "Do not enable DB writes, hosted DB mutation, raw SQL, runtime writes, runtime execution, or execution unlock in P122.5.",
+    "Do not call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend in P122.5.",
     "Do not expose DemoApp, raw JSON/log/policy dumps, raw private IDs, raw DB names, raw report paths in primary UX, fake runnable actions, or mutation controls.",
     "Future P122 subphases must define narrow authority, validation, UX, and rollback before any later phase can consider live behavior."
   ],
@@ -29,7 +29,7 @@
     "P121 approval decision application boundary evidence"
   ],
   "knownLimitations": [
-    "P122.4 is safe dry-run preview only and does not enable live authority.",
+    "P122.5 is scoped Command Center UX only and does not enable live authority.",
     "Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "subphases": [
@@ -515,18 +515,51 @@
     {
       "phaseId": "P122.5",
       "title": "Command Center Authority Handoff UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Planned P122 subphase. Implementation requires its own implementation-grade plan before coding.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "expectedBaseCommit": "865b3da8",
+      "narrowGoal": "Render the approval application authority handoff display model on Business Build and Agent Flow only, with route/theme safety coverage and no live controls.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json",
+        "docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md",
+        "scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1224-founder-runtime-approval-decision-application-authority-handoff.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1224-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json",
+        "docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md",
+        "scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js",
+        "scripts/check-p1224-founder-runtime-approval-decision-application-authority-handoff.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1224-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "live-ready/**",
         "local-state/runtime/**",
@@ -539,28 +572,53 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls until explicitly scoped.",
+      "expectedExports": [
+        "buildFounderApprovalDecisionApplicationAuthorityBoundaryDisplayModel"
+      ],
+      "dataShape": "Display-safe Command Center model with currentState, founderIdea, previewMode, readiness counts, zero unsafe candidate counts, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, readinessSections, readinessRows, safetyRows, and summaryRows.",
+      "commandCenterUx": "Business Build and Agent Flow render a read-only Approval Application Authority Handoff card. Chat with NEXUS, Lite, OS Roadmap, Live Readiness, and unrelated routes do not render it.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
-        "Preserve Light theme."
+        "Preserve Light theme.",
+        "Focused Playwright coverage must verify all three themes on the scoped card."
       ],
       "playwrightTests": [
-        "No new Playwright test until dashboard source changes are explicitly allowed."
+        "Add focused Playwright test: Approval application authority handoff appears only on scoped pages.",
+        "Assert Business Build and Agent Flow presence.",
+        "Assert Lite, Chat, OS Roadmap, and Live Readiness absence.",
+        "Assert no DemoApp, raw JSON/log/policy dumps, private IDs, raw schema names, raw report paths, internal phase labels, or fake runnable actions."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P122.5 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add a P122.5 Command Center UX checker.",
+        "Verify the P122.4 checker accepts P122.5 handoff.",
+        "Validate display model, scoped rendering, Playwright coverage, docs/status, forbidden paths, and unsafe UX claim prevention."
+      ],
+      "docsRoadmap": "Update P122 plan, README, platform roadmap, OS status, generated reports, and P122 contract for P122.5.",
+      "phaseStatusUpdate": "P122 in progress; P122.5 complete; current phase P122.5; previous P122.4; next P122.6.",
+      "validationCommands": [
+        "npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff",
+        "npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority handoff appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P122.5 files>",
-        "git commit -m \"feat(nexus): implement p1225 approval application authority handoff\"",
+        "git commit -m \"feat(nexus): implement p1225 approval application authority ux\"",
+        "stamp P122/P122.5 status with the implementation commit",
+        "git add <allowed P122.5 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1225 approval application authority ux\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval decision application, DB writes, or runtime execution authority is enabled."
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no DB/runtime provider, tool, worker, deploy, release, export, package, local runtime state, or env paths changed.",
+        "Confirm no approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw DB table names, raw report paths in primary UX, or fake runnable actions are introduced."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -569,6 +627,7 @@
         "What was implemented",
         "Command Center UX changes",
         "Tests/checkers run",
+        "Dashboard build/unit/page results",
         "Docs/README/roadmap updates",
         "OS phase status update",
         "Safety confirmations",
@@ -717,7 +776,7 @@
       "order": 158.7
     }
   ],
-  "summary": "P122 continues the approval decision application authority handoff track with browser-safe metadata, a pure local authority intent model, and a local safe dry-run preview while all live authority remains blocked.",
+  "summary": "P122 continues the approval decision application authority handoff track with browser-safe metadata, a local authority intent model, a safe dry-run preview, and scoped Command Center UX while all live authority remains blocked.",
   "updatedAt": "2026-05-29T13:29:01.230Z",
   "expectedBaseCommit": "afb30703"
 }

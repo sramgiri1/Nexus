@@ -3403,6 +3403,15 @@ function AgentFlowPage() {
         ariaLabel="Founder runtime approval decision application boundary"
         rowAriaSuffix="approval decision application boundary row"
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalDecisionApplicationAuthorityBoundary}
+        surfaceLabel="Agent Flow Approval Application Authority Handoff"
+        heading="Approval Application Authority Handoff"
+        pillLabel="Authority read-only"
+        ariaLabel="Founder approval application authority handoff"
+        rowAriaSuffix="approval application authority handoff row"
+        maxRows={4}
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10217,6 +10226,15 @@ function BusinessBuildPage() {
           ariaLabel="Founder runtime approval decision application boundary"
           rowAriaSuffix="approval decision application boundary row"
         />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalDecisionApplicationAuthorityBoundary}
+          surfaceLabel="Business Build Approval Application Authority Handoff"
+          heading="Approval Application Authority Handoff"
+          pillLabel="Authority read-only"
+          ariaLabel="Founder approval application authority handoff"
+          rowAriaSuffix="approval application authority handoff row"
+          maxRows={4}
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -11917,11 +11935,12 @@ function FounderApprovalDecisionBoundaryCard({
   pillLabel = "Decision read-only",
   ariaLabel = "Founder runtime approval decision boundary",
   rowAriaSuffix = "approval decision boundary row",
+  maxRows = 3,
 }) {
   if (!decision) return null;
 
   const rows = Array.isArray(decision.readinessRows)
-    ? decision.readinessRows.slice(0, 3)
+    ? decision.readinessRows.slice(0, maxRows)
     : [];
   const sections = Array.isArray(decision.readinessSections)
     ? decision.readinessSections.slice(0, 3)
@@ -11973,7 +11992,7 @@ function FounderApprovalDecisionBoundaryCard({
           </div>
         ))}
       </div>
-      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+      <div className={`ccv2-grid ${maxRows > 3 ? "ccv2-grid--4" : "ccv2-grid--3"}`} style={{ marginTop: 16 }}>
         {rows.map((row) => (
           <div
             key={`${row.label}-${row.decisionPosition}`}

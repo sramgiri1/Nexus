@@ -3525,6 +3525,18 @@ execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
 release, export, package action, network call, and provider spend remain
 blocked.
 
+P122.5 is complete. Business Build and Agent Flow now show a scoped read-only
+Approval Application Authority Handoff card with current state, readiness rows,
+blockers, next action, disabled reason, owner capability, evidence/activity
+labels, safety rows, and cost impact while Chat with NEXUS, Lite, OS Roadmap,
+and Live Readiness stay clean. P122.6 is next for authority handoff validation
+and docs closure. Approval decision application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+release, export, package action, network call, and provider spend remain
+blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

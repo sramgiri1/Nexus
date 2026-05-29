@@ -623,12 +623,164 @@ phase to P122.3.
 
 Status: complete.
 
+## P122.5 Command Center Authority Handoff UX
+
+Phase: P122
+Subphase: P122.5
+Goal: render the P122.4 authority handoff safe dry-run preview as display-safe
+Command Center cards on Business Build and Agent Flow only.
+Why this is needed: P122.4 creates a hidden preview artifact. P122.5 gives
+operators scoped visibility into authority handoff state before aggregate
+validation and docs closure.
+User/operator impact: operators can inspect authority handoff current state,
+readiness rows, blockers, disabled reason, next action, owner capability,
+evidence/activity labels, and cost posture on the founder work pages.
+Command Center impact: Business Build and Agent Flow show an Approval
+Application Authority Handoff read-only card. Chat with NEXUS, Lite, OS
+Roadmap, Live Readiness, and other routes stay clean.
+Safety impact: UX-only. Approval decision application, approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+runtime execution, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy,
+release, export, package, network calls, and provider spend remain blocked.
+Cost impact: none; no provider, model, network, worker, deploy, package, or
+spend path is used.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json`
+- `docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md`
+- `scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js`
+- `scripts/check-p1224-founder-runtime-approval-decision-application-authority-handoff.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1224-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalDecisionApplicationAuthorityBoundaryDisplayModel`
+
+The display model includes `currentState`, `founderIdea`, `previewMode`,
+readiness counts, zero unsafe candidate counts, `nextAction`, `blockers`,
+`disabledReason`, `ownerCapability`, `evidenceLocation`, `activityLocation`,
+`costImpact`, `readinessSections`, `readinessRows`, `safetyRows`, and
+`summaryRows`.
+
+Reuse check: reuse P122.4
+`shared/founderApprovalDecisionApplicationAuthorityPreview.js`, existing
+`FounderApprovalDecisionBoundaryCard`, existing Command Center route placement,
+existing theme controls, existing route tests, `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, `shared/reportMetadata.js`,
+`shared/resultEnvelope.js`, `shared/modeGuard.js`, `shared/redaction.js`, and
+`os-roadmap/updatePhaseStatus.js`. Do not duplicate UI cards, route matrices,
+report writers, result envelopes, redaction helpers, mode guards, phase status
+updaters, or evidence/activity appenders.
+
+Tests to add/update/remove: add focused Playwright coverage for the authority
+handoff card across dark, light, and system themes; assert Business Build and
+Agent Flow presence; assert Lite, Chat, OS Roadmap, and Live Readiness absence.
+Add the dedicated P122.5 checker and package script.
+
+Docs to update: this P122 plan, README, platform roadmap, P122 contract, OS
+roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1224-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P122 is in progress; P122.5 is complete; current phase
+P122.5; previous P122.4; next P122.6.
+
+Validation commands:
+- `npm run check:p1225-founder-runtime-approval-decision-application-authority-handoff`
+- `npm run check:p1224-founder-runtime-approval-decision-application-authority-handoff`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority handoff appears only on scoped pages"`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P122.5 files>`
+- `git commit -m "feat(nexus): implement p1225 approval application authority ux"`
+- stamp P122/P122.5 status with the implementation commit
+- `git add <allowed P122.5 status/report files>`
+- `git commit -m "chore(nexus): stamp p1225 approval application authority ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop/generated project paths changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, local runtime state, or env paths changed
+- confirm no approval decision application, approval capture, approval
+  persistence, approve/reject decision recording, DB/runtime writes, runtime
+  execution, execution unlock, provider/model calls, agent dispatch,
+  worker/tool execution, project mutation, hosted DB mutation, raw SQL, network,
+  deploy, release, export, package, or spend authority is enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB/schema names, raw report
+  paths in primary UX, JSON/log/policy dumps, internal primary UX phase labels,
+  or fake actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: adding another card can clutter the founder pages. The card is
+scoped to the two work-planning pages and uses the existing compact boundary
+card style.
+
+Rollback plan: remove the P122.5 display model, card render calls, Playwright
+test, checker, report, package script, contract/docs/status updates, restore
+P122.5 to planned, and return current phase to P122.4.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
 P122.1 Authority Handoff Contract / Policy is complete. P122.2 Application
 Authority Eligibility Metadata is complete. P122.3 Governed Local Authority
 Intent Model is complete. P122.4 Authority Handoff Safe Dry Run is complete.
-P122.5 is next for scoped Command Center authority handoff UX. Approval decision application,
+P122.5 Command Center Authority Handoff UX is complete. P122.6 is next for
+authority handoff validation and docs. Approval decision application,
 approval capture, approval persistence, approve/reject decision recording,
 DB/runtime writes, runtime execution, execution unlock, provider/model calls,
 agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
