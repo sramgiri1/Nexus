@@ -114,7 +114,7 @@
       "knownLimitations": [
         "P131.1 is contract/checker/docs/status only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "commit": "pending-final-commit",
+      "commit": "d0079eef",
       "completedAt": "2026-05-29T22:53:37.897Z"
     },
     {
@@ -597,7 +597,7 @@
     "title": "Store Live Admission Contract / Safety Boundary",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d0079eef",
     "completedAt": "2026-05-29T22:53:37.897Z",
     "summary": "Started P131 with an implementation-grade store live admission scope contract, seven-subphase split, safety boundary, checker, docs, and status handoff while all live store actions remain blocked.",
     "checksRun": [

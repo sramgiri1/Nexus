@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P131.1
-- Generated at: 2026-05-29T22:53:55.574Z
+- Generated at: 2026-05-29T22:54:55.929Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d63816a9
+- Validation HEAD: d0079eef
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,8 +37,8 @@
 | phase status advanced | PASS | P131.1/P130.7/P131.2 |
 | phase status summary objects advanced | PASS |  |
 | completed P131.1 entries have required fields | PASS |  |
-| changed files stay in P131.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js, contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md, scripts/check-p1311-founder-runtime-store-live-admission-scope.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1307-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-live-readiness.js, contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md, scripts/check-p1311-founder-runtime-store-live-admission-scope.js |
+| changed files stay in P131.1 allowed scope | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw store table names | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake unsafe runnable actions | PASS |  |
