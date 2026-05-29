@@ -16872,26 +16872,26 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0f492641",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
-      "detail": "P121.1 application boundary contract complete; P121.2 eligibility metadata is next.",
+      "detail": "P121.2 application eligibility metadata complete; P121.3 governed intent model is next.",
       "phaseId": "P121",
       "title": "Founder Runtime Approval Decision Application Boundary",
       "order": 157,
       "status": "in_progress",
-      "summary": "P121 is in progress with the approval decision application boundary contract complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P121.2",
-      "previousPhase": "P121.1",
+      "summary": "P121 is in progress with the approval decision application boundary contract and browser-safe eligibility metadata complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P121.3",
+      "previousPhase": "P121.2",
       "checksRun": [
+        "npm run check:p1212-founder-runtime-approval-decision-application-boundary",
         "npm run check:p1211-founder-runtime-approval-decision-application-boundary-contract",
-        "npm run check:p1207-founder-runtime-approval-decision-persistence-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P121.1 is contract-only; it does not apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P121.2 is metadata-only; it does not apply approvals, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
       ],
       "completedAt": "2026-05-29T12:32:28.282Z"
     },
@@ -16923,23 +16923,29 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Eligibility Metadata",
-      "detail": "Planned P121 subphase. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "detail": "Approval decision application eligibility metadata complete.",
       "phaseId": "P121.2",
       "title": "Application Eligibility Metadata",
       "order": 157.2,
-      "status": "planned",
-      "summary": "Planned only. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Defined browser-safe approval decision application eligibility metadata with blocked authority flags and display-safe sections for future intent modeling. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P121.3",
       "previousPhase": "P121.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1212-founder-runtime-approval-decision-application-boundary",
+        "npm run check:p1211-founder-runtime-approval-decision-application-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P121.2 is metadata-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T12:37:57.379Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17043,9 +17049,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T12:34:37.523Z",
-  "currentPhase": "P121.1",
-  "previousPhase": "P120.7",
-  "nextPhase": "P121.2",
+  "updatedAt": "2026-05-29T12:37:57.379Z",
+  "currentPhase": "P121.2",
+  "previousPhase": "P121.1",
+  "nextPhase": "P121.3",
   "currentPhaseStatus": "complete"
 }

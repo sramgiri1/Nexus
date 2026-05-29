@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision application boundary while keeping approval application, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P121.1",
-  "previousSubphase": "P120.7",
-  "nextSubphase": "P121.2",
+  "currentSubphase": "P121.2",
+  "previousSubphase": "P121.1",
+  "nextSubphase": "P121.3",
   "safetyRules": [
     "Do not enable approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P121.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -146,12 +146,42 @@
     {
       "phaseId": "P121.2",
       "title": "Application Eligibility Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Planned P121 subphase. Implementation requires its own implementation-grade plan before coding.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "narrowGoal": "Define browser-safe approval decision application eligibility metadata without DB files, DB writes, approval application, approval persistence, or runtime execution.",
+      "allowedFiles": [
+        "shared/founderApprovalDecisionApplicationEligibilityMetadata.js",
+        "scripts/check-p1212-founder-runtime-approval-decision-application-boundary.js",
+        "scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js",
+        "contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json",
+        "docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md",
+        "reports/p1212-founder-runtime-approval-decision-application-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "shared/founderApprovalDecisionApplicationEligibilityMetadata.js",
+        "scripts/check-p1212-founder-runtime-approval-decision-application-boundary.js",
+        "scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js",
+        "contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json",
+        "docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md",
+        "reports/p1212-founder-runtime-approval-decision-application-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -170,28 +200,48 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls until explicitly scoped.",
+      "expectedExports": [
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_ELIGIBILITY_METADATA_PHASE",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_ELIGIBILITY_VERSION",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_ELIGIBILITY_STATES",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_AUTHORITY_FLAGS",
+        "FOUNDER_APPROVAL_DECISION_APPLICATION_ELIGIBILITY_SECTIONS",
+        "buildFounderApprovalDecisionApplicationEligibilityMetadata"
+      ],
+      "dataShape": "Browser-safe metadata object with metadata version, phase id, metadataOnly true, commandCenterVisible false, metadata-only write policy, eligibility states, and three display-safe sections for decision source, runtime authority, and operator evidence.",
+      "commandCenterUx": "No Command Center source change in P121.2. Preserve P120/P121.1 read-only UX and avoid any approval application, approve/reject, save, or execution controls.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "No new Playwright test until dashboard source changes are explicitly allowed."
+        "No new Playwright test because P121.2 has no UI source changes; preserve route-wide safety tests."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P121.2 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add a P121.2 eligibility metadata checker.",
+        "Reuse P121.1 checker handoff acceptance for P121.2 started state."
+      ],
+      "docsRoadmap": "Update P121 plan, README, platform roadmap, OS status, generated reports, and P121 contract for P121.2.",
+      "phaseStatusUpdate": "P121 in progress; P121.2 complete; current phase P121.2; previous P121.1; next P121.3.",
+      "validationCommands": [
+        "npm run check:p1212-founder-runtime-approval-decision-application-boundary",
+        "npm run check:p1211-founder-runtime-approval-decision-application-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P121.2 files>",
-        "git commit -m \"feat(nexus): implement p1212 approval decision application\"",
+        "git commit -m \"feat(nexus): implement p1212 approval decision application metadata\"",
+        "stamp P121/P121.2 status with the implementation commit",
+        "git add <allowed P121.2 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1212 approval decision application metadata\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval decision application, DB writes, or runtime execution authority is enabled."
+        "Confirm no approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no project-owned, CareLoop, generated project, dashboard source/test, DB, live-ready, runtime, provider, tool, worker, deploy, release, export, package, or env files changed."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -209,7 +259,8 @@
       ],
       "nextPhase": "P121.3",
       "previousPhase": "P121.1",
-      "order": 157.2
+      "order": 157.2,
+      "expectedBaseCommit": "a5d88916"
     },
     {
       "phaseId": "P121.3",
@@ -552,6 +603,6 @@
       "order": 157.7
     }
   ],
-  "summary": "P121 is in progress. P121.1 defines the approval-decision application boundary contract while approval decision application, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, project mutation, deploy/release/export/package actions, network calls, and provider spend remain blocked.",
-  "updatedAt": "2026-05-29T12:32:28.282Z"
+  "summary": "P121 is in progress. P121.1 defines the approval-decision application boundary contract and P121.2 defines browser-safe application eligibility metadata while Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+  "updatedAt": "2026-05-29T12:37:57.379Z"
 }

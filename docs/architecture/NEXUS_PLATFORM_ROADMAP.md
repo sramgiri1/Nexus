@@ -3417,6 +3417,16 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P121.2 is complete. Browser-safe approval decision application eligibility
+metadata now defines eligibility states, display-safe sections for decision
+source, runtime authority, and operator evidence, and blocked authority flags.
+P121.3 is next for the governed application intent model. Approval decision
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
