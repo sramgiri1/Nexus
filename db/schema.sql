@@ -1014,3 +1014,126 @@ CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_evidence_refs_queue_ite
 CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_evidence_refs_work_order_id        ON founder_runtime_execution_evidence_refs (work_order_id);
 CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_evidence_refs_evidence_type        ON founder_runtime_execution_evidence_refs (evidence_type);
 CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_evidence_refs_evidence_location    ON founder_runtime_execution_evidence_refs (evidence_location);
+
+-- founder_runtime_execution_approval_evidence_items
+CREATE TABLE IF NOT EXISTS founder_runtime_execution_approval_evidence_items (
+  approval_evidence_id       TEXT        NOT NULL,
+  runtime_execution_id       TEXT        NOT NULL,
+  runtime_admission_id       TEXT,
+  dispatch_readiness_id      TEXT,
+  assignment_id              TEXT,
+  queue_item_id              TEXT,
+  work_order_id              TEXT,
+  public_label               TEXT        NOT NULL,
+  approval_gate_state        TEXT        NOT NULL,
+  evidence_state             TEXT        NOT NULL,
+  approval_question          TEXT,
+  evidence_summary           TEXT,
+  owner_capability           TEXT,
+  next_action                TEXT,
+  disabled_reason            TEXT,
+  operator_decision_required BOOLEAN     NOT NULL DEFAULT true,
+  operator_decision_recorded BOOLEAN     NOT NULL DEFAULT false,
+  approval_capture_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  approval_persistence_allowed BOOLEAN   NOT NULL DEFAULT false,
+  local_crud_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  db_write_allowed           BOOLEAN     NOT NULL DEFAULT false,
+  hosted_db_mutation_allowed BOOLEAN     NOT NULL DEFAULT false,
+  runtime_execution_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  execution_unlock_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  tool_execution_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  provider_call_allowed      BOOLEAN     NOT NULL DEFAULT false,
+  agent_dispatch_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  package_action_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  deploy_action_allowed      BOOLEAN     NOT NULL DEFAULT false,
+  release_action_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  export_action_allowed      BOOLEAN     NOT NULL DEFAULT false,
+  network_call_allowed       BOOLEAN     NOT NULL DEFAULT false,
+  provider_spend_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs              JSONB,
+  activity_refs              JSONB,
+  created_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (approval_evidence_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_runtime_execution_id  ON founder_runtime_execution_approval_evidence_items (runtime_execution_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_runtime_admission_id  ON founder_runtime_execution_approval_evidence_items (runtime_admission_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_dispatch_readiness_id ON founder_runtime_execution_approval_evidence_items (dispatch_readiness_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_assignment_id         ON founder_runtime_execution_approval_evidence_items (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_queue_item_id         ON founder_runtime_execution_approval_evidence_items (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_work_order_id         ON founder_runtime_execution_approval_evidence_items (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_approval_gate_state   ON founder_runtime_execution_approval_evidence_items (approval_gate_state);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_evidence_state        ON founder_runtime_execution_approval_evidence_items (evidence_state);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_owner_capability      ON founder_runtime_execution_approval_evidence_items (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_items_updated_at            ON founder_runtime_execution_approval_evidence_items (updated_at);
+
+-- founder_runtime_execution_approval_events
+CREATE TABLE IF NOT EXISTS founder_runtime_execution_approval_events (
+  approval_evidence_event_id TEXT        NOT NULL,
+  approval_evidence_id       TEXT        NOT NULL,
+  runtime_execution_id       TEXT        NOT NULL,
+  runtime_admission_id       TEXT,
+  dispatch_readiness_id      TEXT,
+  assignment_id              TEXT,
+  queue_item_id              TEXT,
+  work_order_id              TEXT,
+  event_type                 TEXT        NOT NULL,
+  event_state                TEXT        NOT NULL,
+  actor_label                TEXT,
+  event_summary              TEXT,
+  rollback_available         BOOLEAN     NOT NULL DEFAULT false,
+  approval_capture_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  approval_persistence_allowed BOOLEAN   NOT NULL DEFAULT false,
+  runtime_execution_allowed  BOOLEAN     NOT NULL DEFAULT false,
+  execution_unlock_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  tool_execution_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  provider_call_allowed      BOOLEAN     NOT NULL DEFAULT false,
+  agent_dispatch_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed   BOOLEAN     NOT NULL DEFAULT false,
+  network_call_allowed       BOOLEAN     NOT NULL DEFAULT false,
+  provider_spend_allowed     BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs              JSONB,
+  created_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (approval_evidence_event_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_approval_evidence_id  ON founder_runtime_execution_approval_events (approval_evidence_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_runtime_execution_id  ON founder_runtime_execution_approval_events (runtime_execution_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_runtime_admission_id  ON founder_runtime_execution_approval_events (runtime_admission_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_dispatch_readiness_id ON founder_runtime_execution_approval_events (dispatch_readiness_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_assignment_id         ON founder_runtime_execution_approval_events (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_queue_item_id         ON founder_runtime_execution_approval_events (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_work_order_id         ON founder_runtime_execution_approval_events (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_event_type            ON founder_runtime_execution_approval_events (event_type);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_event_state           ON founder_runtime_execution_approval_events (event_state);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_events_created_at            ON founder_runtime_execution_approval_events (created_at);
+
+-- founder_runtime_execution_approval_evidence_refs
+CREATE TABLE IF NOT EXISTS founder_runtime_execution_approval_evidence_refs (
+  approval_evidence_ref_id TEXT        NOT NULL,
+  approval_evidence_id     TEXT        NOT NULL,
+  runtime_execution_id     TEXT        NOT NULL,
+  runtime_admission_id     TEXT,
+  dispatch_readiness_id    TEXT,
+  assignment_id            TEXT,
+  queue_item_id            TEXT,
+  work_order_id            TEXT,
+  evidence_label           TEXT        NOT NULL,
+  evidence_type            TEXT,
+  evidence_location        TEXT        NOT NULL,
+  redaction_required       BOOLEAN     NOT NULL DEFAULT true,
+  retained_for_audit       BOOLEAN     NOT NULL DEFAULT true,
+  created_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (approval_evidence_ref_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_approval_evidence_id ON founder_runtime_execution_approval_evidence_refs (approval_evidence_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_runtime_execution_id ON founder_runtime_execution_approval_evidence_refs (runtime_execution_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_runtime_admission_id ON founder_runtime_execution_approval_evidence_refs (runtime_admission_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_dispatch_readiness_id ON founder_runtime_execution_approval_evidence_refs (dispatch_readiness_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_assignment_id        ON founder_runtime_execution_approval_evidence_refs (assignment_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_queue_item_id        ON founder_runtime_execution_approval_evidence_refs (queue_item_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_work_order_id        ON founder_runtime_execution_approval_evidence_refs (work_order_id);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_evidence_type        ON founder_runtime_execution_approval_evidence_refs (evidence_type);
+CREATE INDEX IF NOT EXISTS idx_founder_runtime_execution_approval_evidence_refs_evidence_location    ON founder_runtime_execution_approval_evidence_refs (evidence_location);

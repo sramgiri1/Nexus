@@ -78,9 +78,17 @@ const docsBundle = [JSON.stringify(contract), plan, platformRoadmap, readme].joi
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1171-founder-runtime-execution-approval-gate-contract"]));
 addCheck("contract identifies P117", contract.phaseId === "P117" && contract.title === "Founder Runtime Execution Approval Gate");
-addCheck("contract status and handoff", contract.status === "in_progress" && contract.currentSubphase === "P117.1" && contract.previousSubphase === "P116.7" && contract.nextSubphase === "P117.2");
+addCheck(
+  "contract status and handoff",
+  contract.status === "in_progress"
+    && (
+      (contract.currentSubphase === "P117.1" && contract.previousSubphase === "P116.7" && contract.nextSubphase === "P117.2")
+      || (contract.currentSubphase === "P117.2" && contract.previousSubphase === "P117.1" && contract.nextSubphase === "P117.3")
+      || (contract.currentSubphase === "P117.3" && contract.previousSubphase === "P117.2" && contract.nextSubphase === "P117.4")
+    ),
+);
 addCheck("subphase split complete", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && (contract.subphases || []).length === 7);
-addCheck("P117.1 complete and P117.2 planned", p1171.status === "complete" && p1172.status === "planned");
+addCheck("P117.1 complete and P117.2 planned or complete", p1171.status === "complete" && ["planned", "complete"].includes(p1172.status));
 addCheck("P116 closed before P117 starts", p116Contract.status === "complete" && statusById.get("P116")?.status === "complete" && roadmapById.get("P116")?.status === "complete");
 addCheck("safety rules block approval and execution", contract.safetyRules?.some((rule) => /Do not enable approval capture/i.test(rule)) && contract.safetyRules?.some((rule) => /runtime execution/i.test(rule) && /Do not enable/i.test(rule)));
 addCheck("reuse requirements present", ["shared/reportWriter.js", "shared/checkResultFormatter.js", "os-roadmap/updatePhaseStatus.js", "existing dashboard tabs/cards/badges"].every((item) => contract.reuseRequirements?.includes(item)));
@@ -100,17 +108,29 @@ addCheck("README records P117.1", /P117\.1 runtime execution approval contract/i
 addCheck("platform roadmap records P117.1", /P117\.1 is complete/.test(platformRoadmap) && /P117\.2 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P117.1"
-    && status.previousPhase === "P116.7"
-    && status.nextPhase === "P117.2"
-    && roadmap.currentPhase === "P117.1"
-    && roadmap.previousPhase === "P116.7"
-    && roadmap.nextPhase === "P117.2"
+  ((status.currentPhase === "P117.1"
+      && status.previousPhase === "P116.7"
+      && status.nextPhase === "P117.2"
+      && roadmap.currentPhase === "P117.1"
+      && roadmap.previousPhase === "P116.7"
+      && roadmap.nextPhase === "P117.2")
+    || (status.currentPhase === "P117.2"
+      && status.previousPhase === "P117.1"
+      && status.nextPhase === "P117.3"
+      && roadmap.currentPhase === "P117.2"
+      && roadmap.previousPhase === "P117.1"
+      && roadmap.nextPhase === "P117.3")
+    || (status.currentPhase === "P117.3"
+      && status.previousPhase === "P117.2"
+      && status.nextPhase === "P117.4"
+      && roadmap.currentPhase === "P117.3"
+      && roadmap.previousPhase === "P117.2"
+      && roadmap.nextPhase === "P117.4"))
     && statusById.get("P117")?.status === "in_progress"
     && roadmapById.get("P117")?.status === "in_progress"
     && statusById.get("P117.1")?.status === "complete"
     && roadmapById.get("P117.1")?.status === "complete"
-    && statusById.get("P117.2")?.status === "planned",
+    && ["planned", "complete"].includes(statusById.get("P117.2")?.status),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(

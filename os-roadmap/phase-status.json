@@ -15986,27 +15986,27 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e9955c41",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
-      "detail": "P117.1 contract complete; P117.2 approval evidence schema metadata is next.",
+      "detail": "P117.2 schema metadata complete; P117.3 approval decision model is next.",
       "phaseId": "P117",
       "title": "Founder Runtime Execution Approval Gate",
       "order": 153,
       "status": "in_progress",
-      "summary": "Started P117 with an implementation-grade approval-gate contract, subphase split, policy limits, allowed and forbidden scope, validation commands, docs, and OS handoff records. No approval capture or runtime execution is enabled.",
-      "nextPhase": "P117.2",
-      "previousPhase": "P116.7",
+      "summary": "P117 is in progress with contract and local approval evidence schema metadata complete. Approval capture, approval persistence, and runtime execution remain blocked.",
+      "nextPhase": "P117.3",
+      "previousPhase": "P117.1",
       "checksRun": [
+        "npm run check:p1172-founder-runtime-execution-approval-gate",
         "npm run check:p1171-founder-runtime-execution-approval-gate-contract",
-        "npm run check:p1167-founder-live-runtime-execution-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P117.1 is contract/policy only; it does not capture approvals, persist approvals, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P117.2 must define approval evidence schema metadata before any approval display or decision model work begins."
+        "P117.2 is schema-only; it does not capture approvals, persist approvals, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P117.3 must model governed local approval decisions before preview or Command Center UX work begins."
       ],
       "completedAt": ""
     },
@@ -16039,23 +16039,30 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
-      "label": "Approval Evidence Schema Metadata",
-      "detail": "Planned approval evidence schema metadata before any approval gate display or decision behavior.",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Approval Evidence Schema",
+      "detail": "Approval evidence schema metadata complete; approval capture remains unavailable.",
       "phaseId": "P117.2",
       "title": "Approval Evidence Schema Metadata",
       "order": 153.2,
-      "status": "planned",
-      "summary": "Planned approval evidence schema metadata before any approval gate display or decision behavior.",
+      "status": "complete",
+      "summary": "Added local schema metadata and isolated SQLite validation for runtime execution approval evidence items, approval events, and evidence references without enabling approval capture, approval persistence, or runtime execution.",
       "nextPhase": "P117.3",
       "previousPhase": "P117.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval capture, approval persistence, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1172-founder-runtime-execution-approval-gate",
+        "npm run check:p1171-founder-runtime-execution-approval-gate-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P117.2 is schema-only; it does not capture approvals, persist approvals, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "No Command Center source change is included in P117.2; P117.5 is the scoped UX subphase."
+      ],
+      "completedAt": "2026-05-29T04:03:27.234Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16063,12 +16070,12 @@
       "commit": "planned",
       "commandCenterVisible": false,
       "label": "Governed Local Approval Decision Model",
-      "detail": "Planned local decision model for approval-gate readiness without execution unlock.",
+      "detail": "Planned governed local approval decision model without approval capture or execution unlock.",
       "phaseId": "P117.3",
       "title": "Governed Local Approval Decision Model",
       "order": 153.3,
       "status": "planned",
-      "summary": "Planned local decision model for approval-gate readiness without execution unlock.",
+      "summary": "Planned governed local approval decision model without approval capture or execution unlock.",
       "nextPhase": "P117.4",
       "previousPhase": "P117.2",
       "checksRun": [],
@@ -16159,9 +16166,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T03:55:49.439Z",
-  "currentPhase": "P117.1",
-  "previousPhase": "P116.7",
-  "nextPhase": "P117.2",
+  "updatedAt": "2026-05-29T04:03:27.234Z",
+  "currentPhase": "P117.2",
+  "previousPhase": "P117.1",
+  "nextPhase": "P117.3",
   "currentPhaseStatus": "complete"
 }

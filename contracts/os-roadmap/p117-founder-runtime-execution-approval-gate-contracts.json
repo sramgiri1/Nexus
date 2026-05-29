@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and later validate a governed founder runtime execution approval gate while keeping runtime execution blocked until a later explicitly scoped phase grants narrow authority.",
-  "currentSubphase": "P117.1",
-  "previousSubphase": "P116.7",
-  "nextSubphase": "P117.2",
+  "currentSubphase": "P117.2",
+  "previousSubphase": "P117.1",
+  "nextSubphase": "P117.3",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P117.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -146,10 +146,122 @@
     {
       "phaseId": "P117.2",
       "title": "Approval Evidence Schema Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Define local schema metadata for runtime execution approval evidence without writes or approval capture.",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1172-founder-runtime-execution-approval-gate.js",
+        "scripts/check-p1171-founder-runtime-execution-approval-gate-contract.js",
+        "contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json",
+        "docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1172-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1171-founder-runtime-execution-approval-gate-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p1172-founder-runtime-execution-approval-gate.js",
+        "scripts/check-p1171-founder-runtime-execution-approval-gate-contract.js",
+        "contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json",
+        "docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1172-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1171-founder-runtime-execution-approval-gate-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
+      "expectedExports": [
+        "package script: check:p1172-founder-runtime-execution-approval-gate"
+      ],
+      "dataShape": "Local schema metadata for runtime execution approval evidence items, approval evidence events, and approval evidence references. The schema records display-safe labels, owner, next action, disabled reason, evidence/activity references, and explicit false authority flags for approval capture, approval persistence, runtime execution, execution unlock, providers, agents, workers/tools, projects, package/deploy/release/export, network, and spend.",
+      "commandCenterUx": "No Command Center source change in P117.2. Future UX must keep approval details on scoped approval, agent-flow, or business-build surfaces and out of overloaded chat pages.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test because P117.2 has no UI source changes; preserve route-wide safety tests."
+      ],
+      "checkerUpdates": [
+        "Add a dedicated P117.2 schema checker.",
+        "Update P117.1 checker to accept the P117.2/P117.3 handoff state."
+      ],
+      "docsRoadmap": "P117.2 is recorded in the P117 plan, README, platform roadmap, P117 contract, OS roadmap/status, and generated reports. P117.3 is next for the governed local approval decision model.",
+      "phaseStatusUpdate": "P117 in progress; P117.2 complete; current P117.2; previous P117.1; next P117.3.",
+      "validationCommands": [
+        "npm run check:p1172-founder-runtime-execution-approval-gate",
+        "npm run check:p1171-founder-runtime-execution-approval-gate-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P117.2 files>",
+        "git commit -m \"feat(nexus): implement p1172 execution approval schema\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no live approval capture, approval persistence, runtime execution, or execution unlock authority is enabled.",
+        "Confirm no project/CareLoop paths changed.",
+        "Confirm no temporary check database remains under local-state/runtime.",
+        "Confirm no DemoApp, raw private IDs, raw logs, raw policy dumps, or fake runnable actions are introduced."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "nextPhase": "P117.3",
+      "previousPhase": "P117.1"
+    },
+    {
+      "phaseId": "P117.3",
+      "title": "Governed Local Approval Decision Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "narrowGoal": "Model local approval decision review state without capturing approvals or unlocking execution.",
       "allowedFiles": [],
       "exactFiles": [],
       "forbiddenFiles": [
@@ -168,42 +280,42 @@
         "local-state/runtime/**"
       ],
       "expectedExports": [],
-      "dataShape": "No schema is implemented until P117.2 is explicitly scoped.",
-      "commandCenterUx": "No UI source change; future UX remains blocked until a dedicated UX subphase.",
-      "themeRequirements": ["Preserve System theme.", "Preserve Dark theme.", "Preserve Light theme."],
-      "playwrightTests": ["No new Playwright test until UI source changes."],
-      "checkerUpdates": ["Add a dedicated P117.2 checker when implemented."],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P117 in progress; P117.2 complete when implemented.",
-      "validationCommands": ["npm run check:p1172-founder-runtime-execution-approval-gate", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"],
-      "gitCommands": ["git add <allowed P117.2 files>", "git commit -m \"feat(nexus): implement p1172 execution approval schema\"", "git push origin codex/nexus-e2e-phase-validation"],
-      "finalSafetyChecks": ["Confirm no live approval or execution authority is enabled."],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Known limitations"],
-      "nextPhase": "P117.3",
-      "previousPhase": "P117.1"
-    },
-    {
-      "phaseId": "P117.3",
-      "title": "Governed Local Approval Decision Model",
-      "status": "planned",
-      "scopeClassification": "NEXUS_OS_CHANGE",
-      "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Model local approval decision review state without capturing approvals or unlocking execution.",
-      "allowedFiles": [],
-      "exactFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "dashboard/src/**", "dashboard/tests/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*", "local-state/runtime/**"],
-      "expectedExports": [],
       "dataShape": "No model is implemented until P117.3 is explicitly scoped.",
       "commandCenterUx": "No UI source change.",
-      "themeRequirements": ["Preserve System theme.", "Preserve Dark theme.", "Preserve Light theme."],
-      "playwrightTests": ["No new Playwright test until UI source changes."],
-      "checkerUpdates": ["Add a dedicated P117.3 checker when implemented."],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add a dedicated P117.3 checker when implemented."
+      ],
       "docsRoadmap": "Update docs/status/reports when implemented.",
       "phaseStatusUpdate": "P117 in progress; P117.3 complete when implemented.",
-      "validationCommands": ["npm run check:p1173-founder-runtime-execution-approval-gate", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"],
-      "gitCommands": ["git add <allowed P117.3 files>", "git commit -m \"feat(nexus): implement p1173 execution approval model\"", "git push origin codex/nexus-e2e-phase-validation"],
-      "finalSafetyChecks": ["Confirm no approval capture or runtime execution authority is enabled."],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Known limitations"],
+      "validationCommands": [
+        "npm run check:p1173-founder-runtime-execution-approval-gate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P117.3 files>",
+        "git commit -m \"feat(nexus): implement p1173 execution approval model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval capture or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Known limitations"
+      ],
       "nextPhase": "P117.4",
       "previousPhase": "P117.2"
     },
@@ -216,19 +328,58 @@
       "narrowGoal": "Preview approval-gate candidates without capturing approvals, writing decisions, or unlocking execution.",
       "allowedFiles": [],
       "exactFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "dashboard/src/**", "dashboard/tests/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*", "local-state/runtime/**"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
       "expectedExports": [],
       "dataShape": "No preview is implemented until P117.4 is explicitly scoped.",
       "commandCenterUx": "Preview remains hidden until P117.5.",
-      "themeRequirements": ["Preserve System theme.", "Preserve Dark theme.", "Preserve Light theme."],
-      "playwrightTests": ["No new Playwright test until UI source changes."],
-      "checkerUpdates": ["Add a dedicated P117.4 checker when implemented."],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No new Playwright test until UI source changes."
+      ],
+      "checkerUpdates": [
+        "Add a dedicated P117.4 checker when implemented."
+      ],
       "docsRoadmap": "Update docs/status/reports when implemented.",
       "phaseStatusUpdate": "P117 in progress; P117.4 complete when implemented.",
-      "validationCommands": ["npm run check:p1174-founder-runtime-execution-approval-gate", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"],
-      "gitCommands": ["git add <allowed P117.4 files>", "git commit -m \"feat(nexus): implement p1174 execution approval preview\"", "git push origin codex/nexus-e2e-phase-validation"],
-      "finalSafetyChecks": ["Confirm no approval capture or runtime execution authority is enabled."],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Known limitations"],
+      "validationCommands": [
+        "npm run check:p1174-founder-runtime-execution-approval-gate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P117.4 files>",
+        "git commit -m \"feat(nexus): implement p1174 execution approval preview\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval capture or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Known limitations"
+      ],
       "nextPhase": "P117.5",
       "previousPhase": "P117.3"
     },
@@ -241,19 +392,58 @@
       "narrowGoal": "Render display-safe approval-gate state without approval or execution controls.",
       "allowedFiles": [],
       "exactFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*", "local-state/runtime/**"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
       "expectedExports": [],
       "dataShape": "No UX data shape is implemented until P117.5 is explicitly scoped.",
       "commandCenterUx": "Future UX must show what changed, current state, next action, blockers, disabled reason, owner, evidence/activity, and cost impact without approval/run buttons.",
-      "themeRequirements": ["Preserve System theme.", "Preserve Dark theme.", "Preserve Light theme."],
-      "playwrightTests": ["Add focused route coverage when implemented."],
-      "checkerUpdates": ["Add a dedicated P117.5 checker when implemented."],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add focused route coverage when implemented."
+      ],
+      "checkerUpdates": [
+        "Add a dedicated P117.5 checker when implemented."
+      ],
       "docsRoadmap": "Update docs/status/reports when implemented.",
       "phaseStatusUpdate": "P117 in progress; P117.5 complete when implemented.",
-      "validationCommands": ["npm run check:p1175-founder-runtime-execution-approval-gate", "cd dashboard && npm run build", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"],
-      "gitCommands": ["git add <allowed P117.5 files>", "git commit -m \"feat(nexus): implement p1175 execution approval ux\"", "git push origin codex/nexus-e2e-phase-validation"],
-      "finalSafetyChecks": ["Confirm no approval capture or runtime execution authority is enabled."],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Known limitations"],
+      "validationCommands": [
+        "npm run check:p1175-founder-runtime-execution-approval-gate",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P117.5 files>",
+        "git commit -m \"feat(nexus): implement p1175 execution approval ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval capture or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Known limitations"
+      ],
       "nextPhase": "P117.6",
       "previousPhase": "P117.4"
     },
@@ -266,19 +456,58 @@
       "narrowGoal": "Validate P117.1-P117.5 together before final validation.",
       "allowedFiles": [],
       "exactFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "dashboard/src/**", "dashboard/tests/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*", "local-state/runtime/**"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
       "expectedExports": [],
       "dataShape": "No runtime data shape is introduced.",
       "commandCenterUx": "Preserve P117.5 UX when implemented.",
-      "themeRequirements": ["Preserve System theme.", "Preserve Dark theme.", "Preserve Light theme."],
-      "playwrightTests": ["Preserve P117.5 coverage when implemented."],
-      "checkerUpdates": ["Add a dedicated P117.6 checker when implemented."],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Preserve P117.5 coverage when implemented."
+      ],
+      "checkerUpdates": [
+        "Add a dedicated P117.6 checker when implemented."
+      ],
       "docsRoadmap": "Update docs/status/reports when implemented.",
       "phaseStatusUpdate": "P117 in progress; P117.6 complete when implemented.",
-      "validationCommands": ["npm run check:p1176-founder-runtime-execution-approval-gate", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"],
-      "gitCommands": ["git add <allowed P117.6 files>", "git commit -m \"feat(nexus): implement p1176 execution approval validation\"", "git push origin codex/nexus-e2e-phase-validation"],
-      "finalSafetyChecks": ["Confirm no approval capture or runtime execution authority is enabled."],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Known limitations"],
+      "validationCommands": [
+        "npm run check:p1176-founder-runtime-execution-approval-gate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P117.6 files>",
+        "git commit -m \"feat(nexus): implement p1176 execution approval validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval capture or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Known limitations"
+      ],
       "nextPhase": "P117.7",
       "previousPhase": "P117.5"
     },
@@ -291,21 +520,61 @@
       "narrowGoal": "Close P117 and hand off to the next planned phase without enabling execution.",
       "allowedFiles": [],
       "exactFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "dashboard/src/**", "dashboard/tests/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*", "local-state/runtime/**"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "local-state/runtime/**"
+      ],
       "expectedExports": [],
       "dataShape": "No runtime data shape is introduced.",
       "commandCenterUx": "Preserve P117.5 UX when implemented.",
-      "themeRequirements": ["Preserve System theme.", "Preserve Dark theme.", "Preserve Light theme."],
-      "playwrightTests": ["Preserve P117.5 coverage when implemented."],
-      "checkerUpdates": ["Add a dedicated P117.7 checker when implemented."],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Preserve P117.5 coverage when implemented."
+      ],
+      "checkerUpdates": [
+        "Add a dedicated P117.7 checker when implemented."
+      ],
       "docsRoadmap": "Update docs/status/reports when implemented.",
       "phaseStatusUpdate": "P117 complete when implemented.",
-      "validationCommands": ["npm run check:p1177-founder-runtime-execution-approval-gate", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"],
-      "gitCommands": ["git add <allowed P117.7 files>", "git commit -m \"feat(nexus): finalize p117 execution approval gate\"", "git push origin codex/nexus-e2e-phase-validation"],
-      "finalSafetyChecks": ["Confirm no approval capture or runtime execution authority is enabled."],
-      "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Known limitations"],
+      "validationCommands": [
+        "npm run check:p1177-founder-runtime-execution-approval-gate",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "gitCommands": [
+        "git add <allowed P117.7 files>",
+        "git commit -m \"feat(nexus): finalize p117 execution approval gate\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no approval capture or runtime execution authority is enabled."
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Known limitations"
+      ],
       "nextPhase": "P118",
       "previousPhase": "P117.6"
     }
-  ]
+  ],
+  "summary": "P117 is in progress. P117.1 defined the approval-gate contract and P117.2 adds local approval evidence schema metadata without approval capture, approval persistence, or runtime execution authority."
 }

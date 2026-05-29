@@ -3149,6 +3149,14 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P117.2 is complete. Local schema metadata and isolated SQLite validation now
+cover runtime execution approval evidence items, approval events, and evidence
+references. P117.3 is next for governed local approval decision modeling.
+Approval capture, approval persistence, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

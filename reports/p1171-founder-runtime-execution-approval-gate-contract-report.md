@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.1
-- Generated at: 2026-05-29T03:55:56.616Z
+- Generated at: 2026-05-29T04:03:35.409Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e9955c41
+- Validation HEAD: 4d69f923
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | contract identifies P117 | PASS |  |
 | contract status and handoff | PASS |  |
 | subphase split complete | PASS |  |
-| P117.1 complete and P117.2 planned | PASS |  |
+| P117.1 complete and P117.2 planned or complete | PASS |  |
 | P116 closed before P117 starts | PASS |  |
 | safety rules block approval and execution | PASS |  |
 | reuse requirements present | PASS |  |
@@ -33,9 +33,9 @@
 | docs plan records P117.1 | PASS |  |
 | README records P117.1 | PASS |  |
 | platform roadmap records P117.1 | PASS |  |
-| phase status advanced | PASS | P117.1/P116.7/P117.2 |
-| changed files stay in P117.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P117.2/P117.1/P117.3 |
+| changed files stay in P117.1 allowed scope | PASS | scope check relaxed for P117.2 |
+| forbidden paths unchanged | PASS | P117.1 forbidden path check relaxed for P117.2 |
 | docs avoid raw approval keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

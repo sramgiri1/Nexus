@@ -847,6 +847,14 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P117.2 approval evidence schema metadata: local schema metadata and isolated
+  SQLite validation now cover runtime execution approval evidence items,
+  approval events, and evidence references. P117.3 is next for governed local
+  approval decision modeling. Approval capture, approval persistence, runtime
+  execution, execution unlock, provider/model call, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

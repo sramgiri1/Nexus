@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T03:56:01.065Z
+- Generated at: 2026-05-29T04:03:47.673Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e9955c41
+- Validation HEAD: 4d69f923
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -439,9 +439,9 @@
 | P116.5 validation coverage | PASS | 5 checkers, 2 reports |
 | P116.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P116.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P117 validation coverage | PASS | 5 checkers, 1 reports |
-| P117.1 validation coverage | PASS | 5 checkers, 1 reports |
-| P117.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P117 validation coverage | PASS | 6 checkers, 2 reports |
+| P117.1 validation coverage | PASS | 6 checkers, 2 reports |
+| P117.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P117.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P117.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P117.5 validation coverage | PASS | 4 checkers, 4 reports |
@@ -449,18 +449,13 @@
 | P117.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P117.1; next=P117.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P117.2; next=P117.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P117.2 Approval Evidence Schema Metadata
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P117.3 Governed Local Approval Decision Model
   - status: planned
   - checkers: 0
