@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.1
-- Generated at: 2026-05-29T19:53:29.274Z
+- Generated at: 2026-05-29T20:00:06.446Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c55fe4cf
+- Validation HEAD: c5c52c73
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,11 +31,11 @@
 | plan records P128.1 implementation contract | PASS |  |
 | README records P128.1 | PASS |  |
 | platform roadmap records P128.1 | PASS |  |
-| phase status advanced | PASS | P128.2/P128.1/P128.3 |
+| phase status advanced | PASS | P128.3/P128.2/P128.4 |
 | P128.1 command center visibility recorded | PASS |  |
 | completed P128.1 entries have required fields | PASS |  |
-| changed files stay in P128.1 allowed scope | PASS | scope check relaxed for P128.2 |
-| forbidden paths unchanged | PASS | P128.1 forbidden path check relaxed for P128.2 |
+| changed files stay in P128.1 allowed scope | PASS | scope check relaxed for P128.3 |
+| forbidden paths unchanged | PASS | P128.1 forbidden path check relaxed for P128.3 |
 | P128.1 contract avoids forbidden allowed scope | PASS |  |
 | public docs avoid raw persistence table names | PASS |  |
 | checker has no unsafe imports or URLs | PASS |  |

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.2
-- Generated at: 2026-05-29T19:53:25.463Z
+- Generated at: 2026-05-29T19:59:45.223Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c55fe4cf
+- Validation HEAD: c5c52c73
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,9 +36,9 @@
 | docs record P128.2 | PASS |  |
 | README records P128.2 | PASS |  |
 | platform roadmap records P128.2 | PASS |  |
-| phase status advanced | PASS | P128.2/P128.1/P128.3 |
-| changed files stay in P128.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P128.3/P128.2/P128.4 |
+| changed files stay in P128.2 allowed scope | PASS | scope check relaxed for P128.3 |
+| forbidden paths unchanged | PASS | P128.2 forbidden path check relaxed for P128.3 |
 | public docs avoid raw persistence table names | PASS |  |
 | metadata avoids raw private IDs | PASS |  |
 | metadata avoids fake runnable actions | PASS |  |

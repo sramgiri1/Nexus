@@ -101,10 +101,19 @@ const p1282StartedState =
   && roadmap.nextPhase === "P128.3"
   && p128Status.status === "in_progress"
   && p128Roadmap.status === "in_progress";
+const p128ProgressState =
+  /^P128\.[2-7]$/.test(status.currentPhase || "")
+  && /^P128\.[1-6]$/.test(status.previousPhase || "")
+  && /^P128\.[3-7]$/.test(status.nextPhase || "")
+  && roadmap.currentPhase === status.currentPhase
+  && roadmap.previousPhase === status.previousPhase
+  && roadmap.nextPhase === status.nextPhase
+  && p128Status.status === "in_progress"
+  && p128Roadmap.status === "in_progress";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
 addCheck("contract exists", existsSync(join(ROOT, CONTRACT_PATH)) && contract.phaseId === "P128");
-addCheck("contract marks P128 in progress", contract.status === "in_progress" && ["P128.1", "P128.2"].includes(contract.currentSubphase) && ["P127.7", "P128.1"].includes(contract.previousSubphase) && ["P128.2", "P128.3"].includes(contract.nextSubphase));
+addCheck("contract marks P128 in progress", contract.status === "in_progress" && ["P128.1", "P128.2", "P128.3"].includes(contract.currentSubphase) && ["P127.7", "P128.1", "P128.2"].includes(contract.previousSubphase) && ["P128.2", "P128.3", "P128.4"].includes(contract.nextSubphase));
 addCheck("contract splits P128 into seven subphases", p128Subphases.every((phaseId) => subphaseById.has(phaseId)));
 addCheck("P128.1 contract is complete", p1281.status === "complete" && p1281.scopeClassification === "NEXUS_OS_CHANGE" && p1281.expectedExports?.length === 0);
 addCheck("P128.1 records narrow scope", /contract/i.test(p1281.narrowGoal || "") && /acceptance capture persistence blocked/i.test(p1281.narrowGoal || ""));
@@ -125,7 +134,7 @@ addCheck(
     && roadmap.currentPhase === "P128.1"
     && roadmap.previousPhase === "P127.7"
     && roadmap.nextPhase === "P128.2"
-  ) || p1282StartedState)
+  ) || p1282StartedState || p128ProgressState)
     && p128Status.status === "in_progress"
     && p128Roadmap.status === "in_progress"
     && p1281Status.status === "complete"

@@ -122,6 +122,12 @@ const p1282CurrentState = status.currentPhase === "P128.2"
   && roadmap.currentPhase === "P128.2"
   && roadmap.previousPhase === "P128.1"
   && roadmap.nextPhase === "P128.3";
+const p1283StartedState = status.currentPhase === "P128.3"
+  && status.previousPhase === "P128.2"
+  && status.nextPhase === "P128.4"
+  && roadmap.currentPhase === "P128.3"
+  && roadmap.previousPhase === "P128.2"
+  && roadmap.nextPhase === "P128.4";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary"]));
 addCheck("phase export is P128.2", FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_METADATA_PHASE === "P128.2" && FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_METADATA_VERSION === "1.0");
@@ -152,7 +158,7 @@ addCheck("README records P128.2", /P128\.2 capture persistence schema metadata/i
 addCheck("platform roadmap records P128.2", /P128\.2 is complete/i.test(platformRoadmap) && /P128\.3 is next/i.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  p1282CurrentState
+  (p1282CurrentState || p1283StartedState)
     && statusById.get("P128")?.status === "in_progress"
     && statusById.get("P128.1")?.status === "complete"
     && statusById.get("P128.2")?.status === "complete"

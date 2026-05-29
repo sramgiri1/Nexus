@@ -3,9 +3,9 @@
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P128.2",
-  "previousSubphase": "P128.1",
-  "nextSubphase": "P128.3",
+  "currentSubphase": "P128.3",
+  "previousSubphase": "P128.2",
+  "nextSubphase": "P128.4",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "18fbb37a",
   "owner": "NEXUS OS",
@@ -277,15 +277,33 @@
     {
       "phaseId": "P128.3",
       "title": "Capture Persistence Intent Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P128.2-stamp",
+      "expectedBaseCommit": "c5c52c73",
       "narrowGoal": "Model acceptance capture persistence intent and blockers locally without creating persistence records or write paths.",
       "allowedFiles": [
         "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryIntentModel.js",
         "scripts/check-p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
         "scripts/check-p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
+        "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryIntentModel.js",
+        "scripts/check-p1282-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1283-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-os-phase-status.js",
         "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
         "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
         "package.json",
@@ -317,6 +335,8 @@
       ],
       "expectedExports": [
         "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_INTENT_MODEL_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_INTENT_MODEL_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_INTENT_STATES",
         "buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryIntentModel",
         "validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryIntentModel"
       ],
@@ -333,6 +353,7 @@
       "checkerUpdates": [
         "Add P128.3 checker.",
         "Update P128.2 checker for P128.3 handoff.",
+        "Update check-os-phase-status.js to allow the P128.4 next-subphase placeholder.",
         "Validate local intent states, blocked flags, and no unsafe imports."
       ],
       "docsRoadmap": "Update P128 plan, README, platform roadmap, OS status, and generated reports.",
@@ -357,6 +378,14 @@
         "Validation results",
         "Safety confirmations",
         "Next phase/subphase"
+      ],
+      "previousPhase": "P128.2",
+      "nextPhase": "P128.4",
+      "order": 164.3,
+      "detail": "P128.3 capture persistence intent model complete; P128.4 persistence safe dry-run is next.",
+      "summary": "Added the local acceptance capture persistence intent model with allowlisted states, zero candidate counts, blocked readiness rows, owner/evidence/activity/cost labels, and all persistence, write, execution, dispatch, provider, mutation, network, and spend flags false.",
+      "knownLimitations": [
+        "P128.3 is a pure local model only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ]
     },
     {
@@ -694,19 +723,19 @@
     }
   ],
   "currentStatus": {
-    "phaseId": "P128.2",
+    "phaseId": "P128.3",
     "status": "complete",
-    "previousPhase": "P128.1",
-    "nextPhase": "P128.3",
-    "detail": "P128.2 capture persistence schema metadata complete; P128.3 persistence intent model is next.",
-    "summary": "Added browser-safe local acceptance capture persistence schema metadata that reuses P127.2 capture metadata and keeps persistence, DB/runtime writes, migrations, live capture, execution, dispatch, provider calls, mutation, network, and spend blocked.",
+    "previousPhase": "P128.2",
+    "nextPhase": "P128.4",
+    "detail": "P128.3 capture persistence intent model complete; P128.4 persistence safe dry-run is next.",
+    "summary": "Added the local acceptance capture persistence intent model with allowlisted states, zero candidate counts, blocked readiness rows, owner/evidence/activity/cost labels, and all persistence, write, execution, dispatch, provider, mutation, network, and spend flags false.",
     "knownLimitations": [
-      "P128.2 is schema metadata only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
+      "P128.3 is a pure local model only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend."
     ]
   },
-  "nextPhase": "P128.3",
+  "nextPhase": "P128.4",
   "knownLimitations": [
-    "P128.2 is schema metadata only. Intent, dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
+    "P128.3 is a pure local model only. Safe dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
   ],
-  "summary": "P128 is in progress. P128.2 defines browser-safe local acceptance capture persistence schema metadata while all persistence and execution paths remain blocked."
+  "summary": "P128 is in progress. P128.3 defines the local acceptance capture persistence intent model while all persistence and execution paths remain blocked."
 }
