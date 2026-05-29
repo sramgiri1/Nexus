@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.7
-- Generated at: 2026-05-29T04:58:07.003Z
+- Generated at: 2026-05-29T04:59:05.923Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5a78ec28
+- Validation HEAD: f643c3fb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | P117.7 records final validation commands | PASS |  |
 | P117.7 avoids forbidden file scope | PASS |  |
 | changed files stay in P117.7 allowed scope | PASS | scope check relaxed for P118.1 |
-| changed files avoid forbidden scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1177-founder-runtime-execution-approval-gate.js, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md, scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md |
 | P117.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P118 handoff | PASS |  |
 | phase status closed or handed off | PASS | P118.1/P117.7/P118.2 |

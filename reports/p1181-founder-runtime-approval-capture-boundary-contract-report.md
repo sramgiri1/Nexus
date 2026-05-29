@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.1
-- Generated at: 2026-05-29T04:58:02.127Z
+- Generated at: 2026-05-29T04:59:02.676Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5a78ec28
+- Validation HEAD: f643c3fb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | README records P118.1 | PASS |  |
 | platform roadmap records P118.1 | PASS |  |
 | phase status advanced | PASS | P118.1/P117.7/P118.2 |
-| changed files stay in P118.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1177-founder-runtime-execution-approval-gate.js, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1177-founder-runtime-execution-approval-gate.js, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js |
+| changed files stay in P118.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw approval keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
