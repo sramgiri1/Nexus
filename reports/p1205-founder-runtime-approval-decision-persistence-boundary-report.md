@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P120.5
-- Generated at: 2026-05-29T12:10:03.373Z
+- Generated at: 2026-05-29T12:12:16.110Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9822b22e
+- Validation HEAD: ec846c1f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | platform roadmap records P120.5 | PASS |  |
 | README records P120.5 | PASS |  |
 | phase status advanced | PASS | P120.5/P120.4/P120.6 |
-| changed files stay in P120.5 allowed scope | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1205-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1205-founder-runtime-approval-decision-persistence-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1205-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1205-founder-runtime-approval-decision-persistence-boundary.js |
+| changed files stay in P120.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | P120.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
