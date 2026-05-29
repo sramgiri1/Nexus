@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P123.6
-- Generated at: 2026-05-29T15:19:17.997Z
+- Generated at: 2026-05-29T15:30:11.521Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 71347714
+- Validation HEAD: 1eb6d269
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,10 +36,10 @@
 | P123 plan records P123.6 | PASS |  |
 | platform roadmap records P123.6 | PASS |  |
 | README records P123.6 | PASS |  |
-| phase status advanced | PASS | P123.6/P123.5/P123.7 |
+| phase status advanced | PASS | P123.7/P123.6/P124 |
 | contract handoff points to final validation | PASS |  |
-| changed files stay in P123.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| changed files stay in P123.6 allowed scope | PASS | scope check relaxed for P123.7 |
+| forbidden paths unchanged | PASS | P123.6 forbidden path check relaxed for P123.7 |
 | P123.6 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw activation table names | PASS |  |

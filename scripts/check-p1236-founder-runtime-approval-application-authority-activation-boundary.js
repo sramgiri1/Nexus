@@ -174,14 +174,16 @@ const p1236HandoffState =
 const p1237FinalState =
   status.currentPhase === "P123.7"
     && status.previousPhase === "P123.6"
+    && status.nextPhase === "P124"
     && roadmap.currentPhase === "P123.7"
     && roadmap.previousPhase === "P123.6"
+    && roadmap.nextPhase === "P124"
     && completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
     && statusById.get("P123.7")?.status === "complete"
     && roadmapById.get("P123.7")?.status === "complete";
 
 addCheck("phase status advanced", p1236HandoffState || p1237FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
-addCheck("contract handoff points to final validation", (contract.currentSubphase === "P123.6" && contract.previousSubphase === "P123.5" && contract.nextSubphase === "P123.7") || (contract.currentSubphase === "P123.7" && contract.previousSubphase === "P123.6"));
+addCheck("contract handoff points to final validation", (contract.currentSubphase === "P123.6" && contract.previousSubphase === "P123.5" && contract.nextSubphase === "P123.7") || (contract.currentSubphase === "P123.7" && contract.previousSubphase === "P123.6" && contract.nextSubphase === "P124"));
 addCheck(
   "changed files stay in P123.6 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),

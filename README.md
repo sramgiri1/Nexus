@@ -1278,6 +1278,15 @@ The Command Center and local operator surface have:
   execution unlock, provider/model call, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, raw SQL interface, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P123.7 approval application authority activation final validation: P123 is
+  complete with P123.1-P123.7 scripts, reports, docs, status records, scoped
+  Command Center activation UX, and final safety checks validated. P124 is next
+  as a planned OS handoff only. Activation, authority grant, approval decision
+  application, approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

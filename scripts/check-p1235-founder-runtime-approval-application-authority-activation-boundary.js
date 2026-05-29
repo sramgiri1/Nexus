@@ -93,8 +93,12 @@ const p1235HandoffAccepted = (status.currentPhase === "P123.5"
     && roadmap.previousPhase === "P123.5")
   || (status.currentPhase === "P123.7"
     && status.previousPhase === "P123.6"
+    && status.nextPhase === "P124"
     && roadmap.currentPhase === "P123.7"
-    && roadmap.previousPhase === "P123.6");
+    && roadmap.previousPhase === "P123.6"
+    && roadmap.nextPhase === "P124");
+const p123ParentStatusAccepted = statusById.get("P123")?.status === "in_progress"
+  || (status.currentPhase === "P123.7" && statusById.get("P123")?.status === "complete");
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1235-founder-runtime-approval-application-authority-activation-boundary"]));
 addCheck("business build exposes browser-safe activation display model", businessBuildSource.includes("buildFounderApprovalApplicationAuthorityActivationBoundaryDisplayModel") && businessBuildSource.includes("buildFounderApprovalApplicationAuthorityActivationPreview") && !businessBuildSource.includes("sqliteCrudRepository"));
@@ -134,7 +138,7 @@ addCheck("README records P123.5", /P123\.5 Command Center approval application a
 addCheck(
   "phase status advanced",
   p1235HandoffAccepted
-    && statusById.get("P123")?.status === "in_progress"
+    && p123ParentStatusAccepted
     && statusById.get("P123.4")?.status === "complete"
     && statusById.get("P123.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P123.6")?.status)
