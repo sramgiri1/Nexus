@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P114.4
-- Generated at: 2026-05-29T00:58:26.466Z
+- Generated at: 2026-05-29T00:59:41.780Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f6933cdd
+- Validation HEAD: 1bf0ae2d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | platform roadmap records P114.4 | PASS |  |
 | README records P114.4 | PASS |  |
 | phase status advanced | PASS | P114.4/P114.3/P114.5 |
-| changed files stay in P114.4 allowed scope | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, live-ready/founderLiveAgentDispatchReadiness.js, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1143-founder-live-agent-dispatch-readiness-report.md, reports/p1144-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1144-founder-live-agent-dispatch-readiness.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p114-founder-live-agent-dispatch-readiness-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P114_FOUNDER_LIVE_AGENT_DISPATCH_READINESS_PLAN.md, live-ready/founderLiveAgentDispatchReadiness.js, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1143-founder-live-agent-dispatch-readiness-report.md, reports/p1144-founder-live-agent-dispatch-readiness-report.md, scripts/check-p1144-founder-live-agent-dispatch-readiness.js |
+| changed files stay in P114.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | dispatch preview stays Command Center hidden | PASS |  |
 | dispatch preview avoids raw private IDs | PASS |  |
 | dispatch preview avoids raw dispatch keys and table names | PASS |  |
