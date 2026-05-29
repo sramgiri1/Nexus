@@ -15522,12 +15522,186 @@
         "P115 is not implemented in P114.7."
       ],
       "completedAt": "2026-05-29T01:26:31.186Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Founder Live Runtime Admission Readiness",
+      "detail": "P115.1 runtime admission contract complete; P115.2 local admission schema metadata is next.",
+      "phaseId": "P115",
+      "title": "Founder Live Runtime Admission Readiness",
+      "order": 151,
+      "status": "in_progress",
+      "summary": "P115 is in progress. P115.1 defines the implementation-grade runtime admission readiness contract, safety rules, reuse requirements, checker coverage, and OS status while runtime admission and execution remain blocked.",
+      "nextPhase": "P115.2",
+      "previousPhase": "P114.7",
+      "checksRun": [
+        "npm run check:p1151-founder-live-runtime-admission-contract",
+        "npm run check:p1147-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P115.1 is contract, docs, checker, and status only.",
+        "Runtime admission, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network, and provider spend remain blocked.",
+        "P115.2 is next for local schema metadata."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Runtime Admission Contract",
+      "detail": "P115.1 runtime admission contract complete; P115.2 local admission schema metadata is next.",
+      "phaseId": "P115.1",
+      "title": "Runtime Admission Contract / Policy",
+      "order": 151.1,
+      "status": "complete",
+      "summary": "P115.1 defines the implementation-grade runtime admission readiness contract, subphase safety rules, reuse requirements, checker coverage, docs, and OS status without enabling runtime admission.",
+      "nextPhase": "P115.2",
+      "previousPhase": "P114.7",
+      "checksRun": [
+        "npm run check:p1151-founder-live-runtime-admission-contract",
+        "npm run check:p1147-founder-live-agent-dispatch-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Contract/docs/checker/status only; no runtime admission, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network, or spend."
+      ],
+      "completedAt": "2026-05-29T01:35:36.589Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Local Admission Schema Metadata",
+      "detail": "Planned local admission schema metadata for P115.",
+      "phaseId": "P115.2",
+      "title": "Local Admission Schema Metadata",
+      "order": 151.2,
+      "status": "planned",
+      "summary": "Planned local admission schema metadata for P115.",
+      "nextPhase": "P115.3",
+      "previousPhase": "P115.1",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Governed Local Admission CRUD Model",
+      "detail": "Planned governed local admission crud model for P115.",
+      "phaseId": "P115.3",
+      "title": "Governed Local Admission CRUD Model",
+      "order": 151.3,
+      "status": "planned",
+      "summary": "Planned governed local admission crud model for P115.",
+      "nextPhase": "P115.4",
+      "previousPhase": "P115.2",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Runtime Admission Preview",
+      "detail": "Planned runtime admission preview / safe dry run for P115.",
+      "phaseId": "P115.4",
+      "title": "Runtime Admission Preview / Safe Dry Run",
+      "order": 151.4,
+      "status": "planned",
+      "summary": "Planned runtime admission preview / safe dry run for P115.",
+      "nextPhase": "P115.5",
+      "previousPhase": "P115.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Command Center Runtime Admission UX",
+      "detail": "Planned command center runtime admission ux for P115.",
+      "phaseId": "P115.5",
+      "title": "Command Center Runtime Admission UX",
+      "order": 151.5,
+      "status": "planned",
+      "summary": "Planned command center runtime admission ux for P115.",
+      "nextPhase": "P115.6",
+      "previousPhase": "P115.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Runtime Admission Validation / Docs",
+      "detail": "Planned runtime admission validation / docs for P115.",
+      "phaseId": "P115.6",
+      "title": "Runtime Admission Validation / Docs",
+      "order": 151.6,
+      "status": "planned",
+      "summary": "Planned runtime admission validation / docs for P115.",
+      "nextPhase": "P115.7",
+      "previousPhase": "P115.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final validation for P115.",
+      "phaseId": "P115.7",
+      "title": "Final Validation",
+      "order": 151.7,
+      "status": "planned",
+      "summary": "Planned final validation for P115.",
+      "nextPhase": "P116",
+      "previousPhase": "P115.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned only; not implemented yet."
+      ],
+      "completedAt": ""
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T01:29:27.261Z",
-  "currentPhase": "P114.7",
-  "previousPhase": "P114.6",
-  "nextPhase": "P115",
+  "updatedAt": "2026-05-29T01:35:36.589Z",
+  "currentPhase": "P115.1",
+  "previousPhase": "P114.7",
+  "nextPhase": "P115.2",
   "currentPhaseStatus": "complete"
 }

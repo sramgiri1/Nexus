@@ -3024,6 +3024,15 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P115.1 is complete. P115 is now split into seven implementation-grade
+subphases for moving dispatch readiness toward governed runtime admission
+readiness. P115.1 records the contract, safety rules, reuse requirements,
+checker coverage, OS status entries, and docs while leaving runtime admission,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend blocked. P115.2 is
+next for local admission schema metadata.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

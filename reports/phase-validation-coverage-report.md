@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T01:30:08.612Z
+- Generated at: 2026-05-29T01:35:54.632Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d1e2d025
+- Validation HEAD: dc4450ae
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -423,16 +423,43 @@
 | P114.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P114.7 validation coverage | PASS | 45 checkers, 41 reports |
+| P115 validation coverage | PASS | 5 checkers, 1 reports |
+| P115.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P115.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P115.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P115.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P115.5 validation coverage | PASS | 2 checkers, 2 reports |
+| P115.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P115.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P114.7; next=P115; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P115.1; next=P115.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- None
+- P115.2 Local Admission Schema Metadata
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P115.3 Governed Local Admission CRUD Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P115.4 Runtime Admission Preview / Safe Dry Run
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P115.6 Runtime Admission Validation / Docs
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (410/410)
+PASS (418/418)

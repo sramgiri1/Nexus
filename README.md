@@ -731,6 +731,13 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P115.1 runtime admission contract: P115 now has an implementation-grade
+  runtime admission readiness contract split into seven subphases, with safety
+  rules, reuse requirements, checker coverage, OS status entries, and docs.
+  P115.2 is next for local admission schema metadata. Runtime admission,
+  execution unlock, provider/model call, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
