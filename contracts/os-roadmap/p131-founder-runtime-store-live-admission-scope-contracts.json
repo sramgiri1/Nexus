@@ -307,7 +307,7 @@
       "order": 167.3,
       "completedAt": "2026-05-29T23:10:20.949Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f1e5e33e",
       "summary": "Added a browser-safe local resolver that maps P131.2 request fields to unresolved approval evidence readiness rows with blockers, next action, owner capability, and no-spend cost impact while all live actions remain blocked.",
       "knownLimitations": [
         "P131.3 is an approval evidence readiness resolver only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."

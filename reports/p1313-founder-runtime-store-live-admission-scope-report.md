@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P131.3
-- Generated at: 2026-05-29T23:12:09.561Z
+- Generated at: 2026-05-29T23:13:28.506Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 4a43c992
+- Validation HEAD: f1e5e33e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -43,8 +43,8 @@
 | phase status advanced | PASS | P131.3/P131.2/P131.4 |
 | phase status summary objects advanced | PASS |  |
 | completed P131.3 entries have required fields | PASS |  |
-| changed files stay in P131.3 allowed scope | PASS | README.md, contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1312-founder-runtime-store-live-admission-scope.js, reports/p1313-founder-runtime-store-live-admission-scope-report.md, scripts/check-p1313-founder-runtime-store-live-admission-scope.js, shared/founderRuntimeStoreLiveAdmissionScopeApprovalEvidenceReadinessResolver.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P131_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_SCOPE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1312-founder-runtime-store-live-admission-scope.js, reports/p1313-founder-runtime-store-live-admission-scope-report.md, scripts/check-p1313-founder-runtime-store-live-admission-scope.js, shared/founderRuntimeStoreLiveAdmissionScopeApprovalEvidenceReadinessResolver.js |
+| changed files stay in P131.3 allowed scope | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p131-founder-runtime-store-live-admission-scope-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | resolver has no unsafe imports or URLs | PASS |  |
 | resolver avoids raw private IDs | PASS |  |
 | resolver avoids fake runnable actions | PASS |  |
