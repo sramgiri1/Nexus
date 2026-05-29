@@ -3471,6 +3471,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P121.7 is complete. P121 is complete. Final validation closes the approval
+decision application boundary across contract, eligibility metadata, local
+intent model, safe dry-run preview, scoped Command Center UX, aggregate
+validation, docs, reports, and OS phase status. P122 is planned-only. Approval
+decision application, approval capture, approval persistence, approve/reject
+decision recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

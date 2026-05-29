@@ -12065,20 +12065,20 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fc2f320e",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
-      "detail": "P121.6 validation/docs complete; P121.7 final validation is next.",
+      "detail": "P121 complete; P122 is planned-only.",
       "phaseId": "P121",
       "title": "Founder Runtime Approval Decision Application Boundary",
       "order": 157,
-      "status": "in_progress",
-      "summary": "P121 is in progress with the approval decision application boundary contract, browser-safe eligibility metadata, governed local application intent model, local safe dry-run preview, scoped Command Center application boundary UX, and aggregate validation/docs complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-      "nextPhase": "P121.7",
-      "previousPhase": "P121.6",
+      "status": "complete",
+      "summary": "P121 is complete. Final validation closes the approval decision application boundary contract, browser-safe eligibility metadata, governed local application intent model, local safe dry-run preview, scoped Command Center application boundary UX, aggregate validation/docs, reports, and OS phase status. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "nextPhase": "P122",
+      "previousPhase": "P121.7",
       "checksRun": [
+        "npm run check:p1217-founder-runtime-approval-decision-application-boundary",
         "npm run check:p1216-founder-runtime-approval-decision-application-boundary",
-        "npm run check:p1215-founder-runtime-approval-decision-application-boundary",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
         "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval decision application boundary appears only on scoped pages\"",
@@ -12087,9 +12087,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P121.6 is validation and docs only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+        "P121.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P122 is planned-only until its own implementation-grade contract is written."
       ],
-      "completedAt": "2026-05-29T13:16:17.626Z"
+      "completedAt": "2026-05-29T13:23:12.930Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12256,46 +12256,75 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned P121 subphase. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "detail": "Final validation complete; P122 is planned-only.",
       "phaseId": "P121.7",
       "title": "Final Validation",
       "order": 157.7,
-      "status": "planned",
-      "summary": "Planned only. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Final validation closed P121 across contract, metadata, intent, safe dry-run preview, scoped Command Center UX, aggregate validation, docs, reports, and OS phase status. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
       "nextPhase": "P122",
       "previousPhase": "P121.6",
+      "checksRun": [
+        "npm run check:p1217-founder-runtime-approval-decision-application-boundary",
+        "npm run check:p1216-founder-runtime-approval-decision-application-boundary",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval decision application boundary appears only on scoped pages\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P121.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P122 is planned-only until its own implementation-grade contract is written."
+      ],
+      "completedAt": "2026-05-29T13:23:12.930Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "branch": "planned",
+      "commit": "planned",
+      "commandCenterVisible": false,
+      "label": "Application Authority Handoff",
+      "detail": "Planned-only P122 handoff. No live authority is enabled.",
+      "phaseId": "P122",
+      "title": "Founder Runtime Approval Decision Application Authority Handoff",
+      "order": 158,
+      "status": "planned",
+      "summary": "Planned-only handoff after P121. P122 must get its own implementation-grade contract and subphase plan before any approval application, DB/runtime write, execution unlock, provider/model call, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network, or spend authority is considered.",
+      "nextPhase": "P122.1",
+      "previousPhase": "P121.7",
       "checksRun": [],
       "knownLimitations": [
-        "Planned only. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+        "Planned only. No P122 implementation, live approval application, DB/runtime write, runtime execution, execution unlock, provider/model call, agent dispatch, worker/tool execution, project mutation, deploy, release, export, package, network call, or provider spend authority exists."
       ],
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T13:16:17.626Z",
-  "currentPhase": "P121.6",
-  "previousPhase": "P121.5",
-  "nextPhase": "P121.7",
+  "updatedAt": "2026-05-29T13:23:12.930Z",
+  "currentPhase": "P121.7",
+  "previousPhase": "P121.6",
+  "nextPhase": "P122",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "fc2f320e",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
     "label": "Approval Application Boundary",
-    "detail": "P121.6 validation/docs complete; P121.7 final validation is next.",
+    "detail": "P121 complete; P122 is planned-only.",
     "phaseId": "P121",
     "title": "Founder Runtime Approval Decision Application Boundary",
     "order": 157,
-    "status": "in_progress",
-    "summary": "P121 is in progress with the approval decision application boundary contract, browser-safe eligibility metadata, governed local application intent model, local safe dry-run preview, scoped Command Center application boundary UX, and aggregate validation/docs complete. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-    "nextPhase": "P121.7",
-    "previousPhase": "P121.6",
+    "status": "complete",
+    "summary": "P121 is complete. Final validation closes the approval decision application boundary contract, browser-safe eligibility metadata, governed local application intent model, local safe dry-run preview, scoped Command Center application boundary UX, aggregate validation/docs, reports, and OS phase status. Approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+    "nextPhase": "P122",
+    "previousPhase": "P121.7",
     "checksRun": [
+      "npm run check:p1217-founder-runtime-approval-decision-application-boundary",
       "npm run check:p1216-founder-runtime-approval-decision-application-boundary",
-      "npm run check:p1215-founder-runtime-approval-decision-application-boundary",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
       "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval decision application boundary appears only on scoped pages\"",
@@ -12304,9 +12333,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P121.6 is validation and docs only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend."
+      "P121.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P122 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T13:16:17.626Z"
+    "completedAt": "2026-05-29T13:23:12.930Z"
   },
-  "generatedAt": "2026-05-29T13:16:17.626Z"
+  "generatedAt": "2026-05-29T13:23:12.930Z"
 }

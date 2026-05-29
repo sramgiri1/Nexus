@@ -1148,6 +1148,15 @@ The Command Center and local operator surface have:
   execution unlock, provider/model call, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, raw SQL interface, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P121.7 final validation: P121 is complete. Final validation closes the
+  approval decision application boundary across contract, metadata, intent,
+  safe dry-run preview, scoped Command Center UX, aggregate validation, reports,
+  docs, and OS phase status. P122 is planned-only. Approval decision
+  application, approval capture, approval persistence, approve/reject decision
+  recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
