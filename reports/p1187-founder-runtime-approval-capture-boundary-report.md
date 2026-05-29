@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.7
-- Generated at: 2026-05-29T05:50:52.410Z
+- Generated at: 2026-05-29T05:52:05.464Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 44830e65
+- Validation HEAD: e64ba368
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | contract handoff points to P119 | PASS |  |
 | P118.7 records final validation commands | PASS |  |
 | P118.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P118.7 allowed scope | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1187-founder-runtime-approval-capture-boundary.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1187-founder-runtime-approval-capture-boundary.js |
+| changed files stay in P118.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P118.6 checker accepts final handoff | PASS |  |
 | OS status checker can resolve P119 handoff | PASS |  |
 | phase status closed and handed off | PASS | P118.7/P118.6/P119 |

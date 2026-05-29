@@ -11408,7 +11408,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e64ba368",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
       "detail": "P118 final validation complete; P119 approval decision boundary is planned next.",
@@ -11604,7 +11604,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e64ba368",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "Final P118 validation complete; P119 is planned next.",
@@ -11651,7 +11651,7 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T05:50:46.575Z",
+  "updatedAt": "2026-05-29T05:51:58.929Z",
   "currentPhase": "P118.7",
   "previousPhase": "P118.6",
   "nextPhase": "P119",
