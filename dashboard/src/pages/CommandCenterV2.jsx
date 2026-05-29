@@ -3395,6 +3395,14 @@ function AgentFlowPage() {
         ariaLabel="Founder runtime approval decision persistence boundary"
         rowAriaSuffix="approval decision persistence boundary row"
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalDecisionApplicationBoundary}
+        surfaceLabel="Agent Flow Approval Decision Application Boundary"
+        heading="Approval Decision Application Boundary"
+        pillLabel="Application read-only"
+        ariaLabel="Founder runtime approval decision application boundary"
+        rowAriaSuffix="approval decision application boundary row"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10200,6 +10208,14 @@ function BusinessBuildPage() {
           pillLabel="Persistence read-only"
           ariaLabel="Founder runtime approval decision persistence boundary"
           rowAriaSuffix="approval decision persistence boundary row"
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalDecisionApplicationBoundary}
+          surfaceLabel="Business Build Approval Decision Application Boundary"
+          heading="Approval Decision Application Boundary"
+          pillLabel="Application read-only"
+          ariaLabel="Founder runtime approval decision application boundary"
+          rowAriaSuffix="approval decision application boundary row"
         />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">

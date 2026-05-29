@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision application boundary while keeping approval application, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P121.4",
-  "previousSubphase": "P121.3",
-  "nextSubphase": "P121.5",
+  "currentSubphase": "P121.5",
+  "previousSubphase": "P121.4",
+  "nextSubphase": "P121.6",
   "safetyRules": [
     "Do not enable approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P121.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -506,18 +506,46 @@
     {
       "phaseId": "P121.5",
       "title": "Command Center Application Boundary UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Planned P121 subphase. Implementation requires its own implementation-grade plan before coding.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "narrowGoal": "Render a scoped, display-safe approval-decision application boundary card on Business Build and Agent Flow using the P121.4 safe dry-run preview without adding live controls or changing project files.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1215-founder-runtime-approval-decision-application-boundary.js",
+        "contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json",
+        "docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1215-founder-runtime-approval-decision-application-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1215-founder-runtime-approval-decision-application-boundary.js",
+        "contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json",
+        "docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1215-founder-runtime-approval-decision-application-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "live-ready/**",
         "local-state/runtime/**",
@@ -528,30 +556,50 @@
         "release/**",
         "exports/**",
         "packages/**",
-        ".env*"
+        ".env*",
+        "dashboard files outside dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js"
       ],
-      "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this planned subphase.",
-      "commandCenterUx": "Preserve existing Command Center UX and avoid new controls until explicitly scoped.",
+      "expectedExports": [
+        "buildFounderApprovalDecisionApplicationBoundaryDisplayModel"
+      ],
+      "dataShape": "Command Center display model with current state, founder idea, preview mode, readiness counts, zero unsafe candidate counts, next action, blockers, disabled reason, owner capability, evidence/activity labels, cost impact, readiness sections, readiness rows, safety rows, and summary rows.",
+      "commandCenterUx": "Business Build and Agent Flow show a display-only Approval Decision Application Boundary card. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness stay clean. No approval application, approve/reject, save, run, execution, DB write, provider, deploy, export, package, or spend controls are introduced.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
-        "Preserve Light theme."
+        "Preserve Light theme.",
+        "Verify the scoped card under dark, light, and system themes in Playwright."
       ],
       "playwrightTests": [
-        "No new Playwright test until dashboard source changes are explicitly allowed."
+        "Add focused route coverage for approval decision application boundary scoped visibility and safety wording."
       ],
-      "checkerUpdates": [],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P121.5 planned.",
-      "validationCommands": [],
+      "checkerUpdates": [
+        "Add a P121.5 Command Center application boundary UX checker."
+      ],
+      "docsRoadmap": "Update P121 plan, README, platform roadmap, OS status, generated reports, and P121 contract for P121.5.",
+      "phaseStatusUpdate": "P121 in progress; P121.5 complete; current phase P121.5; previous P121.4; next P121.6.",
+      "validationCommands": [
+        "npm run check:p1215-founder-runtime-approval-decision-application-boundary",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval decision application boundary appears only on scoped pages\"",
+        "browser verification of Business Build and Agent Flow scoped card rendering",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "gitCommands": [
         "git add <allowed P121.5 files>",
-        "git commit -m \"feat(nexus): implement p1215 approval decision application\"",
+        "git commit -m \"feat(nexus): implement p1215 approval decision application ux\"",
+        "stamp P121/P121.5 status with the implementation commit",
+        "git add <allowed P121.5 status/report files>",
+        "git commit -m \"chore(nexus): stamp p1215 approval decision application ux\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval decision application, DB writes, or runtime execution authority is enabled."
+        "Confirm no approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no project-owned, CareLoop, generated project, DB, live-ready, runtime, provider, tool, worker, deploy, release, export, package, or env files changed.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw DB table names, raw report paths, or fake runnable actions are introduced in primary UX."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -560,6 +608,7 @@
         "What was implemented",
         "Command Center UX changes",
         "Tests/checkers run",
+        "Dashboard build/unit/page results",
         "Docs/README/roadmap updates",
         "OS phase status update",
         "Safety confirmations",
@@ -569,7 +618,8 @@
       ],
       "nextPhase": "P121.6",
       "previousPhase": "P121.4",
-      "order": 157.5
+      "order": 157.5,
+      "expectedBaseCommit": "9cf33891"
     },
     {
       "phaseId": "P121.6",
@@ -708,6 +758,6 @@
       "order": 157.7
     }
   ],
-  "summary": "P121 is in progress. P121.1 defines the approval-decision application boundary contract, P121.2 defines browser-safe application eligibility metadata, P121.3 defines a governed local application intent model, and P121.4 defines a local safe dry-run preview while approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
-  "updatedAt": "2026-05-29T12:54:03.107Z"
+  "summary": "P121 is in progress. P121.1 defines the approval-decision application boundary contract, P121.2 defines browser-safe application eligibility metadata, P121.3 defines a governed local application intent model, P121.4 defines a local safe dry-run preview, and P121.5 adds scoped Command Center application boundary UX while approval decision application, approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+  "updatedAt": "2026-05-29T13:02:27.310Z"
 }

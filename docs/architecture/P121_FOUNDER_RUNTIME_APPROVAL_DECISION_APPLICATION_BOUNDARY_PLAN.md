@@ -715,9 +715,180 @@ P121.1-P121.3 complete.
 
 Status: complete.
 
+## P121.5 Command Center Application Boundary UX
+
+Phase: P121 Founder Runtime Approval Decision Application Boundary
+Subphase: P121.5 Command Center Application Boundary UX
+Scope classification: NEXUS_OS_CHANGE
+Starting branch: `codex/nexus-e2e-phase-validation`
+Expected base commit: `9cf33891`
+
+Goal: render a scoped, display-safe approval-decision application boundary card
+on Business Build and Agent Flow using the P121.4 safe dry-run preview without
+adding live controls or changing project files.
+
+Why this is needed: P121.4 creates a hidden safe dry-run preview. P121.5 makes
+the current state, blockers, next action, owner, evidence/activity location,
+and cost impact visible on founder/operator workflow pages.
+
+User/operator impact: operators can see why approval decision application is
+blocked and what evidence would be reviewed later. Chat with NEXUS and Lite stay
+focused on conversation.
+
+Command Center impact: Business Build and Agent Flow show an Approval Decision
+Application Boundary card. Chat with NEXUS, Lite, OS Roadmap, and Live
+Readiness do not show the card.
+
+Safety impact: the card is read-only and display-only. It does not introduce
+apply, approve, reject, save, run, execution, DB write, provider, deploy,
+export, package, or spend controls.
+
+Cost impact: no provider calls, model calls, network calls, or provider spend.
+
+Project/OS scope: OS-only dashboard and roadmap work. No project-owned files,
+CareLoop files, generated project files, DB/runtime/provider/tool/worker files,
+deploy/release/export/package files, or env files are allowed.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1215-founder-runtime-approval-decision-application-boundary.js`
+- `contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json`
+- `docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1215-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- any dashboard file outside `dashboard/src/data/businessBuild.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`, and `dashboard/tests/routes.spec.js`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalDecisionApplicationBoundaryDisplayModel({ founderIdeaSummary, applicationPreview }?)`
+- `businessBuildViewModel.founderApprovalDecisionApplicationBoundary`
+- Display model shape: current state, founder idea, preview mode, readiness
+  counts, zero unsafe candidate counts, next action, blockers, disabled reason,
+  owner capability, evidence/activity labels, cost impact, readiness sections,
+  readiness rows, safety rows, and summary rows.
+
+Reuse check: reuse P121.4 preview, P121.3 intent model through that preview,
+the existing `FounderApprovalDecisionBoundaryCard`, existing card/grid/pill
+classes, `shared/reportWriter.js`, `shared/checkResultFormatter.js`, OS phase
+status records, and existing route safety posture. Do not duplicate report
+writers, mode guards, redaction helpers, result envelopes, phase status
+updaters, route matrices, UI cards, or evidence/audit/activity appenders.
+
+Command Center UX requirements: Business Build and Agent Flow show what
+changed, current state, next action, blockers, disabled reason, owner
+capability, evidence/activity location, and cost impact. Primary UX must not
+show raw JSON, raw logs, raw policy dumps, raw DB names, private IDs, internal
+phase labels outside OS Roadmap, DemoApp, raw report paths, approval
+application buttons, approve/reject/save/run controls, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior and verify the scoped card under each theme in Playwright.
+
+Playwright tests: add focused route coverage proving the application boundary
+card appears on Business Build and Agent Flow only, renders useful text under
+dark/light/system themes, and avoids DemoApp, raw IDs, raw dumps, internal
+phase/report labels, and fake actions.
+
+Checker updates: add a dedicated P121.5 Command Center application boundary UX
+checker.
+
+Docs/README/roadmap updates: P121.5 is recorded in this plan, README, platform
+roadmap, P121 contract, OS roadmap/status, and generated reports. P121.6 is
+next for validation/docs hardening.
+
+OS phase status update: P121 is in progress; P121.5 is complete; current phase
+P121.5; previous P121.4; next P121.6.
+
+Reports to regenerate:
+- `reports/p1215-founder-runtime-approval-decision-application-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1215-founder-runtime-approval-decision-application-boundary`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval decision application boundary appears only on scoped pages"`
+- browser verification of Business Build and Agent Flow scoped card rendering
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P121.5 files>`
+- `git commit -m "feat(nexus): implement p1215 approval decision application ux"`
+- stamp P121/P121.5 status with the implementation commit
+- `git add <allowed P121.5 status/report files>`
+- `git commit -m "chore(nexus): stamp p1215 approval decision application ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop paths changed
+- confirm only the allowed dashboard source/test files changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, or env paths changed
+- confirm no approval decision application, approval capture, approval
+  persistence, approval decision recording, runtime execution, execution unlock,
+  provider/model calls, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+  spend authority is enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB table names, raw report
+  paths, JSON/log/policy dumps, internal primary UX phase labels, or fake
+  actions are introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: adding another card can make scoped workflow pages noisy. P121.5
+keeps the card limited to Business Build and Agent Flow and verifies Chat, Lite,
+OS Roadmap, and Live Readiness stay clean.
+
+Rollback plan: remove the P121.5 dashboard/checker/docs/status/report changes,
+restore P121.5 to planned, set current phase back to P121.4, and keep
+P121.1-P121.4 complete.
+
+Status: complete.
+
 ## Planned Subphase Controls
 
-P121.4 Application Safe Dry Run is complete. P121.5 is next for scoped Command
-Center application boundary UX, with approval decision application,
-persistence, approve/reject decision recording, DB/runtime writes, and execution
-still blocked unless a future subphase explicitly grants narrow authority.
+P121.5 Command Center Application Boundary UX is complete. P121.6 is next for
+validation/docs hardening, with approval decision application, persistence,
+approve/reject decision recording, DB/runtime writes, and execution still
+blocked unless a future subphase explicitly grants narrow authority.

@@ -5,6 +5,7 @@ import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeE
 import { buildFounderApprovalCapturePreview } from "../../../shared/founderApprovalCapturePreview.js";
 import { buildFounderApprovalDecisionPreview } from "../../../shared/founderApprovalDecisionPreview.js";
 import { buildFounderApprovalDecisionPersistencePreview } from "../../../shared/founderApprovalDecisionPersistencePreview.js";
+import { buildFounderApprovalDecisionApplicationPreview } from "../../../shared/founderApprovalDecisionApplicationPreview.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -1869,6 +1870,129 @@ export function buildFounderApprovalDecisionPersistenceBoundaryDisplayModel({
   };
 }
 
+export function buildFounderApprovalDecisionApplicationBoundaryDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  applicationPreview,
+} = {}) {
+  const preview = applicationPreview || buildFounderApprovalDecisionApplicationPreview({
+    intentState: "ready_for_safe_dry_run",
+    founderIdeaSummary,
+    nextAction: "Review approval decision application readiness on scoped founder work pages while apply and execution controls remain unavailable.",
+  });
+  const data = preview.data || {};
+  const summary = data.approvalDecisionApplicationSummary || {};
+  const disabledReason =
+    "Approval decision application boundary is display-only. It cannot apply approvals, accept approvals, persist approvals, record approve/reject decisions, write DB records, write runtime records, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const rows = (data.previewRows || []).map((row, index) => ({
+    label: row.rowLabel || `Approval decision application readiness ${index + 1}`,
+    decisionPosition: index + 1,
+    decisionState: row.currentState || "Dry-run only; application blocked",
+    nextAction: row.nextAction || data.nextAction,
+    blocker: row.blocker || "Approval decision application remains blocked.",
+    disabledReason,
+    ownerCapability: row.ownerCapability || data.ownerCapability || "NEXUS Approval Decision Application Boundary",
+    evidenceLocation: "Approval decision application safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: row.costImpactLabel || "Local dry-run only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalDecisionApplicationAllowed: "Blocked",
+    approvalCaptureAllowed: "Blocked",
+    approvalPersistenceAllowed: "Blocked",
+    approvalDecisionRecordingAllowed: "Blocked",
+    approveDecisionAllowed: "Blocked",
+    rejectDecisionAllowed: "Blocked",
+    dbWriteAllowed: "Blocked",
+    runtimeWriteAllowed: "Blocked",
+    runtimeExecutionAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    agentDispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+  const sections = (data.previewSections || []).map((section) => ({
+    label: section.sectionLabel,
+    currentState: section.currentState,
+    rowCount: section.rowCount,
+    blockedCount: section.blockedCount,
+    nextAction: section.nextAction,
+    disabledReason,
+  }));
+  const model = {
+    currentState: "Approval Decision Application Preview Ready Application Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: toTitle(data.previewMode || "local-only-application-dry-run"),
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    applicationCandidateCount: summary.applicationCandidateCount || 0,
+    applicableDecisionCount: summary.applicableDecisionCount || 0,
+    decisionRecordableCandidateCount: summary.decisionRecordableCandidateCount || 0,
+    approvalDecisionRecordableCandidateCount: summary.approvalDecisionRecordableCandidateCount || 0,
+    approvalApplicationCandidateCount: summary.approvalApplicationCandidateCount || 0,
+    dbWritableCandidateCount: summary.dbWritableCandidateCount || 0,
+    runtimeWritableCandidateCount: summary.runtimeWritableCandidateCount || 0,
+    runtimeExecutableCandidateCount: summary.runtimeExecutableCandidateCount || 0,
+    executionUnlockCandidateCount: summary.executionUnlockCandidateCount || 0,
+    agentDispatchCandidateCount: summary.agentDispatchCandidateCount || 0,
+    projectMutationCandidateCount: summary.projectMutationCandidateCount || 0,
+    hostedDbMutationCandidateCount: summary.hostedDbMutationCandidateCount || 0,
+    providerSpendCandidateCount: summary.providerSpendCandidateCount || 0,
+    nextAction: data.nextAction || "Review application readiness on scoped founder work pages while approval application remains blocked.",
+    blockers: Array.isArray(data.blockers) ? data.blockers : [
+      "Approval decision application remains blocked.",
+      "DB and runtime writes remain blocked.",
+      "Approve/reject decision recording remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: data.ownerCapability || "NEXUS Approval Decision Application Boundary",
+    evidenceLocation: "Approval decision application safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: "Local deterministic approval decision application preview only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    readinessSections: sections,
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Approval application", value: "Blocked" },
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Approval persistence", value: "Blocked" },
+      { label: "Approval decision recording", value: "Blocked" },
+      { label: "Approve decision", value: "Blocked" },
+      { label: "Reject decision", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime writes", value: "Blocked" },
+      { label: "Runtime execution", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    summaryRows: [
+      { label: "Founder idea", value: model.founderIdea },
+      { label: "Preview mode", value: model.previewMode },
+      { label: "Readiness rows", value: model.readinessRowCount },
+      { label: "Blocked rows", value: model.blockedReadinessRowCount },
+      { label: "Application candidates", value: model.applicationCandidateCount },
+      { label: "Applicable decisions", value: model.applicableDecisionCount },
+      { label: "Approval application candidates", value: model.approvalApplicationCandidateCount },
+      { label: "Decision-recordable candidates", value: model.decisionRecordableCandidateCount },
+      { label: "Approval decision recordable candidates", value: model.approvalDecisionRecordableCandidateCount },
+      { label: "DB-writable candidates", value: model.dbWritableCandidateCount },
+      { label: "Runtime-writable candidates", value: model.runtimeWritableCandidateCount },
+      { label: "Executable candidates", value: model.runtimeExecutableCandidateCount },
+      { label: "Owner capability", value: model.ownerCapability },
+      { label: "Next action", value: model.nextAction },
+      { label: "Disabled reason", value: model.disabledReason },
+      { label: "Evidence", value: model.evidenceLocation },
+      { label: "Activity", value: model.activityLocation },
+      { label: "Cost impact", value: model.costImpact },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -3029,6 +3153,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderApprovalDecisionPersistenceBoundary = buildFounderApprovalDecisionPersistenceBoundaryDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderApprovalDecisionApplicationBoundary = buildFounderApprovalDecisionApplicationBoundaryDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -3176,6 +3303,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderApprovalCaptureBoundary,
     founderApprovalDecisionBoundary,
     founderApprovalDecisionPersistenceBoundary,
+    founderApprovalDecisionApplicationBoundary,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

@@ -3450,6 +3450,17 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P121.5 is complete. Business Build and Agent Flow now show a scoped
+display-safe approval decision application boundary card with current state,
+readiness rows, blockers, next action, owner capability, evidence/activity
+labels, and cost impact. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness
+stay clean. P121.6 is next for validation/docs hardening. Approval decision
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and
