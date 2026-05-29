@@ -16872,7 +16872,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "788f754e",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121.2 application eligibility metadata complete; P121.3 governed intent model is next.",
@@ -16924,7 +16924,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "788f754e",
       "commandCenterVisible": true,
       "label": "Eligibility Metadata",
       "detail": "Approval decision application eligibility metadata complete.",
@@ -16945,7 +16945,7 @@
       "knownLimitations": [
         "P121.2 is metadata-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:37:57.379Z"
+      "completedAt": "2026-05-29T12:39:46.739Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17049,7 +17049,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T12:37:57.379Z",
+  "updatedAt": "2026-05-29T12:39:46.739Z",
   "currentPhase": "P121.2",
   "previousPhase": "P121.1",
   "nextPhase": "P121.3",

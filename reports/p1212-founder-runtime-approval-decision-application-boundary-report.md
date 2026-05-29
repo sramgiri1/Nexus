@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.2
-- Generated at: 2026-05-29T12:39:04.611Z
+- Generated at: 2026-05-29T12:41:20.236Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a5d88916
+- Validation HEAD: 788f754e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | README records P121.2 | PASS |  |
 | platform roadmap records P121.2 | PASS |  |
 | phase status advanced | PASS | P121.2/P121.1/P121.3 |
-| changed files stay in P121.2 allowed scope | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1212-founder-runtime-approval-decision-application-boundary.js, shared/founderApprovalDecisionApplicationEligibilityMetadata.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1212-founder-runtime-approval-decision-application-boundary.js, shared/founderApprovalDecisionApplicationEligibilityMetadata.js |
+| changed files stay in P121.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md, reports/p1212-founder-runtime-approval-decision-application-boundary-report.md, reports/phase-validation-coverage-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md, reports/p1212-founder-runtime-approval-decision-application-boundary-report.md, reports/phase-validation-coverage-report.md |
 | public docs avoid raw application table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
