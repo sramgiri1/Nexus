@@ -630,7 +630,8 @@
     "check:p1175-founder-runtime-execution-approval-gate": "node scripts/check-p1175-founder-runtime-execution-approval-gate.js",
     "check:p1176-founder-runtime-execution-approval-gate": "node scripts/check-p1176-founder-runtime-execution-approval-gate.js",
     "check:p1177-founder-runtime-execution-approval-gate": "node scripts/check-p1177-founder-runtime-execution-approval-gate.js",
-    "check:p1181-founder-runtime-approval-capture-boundary-contract": "node scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js"
+    "check:p1181-founder-runtime-approval-capture-boundary-contract": "node scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js",
+    "check:p1182-founder-runtime-approval-capture-boundary": "node scripts/check-p1182-founder-runtime-approval-capture-boundary.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

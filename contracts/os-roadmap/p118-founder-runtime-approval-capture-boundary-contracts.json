@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval capture boundary while keeping approval capture, approval persistence, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P118.1",
-  "previousSubphase": "P117.7",
-  "nextSubphase": "P118.2",
+  "currentSubphase": "P118.2",
+  "previousSubphase": "P118.1",
+  "nextSubphase": "P118.3",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P118.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -27,6 +27,7 @@
   ],
   "knownLimitations": [
     "P118.1 is contract/policy only.",
+    "P118.2 is schema metadata only.",
     "Approval capture, approval persistence, approve/reject decision recording, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain blocked."
   ],
   "subphases": [
@@ -145,24 +146,43 @@
     {
       "phaseId": "P118.2",
       "title": "Approval Capture Schema Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Define approval capture schema metadata without DB writes, persistence, or approval decision recording.",
+      "expectedBaseCommit": "e6695c2b",
+      "narrowGoal": "Define browser-safe approval capture schema metadata without DB files, DB writes, persistence, or approval decision recording.",
       "allowedFiles": [
+        "shared/founderApprovalCaptureSchemaMetadata.js",
         "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
         "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
         "scripts/check-p1182-founder-runtime-approval-capture-boundary.js",
+        "scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js",
         "package.json",
         "README.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md",
         "reports/p1182-founder-runtime-approval-capture-boundary-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "shared/founderApprovalCaptureSchemaMetadata.js",
+        "contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json",
+        "docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md",
+        "scripts/check-p1182-founder-runtime-approval-capture-boundary.js",
+        "scripts/check-p1181-founder-runtime-approval-capture-boundary-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1181-founder-runtime-approval-capture-boundary-contract-report.md",
+        "reports/p1182-founder-runtime-approval-capture-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -181,8 +201,15 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Schema metadata descriptions only; no DB schema file or persisted approval data is introduced unless a later scoped plan explicitly allows it.",
+      "expectedExports": [
+        "FOUNDER_APPROVAL_CAPTURE_SCHEMA_METADATA_PHASE",
+        "FOUNDER_APPROVAL_CAPTURE_SCHEMA_VERSION",
+        "FOUNDER_APPROVAL_CAPTURE_ENTITY_NAMES",
+        "FOUNDER_APPROVAL_CAPTURE_AUTHORITY_FLAGS",
+        "FOUNDER_APPROVAL_CAPTURE_SCHEMA_ENTITIES",
+        "buildFounderApprovalCaptureSchemaMetadata"
+      ],
+      "dataShape": "Browser-safe metadata descriptions for approval capture requests, approval capture events, and approval capture evidence references. No DB schema file, DB write, persisted approval data, or approval decision payload is introduced.",
       "commandCenterUx": "No Command Center source change. Preserve P117 approval-gate UX and avoid capture controls.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -202,7 +229,8 @@
         "npm run check:p1181-founder-runtime-approval-capture-boundary-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
-        "git diff --check"
+        "git diff --check",
+        "find local-state/runtime -maxdepth 1 -name 'check-p118*.sqlite' -print"
       ],
       "gitCommands": [
         "git add <allowed P118.2 files>",
@@ -678,5 +706,5 @@
       "previousPhase": "P118.6"
     }
   ],
-  "summary": "P118 is in progress. P118.1 defines the approval-capture boundary contract and implementation-grade subphase split without approval capture, approval persistence, approve/reject decision recording, or runtime execution authority."
+  "summary": "P118 is in progress. P118.1 defines the approval-capture boundary contract and implementation-grade subphase split, and P118.2 adds browser-safe approval capture schema metadata without DB files, DB writes, approval capture, approval persistence, approve/reject decision recording, or runtime execution authority."
 }

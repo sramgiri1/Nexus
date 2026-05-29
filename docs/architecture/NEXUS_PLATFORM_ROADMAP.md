@@ -3214,6 +3214,14 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P118.2 is complete. Browser-safe metadata now describes future approval capture
+requests, events, and evidence references without DB files or write handles.
+P118.3 is next for governed local approval intent modeling. Approval capture,
+approval persistence, approve/reject decision recording, runtime execution,
+execution unlock, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

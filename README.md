@@ -906,6 +906,14 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P118.2 approval capture schema metadata: browser-safe metadata now describes
+  future approval capture requests, events, and evidence references without DB
+  files or write handles. P118.3 is next for governed local approval intent
+  modeling. Approval capture, approval persistence, approve/reject decision
+  recording, runtime execution, execution unlock, provider/model call, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, deploy, release, export, package, network call, and provider
+  spend remain unavailable.
 
 ## CareLoop Project Progress
 

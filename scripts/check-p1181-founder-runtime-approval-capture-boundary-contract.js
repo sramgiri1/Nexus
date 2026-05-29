@@ -81,12 +81,14 @@ addCheck("contract identifies P118", contract.phaseId === "P118" && contract.tit
 addCheck(
   "contract status and handoff",
   contract.status === "in_progress"
-    && contract.currentSubphase === "P118.1"
-    && contract.previousSubphase === "P117.7"
-    && contract.nextSubphase === "P118.2",
+    && (
+      (contract.currentSubphase === "P118.1" && contract.previousSubphase === "P117.7" && contract.nextSubphase === "P118.2")
+      || (contract.currentSubphase === "P118.2" && contract.previousSubphase === "P118.1" && contract.nextSubphase === "P118.3")
+      || (contract.currentSubphase === "P118.3" && contract.previousSubphase === "P118.2" && contract.nextSubphase === "P118.4")
+    ),
 );
 addCheck("subphase split complete", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && (contract.subphases || []).length === 7);
-addCheck("P118.1 complete and P118.2 planned", p1181.status === "complete" && p1182.status === "planned");
+addCheck("P118.1 complete and P118.2 planned or complete", p1181.status === "complete" && ["planned", "complete"].includes(p1182.status));
 addCheck("P117 closed before P118 starts", p117Contract.status === "complete" && statusById.get("P117")?.status === "complete" && roadmapById.get("P117")?.status === "complete");
 addCheck("safety rules block approval capture and execution", contract.safetyRules?.some((rule) => /Do not enable approval capture/i.test(rule)) && contract.safetyRules?.some((rule) => /runtime execution/i.test(rule) && /Do not enable/i.test(rule)));
 addCheck("reuse requirements present", ["shared/reportWriter.js", "shared/checkResultFormatter.js", "os-roadmap/updatePhaseStatus.js", "existing dashboard tabs/cards/badges"].every((item) => contract.reuseRequirements?.includes(item)));
@@ -112,18 +114,30 @@ addCheck("README records P118.1", /P118\.1 approval capture contract/i.test(read
 addCheck("platform roadmap records P118.1", /P118\.1 is complete/.test(platformRoadmap) && /P118\.2 is next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P118.1"
-    && status.previousPhase === "P117.7"
-    && status.nextPhase === "P118.2"
-    && roadmap.currentPhase === "P118.1"
-    && roadmap.previousPhase === "P117.7"
-    && roadmap.nextPhase === "P118.2"
+  ((status.currentPhase === "P118.1"
+      && status.previousPhase === "P117.7"
+      && status.nextPhase === "P118.2"
+      && roadmap.currentPhase === "P118.1"
+      && roadmap.previousPhase === "P117.7"
+      && roadmap.nextPhase === "P118.2")
+    || (status.currentPhase === "P118.2"
+      && status.previousPhase === "P118.1"
+      && status.nextPhase === "P118.3"
+      && roadmap.currentPhase === "P118.2"
+      && roadmap.previousPhase === "P118.1"
+      && roadmap.nextPhase === "P118.3")
+    || (status.currentPhase === "P118.3"
+      && status.previousPhase === "P118.2"
+      && status.nextPhase === "P118.4"
+      && roadmap.currentPhase === "P118.3"
+      && roadmap.previousPhase === "P118.2"
+      && roadmap.nextPhase === "P118.4"))
     && statusById.get("P118")?.status === "in_progress"
     && roadmapById.get("P118")?.status === "in_progress"
     && statusById.get("P118.1")?.status === "complete"
     && roadmapById.get("P118.1")?.status === "complete"
-    && statusById.get("P118.2")?.status === "planned"
-    && roadmapById.get("P118.2")?.status === "planned",
+    && ["planned", "complete"].includes(statusById.get("P118.2")?.status)
+    && ["planned", "complete"].includes(roadmapById.get("P118.2")?.status),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(

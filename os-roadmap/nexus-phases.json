@@ -11408,27 +11408,27 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "f643c3fb",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
-      "detail": "P118.1 approval capture boundary contract complete; P118.2 schema metadata is next.",
+      "detail": "P118.2 approval capture schema metadata complete; P118.3 intent model is next.",
       "phaseId": "P118",
       "title": "Founder Runtime Approval Capture Boundary",
       "order": 154,
       "status": "in_progress",
-      "summary": "P118 is in progress with the approval capture boundary contract and implementation-grade subphase split complete. Approval capture, approval persistence, approve/reject decision recording, runtime execution, and execution unlock remain blocked.",
-      "nextPhase": "P118.2",
-      "previousPhase": "P117.7",
+      "summary": "P118 is in progress with the approval capture boundary contract, implementation-grade subphase split, and browser-safe schema metadata complete. Approval capture, approval persistence, approve/reject decision recording, runtime execution, and execution unlock remain blocked.",
+      "nextPhase": "P118.3",
+      "previousPhase": "P118.1",
       "checksRun": [
+        "npm run check:p1182-founder-runtime-approval-capture-boundary",
         "npm run check:p1181-founder-runtime-approval-capture-boundary-contract",
-        "npm run check:p1177-founder-runtime-execution-approval-gate",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P118.1 is contract-only; it does not capture approvals, persist approval decisions, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P118.2 is next for approval capture schema metadata."
+        "P118.2 is schema metadata only; it does not create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P118.3 is next for governed local approval intent modeling."
       ],
       "completedAt": ""
     },
@@ -11461,23 +11461,30 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Approval Capture Schema",
-      "detail": "Planned approval capture schema metadata without DB writes.",
+      "detail": "Approval capture schema metadata complete without DB files or writes.",
       "phaseId": "P118.2",
       "title": "Approval Capture Schema Metadata",
       "order": 154.2,
-      "status": "planned",
-      "summary": "Planned schema metadata subphase for approval capture boundary. No DB writes, approval capture, approval persistence, approve/reject decision recording, runtime execution, provider/model calls, agent dispatch, project mutation, network calls, or spend are enabled.",
+      "status": "complete",
+      "summary": "Added browser-safe approval capture schema metadata for future capture requests, events, and evidence references without DB files, DB writes, approval capture, approval persistence, approve/reject decision recording, or runtime execution.",
       "nextPhase": "P118.3",
       "previousPhase": "P118.1",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. P118.2 must start with its own implementation-grade plan before coding."
+      "checksRun": [
+        "npm run check:p1182-founder-runtime-approval-capture-boundary",
+        "npm run check:p1181-founder-runtime-approval-capture-boundary-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P118.2 is schema metadata only; it does not create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "No Command Center source change is included in P118.2; P118.5 is the scoped UX subphase."
+      ],
+      "completedAt": "2026-05-29T05:04:51.650Z"
     },
     {
       "track": "NEXUS_OS",
@@ -11580,9 +11587,9 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T04:56:17.344Z",
-  "currentPhase": "P118.1",
-  "previousPhase": "P117.7",
-  "nextPhase": "P118.2",
+  "updatedAt": "2026-05-29T05:04:51.650Z",
+  "currentPhase": "P118.2",
+  "previousPhase": "P118.1",
+  "nextPhase": "P118.3",
   "currentPhaseStatus": "complete"
 }
