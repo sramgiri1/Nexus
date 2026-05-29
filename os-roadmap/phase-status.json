@@ -16440,28 +16440,28 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9b15dc5f",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Approval Decision Boundary",
-      "detail": "P119.4 approval decision safe dry run complete; P119.5 scoped UX is next.",
+      "detail": "P119.5 scoped approval decision UX complete; P119.6 validation is next.",
       "phaseId": "P119",
       "title": "Founder Runtime Approval Decision Recording Boundary",
       "order": 155,
       "status": "in_progress",
-      "summary": "P119 is in progress with the approval decision recording boundary contract, browser-safe schema metadata, governed local decision intent model, and local dry-run preview complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked.",
-      "nextPhase": "P119.5",
-      "previousPhase": "P119.3",
+      "summary": "P119 is in progress with the approval decision recording boundary contract, browser-safe schema metadata, governed local decision intent model, local dry-run preview, and scoped Command Center UX complete. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked.",
+      "nextPhase": "P119.6",
+      "previousPhase": "P119.4",
       "checksRun": [
-        "npm run check:p1194-founder-runtime-approval-decision-recording-boundary",
-        "npm run check:p1193-founder-runtime-approval-decision-recording-boundary",
+        "npm run check:p1195-founder-runtime-approval-decision-recording-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval decision boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
-        "git diff --check",
-        "find local-state/runtime -maxdepth 1 -name 'check-p119*.sqlite' -print"
+        "git diff --check"
       ],
       "knownLimitations": [
-        "P119.4 is a local dry-run preview only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P119.5 is next for scoped Command Center approval decision boundary UX."
+        "P119.5 renders display-safe approval decision boundary preview state only; it does not accept approvals, write DB/runtime records, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P119.6 is next for aggregate approval decision validation/docs."
       ],
       "completedAt": ""
     },
@@ -16578,23 +16578,31 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
       "label": "Approval Decision UX",
-      "detail": "Planned scoped Command Center approval decision boundary UX without controls or writes.",
+      "detail": "Scoped approval decision boundary UX complete on Business Build and Agent Flow.",
       "phaseId": "P119.5",
       "title": "Command Center Approval Decision Boundary UX",
       "order": 155.5,
-      "status": "planned",
-      "summary": "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable.",
+      "status": "complete",
+      "summary": "Added a display-safe approval decision boundary model and Command Center card on Business Build and Agent Flow only, showing current state, readiness rows, blockers, next action, disabled reason, owner, evidence/activity labels, cost impact, and zero unsafe candidate counts without approve/reject controls or writes.",
       "nextPhase": "P119.6",
       "previousPhase": "P119.4",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1195-founder-runtime-approval-decision-recording-boundary",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Approval decision boundary appears only on scoped pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P119.5 renders display-safe approval decision boundary preview state only; it does not create DB tables, write DB/runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "The card is scoped to Business Build and Agent Flow only; Chat with NEXUS, Lite, OS Roadmap, and Live Readiness stay clean."
+      ],
+      "completedAt": "2026-05-29T06:29:57.859Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16639,8 +16647,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T06:07:47.353Z",
-  "currentPhase": "P119.4",
-  "previousPhase": "P119.3",
-  "nextPhase": "P119.5",
+  "currentPhase": "P119.5",
+  "previousPhase": "P119.4",
+  "nextPhase": "P119.6",
   "currentPhaseStatus": "complete"
 }

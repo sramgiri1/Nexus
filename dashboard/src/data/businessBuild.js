@@ -3,6 +3,7 @@ import { buildFounderActivationReviewPacket } from "../../../live-ready/founderA
 import { buildFounderPrdSafeAuthoring } from "../../../live-ready/founderPrdSafeAuthoring.js";
 import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
 import { buildFounderApprovalCapturePreview } from "../../../shared/founderApprovalCapturePreview.js";
+import { buildFounderApprovalDecisionPreview } from "../../../shared/founderApprovalDecisionPreview.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -1647,6 +1648,105 @@ export function buildFounderApprovalCaptureBoundaryDisplayModel({
   };
 }
 
+export function buildFounderApprovalDecisionBoundaryDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  decisionPreview,
+} = {}) {
+  const preview = decisionPreview || buildFounderApprovalDecisionPreview({
+    founderQuestion: `Can this future approval decision request for ${founderIdeaSummary} be reviewed without enabling execution?`,
+    requestedDecisionLabel: "Founder approval decision readiness review",
+    proposedDecisionLabel: "Decision review only",
+    nextAction: "Review decision readiness on scoped founder work pages while approve/reject controls remain unavailable.",
+  });
+  const data = preview.data || {};
+  const summary = data.approvalDecisionSummary || {};
+  const disabledReason =
+    "Approval decision boundary is display-only. It cannot accept approvals, persist approvals, record approve/reject decisions, write DB records, unlock execution, dispatch agents, run workers/tools, mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.";
+  const rows = (data.previewRows || []).map((row, index) => ({
+    label: row.rowLabel || `Approval decision readiness ${index + 1}`,
+    decisionPosition: index + 1,
+    decisionState: row.currentState || "Preview only; decision recording blocked",
+    nextAction: row.nextAction || data.nextAction,
+    blocker: row.blocker || "Approval decision recording remains blocked.",
+    disabledReason,
+    ownerCapability: row.ownerCapability || data.ownerCapability || "NEXUS Approval Decision Boundary",
+    evidenceLocation: "Approval decision safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: row.costImpactLabel || "Local dry-run only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    approvalCaptureAllowed: "Blocked",
+    approvalPersistenceAllowed: "Blocked",
+    approvalDecisionRecordingAllowed: "Blocked",
+    approveDecisionAllowed: "Blocked",
+    rejectDecisionAllowed: "Blocked",
+    decisionPersistenceAllowed: "Blocked",
+    dbWriteAllowed: "Blocked",
+    runtimeExecutionAllowed: "Blocked",
+    executionUnlockAllowed: "Blocked",
+    agentDispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+    hostedDbMutationAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+  const sections = (data.previewSections || []).map((section) => ({
+    label: section.sectionLabel,
+    currentState: section.currentState,
+    rowCount: section.rowCount,
+    blockedCount: section.blockedCount,
+    nextAction: section.nextAction,
+    disabledReason,
+  }));
+
+  return {
+    currentState: "Approval Decision Boundary Preview Ready Decision Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: toTitle(data.previewMode || "local-only-dry-run"),
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    decisionReviewCandidateCount: summary.decisionReviewCandidateCount || 0,
+    approvableCandidateCount: summary.approvableCandidateCount || 0,
+    rejectableCandidateCount: summary.rejectableCandidateCount || 0,
+    persistableCandidateCount: summary.persistableCandidateCount || 0,
+    decisionRecordableCandidateCount: summary.decisionRecordableCandidateCount || 0,
+    dbWritableCandidateCount: summary.dbWritableCandidateCount || 0,
+    runtimeExecutableCandidateCount: summary.runtimeExecutableCandidateCount || 0,
+    executionUnlockCandidateCount: summary.executionUnlockCandidateCount || 0,
+    agentDispatchCandidateCount: summary.agentDispatchCandidateCount || 0,
+    projectMutationCandidateCount: summary.projectMutationCandidateCount || 0,
+    hostedDbMutationCandidateCount: summary.hostedDbMutationCandidateCount || 0,
+    providerSpendCandidateCount: summary.providerSpendCandidateCount || 0,
+    nextAction: data.nextAction || "Review decision readiness on scoped founder work pages while approval decision recording remains blocked.",
+    blockers: Array.isArray(data.blockers) ? data.blockers : [
+      "Approval decision recording remains blocked.",
+      "Approve/reject persistence remains blocked.",
+      "Runtime execution remains blocked.",
+      "Execution unlock remains blocked.",
+    ],
+    disabledReason,
+    ownerCapability: data.ownerCapability || "NEXUS Approval Decision Boundary",
+    evidenceLocation: "Approval decision safe dry-run report",
+    activityLocation: "OS phase status report",
+    costImpact: "Local deterministic approval decision boundary preview only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    readinessSections: sections,
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Approval capture", value: "Blocked" },
+      { label: "Approval persistence", value: "Blocked" },
+      { label: "Approval decision recording", value: "Blocked" },
+      { label: "Approve decision", value: "Blocked" },
+      { label: "Reject decision", value: "Blocked" },
+      { label: "Decision persistence", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime execution", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -2801,6 +2901,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderApprovalCaptureBoundary = buildFounderApprovalCaptureBoundaryDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderApprovalDecisionBoundary = buildFounderApprovalDecisionBoundaryDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -2946,6 +3049,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveRuntimeExecutionReadiness,
     founderRuntimeExecutionApprovalGate,
     founderApprovalCaptureBoundary,
+    founderApprovalDecisionBoundary,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

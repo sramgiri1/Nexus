@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision recording boundary while keeping approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P119.4",
-  "previousSubphase": "P119.3",
-  "nextSubphase": "P119.5",
+  "currentSubphase": "P119.5",
+  "previousSubphase": "P119.4",
+  "nextSubphase": "P119.6",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P119.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -484,7 +484,7 @@
     {
       "phaseId": "P119.5",
       "title": "Command Center Approval Decision Boundary UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Render a scoped, display-safe approval decision boundary card on Business Build and Agent Flow without approve/reject controls or writes.",
@@ -504,7 +504,22 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1195-founder-runtime-approval-decision-recording-boundary.js",
+        "contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json",
+        "docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1195-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -571,7 +586,8 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P119.6",
-      "previousPhase": "P119.4"
+      "previousPhase": "P119.4",
+      "expectedBaseCommit": "35671417"
     },
     {
       "phaseId": "P119.6",
@@ -749,5 +765,5 @@
       "previousPhase": "P119.6"
     }
   ],
-  "summary": "P119 is in progress. P119.1 defines the approval-decision recording boundary contract and implementation-grade subphase split, and P119.2 adds browser-safe approval decision schema metadata while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
+  "summary": "P119 is in progress. P119.1-P119.5 define the approval-decision recording boundary contract, browser-safe schema metadata, governed local intent model, safe dry-run preview, and scoped Command Center UX while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
 }

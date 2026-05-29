@@ -4378,6 +4378,64 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Approval decision boundary appears only on scoped pages", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder runtime approval decision boundary").filter({ hasText: "Business Build Runtime Approval Decision Boundary" });
+      await expect(themedCard).toContainText("Runtime Approval Decision Boundary");
+      await expect(themedCard).toContainText("Decision read-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Runtime Approval Decision Boundary"],
+      ["/command-center/agent-flow", "Agent Flow Runtime Approval Decision Boundary"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder runtime approval decision boundary").filter({ hasText: label });
+      await expect(card).toContainText("Runtime Approval Decision Boundary");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Preview mode");
+      await expect(card).toContainText("Readiness rows");
+      await expect(card).toContainText("Blocked rows");
+      await expect(card).toContainText("Decision-review candidates");
+      await expect(card).toContainText("Approvable candidates");
+      await expect(card).toContainText("Rejectable candidates");
+      await expect(card).toContainText("Persistable candidates");
+      await expect(card).toContainText("Decision-recordable candidates");
+      await expect(card).toContainText("Executable candidates");
+      await expect(card).toContainText("NEXUS Approval Decision Boundary");
+      await expect(card).toContainText("Approval decision request");
+      await expect(card).toContainText("Approval decision event");
+      await expect(card).toContainText("Approval decision evidence");
+      await expect(card).toContainText("Decision readiness");
+      await expect(card).toContainText("Decision recording");
+      await expect(card).toContainText("Runtime authority");
+      await expect(card).toContainText("Approval decision safe dry-run report");
+      await expect(card).toContainText("No provider calls");
+      const cardText = await card.innerText();
+      expect(cardText).not.toMatch(/P119|reports\/p119|founderApprovalDecision/i);
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Founder runtime approval decision boundary")).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalDecision|approval_decision_|approvalDecisionRecordKey|decisionRequestRef|decisionEventRef|decisionEvidenceRef/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Founder live approval capture boundary appears on non-chat founder routes", async ({ page }) => {
     const errors = captureClientErrors(page);
 

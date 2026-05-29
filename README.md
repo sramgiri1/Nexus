@@ -996,6 +996,16 @@ The Command Center and local operator surface have:
   dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
   SQL interface, deploy, release, export, package, network call, and provider
   spend remain unavailable.
+- P119.5 Command Center approval decision boundary UX: Business Build and
+  Agent Flow now show a scoped read-only approval decision boundary card with
+  current state, readiness rows, blockers, next action, disabled reason, owner,
+  evidence/activity location, and cost impact. Chat with NEXUS, Lite, OS
+  Roadmap, and Live Readiness stay clean. P119.6 is next for approval decision
+  validation/docs. Approval capture, approval persistence, approve/reject
+  decision recording, DB/runtime writes, runtime execution, execution unlock,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL interface, deploy, release, export, package,
+  network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
