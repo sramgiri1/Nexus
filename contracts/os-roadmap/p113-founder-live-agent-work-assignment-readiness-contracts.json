@@ -610,11 +610,11 @@
     {
       "phaseId": "P113.6",
       "title": "Work Assignment Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Validate P113.1-P113.5 together, close docs/README/roadmap/status alignment, and hand off to P113.7 final validation.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "planned-after-previous-subphase",
+      "expectedBaseCommit": "5fd7a20d01588c35c1aa8546e1b79de87e71439d",
       "allowedFiles": [
         "scripts/check-p1136-founder-live-agent-work-assignment-validation.js",
         "scripts/check-p1135-command-center-work-assignment-ux.js",
@@ -665,8 +665,8 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is implemented in this subphase until explicitly scoped.",
-      "commandCenterUx": "Preserve existing Command Center UX until the scoped UX subphase.",
+      "dataShape": "No runtime data shape. P113.6 is aggregate validation and docs/status closure only.",
+      "commandCenterUx": "Preserve P113.5 Business Build and Agent Flow assignment UX. No dashboard source or route changes in P113.6.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -678,8 +678,8 @@
       "checkerUpdates": [
         "Add or update the dedicated P113.6 checker."
       ],
-      "docsRoadmap": "Update P113 plan, README, platform roadmap, OS status, and generated reports for P113.6.",
-      "phaseStatusUpdate": "P113 in progress; P113.6 complete when implemented.",
+      "docsRoadmap": "P113.6 is recorded in the P113 plan, README, platform roadmap, OS status, and generated reports. P113.7 is next.",
+      "phaseStatusUpdate": "P113 in progress; P113.6 complete; current P113.6; previous P113.5; next P113.7.",
       "validationCommands": [
         "npm run check:p1136-founder-live-agent-work-assignment-validation",
         "npm run check:p1135-command-center-work-assignment-ux",
@@ -839,12 +839,12 @@
     "buildAgentWorkAssignmentReadinessViewModel"
   ],
   "knownLimitations": [
-    "P113.5 renders display-safe assignment readiness on Business Build and Agent Flow only; Chat with NEXUS, Lite, and Live Readiness stay clean.",
+    "P113.6 is validation/docs closure only and does not add runtime or UI behavior.",
     "Assignment writes, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, runtime admission, deploy, release, export, package, network, and provider spend remain blocked.",
-    "P113.6 is next for validation and docs closure."
+    "P113.7 is next for final validation and P114 handoff."
   ],
-  "currentSubphase": "P113.5",
-  "previousSubphase": "P113.4",
-  "nextSubphase": "P113.6",
-  "summary": "P113 is in progress. P113.1-P113.5 define assignment readiness contracts, schema, approved local CRUD, safe preview data, and scoped Command Center assignment UX while unsafe authority remains blocked."
+  "currentSubphase": "P113.6",
+  "previousSubphase": "P113.5",
+  "nextSubphase": "P113.7",
+  "summary": "P113 is in progress. P113.1-P113.6 define assignment readiness contracts, schema, approved local CRUD, safe preview data, scoped Command Center UX, and aggregate validation closure while unsafe authority remains blocked."
 }

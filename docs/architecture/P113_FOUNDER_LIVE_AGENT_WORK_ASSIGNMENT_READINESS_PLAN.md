@@ -583,3 +583,109 @@ Flow and keeps Chat/Lite clean.
 Rollback plan: remove the P113.5 display model/card/test/checker/script/docs/
 status/report updates, restore P113 to P113.4 complete with P113.5 planned, and
 keep the P113.4 preview model unchanged.
+
+## P113.6 Work Assignment Validation / Docs
+
+Phase: P113 Founder Live Agent Work Assignment Readiness
+
+Subphase: P113.6 Work Assignment Validation / Docs
+
+Goal: validate P113.1-P113.5 together, close docs/README/roadmap/status
+alignment, and hand off to P113.7 final validation.
+
+Why this is needed: P113 has added contract, schema, guarded local CRUD,
+preview, and scoped Command Center UX. P113.6 proves those pieces agree before
+the parent phase can close.
+
+User/operator impact: no new UX behavior. The operator gets aggregate evidence
+that assignment readiness is documented, tested, and still blocked from unsafe
+runtime authority.
+
+Command Center impact: no Command Center source change in P113.6. The P113.5
+Business Build and Agent Flow assignment card remains the current UX.
+
+Safety impact: validation/docs only. Assignment writes, local CRUD admission,
+runtime admission, provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+export, package creation, network calls, and provider spend remain blocked.
+
+Cost impact: no provider/model calls, network calls, or provider spend.
+
+Project/OS scope: `NEXUS_OS_CHANGE`.
+
+Files expected to change: P113.6 checker, P113.5 compatibility checker/report,
+P113 contract, this plan, README, platform roadmap, package script registry, OS
+phase status files, and generated P113.6/P113.5/status/coverage reports.
+
+Files forbidden to change: `projects/**`, `careloop/**`, `db/**`,
+`live-ready/**`, `dashboard/src/**`, `dashboard/tests/**`,
+`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
+`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+
+Exact files/modules changed: added
+`scripts/check-p1136-founder-live-agent-work-assignment-validation.js`;
+registered the package script; updated P113 contract/status/docs; and
+regenerated reports.
+
+Expected exports/data shapes: no runtime exports and no new data shapes.
+
+Safety rules: do not modify DB schema, live-ready helpers, dashboard source,
+dashboard tests, runtime state, provider/tool/worker/deploy/release/export/
+package paths, project files, or CareLoop files. Do not claim assignment writes,
+agent dispatch, execution, project mutation, hosted DB mutation, raw SQL,
+network calls, or spend are enabled.
+
+Reuse check: P113.6 reuses `shared/reportWriter.js`,
+`shared/checkResultFormatter.js`, existing package scripts, existing P113
+reports, and existing OS roadmap/status files. It does not duplicate report
+writers, checker formatters, status helpers, result envelopes, redaction
+helpers, mode guards, route matrices, or UI components.
+
+Command Center UX requirements: preserve P113.5 UX exactly. No new card, route,
+label, or theme behavior is introduced in P113.6.
+
+Dark/light/system theme requirements: no theme source change in P113.6. P113.5
+Playwright coverage remains the theme proof for assignment UX.
+
+Playwright tests: no new Playwright test in P113.6 because no UI source changes
+are made.
+
+Checker updates: P113.6 adds an aggregate checker that verifies P113.1-P113.5
+are complete, prior reports pass, P113.5 accepts the P113.6 handoff, docs and
+status align, raw IDs/table names stay out of public docs, fake actions remain
+absent, and forbidden paths stay unchanged.
+
+Docs/README/roadmap updates: P113.6 is recorded in this plan, README, platform
+roadmap, P113 contract, OS roadmap/status, and generated reports. P113.7 is
+next.
+
+OS phase status update: P113 is in progress; P113.6 is complete; current phase
+P113.6; previous P113.5; next P113.7.
+
+Validation commands:
+- `npm run check:p1136-founder-live-agent-work-assignment-validation`
+- `npm run check:p1135-command-center-work-assignment-ux`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no DB/live-ready/
+dashboard/runtime source changes; no runtime DB artifacts are created; no
+DemoApp exposure; no raw JSON/log/policy dumps; no raw private IDs, raw
+assignment keys, raw queue keys, or raw DB table names in public docs; no fake
+runnable actions; no local write, hosted DB mutation, raw SQL interface,
+provider/model call, agent dispatch, worker/tool execution, project mutation,
+deploy, release, export, package, network, or provider spend authority is
+enabled.
+
+Git add/commit/push commands:
+- `git add <allowed P113.6 files>`
+- `git commit -m "chore(nexus): validate p113 assignment readiness"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known risks: aggregate docs can go stale or imply live authority. P113.6 blocks
+stale handoff state and unsafe wording through the dedicated checker.
+
+Rollback plan: remove the P113.6 checker/script/docs/status/report updates,
+restore P113 to P113.5 complete with P113.6 planned, and keep the P113.5 UX
+unchanged.

@@ -657,6 +657,13 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, runtime admission, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P113.6 validation and docs closure: P113.1-P113.5 are now validated together
+  through an aggregate checker that confirms scripts, prior reports, docs,
+  README, platform roadmap, OS status, and P113.7 handoff alignment. P113.7 is
+  next for final validation. Assignment writes, provider/model call, agent
+  dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+  SQL interface, runtime admission, deploy, release, export, package, network
+  call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
