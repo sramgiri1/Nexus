@@ -154,8 +154,16 @@ addCheck("contract records expected exports", [
 ].every((name) => p1262.expectedExports?.includes(name)));
 addCheck("P126.1 checker accepts P126.2 handoff", p1261Checker.includes("P126.2") && p1261Checker.includes("P126.3") && p1261Checker.includes("p1262StartedState"));
 addCheck("docs record P126.2", /P126\.2 Acceptance Eligibility Metadata[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P126.2", /P126\.2 approval application authority grant handoff acceptance eligibility\s+metadata/i.test(readme) && /P126\.3\s+is\s+next/.test(readme));
-addCheck("platform roadmap records P126.2", /P126\.2 is complete/.test(platformRoadmap) && /P126\.3\s+is\s+next/.test(platformRoadmap));
+addCheck(
+  "README records P126.2",
+  /P126\.2 approval application authority grant handoff acceptance eligibility\s+metadata/i.test(readme)
+    && (/P126\.3\s+is\s+next/.test(readme) || /P126\.3 governed approval application authority grant handoff acceptance/i.test(readme)),
+);
+addCheck(
+  "platform roadmap records P126.2",
+  /P126\.2 is complete/.test(platformRoadmap)
+    && (/P126\.3\s+is\s+next/.test(platformRoadmap) || /P126\.3 is complete/.test(platformRoadmap)),
+);
 addCheck(
   "phase status advanced",
   (p1262CurrentState || p1263StartedState)

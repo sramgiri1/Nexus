@@ -179,10 +179,95 @@ to P126.1.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P126.3 Governed Acceptance Intent Model
 
-P126.3 Governed Acceptance Intent Model: local readiness model only. No handoff
-acceptance, writes, execution, providers, dispatch, mutation, network, or spend.
+Phase: P126 Founder Runtime Approval Application Authority Grant Handoff
+Acceptance Boundary
+Subphase: P126.3 Governed Acceptance Intent Model
+
+Goal: add a governed local acceptance intent model that consumes P126.2 metadata
+and keeps every acceptance, write, execution, provider, dispatch, mutation,
+network, and spend path blocked.
+
+Why this is needed: P126.2 provides metadata. P126.3 creates the local model
+that P126.4 can preview through a safe dry-run.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryIntentModel.js`
+- `scripts/check-p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `scripts/check-p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary.js`
+- `contracts/os-roadmap/p126-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-contracts.json`
+- `docs/architecture/P126_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_MODEL_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_MODEL_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_BOUNDARY_INTENT_STATES`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryIntentModel`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceBoundaryIntentModel`
+
+Data shape: local model with schema version, phase id, source P126.2 metadata,
+modelOnly/localOnly/hidden flags, allowlisted intent state, zero candidate
+counts, readiness rows, blockers, next action, disabled reason, owner,
+evidence/activity labels, cost label, all-false action booleans, authority
+flags, and metadata section labels.
+
+Command Center UX requirements: no new UI. Do not expose model data in Chat,
+Lite, OS Roadmap, Live Readiness, or unrelated pages.
+
+Validation commands:
+- `npm run check:p1263-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:p1262-founder-runtime-approval-application-authority-grant-handoff-acceptance-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff appears only on scoped pages"`
+- `git diff --check`
+
+OS phase status update: P126 in progress, P126.3 complete, current phase
+P126.3, previous phase P126.2, next phase P126.4.
+
+Known risks: readiness labels could imply runnable acceptance. P126.3 keeps
+candidate counts at zero and all acceptance, write, execution, provider,
+dispatch, mutation, network, and spend booleans false.
+
+Rollback plan: remove the P126.3 intent model/checker/report/package script,
+revert docs/status updates, restore P126.3 to planned, and return current phase
+to P126.2.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P126.4 Acceptance Safe Dry Run: local dry-run envelope only. No handoff
 acceptance, writes, execution, providers, dispatch, mutation, network, or spend.
