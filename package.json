@@ -627,7 +627,8 @@
     "check:p1172-founder-runtime-execution-approval-gate": "node scripts/check-p1172-founder-runtime-execution-approval-gate.js",
     "check:p1173-founder-runtime-execution-approval-gate": "node scripts/check-p1173-founder-runtime-execution-approval-gate.js",
     "check:p1174-founder-runtime-execution-approval-gate": "node scripts/check-p1174-founder-runtime-execution-approval-gate.js",
-    "check:p1175-founder-runtime-execution-approval-gate": "node scripts/check-p1175-founder-runtime-execution-approval-gate.js"
+    "check:p1175-founder-runtime-execution-approval-gate": "node scripts/check-p1175-founder-runtime-execution-approval-gate.js",
+    "check:p1176-founder-runtime-execution-approval-gate": "node scripts/check-p1176-founder-runtime-execution-approval-gate.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

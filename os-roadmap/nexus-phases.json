@@ -11179,18 +11179,19 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "08542fa5",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
-      "detail": "P117.5 Command Center approval gate UX complete; P117.6 validation/docs is next.",
+      "detail": "P117.6 approval gate validation/docs complete; P117.7 final validation is next.",
       "phaseId": "P117",
       "title": "Founder Runtime Execution Approval Gate",
       "order": 153,
       "status": "in_progress",
-      "summary": "P117 is in progress with contract, local approval evidence schema metadata, governed local approval evidence review model, safe dry-run preview, and scoped Command Center approval gate UX complete. Approval capture, approval persistence, approve/reject decision recording, and runtime execution remain blocked.",
-      "nextPhase": "P117.6",
-      "previousPhase": "P117.4",
+      "summary": "P117 is in progress with contract, local approval evidence schema metadata, governed local approval evidence review model, safe dry-run preview, scoped Command Center approval gate UX, and aggregate validation/docs complete. Approval capture, approval persistence, approve/reject decision recording, and runtime execution remain blocked.",
+      "nextPhase": "P117.7",
+      "previousPhase": "P117.5",
       "checksRun": [
+        "npm run check:p1176-founder-runtime-execution-approval-gate",
         "npm run check:p1175-founder-runtime-execution-approval-gate",
         "npm run check:p1174-founder-runtime-execution-approval-gate",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime execution approval gate appears only on Business Build and Agent Flow\"",
@@ -11200,8 +11201,8 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P117.5 is read-only Command Center UX only; it does not capture approvals, persist approval decisions, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
-        "P117.6 must validate P117.1-P117.5 together and keep the approval gate non-runnable."
+        "P117.6 is aggregate validation/docs only; it does not capture approvals, persist approval decisions, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "P117.7 must run final validation and close P117 without adding execution authority."
       ],
       "completedAt": ""
     },
@@ -11346,23 +11347,33 @@
     },
     {
       "track": "NEXUS_OS",
-      "branch": "planned",
-      "commit": "planned",
-      "commandCenterVisible": false,
-      "label": "Approval Gate Validation / Docs",
-      "detail": "Planned validation and docs aggregation for P117.1-P117.5.",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "label": "Approval Gate Validation",
+      "detail": "Approval gate aggregate validation/docs complete; final validation is next.",
       "phaseId": "P117.6",
       "title": "Approval Gate Validation / Docs",
       "order": 153.6,
-      "status": "planned",
-      "summary": "Planned validation and docs aggregation for P117.1-P117.5.",
+      "status": "complete",
+      "summary": "Validated P117.1-P117.5 together across approval-gate contract, schema metadata, local approval evidence review, safe dry-run preview, and scoped Command Center approval gate UX while all approval capture and runtime execution authority remains blocked.",
       "nextPhase": "P117.7",
       "previousPhase": "P117.5",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned only. Approval capture, approval persistence, runtime execution, execution unlock, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL interface, deploy, release, export, package action, network calls, and provider spend remain unavailable."
+      "checksRun": [
+        "npm run check:p1176-founder-runtime-execution-approval-gate",
+        "npm run check:p1175-founder-runtime-execution-approval-gate",
+        "npm run check:p1174-founder-runtime-execution-approval-gate",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime execution approval gate appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P117.6 is aggregate validation/docs only; it does not write approval evidence records, capture approvals, persist decisions, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
+        "No Command Center source or dashboard route tests were changed in P117.6; P117.5 UX is preserved and revalidated."
+      ],
+      "completedAt": "2026-05-29T04:36:12.026Z"
     },
     {
       "track": "NEXUS_OS",
@@ -11386,8 +11397,8 @@
     }
   ],
   "updatedAt": "2026-05-29T04:18:21.182Z",
-  "currentPhase": "P117.5",
-  "previousPhase": "P117.4",
-  "nextPhase": "P117.6",
+  "currentPhase": "P117.6",
+  "previousPhase": "P117.5",
+  "nextPhase": "P117.7",
   "currentPhaseStatus": "complete"
 }

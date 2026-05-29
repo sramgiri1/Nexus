@@ -882,6 +882,14 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P117.6 approval gate validation: P117.1-P117.5 are now checked together
+  across contract, schema metadata, governed local approval evidence review,
+  safe dry-run preview, and Command Center approval gate UX. P117.7 is next for
+  final validation. Approval capture, approval persistence, approve/reject
+  decision recording, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

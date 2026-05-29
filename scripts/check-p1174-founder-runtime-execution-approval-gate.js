@@ -153,12 +153,12 @@ addCheck("platform roadmap records P117.4", /P117\.4 is complete/.test(platformR
 addCheck("README records P117.4", /P117\.4 approval gate safe dry-run preview/i.test(readme) && (/P117\.5 is next/.test(readme) || /P117\.5 Command Center approval gate UX/.test(readme)));
 addCheck(
   "phase status advanced",
-  ["P117.4", "P117.5"].includes(status.currentPhase)
-    && ["P117.3", "P117.4"].includes(status.previousPhase)
-    && ["P117.5", "P117.6"].includes(status.nextPhase)
-    && ["P117.4", "P117.5"].includes(roadmap.currentPhase)
-    && ["P117.3", "P117.4"].includes(roadmap.previousPhase)
-    && ["P117.5", "P117.6"].includes(roadmap.nextPhase)
+  ["P117.4", "P117.5", "P117.6"].includes(status.currentPhase)
+    && ["P117.3", "P117.4", "P117.5"].includes(status.previousPhase)
+    && ["P117.5", "P117.6", "P117.7"].includes(status.nextPhase)
+    && ["P117.4", "P117.5", "P117.6"].includes(roadmap.currentPhase)
+    && ["P117.3", "P117.4", "P117.5"].includes(roadmap.previousPhase)
+    && ["P117.5", "P117.6", "P117.7"].includes(roadmap.nextPhase)
     && statusById.get("P117")?.status === "in_progress"
     && statusById.get("P117.4")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P117.5")?.status)

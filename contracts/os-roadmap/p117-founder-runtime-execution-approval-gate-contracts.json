@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and later validate a governed founder runtime execution approval gate while keeping runtime execution blocked until a later explicitly scoped phase grants narrow authority.",
-  "currentSubphase": "P117.5",
-  "previousSubphase": "P117.4",
-  "nextSubphase": "P117.6",
+  "currentSubphase": "P117.6",
+  "previousSubphase": "P117.5",
+  "nextSubphase": "P117.7",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P117.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -608,17 +608,52 @@
     {
       "phaseId": "P117.6",
       "title": "Approval Gate Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "narrowGoal": "Validate P117.1-P117.5 together before final validation.",
-      "allowedFiles": [],
-      "exactFiles": [],
+      "narrowGoal": "Validate P117.1-P117.5 together and close docs/status alignment before final validation.",
+      "allowedFiles": [
+        "scripts/check-p1176-founder-runtime-execution-approval-gate.js",
+        "contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json",
+        "docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1175-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1176-founder-runtime-execution-approval-gate-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1174-founder-runtime-execution-approval-gate.js",
+        "reports/p1174-founder-runtime-execution-approval-gate-report.md"
+      ],
+      "exactFiles": [
+        "scripts/check-p1176-founder-runtime-execution-approval-gate.js",
+        "contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json",
+        "docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1175-founder-runtime-execution-approval-gate-report.md",
+        "reports/p1176-founder-runtime-execution-approval-gate-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1174-founder-runtime-execution-approval-gate.js",
+        "reports/p1174-founder-runtime-execution-approval-gate-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
         "dashboard/src/**",
         "dashboard/tests/**",
+        "db/**",
+        "live-ready/**",
+        "local-state/runtime/**",
         "providers/**",
         "tools/**",
         "worker-runtime/**",
@@ -626,27 +661,31 @@
         "release/**",
         "exports/**",
         "packages/**",
-        ".env*",
-        "local-state/runtime/**"
+        ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "No runtime data shape is introduced.",
-      "commandCenterUx": "Preserve P117.5 UX when implemented.",
+      "dataShape": "No runtime data shape is introduced. P117.6 aggregates validation evidence for P117.1-P117.5 and writes a markdown validation report only.",
+      "commandCenterUx": "Preserve P117.5 Command Center runtime execution approval gate UX on Business Build and Agent Flow. Do not add new UI, new controls, raw IDs, raw logs, raw policy dumps, internal phase labels in primary UX, or fake actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "playwrightTests": [
-        "Preserve P117.5 coverage when implemented."
+        "Preserve and rerun the P117.5 route coverage for runtime execution approval gate on Business Build and Agent Flow."
       ],
       "checkerUpdates": [
-        "Add a dedicated P117.6 checker when implemented."
+        "Add check:p1176-founder-runtime-execution-approval-gate for aggregate validation across P117.1-P117.5, docs/status/report alignment, Command Center preservation, and safety wording.",
+        "Update the P117.4 checker handoff window so regression validation accepts the P117.6 validation phase."
       ],
-      "docsRoadmap": "Update docs/status/reports when implemented.",
-      "phaseStatusUpdate": "P117 in progress; P117.6 complete when implemented.",
+      "docsRoadmap": "Update P117 plan, README, platform roadmap, OS status, and generated reports for P117.6.",
+      "phaseStatusUpdate": "P117 in progress; P117.6 complete; current phase P117.6; previous P117.5; next P117.7.",
       "validationCommands": [
         "npm run check:p1176-founder-runtime-execution-approval-gate",
+        "npm run check:p1175-founder-runtime-execution-approval-gate",
+        "npm run check:p1174-founder-runtime-execution-approval-gate",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Runtime execution approval gate appears only on Business Build and Agent Flow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -657,17 +696,30 @@
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
-        "Confirm no approval capture or runtime execution authority is enabled."
+        "Confirm no projects/** or careloop/** files changed.",
+        "Confirm no dashboard/src/** or dashboard/tests/** files changed in P117.6.",
+        "Confirm no provider/model calls, approval capture, approval persistence, approval decision recording, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL, runtime execution, execution unlock, deploy, release, export, package, network calls, or provider spend are enabled.",
+        "Confirm no DemoApp exposure, raw JSON/log/policy dumps, raw private IDs, raw packet keys, raw DB table names, internal phase labels in primary UX, or fake runnable actions are introduced."
       ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
         "What was implemented",
-        "Known limitations"
+        "Command Center UX changes",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results if applicable",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
       ],
       "nextPhase": "P117.7",
-      "previousPhase": "P117.5"
+      "previousPhase": "P117.5",
+      "expectedBaseCommit": "9dd03f7e"
     },
     {
       "phaseId": "P117.7",
@@ -734,5 +786,5 @@
       "previousPhase": "P117.6"
     }
   ],
-  "summary": "P117 is in progress. P117.1-P117.5 define the approval-gate contract, local approval evidence schema metadata, governed local approval evidence review model, safe dry-run preview, and scoped Command Center approval gate UX without approval capture, approval persistence, or runtime execution authority."
+  "summary": "P117 is in progress. P117.1-P117.6 define the approval-gate contract, local approval evidence schema metadata, governed local approval evidence review model, safe dry-run preview, scoped Command Center approval gate UX, and aggregate validation/docs without approval capture, approval persistence, or runtime execution authority."
 }
