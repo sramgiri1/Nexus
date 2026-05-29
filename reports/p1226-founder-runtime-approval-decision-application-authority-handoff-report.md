@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P122.6
-- Generated at: 2026-05-29T14:13:56.798Z
+- Generated at: 2026-05-29T14:15:14.165Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f8a1727f
+- Validation HEAD: e3e21955
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | platform roadmap records P122.6 | PASS |  |
 | README records P122.6 | PASS |  |
 | phase status advanced | PASS | P122.6/P122.5/P122.7 |
-| changed files stay in P122.6 allowed scope | PASS | README.md, contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js, reports/p1226-founder-runtime-approval-decision-application-authority-handoff-report.md, scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p122-founder-runtime-approval-decision-application-authority-handoff-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P122_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_AUTHORITY_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1225-founder-runtime-approval-decision-application-authority-handoff-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1225-founder-runtime-approval-decision-application-authority-handoff.js, reports/p1226-founder-runtime-approval-decision-application-authority-handoff-report.md, scripts/check-p1226-founder-runtime-approval-decision-application-authority-handoff.js |
+| changed files stay in P122.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | P122.6 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | no unsafe imports or URLs | PASS |  |

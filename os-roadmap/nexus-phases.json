@@ -12286,7 +12286,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e3e21955",
       "commandCenterVisible": true,
       "label": "Application Authority Handoff",
       "detail": "P122.6 validation/docs closure complete; P122.7 final validation is next.",
@@ -12448,7 +12448,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e3e21955",
       "commandCenterVisible": true,
       "label": "Authority Validation",
       "detail": "P122.6 validation/docs closure complete; P122.7 final validation is next.",
@@ -12502,7 +12502,7 @@
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e3e21955",
     "commandCenterVisible": true,
     "label": "Application Authority Handoff",
     "detail": "P122.6 validation/docs closure complete; P122.7 final validation is next.",
