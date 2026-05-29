@@ -16660,7 +16660,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "45c8823b",
       "commandCenterVisible": true,
       "label": "Approval Decision Persistence",
       "detail": "P120.3 persistence intent model complete; P120.4 safe dry run is next.",
@@ -16739,7 +16739,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "45c8823b",
       "commandCenterVisible": true,
       "label": "Persistence Intent Model",
       "detail": "Governed local approval decision persistence intent model complete.",

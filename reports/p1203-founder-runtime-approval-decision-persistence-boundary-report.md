@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P120.3
-- Generated at: 2026-05-29T11:49:53.494Z
+- Generated at: 2026-05-29T11:50:52.182Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 403b08d7
+- Validation HEAD: 45c8823b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | README records P120.3 | PASS |  |
 | platform roadmap records P120.3 | PASS |  |
 | phase status advanced | PASS | P120.3/P120.2/P120.4 |
-| changed files stay in P120.3 allowed scope | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1203-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1203-founder-runtime-approval-decision-persistence-boundary.js, shared/founderApprovalDecisionPersistenceIntentModel.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1203-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1203-founder-runtime-approval-decision-persistence-boundary.js, shared/founderApprovalDecisionPersistenceIntentModel.js |
+| changed files stay in P120.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
