@@ -10719,7 +10719,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b513aaf77eff4ee1a5127b6d3913eb9b03456533",
       "commandCenterVisible": true,
       "label": "Founder Live Runtime Admission Readiness",
       "detail": "P115.3 governed local admission CRUD model complete; P115.4 runtime admission preview is next.",
@@ -10800,7 +10800,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b513aaf77eff4ee1a5127b6d3913eb9b03456533",
       "commandCenterVisible": true,
       "label": "Governed Local Admission CRUD Model",
       "detail": "P115.3 governed local admission CRUD model complete; P115.4 runtime admission preview is next.",
