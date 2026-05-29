@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision recording boundary while keeping approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P119.5",
-  "previousSubphase": "P119.4",
-  "nextSubphase": "P119.6",
+  "currentSubphase": "P119.6",
+  "previousSubphase": "P119.5",
+  "nextSubphase": "P119.7",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P119.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -592,7 +592,7 @@
     {
       "phaseId": "P119.6",
       "title": "Approval Decision Validation / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Validate P119.1-P119.5 together and close docs/status alignment before final validation.",
@@ -610,7 +610,20 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "scripts/check-p1196-founder-runtime-approval-decision-recording-boundary.js",
+        "contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json",
+        "docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1195-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -675,7 +688,8 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P119.7",
-      "previousPhase": "P119.5"
+      "previousPhase": "P119.5",
+      "expectedBaseCommit": "f2a62938"
     },
     {
       "phaseId": "P119.7",

@@ -487,10 +487,10 @@ reporting. Do not duplicate schema metadata, report writers, checker
 formatters, phase status updaters, redaction helpers, mode guards, route
 matrices, UI components, or audit/activity appenders.
 
-Command Center UX requirements: no UI source change. Do not add submit buttons,
-approval buttons, reject buttons, save decision buttons, run controls, route
-labels, raw JSON/log/policy dumps, raw private IDs, raw DB table names, internal
-phase labels in primary UX, DemoApp, or fake working actions.
+Command Center UX requirements: no UI source change. Do not add submit,
+approval, reject, save decision, or run controls. Do not add route labels, raw
+JSON/log/policy dumps, raw private IDs, raw DB table names, internal phase
+labels in primary UX, DemoApp, or fake working actions.
 
 Dark/light/system theme requirements: preserve System, Dark, and Light theme
 behavior by avoiding dashboard source changes in this subphase.
@@ -679,10 +679,10 @@ reporting. Do not duplicate schema metadata, result envelopes, report writers,
 checker formatters, phase status updaters, redaction helpers, mode guards,
 route matrices, UI components, or audit/activity appenders.
 
-Command Center UX requirements: no UI source change. Do not add submit buttons,
-approval buttons, reject buttons, save decision buttons, run controls, route
-labels, raw JSON/log/policy dumps, raw private IDs, raw DB table names, internal
-phase labels in primary UX, DemoApp, or fake working actions.
+Command Center UX requirements: no UI source change. Do not add submit,
+approval, reject, save decision, or run controls. Do not add route labels, raw
+JSON/log/policy dumps, raw private IDs, raw DB table names, internal phase
+labels in primary UX, DemoApp, or fake working actions.
 
 Dark/light/system theme requirements: preserve System, Dark, and Light theme
 behavior by avoiding dashboard source changes in this subphase.
@@ -945,15 +945,175 @@ Rollback plan: remove the P119.5 dashboard/checker/docs/status/report changes,
 restore P119.5 to planned, set current phase back to P119.4, and keep P119.4
 complete.
 
+## P119.6 Approval Decision Validation / Docs
+
+Status: complete
+
+Phase: P119 Founder Runtime Approval Decision Recording Boundary
+
+Subphase: P119.6 Approval Decision Validation / Docs
+
+Goal: validate P119.1-P119.5 together and close docs/status alignment before
+final validation.
+
+Why this is needed: P119.1-P119.5 now span contract, metadata, intent model,
+dry-run preview, and scoped UX. P119.6 proves they remain aligned and that the
+UX did not introduce live decision authority.
+
+User/operator impact: no new UI behavior. Operators get an aggregate evidence
+report that P119 decision-boundary work is coherent and still blocked.
+
+Command Center impact: preserve P119.5 UX exactly. No new pages, cards, labels,
+controls, or route changes.
+
+Safety impact: validation-only. P119.6 does not enable approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+hosted DB mutation, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, raw SQL, deploy,
+release, export, package, network calls, or spend.
+
+Cost impact: local validation/docs/report only. No provider/model/network/spend
+path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `f2a62938`.
+
+Allowed files:
+- `scripts/check-p1196-founder-runtime-approval-decision-recording-boundary.js`
+- `contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json`
+- `docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1195-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files expected to change:
+- P119.6 aggregate checker
+- P119 contract and plan
+- package script registration
+- README and platform roadmap
+- OS roadmap/status and generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `scripts/check-p1196-founder-runtime-approval-decision-recording-boundary.js`
+- update P119 contract/docs/status/reports
+
+Expected exports, schemas, and data shapes: no runtime exports, UI data shape,
+or schema change. P119.6 produces a markdown validation report only.
+
+Reuse check: reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+P119.5 checker patterns, existing OS phase status validation, and existing
+phase coverage reporting. Do not duplicate report writers, checker formatters,
+phase status updaters, redaction helpers, mode guards, route matrices, UI
+components, or audit/activity appenders.
+
+Command Center UX requirements: preserve P119.5 approval decision boundary UX.
+Do not add UI, approve/reject/save/run controls, raw JSON/log/policy dumps, raw
+private IDs, raw DB table names, internal phase labels in primary UX, DemoApp,
+or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: preserve P119.5 route coverage evidence. No new Playwright
+test is added in P119.6 because dashboard source/test changes are forbidden.
+
+Checker updates: add a dedicated P119.6 aggregate checker for P119.1-P119.5
+completion, prior report pass state, P119.5 UX/test preservation, docs/status
+alignment, allowed file scope, and safety wording.
+
+Docs/README/roadmap updates: P119.6 is recorded in this plan, README, platform
+roadmap, P119 contract, OS roadmap/status, and generated reports. P119.7 is
+next for final validation.
+
+OS phase status update: P119 is in progress; P119.6 is complete; current phase
+P119.6; previous P119.5; next P119.7.
+
+Reports to regenerate:
+- `reports/p1195-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/p1196-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1196-founder-runtime-approval-decision-recording-boundary`
+- `npm run check:p1195-founder-runtime-approval-decision-recording-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+dashboard test files changed; no DB/runtime provider, tool, worker, deploy,
+release, export, package, or env paths changed; no approval capture, approval
+persistence, approval decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+spend authority is enabled; no DemoApp exposure, raw private IDs, raw DB table
+names, raw JSON/log/policy dumps, internal primary UX phase labels, or fake
+actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P119.6 files>`
+- `git commit -m "feat(nexus): implement p1196 approval decision validation"`
+- stamp P119/P119.6 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1196 approval decision validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: aggregate validation could accidentally drift into changing the
+UX. P119.6 keeps dashboard source/test paths forbidden and validates only
+existing UX evidence.
+
+Rollback plan: remove the P119.6 checker/docs/status/report changes, restore
+P119.6 to planned, set current phase back to P119.5, and keep P119.5 complete.
+
 ## Planned Subphase Controls
 
-P119.5 Command Center Approval Decision Boundary UX is complete. Business Build
-and Agent Flow now show scoped decision readiness with no approve/reject or
-save controls.
-
-P119.6 Approval Decision Validation / Docs: validate P119.1-P119.5 together,
-regenerate reports, and preserve UX without adding new UI or controls. No
-approval decision recording or runtime authority may be added.
+P119.6 Approval Decision Validation / Docs is complete. P119.1-P119.5 are
+validated together, reports are regenerated, and P119.5 UX is preserved without
+adding new UI or controls.
 
 P119.7 Final Validation: close P119, record a planned next phase, rerun
 aggregate checks, ensure no stale phase status remains, and keep approval
