@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P117.1
-- Generated at: 2026-05-29T03:55:20.168Z
+- Generated at: 2026-05-29T03:55:56.616Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 67fc2727
+- Validation HEAD: e9955c41
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | README records P117.1 | PASS |  |
 | platform roadmap records P117.1 | PASS |  |
 | phase status advanced | PASS | P117.1/P116.7/P117.2 |
-| changed files stay in P117.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1167-founder-live-runtime-execution-readiness-report.md, scripts/check-os-phase-status.js, scripts/check-p1167-founder-live-runtime-execution-readiness.js, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, scripts/check-p1171-founder-runtime-execution-approval-gate-contract.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1167-founder-live-runtime-execution-readiness-report.md, scripts/check-os-phase-status.js, scripts/check-p1167-founder-live-runtime-execution-readiness.js, contracts/os-roadmap/p117-founder-runtime-execution-approval-gate-contracts.json, docs/architecture/P117_FOUNDER_RUNTIME_EXECUTION_APPROVAL_GATE_PLAN.md, reports/p1171-founder-runtime-execution-approval-gate-contract-report.md, scripts/check-p1171-founder-runtime-execution-approval-gate-contract.js |
+| changed files stay in P117.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw approval keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

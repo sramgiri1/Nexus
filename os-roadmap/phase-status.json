@@ -15986,7 +15986,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e9955c41",
       "commandCenterVisible": true,
       "label": "Runtime Approval Gate",
       "detail": "P117.1 contract complete; P117.2 approval evidence schema metadata is next.",
@@ -16013,7 +16013,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e9955c41",
       "commandCenterVisible": true,
       "label": "Approval Contract",
       "detail": "Runtime execution approval gate contract and policy are recorded; approval capture remains unavailable.",
@@ -16159,7 +16159,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T03:54:45.377Z",
+  "updatedAt": "2026-05-29T03:55:49.439Z",
   "currentPhase": "P117.1",
   "previousPhase": "P116.7",
   "nextPhase": "P117.2",
