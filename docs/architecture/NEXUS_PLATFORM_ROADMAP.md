@@ -3627,6 +3627,18 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P124.3 is complete. The governed local approval application authority grant
+intent model now reuses P124.2 grant metadata and exposes blocked readiness
+rows, blockers, disabled reason, owner capability, evidence/activity labels,
+zero unsafe candidate counts, and no-spend cost posture while rejecting granted,
+write, execution, provider, dispatch, mutation, network, and spend states.
+P124.4 is next for the grant safe dry-run preview. Authority grant, activation,
+approval application, approval capture, approval persistence, approve/reject
+decision recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL interface, deploy, release, export, package action,
+network call, and provider spend remain blocked.
+
 Implementation follows
 [`p111-founder-live-agent-work-order-persistence-contracts.json`](../../contracts/os-roadmap/p111-founder-live-agent-work-order-persistence-contracts.json)
 and

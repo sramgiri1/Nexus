@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define the governed approval application authority grant boundary before any live authority grant can be considered, while keeping grants, approval application, DB/runtime writes, execution, provider calls, project mutation, deploy, package, network, and spend blocked.",
-  "currentSubphase": "P124.2",
-  "previousSubphase": "P124.1",
-  "nextSubphase": "P124.3",
+  "currentSubphase": "P124.3",
+  "previousSubphase": "P124.2",
+  "nextSubphase": "P124.4",
   "safetyRules": [
     "Do not enable approval application authority grant in P124.1.",
     "Do not enable approval application, approval capture, approval persistence, or approve/reject decision recording in P124.1.",
@@ -296,12 +296,12 @@
     {
       "phaseId": "P124.3",
       "title": "Governed Grant Intent Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Add a pure local grant intent model that consumes P124.2 metadata and returns blocked readiness rows, disabled reasons, evidence labels, activity labels, owner capability, and zero unsafe action counts without enabling live grants.",
       "allowedFiles": [
-        "shared/founderApprovalApplicationAuthorityGrantIntent.js",
+        "shared/founderApprovalApplicationAuthorityGrantIntentModel.js",
         "shared/founderApprovalApplicationAuthorityGrantEligibilityMetadata.js",
         "contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json",
         "docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md",
@@ -318,7 +318,7 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "exactFiles": [
-        "shared/founderApprovalApplicationAuthorityGrantIntent.js",
+        "shared/founderApprovalApplicationAuthorityGrantIntentModel.js",
         "shared/founderApprovalApplicationAuthorityGrantEligibilityMetadata.js",
         "contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json",
         "docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md",
@@ -353,9 +353,13 @@
         ".env*"
       ],
       "expectedExports": [
-        "buildFounderApprovalApplicationAuthorityGrantIntent"
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_INTENT_MODEL_PHASE",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_INTENT_MODEL_VERSION",
+        "FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_INTENT_STATES",
+        "buildFounderApprovalApplicationAuthorityGrantIntentModel",
+        "validateFounderApprovalApplicationAuthorityGrantIntentModel"
       ],
-      "dataShape": "Pure local object with currentState, readinessRows, blocked counts, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, and zero candidate counts for unsafe work.",
+      "dataShape": "Pure local object with currentState, readinessRows, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, and zero candidate counts for unsafe work. No persistence or runtime records.",
       "commandCenterUx": "No Command Center source changes. Preserve scoped activation UX until P124.5.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -367,26 +371,29 @@
         "Preserve route-wide safety coverage for no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
       ],
       "checkerUpdates": [
-        "Add scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js or update the prior checker handoff as needed.",
+        "Add scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js.",
+        "Confirm the P124.2 checker accepts P124.3 handoff.",
         "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
-        "Validate forbidden paths, safe wording, status, docs, reports, and no unsafe imports or URLs."
+        "Validate grant intent model shape, P124.2 metadata reuse, blocked flags and zero counts, docs/status/reports, forbidden paths, and unsafe claim prevention."
       ],
-      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, and generated reports.",
+      "docsRoadmap": "Update P124 plan, README, platform roadmap, P124 contract, OS roadmap/status, generated reports, and P124.4 planned handoff.",
       "phaseStatusUpdate": "P124 in progress; P124.3 complete; current phase P124.3; previous P124.2; next P124.4.",
       "validationCommands": [
         "npm run check:p1243-founder-runtime-approval-application-authority-grant-boundary",
+        "npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority activation appears only on scoped pages\"",
         "git diff --check"
       ],
       "gitCommands": [
         "git add <allowed P124.3 files>",
-        "git commit -m \"feat(nexus): implement p1243 approval authority grant boundary\"",
+        "git commit -m \"feat(nexus): implement p1243 approval authority grant intent model\"",
         "stamp P124/P124.3 status with the implementation commit",
         "git add <allowed P124.3 status/report files>",
-        "git commit -m \"chore(nexus): stamp p1243 approval authority grant boundary\"",
+        "git commit -m \"chore(nexus): stamp p1243 approval authority grant intent model\"",
         "git push origin codex/nexus-e2e-phase-validation"
       ],
       "finalSafetyChecks": [
@@ -413,7 +420,8 @@
       ],
       "previousPhase": "P124.2",
       "nextPhase": "P124.4",
-      "order": 160.3
+      "order": 160.3,
+      "expectedBaseCommit": "8f559390"
     },
     {
       "phaseId": "P124.4",
@@ -899,7 +907,7 @@
     }
   ],
   "completedAt": "2026-05-29T15:38:15.699Z",
-  "summary": "P124.2 adds browser-safe authority grant eligibility metadata that reuses P123 activation metadata. Live grants remain blocked.",
+  "summary": "P124.3 adds a pure local authority grant intent model that reuses P124.2 grant metadata. Live grants remain blocked.",
   "previousPhase": "P123.7",
-  "nextPhase": "P124.3"
+  "nextPhase": "P124.4"
 }

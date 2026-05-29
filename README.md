@@ -1306,6 +1306,16 @@ The Command Center and local operator surface have:
   provider/model call, agent dispatch, worker/tool execution, project mutation,
   hosted DB mutation, raw SQL interface, deploy, release, export, package,
   network call, and provider spend remain unavailable.
+- P124.3 governed approval application authority grant intent model: the local
+  model now reuses P124.2 metadata, exposes blocked readiness rows, blockers,
+  disabled reason, owner capability, evidence/activity labels, and no-spend cost
+  posture, and rejects granted/write/execution states. P124.4 is next for the
+  grant safe dry-run preview. Authority grant, activation, approval application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

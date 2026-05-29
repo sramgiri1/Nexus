@@ -317,14 +317,139 @@ return current phase to P124.1.
 
 Status: complete.
 
-## Planned Subphase Contracts
+## P124.3 Governed Grant Intent Model
 
-P124.3 Governed Grant Intent Model: model-only, allowed files are the planned
-shared grant intent module, P124.2 metadata, P124 contract/docs/checker/status,
-and reports. It forbids the same unsafe paths. Expected export is
-`buildFounderApprovalApplicationAuthorityGrantIntent`. It must return
-display-safe blocked readiness data and zero unsafe candidate counts without
-granting authority.
+Phase: P124
+Subphase: P124.3
+Goal: add a pure local governed grant intent model that consumes P124.2 metadata
+and returns blocked readiness rows, disabled reasons, evidence/activity labels,
+owner capability, and zero unsafe action counts.
+Why this is needed: P124.2 defines grant eligibility metadata. P124.3 provides a
+deterministic local model before any safe dry-run or scoped UX work.
+User/operator impact: operators get a display-safe grant intent model for future
+review without any live grant, write, execution, provider, or mutation behavior.
+Command Center impact: no Command Center source change in P124.3. Preserve the
+current Business Build and Agent Flow activation boundary UX.
+Safety impact: model-only. Authority grant, activation, approval application,
+approval capture, approval persistence, approve/reject decision recording,
+DB/runtime writes, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation, raw
+SQL, deploy, release, export, package, network calls, and provider spend remain
+blocked.
+Cost impact: none; no provider, model, network, worker, deploy, package, or
+spend path is used.
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantIntentModel.js`
+- `shared/founderApprovalApplicationAuthorityGrantEligibilityMetadata.js`
+- `contracts/os-roadmap/p124-founder-runtime-approval-application-authority-grant-boundary-contracts.json`
+- `docs/architecture/P124_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_BOUNDARY_PLAN.md`
+- `scripts/check-p1242-founder-runtime-approval-application-authority-grant-boundary.js`
+- `scripts/check-p1243-founder-runtime-approval-application-authority-grant-boundary.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1242-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_INTENT_MODEL_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_INTENT_MODEL_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_INTENT_STATES`
+- `buildFounderApprovalApplicationAuthorityGrantIntentModel`
+- `validateFounderApprovalApplicationAuthorityGrantIntentModel`
+- No schemas, DB tables, runtime records, provider requests, or persistence.
+
+Reuse check: reuse P124.2 grant eligibility metadata and the P123.3 local model
+pattern. Do not duplicate report writers, redaction helpers, result envelopes,
+mode guards, UI components, route matrices, or activity/evidence helpers.
+
+Command Center UX requirements: no source changes. Primary UX must not show raw
+JSON, raw logs, raw policy dumps, raw private IDs, raw report paths, fake
+runnable actions, DemoApp, or mutation controls.
+
+Dark/light/system theme requirements: no theme source changes. Run existing
+focused Playwright coverage as regression.
+
+Playwright tests: no dashboard test edits. Run the scoped activation boundary
+Playwright test.
+
+Tests to add/update/remove: add P124.3 checker and package script. Update no
+dashboard tests.
+
+Checker updates: validate model shape, P124.2 metadata reuse, blocked grant
+flags, zero unsafe candidate counts, docs/status/report alignment, P124.2
+checker handoff acceptance, forbidden paths, safe wording, and no unsafe imports
+or URLs.
+
+Docs to update: this P124 plan, `README.md`, platform roadmap, P124 contract,
+OS roadmap/status, and generated reports.
+
+Reports to regenerate:
+- `reports/p1242-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/p1243-founder-runtime-approval-application-authority-grant-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update: P124 is in progress. P124.3 is complete. Current phase
+is P124.3, previous phase is P124.2, and next phase is P124.4.
+
+Validation commands:
+- `npm run check:p1243-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:p1242-founder-runtime-approval-application-authority-grant-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority activation appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P124.3 files>`
+- `git commit -m "feat(nexus): implement p1243 approval authority grant intent model"`
+- stamp P124/P124.3 status with the implementation commit
+- `git add <allowed P124.3 status/report files>`
+- `git commit -m "chore(nexus): stamp p1243 approval authority grant intent model"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks: confirm no forbidden paths changed, no runtime/provider/
+project/deploy/package/env paths changed, no authority grant/write/execution/
+spend behavior is enabled, and no stale `pending-final-commit` remains after
+the status stamp commit.
+
+Known risks: local model naming can imply authority is live. P124.3 keeps every
+grant flag false, all candidate counts zero, and grant behavior blocked.
+
+Rollback plan: remove the grant intent model, P124.3 checker/report/package
+script, contract/docs/status/report updates, restore P124.3 to planned, and
+return current phase to P124.2.
+
+Status: complete.
+
+## Planned Subphase Contracts
 
 P124.4 Grant Safe Dry Run: preview-only, allowed files are the planned safe
 dry-run module, P124.3 intent model, P124 contract/docs/checker/status, and
