@@ -19,6 +19,197 @@ P129 is split into seven implementation-grade subphases:
 - P129.6 Command Center Store UX
 - P129.7 Final Validation
 
+## P129.5 Store CRUD Safe Dry Run
+
+Status: complete
+Phase: P129
+Subphase: P129.5
+Goal: Add browser-safe local blocked safe dry-run envelopes for future
+acceptance capture persistence store CRUD while keeping DB schemas, migrations,
+reads, writes, runtime records, CRUD execution, providers, dispatch, mutation,
+network, and spend blocked.
+Why this is needed: P129.4 previewed migration readiness. P129.5 defines the
+future dry-run envelope surface before any Command Center store UX can explain
+what is blocked and why.
+User/operator impact: Operators can see future store create, read, modify,
+remove, list, and evidence-link dry-run envelopes with disabled reason, owner,
+next action, evidence, activity, and cost labels.
+Command Center impact: No dashboard source or route test changes. Existing
+read-only persistence cards stay scoped to Business Build and Agent Flow; Chat
+with NEXUS and Lite stay clean.
+Safety impact: P129.5 is safe-dry-run-only. It does not create DB schemas,
+migration files, raw SQL interfaces, reads, writes, runtime records, CRUD
+actions, acceptance capture, handoff acceptance, authority handoff, authority
+grant, activation, approval application, approve/reject recording, runtime
+execution, provider/model calls, agent dispatch, project mutation, deploy,
+release, export, package, network calls, or spend.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `0997f9e3`
+
+Files expected to change:
+- `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun.js`
+- `contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json`
+- `docs/architecture/P129_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_PLAN.md`
+- `scripts/check-p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`
+- `scripts/check-p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md`
+- `reports/p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun.js`.
+- Create `scripts/check-p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store.js`.
+- Update P129 docs, contract, status, package script, and reports listed above.
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_CRUD_SAFE_DRY_RUN_PHASE`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_CRUD_SAFE_DRY_RUN_VERSION`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_CRUD_SAFE_DRY_RUN_ACTION_NAMES`
+- `FOUNDER_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_STORE_CRUD_SAFE_DRY_RUN_FLAGS`
+- `buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun`
+- `validateFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun`
+- Data shape: browser-safe blocked result envelopes only, with display-safe
+  dry-run data, blocked authority flags, P129.4/P129.3/P129.2/P128.2/P127.2
+  lineage, blockers, next action, owner, evidence/activity labels, and cost
+  label. No DB schema, query, migration file, runtime record, live CRUD
+  executor, provider envelope, dispatch packet, raw private ID, or project data.
+
+Reuse check:
+- Reuse P129.4 migration preview.
+- Reuse `shared/resultEnvelope.js`.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, or UI components.
+
+Command Center UX requirements:
+- Preserve current scoped read-only persistence UX on Business Build and Agent
+  Flow.
+- Do not add new Chat with NEXUS or Lite page information.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw table names, DemoApp,
+  raw report paths, or private project IDs in primary UX.
+- No provider/tool/project mutation, DB writes, live CRUD, migration execution,
+  or deploy controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Do not change dashboard source, CSS, theme tokens, or route layout in P129.5.
+
+Tests to add/update/remove:
+- Add the P129.5 checker.
+- Do not add or remove Playwright tests in P129.5 because primary UX does not
+  change.
+- Run existing scoped Playwright coverage for the P128/P129 persistence route
+  guard.
+
+Checker updates:
+- Validate P129.5 exported safe dry-run model and source lineage.
+- Validate blocked live CRUD, schema, migration, DB reads/writes, raw SQL,
+  runtime writes, execution, providers, dispatch, mutation, network, and spend.
+- Validate allowed file scope, forbidden path scope, safe docs, result
+  envelopes, and status handoff.
+
+Docs to update:
+- This P129 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P129.4 report.
+- P129.5 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P129 in progress.
+- P129.5 complete.
+- Current phase P129.5.
+- Previous phase P129.4.
+- Next phase P129.6.
+- P129.6 remains planned.
+
+Known risks:
+- Safe dry-run wording can imply live CRUD exists. The checker blocks unsafe
+  positive claims, raw table names, raw SQL wording, and fake runnable action
+  phrases.
+- Future Command Center store UX must remain scoped and must not expose raw
+  dry-run envelope internals.
+
+Rollback plan:
+- Revert only the P129.5 implementation and stamp commits. P129.4 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store`
+- `npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance capture persistence appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P129.5 allowed files>`
+- `git commit -m "feat(nexus): implement p1295 capture persistence store crud dry run"`
+- `git add <P129.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1295 capture persistence store crud dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Store CRUD execution, DB schemas, migrations, DB/runtime reads or writes,
+  live capture, handoff acceptance, authority grant handoff, execution,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P129.4 Store Migration Preview
 
 Status: complete

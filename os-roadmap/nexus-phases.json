@@ -13920,15 +13920,15 @@
       "order": 165,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e9b85f36",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P129 is in progress; P129.4 store migration preview is complete and P129.5 store CRUD safe dry run is next.",
-      "summary": "P129 capture persistence store work now includes contract/policy, schema metadata, repository intent rows, and migration preview rows while DB/runtime writes and live CRUD remain blocked.",
+      "detail": "P129 is in progress; P129.5 store CRUD safe dry run is complete and P129.6 Command Center store UX is next.",
+      "summary": "P129 capture persistence store work now includes contract/policy, schema metadata, repository intent rows, migration preview rows, and blocked safe dry-run envelopes while DB/runtime writes and live CRUD remain blocked.",
       "previousPhase": "P128.7",
-      "nextPhase": "P129.5",
+      "nextPhase": "P129.6",
       "checksRun": [
+        "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
-        "npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
@@ -13937,9 +13937,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T21:12:42.442Z"
+      "completedAt": "2026-05-29T21:18:18.002Z"
     },
     {
       "track": "NEXUS_OS",
@@ -14063,41 +14063,70 @@
       "title": "Store CRUD Safe Dry Run",
       "label": "Store CRUD Dry Run",
       "order": 165.5,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P129.5 store CRUD safe dry run complete; P129.6 Command Center store UX is next.",
+      "summary": "Added browser-safe local blocked dry-run envelopes for future acceptance capture persistence store CRUD while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
+      "previousPhase": "P129.4",
+      "nextPhase": "P129.6",
+      "checksRun": [
+        "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Approval application authority grant handoff acceptance capture persistence appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-29T21:18:18.002Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P129.6",
+      "title": "Command Center Store UX",
+      "label": "Store UX",
+      "order": 165.6,
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P129.5 will model store CRUD safe dry-run envelopes without running CRUD, reading or writing DB/runtime records, or mutating projects.",
-      "summary": "Planned store CRUD safe dry-run modeling for acceptance capture persistence, with live CRUD and DB/runtime writes still blocked until explicitly allowed in a future subphase.",
-      "previousPhase": "P129.4",
-      "nextPhase": "P129.6",
+      "detail": "P129.6 will surface scoped store readiness UX without exposing raw envelopes, raw IDs, or live actions.",
+      "summary": "Planned scoped Command Center store UX for acceptance capture persistence readiness, with live CRUD and DB/runtime writes still blocked.",
+      "previousPhase": "P129.5",
+      "nextPhase": "P129.7",
       "checksRun": [],
       "knownLimitations": [
-        "P129.5 is planned only. It must not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, call providers/models, dispatch agents, mutate projects, use network calls, deploy, release, export, package, or spend."
+        "P129.6 is planned only. It must not create DB schemas, run migrations, write DB/runtime records, persist acceptance capture, run CRUD actions, call providers/models, dispatch agents, mutate projects, use network calls, deploy, release, export, package, or spend."
       ]
     }
   ],
-  "updatedAt": "2026-05-29T21:12:42.442Z",
-  "currentPhase": "P129.4",
-  "previousPhase": "P129.3",
-  "nextPhase": "P129.5",
+  "updatedAt": "2026-05-29T21:18:18.002Z",
+  "currentPhase": "P129.5",
+  "previousPhase": "P129.4",
+  "nextPhase": "P129.6",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
-    "phaseId": "P129.4",
-    "title": "Store Migration Preview",
-    "label": "Migration Preview",
-    "order": 165.4,
+    "phaseId": "P129.5",
+    "title": "Store CRUD Safe Dry Run",
+    "label": "Store CRUD Dry Run",
+    "order": 165.5,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "e9b85f36",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P129.4 store migration preview complete; P129.5 store CRUD safe dry run is next.",
-    "summary": "Added browser-safe local migration preview rows for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, provider, dispatch, mutation, network, and spend blocked.",
-    "previousPhase": "P129.3",
-    "nextPhase": "P129.5",
+    "detail": "P129.5 store CRUD safe dry run complete; P129.6 Command Center store UX is next.",
+    "summary": "Added browser-safe local blocked dry-run envelopes for future acceptance capture persistence store CRUD while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
+    "previousPhase": "P129.4",
+    "nextPhase": "P129.6",
     "checksRun": [
+      "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
-      "npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -14106,28 +14135,28 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:12:42.442Z"
+    "completedAt": "2026-05-29T21:18:18.002Z"
   },
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
     "track": "NEXUS_OS",
-    "phaseId": "P129.4",
-    "title": "Store Migration Preview",
-    "label": "Migration Preview",
-    "order": 165.4,
+    "phaseId": "P129.5",
+    "title": "Store CRUD Safe Dry Run",
+    "label": "Store CRUD Dry Run",
+    "order": 165.5,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "e9b85f36",
+    "commit": "pending-final-commit",
     "commandCenterVisible": true,
-    "detail": "P129.4 store migration preview complete; P129.5 store CRUD safe dry run is next.",
-    "summary": "Added browser-safe local migration preview rows for future acceptance capture persistence store readiness while keeping schemas, migrations, DB/runtime reads or writes, CRUD, execution, provider, dispatch, mutation, network, and spend blocked.",
-    "previousPhase": "P129.3",
-    "nextPhase": "P129.5",
+    "detail": "P129.5 store CRUD safe dry run complete; P129.6 Command Center store UX is next.",
+    "summary": "Added browser-safe local blocked dry-run envelopes for future acceptance capture persistence store CRUD while keeping live CRUD, DB/runtime reads or writes, execution, providers, dispatch, mutation, network, and spend blocked.",
+    "previousPhase": "P129.4",
+    "nextPhase": "P129.6",
     "checksRun": [
+      "npm run check:p1295-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
-      "npm run check:p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -14136,8 +14165,8 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P129.4 is migration preview only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P129.5 is safe dry-run modeling only. It does not create DB schemas, create migration files, run migrations, read DB records, write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "completedAt": "2026-05-29T21:12:42.442Z"
+    "completedAt": "2026-05-29T21:18:18.002Z"
   }
 }

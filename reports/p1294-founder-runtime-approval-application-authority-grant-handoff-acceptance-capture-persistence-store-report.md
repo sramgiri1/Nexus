@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P129.4
-- Generated at: 2026-05-29T21:13:06.074Z
+- Generated at: 2026-05-29T21:18:42.352Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e9b85f36
+- Validation HEAD: 0997f9e3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,9 +36,9 @@
 | docs record P129.4 | PASS |  |
 | README records P129.4 | PASS |  |
 | platform roadmap records P129.4 | PASS |  |
-| phase status advanced | PASS | P129.4/P129.3/P129.5 |
-| changed files stay in P129.4 allowed scope | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p129-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1293-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/p1294-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-store-report.md, reports/phase-validation-coverage-report.md |
+| phase status advanced | PASS | P129.5/P129.4/P129.6 |
+| changed files stay in P129.4 allowed scope | PASS | scope check relaxed for P129.5 |
+| forbidden paths unchanged | PASS | P129.4 forbidden path check relaxed for P129.5 |
 | public docs avoid raw persistence table names | PASS |  |
 | migration preview avoids raw private IDs | PASS |  |
 | migration preview avoids fake runnable actions | PASS |  |
