@@ -16215,7 +16215,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "205216cd",
       "commandCenterVisible": true,
       "label": "Approval Capture Boundary",
       "detail": "P118.5 scoped Command Center approval capture boundary UX complete; P118.6 validation/docs is next.",
@@ -16353,7 +16353,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "205216cd",
       "commandCenterVisible": true,
       "label": "Approval Capture UX",
       "detail": "Scoped Command Center approval capture boundary UX complete without controls or writes.",
@@ -16421,7 +16421,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T05:33:03.406Z",
+  "updatedAt": "2026-05-29T05:36:20.630Z",
   "currentPhase": "P118.5",
   "previousPhase": "P118.4",
   "nextPhase": "P118.6",

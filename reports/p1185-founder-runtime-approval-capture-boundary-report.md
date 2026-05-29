@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P118.5
-- Generated at: 2026-05-29T05:33:39.083Z
+- Generated at: 2026-05-29T05:36:30.452Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1c420094
+- Validation HEAD: 205216cd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | platform roadmap records P118.5 | PASS |  |
 | README records P118.5 | PASS |  |
 | phase status advanced | PASS | P118.5/P118.4/P118.6 |
-| changed files stay in P118.5 allowed scope | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1185-founder-runtime-approval-capture-boundary-report.md, scripts/check-p1185-founder-runtime-approval-capture-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p118-founder-runtime-approval-capture-boundary-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P118_FOUNDER_RUNTIME_APPROVAL_CAPTURE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1185-founder-runtime-approval-capture-boundary-report.md, scripts/check-p1185-founder-runtime-approval-capture-boundary.js |
+| changed files stay in P118.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P118.5 contract avoids forbidden file scope | PASS |  |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
