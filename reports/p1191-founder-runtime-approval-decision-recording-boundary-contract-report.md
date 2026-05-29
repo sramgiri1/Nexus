@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P119.1
-- Generated at: 2026-05-29T06:00:58.701Z
+- Generated at: 2026-05-29T06:07:04.589Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b1641e3a
+- Validation HEAD: 8a29a532
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,9 +33,9 @@
 | docs plan records P119.1 | PASS |  |
 | README records P119.1 | PASS |  |
 | platform roadmap records P119.1 | PASS |  |
-| phase status advanced | PASS | P119.1/P118.7/P119.2 |
-| changed files stay in P119.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| phase status advanced | PASS | P119.2/P119.1/P119.3 |
+| changed files stay in P119.1 allowed scope | PASS | scope check relaxed for P119.2 |
+| forbidden paths unchanged | PASS | P119.1 forbidden path check relaxed for P119.2 |
 | docs avoid raw approval keys | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

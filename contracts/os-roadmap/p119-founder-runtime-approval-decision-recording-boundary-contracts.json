@@ -4,9 +4,9 @@
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Define and validate the founder approval decision recording boundary while keeping approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, and runtime execution blocked until later explicitly scoped phases grant narrow authority.",
-  "currentSubphase": "P119.1",
-  "previousSubphase": "P118.7",
-  "nextSubphase": "P119.2",
+  "currentSubphase": "P119.2",
+  "previousSubphase": "P119.1",
+  "nextSubphase": "P119.3",
   "safetyRules": [
     "Do not enable approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, execution unlock, worker/tool execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, raw SQL, deploy, release, export, package, network calls, or provider spend in P119.1.",
     "Do not expose DemoApp in full Command Center.",
@@ -145,7 +145,7 @@
     {
       "phaseId": "P119.2",
       "title": "Approval Decision Schema Metadata",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "narrowGoal": "Define browser-safe approval decision recording schema metadata without DB files, DB writes, persistence, or approve/reject decision recording.",
@@ -165,7 +165,22 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "exactFiles": [],
+      "exactFiles": [
+        "shared/founderApprovalDecisionSchemaMetadata.js",
+        "contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json",
+        "docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md",
+        "scripts/check-p1192-founder-runtime-approval-decision-recording-boundary.js",
+        "scripts/check-p1191-founder-runtime-approval-decision-recording-boundary-contract.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1191-founder-runtime-approval-decision-recording-boundary-contract-report.md",
+        "reports/p1192-founder-runtime-approval-decision-recording-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -238,7 +253,8 @@
         "Next phase/subphase"
       ],
       "nextPhase": "P119.3",
-      "previousPhase": "P119.1"
+      "previousPhase": "P119.1",
+      "expectedBaseCommit": "8a29a532"
     },
     {
       "phaseId": "P119.3",
@@ -701,5 +717,5 @@
       "previousPhase": "P119.6"
     }
   ],
-  "summary": "P119 is in progress. P119.1 defines the approval-decision recording boundary contract and implementation-grade subphase split while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
+  "summary": "P119 is in progress. P119.1 defines the approval-decision recording boundary contract and implementation-grade subphase split, and P119.2 adds browser-safe approval decision schema metadata while approval capture, approval persistence, approve/reject decision recording, DB/runtime writes, runtime execution, and execution unlock remain blocked."
 }

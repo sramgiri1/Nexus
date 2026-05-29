@@ -190,11 +190,197 @@ Rollback plan: remove the P119.1 contract/checker/docs/status/report changes,
 restore P119 to planned, set current phase back to P118.7, and keep P118
 complete.
 
+## P119.2 Approval Decision Schema Metadata
+
+Status: complete
+
+Phase: P119 Founder Runtime Approval Decision Recording Boundary
+
+Subphase: P119.2 Approval Decision Schema Metadata
+
+Goal: define browser-safe approval decision recording schema metadata without
+DB files, DB writes, persistence, approve/reject decision recording, or runtime
+execution.
+
+Why this is needed: P119.1 defines the decision recording boundary. P119.2
+gives later P119 model, preview, and UX phases a stable browser-safe metadata
+shape while all decision and execution authority remains blocked.
+
+User/operator impact: no founder-facing behavior changes. Operators get
+schema-level evidence for future approval decision requests, events, and
+evidence references without storing decisions.
+
+Command Center impact: no Command Center source changes in P119.2. Preserve
+P118 approval capture boundary UX and avoid any approve/reject or save
+decision controls.
+
+Safety impact: P119.2 is metadata-only. It does not enable approval capture,
+approval persistence, approve/reject decision recording, DB/runtime writes,
+hosted DB mutation, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, raw SQL, deploy,
+release, export, package, network calls, or spend.
+
+Cost impact: local deterministic metadata only. No provider/model/network/spend
+path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `8a29a532`.
+
+Allowed files:
+- `shared/founderApprovalDecisionSchemaMetadata.js`
+- `contracts/os-roadmap/p119-founder-runtime-approval-decision-recording-boundary-contracts.json`
+- `docs/architecture/P119_FOUNDER_RUNTIME_APPROVAL_DECISION_RECORDING_BOUNDARY_PLAN.md`
+- `scripts/check-p1192-founder-runtime-approval-decision-recording-boundary.js`
+- `scripts/check-p1191-founder-runtime-approval-decision-recording-boundary-contract.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1191-founder-runtime-approval-decision-recording-boundary-contract-report.md`
+- `reports/p1192-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files expected to change:
+- `shared/founderApprovalDecisionSchemaMetadata.js`
+- `scripts/check-p1192-founder-runtime-approval-decision-recording-boundary.js`
+- P119 contract, this plan, README, platform roadmap, OS roadmap/status, and
+  generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- add `shared/founderApprovalDecisionSchemaMetadata.js`
+- add `scripts/check-p1192-founder-runtime-approval-decision-recording-boundary.js`
+- add `check:p1192-founder-runtime-approval-decision-recording-boundary`
+  to `package.json`
+- update P119 contract, this plan, README, platform roadmap, OS roadmap/status,
+  and generated reports
+
+Expected exports, schemas, and data shapes:
+- `FOUNDER_APPROVAL_DECISION_SCHEMA_METADATA_PHASE`
+- `FOUNDER_APPROVAL_DECISION_SCHEMA_VERSION`
+- `FOUNDER_APPROVAL_DECISION_ENTITY_NAMES`
+- `FOUNDER_APPROVAL_DECISION_AUTHORITY_FLAGS`
+- `FOUNDER_APPROVAL_DECISION_SCHEMA_ENTITIES`
+- `buildFounderApprovalDecisionSchemaMetadata`
+- browser-safe metadata object with schema version, phase id,
+  `schemaOnly: true`, `commandCenterVisible: false`, metadata-only write
+  policy, and three entities for future decision requests, decision events, and
+  decision evidence references.
+
+Reuse check: reuse the P118.2 schema metadata pattern, P119.1 checker handoff
+style, `shared/reportWriter.js`, `shared/checkResultFormatter.js`, existing OS
+status checks, and existing phase validation coverage. Do not duplicate report
+writers, checker formatters, phase status updaters, redaction helpers, mode
+guards, route matrices, UI card/tab/status components, or audit/activity
+appenders.
+
+Command Center UX requirements: no UI changes. Do not add approve/reject/save
+controls, raw JSON/log/policy dumps, raw private IDs, raw DB table names,
+internal phase labels in primary UX, DemoApp, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: no new Playwright test is added in P119.2 because there is
+no UI source change. Existing route-wide safety tests remain the required UX
+backstop.
+
+Checker updates: add a dedicated P119.2 schema metadata checker covering
+exports, schema-only posture, blocked authority flags, display-safe entity
+fields, no DB/runtime imports, docs/report alignment, and P119.1 handoff
+acceptance.
+
+Docs/README/roadmap updates: P119.2 is recorded in this plan, README, platform
+roadmap, P119 contract, OS roadmap/status, and generated reports. P119.3 is
+next for governed local approval decision intent modeling.
+
+OS phase status update: P119 is in progress; P119.2 is complete; current phase
+P119.2; previous P119.1; next P119.3.
+
+Reports to regenerate:
+- `reports/p1191-founder-runtime-approval-decision-recording-boundary-contract-report.md`
+- `reports/p1192-founder-runtime-approval-decision-recording-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1192-founder-runtime-approval-decision-recording-boundary`
+- `npm run check:p1191-founder-runtime-approval-decision-recording-boundary-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+- `find local-state/runtime -maxdepth 1 -name 'check-p119*.sqlite' -print`
+
+Final safety checks: no project/CareLoop paths changed; no dashboard source or
+dashboard test files changed; no DB/runtime provider, tool, worker, deploy,
+release, export, package, or env paths changed; no approval capture, approval
+persistence, approval decision recording, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+spend authority is enabled; no DemoApp exposure, raw private IDs, raw DB table
+names, raw JSON/log/policy dumps, internal primary UX phase labels, or fake
+actions are introduced.
+
+Git add/commit/push commands:
+- `git add <allowed P119.2 files>`
+- `git commit -m "feat(nexus): implement p1192 approval decision schema"`
+- stamp P119/P119.2 status with the implementation commit
+- `git commit -m "chore(nexus): stamp p1192 approval decision schema"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: schema metadata can drift into implied persistence if names and
+flags are loose. P119.2 keeps all decision, write, execution, dispatch,
+project mutation, deploy/package, network, and spend authority flags false and
+does not create DB files.
+
+Rollback plan: remove the P119.2 helper/checker/docs/status/report changes,
+restore P119.2 to planned, set current phase back to P119.1, and keep P119.1
+complete.
+
 ## Planned Subphase Controls
 
-P119.2 Approval Decision Schema Metadata: define browser-safe metadata for
-future approval decision requests, events, and evidence references without DB
-files or writes.
+P119.2 Approval Decision Schema Metadata is complete. Browser-safe metadata now
+describes future approval decision requests, events, and evidence references
+without DB files or writes.
 
 P119.3 Governed Local Approval Decision Intent Model: add a pure local model
 that describes future approve/reject decision intent while recording no
