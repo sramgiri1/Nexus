@@ -16872,7 +16872,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "59c3f208",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121.3 governed application intent model complete; P121.4 safe dry-run preview is next.",
@@ -16894,7 +16894,7 @@
       "knownLimitations": [
         "P121.3 is model-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:48:10.804Z"
+      "completedAt": "2026-05-29T12:49:06.510Z"
     },
     {
       "track": "NEXUS_OS",
@@ -16951,7 +16951,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "59c3f208",
       "commandCenterVisible": true,
       "label": "Application Intent",
       "detail": "Governed local approval decision application intent model complete.",
@@ -16973,7 +16973,7 @@
       "knownLimitations": [
         "P121.3 is model-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T12:48:10.804Z"
+      "completedAt": "2026-05-29T12:49:06.510Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17057,7 +17057,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T12:48:10.804Z",
+  "updatedAt": "2026-05-29T12:49:06.510Z",
   "currentPhase": "P121.3",
   "previousPhase": "P121.2",
   "nextPhase": "P121.4",

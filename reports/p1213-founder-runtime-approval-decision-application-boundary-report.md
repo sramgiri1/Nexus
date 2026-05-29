@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.3
-- Generated at: 2026-05-29T12:48:22.000Z
+- Generated at: 2026-05-29T12:49:10.770Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b0092697
+- Validation HEAD: 59c3f208
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | README records P121.3 | PASS |  |
 | platform roadmap records P121.3 | PASS |  |
 | phase status advanced | PASS | P121.3/P121.2/P121.4 |
-| changed files stay in P121.3 allowed scope | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js, scripts/check-p1213-founder-runtime-approval-decision-application-boundary.js, shared/founderApprovalDecisionApplicationIntentModel.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js, scripts/check-p1213-founder-runtime-approval-decision-application-boundary.js, shared/founderApprovalDecisionApplicationIntentModel.js |
+| changed files stay in P121.3 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw application table names | PASS |  |
 | models avoid raw private IDs | PASS |  |
 | models avoid fake runnable actions | PASS |  |
