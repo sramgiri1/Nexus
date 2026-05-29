@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P120.4
-- Generated at: 2026-05-29T11:57:08.817Z
+- Generated at: 2026-05-29T11:57:44.357Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9b76d00f
+- Validation HEAD: bcbcf4b9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,8 +39,8 @@
 | README records P120.4 | PASS |  |
 | platform roadmap records P120.4 | PASS |  |
 | phase status advanced | PASS | P120.4/P120.3/P120.5 |
-| changed files stay in P120.4 allowed scope | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1204-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1204-founder-runtime-approval-decision-persistence-boundary.js, shared/founderApprovalDecisionPersistencePreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1204-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1204-founder-runtime-approval-decision-persistence-boundary.js, shared/founderApprovalDecisionPersistencePreview.js |
+| changed files stay in P120.4 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw table names | PASS |  |
 | preview avoids raw private IDs | PASS |  |
 | preview avoids raw schema/table names | PASS |  |
