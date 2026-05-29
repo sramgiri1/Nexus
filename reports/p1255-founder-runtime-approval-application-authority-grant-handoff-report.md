@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P125.5
-- Generated at: 2026-05-29T17:06:43.714Z
+- Generated at: 2026-05-29T17:07:58.490Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5110f30f
+- Validation HEAD: 2c4dfb30
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,8 +39,8 @@
 | README records P125.5 | PASS |  |
 | platform roadmap records P125.5 | PASS |  |
 | phase status advanced | PASS | P125.5/P125.4/P125.6 |
-| changed files stay in P125.5 allowed scope | PASS | README.md, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1254-founder-runtime-approval-application-authority-grant-handoff.js, scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p125-founder-runtime-approval-application-authority-grant-handoff-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P125_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1254-founder-runtime-approval-application-authority-grant-handoff.js, scripts/check-p1255-founder-runtime-approval-application-authority-grant-handoff.js |
+| changed files stay in P125.5 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | no unauthorized dashboard files changed | PASS |  |
 | public docs avoid raw handoff table names | PASS |  |
 | display model avoids raw private IDs | PASS |  |
