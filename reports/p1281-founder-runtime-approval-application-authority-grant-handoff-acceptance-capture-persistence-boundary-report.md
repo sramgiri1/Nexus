@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.1
-- Generated at: 2026-05-29T19:43:03.193Z
+- Generated at: 2026-05-29T19:44:15.208Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 18fbb37a
+- Validation HEAD: 683aea9d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,8 +34,8 @@
 | phase status advanced | PASS | P128.1/P127.7/P128.2 |
 | P128.1 command center visibility recorded | PASS |  |
 | completed P128.1 entries have required fields | PASS |  |
-| changed files stay in P128.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md, scripts/check-os-phase-status.js, scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, reports/p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, scripts/check-p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary-report.md, scripts/check-os-phase-status.js, scripts/check-p1277-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-boundary.js, contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json, docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md, reports/p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, scripts/check-p1281-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js |
+| changed files stay in P128.1 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P128.1 contract avoids forbidden allowed scope | PASS |  |
 | public docs avoid raw persistence table names | PASS |  |
 | checker has no unsafe imports or URLs | PASS |  |
