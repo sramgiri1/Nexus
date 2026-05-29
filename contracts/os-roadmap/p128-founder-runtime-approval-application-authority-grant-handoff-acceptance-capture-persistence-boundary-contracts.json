@@ -1,13 +1,13 @@
 {
   "phaseId": "P128",
   "title": "Founder Runtime Approval Application Authority Grant Handoff Acceptance Capture Persistence Boundary",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P128.6",
-  "previousSubphase": "P128.5",
-  "nextSubphase": "P128.7",
+  "currentSubphase": "P128.7",
+  "previousSubphase": "P128.6",
+  "nextSubphase": "P129",
   "branch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "56b8e148",
+  "expectedBaseCommit": "5df76f71",
   "owner": "NEXUS OS",
   "goal": "Plan and validate the approval application authority grant handoff acceptance capture persistence boundary without enabling DB/runtime writes, live acceptance capture, execution, providers, dispatch, mutation, network, or spend.",
   "safetyRules": [
@@ -698,12 +698,14 @@
     {
       "phaseId": "P128.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P128.6-stamp",
+      "expectedBaseCommit": "5df76f71",
       "narrowGoal": "Close P128 with final validation evidence and create the P129 planned handoff.",
       "allowedFiles": [
+        "scripts/check-p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
         "scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
         "scripts/check-os-phase-status.js",
         "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
@@ -750,7 +752,8 @@
       "checkerUpdates": [
         "Add P128.7 final validation checker.",
         "Update P128.6 checker for final closure.",
-        "Update OS checker for P129 planned-only handoff."
+        "Update OS checker for P129 planned-only handoff.",
+        "Update P128.5 checker for P128.7 final closure."
       ],
       "docsRoadmap": "Update P128 plan, README, platform roadmap, OS status, generated reports, and P128 contract for P128.7 completion and P129 planned handoff.",
       "phaseStatusUpdate": "P128 complete; P128.7 complete; current phase P128.7; previous P128.6; next P129 planned.",
@@ -766,7 +769,9 @@
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "Confirm P129 is planned-only and P128 does not claim implemented persistence or write behavior."
+        "Confirm P129 is planned-only and P128 does not claim implemented persistence or write behavior.",
+        "Confirm dashboard source and Playwright tests were not changed in P128.7.",
+        "Confirm project, CareLoop, generated project, DB, runtime, provider, tool, worker, deploy, release, export, package, and env paths remain untouched."
       ],
       "finalResponseChecklist": [
         "Branch name",
@@ -775,21 +780,39 @@
         "Validation results",
         "Safety confirmations",
         "Next phase/subphase"
+      ],
+      "exactFiles": [
+        "scripts/check-p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json",
+        "docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ]
     }
   ],
   "currentStatus": {
-    "phaseId": "P128.6",
+    "phaseId": "P128.7",
     "status": "complete",
-    "previousPhase": "P128.5",
-    "nextPhase": "P128.7",
-    "detail": "P128.6 capture persistence validation/docs complete; P128.7 final validation is next.",
-    "summary": "Added aggregate validation/docs coverage for P128.1-P128.5 reports, status, docs, scoped Command Center UX evidence, and checker handoffs while keeping acceptance capture persistence, DB/runtime writes, execution, providers, dispatch, mutation, network, and spend blocked.",
+    "previousPhase": "P128.6",
+    "nextPhase": "P129",
+    "detail": "P128.7 final validation complete; P129 capture persistence store is planned-only next.",
+    "summary": "Closed P128 with final validation across P128.1-P128.6 evidence, scoped Command Center UX safety, OS status, docs, checker handoffs, and the planned-only P129 persistence-store handoff.",
     "knownLimitations": [
-      "P128.6 is validation/docs only. It does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P128.7 is final validation only. P128 does not persist acceptance capture, create DB schemas, create migrations, write DB/runtime records, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend. P129 is planned-only until its own implementation-grade contract is written."
     ]
   },
-  "nextPhase": "P128.7",
+  "nextPhase": "P129",
   "knownLimitations": [
     "P128.3 is a pure local model only. Safe dry-run, UX, validation, and final closure are planned for later subphases. No DB/runtime writes, migrations, table creation, live acceptance capture, execution, providers, dispatch, mutation, network, or spend are enabled."
   ],

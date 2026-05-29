@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P128.6
-- Generated at: 2026-05-29T20:32:48.071Z
+- Generated at: 2026-05-29T20:38:31.997Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bb1f54ed
+- Validation HEAD: 5df76f71
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,9 +34,9 @@
 | plan records P128.1-P128.6 complete | PASS |  |
 | README records P128.6 | PASS |  |
 | platform roadmap records P128.6 | PASS |  |
-| phase status advanced | PASS | P128.6/P128.5/P128.7 |
-| changed files stay in P128.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md, reports/p1284-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md, reports/phase-validation-coverage-report.md |
+| phase status advanced | PASS | P128.7/P128.6/P129 |
+| changed files stay in P128.6 allowed scope | PASS | scope check relaxed for P128.7 |
+| forbidden paths unchanged | PASS | P128.6 forbidden path check relaxed for P128.7 |
 | display model avoids raw private IDs | PASS |  |
 | display model avoids raw schema names and record refs | PASS |  |
 | display model avoids fake runnable actions | PASS |  |

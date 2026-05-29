@@ -135,6 +135,128 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P128.7 Final Validation
+
+Status: complete
+Phase: P128
+Subphase: P128.7
+Goal: Close P128 with final validation evidence and create the planned-only
+P129 capture persistence store handoff.
+Why this is needed: P128 has completed its boundary, metadata, intent,
+dry-run, scoped UX, and validation/docs work. P128.7 makes the phase closure
+auditable before any later persistence-store contract is written.
+User/operator impact: Operators can see P128 complete, which checks closed the
+phase, what remains blocked, and that P129 is planned-only.
+Command Center impact: No dashboard source or route test changes. P128.7
+validates the P128.5 Business Build and Agent Flow cards remain read-only and
+useful while Chat with NEXUS, Lite, OS Roadmap, and Live Readiness stay clean.
+Safety impact: P128.7 does not persist acceptance capture, create DB schemas,
+create migrations, write DB/runtime records, capture acceptance, accept
+handoff, hand off authority, grant authority, activate authority, apply
+approvals, record approve/reject decisions, unlock execution, call
+providers/models, dispatch agents, execute workers/tools, mutate projects,
+deploy, release, export, package, use network calls, or spend.
+Cost impact: Local checkers, docs, build, and tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+
+Files expected to change:
+- `scripts/check-p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`
+- `scripts/check-p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`
+- `scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p128-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-contracts.json`
+- `docs/architecture/P128_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_GRANT_HANDOFF_ACCEPTANCE_CAPTURE_PERSISTENCE_BOUNDARY_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md`
+- `reports/p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md`
+- `reports/p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Tests to add/update/remove:
+- Add `scripts/check-p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary.js`.
+- Update the P128.5 and P128.6 checkers so they accept the P128.7 final
+  closure state.
+- Update `scripts/check-os-phase-status.js` so the P129 planned-only handoff is
+  recognized.
+- Run the existing P128.5 scoped Playwright test; do not add or remove
+  Playwright tests in P128.7 because no Command Center source changes.
+
+Docs to update:
+- This P128 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P128.5 report.
+- P128.6 report.
+- P128.7 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P128 complete.
+- P128.7 complete.
+- Current phase P128.7.
+- Previous phase P128.6.
+- Next phase P129 planned.
+
+Known risks:
+- Final validation wording could imply persistence is live. The checker blocks
+  unsafe positive claims and confirms P129 remains planned-only.
+
+Rollback plan:
+- Revert the P128.7 implementation and stamp commits only. P128.6 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1287-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary`
+- `npm run check:p1286-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary`
+- `npm run check:p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Approval application authority grant handoff acceptance capture persistence appears only on scoped pages"`
+- `git diff --check`
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P128.6 Capture Persistence Validation / Docs
 
 Status: complete

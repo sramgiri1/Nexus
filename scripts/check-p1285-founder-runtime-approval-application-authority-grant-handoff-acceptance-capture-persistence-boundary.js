@@ -92,7 +92,13 @@ const p1285HandoffAccepted = (status.currentPhase === "P128.5"
     && status.nextPhase === "P128.7"
     && roadmap.currentPhase === "P128.6"
     && roadmap.previousPhase === "P128.5"
-    && roadmap.nextPhase === "P128.7");
+    && roadmap.nextPhase === "P128.7")
+  || (status.currentPhase === "P128.7"
+    && status.previousPhase === "P128.6"
+    && status.nextPhase === "P129"
+    && roadmap.currentPhase === "P128.7"
+    && roadmap.previousPhase === "P128.6"
+    && roadmap.nextPhase === "P129");
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1285-founder-runtime-approval-application-authority-grant-handoff-acceptance-capture-persistence-boundary"]));
 addCheck("business build exposes browser-safe persistence display model", businessBuildSource.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundaryDisplayModel") && businessBuildSource.includes("buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceBoundarySafeDryRun"));
@@ -141,7 +147,7 @@ addCheck("README records P128.5", /P128\.5 Command Center capture persistence UX
 addCheck(
   "phase status advanced",
   p1285HandoffAccepted
-    && statusById.get("P128")?.status === "in_progress"
+    && ["in_progress", "complete"].includes(statusById.get("P128")?.status)
     && statusById.get("P128.4")?.status === "complete"
     && statusById.get("P128.5")?.status === "complete"
     && ["planned", "complete"].includes(statusById.get("P128.6")?.status)

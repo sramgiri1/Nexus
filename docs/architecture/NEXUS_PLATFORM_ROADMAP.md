@@ -2863,6 +2863,18 @@ execution unlock, provider/model calls, agent dispatch, worker/tool execution,
 project mutation, hosted DB mutation, raw SQL interface, deploy, release,
 export, package action, network call, and provider spend remain blocked.
 
+P128.7 is complete. P128 is complete with final validation across P128.1-P128.6
+evidence, scoped Command Center UX safety, OS status, docs, checker handoffs,
+and the planned-only P129 persistence-store handoff. P129 is planned-only for a
+future implementation-grade local persistence store contract. Acceptance
+capture persistence, DB schemas, migrations, DB/runtime writes, live acceptance
+capture, handoff acceptance, authority handoff, authority grant, activation,
+approval application, approval capture, approval persistence, approve/reject
+decision recording, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 
