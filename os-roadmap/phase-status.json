@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-28T07:20:00.000Z",
+  "generatedAt": "2026-05-29T13:08:02.820Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -16872,7 +16872,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "67a4ef1c",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121.5 scoped Command Center application UX complete; P121.6 validation/docs is next.",
@@ -16896,7 +16896,7 @@
       "knownLimitations": [
         "P121.5 is display-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:04:03.077Z"
+      "completedAt": "2026-05-29T13:08:02.820Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17006,7 +17006,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "67a4ef1c",
       "commandCenterVisible": true,
       "label": "Application UX",
       "detail": "Scoped Command Center approval decision application boundary UX complete.",
@@ -17030,7 +17030,7 @@
       "knownLimitations": [
         "P121.5 is display-only; it does not apply approvals, create DB tables, write runtime records, capture approvals, persist approvals, record approve/reject decisions, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T13:04:03.077Z"
+      "completedAt": "2026-05-29T13:08:02.820Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17074,7 +17074,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-29T13:04:03.077Z",
+  "updatedAt": "2026-05-29T13:08:02.820Z",
   "currentPhase": "P121.5",
   "previousPhase": "P121.4",
   "nextPhase": "P121.6",
