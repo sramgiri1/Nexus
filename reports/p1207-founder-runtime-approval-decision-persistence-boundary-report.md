@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P120.7
-- Generated at: 2026-05-29T12:27:44.585Z
+- Generated at: 2026-05-29T12:28:36.460Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 617c3372
+- Validation HEAD: 093a9d2b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | contract handoff points to P121 | PASS |  |
 | P120.7 records final validation commands | PASS |  |
 | P120.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P120.7 allowed scope | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1206-founder-runtime-approval-decision-persistence-boundary.js, reports/p1207-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1206-founder-runtime-approval-decision-persistence-boundary.js, reports/p1207-founder-runtime-approval-decision-persistence-boundary-report.md, scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js |
+| changed files stay in P120.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P120.6 checker accepts final handoff | PASS |  |
 | OS status checker recognizes P121 | PASS |  |
 | phase status closed | PASS | P120.7/P120.6/P121 |

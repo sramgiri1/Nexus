@@ -11853,7 +11853,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "093a9d2b",
       "commandCenterVisible": true,
       "label": "Approval Decision Persistence",
       "detail": "P120.7 final validation complete; P120 is complete and P121 is planned-only.",
@@ -11875,7 +11875,7 @@
         "P120.7 is final validation only; it does not capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
         "P121 is planned-only until its own implementation-grade contract is written and approved."
       ],
-      "completedAt": "2026-05-29T12:26:05.093Z"
+      "completedAt": "2026-05-29T12:28:29.889Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12038,7 +12038,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "093a9d2b",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "P120 final validation complete; P121 is planned-only.",
@@ -12060,7 +12060,7 @@
         "P120.7 is final validation only; it does not capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend.",
         "P121 is planned-only until its own implementation-grade contract is written and approved."
       ],
-      "completedAt": "2026-05-29T12:26:05.093Z"
+      "completedAt": "2026-05-29T12:28:29.889Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12084,7 +12084,7 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T12:26:05.093Z",
+  "updatedAt": "2026-05-29T12:28:29.889Z",
   "currentPhase": "P120.7",
   "previousPhase": "P120.6",
   "nextPhase": "P121",
