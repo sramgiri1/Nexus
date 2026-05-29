@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P121.7
-- Generated at: 2026-05-29T13:24:41.289Z
+- Generated at: 2026-05-29T13:25:20.280Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 53fdfa09
+- Validation HEAD: 063cfbcf
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | contract handoff points to P122 | PASS |  |
 | P121.7 records final validation commands | PASS |  |
 | P121.7 avoids forbidden file scope | PASS |  |
-| changed files stay in P121.7 allowed scope | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1216-founder-runtime-approval-decision-application-boundary-report.md, scripts/check-os-phase-status.js, reports/p1217-founder-runtime-approval-decision-application-boundary-report.md, scripts/check-p1217-founder-runtime-approval-decision-application-boundary.js |
-| changed files avoid forbidden scope | PASS | README.md, contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1216-founder-runtime-approval-decision-application-boundary-report.md, scripts/check-os-phase-status.js, reports/p1217-founder-runtime-approval-decision-application-boundary-report.md, scripts/check-p1217-founder-runtime-approval-decision-application-boundary.js |
+| changed files stay in P121.7 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files avoid forbidden scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P121.6 checker accepts final handoff | PASS |  |
 | OS status checker recognizes P121 | PASS |  |
 | phase status closed or P122 started | PASS | P121.7/P121.6/P122 |

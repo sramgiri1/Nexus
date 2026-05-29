@@ -12065,7 +12065,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "063cfbcf",
       "commandCenterVisible": true,
       "label": "Approval Application Boundary",
       "detail": "P121 complete; P122 is planned-only.",
@@ -12089,7 +12089,7 @@
       "knownLimitations": [
         "P121.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P122 is planned-only until its own implementation-grade contract is written."
       ],
-      "completedAt": "2026-05-29T13:23:12.930Z"
+      "completedAt": "2026-05-29T13:25:16.964Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12257,7 +12257,7 @@
     {
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "063cfbcf",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "Final validation complete; P122 is planned-only.",
@@ -12281,7 +12281,7 @@
       "knownLimitations": [
         "P121.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P122 is planned-only until its own implementation-grade contract is written."
       ],
-      "completedAt": "2026-05-29T13:23:12.930Z"
+      "completedAt": "2026-05-29T13:25:16.964Z"
     },
     {
       "track": "NEXUS_OS",
@@ -12304,14 +12304,14 @@
       "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-29T13:23:12.930Z",
+  "updatedAt": "2026-05-29T13:25:16.964Z",
   "currentPhase": "P121.7",
   "previousPhase": "P121.6",
   "nextPhase": "P122",
   "currentPhaseStatus": {
     "track": "NEXUS_OS",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "063cfbcf",
     "commandCenterVisible": true,
     "label": "Approval Application Boundary",
     "detail": "P121 complete; P122 is planned-only.",
@@ -12335,7 +12335,7 @@
     "knownLimitations": [
       "P121.7 is final validation only. It does not apply approval decisions, capture approvals, persist approvals, record approve/reject decisions, write DB/runtime records, unlock execution, run runtime work, call providers/models, dispatch agents, execute workers/tools, mutate projects, use hosted DBs, run raw SQL, deploy, release, export, package, use network calls, or spend. P122 is planned-only until its own implementation-grade contract is written."
     ],
-    "completedAt": "2026-05-29T13:23:12.930Z"
+    "completedAt": "2026-05-29T13:25:16.964Z"
   },
-  "generatedAt": "2026-05-29T13:23:12.930Z"
+  "generatedAt": "2026-05-29T13:25:16.964Z"
 }
