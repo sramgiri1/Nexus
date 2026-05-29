@@ -1,0 +1,202 @@
+# P121 Founder Runtime Approval Decision Application Boundary Plan
+
+Status: in progress
+
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit for P121.1: `d2c610dc`
+
+Planned subphases:
+- P121.1 Application Boundary Contract / Policy
+- P121.2 Application Eligibility Metadata
+- P121.3 Governed Application Intent Model
+- P121.4 Application Safe Dry Run
+- P121.5 Command Center Application Boundary UX
+- P121.6 Application Validation / Docs
+- P121.7 Final Validation
+
+P121 starts from the completed P120 approval decision persistence boundary. It
+does not enable approval decision application, approval capture, approval
+persistence, approve/reject decision recording, DB/runtime writes, runtime
+execution, execution unlock, provider/model calls, agent dispatch, worker/tool
+execution, project mutation, hosted DB mutation, raw SQL, deploy, release,
+export, package actions, network calls, or provider spend.
+
+## P121.1 Application Boundary Contract / Policy
+
+Phase: P121 Founder Runtime Approval Decision Application Boundary
+
+Subphase: P121.1 Application Boundary Contract / Policy
+
+Goal: define the P121 approval-decision application boundary contract, subphase
+split, safety policy, reuse rules, validation commands, and OS handoff records
+without implementation behavior.
+
+Why this is needed: P120 closed persistence-boundary validation but did not
+grant authority to apply an approval decision to runtime execution, project
+mutation, dispatch, provider calls, or spend. P121 needs an implementation-grade
+contract before any application metadata, intent model, preview, or UX work.
+
+User/operator impact: OS Roadmap moves from planned P121 to P121.1 complete and
+shows P121.2 as the next scoped subphase. Founder UX stays unchanged.
+
+Command Center impact: no Command Center source change in P121.1. Preserve the
+existing scoped P120 persistence-boundary UX and keep Chat with NEXUS and Lite
+chat clean.
+
+Safety impact: contract-only. P121.1 does not enable approval decision
+application, approval capture, approval persistence, approve/reject decision
+recording, DB/runtime writes, runtime execution, execution unlock,
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, raw SQL, deploy, release, export, package actions, network
+calls, or provider spend.
+
+Cost impact: local docs/checkers/reports only. No provider/model/network/spend
+path.
+
+Project/OS scope: NEXUS_OS_CHANGE.
+
+Allowed files:
+- `contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json`
+- `docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md`
+- `scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js`
+- `scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js`
+- `scripts/check-os-phase-status.js`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1207-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- create `contracts/os-roadmap/p121-founder-runtime-approval-decision-application-boundary-contracts.json`
+- create `docs/architecture/P121_FOUNDER_RUNTIME_APPROVAL_DECISION_APPLICATION_BOUNDARY_PLAN.md`
+- create `scripts/check-p1211-founder-runtime-approval-decision-application-boundary-contract.js`
+- update `scripts/check-p1207-founder-runtime-approval-decision-persistence-boundary.js`
+- update `scripts/check-os-phase-status.js`
+- update package, README, platform roadmap, OS roadmap/status, and generated reports
+
+Expected exports, schemas, and data shapes: no runtime exports, schemas, UI data
+shape, persisted approval application record, DB table, runtime event, provider
+request, tool call, worker dispatch, project mutation, hosted DB mutation,
+deploy, release, export, package, network call, or spend path is implemented.
+
+Reuse check: reuse `shared/reportWriter.js`, `shared/checkResultFormatter.js`,
+`os-roadmap/updatePhaseStatus.js`, existing dashboard tabs/cards/badges, the
+existing route matrix, and evidence/audit/activity helpers. Do not duplicate
+report writers, checker formatters, phase status updaters, redaction helpers,
+mode guards, route matrices, UI components, or audit/activity appenders.
+
+Command Center UX requirements: preserve existing Command Center UX. Primary UX
+must not show raw JSON, raw logs, raw policy dumps, raw DB names, private IDs,
+internal phase labels outside OS Roadmap, DemoApp, approval application buttons,
+approve/reject/save/run controls, or fake working actions.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light theme
+behavior by avoiding dashboard source changes in this subphase.
+
+Playwright tests: no new Playwright test because P121.1 has no UI source
+changes. Preserve route-wide safety tests.
+
+Checker updates: add a dedicated P121.1 contract checker, update P120.7 final
+checker to accept the P121.1 started handoff, and update the OS phase status
+checker to recognize P121.1-P121.7.
+
+Docs/README/roadmap updates: P121.1 is recorded in this plan, README, platform
+roadmap, P121 contract, OS roadmap/status, and generated reports. P121.2 is
+next for eligibility metadata.
+
+OS phase status update: P121 is in progress; P121.1 is complete; current phase
+P121.1; previous P120.7; next P121.2.
+
+Reports to regenerate:
+- `reports/p1207-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1211-founder-runtime-approval-decision-application-boundary-contract-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Validation commands:
+- `npm run check:p1211-founder-runtime-approval-decision-application-boundary-contract`
+- `npm run check:p1207-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P121.1 files>`
+- `git commit -m "feat(nexus): implement p1211 approval decision application contract"`
+- stamp P121/P121.1 status with the implementation commit
+- `git add <allowed P121.1 status/report files>`
+- `git commit -m "chore(nexus): stamp p1211 approval decision application contract"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- confirm no project/CareLoop paths changed
+- confirm no dashboard source or dashboard test files changed
+- confirm no DB/runtime provider, tool, worker, deploy, release, export,
+  package, or env paths changed
+- confirm no approval decision application, approval capture, approval
+  persistence, approval decision recording, runtime execution, execution unlock,
+  provider/model calls, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, raw SQL, network, deploy, release, export, package, or
+  spend authority is enabled
+- confirm no DemoApp exposure, raw private IDs, raw DB table names, raw
+  JSON/log/policy dumps, internal primary UX phase labels, or fake actions are
+  introduced
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: contract language could imply live approval application. P121.1
+keeps the subphase contract-only and validates that unsafe authority remains
+blocked.
+
+Rollback plan: remove the P121.1 checker/contract/docs/status/report changes,
+restore P121 to planned, set current phase back to P120.7, and keep P120
+complete.
+
+Status: complete.
+
+## Planned Subphase Controls
+
+P121.1 Application Boundary Contract / Policy is complete. P121.2 is next for
+approval decision application eligibility metadata, with application,
+persistence, approve/reject decision recording, DB/runtime writes, and execution
+still blocked unless a future subphase explicitly grants narrow authority.

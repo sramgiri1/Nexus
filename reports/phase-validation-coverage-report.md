@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-29T12:28:41.102Z
+- Generated at: 2026-05-29T12:34:06.256Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 093a9d2b
+- Validation HEAD: d2c610dc
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -447,7 +447,7 @@
 | P117.5 validation coverage | PASS | 8 checkers, 5 reports |
 | P117.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P117.7 validation coverage | PASS | 45 checkers, 41 reports |
-| P118 validation coverage | PASS | 25 checkers, 21 reports |
+| P118 validation coverage | PASS | 26 checkers, 22 reports |
 | P118.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P118.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P118.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -455,7 +455,7 @@
 | P118.5 validation coverage | PASS | 7 checkers, 5 reports |
 | P118.6 validation coverage | PASS | 5 checkers, 2 reports |
 | P118.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P119 validation coverage | PASS | 25 checkers, 21 reports |
+| P119 validation coverage | PASS | 26 checkers, 22 reports |
 | P119.1 validation coverage | PASS | 11 checkers, 7 reports |
 | P119.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P119.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -463,7 +463,7 @@
 | P119.5 validation coverage | PASS | 7 checkers, 5 reports |
 | P119.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P119.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P120 validation coverage | PASS | 25 checkers, 21 reports |
+| P120 validation coverage | PASS | 26 checkers, 22 reports |
 | P120.1 validation coverage | PASS | 11 checkers, 7 reports |
 | P120.2 validation coverage | PASS | 11 checkers, 7 reports |
 | P120.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -471,17 +471,48 @@
 | P120.5 validation coverage | PASS | 8 checkers, 5 reports |
 | P120.6 validation coverage | PASS | 12 checkers, 7 reports |
 | P120.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P121 validation coverage | PASS | 21 checkers, 21 reports |
+| P121 validation coverage | PASS | 26 checkers, 22 reports |
+| P121.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P121.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P121.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P121.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P121.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P121.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P121.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P120.7; next=P121; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P121.1; next=P121.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- None
+- P121.2 Application Eligibility Metadata
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P121.3 Governed Application Intent Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P121.4 Application Safe Dry Run
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P121.5 Command Center Application Boundary UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P121.6 Application Validation / Docs
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (459/459)
+PASS (466/466)

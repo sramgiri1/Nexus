@@ -1088,6 +1088,16 @@ The Command Center and local operator surface have:
   execution unlock, provider/model call, agent dispatch, worker/tool execution,
   project mutation, hosted DB mutation, raw SQL interface, deploy, release,
   export, package, network call, and provider spend remain unavailable.
+- P121.1 approval decision application contract: P121 now has an
+  implementation-grade subphase contract for approval decision application
+  boundary work. P121.1 is contract-only and records the P121.1-P121.7 split,
+  safety rules, reuse rules, validation commands, and P120.7 handoff acceptance.
+  P121.2 is next for eligibility metadata. Approval decision application,
+  approval capture, approval persistence, approve/reject decision recording,
+  DB/runtime writes, runtime execution, execution unlock, provider/model call,
+  agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+  raw SQL interface, deploy, release, export, package, network call, and
+  provider spend remain unavailable.
 
 ## CareLoop Project Progress
 
