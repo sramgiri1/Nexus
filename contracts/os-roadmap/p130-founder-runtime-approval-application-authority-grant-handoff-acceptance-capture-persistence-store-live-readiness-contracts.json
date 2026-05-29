@@ -753,7 +753,7 @@
       "knownLimitations": [
         "P130.7 is final validation only. It does not capture approvals, persist decisions, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P131 is planned-only until its own implementation-grade contract is written."
       ],
-      "commit": "pending-final-commit",
+      "commit": "51d9d077",
       "completedAt": "2026-05-29T22:46:45.914Z"
     }
   ],
@@ -762,7 +762,7 @@
     "title": "Store Live Readiness Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "51d9d077",
     "completedAt": "2026-05-29T22:46:45.914Z",
     "summary": "Closed P130 with final validation evidence, OS status, reports, and the planned-only P131 handoff while all live store actions remain blocked.",
     "checksRun": [
