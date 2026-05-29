@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P120.2
-- Generated at: 2026-05-29T07:02:17.032Z
+- Generated at: 2026-05-29T07:03:22.868Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e25c78d5
+- Validation HEAD: 697e47b4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -35,8 +35,8 @@
 | README records P120.2 | PASS |  |
 | platform roadmap records P120.2 | PASS |  |
 | phase status advanced | PASS | P120.2/P120.1/P120.3 |
-| changed files stay in P120.2 allowed scope | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js, shared/founderApprovalDecisionPersistenceSchemaMetadata.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-p1202-founder-runtime-approval-decision-persistence-boundary.js, shared/founderApprovalDecisionPersistenceSchemaMetadata.js |
+| changed files stay in P120.2 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | public docs avoid raw table names | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
