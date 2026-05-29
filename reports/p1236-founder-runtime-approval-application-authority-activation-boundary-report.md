@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P123.6
-- Generated at: 2026-05-29T15:17:56.659Z
+- Generated at: 2026-05-29T15:19:17.997Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5adfdd30
+- Validation HEAD: 71347714
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,8 +38,8 @@
 | README records P123.6 | PASS |  |
 | phase status advanced | PASS | P123.6/P123.5/P123.7 |
 | contract handoff points to final validation | PASS |  |
-| changed files stay in P123.6 allowed scope | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1236-founder-runtime-approval-application-authority-activation-boundary-report.md, scripts/check-p1236-founder-runtime-approval-application-authority-activation-boundary.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p123-founder-runtime-approval-application-authority-activation-boundary-contracts.json, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P123_FOUNDER_RUNTIME_APPROVAL_APPLICATION_AUTHORITY_ACTIVATION_BOUNDARY_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/p1236-founder-runtime-approval-application-authority-activation-boundary-report.md, scripts/check-p1236-founder-runtime-approval-application-authority-activation-boundary.js |
+| changed files stay in P123.6 allowed scope | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
+| forbidden paths unchanged | PASS | os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/os-phase-status-report.md |
 | P123.6 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | public docs avoid raw activation table names | PASS |  |
