@@ -721,9 +721,181 @@ Rollback plan: remove the P120.4 helper/checker/docs/status/report changes,
 restore P120.4 to planned, set current phase back to P120.3, and keep P120.3
 complete.
 
+## P120.5 Command Center Approval Decision Persistence Boundary UX
+
+Phase: P120 Founder Runtime Approval Decision Persistence Boundary
+
+Subphase: P120.5 Command Center Approval Decision Persistence Boundary UX
+
+Status: complete
+
+Classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit: `9822b22e`
+
+Goal: show P120.4 persistence dry-run readiness on scoped Command Center founder
+work pages without adding live save, approve/reject, DB write, runtime write,
+dispatch, provider, or execution controls.
+
+Why this is needed: P120.4 created a safe preview envelope. P120.5 makes it
+useful in the Command Center by showing current state, blockers, next action,
+owner, evidence/activity labels, and cost impact on the pages where founder
+work planning already happens.
+
+User/operator impact: Business Build and Agent Flow now show a display-safe
+approval decision persistence boundary card. Chat/Lite stays clean and
+chat-focused; OS Roadmap remains phase-only; Live Readiness stays focused on
+readiness.
+
+Command Center impact: scoped UX only on Business Build and Agent Flow. Primary
+UX must not show raw JSON, raw logs, raw policy dumps, raw DB table names,
+private project IDs, internal P120 labels, report paths, DemoApp, fake runnable
+actions, save controls, approve/reject controls, or execution controls.
+
+Safety impact: P120.5 is display-only. Approval capture, approval persistence,
+approve/reject decision recording, save actions, DB/runtime writes, hosted DB
+mutation, raw SQL, runtime execution, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, deploy, release,
+export, package, network calls, and provider spend remain blocked.
+
+Cost impact: no provider calls, model calls, network calls, hosted services, or
+provider spend.
+
+Project/OS scope: OS UI/data/tests only. No project source, CareLoop source,
+generated app source, DB implementation, provider implementation, tool/worker
+runtime, deploy/release/export/package files, or env files are allowed.
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1205-founder-runtime-approval-decision-persistence-boundary.js`
+- `contracts/os-roadmap/p120-founder-runtime-approval-decision-persistence-boundary-contracts.json`
+- `docs/architecture/P120_FOUNDER_RUNTIME_APPROVAL_DECISION_PERSISTENCE_BOUNDARY_PLAN.md`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `package.json`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1204-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/p1205-founder-runtime-approval-decision-persistence-boundary-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `live-ready/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `buildFounderApprovalDecisionPersistenceBoundaryDisplayModel`
+- The display model shape includes current state, founder idea, preview mode,
+  summary rows, readiness row counts, zero persistence/write/execution/spend
+  counts, next action, blockers, disabled reason, owner capability,
+  evidence/activity labels, cost impact, display-safe readiness sections/rows,
+  and safety rows all blocked.
+
+Command Center UX requirements:
+- Reuse the existing approval boundary card structure.
+- Render the persistence boundary card on `/command-center/business-build` and
+  `/command-center/agent-flow`.
+- Do not render the card on `/command-center/lite`, `/command-center`,
+  `/command-center/os-roadmap`, or `/command-center/live-readiness`.
+- Do not expose DemoApp in full Command Center.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw DB table names,
+  private IDs, internal phase labels, report paths, approve/reject controls,
+  save controls, execution controls, or fake runnable actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Playwright verifies the scoped card in all three themes on Business Build.
+
+Playwright tests:
+- Add coverage for the approval decision persistence boundary card on scoped
+  pages.
+- Verify Business Build and Agent Flow show display-safe persistence readiness.
+- Verify Lite, Chat, OS Roadmap, and Live Readiness do not show the card.
+- Verify no DemoApp, raw dumps, private IDs, or fake runnable actions appear.
+
+Checker updates: add a dedicated P120.5 checker covering the display model,
+scoped rendering, Playwright coverage, safe strings, allowed paths, docs/status
+updates, forbidden path safety, and P120.4 handoff.
+
+Docs/README/roadmap updates: P120.5 is recorded in this plan, README, platform
+roadmap, P120 contract, OS roadmap/status, and generated reports. P120.6 is
+next for validation hardening.
+
+OS phase status update: P120 is in progress; P120.5 is complete; current phase
+P120.5; previous P120.4; next P120.6.
+
+Validation commands:
+- `npm run check:p1205-founder-runtime-approval-decision-persistence-boundary`
+- `npm run check:p1204-founder-runtime-approval-decision-persistence-boundary`
+- `npm --prefix dashboard run test:pages -- -g "Approval decision persistence boundary" dashboard/tests/routes.spec.js`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <allowed P120.5 files>`
+- `git commit -m "feat(nexus): implement p1205 approval decision persistence ux"`
+- stamp P120/P120.5 status with the implementation commit
+- `git add <allowed P120.5 status/report files>`
+- `git commit -m "chore(nexus): stamp p1205 approval decision persistence ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- Confirm no approval capture, approval persistence, approve/reject decision
+  recording, save action, DB/runtime write, hosted DB mutation, raw SQL,
+  provider/model call, agent dispatch, worker/tool execution, project mutation,
+  deploy, release, export, package, network call, or provider spend authority
+  exists.
+- Confirm Chat/Lite remains clean.
+- Confirm no project-owned, CareLoop, generated app, DB, provider, tool,
+  worker, deploy, release, export, package, or env path changed.
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results if applicable
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
+
+Known risks: adding another Command Center card could re-clutter founder pages.
+The scope is limited to Business Build and Agent Flow, and Chat/Lite is
+explicitly tested clean.
+
+Rollback plan: remove the P120.5 UI/data/test/checker/docs/status/report
+changes, restore P120.5 to planned, set current phase back to P120.4, and keep
+P120.4 complete.
+
 ## Planned Subphase Controls
 
-P120.4 Approval Decision Persistence Safe Dry Run is complete. P120.5 is next
-for scoped Command Center persistence boundary UX, with approval persistence,
-DB/runtime writes, approve/reject decision recording, and execution still
-blocked unless a future subphase explicitly grants narrow authority.
+P120.5 Command Center Approval Decision Persistence Boundary UX is complete.
+P120.6 is next for validation hardening, with approval persistence, DB/runtime
+writes, approve/reject decision recording, and execution still blocked unless a
+future subphase explicitly grants narrow authority.

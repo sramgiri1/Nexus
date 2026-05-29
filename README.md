@@ -1060,6 +1060,15 @@ The Command Center and local operator surface have:
   worker/tool execution, project mutation, hosted DB mutation, raw SQL
   interface, deploy, release, export, package, network call, and provider spend
   remain unavailable.
+- P120.5 Command Center approval decision persistence boundary UX: Business
+  Build and Agent Flow now show a scoped display-safe persistence boundary card
+  with current state, blockers, next action, owner, evidence/activity labels,
+  and cost impact. Chat/Lite, OS Roadmap, and Live Readiness stay clean. P120.6
+  is next for validation hardening. Approval capture, approval persistence,
+  approve/reject decision recording, DB/runtime writes, runtime execution,
+  execution unlock, provider/model call, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, raw SQL interface, deploy, release,
+  export, package, network call, and provider spend remain unavailable.
 
 ## CareLoop Project Progress
 

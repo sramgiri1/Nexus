@@ -3387,6 +3387,14 @@ function AgentFlowPage() {
         decision={businessBuild.founderApprovalDecisionBoundary}
         surfaceLabel="Agent Flow Runtime Approval Decision Boundary"
       />
+      <FounderApprovalDecisionBoundaryCard
+        decision={businessBuild.founderApprovalDecisionPersistenceBoundary}
+        surfaceLabel="Agent Flow Approval Decision Persistence Boundary"
+        heading="Approval Decision Persistence Boundary"
+        pillLabel="Persistence read-only"
+        ariaLabel="Founder runtime approval decision persistence boundary"
+        rowAriaSuffix="approval decision persistence boundary row"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -10185,6 +10193,14 @@ function BusinessBuildPage() {
           decision={build.founderApprovalDecisionBoundary}
           surfaceLabel="Business Build Runtime Approval Decision Boundary"
         />
+        <FounderApprovalDecisionBoundaryCard
+          decision={build.founderApprovalDecisionPersistenceBoundary}
+          surfaceLabel="Business Build Approval Decision Persistence Boundary"
+          heading="Approval Decision Persistence Boundary"
+          pillLabel="Persistence read-only"
+          ariaLabel="Founder runtime approval decision persistence boundary"
+          rowAriaSuffix="approval decision persistence boundary row"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -11881,6 +11897,10 @@ function FounderApprovalCaptureBoundaryCard({
 function FounderApprovalDecisionBoundaryCard({
   decision,
   surfaceLabel = "Runtime Approval Decision Boundary",
+  heading = "Runtime Approval Decision Boundary",
+  pillLabel = "Decision read-only",
+  ariaLabel = "Founder runtime approval decision boundary",
+  rowAriaSuffix = "approval decision boundary row",
 }) {
   if (!decision) return null;
 
@@ -11896,42 +11916,52 @@ function FounderApprovalDecisionBoundaryCard({
   const safetyRows = Array.isArray(decision.safetyRows)
     ? decision.safetyRows
     : [];
+  const summaryRows = Array.isArray(decision.summaryRows)
+    ? decision.summaryRows
+    : [
+      { label: "Founder idea", value: decision.founderIdea },
+      { label: "Preview mode", value: decision.previewMode },
+      { label: "Readiness rows", value: decision.readinessRowCount },
+      { label: "Blocked rows", value: decision.blockedReadinessRowCount },
+      { label: "Decision-review candidates", value: decision.decisionReviewCandidateCount },
+      { label: "Approvable candidates", value: decision.approvableCandidateCount },
+      { label: "Rejectable candidates", value: decision.rejectableCandidateCount },
+      { label: "Persistable candidates", value: decision.persistableCandidateCount },
+      { label: "Decision-recordable candidates", value: decision.decisionRecordableCandidateCount },
+      { label: "Executable candidates", value: decision.runtimeExecutableCandidateCount },
+      { label: "Owner capability", value: decision.ownerCapability },
+      { label: "Next action", value: decision.nextAction },
+      { label: "Disabled reason", value: decision.disabledReason },
+      { label: "Evidence", value: decision.evidenceLocation },
+      { label: "Activity", value: decision.activityLocation },
+      { label: "Cost impact", value: decision.costImpact },
+    ];
 
   return (
-    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder runtime approval decision boundary">
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label={ariaLabel}>
       <div className="ccv2-card-header-row">
         <div>
           <div className="ccv2-eyebrow">{surfaceLabel}</div>
-          <h3>Runtime Approval Decision Boundary</h3>
+          <h3>{heading}</h3>
           <div className="ccv2-muted" style={{ marginTop: 6 }}>
             {decision.currentState}
           </div>
         </div>
-        <span className="ccv2-pill ccv2-pill--disabled">Decision read-only</span>
+        <span className="ccv2-pill ccv2-pill--disabled">{pillLabel}</span>
       </div>
       <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{decision.founderIdea}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview mode</span><span className="ccv2-page-summary-value">{decision.previewMode}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Readiness rows</span><span className="ccv2-page-summary-value">{decision.readinessRowCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{decision.blockedReadinessRowCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Decision-review candidates</span><span className="ccv2-page-summary-value">{decision.decisionReviewCandidateCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approvable candidates</span><span className="ccv2-page-summary-value">{decision.approvableCandidateCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Rejectable candidates</span><span className="ccv2-page-summary-value">{decision.rejectableCandidateCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Persistable candidates</span><span className="ccv2-page-summary-value">{decision.persistableCandidateCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Decision-recordable candidates</span><span className="ccv2-page-summary-value">{decision.decisionRecordableCandidateCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable candidates</span><span className="ccv2-page-summary-value">{decision.runtimeExecutableCandidateCount}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{decision.ownerCapability}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{decision.nextAction}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{decision.disabledReason}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{decision.evidenceLocation}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{decision.activityLocation}</span></div>
-        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{decision.costImpact}</span></div>
+        {summaryRows.map((row) => (
+          <div className="ccv2-page-summary-row" key={row.label}>
+            <span className="ccv2-page-summary-label">{row.label}</span>
+            <span className="ccv2-page-summary-value">{row.value}</span>
+          </div>
+        ))}
       </div>
       <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
         {rows.map((row) => (
           <div
             key={`${row.label}-${row.decisionPosition}`}
-            aria-label={`${row.label} approval decision boundary row`}
+            aria-label={`${row.label} ${rowAriaSuffix}`}
             style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
           >
             <div className="ccv2-section-heading">{row.label}</div>

@@ -4436,6 +4436,64 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Approval decision persistence boundary appears only on scoped pages", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Founder runtime approval decision persistence boundary").filter({ hasText: "Business Build Approval Decision Persistence Boundary" });
+      await expect(themedCard).toContainText("Approval Decision Persistence Boundary");
+      await expect(themedCard).toContainText("Persistence read-only");
+    }
+
+    for (const [path, label] of [
+      ["/command-center/business-build", "Business Build Approval Decision Persistence Boundary"],
+      ["/command-center/agent-flow", "Agent Flow Approval Decision Persistence Boundary"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Founder runtime approval decision persistence boundary").filter({ hasText: label });
+      await expect(card).toContainText("Approval Decision Persistence Boundary");
+      await expect(card).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(card).toContainText("Preview mode");
+      await expect(card).toContainText("Readiness rows");
+      await expect(card).toContainText("Blocked rows");
+      await expect(card).toContainText("Persistence candidates");
+      await expect(card).toContainText("Persistable candidates");
+      await expect(card).toContainText("Decision-recordable candidates");
+      await expect(card).toContainText("DB-writable candidates");
+      await expect(card).toContainText("Runtime-writable candidates");
+      await expect(card).toContainText("Executable candidates");
+      await expect(card).toContainText("NEXUS Approval Decision Persistence Boundary");
+      await expect(card).toContainText("Approval decision persistence draft");
+      await expect(card).toContainText("Approval decision persistence event");
+      await expect(card).toContainText("Approval decision persistence evidence");
+      await expect(card).toContainText("Persistence readiness");
+      await expect(card).toContainText("Write authority");
+      await expect(card).toContainText("Runtime authority");
+      await expect(card).toContainText("Approval decision persistence safe dry-run report");
+      await expect(card).toContainText("No provider calls");
+      const cardText = await card.innerText();
+      expect(cardText).not.toMatch(/P120|reports\/p120|founderApprovalDecisionPersistence|approval_decision_persistence/i);
+    }
+
+    for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      await expect(page.getByLabel("Founder runtime approval decision persistence boundary")).toHaveCount(0);
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalDecisionPersistence|approval_decision_persistence|approvalDecisionPersistenceKey|persistenceDraftRef|persistenceEventRef|persistenceEvidenceRef/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Founder live approval capture boundary appears on non-chat founder routes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
