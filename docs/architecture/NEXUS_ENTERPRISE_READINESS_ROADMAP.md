@@ -39,12 +39,13 @@ P137.4 is now complete as Agent Flow Command Center UX only.
 P137.5 is now complete as tests/checkers hardening only.
 P137.6 is now complete as docs/roadmap/status closure only.
 P137.7 is now complete as final validation only. P137 is complete.
-P138 is the next executable phase. P138-P145 remain
-planned-only. They do not enable secret values, DB writes, provider/model
-calls, tool execution, agent dispatch, project mutation, deploy, release,
-export, package, network calls, or spend until each phase/subphase has its own
-implementation-grade plan, checker coverage, Command Center UX when applicable,
-and final validation.
+P138.1 is now complete as contract/policy/safety-boundary only.
+P138.2 is the next executable subphase. P138.2-P145 remain planned-only. They
+do not enable secret values, DB writes, provider/model calls, tool execution,
+agent dispatch, project mutation, patch application, build/test execution,
+rollback execution, deploy, release, export, package, network calls, or spend
+until each phase/subphase has its own implementation-grade plan, checker
+coverage, Command Center UX when applicable, and final validation.
 
 ## Global Subphase Contract
 
@@ -123,14 +124,16 @@ P137.4 is now complete as Agent Flow Command Center UX only.
 P137.5 is now complete as tests/checkers hardening only.
 P137.6 is now complete as docs/roadmap/status closure only.
 P137.7 is now complete as final validation only. P137 is complete.
-P138 is the next executable phase. P138-P145 are planned-only
-backlog phases and must not be treated as complete or live.
+P138.1 is now complete as contract/policy/safety-boundary only.
+P138.2 is the next executable subphase. P138.2-P145 are planned-only backlog
+phases and must not be treated as complete or live.
 
 ## Validation
 
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1381-project-workspace-mutation-build-pipeline`
 - `npm run check:p1366-secrets-providers-tool-governance-docs-roadmap`
 - `npm run check:p1365-secrets-providers-tool-governance-tests-checkers`
 - `npm run check:p1364-provider-governance-command-center-ux`
