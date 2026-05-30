@@ -133,7 +133,9 @@ const p1377FinalState =
   && roadmapById.get("P138")?.status === "planned";
 const planP1376Slice = plan.match(/### P137\.6 Docs \/ Roadmap \/ Status[\s\S]*?### P137\.7 Final Validation/)?.[0] || plan;
 const readmeP137Slice = readme.match(/- P137\.5 agent work order runtime tests\/checkers:[\s\S]*?## CareLoop Project Progress/)?.[0] || readme;
-const platformP137Slice = platformRoadmap.match(/P137\.5 agent work order runtime tests\/checkers is complete[\s\S]*?spend remain blocked\./)?.[0] || platformRoadmap;
+const platformP137Start = platformRoadmap.lastIndexOf("P137.5 agent work order runtime tests/checkers is complete");
+const platformP137End = platformP137Start >= 0 ? platformRoadmap.indexOf("Implementation follows", platformP137Start) : -1;
+const platformP137Slice = platformP137Start >= 0 && platformP137End > platformP137Start ? platformRoadmap.slice(platformP137Start, platformP137End) : platformRoadmap;
 const enterpriseP137Slice = enterpriseRoadmap.match(/P137\.1 is now complete[\s\S]*?must not be treated as complete or live\./)?.[0] || enterpriseRoadmap;
 const combinedDocs = [planP1376Slice, readmeP137Slice, platformP137Slice, enterpriseP137Slice].join("\n");
 

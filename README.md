@@ -2008,7 +2008,8 @@ The Command Center and local operator surface have:
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
   implementation is closed through P136.7. P137 Agent Work Order Runtime is
-  in progress through P137.6 with P137.7 planned-only next.
+  complete through final validation. P138 Project Workspace Mutation and Build
+  Pipeline is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2256,10 +2257,14 @@ The Command Center and local operator surface have:
   roadmap, and OS phase status.
 - P137.6 agent work order runtime docs/status: Closed the P137 docs, README,
   platform roadmap, enterprise roadmap, OS phase status, phase index, checker
-  handoff, and report evidence through P137.6. P137.7 Final Validation is next;
-  provider/model calls, tool execution, MCP startup, agent dispatch,
-  DB/runtime writes, project mutation, deploy, release, export, package,
-  network calls, and spend remain unavailable.
+  handoff, and report evidence through P137.6.
+- P137.7 agent work order runtime final validation: Closed P137 with prior
+  report verification, checker compatibility, docs/status closure, route-wide
+  Command Center safety, and planned-only P138 handoff. P137 Agent Work Order
+  Runtime is complete; provider/model calls, tool execution, MCP startup,
+  agent dispatch, DB/runtime writes, project mutation, deploy, release, export,
+  package, network calls, and spend remain unavailable until a later phase
+  explicitly allows them.
 
 ## CareLoop Project Progress
 

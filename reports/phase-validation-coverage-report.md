@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T19:47:38.375Z
+- Generated at: 2026-05-30T19:56:28.608Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1ae05fe9
+- Validation HEAD: 2dae40b5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -393,7 +393,7 @@
 | P110.7 validation coverage | PASS | 49 checkers, 45 reports |
 | P111 validation coverage | PASS | 30 checkers, 26 reports |
 | P111.1 validation coverage | PASS | 9 checkers, 5 reports |
-| P111.2 validation coverage | PASS | 16 checkers, 12 reports |
+| P111.2 validation coverage | PASS | 17 checkers, 13 reports |
 | P111.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P111.4 validation coverage | PASS | 8 checkers, 4 reports |
 | P111.5 validation coverage | PASS | 9 checkers, 5 reports |
@@ -597,14 +597,14 @@
 | P136.5 validation coverage | PASS | 27 checkers, 22 reports |
 | P136.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P136.7 validation coverage | PASS | 54 checkers, 44 reports |
-| P137 validation coverage | PASS | 17 checkers, 12 reports |
+| P137 validation coverage | PASS | 17 checkers, 13 reports |
 | P137.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P137.2 validation coverage | PASS | 6 checkers, 1 reports |
 | P137.3 validation coverage | PASS | 8 checkers, 2 reports |
 | P137.4 validation coverage | PASS | 8 checkers, 1 reports |
 | P137.5 validation coverage | PASS | 27 checkers, 23 reports |
 | P137.6 validation coverage | PASS | 5 checkers, 1 reports |
-| P137.7 validation coverage | PASS | 44 checkers, 44 reports |
+| P137.7 validation coverage | PASS | 48 checkers, 45 reports |
 | P138 validation coverage | PASS | dedicated_checker, validation_report |
 | P139 validation coverage | PASS | dedicated_checker, validation_report |
 | P140 validation coverage | PASS | dedicated_checker, validation_report |
@@ -615,7 +615,7 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P137.6; next=P137.7; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P137.7; next=P138; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

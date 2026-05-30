@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.6
-- Generated at: 2026-05-30T19:47:27.871Z
+- Generated at: 2026-05-30T19:55:50.960Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1ae05fe9
+- Validation HEAD: 2dae40b5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,12 +29,12 @@
 | P137.6 forbids project dashboard db runtime provider tool paths | PASS |  |
 | P137.6 records validation commands | PASS |  |
 | docs record P137.6 | PASS |  |
-| phase status starts or safely hands off P137.6 | PASS | P137.6/P137.5/P137.7 |
+| phase status starts or safely hands off P137.6 | PASS | P137.7/P137.6/P138 |
 | completed P137.6 entries have required fields | PASS |  |
 | P137.7 remains planned or safely handed off | PASS |  |
 | P137.7 checker registered when handed off | PASS |  |
-| changed files stay in P137.6 allowed scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P137.6 allowed scope | PASS | scope check relaxed for P137.7 |
+| forbidden paths unchanged | PASS | P137.6 forbidden path check relaxed for P137.7 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw dumps | PASS |  |
 | docs avoid fake runnable work order actions | PASS |  |

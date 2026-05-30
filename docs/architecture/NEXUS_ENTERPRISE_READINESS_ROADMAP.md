@@ -38,7 +38,8 @@ P137.3 is now complete as a local non-runnable dispatch dry run only.
 P137.4 is now complete as Agent Flow Command Center UX only.
 P137.5 is now complete as tests/checkers hardening only.
 P137.6 is now complete as docs/roadmap/status closure only.
-P137.7 is the next executable subphase. P137.7 and P138-P145 remain
+P137.7 is now complete as final validation only. P137 is complete.
+P138 is the next executable phase. P138-P145 remain
 planned-only. They do not enable secret values, DB writes, provider/model
 calls, tool execution, agent dispatch, project mutation, deploy, release,
 export, package, network calls, or spend until each phase/subphase has its own
@@ -121,7 +122,8 @@ P137.3 is now complete as a local non-runnable dispatch dry run only.
 P137.4 is now complete as Agent Flow Command Center UX only.
 P137.5 is now complete as tests/checkers hardening only.
 P137.6 is now complete as docs/roadmap/status closure only.
-P137.7 is the next executable subphase. P137.7 and P138-P145 are planned-only
+P137.7 is now complete as final validation only. P137 is complete.
+P138 is the next executable phase. P138-P145 are planned-only
 backlog phases and must not be treated as complete or live.
 
 ## Validation

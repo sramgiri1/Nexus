@@ -24721,17 +24721,16 @@
       "title": "Agent Work Order Runtime",
       "label": "Agent Work Order Runtime",
       "order": 173,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1ae05fe9",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P137.6 is complete. P137.7 Final Validation is planned-only next.",
-      "summary": "P137 is in progress through P137.6. Docs/status now close the scoped runtime contract, work-order model, dry run, Agent Flow UX, tests/checkers, route-wide safety assertions, and roadmap evidence while live dispatch and execution remain blocked.",
+      "detail": "P137.7 is complete. P137 Agent Work Order Runtime is complete. P138 is planned-only next.",
+      "summary": "P137 Agent Work Order Runtime is complete. NEXUS now has a scoped agent work-order contract, read-only work-order model, non-runnable dispatch dry run, Agent Flow UX, aggregate tests/checkers, docs/status closure, and final validation while live dispatch and execution remain blocked.",
       "previousPhase": "P136",
       "nextPhase": "P138",
       "checksRun": [
-        "npm run check:p1376-agent-work-order-runtime",
-        "npm run check:p1375-agent-work-order-runtime",
+        "npm run check:p1377-agent-work-order-runtime",
         "npm run check:enterprise-readiness-roadmap",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
@@ -24741,9 +24740,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P137.6 is docs/status/checker hardening only.",
+        "P137 closes scoped agent work-order runtime planning and display only.",
         "It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend.",
-        "P137.7 remains planned-only."
+        "P138 remains planned-only."
       ],
       "subphases": [
         {
@@ -25187,7 +25186,7 @@
         {
           "phaseId": "P137.7",
           "title": "Final Validation",
-          "status": "planned",
+          "status": "complete",
           "narrowGoal": "Close P137 with final validation evidence, prior report verification, checker compatibility, docs/roadmap/status closure, route-wide Command Center safety, and planned-only P138 handoff.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
@@ -25210,15 +25209,26 @@
           ],
           "previousPhase": "P137.6",
           "nextPhase": "P138",
-          "branch": "",
-          "commit": "",
-          "completedAt": "",
-          "checksRun": [],
-          "knownLimitations": [
-            "P137.7 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-30T19:53:00.317Z",
+          "checksRun": [
+            "npm run check:p1377-agent-work-order-runtime",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
           ],
-          "summary": "Planned-only Final Validation for P137 Agent Work Order Runtime.",
-          "detail": "P137.7 remains planned-only.",
+          "knownLimitations": [
+            "P137.7 is final validation only.",
+            "It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend.",
+            "P138 remains planned-only."
+          ],
+          "summary": "Closed P137 with prior report verification, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P138 handoff without enabling live dispatch or execution.",
+          "detail": "P137.7 is complete. P137 Agent Work Order Runtime is complete. P138 is planned-only next.",
           "commandCenterVisible": true
         }
       ],
@@ -25763,19 +25773,30 @@
       "title": "Final Validation",
       "label": "Final Validation",
       "order": 173.7,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned-only final validation for P137 Agent Work Order Runtime.",
-      "detail": "P137.7 remains planned-only.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-30T19:53:00.317Z",
+      "summary": "Closed P137 with prior report verification, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P138 handoff without enabling live dispatch or execution.",
+      "detail": "P137.7 is complete. P137 Agent Work Order Runtime is complete. P138 is planned-only next.",
+      "checksRun": [
+        "npm run check:p1377-agent-work-order-runtime",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P137.7 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+        "P137.7 is final validation only.",
+        "It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend.",
+        "P138 remains planned-only."
       ],
       "previousPhase": "P137.6",
       "nextPhase": "P138",
-      "commandCenterVisible": false
+      "commandCenterVisible": true
     },
     {
       "track": "NEXUS_OS",
@@ -25971,7 +25992,8 @@
             "final response checklist"
           ]
         }
-      ]
+      ],
+      "completedAt": ""
     },
     {
       "track": "NEXUS_OS",
@@ -28818,12 +28840,44 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-30T19:41:21.429Z",
-  "currentPhase": "P137.6",
-  "previousPhase": "P137.5",
-  "nextPhase": "P137.7",
+  "updatedAt": "2026-05-30T19:53:00.317Z",
+  "currentPhase": "P137.7",
+  "previousPhase": "P137.6",
+  "nextPhase": "P138",
   "currentPhaseStatus": "complete",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P137.7",
+    "phase": "P137.7",
+    "title": "Final Validation",
+    "label": "Final Validation",
+    "order": 173.7,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T19:53:00.317Z",
+    "summary": "Closed P137 with prior report verification, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P138 handoff without enabling live dispatch or execution.",
+    "detail": "P137.7 is complete. P137 Agent Work Order Runtime is complete. P138 is planned-only next.",
+    "checksRun": [
+      "npm run check:p1377-agent-work-order-runtime",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P137.7 is final validation only.",
+      "It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend.",
+      "P138 remains planned-only."
+    ],
+    "previousPhase": "P137.6",
+    "nextPhase": "P138",
+    "commandCenterVisible": true
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P137.6",
     "phase": "P137.6",
@@ -28856,62 +28910,205 @@
     "nextPhase": "P137.7",
     "commandCenterVisible": true
   },
-  "previous": {
-    "phaseId": "P137.5",
-    "phase": "P137.5",
-    "title": "Tests / Checkers",
-    "label": "Tests / Checkers",
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "05cb2531",
-    "completedAt": "2026-05-30T19:24:22.128Z",
-    "summary": "Aggregated P137 contract, scoped work-order model, dispatch dry run, Agent Flow UX coverage, route-wide safety assertions, docs, roadmap, and OS phase status into tests/checkers evidence without enabling live dispatch.",
-    "detail": "P137.5 is complete. P137.6 Docs / Roadmap / Status is planned-only next.",
-    "checksRun": [
-      "npm run check:p1375-agent-work-order-runtime",
-      "npm run check:p1374-agent-work-order-runtime",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P137.5 is tests/checkers hardening only.",
-      "It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend.",
-      "P137.6 remains planned-only."
-    ],
-    "previousPhase": "P137.4",
-    "nextPhase": "P137.6",
-    "commandCenterVisible": true,
-    "track": "NEXUS_OS",
-    "order": 173.5
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P137.7",
-    "phase": "P137.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 173.7,
+    "phaseId": "P138",
+    "title": "Project Workspace Mutation and Build Pipeline",
+    "label": "Build Pipeline",
+    "order": 174,
     "status": "planned",
-    "branch": "",
+    "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
-    "completedAt": "",
-    "summary": "Planned-only final validation for P137 Agent Work Order Runtime.",
-    "detail": "P137.7 remains planned-only.",
+    "commandCenterVisible": true,
+    "detail": "P138 is planned-only enterprise readiness work. NEXUS can safely plan, apply, test, and roll back project changes under explicit project boundaries and approval gates.",
+    "summary": "Planned-only enterprise readiness phase: NEXUS can safely plan, apply, test, and roll back project changes under explicit project boundaries and approval gates.",
+    "previousPhase": "P137",
+    "nextPhase": "P139",
     "checksRun": [],
     "knownLimitations": [
-      "P137.7 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+      "P138 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
     ],
-    "previousPhase": "P137.6",
-    "nextPhase": "P138",
-    "commandCenterVisible": false
+    "subphases": [
+      {
+        "phaseId": "P138.1",
+        "title": "Contract / Policy / Safety Boundary",
+        "status": "planned",
+        "narrowGoal": "Contract / Policy / Safety Boundary for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P138.2",
+        "title": "Workspace Mutation Model",
+        "status": "planned",
+        "narrowGoal": "Workspace Mutation Model for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P138.3",
+        "title": "Patch and Build Preview",
+        "status": "planned",
+        "narrowGoal": "Patch and Build Preview for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P138.4",
+        "title": "Project Build Command Center UX",
+        "status": "planned",
+        "narrowGoal": "Project Build Command Center UX for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P138.5",
+        "title": "Tests / Checkers",
+        "status": "planned",
+        "narrowGoal": "Tests / Checkers for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P138.6",
+        "title": "Docs / Roadmap / Status",
+        "status": "planned",
+        "narrowGoal": "Docs / Roadmap / Status for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P138.7",
+        "title": "Final Validation",
+        "status": "planned",
+        "narrowGoal": "Final Validation for Project Workspace Mutation and Build Pipeline.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      }
+    ],
+    "completedAt": ""
   },
   "currentPhaseSummary": "Surfaced the scoped agent work order runtime dry run on Agent Flow with display-safe work-order lanes, gates, blockers, owner, evidence/activity, next action, disabled reason, and zero-cost impact while live dispatch remains blocked.",
-  "nextSubphase": "P137.7",
-  "currentSubphase": "P137.6",
-  "previousSubphase": "P137.5"
+  "nextSubphase": "P138",
+  "currentSubphase": "P137.7",
+  "previousSubphase": "P137.6"
 }

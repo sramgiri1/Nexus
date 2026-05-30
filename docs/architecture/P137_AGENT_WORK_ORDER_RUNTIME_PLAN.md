@@ -948,8 +948,162 @@ Final response checklist:
 
 ### P137.7 Final Validation
 
-Status: planned
+Status: complete
 
-- Close P137 with final validation evidence, prior report verification,
-  checker compatibility, route-wide Command Center safety, docs/status closure,
-  and planned-only P138 handoff.
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `2dae40b5`
+
+Allowed files:
+- `contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json`
+- `docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1376-agent-work-order-runtime.js`
+- `scripts/check-p1377-agent-work-order-runtime.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `reports/p1376-agent-work-order-runtime-report.md`
+- `reports/p1377-agent-work-order-runtime-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `generated-projects/**`
+- `careloop/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Add `scripts/check-p1377-agent-work-order-runtime.js`.
+- Update P137 contract, docs, README, enterprise/platform roadmap, OS phase
+  status, phase index, package script, enterprise readiness checker, and
+  generated reports.
+
+Expected exports, schemas, and data shapes:
+- No new runtime export is introduced in P137.7.
+- Existing P137 model exports remain:
+  `AGENT_WORK_ORDER_RUNTIME_PHASE`, `AGENT_WORK_ORDER_RUNTIME_VERSION`,
+  `AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES`,
+  `buildAgentWorkOrderRuntimeModel`, `validateAgentWorkOrderRuntimeModel`,
+  `buildAgentWorkOrderDispatchDryRun`,
+  `validateAgentWorkOrderDispatchDryRun`,
+  and `buildAgentWorkOrderRuntimeEnvelope`.
+- Existing scoped packet and dry-run shapes remain read-only and
+  non-runnable.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX.
+- Chat/Lite remains clean and chat-focused.
+- Agent Flow remains the page for work-order runtime state, next action,
+  blockers, disabled reason, owner capability, evidence/activity location, and
+  zero-cost impact.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw registry
+  dumps, DemoApp, raw private IDs, or fake runnable actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through existing route-wide Command Center Playwright coverage.
+
+Safety rules:
+- Do not load all tools, MCP schemas, skills, agents, policies, or memory into
+  model context.
+- Runtime owns the full registry; agents receive only scoped task/context
+  packets.
+- Do not call providers/models, execute tools, start MCP servers, dispatch
+  agents, mutate projects, write DB/runtime state, deploy, release, export,
+  package, use network calls, or spend in P137.7.
+- P138 remains planned-only until its own implementation-grade plan is written.
+
+Reuse check:
+- Reuse `shared/reportWriter.js`.
+- Reuse `shared/checkResultFormatter.js`.
+- Reuse existing P137 reports, OS status, phase index, and enterprise roadmap
+  checker patterns.
+- Do not duplicate report writers, checker formatters, result envelopes,
+  redaction helpers, mode guards, route matrices, UI cards/tabs/badges,
+  activity/evidence/audit appenders, or work-order helpers.
+
+Playwright tests:
+- No Playwright source update in P137.7 because no Command Center source
+  changes are made.
+- Existing route-wide Command Center Playwright coverage remains required.
+
+Checker updates:
+- Add `scripts/check-p1377-agent-work-order-runtime.js`.
+- Add `check:p1377-agent-work-order-runtime` to `package.json`.
+- Update enterprise readiness checker for P137.7 final state.
+
+Docs/README/roadmap updates:
+- Update this P137 plan, README, NEXUS platform roadmap, enterprise readiness
+  roadmap, OS phase status, and phase index.
+
+OS phase status update:
+- P137 complete.
+- P137.7 complete.
+- Current phase is P137.7.
+- Previous phase is P137.6.
+- Next phase is P138 planned-only.
+
+Validation commands:
+- `npm run check:p1377-agent-work-order-runtime`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No forbidden project, dashboard, DB/runtime, provider/tool, worker, deploy,
+  release, export, package, or env paths changed.
+- No full registry/context loading into model context.
+- No provider/model calls, tool execution, MCP startup, agent dispatch,
+  DB/runtime writes, project mutation, network calls, deploy, release, export,
+  package, or spend.
+- P138 remains planned-only.
+- No stale implementation commit marker remains after status stamp.
+
+Git add/commit/push commands:
+- `git add <P137.7 allowed files>`
+- `git commit -m "chore(nexus): implement p1377 agent work order runtime"`
+- `git add <P137.7 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1377 agent work order runtime"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX preservation
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase

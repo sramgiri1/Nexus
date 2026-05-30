@@ -3194,8 +3194,8 @@ remain blocked.
 
 ## P133-P145 Enterprise Readiness Roadmap
 
-P133-P145 are enterprise readiness phases. P133, P134, P135, and P136 are
-complete through final validation, and P137 is in progress through P137.6.
+P133-P145 are enterprise readiness phases. P133, P134, P135, P136, and P137 are
+complete through final validation.
 Later subphases and phases remain
 planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
@@ -3216,8 +3216,9 @@ P137.1 agent work order runtime contract is complete.
 P137.2 agent work order runtime model is complete. P137.3 agent work order
 dispatch dry run is complete. P137.4 agent work order Agent Flow UX is
 complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
-agent work order runtime docs/status is complete. P137.7
-and P138-P145 do not enable secret values, DB/runtime writes, live CRUD,
+agent work order runtime docs/status is complete. P137.7 agent work order
+runtime final validation is complete. P138-P145 do not enable secret values,
+DB/runtime writes, live CRUD,
 provider/model calls, tool execution, agent dispatch, project mutation, deploy,
 release, export, package, network calls, or spend.
 
@@ -3479,10 +3480,15 @@ handoffs, docs, roadmap, and OS phase status.
 
 P137.6 agent work order runtime docs/status is complete. NEXUS now has closed
 P137 docs, README, platform roadmap, enterprise roadmap, OS phase status,
-phase index, checker handoff, and report evidence through P137.6. P137.7 Final
-Validation is planned-only next; provider/model calls, tool execution, MCP
-startup, agent dispatch, DB/runtime writes, project mutation, deploy, release,
-export, package, network calls, and spend remain blocked.
+phase index, checker handoff, and report evidence through P137.6.
+
+P137.7 agent work order runtime final validation is complete. P137 Agent Work
+Order Runtime is complete with prior report verification, checker
+compatibility, docs/status closure, route-wide Command Center safety, and
+planned-only P138 handoff. Provider/model calls, tool execution, MCP startup,
+agent dispatch, DB/runtime writes, project mutation, deploy, release, export,
+package, network calls, and spend remain blocked until a later phase explicitly
+allows them.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
