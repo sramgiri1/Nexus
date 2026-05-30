@@ -389,7 +389,7 @@
       "order": 171.3,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "775def2a",
       "summary": "Added a display-safe permission preview over the P135.2 auth and tenant model while role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, login, sessions, tenant writes, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
         "P135.3 is preview-only. It does not create a permission engine, auth schema, tenant store, role store, grant store, enforcement adapter, auth provider, DB/runtime write, dashboard source, Playwright source, provider/model call, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path. P135.4 remains planned-only."
