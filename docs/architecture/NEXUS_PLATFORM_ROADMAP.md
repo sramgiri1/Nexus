@@ -3157,7 +3157,21 @@ labels, and no-spend cost posture while schemas, migrations, tables, DB reads,
 DB writes, CRUD execution, runtime writes, adapter selection, adapter
 connection, provider/model calls, agent dispatch, project mutation, deploy,
 release, export, package action, network call, and provider spend remain
-blocked. P132.5 is next.
+blocked.
+
+P132.5 is complete. NEXUS added display-safe Store Execution Scope cards to
+Business Build and Agent Flow by reusing the P132.4 write-plan preview and the
+existing Command Center boundary card. Chat with NEXUS, Lite, OS Roadmap, and
+Live Readiness stay clean while the scoped cards show what changed, current
+state, next action, blockers, disabled reason, owner capability, evidence/
+activity wording, and no-spend cost impact without raw report paths, raw helper
+IDs, raw JSON, raw logs, raw table names, raw SQL, or private project
+identifiers. DB schemas, migrations, DB/runtime reads or writes, request
+persistence, live CRUD execution, approval capture, handoff acceptance,
+authority grant, execution unlock, provider/model calls, agent dispatch,
+worker/tool execution, project mutation, hosted DB mutation, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+P132.6 is next.
 
 ## P133-P145 Enterprise Readiness Roadmap
 
@@ -3170,7 +3184,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation remains on P132.4 and P132.5 remains next. P133-P145 do
+Current implementation remains on P132.5 and P132.6 remains next. P133-P145 do
 not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch,
 project mutation, deploy, release, export, package, network calls, or spend.
 

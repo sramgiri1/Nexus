@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.4
-- Generated at: 2026-05-30T00:56:20.367Z
+- Generated at: 2026-05-30T09:46:47.380Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5d2d07c4
+- Validation HEAD: 9ec02306
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -20,7 +20,7 @@
 | package script registered | PASS |  |
 | contract marks P132.4 complete | PASS |  |
 | P132.4 records expected base commit | PASS |  |
-| P132.5 remains planned | PASS |  |
+| P132.5 remains planned or complete | PASS |  |
 | P132.4 allowed files include model and checker | PASS |  |
 | P132.4 forbids project/dashboard/db/runtime paths | PASS |  |
 | P132.4 records validation commands | PASS |  |
@@ -44,10 +44,10 @@
 | platform roadmap records P132.4 | PASS |  |
 | Command Center UX remains unchanged and scoped | PASS |  |
 | Playwright scoped store readiness coverage remains | PASS |  |
-| phase status advanced | PASS | P132.4/P132.3/P132.5 |
+| phase status advanced | PASS | P132.5/P132.4/P132.6 |
 | completed P132.4 entries have required fields | PASS |  |
-| changed files stay in P132.4 allowed scope | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P132.4 allowed scope | PASS | scope check relaxed for P132.5 |
+| forbidden paths unchanged | PASS | P132.4 forbidden path check relaxed for P132.5 |
 | model has no unsafe imports or URLs | PASS |  |
 | model avoids raw SQL/table names | PASS |  |
 | model avoids raw private IDs | PASS |  |

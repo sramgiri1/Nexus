@@ -1921,7 +1921,7 @@ The Command Center and local operator surface have:
 - P132.1 store live execution contract: Started P132 with an
   implementation-grade execution contract, seven-subphase split, safety
   boundary, checker, docs, status handoff, and planned-only P132.2 handoff.
-  P132.2, P132.3, and P132.4 are now complete.
+  P132.2, P132.3, P132.4, and P132.5 are now complete.
   DB schemas, migrations, DB/runtime reads or writes, request persistence,
   live CRUD execution, approval capture, handoff acceptance, authority grant,
   execution unlock, provider/model calls, agent dispatch, worker/tool
@@ -1958,7 +1958,21 @@ The Command Center and local operator surface have:
   reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter
   connection, provider/model calls, agent dispatch, project mutation, deploy,
   release, export, package, network call, and provider spend remain blocked.
-  P132.5 is next.
+  P132.5 is now complete.
+  DB schemas, migrations, DB/runtime reads or writes, request persistence,
+  live CRUD execution, approval capture, handoff acceptance, authority grant,
+  execution unlock, provider/model calls, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
+- P132.5 Command Center execution scope UX: Added display-safe Store Execution
+  Scope cards to Business Build and Agent Flow by reusing the P132.4 write-plan
+  preview and existing Command Center boundary card. Chat with NEXUS, Lite, OS
+  Roadmap, and Live Readiness stay clean while the scoped cards show what
+  changed, current state, next action, blockers, disabled reason, owner
+  capability, evidence/activity wording, and no-spend cost impact without raw
+  report paths, raw helper IDs, raw JSON, raw logs, raw table names, raw SQL, or
+  private project identifiers. P132.6 is next.
   DB schemas, migrations, DB/runtime reads or writes, request persistence,
   live CRUD execution, approval capture, handoff acceptance, authority grant,
   execution unlock, provider/model calls, agent dispatch, worker/tool
@@ -1971,8 +1985,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation remains on P132.4 with
-  P132.5 next.
+  roadmap/status entries only; current implementation remains on P132.5 with
+  P132.6 next.
 
 ## CareLoop Project Progress
 

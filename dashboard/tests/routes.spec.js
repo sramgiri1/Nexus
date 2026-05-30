@@ -5727,11 +5727,14 @@ test.describe("Command Center route-wide UX", () => {
       const themedScopeCard = page.getByLabel("Store live admission scope", { exact: true }).filter({ hasText: "Business Build Store Live Admission Scope" });
       await expect(themedScopeCard).toContainText("Store Live Admission Scope");
       await expect(themedScopeCard).toContainText("Admission scope display-only");
+      const themedExecutionCard = page.getByLabel("Store execution scope", { exact: true }).filter({ hasText: "Business Build Store Execution Scope" });
+      await expect(themedExecutionCard).toContainText("Store Execution Scope");
+      await expect(themedExecutionCard).toContainText("Execution scope display-only");
     }
 
-    for (const [path, label] of [
-      ["/command-center/business-build", "Business Build Store Live Readiness Gate"],
-      ["/command-center/agent-flow", "Agent Flow Store Live Readiness Gate"],
+    for (const [path, label, executionLabel] of [
+      ["/command-center/business-build", "Business Build Store Live Readiness Gate", "Business Build Store Execution Scope"],
+      ["/command-center/agent-flow", "Agent Flow Store Live Readiness Gate", "Agent Flow Store Execution Scope"],
     ]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
       const card = page.getByLabel("Store live readiness gate", { exact: true }).filter({ hasText: label });
@@ -5781,18 +5784,42 @@ test.describe("Command Center route-wide UX", () => {
       await expect(scopeCard).toContainText("No provider spend");
       const scopeCardText = await scopeCard.innerText();
       expect(scopeCardText).not.toMatch(/P131|reports\/p131|founderRuntimeStoreLiveAdmissionScope|requestPersistenceBoundaryDryRun|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
+
+      const executionCard = page.getByLabel("Store execution scope", { exact: true }).filter({ hasText: executionLabel });
+      await expect(executionCard).toContainText("Store Execution Scope");
+      await expect(executionCard).toContainText("Execution scope display-only");
+      await expect(executionCard).toContainText("What changed");
+      await expect(executionCard).toContainText("Execution scope rows");
+      await expect(executionCard).toContainText("Write-plan candidates");
+      await expect(executionCard).toContainText("Write-plan persistence candidates");
+      await expect(executionCard).toContainText("Schema candidates");
+      await expect(executionCard).toContainText("Migration candidates");
+      await expect(executionCard).toContainText("Table candidates");
+      await expect(executionCard).toContainText("DB-readable candidates");
+      await expect(executionCard).toContainText("DB-writable candidates");
+      await expect(executionCard).toContainText("Runtime-writable candidates");
+      await expect(executionCard).toContainText("Adapter-selection candidates");
+      await expect(executionCard).toContainText("NEXUS Store Execution Scope Guard");
+      await expect(executionCard).toContainText("Execution scope prerequisites");
+      await expect(executionCard).toContainText("DB write-plan boundary");
+      await expect(executionCard).toContainText("Adapter and runtime boundary");
+      await expect(executionCard).toContainText("Execution scope UX evidence");
+      await expect(executionCard).toContainText("No provider spend");
+      const executionCardText = await executionCard.innerText();
+      expect(executionCardText).not.toMatch(/P132|reports\/p132|founderRuntimeStoreLiveAdmissionExecutionScope|founderRuntimeStoreLiveAdmissionDbWritePlanPreview|CREATE TABLE|INSERT INTO|UPDATE .* SET|DELETE FROM|SELECT \* FROM/i);
     }
 
     for (const path of ["/command-center/lite", "/command-center", "/command-center/os-roadmap", "/command-center/live-readiness"]) {
       await page.goto(path, { waitUntil: "domcontentloaded" });
       await expect(page.getByLabel("Store live readiness gate", { exact: true })).toHaveCount(0);
       await expect(page.getByLabel("Store live admission scope", { exact: true })).toHaveCount(0);
+      await expect(page.getByLabel("Store execution scope", { exact: true })).toHaveCount(0);
     }
 
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
-    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|founderRuntimeStoreLiveAdmissionScope|dryRunStoreLiveAdmissionReview|requestPersistenceBoundaryDryRun|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness|founderRuntimeStoreLiveAdmissionScope|founderRuntimeStoreLiveAdmissionExecutionScope|founderRuntimeStoreLiveAdmissionDbWritePlanPreview|dryRunStoreLiveAdmissionReview|requestPersistenceBoundaryDryRun|approval_authority_grant_handoff_acceptance_capture_persistence_store/i);
     expect(body).not.toMatch(/persist now|save now|write now|run now|execute now|deploy now|activate now|accept handoff now|capture acceptance now|record acceptance now|handoff authority now|grant authority now|apply now|approve now|reject now|save decision now|call provider now|create project now|dispatch agent now|write sqlite now|write approval now|unlock execution now|admit live store now/i);
     expect(errors).toEqual([]);
   });

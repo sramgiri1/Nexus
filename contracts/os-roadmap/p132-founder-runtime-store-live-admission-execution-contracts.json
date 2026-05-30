@@ -3,9 +3,9 @@
   "title": "Founder Runtime Store Live Admission Execution Contract",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P132.4",
-  "previousSubphase": "P132.3",
-  "nextSubphase": "P132.5",
+  "currentSubphase": "P132.5",
+  "previousSubphase": "P132.4",
+  "nextSubphase": "P132.6",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "39e2da0a",
   "owner": "NEXUS OS",
@@ -23,7 +23,7 @@
     "Reuse P131.5 scoped Command Center UX evidence.",
     "Do not duplicate report writers, checker formatters, mode guards, redaction helpers, route matrices, status helpers, UI components, or evidence/audit/activity appenders."
   ],
-  "commandCenterUx": "P132.4 does not change dashboard source. The P131.5 scoped Store Live Admission Scope cards remain visible only on Business Build and Agent Flow. Chat with NEXUS and Lite stay clean.",
+  "commandCenterUx": "P132.5 adds scoped Store Execution Scope cards to Business Build and Agent Flow. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean.",
   "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
   "subphases": [
     {
@@ -477,17 +477,32 @@
     {
       "phaseId": "P132.5",
       "title": "Command Center Execution Scope UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "allowedFiles": [],
+      "expectedBaseCommit": "9ec02306",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1325-founder-runtime-store-live-admission-execution.js",
+        "scripts/check-p1324-founder-runtime-store-live-admission-execution.js",
+        "contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json",
+        "docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1325-founder-runtime-store-live-admission-execution-report.md",
+        "reports/p1324-founder-runtime-store-live-admission-execution-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -499,41 +514,74 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
-      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "expectedExports": [
+        "buildFounderRuntimeStoreLiveAdmissionExecutionScopeDisplayModel",
+        "founderRuntimeStoreLiveAdmissionExecutionScope"
+      ],
+      "dataShape": "Display-safe execution scope object with founder idea summary, current state, preview mode, readiness rows, readiness sections, summary rows, blocker rows, disabled reason, owner capability, evidence/activity labels, no-spend cost posture, zero candidate counts, and blocked write/runtime/dispatch/spend fields. No DB schema, migration file, table, query, runtime record, selected adapter, connected adapter, write adapter, live CRUD executor, provider envelope, dispatch packet, raw private ID, raw table name, raw report dump, or project data.",
+      "commandCenterUx": "Business Build and Agent Flow show Store Execution Scope cards using the existing boundary card. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "Display-only scoped Command Center UX.",
+        "No DB schemas, migrations, tables, DB reads, DB writes, runtime writes, adapter selection, adapter connection, request persistence, CRUD execution, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+        "No raw JSON/log/policy dumps, raw table names, raw report paths, private IDs, raw SQL snippets, internal helper IDs, or fake runnable actions in primary UX."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
-        "Reuse shared report/check/status/dashboard patterns."
+        "Reuse shared/founderRuntimeStoreLiveAdmissionDbWritePlanPreview.js.",
+        "Reuse existing FounderApprovalDecisionBoundaryCard.",
+        "Reuse existing scoped route test patterns.",
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse P132.4 handoff checker behavior."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add check:p1325-founder-runtime-store-live-admission-execution.",
+        "Update P132.4 checker for P132.5 handoff compatibility.",
+        "Update Playwright scoped route coverage for execution scope presence, absence, themes, and raw-internal leakage.",
+        "Run OS phase status and phase validation coverage.",
+        "Run dashboard build, unit tests, and scoped Playwright route coverage."
+      ],
+      "docsRoadmap": "Update P132 plan, README, platform roadmap, OS phase status, roadmap, and generated reports.",
+      "phaseStatusUpdate": "P132 in progress; P132.5 complete; current P132.5; previous P132.4; next P132.6 planned-only.",
+      "validationCommands": [
+        "npm run check:p1325-founder-runtime-store-live-admission-execution",
+        "npm run check:p1324-founder-runtime-store-live-admission-execution",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
         "What was implemented",
-        "Command Center UX changes or preservation",
+        "Command Center UX changes",
         "Tests/checkers run",
-        "Docs/roadmap/status updates",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
         "Safety confirmations",
         "Forbidden paths confirmation",
         "Known limitations",
         "Next phase/subphase"
       ],
       "narrowGoal": "Expose display-safe execution scope state on scoped founder pages without raw IDs, raw dumps, or runnable write controls.",
-      "previousSubphase": "P132.4"
+      "previousSubphase": "P132.4",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-30T09:44:23.478Z",
+      "summary": "Added display-safe Store Execution Scope cards to Business Build and Agent Flow by reusing the P132.4 write-plan preview and existing Command Center boundary card while Chat with NEXUS, Lite, OS Roadmap, Live Readiness, DB writes, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+      "knownLimitations": [
+        "P132.5 is scoped Command Center display only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "nextPhase": "P132.6"
     },
     {
       "phaseId": "P132.6",

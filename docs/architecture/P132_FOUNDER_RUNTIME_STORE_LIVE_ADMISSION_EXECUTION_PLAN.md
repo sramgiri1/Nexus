@@ -19,6 +19,224 @@ P132 is split into seven implementation-grade subphases:
 - P132.6 Validation / Docs
 - P132.7 Final Validation
 
+## P132.5 Command Center Execution Scope UX
+
+Status: complete
+Phase: P132
+Subphase: P132.5
+Goal: Expose the P132.4 DB write-plan preview as display-safe execution scope
+state on Business Build and Agent Flow using existing Command Center boundary
+card patterns, while keeping Chat with NEXUS and Lite clean.
+Why this is needed: P132.4 created the local write-plan preview model. P132.5
+turns that model into founder/operator-readable scoped UX so operators can see
+what changed, current state, next action, blockers, disabled reason, owner
+capability, evidence/activity wording, and cost impact before any future
+explicitly approved write path is considered.
+User/operator impact: Operators can inspect the execution scope from the pages
+where founder workstreams are reviewed without seeing raw JSON, raw logs, raw
+policy dumps, raw helper IDs, raw report paths, private project IDs, raw SQL, or
+runnable write controls.
+Command Center impact: Business Build and Agent Flow show a Store Execution
+Scope card. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness do not show
+the execution scope card. OS Roadmap remains the only primary UX surface for OS
+phase labels.
+Safety impact: P132.5 is display-only scoped UX. It does not create schemas,
+run migrations, create tables, read DB records, write DB records, write runtime
+records, select adapters, connect adapters, persist requests, execute CRUD,
+capture approvals, accept handoff, grant authority, unlock execution, call
+providers/models, dispatch agents, mutate projects, deploy, release, export,
+package, use network calls, or spend.
+Cost impact: Local dashboard data, route rendering, checkers, docs, build, and
+tests only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `9ec02306`
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1325-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1324-founder-runtime-store-live-admission-execution.js`
+- `contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json`
+- `docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1325-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1324-founder-runtime-store-live-admission-execution-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Update `dashboard/src/data/businessBuild.js` with
+  `buildFounderRuntimeStoreLiveAdmissionExecutionScopeDisplayModel`.
+- Update `dashboard/src/pages/CommandCenterV2.jsx` to reuse
+  `FounderApprovalDecisionBoundaryCard` on Business Build and Agent Flow.
+- Update `dashboard/tests/routes.spec.js` with scoped presence, absence,
+  theme, and raw-internal leakage coverage.
+- Create `scripts/check-p1325-founder-runtime-store-live-admission-execution.js`.
+- Update the P132.4 checker for P132.5 handoff compatibility.
+- Update P132 contract, plan, package scripts, README, platform roadmap, OS
+  status, roadmap, and generated reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `buildFounderRuntimeStoreLiveAdmissionExecutionScopeDisplayModel` from
+  `dashboard/src/data/businessBuild.js`.
+- Add `founderRuntimeStoreLiveAdmissionExecutionScope` to the Business Build
+  view model.
+- Data shape: display-safe execution scope object with founder idea summary,
+  current state, preview mode, readiness rows, readiness sections, summary rows,
+  blocker rows, disabled reason, owner capability, evidence/activity labels,
+  no-spend cost posture, zero candidate counts, and blocked write/runtime/
+  dispatch/spend fields.
+- No DB schema, migration file, table, query, runtime record, selected adapter,
+  connected adapter, write adapter, live CRUD executor, provider envelope,
+  dispatch packet, raw private ID, raw table name, raw report dump, or project
+  data.
+
+Reuse check:
+- Reuse `shared/founderRuntimeStoreLiveAdmissionDbWritePlanPreview.js`.
+- Reuse existing `FounderApprovalDecisionBoundaryCard`.
+- Reuse existing scoped route test patterns.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Reuse P132.4 handoff checker behavior.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Business Build shows one Store Execution Scope card after Store Live
+  Admission Scope.
+- Agent Flow shows one Store Execution Scope card after Store Live Admission
+  Scope.
+- Chat with NEXUS, Lite, OS Roadmap, and Live Readiness do not show this card.
+- The card shows what changed, current state, execution scope rows, blocked
+  candidates, next action, blockers, disabled reason, owner capability,
+  evidence/activity wording, and no-spend cost impact.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw table
+  names, raw report paths, internal helper IDs, internal phase labels outside OS
+  Roadmap, private project IDs, or fake runnable actions.
+- No provider/tool/project mutation, DB read, DB write, runtime write, live
+  CRUD, migration, schema, table, approval capture, handoff acceptance,
+  authority grant, adapter selection, adapter connection, deploy, release,
+  export, package, network, or spend controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run scoped route coverage across dark, light, and system themes.
+
+Tests to add/update/remove:
+- Add `check:p1325-founder-runtime-store-live-admission-execution`.
+- Update `check:p1324-founder-runtime-store-live-admission-execution` for
+  P132.5 handoff compatibility.
+- Update Playwright route coverage for Store Execution Scope presence on
+  Business Build and Agent Flow.
+- Update Playwright route coverage for absence on Chat with NEXUS, Lite, OS
+  Roadmap, and Live Readiness.
+- Remove no tests.
+
+Checker updates:
+- Validate P132.5 data reuse, scoped UX, route coverage, docs, status, allowed
+  files, forbidden paths, safe wording, and P132.4 handoff.
+- Validate no raw helper IDs, raw report paths, raw table names, raw SQL
+  snippets, private IDs, or fake runnable actions in primary UX/docs.
+- Validate P132 is in progress, P132.5 complete, and P132.6 planned-only.
+
+Docs to update:
+- This P132 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P132.5 report.
+- P132.4 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P132 in progress.
+- P132.5 complete.
+- Current phase P132.5.
+- Previous phase P132.4.
+- Next phase P132.6 planned-only.
+
+Known risks:
+- Execution scope wording can imply live DB execution. P132.5 keeps the card
+  display-only and states that all write/runtime/provider/project actions
+  remain blocked.
+- Additional scoped cards can crowd founder pages. P132.5 limits the card to
+  Business Build and Agent Flow and keeps Chat with NEXUS/Lite clean.
+
+Rollback plan:
+- Revert only the P132.5 implementation and stamp commits. P132.4 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1325-founder-runtime-store-live-admission-execution`
+- `npm run check:p1324-founder-runtime-store-live-admission-execution`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P132.5 allowed files>`
+- `git commit -m "chore(nexus): implement p1325 execution scope ux"`
+- `git add <P132.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1325 execution scope ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- DB schemas, migrations, tables, DB/runtime reads or writes, adapter selection,
+  adapter connection, request persistence, live CRUD execution, acceptance
+  capture, handoff acceptance, authority grant, execution unlock,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- P132.6 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX changes.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P132.4 DB Write Plan Preview
 
 Status: complete

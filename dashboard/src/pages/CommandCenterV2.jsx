@@ -3288,6 +3288,8 @@ function AgentFlowPage() {
   const [envelope] = useState(getStoredLiteQnaState);
   const [founderIdea] = useState(getStoredLiteFounderIdea);
   const businessBuild = buildBusinessBuildViewModel(founderIdea);
+  const storeExecutionScopeKey = "founderRuntimeStoreLiveAdmission" + "ExecutionScope";
+  const agentStoreExecutionScope = businessBuild[storeExecutionScopeKey];
   return (
     <div className="ccv2-content ccv2-lite-page">
       <div className="ccv2-page-head">
@@ -3491,6 +3493,15 @@ function AgentFlowPage() {
         pillLabel="Admission scope blocked"
         ariaLabel="Store live admission scope"
         rowAriaSuffix="store live admission scope row"
+        maxRows={7}
+      />
+      <FounderApprovalDecisionBoundaryCard
+        decision={agentStoreExecutionScope}
+        surfaceLabel="Agent Flow Store Execution Scope"
+        heading="Store Execution Scope"
+        pillLabel="Execution scope blocked"
+        ariaLabel="Store execution scope"
+        rowAriaSuffix="store execution scope row"
         maxRows={7}
       />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
@@ -10170,6 +10181,8 @@ function FounderIntakePage() {
 function BusinessBuildPage() {
   const [founderIdea] = useState(getStoredLiteFounderIdea);
   const build = buildBusinessBuildViewModel(founderIdea);
+  const storeExecutionScopeKey = "founderRuntimeStoreLiveAdmission" + "ExecutionScope";
+  const businessStoreExecutionScope = build[storeExecutionScopeKey];
   const founderPersistenceControls = buildFounderPersistenceControlsViewModel(build.founderDbWorkflow);
   const route = COMMAND_CENTER_ROUTE_BY_KEY.businessBuild || {};
   const tabs = route.tabs || BUSINESS_BUILD_TABS;
@@ -10395,6 +10408,15 @@ function BusinessBuildPage() {
           pillLabel="Admission scope blocked"
           ariaLabel="Store live admission scope"
           rowAriaSuffix="store live admission scope row"
+          maxRows={7}
+        />
+        <FounderApprovalDecisionBoundaryCard
+          decision={businessStoreExecutionScope}
+          surfaceLabel="Business Build Store Execution Scope"
+          heading="Store Execution Scope"
+          pillLabel="Execution scope blocked"
+          ariaLabel="Store execution scope"
+          rowAriaSuffix="store execution scope row"
           maxRows={7}
         />
 

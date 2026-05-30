@@ -16,6 +16,7 @@ import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePe
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreCrudSafeDryRun.js";
 import { buildFounderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun } from "../../../shared/founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadinessSafeDryRun.js";
 import { buildFounderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun } from "../../../shared/founderRuntimeStoreLiveAdmissionScopeWriteBoundaryAdmissionDryRun.js";
+import { buildFounderRuntimeStoreLiveAdmissionDbWritePlanPreview } from "../../../shared/founderRuntimeStoreLiveAdmissionDbWritePlanPreview.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
 export const DEFAULT_BUSINESS_BUILD_IDEA =
@@ -3537,6 +3538,151 @@ export function buildFounderRuntimeStoreLiveAdmissionScopeDisplayModel({
   };
 }
 
+export function buildFounderRuntimeStoreLiveAdmissionExecutionScopeDisplayModel({
+  founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
+  dbWritePlanPreview,
+} = {}) {
+  const preview = dbWritePlanPreview || buildFounderRuntimeStoreLiveAdmissionDbWritePlanPreview();
+  const previewSteps = Array.isArray(preview.writePlanSteps) ? preview.writePlanSteps : [];
+  const disabledReason =
+    "Execution scope is display-only. It cannot add schemas, run migrations, alter storage structures, persist write plans, select adapters, connect adapters, run CRUD, read or write DB records, write runtime records, dispatch agents, mutate projects, call providers/models, deploy, release, export, package, use network calls, or spend.";
+  const ownerCapability = "NEXUS Store Execution Scope Guard";
+  const nextAction = "Review the blocked execution scope before any future explicitly approved write path can be considered.";
+  const evidenceLocation = "Execution scope UX evidence";
+  const activityLocation = "OS phase status evidence";
+  const costImpact = "No provider spend. Display-only execution scope with no provider calls, model calls, network calls, worker runtime, deploy, package creation, or DB/runtime writes.";
+  const rows = previewSteps.map((step, index) => ({
+    label: step.publicLabel || toTitle(step.stepName || `Execution scope row ${index + 1}`),
+    decisionPosition: index + 1,
+    decisionState: "Execution scope blocked",
+    nextAction: "Review this blocked prerequisite before any future write path can be considered.",
+    blocker: step.blocker || "Execution scope prerequisite remains blocked.",
+    disabledReason,
+    ownerCapability,
+    evidenceLocation,
+    activityLocation,
+    costImpact: step.costImpactLabel || "No provider spend",
+    writePlanAllowed: "Blocked",
+    schemaAllowed: "Blocked",
+    migrationAllowed: "Blocked",
+    tableAllowed: "Blocked",
+    dbReadAllowed: "Blocked",
+    dbWriteAllowed: "Blocked",
+    runtimeWriteAllowed: "Blocked",
+    adapterSelectionAllowed: "Blocked",
+    executionAllowed: "Blocked",
+    providerSpendAllowed: "Blocked",
+  }));
+  const model = {
+    currentState: "Store Execution Scope Ready For Review Writes Blocked",
+    founderIdea: founderIdeaSummary,
+    previewMode: "Execution scope display-only",
+    readinessRowCount: rows.length,
+    blockedReadinessRowCount: rows.length,
+    writePlanStepCount: preview.writePlanStepCount || rows.length,
+    writePlanPreviewCandidateCount: 0,
+    writePlanPersistenceCandidateCount: 0,
+    schemaCandidateCount: 0,
+    migrationCandidateCount: 0,
+    tableCandidateCount: 0,
+    dbReadableCandidateCount: 0,
+    dbWritableCandidateCount: 0,
+    liveCrudCandidateCount: 0,
+    runtimeWritableCandidateCount: 0,
+    adapterSelectionCandidateCount: 0,
+    adapterConnectionCandidateCount: 0,
+    runtimeExecutableCandidateCount: 0,
+    agentDispatchCandidateCount: 0,
+    projectMutationCandidateCount: 0,
+    networkCallCandidateCount: 0,
+    providerSpendCandidateCount: 0,
+    whatChanged: "Execution scope now turns the write-plan preview into founder-readable blockers for Business Build and Agent Flow.",
+    nextAction,
+    blockers: [
+      "Execution scope is display-only.",
+      "Write-plan persistence, schemas, migrations, tables, DB reads, DB writes, runtime writes, and raw SQL remain blocked.",
+      "Adapter selection, adapter connection, and live CRUD remain blocked.",
+      "Runtime execution, providers, agent dispatch, project mutation, network calls, deploy, package, and spend remain blocked.",
+    ],
+    disabledReason,
+    ownerCapability,
+    evidenceLocation,
+    activityLocation,
+    costImpact,
+    readinessSections: [
+      {
+        label: "Execution scope prerequisites",
+        currentState: "Modeled locally",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+      {
+        label: "DB write-plan boundary",
+        currentState: "Writes blocked",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+      {
+        label: "Adapter and runtime boundary",
+        currentState: "Execution blocked",
+        rowCount: rows.length,
+        blockedCount: rows.length,
+        nextAction,
+        disabledReason,
+      },
+    ],
+    readinessRows: rows,
+    safetyRows: [
+      { label: "Write-plan persistence", value: "Blocked" },
+      { label: "Schema creation", value: "Blocked" },
+      { label: "Migrations", value: "Blocked" },
+      { label: "Tables", value: "Blocked" },
+      { label: "DB reads", value: "Blocked" },
+      { label: "DB writes", value: "Blocked" },
+      { label: "Runtime writes", value: "Blocked" },
+      { label: "Adapter selection", value: "Blocked" },
+      { label: "Adapter connection", value: "Blocked" },
+      { label: "Live CRUD actions", value: "Blocked" },
+      { label: "Execution unlock", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Network", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    summaryRows: [
+      { label: "Founder idea", value: model.founderIdea },
+      { label: "What changed", value: model.whatChanged },
+      { label: "Current state", value: model.previewMode },
+      { label: "Execution scope rows", value: model.readinessRowCount },
+      { label: "Blocked rows", value: model.blockedReadinessRowCount },
+      { label: "Write-plan candidates", value: model.writePlanPreviewCandidateCount },
+      { label: "Write-plan persistence candidates", value: model.writePlanPersistenceCandidateCount },
+      { label: "Schema candidates", value: model.schemaCandidateCount },
+      { label: "Migration candidates", value: model.migrationCandidateCount },
+      { label: "Table candidates", value: model.tableCandidateCount },
+      { label: "DB-readable candidates", value: model.dbReadableCandidateCount },
+      { label: "DB-writable candidates", value: model.dbWritableCandidateCount },
+      { label: "Runtime-writable candidates", value: model.runtimeWritableCandidateCount },
+      { label: "Adapter-selection candidates", value: model.adapterSelectionCandidateCount },
+      { label: "Owner capability", value: model.ownerCapability },
+      { label: "Next action", value: model.nextAction },
+      { label: "Disabled reason", value: model.disabledReason },
+      { label: "Evidence", value: model.evidenceLocation },
+      { label: "Activity", value: model.activityLocation },
+      { label: "Cost impact", value: model.costImpact },
+    ],
+  };
+}
+
 export function buildFounderLiveApprovalCaptureBoundaryDisplayModel({
   founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA,
   approvalRequestQueuePreview,
@@ -4730,6 +4876,9 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderRuntimeStoreLiveAdmissionScope = buildFounderRuntimeStoreLiveAdmissionScopeDisplayModel({
     founderIdeaSummary: prdFields.founderIdea,
   });
+  const founderRuntimeStoreLiveAdmissionExecutionScope = buildFounderRuntimeStoreLiveAdmissionExecutionScopeDisplayModel({
+    founderIdeaSummary: prdFields.founderIdea,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -4888,6 +5037,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStore,
     founderApprovalApplicationAuthorityGrantHandoffAcceptanceCapturePersistenceStoreLiveReadiness,
     founderRuntimeStoreLiveAdmissionScope,
+    founderRuntimeStoreLiveAdmissionExecutionScope,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,
