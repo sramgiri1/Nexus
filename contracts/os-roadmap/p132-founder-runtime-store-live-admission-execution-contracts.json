@@ -347,7 +347,7 @@
       ],
       "narrowGoal": "Define the capability gate that separates future DB-backed adapters from provider, agent, project, deploy, and package actions.",
       "previousSubphase": "P132.2",
-      "commit": "pending-final-commit",
+      "commit": "6d8f8305",
       "completedAt": "2026-05-30T00:41:24.427Z",
       "summary": "Added a local store adapter capability gate that reuses P132.2 execution request envelope evidence and keeps adapter selection, DB reads, DB writes, CRUD execution, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "knownLimitations": [
@@ -602,7 +602,7 @@
     "title": "Store Adapter Capability Gate",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "6d8f8305",
     "completedAt": "2026-05-30T00:41:24.427Z",
     "summary": "Added a local store adapter capability gate that reuses P132.2 execution request envelope evidence and keeps adapter selection, DB reads, DB writes, CRUD execution, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
@@ -628,7 +628,7 @@
     "title": "Founder Runtime Store Live Admission Execution Contract",
     "status": "in_progress",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "6d8f8305",
     "completedAt": "2026-05-30T00:41:24.427Z",
     "summary": "Added a local store adapter capability gate that reuses P132.2 execution request envelope evidence and keeps adapter selection, DB reads, DB writes, CRUD execution, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
