@@ -19430,13 +19430,14 @@
       "order": 168,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "19fa4d4d",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P132 in progress; P132.5 Command Center execution scope UX complete and P132.6 is planned-only next.",
-      "summary": "P132 in progress; P132.5 Command Center execution scope UX complete and P132.6 validation/docs aggregation planned-only next.",
+      "detail": "P132 in progress; P132.6 validation/docs aggregation complete and P132.7 is planned-only next.",
+      "summary": "P132 in progress; P132.6 validation/docs aggregation complete and P132.7 final validation planned-only next.",
       "previousPhase": "P131.7",
-      "nextPhase": "P132.6",
+      "nextPhase": "P132.7",
       "checksRun": [
+        "npm run check:p1326-founder-runtime-store-live-admission-execution",
         "npm run check:p1325-founder-runtime-store-live-admission-execution",
         "npm run check:p1324-founder-runtime-store-live-admission-execution",
         "npm run check:os-phase-status",
@@ -19447,9 +19448,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P132 is in progress but contract-gated. P132.5 does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P132 is in progress but contract-gated. P132.6 does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-30T09:44:23.478Z"
+      "completedAt": "2026-05-30T09:54:13.439Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19608,19 +19609,29 @@
       "title": "Validation / Docs",
       "label": "Validation / Docs",
       "order": 168.6,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P132.6 is planned-only for validation/docs aggregation.",
-      "summary": "Planned-only future P132 validation/docs aggregation.",
+      "detail": "P132.6 validation/docs aggregation complete; P132.7 final validation is next.",
+      "summary": "Added aggregate validation/docs evidence for P132.1-P132.5, P132.6 checker coverage, P132.5 handoff compatibility, scoped UX preservation checks, and refreshed OS phase reports while DB writes, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "previousPhase": "P132.5",
       "nextPhase": "P132.7",
-      "checksRun": [],
-      "knownLimitations": [
-        "Planned-only; no implementation yet."
+      "checksRun": [
+        "npm run check:p1326-founder-runtime-store-live-admission-execution",
+        "npm run check:p1325-founder-runtime-store-live-admission-execution",
+        "npm run check:p1324-founder-runtime-store-live-admission-execution",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P132.6 is validation/docs closure only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-30T09:54:13.439Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19632,14 +19643,15 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P132.7 is planned-only.",
-      "summary": "Planned-only future P132 final validation.",
+      "detail": "P132.7 is planned-only for final validation and next-phase handoff.",
+      "summary": "Planned-only future P132 final validation and next-phase handoff.",
       "previousPhase": "P132.6",
       "nextPhase": "P133",
       "checksRun": [],
       "knownLimitations": [
         "Planned-only; no implementation yet."
-      ]
+      ],
+      "completedAt": ""
     },
     {
       "track": "NEXUS_OS",
@@ -22192,11 +22204,41 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T23:47:33.019Z",
-  "currentPhase": "P132.5",
-  "previousPhase": "P132.4",
-  "nextPhase": "P132.6",
+  "currentPhase": "P132.6",
+  "previousPhase": "P132.5",
+  "nextPhase": "P132.7",
   "currentPhaseStatus": "complete",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P132.6",
+    "title": "Validation / Docs",
+    "label": "Validation / Docs",
+    "order": 168.6,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P132.6 validation/docs aggregation complete; P132.7 final validation is next.",
+    "summary": "Added aggregate validation/docs evidence for P132.1-P132.5, P132.6 checker coverage, P132.5 handoff compatibility, scoped UX preservation checks, and refreshed OS phase reports while DB writes, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+    "previousPhase": "P132.5",
+    "nextPhase": "P132.7",
+    "checksRun": [
+      "npm run check:p1326-founder-runtime-store-live-admission-execution",
+      "npm run check:p1325-founder-runtime-store-live-admission-execution",
+      "npm run check:p1324-founder-runtime-store-live-admission-execution",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P132.6 is validation/docs closure only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-30T09:54:13.439Z"
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P132.5",
     "title": "Command Center Execution Scope UX",
@@ -22225,52 +22267,20 @@
     ],
     "completedAt": "2026-05-30T09:44:23.478Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P132.4",
-    "title": "DB Write Plan Preview",
-    "label": "Write Plan Preview",
-    "order": 168.4,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "5d2d07c4",
-    "commandCenterVisible": true,
-    "detail": "P132.4 DB write-plan preview complete; P132.5 Command Center execution scope UX is next.",
-    "summary": "Added a local DB write-plan preview model that reuses P132.3 adapter capability gate evidence and keeps schemas, migrations, tables, DB reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter connection, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
-    "previousPhase": "P132.3",
-    "nextPhase": "P132.5",
-    "checksRun": [
-      "npm run check:p1324-founder-runtime-store-live-admission-execution",
-      "npm run check:p1323-founder-runtime-store-live-admission-execution",
-      "npm run check:p1322-founder-runtime-store-live-admission-execution",
-      "npm run check:p1321-founder-runtime-store-live-admission-execution",
-      "npm run check:p1317-founder-runtime-store-live-admission-scope",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P132.4 is a DB write-plan preview model only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-30T00:54:38.171Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P132.6",
-    "title": "Validation / Docs",
-    "label": "Validation / Docs",
-    "order": 168.6,
+    "phaseId": "P132.7",
+    "title": "Final Validation",
+    "label": "Final Validation",
+    "order": 168.7,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P132.6 is planned-only for validation/docs aggregation.",
-    "summary": "Planned-only future P132 validation/docs aggregation.",
-    "previousPhase": "P132.5",
-    "nextPhase": "P132.7",
+    "detail": "P132.7 is planned-only for final validation and next-phase handoff.",
+    "summary": "Planned-only future P132 final validation and next-phase handoff.",
+    "previousPhase": "P132.6",
+    "nextPhase": "P133",
     "checksRun": [],
     "knownLimitations": [
       "Planned-only; no implementation yet."

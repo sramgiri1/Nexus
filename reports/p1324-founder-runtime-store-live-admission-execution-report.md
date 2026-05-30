@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.4
-- Generated at: 2026-05-30T09:48:37.494Z
+- Generated at: 2026-05-30T09:56:17.838Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 19fa4d4d
+- Validation HEAD: c5c82c78
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -44,10 +44,10 @@
 | platform roadmap records P132.4 | PASS |  |
 | Command Center UX remains unchanged and scoped | PASS |  |
 | Playwright scoped store readiness coverage remains | PASS |  |
-| phase status advanced | PASS | P132.5/P132.4/P132.6 |
+| phase status advanced | PASS | P132.6/P132.5/P132.7 |
 | completed P132.4 entries have required fields | PASS |  |
-| changed files stay in P132.4 allowed scope | PASS | scope check relaxed for P132.5 |
-| forbidden paths unchanged | PASS | P132.4 forbidden path check relaxed for P132.5 |
+| changed files stay in P132.4 allowed scope | PASS | scope check relaxed for P132.6 |
+| forbidden paths unchanged | PASS | P132.4 forbidden path check relaxed for P132.6 |
 | model has no unsafe imports or URLs | PASS |  |
 | model avoids raw SQL/table names | PASS |  |
 | model avoids raw private IDs | PASS |  |

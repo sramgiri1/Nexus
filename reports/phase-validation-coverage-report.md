@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T09:48:44.446Z
+- Generated at: 2026-05-30T09:56:49.105Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 19fa4d4d
+- Validation HEAD: c5c82c78
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -547,25 +547,25 @@
 | P130.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.3 validation coverage | PASS | 4 checkers, 1 reports |
-| P130.4 validation coverage | PASS | 16 checkers, 13 reports |
+| P130.4 validation coverage | PASS | 17 checkers, 14 reports |
 | P130.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P130.6 validation coverage | PASS | 11 checkers, 7 reports |
 | P130.7 validation coverage | PASS | 11 checkers, 7 reports |
-| P131 validation coverage | PASS | 18 checkers, 12 reports |
-| P131.1 validation coverage | PASS | 16 checkers, 12 reports |
+| P131 validation coverage | PASS | 19 checkers, 13 reports |
+| P131.1 validation coverage | PASS | 17 checkers, 13 reports |
 | P131.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P131.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P131.4 validation coverage | PASS | 4 checkers, 1 reports |
 | P131.5 validation coverage | PASS | 4 checkers, 1 reports |
 | P131.6 validation coverage | PASS | 6 checkers, 2 reports |
 | P131.7 validation coverage | PASS | 46 checkers, 41 reports |
-| P132 validation coverage | PASS | 16 checkers, 12 reports |
+| P132 validation coverage | PASS | 18 checkers, 13 reports |
 | P132.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P132.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P132.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P132.4 validation coverage | PASS | 7 checkers, 1 reports |
 | P132.5 validation coverage | PASS | 5 checkers, 2 reports |
-| P132.6 validation coverage | PASS | 1 checkers, 1 reports |
+| P132.6 validation coverage | PASS | 6 checkers, 2 reports |
 | P132.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P133 validation coverage | PASS | dedicated_checker |
 | P134 validation coverage | PASS | dedicated_checker, validation_report |
@@ -582,7 +582,7 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P132.5; next=P132.6; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P132.6; next=P132.7; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

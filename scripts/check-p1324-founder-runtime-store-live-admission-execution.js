@@ -155,9 +155,32 @@ const p1325StartedState =
   && roadmapById.get("P132.5")?.status === "complete"
   && statusById.get("P132.6")?.status === "planned"
   && roadmapById.get("P132.6")?.status === "planned";
+const p1326StartedState =
+  status.currentPhase === "P132.6"
+  && status.previousPhase === "P132.5"
+  && status.nextPhase === "P132.7"
+  && roadmap.currentPhase === "P132.6"
+  && roadmap.previousPhase === "P132.5"
+  && roadmap.nextPhase === "P132.7"
+  && status.current?.phaseId === "P132.6"
+  && status.previous?.phaseId === "P132.5"
+  && status.next?.phaseId === "P132.7"
+  && roadmap.current?.phaseId === "P132.6"
+  && roadmap.previous?.phaseId === "P132.5"
+  && roadmap.next?.phaseId === "P132.7"
+  && statusById.get("P132")?.status === "in_progress"
+  && roadmapById.get("P132")?.status === "in_progress"
+  && statusById.get("P132.4")?.status === "complete"
+  && roadmapById.get("P132.4")?.status === "complete"
+  && statusById.get("P132.5")?.status === "complete"
+  && roadmapById.get("P132.5")?.status === "complete"
+  && statusById.get("P132.6")?.status === "complete"
+  && roadmapById.get("P132.6")?.status === "complete"
+  && statusById.get("P132.7")?.status === "planned"
+  && roadmapById.get("P132.7")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck("contract marks P132.4 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P132.4" && contract.previousSubphase === "P132.3" && contract.nextSubphase === "P132.5") || (contract.currentSubphase === "P132.5" && contract.previousSubphase === "P132.4" && contract.nextSubphase === "P132.6")) && p1324.status === "complete");
+addCheck("contract marks P132.4 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P132.4" && contract.previousSubphase === "P132.3" && contract.nextSubphase === "P132.5") || (contract.currentSubphase === "P132.5" && contract.previousSubphase === "P132.4" && contract.nextSubphase === "P132.6") || (contract.currentSubphase === "P132.6" && contract.previousSubphase === "P132.5" && contract.nextSubphase === "P132.7")) && p1324.status === "complete");
 addCheck("P132.4 records expected base commit", p1324.expectedBaseCommit === "de20e30f");
 addCheck("P132.5 remains planned or complete", ["planned", "complete"].includes(p1325.status));
 addCheck("P132.4 allowed files include model and checker", p1324.allowedFiles?.includes(MODEL_PATH) && p1324.allowedFiles?.includes("scripts/check-p1324-founder-runtime-store-live-admission-execution.js"));
@@ -192,7 +215,7 @@ addCheck("Command Center UX remains unchanged and scoped", pageSource.includes("
 addCheck("Playwright scoped store readiness coverage remains", routeTests.includes("store live readiness gate appears only on scoped pages") && routeTests.includes("Store live admission scope"));
 addCheck(
   "phase status advanced",
-  p1324CurrentState || p1325StartedState,
+  p1324CurrentState || p1325StartedState || p1326StartedState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("completed P132.4 entries have required fields", [statusById.get("P132"), statusById.get("P132.4"), roadmapById.get("P132.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));

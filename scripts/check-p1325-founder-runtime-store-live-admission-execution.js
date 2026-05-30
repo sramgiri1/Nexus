@@ -95,11 +95,53 @@ const validationCommands = [
   "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
   "git diff --check",
 ];
+const p1325CurrentState =
+  status.currentPhase === "P132.5"
+  && status.previousPhase === "P132.4"
+  && status.nextPhase === "P132.6"
+  && roadmap.currentPhase === "P132.5"
+  && roadmap.previousPhase === "P132.4"
+  && roadmap.nextPhase === "P132.6"
+  && status.current?.phaseId === "P132.5"
+  && status.previous?.phaseId === "P132.4"
+  && status.next?.phaseId === "P132.6"
+  && roadmap.current?.phaseId === "P132.5"
+  && roadmap.previous?.phaseId === "P132.4"
+  && roadmap.next?.phaseId === "P132.6"
+  && statusById.get("P132")?.status === "in_progress"
+  && roadmapById.get("P132")?.status === "in_progress"
+  && statusById.get("P132.4")?.status === "complete"
+  && roadmapById.get("P132.4")?.status === "complete"
+  && statusById.get("P132.5")?.status === "complete"
+  && roadmapById.get("P132.5")?.status === "complete"
+  && statusById.get("P132.6")?.status === "planned"
+  && roadmapById.get("P132.6")?.status === "planned";
+const p1326HandoffState =
+  status.currentPhase === "P132.6"
+  && status.previousPhase === "P132.5"
+  && status.nextPhase === "P132.7"
+  && roadmap.currentPhase === "P132.6"
+  && roadmap.previousPhase === "P132.5"
+  && roadmap.nextPhase === "P132.7"
+  && status.current?.phaseId === "P132.6"
+  && status.previous?.phaseId === "P132.5"
+  && status.next?.phaseId === "P132.7"
+  && roadmap.current?.phaseId === "P132.6"
+  && roadmap.previous?.phaseId === "P132.5"
+  && roadmap.next?.phaseId === "P132.7"
+  && statusById.get("P132")?.status === "in_progress"
+  && roadmapById.get("P132")?.status === "in_progress"
+  && statusById.get("P132.5")?.status === "complete"
+  && roadmapById.get("P132.5")?.status === "complete"
+  && statusById.get("P132.6")?.status === "complete"
+  && roadmapById.get("P132.6")?.status === "complete"
+  && statusById.get("P132.7")?.status === "planned"
+  && roadmapById.get("P132.7")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
-addCheck("contract marks P132.5 complete", contract.status === "in_progress" && contract.currentSubphase === "P132.5" && contract.previousSubphase === "P132.4" && contract.nextSubphase === "P132.6" && p1325.status === "complete");
+addCheck("contract marks P132.5 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P132.5" && contract.previousSubphase === "P132.4" && contract.nextSubphase === "P132.6") || (contract.currentSubphase === "P132.6" && contract.previousSubphase === "P132.5" && contract.nextSubphase === "P132.7")) && p1325.status === "complete");
 addCheck("P132.5 records expected base commit", p1325.expectedBaseCommit === "9ec02306");
-addCheck("P132.6 remains planned", p1326.status === "planned");
+addCheck("P132.6 remains planned or complete", ["planned", "complete"].includes(p1326.status));
 addCheck("P132.5 allowed files include dashboard UX and checker", [
   "dashboard/src/data/businessBuild.js",
   "dashboard/src/pages/CommandCenterV2.jsx",
@@ -121,29 +163,10 @@ addCheck("P132.4 report passes", reportPassed("reports/p1324-founder-runtime-sto
 addCheck("P132.4 checker accepts P132.5 handoff", p1324Checker.includes("p1325StartedState") && p1324Checker.includes('status.currentPhase === "P132.5"') && p1324Checker.includes('status.nextPhase === "P132.6"'));
 addCheck("plan records P132.5 implementation", /## P132\.5 Command Center Execution Scope UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P132.5", /P132\.5 Command Center execution scope UX/i.test(readme));
-addCheck("platform roadmap records P132.5", /P132\.5 is complete/i.test(platformRoadmap) && /P132\.6\s+is next/i.test(platformRoadmap));
+addCheck("platform roadmap records P132.5", /P132\.5 is complete/i.test(platformRoadmap) && (/P132\.6\s+is next/i.test(platformRoadmap) || /P132\.6 is complete/i.test(platformRoadmap)));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P132.5"
-    && status.previousPhase === "P132.4"
-    && status.nextPhase === "P132.6"
-    && roadmap.currentPhase === "P132.5"
-    && roadmap.previousPhase === "P132.4"
-    && roadmap.nextPhase === "P132.6"
-    && status.current?.phaseId === "P132.5"
-    && status.previous?.phaseId === "P132.4"
-    && status.next?.phaseId === "P132.6"
-    && roadmap.current?.phaseId === "P132.5"
-    && roadmap.previous?.phaseId === "P132.4"
-    && roadmap.next?.phaseId === "P132.6"
-    && statusById.get("P132")?.status === "in_progress"
-    && roadmapById.get("P132")?.status === "in_progress"
-    && statusById.get("P132.4")?.status === "complete"
-    && roadmapById.get("P132.4")?.status === "complete"
-    && statusById.get("P132.5")?.status === "complete"
-    && roadmapById.get("P132.5")?.status === "complete"
-    && statusById.get("P132.6")?.status === "planned"
-    && roadmapById.get("P132.6")?.status === "planned",
+  p1325CurrentState || p1326HandoffState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("completed P132.5 entries have required fields", [statusById.get("P132"), statusById.get("P132.5"), roadmapById.get("P132.5")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
