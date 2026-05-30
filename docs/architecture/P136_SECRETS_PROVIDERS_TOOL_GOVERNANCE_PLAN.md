@@ -5,8 +5,8 @@ budgets, approvals, and evidence before any live external execution can be
 considered. The phase is intentionally staged. P136.1 started the contract and
 safety boundary, P136.2 added the read-only governance model, P136.3 added the
 non-runnable dry run, and P136.4 surfaces that posture in Command Center as
-review-only UX. P136.5 adds aggregate tests/checkers hardening. Later
-subphases own docs/status closure and final validation.
+review-only UX. P136.5 adds aggregate tests/checkers hardening, and P136.6
+aligns docs, roadmap, reports, and OS status. P136.7 owns final validation.
 
 ## Subphases
 
@@ -327,7 +327,7 @@ Tests/checkers and validation:
 
 ### P136.6 Docs / Roadmap / Status
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Close P136 docs, README, roadmap, phase status, reports, checker handoffs,
@@ -344,7 +344,13 @@ Command Center UX requirements:
 - Preserve P136.4 UX; no dashboard source changes.
 
 Tests/checkers and validation:
-- Add `check:p1366-secrets-providers-tool-governance-docs-roadmap`.
+- Added `check:p1366-secrets-providers-tool-governance-docs-roadmap`.
+- Updated P136 plan, README, platform roadmap, enterprise roadmap, OS phase
+  status, phase index, package script, P136.5 handoff checker, enterprise
+  checker, and generated reports.
+- Current phase is P136.6.
+- Previous phase is P136.5.
+- Next phase is P136.7 planned-only.
 - Run P136.6, P136.5, enterprise, OS status, phase coverage, dashboard build,
   unit, route-wide Playwright, and `git diff --check`.
 

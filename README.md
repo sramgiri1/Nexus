@@ -2007,7 +2007,7 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P136.5 with P136.6 planned-only next.
+  implementation is closed through P136.6 with P136.7 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2200,10 +2200,18 @@ The Command Center and local operator surface have:
   P136 validation over the provider governance contract, P136.2 model, P136.3
   dry run, P136.4 Command Center UX, route-wide Playwright safety assertions,
   checker handoffs, docs, roadmap, and OS phase status. P136.6 Docs / Roadmap /
-  Status is planned-only next; secret values, provider/model calls, tool
+  Status followed next; secret values, provider/model calls, tool
   execution, MCP server startup, provider payload preparation, agent dispatch,
   DB/runtime writes, project mutation, deploy, release, export, package,
   network calls, and spend remain unavailable.
+- P136.6 secrets/providers/tool governance docs/roadmap: Aligned the P136 plan,
+  README, enterprise roadmap, platform roadmap, OS phase status, phase index,
+  checker handoffs, and validation reports through P136.6 while preserving the
+  review-only Provider Governance UX. P136.7 Final Validation is planned-only
+  next; secret values, provider/model calls, tool execution, MCP server startup,
+  provider payload preparation, agent dispatch, DB/runtime writes, project
+  mutation, deploy, release, export, package, network calls, and spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 

@@ -13,6 +13,7 @@ const CONTRACT_PATH = "contracts/os-roadmap/p136-secrets-providers-tool-governan
 const PLAN_PATH = "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md";
 const TEST_PATH = "dashboard/tests/routes.spec.js";
 const REQUIRED_SCRIPT = "check:p1365-secrets-providers-tool-governance-tests-checkers";
+const P1366_SCRIPT = "check:p1366-secrets-providers-tool-governance-docs-roadmap";
 const ROUTE_TEST = "Provider Governance route renders P136.4 review-only dry-run posture";
 const VALIDATION_COMMANDS = [
   "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
@@ -161,6 +162,7 @@ addCheck("route-wide OS/project separation retained", testSource.includes("OS Ro
 addCheck("P136.4 checker accepts P136.5 handoff", p1364Checker.includes("p1365CurrentState") && p1364Checker.includes('status.currentPhase === "P136.5"') && p1364Checker.includes(REQUIRED_SCRIPT));
 addCheck("enterprise checker accepts P136.5", enterpriseChecker.includes("p1365CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("contract marks P136.5 complete", p1365.status === "complete" && ((contract.currentSubphase === "P136.5" && contract.previousSubphase === "P136.4" && contract.nextSubphase === "P136.6" && p1366.status === "planned") || p1366CurrentState));
+addCheck("P136.6 checker registered when handed off", !p1366CurrentState || Boolean(packageJson.scripts?.[P1366_SCRIPT]));
 addCheck("P136.5 records expected base commit", p1365.expectedBaseCommit === "9cee6788");
 addCheck("P136.5 allowed files include checker and route test", [TEST_PATH, "scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js"].every((file) => p1365.allowedFiles?.includes(file)));
 addCheck("P136.5 forbids project/db/runtime/provider/tool paths", ["projects/**", "careloop/**", "generated-projects/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1365.forbiddenFiles?.includes(path)));

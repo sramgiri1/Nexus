@@ -23575,15 +23575,15 @@
       "order": 172,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7f18f9a6",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P136.5 is complete. P136.6 Docs / Roadmap / Status is planned-only next.",
-      "summary": "P136 is complete through P136.5. Provider governance now includes the safety contract, display-safe governance model, non-runnable dry run, review-only Command Center UX, and aggregate checker coverage while all provider/model/tool execution, mutation, deploy, package, network, and spend authority remains blocked.",
+      "detail": "P136.6 is complete. P136.7 Final Validation is planned-only next.",
+      "summary": "P136 is complete through P136.6. Provider governance now includes the safety contract, display-safe governance model, non-runnable dry run, review-only Command Center UX, aggregate checker coverage, and aligned docs/status while all provider/model/tool execution, mutation, deploy, package, network, and spend authority remains blocked.",
       "previousPhase": "P135",
       "nextPhase": "P137",
       "checksRun": [
+        "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",
         "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
-        "npm run check:p1364-provider-governance-command-center-ux",
         "npm run check:enterprise-readiness-roadmap",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
@@ -23593,7 +23593,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P136 is in progress through P136.5. P136.6-P136.7 remain planned-only. Current P136 work does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "P136 is in progress through P136.6. P136.7 remains planned-only. Current P136 work does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ],
       "subphases": [
         {
@@ -24371,10 +24371,10 @@
         {
           "phaseId": "P136.6",
           "title": "Docs / Roadmap / Status",
-          "status": "planned",
+          "status": "complete",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "pending-p1365-final-commit",
+          "expectedBaseCommit": "febd58f5",
           "narrowGoal": "Close P136 docs, README, roadmap, phase status, reports, checker handoffs, and final-validation preparation without changing runtime behavior.",
           "allowedFiles": [
             "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
@@ -24502,16 +24502,26 @@
           "order": 172.6,
           "commandCenterVisible": true,
           "knownLimitations": [
-            "P136.6 is planned-only until implemented. It must not enable secret values, provider/model calls, tool execution, MCP startup, DB/runtime writes, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+            "P136.6 is docs/roadmap/status only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
           ],
           "track": "NEXUS_OS",
           "label": "Provider Governance Docs",
-          "completedAt": "",
-          "branch": "",
-          "commit": "",
-          "summary": "Planned-only docs, roadmap, status, checker handoff, and final-validation preparation for P136 provider governance.",
-          "checksRun": [],
-          "detail": "P136.6 is planned-only next after P136.5 tests/checkers."
+          "completedAt": "2026-05-30T00:00:00.000Z",
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "summary": "Aligned P136 docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P136.6 while preserving Provider Governance as review-only UX.",
+          "checksRun": [
+            "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",
+            "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "detail": "P136.6 is complete. P136.7 Final Validation is planned-only next."
         },
         {
           "phaseId": "P136.7",
@@ -24657,14 +24667,22 @@
           "order": 172.7,
           "commandCenterVisible": true,
           "knownLimitations": [
-            "Planned-only until P136.7 implementation starts."
-          ]
+            "P136.7 is planned-only until implemented. It must not enable secret values, provider/model calls, tool execution, MCP startup, DB/runtime writes, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "track": "NEXUS_OS",
+          "label": "Provider Governance Final Validation",
+          "completedAt": "",
+          "branch": "",
+          "commit": "",
+          "summary": "Planned-only final validation for P136 secrets, providers, and tool governance.",
+          "checksRun": [],
+          "detail": "P136.7 is planned-only next after P136.6 docs/roadmap/status closure."
         }
       ],
       "completedAt": "",
-      "currentSubphase": "P136.5",
-      "previousSubphase": "P136.4",
-      "nextSubphase": "P136.6"
+      "currentSubphase": "P136.6",
+      "previousSubphase": "P136.5",
+      "nextSubphase": "P136.7"
     },
     {
       "track": "NEXUS_OS",
@@ -27464,10 +27482,10 @@
     {
       "phaseId": "P136.6",
       "title": "Docs / Roadmap / Status",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1365-final-commit",
+      "expectedBaseCommit": "febd58f5",
       "narrowGoal": "Close P136 docs, README, roadmap, phase status, reports, checker handoffs, and final-validation preparation without changing runtime behavior.",
       "allowedFiles": [
         "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
@@ -27595,37 +27613,202 @@
       "order": 172.6,
       "commandCenterVisible": true,
       "knownLimitations": [
-        "P136.6 is planned-only until implemented. It must not enable secret values, provider/model calls, tool execution, MCP startup, DB/runtime writes, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "P136.6 is docs/roadmap/status only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ],
       "track": "NEXUS_OS",
       "label": "Provider Governance Docs",
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Aligned P136 docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P136.6 while preserving Provider Governance as review-only UX.",
+      "checksRun": [
+        "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",
+        "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "detail": "P136.6 is complete. P136.7 Final Validation is planned-only next."
+    },
+    {
+      "phaseId": "P136.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1366-final-commit",
+      "narrowGoal": "Close P136 with final validation evidence, prior report verification, checker compatibility, docs/roadmap/status closure, route-wide Command Center safety, and planned-only P137 handoff.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+        "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
+        "scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
+        "reports/p1366-secrets-providers-tool-governance-docs-roadmap-report.md",
+        "reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md",
+        "reports/p1364-provider-governance-command-center-ux-report.md",
+        "reports/p1363-provider-dry-run-report.md",
+        "reports/p1362-secret-provider-model-report.md",
+        "reports/p1361-secrets-providers-tool-governance-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "private project app files",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
+        "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+        "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
+        "reports/p1366-secrets-providers-tool-governance-docs-roadmap-report.md",
+        "reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md",
+        "reports/p1364-provider-governance-command-center-ux-report.md",
+        "reports/p1363-provider-dry-run-report.md",
+        "reports/p1362-secret-provider-model-report.md",
+        "reports/p1361-secrets-providers-tool-governance-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "Final validation evidence only. No runtime exports.",
+      "commandCenterUx": "No Command Center source changes. Preserve P136.4 review-only Provider Governance UX and validate route-wide safety.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate route-wide."
+      ],
+      "safetyRules": [
+        "No provider/tool/model/network execution.",
+        "No secret values.",
+        "No DB/runtime writes or project mutation.",
+        "No deploy, release, export, package, or spend."
+      ],
+      "reuseCheck": [
+        "Reuse P136.1-P136.6 reports.",
+        "Reuse shared report/check helpers.",
+        "Reuse OS phase status and roadmap structures."
+      ],
+      "testsAndCheckers": [
+        "Add P136.7 final checker.",
+        "Update P136.6, enterprise, and OS status checkers for P137 handoff.",
+        "Run full P136 checker chain and route-wide Command Center Playwright coverage."
+      ],
+      "docsRoadmap": "Update P136 docs, README, roadmaps, status, and reports for closure.",
+      "phaseStatusUpdate": "P136 complete; P136.1 through P136.7 complete; current P136.7; previous P136.6; next P137 planned-only.",
+      "validationCommands": [
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+        "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",
+        "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
+        "npm run check:p1364-provider-governance-command-center-ux",
+        "npm run check:p1363-provider-dry-run",
+        "npm run check:p1362-secret-provider-model",
+        "npm run check:p1361-secrets-providers-tool-governance",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "P137 remains planned-only.",
+        "No stale implementation commit marker remains after status stamp.",
+        "No forbidden paths changed.",
+        "No unsafe execution is enabled."
+      ],
+      "gitCommands": [
+        "git add <P136.7 allowed files>",
+        "git commit -m \"chore(nexus): implement p1367 provider governance final validation\"",
+        "git add <P136.7 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1367 provider governance final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch",
+        "Commit",
+        "Files",
+        "Implementation",
+        "UX",
+        "Tests",
+        "Dashboard results",
+        "Docs/status",
+        "Safety",
+        "Known limitations",
+        "Next"
+      ],
+      "previousPhase": "P136.6",
+      "nextPhase": "P137",
+      "order": 172.7,
+      "commandCenterVisible": true,
+      "knownLimitations": [
+        "P136.7 is planned-only until implemented. It must not enable secret values, provider/model calls, tool execution, MCP startup, DB/runtime writes, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "track": "NEXUS_OS",
+      "label": "Provider Governance Final Validation",
       "completedAt": "",
       "branch": "",
       "commit": "",
-      "summary": "Planned-only docs, roadmap, status, checker handoff, and final-validation preparation for P136 provider governance.",
+      "summary": "Planned-only final validation for P136 secrets, providers, and tool governance.",
       "checksRun": [],
-      "detail": "P136.6 is planned-only next after P136.5 tests/checkers."
+      "detail": "P136.7 is planned-only next after P136.6 docs/roadmap/status closure."
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-30T00:00:00.000Z",
-  "currentPhase": "P136.5",
-  "previousPhase": "P136.4",
-  "nextPhase": "P136.6",
+  "currentPhase": "P136.6",
+  "previousPhase": "P136.5",
+  "nextPhase": "P136.7",
   "currentPhaseStatus": "complete",
   "current": {
+    "phaseId": "P136.6",
+    "title": "Docs / Roadmap / Status",
+    "status": "complete"
+  },
+  "previous": {
     "phaseId": "P136.5",
     "title": "Tests / Checkers",
     "status": "complete"
   },
-  "previous": {
-    "phaseId": "P136.4",
-    "title": "Provider Governance Command Center UX",
-    "status": "complete"
-  },
   "next": {
-    "phaseId": "P136.6",
-    "title": "Docs / Roadmap / Status",
+    "phaseId": "P136.7",
+    "title": "Final Validation",
     "status": "planned"
   }
 }
