@@ -23575,7 +23575,7 @@
       "order": 172,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "790a33d3",
       "commandCenterVisible": true,
       "detail": "P136.6 is complete. P136.7 Final Validation is planned-only next.",
       "summary": "P136 is complete through P136.6. Provider governance now includes the safety contract, display-safe governance model, non-runnable dry run, review-only Command Center UX, aggregate checker coverage, and aligned docs/status while all provider/model/tool execution, mutation, deploy, package, network, and spend authority remains blocked.",
@@ -24508,7 +24508,7 @@
           "label": "Provider Governance Docs",
           "completedAt": "2026-05-30T00:00:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "790a33d3",
           "summary": "Aligned P136 docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P136.6 while preserving Provider Governance as review-only UX.",
           "checksRun": [
             "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",
@@ -27619,7 +27619,7 @@
       "label": "Provider Governance Docs",
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "790a33d3",
       "summary": "Aligned P136 docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P136.6 while preserving Provider Governance as review-only UX.",
       "checksRun": [
         "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",

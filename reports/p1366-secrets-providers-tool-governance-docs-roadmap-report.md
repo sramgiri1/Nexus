@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P136.6
-- Generated at: 2026-05-30T17:34:04.997Z
+- Generated at: 2026-05-30T17:38:31.445Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: febd58f5
+- Validation HEAD: 790a33d3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -35,8 +35,8 @@
 | enterprise roadmap records P136.6 | PASS |  |
 | phase status advanced | PASS | P136.6/P136.5/P136.7 |
 | completed P136.6 entries have required fields | PASS |  |
-| changed files stay in P136.6 allowed scope | PASS | README.md, contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js, reports/p1366-secrets-providers-tool-governance-docs-roadmap-report.md, scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js, reports/p1366-secrets-providers-tool-governance-docs-roadmap-report.md, scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js |
+| changed files stay in P136.6 allowed scope | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable provider/tool actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
