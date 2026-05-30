@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.3 and P135.4 Auth Governance
-Command Center UX is planned-only next. P135.4-P145 do not enable
+Current implementation is closed through P135.4 and P135.5 Tests / Checkers is
+planned-only next. P135.5-P145 do not enable
 DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3336,11 +3336,21 @@ preview over the P135.2 auth and tenant model. It exposes role preview rows,
 tenant scope preview rows, Command Center surface rows, sensitive workflow
 rows, a preview-only permission policy, safety flags, blockers, evidence,
 activity, cost impact, and next action. P135.4 Auth Governance Command Center
-UX is planned-only next. Role assignment, permission grants, permission
+UX followed next. Role assignment, permission grants, permission
 revokes, permission enforcement, access decisions as live authority, login,
 sessions, tenant mutation, auth providers, DB/runtime writes, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, and spend remain blocked.
+
+P135.4 auth governance Command Center UX is complete. NEXUS now surfaces the
+P135.3 permission preview in Auth Governance with review-only role,
+tenant-scope, Command Center surface, blocked workflow, evidence, blocker, and
+disabled-action sections. P135.5 Tests / Checkers is planned-only next. Login,
+sessions, role assignment, permission grants, permission revokes, permission
+enforcement, access decisions as live authority, tenant mutation, auth
+providers, DB/runtime writes, provider/model calls, agent dispatch, project
+mutation, deploy, release, export, package, network calls, and spend remain
+blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

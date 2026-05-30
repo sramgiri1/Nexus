@@ -582,7 +582,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Auth Governance",
     status: "implemented",
-    badge: "Preview",
+    badge: "Review",
     scope: "os",
     tabs: AUTH_GOVERNANCE_TABS,
     defaultTab: "overview",

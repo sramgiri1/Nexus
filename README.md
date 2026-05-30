@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P135.3
-  with P135.4 planned-only next.
+  roadmap/status entries only; current implementation is closed through P135.4
+  with P135.5 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2121,8 +2121,17 @@ The Command Center and local operator surface have:
   P135.2 auth/tenant model. It exposes role preview rows, tenant scope preview
   rows, Command Center surface rows, sensitive workflow rows, a preview-only
   permission policy, safety flags, blockers, evidence, activity, cost impact,
-  and next action. P135.4 Auth Governance Command Center UX is planned-only
-  next; role assignment, permission grants, permission revokes, permission
+  and next action. P135.4 Auth Governance Command Center UX followed next;
+  role assignment, permission grants, permission revokes, permission
+  enforcement, access decisions as live authority, login, sessions, tenant
+  mutation, auth providers, DB/runtime writes, provider/model calls, agent
+  dispatch, project mutation, deploy, release, export, package, network calls,
+  and spend remain unavailable.
+- P135.4 Auth Governance Command Center UX: Surfaced the P135.3 permission
+  preview in the Auth Governance route with review-only role, tenant-scope,
+  Command Center surface, blocked workflow, evidence, blocker, and
+  disabled-action sections. P135.5 Tests / Checkers is planned-only next; role
+  assignment, permission grants, permission revokes, permission
   enforcement, access decisions as live authority, login, sessions, tenant
   mutation, auth providers, DB/runtime writes, provider/model calls, agent
   dispatch, project mutation, deploy, release, export, package, network calls,

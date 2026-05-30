@@ -349,6 +349,190 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P135.4 Auth Governance Command Center UX
+
+Status: complete
+
+Scope classification:
+- NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `3bcfb764`
+
+Narrow goal:
+- Surface the P135.3 permission preview in Auth Governance Command Center UX
+  without enabling auth, permission enforcement, tenant writes, DB/runtime
+  writes, provider calls, agent dispatch, project mutation, deploy, package,
+  network, or spend.
+
+Allowed files:
+- `dashboard/src/data/authGovernanceReadiness.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/data/commandCenterRoutes.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json`
+- `docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1354-auth-governance-command-center-ux.js`
+- `scripts/check-p1353-permission-preview.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `reports/p1354-auth-governance-command-center-ux-report.md`
+- regenerated P135.3, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Update `dashboard/src/data/authGovernanceReadiness.js` to reuse the P135.3
+  permission preview and expose sanitized Auth Governance rows.
+- Update Auth Governance tabs, route badge, and page renderer.
+- Update Playwright route coverage.
+- Add `scripts/check-p1354-auth-governance-command-center-ux.js`.
+- Update package scripts, P135.3 checker, enterprise checker, OS phase status
+  checker, README, platform roadmap, enterprise roadmap, OS phase status,
+  phase index, and this plan.
+
+Expected exports, schemas, and data shapes:
+- Exports:
+  - `buildAuthGovernanceReadinessViewModel`
+  - `authGovernanceReadinessViewModel`
+- Auth Governance view model includes:
+  - `routeId`
+  - `pageTitle`
+  - `whatChanged`
+  - `currentState`
+  - `nextAction`
+  - `ownerAgent`
+  - `ownerCapability`
+  - `evidenceLocation`
+  - `activityLocation`
+  - `costImpact`
+  - `disabledReason`
+  - `readinessCards`
+  - `roleAccessRows`
+  - `tenantScopeRows`
+  - `commandCenterSurfaceRows`
+  - `sensitiveWorkflowRows`
+  - `governanceRows`
+  - `blockers`
+  - `blockedOperations`
+  - `disabledActions`
+  - `safety`
+- All auth, permission, tenant, DB/runtime, provider, agent, project, deploy,
+  package, network, and spend safety flags remain false.
+
+Command Center UX requirements:
+- Auth Governance shows concise review-only identity, role, tenant-scope,
+  Command Center surface, blocked workflow, evidence, blocker, and
+  disabled-action sections.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw auth provider
+  payloads, private IDs, tenant IDs, user IDs, role IDs, permission IDs,
+  mutation controls, provider controls, deploy controls, package controls, or
+  spend controls.
+- Do not expose internal phase labels in primary UX.
+- Do not expose DemoApp in full Command Center.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Use existing Command Center classes and route-wide navigation patterns.
+
+Playwright tests:
+- Update Auth Governance route coverage to verify dark/light/system themes,
+  role rows, tenant scope rows, Command Center surface rows, blocked workflows,
+  disabled actions, no DemoApp leakage, no raw tokens/URLs, no internal phase
+  labels, and no fake runnable auth actions.
+
+Checker updates:
+- Add `scripts/check-p1354-auth-governance-command-center-ux.js`.
+- Update `scripts/check-p1353-permission-preview.js` for P135.4 handoff
+  compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P135.4 handoff
+  compatibility.
+- Update `scripts/check-os-phase-status.js` so P135.5 is a valid OS phase
+  handoff ID.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update `README.md`.
+- Update `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- Update `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+OS phase status update:
+- P135 is in progress.
+- P135.1 through P135.4 complete.
+- Current phase P135.4.
+- Previous phase P135.3.
+- Next phase P135.5 planned-only.
+
+Validation commands:
+- `npm run check:p1354-auth-governance-command-center-ux`
+- `npm run check:p1353-permission-preview`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Auth Governance route"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P135.4 allowed files>`
+- `git commit -m "chore(nexus): implement p1354 auth governance command center ux"`
+- `git add <P135.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1354 auth governance command center ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- Login, sessions, token exchange, role assignment, permission grants,
+  permission revokes, permission enforcement, access decisions as live
+  authority, tenant mutation, auth providers, DB/runtime writes,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- P135.5 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX changes.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P135.2 Auth and Tenant Model
 
 Status: complete

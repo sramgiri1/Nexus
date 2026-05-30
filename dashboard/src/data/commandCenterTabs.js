@@ -104,8 +104,11 @@ export const API_BATCH_TABS = [
 ];
 
 export const AUTH_GOVERNANCE_TABS = [
-  { id: "overview", label: "Overview", description: "Identity, RBAC, workspace posture, and next action", badge: "Preview" },
-  { id: "governance", label: "Governance", description: "Disabled auth and role mutation posture", badge: "Blocked" },
+  { id: "overview", label: "Overview", description: "Identity, roles, tenant scope, and next action", badge: "Review" },
+  { id: "roles", label: "Roles", description: "Visible role responsibilities without assignment", badge: "Display-only" },
+  { id: "tenant-scope", label: "Tenant Scope", description: "Tenant and workspace scope without mutation", badge: "Display-only" },
+  { id: "surfaces", label: "Surfaces", description: "Command Center surfaces and permission posture", badge: "Review" },
+  { id: "workflows", label: "Blocked Workflows", description: "Sensitive workflow gates that remain unavailable", badge: "Blocked" },
   { id: "evidence", label: "Evidence", description: "Evidence, activity, cost, and blockers", badge: "Read-only" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable auth actions and reasons", badge: "Disabled" },
 ];

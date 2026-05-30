@@ -9410,26 +9410,83 @@ function AuthGovernancePage() {
             </div>
           </CommandTabPanel>
 
-          <CommandTabPanel tabId="governance" activeTab={activeTab}>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Governance Posture</div>
-              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
-                {readiness.governanceRows.map((row) => (
-                  <div className="ccv2-page-summary-row" key={row.label}>
-                    <span className="ccv2-page-summary-label">{row.label}</span>
-                    <span className="ccv2-page-summary-value">{row.value}</span>
+          <CommandTabPanel tabId="roles" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {readiness.roleAccessRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.responsibility}</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">State</span><span className="ccv2-page-summary-value">{row.state}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Reason</span><span className="ccv2-page-summary-value">{row.disabledReason}</span></div>
                   </div>
-                ))}
-              </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="tenant-scope" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.tenantScopeRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--teal" style={{ marginTop: 8 }}>{row.state}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.detail}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.disabledReason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="surfaces" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {readiness.commandCenterSurfaceRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.purpose}</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Permission state</span><span className="ccv2-page-summary-value">{row.state}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Reason</span><span className="ccv2-page-summary-value">{row.disabledReason}</span></div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="workflows" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {readiness.sensitiveWorkflowRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--amber" style={{ marginTop: 8 }}>{row.state}</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Required gate</span><span className="ccv2-page-summary-value">{row.requiredGate}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Reason</span><span className="ccv2-page-summary-value">{row.disabledReason}</span></div>
+                  </div>
+                </article>
+              ))}
             </div>
           </CommandTabPanel>
 
           <CommandTabPanel tabId="evidence" activeTab={activeTab}>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Evidence and Blockers</div>
-              <ul className="ccv2-list" style={{ marginTop: 12 }}>
-                {readiness.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
-              </ul>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Governance Posture</div>
+                <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                  {readiness.governanceRows.map((row) => (
+                    <div className="ccv2-page-summary-row" key={row.label}>
+                      <span className="ccv2-page-summary-label">{row.label}</span>
+                      <span className="ccv2-page-summary-value">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Blockers</div>
+                <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                  {readiness.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+                </ul>
+              </article>
             </div>
           </CommandTabPanel>
 

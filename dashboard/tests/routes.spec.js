@@ -2369,20 +2369,40 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/auth-governance");
 
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("Auth Governance");
-    await expect(page.locator("body")).toContainText("Identity mode");
-    await expect(page.locator("body")).toContainText("Role posture");
-    await expect(page.locator("body")).toContainText("Workspace boundary");
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Auth Governance");
+      await expect(page.locator("body")).toContainText("Identity mode");
+      await expect(page.locator("body")).toContainText("Role posture");
+      await expect(page.locator("body")).toContainText("Workspace boundary");
+      await expect(page.locator("body")).toContainText("Permission posture");
+    }
+
     await expect(page.locator("body")).toContainText("Auth governance is display-only");
+    await commandTab(page, "Roles").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Visible, not assignable");
+    await expect(activeCommandTabPanel(page)).toContainText("Role assignment and role mutation remain disabled");
+    await commandTab(page, "Tenant Scope").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Visible, not authoritative");
+    await commandTab(page, "Surfaces").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Permission state");
+    await expect(activeCommandTabPanel(page)).toContainText("Display-only");
+    await commandTab(page, "Blocked Workflows").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Agent dispatch");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked");
+    await commandTab(page, "Evidence").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Permission grants and revokes");
     await commandTab(page, "Disabled Actions").click();
     await expect(activeCommandTabPanel(page)).toContainText("Sign in disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Assign role disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Grant permission disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Enforce access disabled");
 
     const body = await page.locator("body").innerText();
-    expect(body).not.toMatch(/sign in now|log in now|assign role now|create workspace now|invite user now|execute now/i);
+    expect(body).not.toMatch(/sign in now|log in now|assign role now|grant permission now|revoke permission now|enforce permission now|create workspace now|invite user now|execute now/i);
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/[^\s]*auth/i);
-    expect(body).not.toMatch(/P73\./);
+    expect(body).not.toMatch(/P73\.|P135\./);
 
     expect(errors).toEqual([]);
   });
