@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133.1
-- Generated at: 2026-05-30T10:28:17.701Z
+- Generated at: 2026-05-30T10:29:11.823Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c1f61bfe
+- Validation HEAD: dc3694c0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -48,8 +48,8 @@
 | phase status advanced | PASS | P133.1/P132.7/P133.2 |
 | completed P133.1 entries have required fields | PASS |  |
 | P133.2 handoff remains planned-only | PASS |  |
-| changed files stay in P133.1 allowed scope | PASS | README.md, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1327-founder-runtime-store-live-admission-execution-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1327-founder-runtime-store-live-admission-execution.js, contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md, reports/p1331-founder-idea-to-prd-productization-report.md, scripts/check-p1331-founder-idea-to-prd-productization.js |
-| forbidden paths unchanged | PASS | README.md, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1327-founder-runtime-store-live-admission-execution-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1327-founder-runtime-store-live-admission-execution.js, contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md, reports/p1331-founder-idea-to-prd-productization-report.md, scripts/check-p1331-founder-idea-to-prd-productization.js |
+| changed files stay in P133.1 allowed scope | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P133.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | primary UX avoids DemoApp leakage | PASS |  |

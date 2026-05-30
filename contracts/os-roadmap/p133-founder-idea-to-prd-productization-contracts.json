@@ -126,7 +126,7 @@
       "order": 169.1,
       "completedAt": "2026-05-30T10:12:54.169Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "dc3694c0",
       "summary": "Started P133 with an implementation-grade founder idea-to-PRD productization contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned-only P133.2 handoff while live Q&A, PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
         "P133.1 is contract/checker/docs/status only and P133.2 is planned-only. It does not execute founder Q&A, generate PRDs with providers/models, dispatch agents, create or mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend."
@@ -565,7 +565,7 @@
     "title": "Contract / Policy / Safety Boundary",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "dc3694c0",
     "completedAt": "2026-05-30T10:12:54.169Z",
     "detail": "P133.1 contract and safety boundary complete; P133.2 is planned-only next.",
     "summary": "Started P133 with an implementation-grade founder idea-to-PRD productization contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned-only P133.2 handoff while live Q&A, PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.",
@@ -591,7 +591,7 @@
     "title": "Founder Idea-to-PRD Productization",
     "status": "in_progress",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "dc3694c0",
     "completedAt": "2026-05-30T10:12:54.169Z",
     "detail": "P133 in progress; P133.1 contract and safety boundary complete and P133.2 is planned-only next.",
     "summary": "Started P133 with an implementation-grade founder idea-to-PRD productization contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned-only P133.2 handoff while live Q&A, PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.",
