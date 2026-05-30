@@ -178,6 +178,33 @@ const p1322StartedState =
   && roadmapById.get("P132.2")?.status === "complete"
   && statusById.get("P132.3")?.status === "planned"
   && roadmapById.get("P132.3")?.status === "planned";
+const p1323StartedState =
+  status.currentPhase === "P132.3"
+  && status.previousPhase === "P132.2"
+  && status.nextPhase === "P132.4"
+  && roadmap.currentPhase === "P132.3"
+  && roadmap.previousPhase === "P132.2"
+  && roadmap.nextPhase === "P132.4"
+  && status.current?.phaseId === "P132.3"
+  && status.previous?.phaseId === "P132.2"
+  && status.next?.phaseId === "P132.4"
+  && roadmap.current?.phaseId === "P132.3"
+  && roadmap.previous?.phaseId === "P132.2"
+  && roadmap.next?.phaseId === "P132.4"
+  && statusById.get("P131")?.status === "complete"
+  && roadmapById.get("P131")?.status === "complete"
+  && statusById.get("P131.7")?.status === "complete"
+  && roadmapById.get("P131.7")?.status === "complete"
+  && statusById.get("P132")?.status === "in_progress"
+  && roadmapById.get("P132")?.status === "in_progress"
+  && statusById.get("P132.1")?.status === "complete"
+  && roadmapById.get("P132.1")?.status === "complete"
+  && statusById.get("P132.2")?.status === "complete"
+  && roadmapById.get("P132.2")?.status === "complete"
+  && statusById.get("P132.3")?.status === "complete"
+  && roadmapById.get("P132.3")?.status === "complete"
+  && statusById.get("P132.4")?.status === "planned"
+  && roadmapById.get("P132.4")?.status === "planned";
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P131 final", contract.status === "complete" && contract.currentSubphase === "P131.7" && contract.previousSubphase === "P131.6" && contract.nextSubphase === "P132" && p1317.status === "complete");
@@ -193,19 +220,19 @@ addCheck("P131.5 scoped data export remains intact", businessData.includes("buil
 addCheck("P131.5 scoped page labels remain intact", pageSource.includes("Business Build Store Live Admission Scope") && pageSource.includes("Agent Flow Store Live Admission Scope") && pageSource.includes('ariaLabel="Store live admission scope"') && !pageSource.includes("Lite Store Live Admission Scope") && !pageSource.includes("Chat Store Live Admission Scope"));
 addCheck("P131.5 scoped route coverage remains", routeTests.includes("store live readiness gate appears only on scoped pages") && routeTests.includes("Store live admission scope") && routeTests.includes("Business Build Store Live Admission Scope") && routeTests.includes("/command-center/business-build") && routeTests.includes("/command-center/agent-flow") && routeTests.includes("/command-center/lite") && routeTests.includes("/command-center/os-roadmap") && routeTests.includes("/command-center/live-readiness") && routeTests.includes("dark") && routeTests.includes("light") && routeTests.includes("system"));
 addCheck("P131 plan records P131.7", /## P131\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P131.7", /P131\.7 final validation/i.test(readme) && /P132 is planned-only/i.test(readme));
-addCheck("platform roadmap records P131.7", /P131\.7 is complete/i.test(platformRoadmap) && /P132 is planned-only/i.test(platformRoadmap));
+addCheck("README records P131.7", /P131\.7 final validation/i.test(readme) && (/P132 is planned-only/i.test(readme) || /P132\.1 store live execution contract/i.test(readme)));
+addCheck("platform roadmap records P131.7", /P131\.7 is complete/i.test(platformRoadmap) && (/P132 is planned-only/i.test(platformRoadmap) || /P132\.1 is complete/i.test(platformRoadmap)));
 addCheck(
   "phase status closes P131",
-  p1317FinalState || p1321StartedState || p1322StartedState,
+  p1317FinalState || p1321StartedState || p1322StartedState || p1323StartedState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(
   "phase status summary objects close P131",
-  p1317FinalState || p1321StartedState || p1322StartedState,
+  p1317FinalState || p1321StartedState || p1322StartedState || p1323StartedState,
 );
 addCheck("completed P131.7 entries have required fields", [statusById.get("P131"), statusById.get("P131.7"), roadmapById.get("P131.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P132 handoff remains safe", (statusById.get("P132")?.status === "planned" && roadmapById.get("P132")?.status === "planned" && !(statusById.get("P132")?.checksRun || []).length && !(roadmapById.get("P132")?.checksRun || []).length) || p1321StartedState || p1322StartedState);
+addCheck("P132 handoff remains safe", (statusById.get("P132")?.status === "planned" && roadmapById.get("P132")?.status === "planned" && !(statusById.get("P132")?.checksRun || []).length && !(roadmapById.get("P132")?.checksRun || []).length) || p1321StartedState || p1322StartedState || p1323StartedState);
 addCheck(
   "changed files stay in P131.7 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),

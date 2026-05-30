@@ -730,6 +730,7 @@
     "check:p1317-founder-runtime-store-live-admission-scope": "node scripts/check-p1317-founder-runtime-store-live-admission-scope.js",
     "check:p1321-founder-runtime-store-live-admission-execution": "node scripts/check-p1321-founder-runtime-store-live-admission-execution.js",
     "check:p1322-founder-runtime-store-live-admission-execution": "node scripts/check-p1322-founder-runtime-store-live-admission-execution.js",
+    "check:p1323-founder-runtime-store-live-admission-execution": "node scripts/check-p1323-founder-runtime-store-live-admission-execution.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {
