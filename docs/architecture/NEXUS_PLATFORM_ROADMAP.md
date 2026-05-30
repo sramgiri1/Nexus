@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.1 and P135.2 Auth and Tenant
-Model is planned-only next. P135.2-P145 do not enable
+Current implementation is closed through P135.2 and P135.3 Permission Preview
+is planned-only next. P135.3-P145 do not enable
 DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3315,11 +3315,21 @@ blocked.
 P135.1 identity/tenant/RBAC contract is complete. NEXUS now has the P135
 contract, seven-subphase split, safety boundary, checker, docs, roadmap, OS
 status, phase index, and validation report for enterprise identity, tenant,
-role, session, and permission governance. P135.2 Auth and Tenant Model is
-planned-only next. Login, sessions, tenant mutation, role mutation, permission
+role, session, and permission governance. P135.2 Auth and Tenant Model followed
+as the next model subphase. Login, sessions, tenant mutation, role mutation, permission
 grants, permission enforcement, auth providers, DB/runtime writes,
 provider/model calls, agent dispatch, project mutation, deploy, release,
 export, package, network calls, and spend remain blocked.
+
+P135.2 auth/tenant model is complete. NEXUS now has a read-only auth and
+tenant model that reuses the existing identity/session contract, RBAC matrix,
+and tenant boundary contract. It exposes display-safe role catalog, tenant
+scope catalog, session policy, auth provider policy, permission policy, safety
+flags, blockers, evidence, activity, cost impact, and next action. P135.3
+Permission Preview is planned-only next. Login, sessions, tenant mutation, role
+mutation, permission grants, permission enforcement, auth providers,
+DB/runtime writes, provider/model calls, agent dispatch, project mutation,
+deploy, release, export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

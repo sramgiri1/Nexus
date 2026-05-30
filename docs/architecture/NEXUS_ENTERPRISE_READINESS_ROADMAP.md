@@ -17,7 +17,8 @@ P134.5 is now complete as tests/checkers hardening only.
 P134.6 is now complete as docs/roadmap/status closure only.
 P134.7 is now complete as final validation only.
 P135.1 is now complete as contract/policy/safety-boundary only.
-P135.2 is the next executable subphase. P135.2-P135.7 and P136-P145 remain
+P135.2 is now complete as a read-only auth/tenant model.
+P135.3 is the next executable subphase. P135.3-P135.7 and P136-P145 remain
 planned-only. They do not enable DB writes,
 provider/model calls, agent dispatch, project mutation, deploy, release,
 export, package, network calls, or spend until each phase/subphase has its own
@@ -85,8 +86,8 @@ Forbidden by default unless a phase explicitly allows it:
 
 ## Current Handoff
 
-Current implementation has started P135 and closed P135.1. P135.2 is the next
-executable subphase. P135.2-P145 are planned-only backlog phases and must not
+Current implementation has started P135 and closed P135.1 and P135.2. P135.3 is
+the next executable subphase. P135.3-P145 are planned-only backlog phases and must not
 be treated as complete or live.
 
 ## Validation
@@ -94,6 +95,7 @@ be treated as complete or live.
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1352-auth-tenant-model`
 - `npm run check:p1351-identity-tenant-roles-permissions`
 - `npm run check:p1347-durable-db-crud-runtime-final-validation`
 - `npm run check:p1346-durable-db-crud-runtime-docs-roadmap`

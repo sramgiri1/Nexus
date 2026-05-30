@@ -173,7 +173,7 @@ addCheck("OS checker recognizes P135 subphases", ["P135", "P135.1", "P135.2"].ev
 addCheck("P135 plan records P135.1", /## P135\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P135.1", /P135\.1 identity\/tenant\/RBAC contract/i.test(readme));
 addCheck("platform roadmap records P135.1", /P135\.1 identity\/tenant\/RBAC contract is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P135.1", /P135\.1 is now complete/i.test(enterpriseRoadmap) && /P135\.2 is the next executable subphase/i.test(enterpriseRoadmap));
+addCheck("enterprise roadmap records P135.1", /P135\.1 is now complete/i.test(enterpriseRoadmap) && (/P135\.2 is the next executable subphase/i.test(enterpriseRoadmap) || /P135\.2 is now complete/i.test(enterpriseRoadmap)));
 addCheck("phase status starts P135.1", p1351StartedState || p1352CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.1 entries have required fields", [statusById.get("P135"), statusById.get("P135.1"), roadmapById.get("P135.1")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck("P135.2 remains planned or safely handed off", (statusById.get("P135.2")?.status === "planned" && roadmapById.get("P135.2")?.status === "planned" && !(statusById.get("P135.2")?.checksRun || []).length) || p1352CurrentState);

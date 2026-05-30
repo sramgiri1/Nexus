@@ -750,6 +750,7 @@
     "check:p1346-durable-db-crud-runtime-docs-roadmap": "node scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js",
     "check:p1347-durable-db-crud-runtime-final-validation": "node scripts/check-p1347-durable-db-crud-runtime-final-validation.js",
     "check:p1351-identity-tenant-roles-permissions": "node scripts/check-p1351-identity-tenant-roles-permissions.js",
+    "check:p1352-auth-tenant-model": "node scripts/check-p1352-auth-tenant-model.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {
