@@ -24437,7 +24437,7 @@
       "order": 175,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "504a08ad",
       "commandCenterVisible": true,
       "detail": "P139.1 defines the future evidence, audit/activity, observability, and cost ledger contract while every live write and execution authority remains blocked.",
       "summary": "P139 is in progress through P139.1, with enterprise ledger authority still contract-only and non-runnable.",
@@ -24585,7 +24585,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T22:37:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "504a08ad",
           "summary": "P139.1 defines the evidence, audit, observability, and cost ledger contract and safety boundary without enabling live ledger writes.",
           "detail": "P139.1 is contract-only. It records the future ledger shape, reuse requirements, safety rules, validation commands, and planned-only P139.2 handoff.",
           "checksRun": [
@@ -24881,7 +24881,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T22:37:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "504a08ad",
       "summary": "P139.1 defines the evidence, audit, observability, and cost ledger contract and safety boundary without enabling live ledger writes.",
       "detail": "P139.1 is contract-only. It records the future ledger shape, reuse requirements, safety rules, validation commands, and planned-only P139.2 handoff.",
       "checksRun": [
@@ -26583,7 +26583,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T22:37:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "504a08ad",
     "summary": "P139.1 defines the evidence, audit, observability, and cost ledger contract and safety boundary without enabling live ledger writes.",
     "detail": "P139.1 is contract-only. It records the future ledger shape, reuse requirements, safety rules, validation commands, and planned-only P139.2 handoff.",
     "checksRun": [

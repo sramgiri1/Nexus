@@ -47,10 +47,18 @@
     "actionRef": "display-safe action reference only",
     "actorRef": "display-safe owner capability or operator role",
     "projectScope": "NEXUS_OS or selected project label without raw private IDs",
-    "evidenceRefs": ["display-safe evidence report labels"],
-    "auditRefs": ["display-safe audit/activity labels"],
-    "activityRefs": ["display-safe activity labels"],
-    "observabilityRefs": ["display-safe trace or health labels"],
+    "evidenceRefs": [
+      "display-safe evidence report labels"
+    ],
+    "auditRefs": [
+      "display-safe audit/activity labels"
+    ],
+    "activityRefs": [
+      "display-safe activity labels"
+    ],
+    "observabilityRefs": [
+      "display-safe trace or health labels"
+    ],
     "costAttribution": {
       "mode": "no-spend until future approval",
       "budgetRef": "display-safe budget policy label",
@@ -225,7 +233,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T22:37:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "504a08ad",
       "summary": "P139.1 defines the evidence, audit, observability, and cost ledger contract and safety boundary without enabling live ledger writes.",
       "detail": "P139.1 is contract-only. It records the future ledger shape, reuse requirements, safety rules, validation commands, and planned-only P139.2 handoff.",
       "checksRun": [
@@ -320,7 +328,7 @@
   ],
   "completedAt": "",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "504a08ad",
   "checksRun": [
     "npm run check:p1391-evidence-audit-observability-cost-ledger",
     "npm run check:enterprise-readiness-roadmap",
