@@ -363,7 +363,7 @@
       "order": 170.3,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e9b105d6",
       "summary": "Completed P134.3 by adding a local, display-safe DB write-plan preview over the P134.2 schema model, with blocked evidence gates, grouped readiness rows, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
         "P134.3 is a write-plan preview only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.4 remains planned-only."
@@ -681,7 +681,7 @@
     "title": "DB Write Plan Preview",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e9b105d6",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "detail": "P134.3 is complete. P134.4 DB Runtime Command Center UX is planned-only next.",
     "summary": "Completed P134.3 by adding a local, display-safe DB write-plan preview over the P134.2 schema model, with blocked evidence gates, grouped readiness rows, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
