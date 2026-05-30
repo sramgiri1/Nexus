@@ -3,9 +3,9 @@
   "title": "Founder Runtime Store Live Admission Execution Contract",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P132.1",
-  "previousSubphase": "P131.7",
-  "nextSubphase": "P132.2",
+  "currentSubphase": "P132.2",
+  "previousSubphase": "P132.1",
+  "nextSubphase": "P132.3",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "39e2da0a",
   "owner": "NEXUS OS",
@@ -23,7 +23,7 @@
     "Reuse P131.5 scoped Command Center UX evidence.",
     "Do not duplicate report writers, checker formatters, mode guards, redaction helpers, route matrices, status helpers, UI components, or evidence/audit/activity appenders."
   ],
-  "commandCenterUx": "P132.1 does not change dashboard source. The P131.5 scoped Store Live Admission Scope cards remain visible only on Business Build and Agent Flow. Chat with NEXUS and Lite stay clean.",
+  "commandCenterUx": "P132.2 does not change dashboard source. The P131.5 scoped Store Live Admission Scope cards remain visible only on Business Build and Agent Flow. Chat with NEXUS and Lite stay clean.",
   "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
   "subphases": [
     {
@@ -131,11 +131,28 @@
     {
       "phaseId": "P132.2",
       "title": "Execution Request Envelope Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "allowedFiles": [],
+      "expectedBaseCommit": "894644ab",
+      "allowedFiles": [
+        "shared/founderRuntimeStoreLiveAdmissionExecutionRequestEnvelope.js",
+        "scripts/check-p1322-founder-runtime-store-live-admission-execution.js",
+        "scripts/check-p1321-founder-runtime-store-live-admission-execution.js",
+        "contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json",
+        "docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1321-founder-runtime-store-live-admission-execution-report.md",
+        "reports/p1322-founder-runtime-store-live-admission-execution-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1317-founder-runtime-store-live-admission-scope.js",
+        "reports/p1317-founder-runtime-store-live-admission-scope-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -153,40 +170,74 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
-      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "expectedExports": [
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_PHASE",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_VERSION",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_FIELD_NAMES",
+        "FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_FLAGS",
+        "buildFounderRuntimeStoreLiveAdmissionExecutionRequestEnvelope",
+        "validateFounderRuntimeStoreLiveAdmissionExecutionRequestEnvelope"
+      ],
+      "dataShape": "Local envelope-only object with source P131.2 lineage, envelope fields, required evidence, missing evidence, blocker rows, disabled reason, owner capability, evidence/activity labels, cost posture, and all live/write/dispatch/spend flags false. No DB schema, migration file, query, runtime record, write adapter, live CRUD executor, provider envelope, dispatch packet, raw private ID, raw table name, raw report dump, or project data.",
+      "commandCenterUx": "Preserve the scoped Store Live Admission Scope cards on Business Build and Agent Flow. Keep Chat with NEXUS and Lite clean.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "Model/checker/docs/status only.",
+        "No DB schemas, migrations, DB reads, DB writes, runtime writes, request persistence, CRUD execution, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+        "No raw JSON/log/policy dumps, raw table names, raw report paths, private IDs, or fake runnable actions in primary UX."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
-        "Reuse shared report/check/status/dashboard patterns."
+        "Reuse shared/founderRuntimeStoreLiveAdmissionScopeRequestModel.js.",
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse P132.1 handoff checker behavior."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add check:p1322-founder-runtime-store-live-admission-execution.",
+        "Update P132.1 checker for P132.2 handoff compatibility.",
+        "Run P131.7 checker, OS phase status, phase validation coverage, dashboard build, unit tests, and scoped Playwright route coverage."
+      ],
+      "docsRoadmap": "Update P132 plan, README, platform roadmap, OS phase status, roadmap, and generated reports.",
+      "phaseStatusUpdate": "P132 in progress; P132.2 complete; current P132.2; previous P132.1; next P132.3 planned-only.",
+      "validationCommands": [
+        "npm run check:p1322-founder-runtime-store-live-admission-execution",
+        "npm run check:p1321-founder-runtime-store-live-admission-execution",
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
         "What was implemented",
-        "Command Center UX changes or preservation",
+        "Command Center UX preservation",
         "Tests/checkers run",
-        "Docs/roadmap/status updates",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
         "Safety confirmations",
         "Forbidden paths confirmation",
         "Known limitations",
         "Next phase/subphase"
       ],
-      "narrowGoal": "Define the local execution request envelope shape, validation fields, blockers, and evidence references without persistence or execution."
+      "narrowGoal": "Define the local execution request envelope shape, validation fields, blockers, and evidence references without persistence or execution.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-30T00:28:40.894Z",
+      "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
+      "knownLimitations": [
+        "P132.2 is an execution request envelope model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "nextPhase": "P132.3"
     },
     {
       "phaseId": "P132.3",
@@ -246,7 +297,8 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "narrowGoal": "Define the capability gate that separates future DB-backed adapters from provider, agent, project, deploy, and package actions."
+      "narrowGoal": "Define the capability gate that separates future DB-backed adapters from provider, agent, project, deploy, and package actions.",
+      "previousSubphase": "P132.2"
     },
     {
       "phaseId": "P132.4",
@@ -490,14 +542,15 @@
     }
   ],
   "current": {
-    "phaseId": "P132.1",
-    "title": "Store Live Execution Contract / Safety Boundary",
+    "phaseId": "P132.2",
+    "title": "Execution Request Envelope Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "2764852a",
-    "completedAt": "2026-05-29T23:58:16.871Z",
-    "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:28:40.894Z",
+    "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
+      "npm run check:p1322-founder-runtime-store-live-admission-execution",
       "npm run check:p1321-founder-runtime-store-live-admission-execution",
       "npm run check:p1317-founder-runtime-store-live-admission-scope",
       "npm run check:os-phase-status",
@@ -508,9 +561,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P132.1 is contract/checker/docs/status only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P132.2 is an execution request envelope model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P132.2",
+    "nextPhase": "P132.3",
     "commandCenterVisible": true
   },
   "summary": {
@@ -518,10 +571,11 @@
     "title": "Founder Runtime Store Live Admission Execution Contract",
     "status": "in_progress",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "2764852a",
-    "completedAt": "2026-05-29T23:58:16.871Z",
-    "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:28:40.894Z",
+    "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
+      "npm run check:p1322-founder-runtime-store-live-admission-execution",
       "npm run check:p1321-founder-runtime-store-live-admission-execution",
       "npm run check:p1317-founder-runtime-store-live-admission-scope",
       "npm run check:os-phase-status",
@@ -532,9 +586,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P132 is in progress but contract-gated. P132.1 does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P132 is in progress but contract-gated. P132.2 does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P132.2",
+    "nextPhase": "P132.3",
     "commandCenterVisible": true
   }
 }

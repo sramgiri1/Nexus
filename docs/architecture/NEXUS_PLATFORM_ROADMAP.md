@@ -3131,6 +3131,17 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 raw SQL interface, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+P132.2 is complete. NEXUS added a local execution request envelope model that
+reuses P131.2 admission request evidence, records execution intent fields,
+required evidence, blockers, disabled reason, owner capability, evidence/
+activity labels, and no-spend cost posture while all live/write/dispatch/spend
+flags remain blocked. P132.3 is next. DB schemas, migrations, DB/runtime reads
+or writes, request persistence, live CRUD execution, approval capture, handoff
+acceptance, authority grant, execution unlock, provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
+interface, deploy, release, export, package action, network call, and provider
+spend remain blocked.
+
 ## P133-P145 Enterprise Readiness Roadmap
 
 P133-P145 are planned-only enterprise readiness phases. They cover founder

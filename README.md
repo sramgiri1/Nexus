@@ -1928,6 +1928,17 @@ The Command Center and local operator surface have:
   execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
   release, export, package, network call, and provider spend remain
   unavailable.
+- P132.2 execution request envelope model: Added a local envelope-only model
+  that reuses P131.2 admission request evidence, records execution intent
+  fields, required evidence, blockers, disabled reason, owner capability,
+  evidence/activity labels, and no-spend cost posture while all live/write/
+  dispatch/spend flags remain blocked. P132.3 is next.
+  DB schemas, migrations, DB/runtime reads or writes, request persistence,
+  live CRUD execution, approval capture, handoff acceptance, authority grant,
+  execution unlock, provider/model calls, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
 - P133-P145 enterprise readiness roadmap: Added planned-only enterprise
   readiness phases for founder idea-to-PRD productization, durable DB/CRUD,
   identity/tenant/RBAC, secrets/provider/tool governance, agent work orders,

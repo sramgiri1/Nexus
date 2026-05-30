@@ -19430,13 +19430,14 @@
       "order": 168,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2764852a",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P132 in progress; P132.1 execution contract/safety boundary complete and P132.2 is planned-only next.",
-      "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
+      "detail": "P132 in progress; P132.2 execution request envelope model complete and P132.3 is planned-only next.",
+      "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "previousPhase": "P131.7",
-      "nextPhase": "P132.2",
+      "nextPhase": "P132.3",
       "checksRun": [
+        "npm run check:p1322-founder-runtime-store-live-admission-execution",
         "npm run check:p1321-founder-runtime-store-live-admission-execution",
         "npm run check:p1317-founder-runtime-store-live-admission-scope",
         "npm run check:os-phase-status",
@@ -19447,9 +19448,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P132 is in progress but contract-gated. P132.1 does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P132 is in progress but contract-gated. P132.2 does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-29T23:58:58.247Z"
+      "completedAt": "2026-05-30T00:28:40.894Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19486,18 +19487,29 @@
       "title": "Execution Request Envelope Model",
       "label": "Request Envelope",
       "order": 168.2,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P132.2 is planned-only. It will define the local execution request envelope model without persistence or execution.",
-      "summary": "Planned-only next subphase for a local execution request envelope model. No implementation exists yet.",
+      "detail": "P132.2 execution request envelope model complete; P132.3 store adapter capability gate is next.",
+      "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "previousPhase": "P132.1",
       "nextPhase": "P132.3",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1322-founder-runtime-store-live-admission-execution",
+        "npm run check:p1321-founder-runtime-store-live-admission-execution",
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P132.2 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
-      ]
+        "P132.2 is an execution request envelope model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-30T00:28:40.894Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19509,13 +19521,13 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "commandCenterVisible": true,
-      "detail": "P132.3 is planned-only.",
-      "summary": "Planned-only future capability gate for store adapters.",
+      "detail": "P132.3 is planned-only. It will define the store adapter capability gate without selecting adapters or writing records.",
+      "summary": "Planned-only next subphase for store adapter capability gating. No implementation exists yet.",
       "previousPhase": "P132.2",
       "nextPhase": "P132.4",
       "checksRun": [],
       "knownLimitations": [
-        "Planned-only; no implementation yet."
+        "P132.3 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
       ]
     },
     {
@@ -22145,11 +22157,41 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T23:47:33.019Z",
-  "currentPhase": "P132.1",
-  "previousPhase": "P131.7",
-  "nextPhase": "P132.2",
+  "currentPhase": "P132.2",
+  "previousPhase": "P132.1",
+  "nextPhase": "P132.3",
   "currentPhaseStatus": "complete",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P132.2",
+    "title": "Execution Request Envelope Model",
+    "label": "Request Envelope",
+    "order": 168.2,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P132.2 execution request envelope model complete; P132.3 store adapter capability gate is next.",
+    "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
+    "previousPhase": "P132.1",
+    "nextPhase": "P132.3",
+    "checksRun": [
+      "npm run check:p1322-founder-runtime-store-live-admission-execution",
+      "npm run check:p1321-founder-runtime-store-live-admission-execution",
+      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P132.2 is an execution request envelope model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-30T00:28:40.894Z"
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P132.1",
     "title": "Store Live Execution Contract / Safety Boundary",
@@ -22178,54 +22220,23 @@
     ],
     "completedAt": "2026-05-29T23:58:58.247Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P131.7",
-    "title": "Final Validation",
-    "label": "Final Validation",
-    "order": 167.7,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "f544c7ed",
-    "commandCenterVisible": true,
-    "detail": "P131.7 final validation complete; P132 is planned-only next.",
-    "summary": "Closed P131 with final validation evidence, completed phase status, scoped UX preservation checks, and the planned-only P132 handoff while all live store actions remain blocked.",
-    "previousPhase": "P131.6",
-    "nextPhase": "P132",
-    "checksRun": [
-      "npm run check:p1317-founder-runtime-store-live-admission-scope",
-      "npm run check:p1316-founder-runtime-store-live-admission-scope",
-      "npm run check:p1315-founder-runtime-store-live-admission-scope",
-      "npm run check:p1314-founder-runtime-store-live-admission-scope",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P131.7 is final validation closure only and P132 is planned-only. It does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-29T23:47:33.019Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P132.2",
-    "title": "Execution Request Envelope Model",
-    "label": "Request Envelope",
-    "order": 168.2,
+    "phaseId": "P132.3",
+    "title": "Store Adapter Capability Gate",
+    "label": "Adapter Gate",
+    "order": 168.3,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P132.2 is planned-only. It will define the local execution request envelope model without persistence or execution.",
-    "summary": "Planned-only next subphase for a local execution request envelope model. No implementation exists yet.",
-    "previousPhase": "P132.1",
-    "nextPhase": "P132.3",
+    "detail": "P132.3 is planned-only. It will define the store adapter capability gate without selecting adapters or writing records.",
+    "summary": "Planned-only next subphase for store adapter capability gating. No implementation exists yet.",
+    "previousPhase": "P132.2",
+    "nextPhase": "P132.4",
     "checksRun": [],
     "knownLimitations": [
-      "P132.2 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "P132.3 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
     ]
   }
 }

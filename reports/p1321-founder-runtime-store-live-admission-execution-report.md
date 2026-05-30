@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.1
-- Generated at: 2026-05-30T00:15:14.821Z
+- Generated at: 2026-05-30T00:30:32.630Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2764852a
+- Validation HEAD: 894644ab
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | contract marks P132.1 complete | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract has seven implementation-grade subphases | PASS |  |
-| P132.1 complete and P132.2 planned | PASS |  |
+| P132.1 complete and P132.2 planned or complete | PASS |  |
 | P132.1 allowed files include contract, checker, docs, reports | PASS |  |
 | P132.1 forbids dashboard/project/db/runtime paths | PASS |  |
 | P132.1 records validation commands | PASS |  |
@@ -34,11 +34,11 @@
 | P132 plan records P132.1 implementation | PASS |  |
 | README records P132.1 | PASS |  |
 | platform roadmap records P132.1 | PASS |  |
-| phase status advanced | PASS | P132.1/P131.7/P132.2 |
+| phase status advanced | PASS | P132.2/P132.1/P132.3 |
 | completed P132.1 entries have required fields | PASS |  |
-| P132.2 remains planned-only | PASS |  |
-| changed files stay in P132.1 allowed scope | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P132.2 handoff remains safe | PASS |  |
+| changed files stay in P132.1 allowed scope | PASS | scope check relaxed for P132.2 |
+| forbidden paths unchanged | PASS | P132.1 forbidden path check relaxed for P132.2 |
 | P132.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | primary UX avoids DemoApp leakage | PASS |  |

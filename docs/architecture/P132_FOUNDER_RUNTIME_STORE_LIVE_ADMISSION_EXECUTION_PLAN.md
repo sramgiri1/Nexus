@@ -19,6 +19,208 @@ P132 is split into seven implementation-grade subphases:
 - P132.6 Validation / Docs
 - P132.7 Final Validation
 
+## P132.2 Execution Request Envelope Model
+
+Status: complete
+Phase: P132
+Subphase: P132.2
+Goal: Add a local execution request envelope model that turns the P131
+admission-scope request model into display-safe execution-intent envelopes while
+keeping persistence, DB writes, CRUD execution, provider calls, agent dispatch,
+project mutation, deploy, release, export, package, network calls, and spend
+blocked.
+Why this is needed: P132.1 defined the execution contract. P132.2 provides the
+concrete local model shape needed before any adapter gate or DB write preview
+can be considered.
+User/operator impact: Operators get a verifiable local model for what an
+execution request would need, why it is blocked, and which evidence gates are
+missing.
+Command Center impact: No dashboard source changes. Business Build and Agent
+Flow keep the scoped Store Live Admission Scope cards. Chat with NEXUS, Lite,
+OS Roadmap, and Live Readiness remain clean.
+Safety impact: P132.2 is model/checker/docs/status only. It does not create DB
+schemas, run migrations, read or write DB/runtime records, persist requests,
+execute CRUD, capture approvals, accept handoff, grant authority, unlock
+execution, call providers/models, dispatch agents, mutate projects, deploy,
+release, export, package, use network calls, or spend.
+Cost impact: Local model, checkers, docs, build, and tests only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `894644ab`
+
+Files expected to change:
+- `shared/founderRuntimeStoreLiveAdmissionExecutionRequestEnvelope.js`
+- `scripts/check-p1322-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1321-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1317-founder-runtime-store-live-admission-scope.js`
+- `contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json`
+- `docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1321-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1322-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1317-founder-runtime-store-live-admission-scope-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `shared/founderRuntimeStoreLiveAdmissionExecutionRequestEnvelope.js`.
+- Create `scripts/check-p1322-founder-runtime-store-live-admission-execution.js`.
+- Update P132.1 checker/report to accept P132.2 handoff.
+- Update P132 contract, plan, package scripts, README, platform roadmap, OS
+  status, roadmap, and generated reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_PHASE`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_VERSION`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_FIELD_NAMES`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_REQUEST_ENVELOPE_FLAGS`.
+- Export `buildFounderRuntimeStoreLiveAdmissionExecutionRequestEnvelope`.
+- Export `validateFounderRuntimeStoreLiveAdmissionExecutionRequestEnvelope`.
+- Data shape: local envelope-only object with source P131.2 lineage, envelope
+  fields, required evidence, missing evidence, blocker rows, disabled reason,
+  owner capability, evidence/activity labels, cost posture, and all live/write/
+  dispatch/spend flags false.
+- No DB schema, migration file, query, runtime record, write adapter, live CRUD
+  executor, provider envelope, dispatch packet, raw private ID, raw table name,
+  raw report dump, or project data.
+
+Reuse check:
+- Reuse `shared/founderRuntimeStoreLiveAdmissionScopeRequestModel.js`.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Reuse P132.1/P131.7 handoff patterns and P131.5 scoped UX evidence.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Preserve Store Live Admission Scope cards on Business Build and Agent Flow.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- OS Roadmap remains the only surface for OS phase labels.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw table
+  names, raw report paths, internal helper IDs, internal phase labels outside OS
+  Roadmap, or private project IDs.
+- No provider/tool/project mutation, DB write, runtime write, live CRUD,
+  migration, approval capture, handoff acceptance, authority grant, deploy,
+  release, export, package, network, or spend controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run existing scoped route coverage.
+
+Tests to add/update/remove:
+- Add `check:p1322-founder-runtime-store-live-admission-execution`.
+- Update P132.1 checker for P132.2 handoff compatibility.
+- Run P131.7 checker, OS phase status, and phase validation coverage.
+- Run dashboard build, unit tests, and the existing scoped Playwright route
+  coverage without editing dashboard tests.
+
+Checker updates:
+- Validate P132.2 model exports, lineage, blocked flags, counts, docs, and
+  status.
+- Validate P132.1 checker accepts P132.2 handoff.
+- Validate P131.5 scoped data, page labels, and route coverage remain intact.
+- Validate P132 is in progress, P132.2 complete, and P132.3 planned-only.
+- Validate docs, status, forbidden paths, reuse, and safe wording.
+
+Docs to update:
+- This P132 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P132.1 report.
+- P132.2 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P132 in progress.
+- P132.2 complete.
+- Current phase P132.2.
+- Previous phase P132.1.
+- Next phase P132.3 planned-only.
+
+Known risks:
+- Execution envelope wording can imply runnable execution. P132.2 keeps the
+  model envelope-only and states that all live actions remain blocked.
+- Model details can leak internals. The checker enforces no raw private IDs,
+  raw dumps, fake runnable actions, unsafe imports, or unsafe URLs.
+
+Rollback plan:
+- Revert only the P132.2 implementation and stamp commits. P132.1 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1322-founder-runtime-store-live-admission-execution`
+- `npm run check:p1321-founder-runtime-store-live-admission-execution`
+- `npm run check:p1317-founder-runtime-store-live-admission-scope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P132.2 allowed files>`
+- `git commit -m "chore(nexus): implement p1322 execution request envelope"`
+- `git add <P132.2 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1322 execution request envelope"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or dashboard test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- DB schemas, migrations, DB/runtime reads or writes, request persistence, live
+  CRUD execution, acceptance capture, handoff acceptance, authority grant,
+  execution unlock, provider/model calls, agent dispatch, project mutation,
+  network calls, and spend remain blocked.
+- P132.3 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P132.1 Store Live Execution Contract / Safety Boundary
 
 Status: complete
