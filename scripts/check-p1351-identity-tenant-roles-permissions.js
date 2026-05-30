@@ -158,10 +158,28 @@ const p1352CurrentState =
   && roadmapById.get("P135.2")?.status === "complete"
   && statusById.get("P135.3")?.status === "planned"
   && roadmapById.get("P135.3")?.status === "planned";
+const p1357FinalState =
+  status.currentPhase === "P135.7"
+  && status.previousPhase === "P135.6"
+  && status.nextPhase === "P136"
+  && roadmap.currentPhase === "P135.7"
+  && roadmap.previousPhase === "P135.6"
+  && roadmap.nextPhase === "P136"
+  && status.current?.phaseId === "P135.7"
+  && status.previous?.phaseId === "P135.6"
+  && status.next?.phaseId === "P136"
+  && roadmap.current?.phaseId === "P135.7"
+  && roadmap.previous?.phaseId === "P135.6"
+  && roadmap.next?.phaseId === "P136"
+  && statusById.get("P135")?.status === "complete"
+  && roadmapById.get("P135")?.status === "complete"
+  && expectedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P136")?.status === "planned"
+  && roadmapById.get("P136")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract starts P135 safely", contract.phaseId === "P135" && contract.status === "in_progress" && ((contract.currentSubphase === "P135.1" && contract.previousSubphase === "P134.7" && contract.nextSubphase === "P135.2") || (contract.currentSubphase === "P135.2" && contract.previousSubphase === "P135.1" && contract.nextSubphase === "P135.3")));
+addCheck("contract starts P135 safely", contract.phaseId === "P135" && ((contract.status === "in_progress" && ((contract.currentSubphase === "P135.1" && contract.previousSubphase === "P134.7" && contract.nextSubphase === "P135.2") || (contract.currentSubphase === "P135.2" && contract.previousSubphase === "P135.1" && contract.nextSubphase === "P135.3"))) || (p1357FinalState && contract.status === "complete" && contract.currentSubphase === "P135.7" && contract.previousSubphase === "P135.6" && contract.nextSubphase === "P136")));
 addCheck("contract has seven implementation-grade subphases", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && expectedSubphases.every((phaseId) => subphaseById.get(phaseId)?.scopeClassification === "NEXUS_OS_CHANGE"));
 addCheck("P135.1 complete and P135.2 planned or complete", p1351.status === "complete" && ["planned", "complete"].includes(p1352.status));
 addCheck("P135.1 records safety boundary", p1351.safetyRules?.join(" ").includes("Do not enable login") && p1351.safetyRules?.join(" ").includes("Do not mutate tenants") && p1351.safetyRules?.join(" ").includes("Do not enforce permissions") && p1351.forbiddenFiles?.includes("db/**") && p1351.forbiddenFiles?.includes("local-state/runtime/**"));
@@ -174,9 +192,9 @@ addCheck("P135 plan records P135.1", /## P135\.1 Contract \/ Policy \/ Safety Bo
 addCheck("README records P135.1", /P135\.1 identity\/tenant\/RBAC contract/i.test(readme));
 addCheck("platform roadmap records P135.1", /P135\.1 identity\/tenant\/RBAC contract is complete/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P135.1", /P135\.1 is now complete/i.test(enterpriseRoadmap) && (/P135\.2 is the next executable subphase/i.test(enterpriseRoadmap) || /P135\.2 is now complete/i.test(enterpriseRoadmap)));
-addCheck("phase status starts P135.1", p1351StartedState || p1352CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts P135.1", p1351StartedState || p1352CurrentState || p1357FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.1 entries have required fields", [statusById.get("P135"), statusById.get("P135.1"), roadmapById.get("P135.1")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135.2 remains planned or safely handed off", (statusById.get("P135.2")?.status === "planned" && roadmapById.get("P135.2")?.status === "planned" && !(statusById.get("P135.2")?.checksRun || []).length) || p1352CurrentState);
+addCheck("P135.2 remains planned or safely handed off", (statusById.get("P135.2")?.status === "planned" && roadmapById.get("P135.2")?.status === "planned" && !(statusById.get("P135.2")?.checksRun || []).length) || p1352CurrentState || p1357FinalState);
 addCheck(
   "changed files stay in P135.1 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),

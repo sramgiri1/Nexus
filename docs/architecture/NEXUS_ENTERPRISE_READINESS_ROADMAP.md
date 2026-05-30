@@ -22,11 +22,13 @@ P135.3 is now complete as a permission preview only.
 P135.4 is now complete as Auth Governance Command Center UX only.
 P135.5 is now complete as tests/checkers hardening only.
 P135.6 is now complete as docs/roadmap/status closure only.
-P135.7 is the next executable subphase. P135.7 and P136-P145 remain
-planned-only. They do not enable DB writes, provider/model calls, agent
-dispatch, project mutation, deploy, release, export, package, network calls,
-or spend until each phase/subphase has its own implementation-grade plan,
-checker coverage, Command Center UX when applicable, and final validation.
+P135.7 is now complete as final validation only. P135.1 through P135.7 are
+now complete, and P135 is complete.
+P136 is the next executable phase. P136-P145 remain planned-only. They do not
+enable DB writes, provider/model calls, agent dispatch, project mutation,
+deploy, release, export, package, network calls, or spend until each
+phase/subphase has its own implementation-grade plan, checker coverage,
+Command Center UX when applicable, and final validation.
 
 ## Global Subphase Contract
 
@@ -89,15 +91,16 @@ Forbidden by default unless a phase explicitly allows it:
 
 ## Current Handoff
 
-Current implementation has started P135 and closed P135.1 through P135.6. P135.7
-is the next executable subphase. P135.7-P145 are planned-only backlog phases and must not
-be treated as complete or live.
+Current implementation has closed P135.1 through P135.7 and P135 is complete.
+P136 is the next executable phase. P136-P145 are planned-only backlog phases
+and must not be treated as complete or live.
 
 ## Validation
 
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1357-identity-tenant-roles-permissions-final-validation`
 - `npm run check:p1356-identity-tenant-roles-permissions-docs-roadmap`
 - `npm run check:p1355-identity-tenant-roles-permissions-tests-checkers`
 - `npm run check:p1354-auth-governance-command-center-ux`

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P135.5
-- Generated at: 2026-05-30T15:47:13.149Z
+- Generated at: 2026-05-30T15:57:55.665Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ed127243
+- Validation HEAD: 986d1e47
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,11 +38,11 @@
 | P135.5 forbids project/dashboard-src/db/runtime/provider/tool paths | PASS |  |
 | P135.5 records validation commands | PASS |  |
 | docs record P135.5 | PASS |  |
-| phase status starts or safely hands off P135.5 | PASS | P135.6/P135.5/P135.7 |
+| phase status starts or safely hands off P135.5 | PASS | P135.7/P135.6/P136 |
 | completed P135.5 entries have required fields | PASS |  |
 | P135.6 remains planned or safely handed off | PASS |  |
-| changed files stay in P135.5 allowed scope | PASS | scope check relaxed for P135.6 |
-| forbidden paths unchanged | PASS | P135.5 forbidden path check relaxed for P135.6 |
+| changed files stay in P135.5 allowed scope | PASS | scope check relaxed for P135.7 |
+| forbidden paths unchanged | PASS | P135.5 forbidden path check relaxed for P135.7 |
 | primary UX data avoids raw private IDs | PASS |  |
 | primary UX data avoids tokens URLs and raw dumps | PASS |  |
 | primary UX data avoids internal phase labels | PASS |  |

@@ -164,9 +164,28 @@ const p1354CurrentState =
   && ["P135.1", "P135.2", "P135.3", "P135.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P135.5")?.status === "planned"
   && roadmapById.get("P135.5")?.status === "planned";
+const p1357FinalState =
+  status.currentPhase === "P135.7"
+  && status.previousPhase === "P135.6"
+  && status.nextPhase === "P136"
+  && roadmap.currentPhase === "P135.7"
+  && roadmap.previousPhase === "P135.6"
+  && roadmap.nextPhase === "P136"
+  && status.current?.phaseId === "P135.7"
+  && status.previous?.phaseId === "P135.6"
+  && status.next?.phaseId === "P136"
+  && roadmap.current?.phaseId === "P135.7"
+  && roadmap.previous?.phaseId === "P135.6"
+  && roadmap.next?.phaseId === "P136"
+  && statusById.get("P135")?.status === "complete"
+  && roadmapById.get("P135")?.status === "complete"
+  && ["P135.1", "P135.2", "P135.3", "P135.4", "P135.5", "P135.6", "P135.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P136")?.status === "planned"
+  && roadmapById.get("P136")?.status === "planned";
 const p1353ContractState =
   (contract.currentSubphase === "P135.3" && contract.previousSubphase === "P135.2" && contract.nextSubphase === "P135.4" && p1353.status === "complete" && p1354.status === "planned")
-  || (contract.currentSubphase === "P135.4" && contract.previousSubphase === "P135.3" && contract.nextSubphase === "P135.5" && p1353.status === "complete" && p1354.status === "complete" && p1355.status === "planned");
+  || (contract.currentSubphase === "P135.4" && contract.previousSubphase === "P135.3" && contract.nextSubphase === "P135.5" && p1353.status === "complete" && p1354.status === "complete" && p1355.status === "planned")
+  || (p1357FinalState && contract.status === "complete" && contract.currentSubphase === "P135.7" && contract.nextSubphase === "P136" && p1353.status === "complete");
 const enforceCurrentDiffScope = status.currentPhase === "P135.3";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
@@ -192,9 +211,9 @@ addCheck("P135 plan records P135.3", /## P135\.3 Permission Preview[\s\S]*Status
 addCheck("README records P135.3", /P135\.3 permission preview/i.test(readme));
 addCheck("platform roadmap records P135.3", /P135\.3 permission preview is complete/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P135.3", /P135\.3 is now complete/i.test(enterpriseRoadmap) && (/P135\.4 is the next executable subphase/i.test(enterpriseRoadmap) || /P135\.4 is now complete/i.test(enterpriseRoadmap)));
-addCheck("phase status starts or safely hands off P135.3", p1353CurrentState || p1354CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts or safely hands off P135.3", p1353CurrentState || p1354CurrentState || p1357FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.3 entries have required fields", [statusById.get("P135"), statusById.get("P135.3"), roadmapById.get("P135.3")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135.4 remains planned or safely handed off", (statusById.get("P135.4")?.status === "planned" && roadmapById.get("P135.4")?.status === "planned" && !(statusById.get("P135.4")?.checksRun || []).length) || p1354CurrentState);
+addCheck("P135.4 remains planned or safely handed off", (statusById.get("P135.4")?.status === "planned" && roadmapById.get("P135.4")?.status === "planned" && !(statusById.get("P135.4")?.checksRun || []).length) || p1354CurrentState || p1357FinalState);
 addCheck("changed files stay in P135.3 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : "scope check relaxed for P135.4");
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : "P135.3 forbidden path check relaxed for P135.4");
 

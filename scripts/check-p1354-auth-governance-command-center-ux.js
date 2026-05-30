@@ -156,9 +156,28 @@ const p1355CurrentState =
   && ["P135.1", "P135.2", "P135.3", "P135.4", "P135.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P135.6")?.status === "planned"
   && roadmapById.get("P135.6")?.status === "planned";
+const p1357FinalState =
+  status.currentPhase === "P135.7"
+  && status.previousPhase === "P135.6"
+  && status.nextPhase === "P136"
+  && roadmap.currentPhase === "P135.7"
+  && roadmap.previousPhase === "P135.6"
+  && roadmap.nextPhase === "P136"
+  && status.current?.phaseId === "P135.7"
+  && status.previous?.phaseId === "P135.6"
+  && status.next?.phaseId === "P136"
+  && roadmap.current?.phaseId === "P135.7"
+  && roadmap.previous?.phaseId === "P135.6"
+  && roadmap.next?.phaseId === "P136"
+  && statusById.get("P135")?.status === "complete"
+  && roadmapById.get("P135")?.status === "complete"
+  && ["P135.1", "P135.2", "P135.3", "P135.4", "P135.5", "P135.6", "P135.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P136")?.status === "planned"
+  && roadmapById.get("P136")?.status === "planned";
 const p1354ContractState =
   (contract.currentSubphase === "P135.4" && contract.previousSubphase === "P135.3" && contract.nextSubphase === "P135.5" && p1354.status === "complete" && p1355.status === "planned")
-  || (contract.currentSubphase === "P135.5" && contract.previousSubphase === "P135.4" && contract.nextSubphase === "P135.6" && p1354.status === "complete" && p1355.status === "complete" && p1356.status === "planned");
+  || (contract.currentSubphase === "P135.5" && contract.previousSubphase === "P135.4" && contract.nextSubphase === "P135.6" && p1354.status === "complete" && p1355.status === "complete" && p1356.status === "planned")
+  || (p1357FinalState && contract.status === "complete" && contract.currentSubphase === "P135.7" && contract.nextSubphase === "P136" && p1354.status === "complete");
 const enforceCurrentDiffScope = status.currentPhase === "P135.4";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
@@ -182,9 +201,9 @@ addCheck("contract records P135.4 completion", p1354ContractState);
 addCheck("P135.4 records implementation-grade scope", p1354.scopeClassification === "NEXUS_OS_CHANGE" && p1354.allowedFiles?.includes("dashboard/src/data/authGovernanceReadiness.js") && p1354.allowedFiles?.includes("dashboard/tests/routes.spec.js") && p1354.validationCommands?.includes("npm run check:p1354-auth-governance-command-center-ux"));
 addCheck("P135.4 records safety boundary", p1354.safetyRules?.join(" ").includes("Do not enable login") && p1354.safetyRules?.join(" ").includes("Do not grant permissions") && p1354.forbiddenFiles?.includes("db/**") && p1354.forbiddenFiles?.includes("local-state/runtime/**"));
 addCheck("docs record P135.4", /## P135\.4 Auth Governance Command Center UX[\s\S]*Status:\s+complete/.test(plan) && /P135\.4 Auth Governance Command Center UX/i.test(readme) && /P135\.4 auth governance Command Center UX is complete/i.test(platformRoadmap) && /P135\.4 is now complete/i.test(enterpriseRoadmap));
-addCheck("phase status starts or safely hands off P135.4", p1354CurrentState || p1355CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts or safely hands off P135.4", p1354CurrentState || p1355CurrentState || p1357FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.4 entries have required fields", [statusById.get("P135"), statusById.get("P135.4"), roadmapById.get("P135.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135.5 remains planned or safely handed off", (statusById.get("P135.5")?.status === "planned" && roadmapById.get("P135.5")?.status === "planned" && !(statusById.get("P135.5")?.checksRun || []).length) || p1355CurrentState);
+addCheck("P135.5 remains planned or safely handed off", (statusById.get("P135.5")?.status === "planned" && roadmapById.get("P135.5")?.status === "planned" && !(statusById.get("P135.5")?.checksRun || []).length) || p1355CurrentState || p1357FinalState);
 addCheck("changed files stay in P135.4 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : "scope check relaxed for P135.5");
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : "P135.4 forbidden path check relaxed for P135.5");
 addCheck("primary UX avoids raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedVm));

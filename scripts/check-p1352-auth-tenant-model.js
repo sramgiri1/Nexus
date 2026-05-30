@@ -91,6 +91,7 @@ const validationCommands = [
   "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
   "git diff --check",
 ];
+const completedP135Subphases = ["P135.1", "P135.2", "P135.3", "P135.4", "P135.5", "P135.6", "P135.7"];
 const allowedFiles = new Set([
   "auth-governance/p135-2-auth-tenant-model.js",
   CONTRACT_PATH,
@@ -167,6 +168,24 @@ const p1353CurrentState =
   && ["P135.1", "P135.2", "P135.3"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P135.4")?.status === "planned"
   && roadmapById.get("P135.4")?.status === "planned";
+const p1357FinalState =
+  status.currentPhase === "P135.7"
+  && status.previousPhase === "P135.6"
+  && status.nextPhase === "P136"
+  && roadmap.currentPhase === "P135.7"
+  && roadmap.previousPhase === "P135.6"
+  && roadmap.nextPhase === "P136"
+  && status.current?.phaseId === "P135.7"
+  && status.previous?.phaseId === "P135.6"
+  && status.next?.phaseId === "P136"
+  && roadmap.current?.phaseId === "P135.7"
+  && roadmap.previous?.phaseId === "P135.6"
+  && roadmap.next?.phaseId === "P136"
+  && statusById.get("P135")?.status === "complete"
+  && roadmapById.get("P135")?.status === "complete"
+  && completedP135Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P136")?.status === "planned"
+  && roadmapById.get("P136")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -182,7 +201,7 @@ addCheck("blocked operations and blockers visible", models.every((model) => mode
 addCheck("evidence activity and cost visible", models.every((model) => model.evidenceRefs.includes(REPORT_PATH) && model.activityRefs.includes("os-roadmap/phase-status.json#P135.2") && model.costImpact.includes("No auth provider calls")));
 addCheck("envelope pass", envelope.status === "PASS" && envelope.phase === "P135.2" && envelope.data.model.safetyFlags.loginAllowed === false);
 addCheck("private IDs tokens and URLs hidden", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedModels) && !/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i.test(serializedModels));
-addCheck("contract records P135.2 completion", ((contract.currentSubphase === "P135.2" && contract.previousSubphase === "P135.1" && contract.nextSubphase === "P135.3" && p1353.status === "planned") || (contract.currentSubphase === "P135.3" && contract.previousSubphase === "P135.2" && contract.nextSubphase === "P135.4" && p1353.status === "complete")) && p1352.status === "complete");
+addCheck("contract records P135.2 completion", p1352.status === "complete" && (((contract.currentSubphase === "P135.2" && contract.previousSubphase === "P135.1" && contract.nextSubphase === "P135.3" && p1353.status === "planned") || (contract.currentSubphase === "P135.3" && contract.previousSubphase === "P135.2" && contract.nextSubphase === "P135.4" && p1353.status === "complete")) || (p1357FinalState && contract.status === "complete" && contract.currentSubphase === "P135.7" && contract.nextSubphase === "P136")));
 addCheck("P135.2 records implementation-grade scope", p1352.scopeClassification === "NEXUS_OS_CHANGE" && p1352.allowedFiles?.includes("auth-governance/p135-2-auth-tenant-model.js") && p1352.expectedExports?.includes("createAuthTenantModel") && p1352.validationCommands?.includes("npm run check:p1352-auth-tenant-model"));
 addCheck("P135.2 records safety boundary", p1352.safetyRules?.join(" ").includes("Do not enable login") && p1352.safetyRules?.join(" ").includes("Do not mutate tenants") && p1352.safetyRules?.join(" ").includes("Do not enforce permissions") && p1352.forbiddenFiles?.includes("db/**") && p1352.forbiddenFiles?.includes("local-state/runtime/**"));
 addCheck("P135.1 checker accepts P135.2 handoff", p1351Checker.includes("p1352CurrentState") && p1351Checker.includes('status.currentPhase === "P135.2"'));
@@ -192,9 +211,9 @@ addCheck("P135 plan records P135.2", /## P135\.2 Auth and Tenant Model[\s\S]*Sta
 addCheck("README records P135.2", /P135\.2 auth\/tenant model/i.test(readme));
 addCheck("platform roadmap records P135.2", /P135\.2 auth\/tenant model is complete/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P135.2", /P135\.2 is now complete/i.test(enterpriseRoadmap) && (/P135\.3 is the next executable subphase/i.test(enterpriseRoadmap) || /P135\.3 is now complete/i.test(enterpriseRoadmap)));
-addCheck("phase status starts P135.2", p1352CurrentState || p1353CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts P135.2", p1352CurrentState || p1353CurrentState || p1357FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.2 entries have required fields", [statusById.get("P135"), statusById.get("P135.2"), roadmapById.get("P135.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135.3 remains planned or safely handed off", (statusById.get("P135.3")?.status === "planned" && roadmapById.get("P135.3")?.status === "planned" && !(statusById.get("P135.3")?.checksRun || []).length) || p1353CurrentState);
+addCheck("P135.3 remains planned or safely handed off", (statusById.get("P135.3")?.status === "planned" && roadmapById.get("P135.3")?.status === "planned" && !(statusById.get("P135.3")?.checksRun || []).length) || p1353CurrentState || p1357FinalState);
 addCheck(
   "changed files stay in P135.2 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),

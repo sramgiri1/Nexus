@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P135.6
-  with P135.7 planned-only next.
+  roadmap/status entries only; current implementation is closed through P135.7
+  with P136 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2148,12 +2148,21 @@ The Command Center and local operator surface have:
 - P135.6 identity/tenant/RBAC docs/roadmap: Aligned the P135 plan, README,
   enterprise roadmap, platform roadmap, OS phase status, phase index, checker
   handoffs, and validation reports through P135.6 while preserving the
-  review-only Auth Governance UX. P135.7 Final Validation is planned-only next;
+  review-only Auth Governance UX. P135.7 Final Validation followed next;
   role assignment, permission grants, permission revokes, permission
   enforcement, access decisions as live authority, login, sessions, tenant
   mutation, auth providers, DB/runtime writes, provider/model calls, agent
   dispatch, project mutation, deploy, release, export, package, network calls,
   and spend remain unavailable.
+- P135.7 identity/tenant/RBAC final validation: Closed P135 Identity, Tenant,
+  Roles, and Permissions with final checker evidence, compatibility gates,
+  docs, roadmap, OS status, phase index, and validation reports. P136 secrets,
+  providers, and tool governance is planned-only next; role assignment,
+  permission grants, permission revokes, permission enforcement, access
+  decisions as live authority, login, sessions, tenant mutation, auth
+  providers, DB/runtime writes, provider/model calls, agent dispatch, project
+  mutation, deploy, release, export, package, network calls, and spend remain
+  unavailable.
 
 ## CareLoop Project Progress
 
