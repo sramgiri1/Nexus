@@ -89,6 +89,7 @@ const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.ph
 const p1381 = subphaseById.get("P138.1") || {};
 const p1382 = subphaseById.get("P138.2") || {};
 const p1383 = subphaseById.get("P138.3") || {};
+const p1384 = subphaseById.get("P138.4") || {};
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
@@ -164,6 +165,33 @@ const p1382CurrentState =
   && roadmapById.get("P138.2")?.status === "complete"
   && statusById.get("P138.3")?.status === "planned"
   && roadmapById.get("P138.3")?.status === "planned";
+const p1383CurrentState =
+  status.currentPhase === "P138.3"
+  && status.previousPhase === "P138.2"
+  && status.nextPhase === "P138.4"
+  && roadmap.currentPhase === "P138.3"
+  && roadmap.previousPhase === "P138.2"
+  && roadmap.nextPhase === "P138.4"
+  && status.current?.phaseId === "P138.3"
+  && status.previous?.phaseId === "P138.2"
+  && status.next?.phaseId === "P138.4"
+  && roadmap.current?.phaseId === "P138.3"
+  && roadmap.previous?.phaseId === "P138.2"
+  && roadmap.next?.phaseId === "P138.4"
+  && statusById.get("P137")?.status === "complete"
+  && roadmapById.get("P137")?.status === "complete"
+  && statusById.get("P137.7")?.status === "complete"
+  && roadmapById.get("P137.7")?.status === "complete"
+  && statusById.get("P138")?.status === "in_progress"
+  && roadmapById.get("P138")?.status === "in_progress"
+  && statusById.get("P138.1")?.status === "complete"
+  && roadmapById.get("P138.1")?.status === "complete"
+  && statusById.get("P138.2")?.status === "complete"
+  && roadmapById.get("P138.2")?.status === "complete"
+  && statusById.get("P138.3")?.status === "complete"
+  && roadmapById.get("P138.3")?.status === "complete"
+  && statusById.get("P138.4")?.status === "planned"
+  && roadmapById.get("P138.4")?.status === "planned";
 const enterpriseRoadmapRecordsP1381 = /P138\.1 is now complete/i.test(enterpriseRoadmap)
   && (
     /P138\.2 is the next executable subphase/i.test(enterpriseRoadmap)
@@ -173,23 +201,23 @@ const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformR
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1381-project-workspace-mutation-build-pipeline.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract starts P138 safely", contract.phaseId === "P138" && contract.status === "in_progress" && ((contract.currentSubphase === "P138.1" && contract.previousSubphase === "P137.7" && contract.nextSubphase === "P138.2") || (contract.currentSubphase === "P138.2" && contract.previousSubphase === "P138.1" && contract.nextSubphase === "P138.3")));
+addCheck("contract starts P138 safely", contract.phaseId === "P138" && contract.status === "in_progress" && ((contract.currentSubphase === "P138.1" && contract.previousSubphase === "P137.7" && contract.nextSubphase === "P138.2") || (contract.currentSubphase === "P138.2" && contract.previousSubphase === "P138.1" && contract.nextSubphase === "P138.3") || (contract.currentSubphase === "P138.3" && contract.previousSubphase === "P138.2" && contract.nextSubphase === "P138.4")));
 addCheck("contract has seven implementation-grade subphases", EXPECTED_SUBPHASES.every((phaseId) => subphaseById.has(phaseId)) && EXPECTED_SUBPHASES.every((phaseId) => subphaseById.get(phaseId)?.scopeClassification === "NEXUS_OS_CHANGE") && EXPECTED_SUBPHASES.every((phaseId) => REQUIRED_SUBPHASE_FIELDS.every((field) => Object.hasOwn(subphaseById.get(phaseId) || {}, field))));
-addCheck("P138.1 complete and P138.2 planned or complete", p1381.status === "complete" && (p1382.status === "planned" || (p1382.status === "complete" && p1383.status === "planned")));
+addCheck("P138.1 complete and later P138 subphases are coherent", p1381.status === "complete" && (p1382.status === "planned" || (p1382.status === "complete" && (p1383.status === "planned" || (p1383.status === "complete" && p1384.status === "planned")))));
 addCheck("P138.1 records expected base commit", p1381.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("P138.1 records validation commands", VALIDATION_COMMANDS.every((command) => p1381.validationCommands?.includes(command)));
 addCheck("project boundary policy blocks mutation", p1381.safetyRules?.join(" ").includes("Do not mutate project files") && p1381.safetyRules?.join(" ").includes("Do not run builds") && p1381.forbiddenFiles?.includes("projects/**") && p1381.forbiddenFiles?.includes("generated-projects/**") && p1381.forbiddenFiles?.includes("careloop/**"));
 addCheck("future workspace model shape is scoped", p1381.futureDataShape?.includes("selectedProjectProfile") && p1381.futureDataShape?.includes("allowedPathGlobs") && p1381.futureDataShape?.includes("patchPlan") && p1381.futureDataShape?.includes("rollbackPlan") && p1381.futureDataShape?.includes("approvalGate"));
 addCheck("P137.7 report passes", reportPassed("reports/p1377-agent-work-order-runtime-report.md"));
 addCheck("enterprise checker accepts P138.1", enterpriseChecker.includes("p1381StartedState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("OS checker recognizes P138 subphases", ["P138", "P138.1", "P138.2", "P138.3"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
+addCheck("OS checker recognizes P138 subphases", ["P138", "P138.1", "P138.2", "P138.3", "P138.4"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
 addCheck("P138 plan records P138.1", /## P138\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P138.1", /P138\.1 project workspace mutation build pipeline contract/i.test(readme));
 addCheck("platform roadmap records P138.1", /P138\.1 project workspace mutation build pipeline contract is complete/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P138.1", enterpriseRoadmapRecordsP1381);
-addCheck("phase status starts P138.1 or hands off to P138.2", p1381StartedState || p1382CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts P138.1 or hands off through P138.3", p1381StartedState || p1382CurrentState || p1383CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P138.1 entries have required fields", [statusById.get("P138"), statusById.get("P138.1"), roadmapById.get("P138.1")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P138.2 remains planned or is safely complete", (statusById.get("P138.2")?.status === "planned" && roadmapById.get("P138.2")?.status === "planned" && !(statusById.get("P138.2")?.checksRun || []).length) || p1382CurrentState);
+addCheck("P138.2 remains planned or is safely complete", (statusById.get("P138.2")?.status === "planned" && roadmapById.get("P138.2")?.status === "planned" && !(statusById.get("P138.2")?.checksRun || []).length) || p1382CurrentState || p1383CurrentState);
 addCheck(
   "changed files stay in P138.1 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T20:31:46.799Z
+- Generated at: 2026-05-30T20:46:17.232Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 22610014
+- Validation HEAD: 950d8d2c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,7 +37,7 @@
 | P136 checker registered when active | PASS |  |
 | P137 checker registered when active | PASS |  |
 | P138 checker registered when active | PASS |  |
-| current enterprise handoff | PASS | P138.2/P138.1/P138.3 |
+| current enterprise handoff | PASS | P138.3/P138.2/P138.4 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -50,8 +50,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, reports/p1382-project-workspace-mutation-build-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1381-project-workspace-mutation-build-pipeline.js, scripts/check-p1382-project-workspace-mutation-build-pipeline.js, reports/p1383-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1383-project-workspace-mutation-build-pipeline.js, shared/projectPatchBuildPreview.js |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, reports/p1382-project-workspace-mutation-build-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1381-project-workspace-mutation-build-pipeline.js, scripts/check-p1382-project-workspace-mutation-build-pipeline.js, reports/p1383-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1383-project-workspace-mutation-build-pipeline.js, shared/projectPatchBuildPreview.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -65,7 +65,7 @@
 - git diff --check
 ## Known Limitations
 
-- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, and P137.1-P137.7 may be complete. P138 may be in progress through P138.2. P139-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
+- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, and P137.1-P137.7 may be complete. P138 may be in progress through P138.3. P139-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
 ## Result
 
 PASS (25/25)

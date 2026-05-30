@@ -269,7 +269,11 @@ Final response checklist:
 
 ## P138.3 Patch and Build Preview
 
-Status: planned
+Status: complete
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `950d8d2c`
 
 Narrow goal:
 - Build a non-runnable patch/build preview from the P138.2 model showing
@@ -279,7 +283,7 @@ Narrow goal:
 
 Allowed files:
 - `shared/projectPatchBuildPreview.js`, P138 contract/plan/docs/status, package,
-  P138.2/P138.3/enterprise/OS checkers, and generated reports.
+  P138.1/P138.2/P138.3/enterprise/OS checkers, and generated reports.
 
 Forbidden files:
 - `projects/**`, `generated-projects/**`, `careloop/**`, `db/**`,
@@ -287,11 +291,16 @@ Forbidden files:
   `deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`
 
 Expected exports, schemas, and data shapes:
+- `PROJECT_PATCH_BUILD_PREVIEW_PHASE`
+- `PROJECT_PATCH_BUILD_PREVIEW_VERSION`
+- `PROJECT_PATCH_BUILD_PREVIEW_SAFETY_FLAG_NAMES`
 - `buildProjectPatchBuildPreview`
 - `validateProjectPatchBuildPreview`
-- Preview-only envelope with redacted change summaries, path classifications,
-  build/test command summaries, rollback summary, blockers, disabled reason,
-  owner, evidence/activity refs, cost impact, and blocked execution flags.
+- `buildProjectPatchBuildPreviewEnvelope`
+- Preview-only envelope with source model phase, redacted change summaries, path
+  classifications, build/test command summaries, rollback summary, approval
+  gate, blockers, disabled reason, owner, evidence/activity/audit refs, cost
+  impact, redaction summary, and blocked execution flags.
 
 Command Center UX requirements:
 - Preserve existing UX.
@@ -301,6 +310,32 @@ Tests/checkers, docs, status, validation, git, and final checks:
 - Add focused P138.3 checker, update handoffs, update docs/status/reports, run
   the P138 validation command set, commit, stamp, push, and leave P138.4
   planned-only.
+
+Validation commands:
+- `npm run check:p1383-project-workspace-mutation-build-pipeline`
+- `npm run check:p1382-project-workspace-mutation-build-pipeline`
+- `npm run check:p1381-project-workspace-mutation-build-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+OS phase status update:
+- P138 is in progress through P138.3.
+- P138.3 is complete.
+- Current subphase: P138.3.
+- Previous subphase: P138.2.
+- Next subphase: P138.4 planned-only.
+
+Known limitations:
+- P138.3 is non-runnable preview work only.
+- It does not apply patches, mutate projects, run project builds/tests, execute
+  rollback, write DB/runtime state, call providers/models, execute tools, start
+  MCP servers, dispatch agents, deploy, release, export, package, use network
+  calls, or spend.
 
 ## P138.4 Project Build Command Center UX
 
