@@ -21642,7 +21642,7 @@
       "order": 171,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2343ecee",
       "commandCenterVisible": true,
       "detail": "P135 is complete. P136 Secrets, Providers, and Tool Governance is planned-only next.",
       "summary": "P135 identity, tenant, roles, and permissions is complete through P135.7 final validation. P136 Secrets, Providers, and Tool Governance is planned-only next.",
@@ -23383,7 +23383,7 @@
       "order": 171.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2343ecee",
       "completedAt": "2026-05-30T00:00:00.000Z",
       "commandCenterVisible": true,
       "detail": "P135.7 is complete. P136 Secrets, Providers, and Tool Governance is planned-only next.",
@@ -25888,7 +25888,7 @@
     "nextPhase": "P136",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "2343ecee",
     "summary": "Closed P135 identity, tenant, roles, and permissions final validation with prior report evidence, checker compatibility, docs/roadmap/status closure, and route-wide Command Center safety while keeping all live auth, tenant, permission, DB/runtime, provider, agent, project, deploy, export, package, network, and spend actions blocked.",
     "knownLimitations": [
       "P135.7 is final validation only. It does not enable login, sessions, tenant mutation, role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136 remains planned-only."
