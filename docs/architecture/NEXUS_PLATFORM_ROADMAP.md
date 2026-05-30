@@ -3194,8 +3194,9 @@ remain blocked.
 
 ## P133-P145 Enterprise Readiness Roadmap
 
-P133-P145 are enterprise readiness phases. P133 and P134 are complete, and
-later phases remain planned-only. They cover founder
+P133-P145 are enterprise readiness phases. P133, P134, and P135 are complete,
+and P136 is in progress through P136.1. Later subphases and phases remain
+planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3204,10 +3205,10 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7 and P136 Secrets, Providers,
-and Tool Governance is planned-only next. P136-P145 do not enable
-DB/runtime writes, live CRUD, provider/model
-calls, agent dispatch, project mutation, deploy, release, export, package,
+Current implementation is closed through P135.7 and P136.1. P136.2 Secret and
+Provider Model is planned-only next. P136.2-P136.7 and P137-P145 do not enable
+secret values, DB/runtime writes, live CRUD, provider/model calls, tool
+execution, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
 P133.1 is complete. NEXUS started Founder Idea-to-PRD Productization with an
@@ -3375,12 +3376,21 @@ network calls, and spend remain blocked.
 P135.7 identity/tenant/RBAC final validation is complete. NEXUS now closes P135
 Identity, Tenant, Roles, and Permissions with final checker evidence,
 compatibility gates, docs, roadmap, OS status, phase index, and validation
-reports. P136 Secrets, Providers, and Tool Governance is planned-only next.
+reports. P136.1 Secrets, Providers, and Tool Governance has started.
 Login, sessions, role assignment, permission grants, permission revokes,
 permission enforcement, access decisions as live authority, tenant mutation,
 auth providers, DB/runtime writes, provider/model calls, agent dispatch,
 project mutation, deploy, release, export, package, network calls, and spend
 remain blocked.
+
+P136.1 secrets/providers/tool governance contract is complete. NEXUS now has
+the P136 contract, seven-subphase split, safety boundary, checker, docs,
+roadmap, OS status, phase index, and validation report for secrets, provider
+eligibility, model access, tool contracts, budgets, approvals, and evidence.
+P136.2 Secret and Provider Model is planned-only next. Secret values,
+provider/model calls, tool execution, MCP server startup, agent dispatch,
+DB/runtime writes, project mutation, deploy, release, export, package, network
+calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

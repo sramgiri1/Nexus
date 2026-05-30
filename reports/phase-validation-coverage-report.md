@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T16:02:40.126Z
+- Generated at: 2026-05-30T16:17:38.695Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2343ecee
+- Validation HEAD: 9bbaedf9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -589,7 +589,9 @@
 | P135.5 validation coverage | PASS | 26 checkers, 21 reports |
 | P135.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P135.7 validation coverage | PASS | 53 checkers, 43 reports |
-| P136 validation coverage | PASS | dedicated_checker, validation_report |
+| P136 validation coverage | PASS | 6 checkers, 1 reports |
+| P136.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P136.2 validation coverage | PASS | dedicated_checker, validation_report |
 | P137 validation coverage | PASS | 6 checkers, 6 reports |
 | P138 validation coverage | PASS | dedicated_checker, validation_report |
 | P139 validation coverage | PASS | dedicated_checker, validation_report |
@@ -601,14 +603,14 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P135.7; next=P136; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P136.1; next=P136.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P136 Secrets, Providers, and Tool Governance
+- P136.2 Secret and Provider Model
   - status: planned
   - checkers: 0
   - reports: 0
@@ -655,4 +657,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (586/586)
+PASS (588/588)

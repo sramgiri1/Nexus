@@ -83,6 +83,7 @@ const readme = readText("README.md");
 const platformRoadmap = readText(PLATFORM_PATH);
 const enterpriseRoadmap = readText(ENTERPRISE_PATH);
 const changed = changedFiles();
+const enforceCurrentDiffScope = status.currentPhase === "P135.7";
 const allowedFiles = new Set([
   CONTRACT_PATH,
   PLAN_PATH,
@@ -149,6 +150,31 @@ const p1357FinalState =
   && COMPLETED_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P136")?.status === "planned"
   && roadmapById.get("P136")?.status === "planned";
+const p1361StartedState =
+  status.currentPhase === "P136.1"
+  && status.previousPhase === "P135.7"
+  && status.nextPhase === "P136.2"
+  && roadmap.currentPhase === "P136.1"
+  && roadmap.previousPhase === "P135.7"
+  && roadmap.nextPhase === "P136.2"
+  && status.current?.phaseId === "P136.1"
+  && status.previous?.phaseId === "P135.7"
+  && status.next?.phaseId === "P136.2"
+  && roadmap.current?.phaseId === "P136.1"
+  && roadmap.previous?.phaseId === "P135.7"
+  && roadmap.next?.phaseId === "P136.2"
+  && statusById.get("P134")?.status === "complete"
+  && roadmapById.get("P134")?.status === "complete"
+  && statusById.get("P135")?.status === "complete"
+  && roadmapById.get("P135")?.status === "complete"
+  && COMPLETED_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P136")?.status === "in_progress"
+  && roadmapById.get("P136")?.status === "in_progress"
+  && statusById.get("P136.1")?.status === "complete"
+  && roadmapById.get("P136.1")?.status === "complete"
+  && statusById.get("P136.2")?.status === "planned"
+  && roadmapById.get("P136.2")?.status === "planned";
+const p136SafeHandoffState = p1357FinalState || p1361StartedState;
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -167,14 +193,22 @@ addCheck("prior P135 reports pass", [
 addCheck("P135.6 checker accepts P135.7", p1356Checker.includes("p1357FinalState") && p1356Checker.includes('status.currentPhase === "P135.7"') && p1356Checker.includes('status.nextPhase === "P136"'));
 addCheck("enterprise checker accepts P135.7", enterpriseChecker.includes("p1357FinalState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("P135 plan records P135.7", /## P135\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P135.7", /P135\.7 identity\/tenant\/RBAC final validation/i.test(readme) && /P136 secrets,\s+providers,\s+and tool governance is planned-only next/i.test(readme));
-addCheck("platform roadmap records P135.7", /P135\.7 identity\/tenant\/RBAC final validation is complete/i.test(platformRoadmap) && /P136 Secrets,\s+Providers,\s+and Tool Governance is planned-only next/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P135 closure", /P135\.1 through P135\.7\s+are\s+now complete/i.test(enterpriseRoadmap) && /P136 is the next executable phase/i.test(enterpriseRoadmap));
-addCheck("phase status closes P135", p1357FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("README records P135.7", /P135\.7 identity\/tenant\/RBAC final validation/i.test(readme) && (/P136 secrets,\s+providers,\s+and tool governance is planned-only next/i.test(readme) || /P136\.1 secrets\/providers\/tool governance contract/i.test(readme)));
+addCheck("platform roadmap records P135.7", /P135\.7 identity\/tenant\/RBAC final validation is complete/i.test(platformRoadmap) && (/P136 Secrets,\s+Providers,\s+and Tool Governance is planned-only next/i.test(platformRoadmap) || /P136\.1 secrets\/providers\/tool governance contract is complete/i.test(platformRoadmap)));
+addCheck("enterprise roadmap records P135 closure", /P135\.1 through P135\.7\s+are\s+now complete/i.test(enterpriseRoadmap) && (/P136 is the next executable phase/i.test(enterpriseRoadmap) || /P136\.1 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status closes P135", p136SafeHandoffState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135 entries have required fields", [statusById.get("P135"), statusById.get("P135.7"), roadmapById.get("P135"), roadmapById.get("P135.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P136 handoff remains planned-only", p136Status.status === "planned" && p136Status.commit === "" && Array.isArray(p136Status.checksRun) && p136Status.checksRun.length === 0 && (p136Status.knownLimitations || []).join(" ").toLowerCase().includes("planned-only"));
-addCheck("changed files stay in P135.7 allowed scope", changed.every((file) => allowedFiles.has(file)), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("P136 handoff remains safe", (p136Status.status === "planned" && p136Status.commit === "" && Array.isArray(p136Status.checksRun) && p136Status.checksRun.length === 0 && (p136Status.knownLimitations || []).join(" ").toLowerCase().includes("planned-only")) || p1361StartedState);
+addCheck(
+  "changed files stay in P135.7 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
+addCheck(
+  "forbidden paths unchanged",
+  !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))),
+  enforceCurrentDiffScope ? changed.join(", ") : `P135.7 forbidden path check relaxed for ${status.currentPhase}`,
+);
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid fake runnable actions", !/sign in now|log in now|assign role now|grant permission now|revoke permission now|enforce permission now|create tenant now|connect provider now|execute now|dispatch agent now|mutate project now|deploy now|export now|package now/i.test(docsBundle));
@@ -190,7 +224,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates final P135 closure, P135.1-P135.6 reports, checker handoffs, OS status, roadmap, and documentation.",
-        "- Confirms P136 remains planned-only and no identity, tenant, role, permission, auth provider, DB/runtime, provider/model, agent dispatch, project mutation, deploy, release, export, package, network, or spend behavior is enabled by P135.7.",
+        "- Confirms P136 remains safely handed off and no identity, tenant, role, permission, auth provider, DB/runtime, provider/model, agent dispatch, project mutation, deploy, release, export, package, network, or spend behavior is enabled by P135.7.",
         "- Confirms this subphase does not change Command Center source, project source, DB/runtime source, provider/tool source, deploy/release/export/package files, or environment files.",
       ].join("\n"),
     },
@@ -198,7 +232,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P135.7 is final validation only. It does not enable login, sessions, tenant mutation, role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136 remains planned-only until its own implementation-grade contract starts.",
+      body: "- P135.7 is final validation only. It does not enable login, sessions, tenant mutation, role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136 remains governed by its own implementation-grade subphase contract.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

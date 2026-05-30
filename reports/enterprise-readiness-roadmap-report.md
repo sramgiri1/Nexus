@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T16:02:28.829Z
+- Generated at: 2026-05-30T16:17:30.600Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2343ecee
+- Validation HEAD: 9bbaedf9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Tracks P133-P145 enterprise-readiness roadmap phases after P132.
-- Allows P133 to close and P134 to advance through completed implementation-grade durable DB/CRUD subphases while later enterprise phases remain planned-only.
+- Allows P133-P135 to close and P136 to advance through implementation-grade secrets/provider/tool governance subphases while later enterprise phases remain planned-only.
 - Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
 ## Enterprise Phases
 
@@ -34,7 +34,8 @@
 | --- | --- | --- |
 | package script registered | PASS |  |
 | P133/P134/P135 checkers registered when active | PASS |  |
-| current enterprise handoff | PASS | P135.7/P135.6/P136 |
+| P136 checker registered when active | PASS |  |
+| current enterprise handoff | PASS | P136.1/P135.7/P136.2 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -42,13 +43,13 @@
 | enterprise phases are Command Center visible | PASS |  |
 | roadmap entries include details and limitations | PASS |  |
 | roadmap entries include subphase details | PASS |  |
-| P133/P134/P135 active subphase records are present | PASS |  |
+| P133/P134/P135/P136 active subphase records are present | PASS |  |
 | enterprise roadmap doc covers all phases | PASS |  |
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in enterprise roadmap scope | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1357-identity-tenant-roles-permissions-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1357-identity-tenant-roles-permissions-final-validation.js, contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md, reports/p1361-secrets-providers-tool-governance-report.md, scripts/check-p1361-secrets-providers-tool-governance.js |
+| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1357-identity-tenant-roles-permissions-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1357-identity-tenant-roles-permissions-final-validation.js, contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md, reports/p1361-secrets-providers-tool-governance-report.md, scripts/check-p1361-secrets-providers-tool-governance.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -62,7 +63,7 @@
 - git diff --check
 ## Known Limitations
 
-- P133.1-P133.7 and P134.1-P134.7 may be complete. P135 may be in progress through implementation-grade identity/tenant/RBAC subphases. P136-P145 remain planned-only. Current enterprise work does not enable login, sessions, permission enforcement, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
+- P133.1-P133.7, P134.1-P134.7, and P135.1-P135.7 may be complete. P136 may be in progress through implementation-grade secrets/provider/tool governance subphases. P137-P145 remain planned-only. Current enterprise work does not enable secret values, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
 ## Result
 
-PASS (22/22)
+PASS (23/23)
