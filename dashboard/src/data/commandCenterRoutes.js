@@ -26,6 +26,7 @@ import {
   PROJECT_SHIPPING_TABS,
   QUALITY_INTELLIGENCE_TABS,
   POLICY_CENTER_TABS,
+  PROVIDER_GOVERNANCE_TABS,
   RELEASE_CONTROL_TABS,
   SAFETY_CENTER_TABS,
   SECRETS_BOUNDARY_TABS,
@@ -470,6 +471,20 @@ export const COMMAND_CENTER_ROUTES = [
     helpDoc: "docs/architecture/SECRETS_AND_CREDENTIAL_BOUNDARY.md",
   },
   {
+    key: "providerGovernance",
+    path: "/command-center/provider-governance",
+    name: "Provider Governance",
+    section: "PLATFORM",
+    allowPhaseLabels: false,
+    expectedHeading: "Provider Governance",
+    status: "implemented",
+    badge: "Review-only",
+    scope: "platform",
+    tabs: PROVIDER_GOVERNANCE_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+  },
+  {
     key: "memory",
     path: "/command-center/memory",
     name: "Memory Center",
@@ -867,6 +882,10 @@ const FOUNDER_ROUTE_CONTEXT_BY_KEY = {
   secrets: {
     purpose: "Understand credential boundaries without exposing secrets.",
     nextAction: "Review missing credentials and safe setup requirements.",
+  },
+  providerGovernance: {
+    purpose: "Review provider, model, tool, approval, evidence, and spend posture before any live authority exists.",
+    nextAction: "Review P136.3 dry-run blockers and approval needs before P136.5 validation.",
   },
   memory: {
     purpose: "See memory/context posture before runtime injection is allowed.",

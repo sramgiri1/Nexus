@@ -3,9 +3,10 @@
 P136 governs secrets, provider eligibility, model access, tool contracts,
 budgets, approvals, and evidence before any live external execution can be
 considered. The phase is intentionally staged. P136.1 started the contract and
-safety boundary, P136.2 adds the read-only governance model, and P136.3 adds
-the non-runnable dry run. Later subphases own Command Center UX, tests, docs,
-and final validation.
+safety boundary, P136.2 added the read-only governance model, P136.3 added the
+non-runnable dry run, and P136.4 surfaces that posture in Command Center as
+review-only UX. Later subphases own aggregate tests, docs, and final
+validation.
 
 ## Subphases
 
@@ -253,7 +254,7 @@ Status handoff:
 
 ### P136.4 Provider Governance Command Center UX
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Surface provider/tool governance state in Command Center with current state,
@@ -282,9 +283,17 @@ Command Center UX requirements:
 - Preserve route-wide navigation and no DemoApp leakage.
 
 Tests/checkers and validation:
-- Add `check:p1364-provider-governance-command-center-ux`.
-- Add/extend Playwright assertions for Provider Governance while preserving
-  route-wide safety coverage.
+- Added `check:p1364-provider-governance-command-center-ux`.
+- Added Playwright assertions for the Provider Governance route, tabs, dark,
+  light, system theme behavior, no DemoApp leakage, no raw dumps, and no fake
+  runnable provider/tool actions.
+- Current phase is P136.4.
+- Previous phase is P136.3.
+- Next phase is P136.5 planned-only.
+- Primary UX is display-safe and non-runnable. It shows P136.3 dry-run state,
+  approval needs, blockers, evidence/activity locations, and zero-spend cost
+  posture without exposing raw provider payloads, secret references, private
+  project IDs, or mutation controls.
 
 ### P136.5 Tests / Checkers
 

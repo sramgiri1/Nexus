@@ -27,7 +27,8 @@ now complete, and P135 is complete.
 P136.1 is now complete as contract/policy/safety-boundary only.
 P136.2 is now complete as a read-only secret/provider/tool governance model.
 P136.3 is now complete as a non-runnable provider/tool dry run.
-P136.4 is the next executable subphase. P136.4-P136.7 and P137-P145 remain
+P136.4 is now complete as Provider Governance Command Center UX only.
+P136.5 is the next executable subphase. P136.5-P136.7 and P137-P145 remain
 planned-only. They do not enable secret values, DB writes, provider/model calls,
 tool execution, agent dispatch, project mutation, deploy, release, export,
 package, network calls, or spend until each phase/subphase has its own
@@ -99,7 +100,8 @@ Current implementation has closed P135.1 through P135.7 and P135 is complete.
 P136.1 is now complete as a secrets/provider/tool governance contract and
 safety boundary. P136.2 is now complete as a read-only secret/provider/tool
 governance model. P136.3 is now complete as a non-runnable provider/tool dry
-run. P136.4 is the next executable subphase. P136.4-P136.7 and P137-P145 are
+run. P136.4 is now complete as Provider Governance Command Center UX only.
+P136.5 is the next executable subphase. P136.5-P136.7 and P137-P145 are
 planned-only backlog phases and must not be treated as complete
 or live.
 

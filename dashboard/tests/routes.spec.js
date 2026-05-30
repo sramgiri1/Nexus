@@ -174,6 +174,7 @@ test("Full Command Center founder navigation exposes governed areas", async ({ p
     "Durable State",
     "Cost Center",
     "Policy Center",
+    "Provider Governance",
     "Founder Intake",
     "Business Build",
     "Live Readiness",
@@ -292,6 +293,7 @@ test("Founder governance pages show useful action boards", async ({ page }) => {
     { path: "/command-center/cost", title: "Cost Center", expected: ["No real provider spend", "Budget scopes"] },
     { path: "/command-center/policies", title: "Policy Center", expected: ["Break-glass", "simulation"] },
     { path: "/command-center/secrets", title: "Secrets Boundary", expected: ["raw values", "Credential states"] },
+    { path: "/command-center/provider-governance", title: "Provider Governance", expected: ["P136.3 dry run", "Execution disabled"] },
   ]) {
     await page.goto(route.path);
     const board = page.getByLabel(`${route.title} founder operations board`);
@@ -1802,6 +1804,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/cost", ["Overview", "Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]],
       ["/command-center/policies", ["Overview", "Registry", "Versions", "Diff Preview", "Simulation", "Exceptions", "Break-Glass", "Developer Details"]],
       ["/command-center/secrets", ["Overview", "Provider Credentials", "Project Credentials", "DB / Deploy", "Integrations", "Developer Details"]],
+      ["/command-center/provider-governance", ["Overview", "Dry Run", "Approval Needs", "Cost Impact", "Evidence", "Safety"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
       ["/command-center/workers", ["Overview", "Queue", "Leases", "Heartbeats", "Retries / DLQ", "Developer Details"]],
     ];
@@ -1844,6 +1847,7 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/evidence",
       "/command-center/safety",
       "/command-center/projects",
+      "/command-center/provider-governance",
     ]) {
       await page.goto(path);
       await pickTheme(page, "dark");
@@ -3438,6 +3442,52 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Secrets Boundary");
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Secrets Boundary");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Provider Governance route renders P136.4 review-only dry-run posture", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/provider-governance");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Provider Governance");
+    await expect(page.locator("body")).toContainText("P136.3 dry run");
+    await expect(page.locator("body")).toContainText("Execution disabled");
+    await expect(page.locator("body")).toContainText("Approval needs");
+    await expect(page.locator("body")).toContainText("Cost impact");
+    await expect(page.locator("body")).toContainText("Activity Log > Provider Governance");
+
+    for (const label of ["Dry Run", "Approval Needs", "Cost Impact", "Evidence", "Safety"]) {
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Dry Run").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider eligibility");
+    await expect(activeCommandTabPanel(page)).toContainText("Model access");
+    await expect(activeCommandTabPanel(page)).toContainText("Tool contract");
+
+    await commandTab(page, "Approval Needs").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider credential value access");
+    await expect(activeCommandTabPanel(page)).toContainText("Review only");
+
+    await commandTab(page, "Cost Impact").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Estimated spend");
+    await expect(activeCommandTabPanel(page)).toContainText("$0");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("providerBatchId");
+    expect(body).not.toContain("secret-ref-");
+    expect(body).not.toMatch(/call provider now|run tool now|execute tool now|spend now|deploy now/i);
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Provider Governance");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Provider Governance");
+    await pickTheme(page, "system");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Provider Governance");
 
     expect(errors).toEqual([]);
   });

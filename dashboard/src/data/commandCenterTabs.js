@@ -769,6 +769,15 @@ export const SECRETS_BOUNDARY_TABS = [
   { id: "developer-details", label: "Developer Details", description: "Reference IDs and safe report links only", badge: "Read-only" },
 ];
 
+export const PROVIDER_GOVERNANCE_TABS = [
+  { id: "overview", label: "Overview", description: "Current provider governance state, next action, and blockers", badge: "Review" },
+  { id: "dry-run", label: "Dry Run", description: "P136.3 provider, model, and tool lane decisions", badge: "Blocked" },
+  { id: "approvals", label: "Approval Needs", description: "Future approval needs without approval writes", badge: "Review only" },
+  { id: "cost", label: "Cost Impact", description: "Estimate-only budget and spend posture", badge: "No spend" },
+  { id: "evidence", label: "Evidence", description: "Reports, activity, and roadmap references", badge: "Read-only" },
+  { id: "safety", label: "Safety", description: "Disabled authorities and blocked operations", badge: "Disabled" },
+];
+
 export const BATCH_QUEUE_TABS = [
   { id: "overview", label: "Overview", description: "Batch status and not-enabled state", badge: "Planned" },
   { id: "jobs", label: "Jobs", description: "Future batch job list", badge: "Planned" },
@@ -866,6 +875,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "cost") return COST_CENTER_TABS;
   if (pageId === "policies") return POLICY_CENTER_TABS;
   if (pageId === "secrets") return SECRETS_BOUNDARY_TABS;
+  if (pageId === "providerGovernance") return PROVIDER_GOVERNANCE_TABS;
   if (pageId === "batch") return BATCH_QUEUE_TABS;
   if (pageId === "memory") return MEMORY_CENTER_TABS;
   if (pageId === "triggers") return TRIGGER_INTEGRATION_TABS;

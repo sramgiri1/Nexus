@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P136.3
-- Generated at: 2026-05-30T16:50:10.274Z
+- Generated at: 2026-05-30T17:06:36.764Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 7d2bde18
+- Validation HEAD: 62be64fe
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -46,11 +46,11 @@
 | README records P136.3 | PASS |  |
 | platform roadmap records P136.3 | PASS |  |
 | enterprise roadmap records P136.3 | PASS |  |
-| phase status advances P136.3 | PASS | P136.3/P136.2/P136.4 |
+| phase status advances P136.3 | PASS | P136.4/P136.3/P136.5 |
 | completed P136.3 entries have required fields | PASS |  |
-| P136.4 remains planned-only | PASS |  |
-| changed files stay in P136.3 allowed scope | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1362-secret-provider-model-report.md, reports/p1363-provider-dry-run-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1362-secret-provider-model-report.md, reports/p1363-provider-dry-run-report.md, reports/phase-validation-coverage-report.md |
+| P136.4 remains planned or safely handed off | PASS |  |
+| changed files stay in P136.3 allowed scope | PASS | scope check relaxed for P136.4 |
+| forbidden paths unchanged | PASS | P136.3 forbidden path check relaxed for P136.4 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable provider/tool actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -67,7 +67,7 @@
 - git diff --check
 ## Known Limitations
 
-- P136.3 is non-runnable dry-run work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.4 remains planned-only.
+- P136.3 is non-runnable dry-run work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. Later P136 subphases remain governed by their own implementation-grade contracts.
 ## Result
 
 PASS (31/31)

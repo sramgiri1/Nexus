@@ -30,6 +30,7 @@ import {
   MISSION_CONTROL_TABS,
   OBSERVABILITY_TABS,
   POLICY_CENTER_TABS,
+  PROVIDER_GOVERNANCE_TABS,
   PROJECTS_TABS,
   PROJECT_SHIPPING_TABS,
   QUALITY_INTELLIGENCE_TABS,
@@ -95,6 +96,7 @@ import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePrev
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
 import { buildBusinessBuildViewModel, buildFounderRuntimeDbViewModel } from "../data/businessBuild.js";
+import { providerGovernanceReadiness } from "../data/providerGovernanceReadiness.js";
 import {
   appendFounderQnaTurn,
   resetFounderQnaTurnState,
@@ -6104,6 +6106,168 @@ function SecretsBoundaryPage() {
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Developer Details</div>
               <div className="ccv2-empty-state">Credential references are summarized by provider and project scope. Raw credential values are never shown.</div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Provider Governance Page ─── */
+function ProviderGovernancePage() {
+  const readiness = providerGovernanceReadiness;
+  const [activeTab, setActiveTab] = useState("overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page" data-route-id={readiness.routeId}>
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
+            <div className="ccv2-page-head__sub">
+              Review-only provider, model, tool, approval, evidence, activity, and cost posture before live authority exists.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--teal">P136.3 dry run</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+            <span className="ccv2-pill ccv2-pill--disabled">No spend</span>
+          </div>
+        </div>
+
+        <FounderOperationsBoard
+          title="Provider Governance"
+          purpose="Show whether provider, model, and tool authority is ready before a founder workflow can spend or execute."
+          currentState={readiness.currentState}
+          nextAction={readiness.nextAction}
+          blocker={readiness.disabledReason}
+          owner={`${readiness.ownerAgent} · ${readiness.ownerCapability}`}
+          evidence={readiness.evidenceLocation}
+          activity={readiness.activityLocation}
+          cost={readiness.costImpact}
+          lanes={[
+            { label: "Decision rows", value: readiness.summaryCards[1].value },
+            { label: "Approval needs", value: readiness.summaryCards[3].value },
+            { label: "Executable rows", value: readiness.summaryCards[2].value },
+            { label: "Spend", value: "$0" },
+          ]}
+        />
+
+        <div className="ccv2-page-summary">
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{readiness.disabledReason}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
+        </div>
+
+        <CommandTabs tabs={PROVIDER_GOVERNANCE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Provider Governance sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.summaryCards.map((card) => (
+                <article className="ccv2-card" key={card.label}>
+                  <div className="ccv2-section-heading">{card.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${card.tone}`}>{card.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{card.detail}</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Current State</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 10 }}>
+                {readiness.stateRows.map((row) => (
+                  <div className="ccv2-safety-row" key={row.label}>
+                    <span className="ccv2-safety-row__label">{row.label}</span>
+                    <span className={row.state === "Hidden" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.state}</span>
+                    <small>{row.detail}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="dry-run" activeTab={activeTab}>
+            <div className="ccv2-section-heading">P136.3 Dry Run Decisions</div>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.decisionRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{row.currentState}</span>
+                    <span className="ccv2-pill ccv2-pill--amber">{row.count} rows</span>
+                  </div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.detail}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Next action: {row.nextAction}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="approvals" activeTab={activeTab}>
+            <div className="ccv2-section-heading">Approval Needs</div>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.approvalRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{row.currentState}</span>
+                    <span className="ccv2-pill ccv2-pill--amber">{row.approvalRequired}</span>
+                  </div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Disabled reason: {row.disabledReason}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Next action: {row.nextAction}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="cost" activeTab={activeTab}>
+            <div className="ccv2-section-heading">Cost Impact</div>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.costRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{row.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.detail}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="evidence" activeTab={activeTab}>
+            <div className="ccv2-section-heading">Evidence</div>
+            <div className="ccv2-grid ccv2-grid--2">
+              {readiness.evidenceRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.detail}</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Location</span><span className="ccv2-page-summary-value">{row.location}</span></div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="safety" activeTab={activeTab}>
+            <div className="ccv2-section-heading">Safety</div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Safety</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 10 }}>
+                {readiness.safetyRows.map((row) => (
+                  <div className="ccv2-safety-row" key={row.label}>
+                    <span className="ccv2-safety-row__label">{row.label}</span>
+                    <span className={row.value === "No" || row.value === "None" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Blockers</div>
+              <ul className="ccv2-list">
+                {readiness.blockerRows.map((row) => (
+                  <li key={row.reason}>{row.reason}</li>
+                ))}
+              </ul>
             </div>
           </CommandTabPanel>
         </CommandTabs>
@@ -14728,6 +14892,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "policies" && <PolicyCenterPage />}
           {currentPage === "secrets" && <SecretsBoundaryPage />}
+          {currentPage === "providerGovernance" && <ProviderGovernancePage />}
           {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
           {currentPage === "context" && <DataContextCenterPage vm={vmWithApi} />}
           {currentPage === "recovery" && (
