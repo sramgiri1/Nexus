@@ -5,7 +5,7 @@ import { buildCheckTable, writeMarkdownReport } from "../shared/reportWriter.js"
 import { printCheckReport } from "../shared/checkResultFormatter.js";
 
 const ROOT = process.cwd();
-const REPORT_PATH = "reports/p1336-founder-idea-to-prd-docs-roadmap-report.md";
+const REPORT_PATH = "reports/p1337-founder-idea-to-prd-final-validation-report.md";
 const CONTRACT_PATH = "contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json";
 const PLAN_PATH = "docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md";
 const ENTERPRISE_PATH = "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md";
@@ -38,7 +38,7 @@ function hasUnsafePositiveClaim(text, pattern) {
   return lines.some((line, index) => {
     const context = `${lines[index - 2] || ""} ${lines[index - 1] || ""} ${line}`;
     return pattern.test(line)
-      && !/\b(no|not|never|without|blocked|unavailable|disabled|forbidden|do not|does not|remain|remains|planned-only|local|preview|read-only|in memory|docs?|roadmap|status|reports?|checkers?|coverage|future|until|before|must not|cannot|preserve|safety boundary)\b/i.test(context);
+      && !/\b(no|not|never|without|blocked|unavailable|disabled|forbidden|do not|does not|remain|remains|planned-only|local|preview|read-only|in memory|docs?|roadmap|status|reports?|checkers?|coverage|future|until|before|must not|cannot|preserve|safety boundary|final validation)\b/i.test(context);
   });
 }
 
@@ -54,12 +54,14 @@ const roadmap = readJson("os-roadmap/nexus-phases.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
 const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId, entry]));
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
-const p1336 = subphaseById.get("P133.6") || {};
 const p1337 = subphaseById.get("P133.7") || {};
+const p134 = statusById.get("P134") || {};
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const enterpriseRoadmap = readText(ENTERPRISE_PATH);
+const checkerSource = readText("scripts/check-p1337-founder-idea-to-prd-final-validation.js");
+const p1336Checker = readText("scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js");
 const p1335Checker = readText("scripts/check-p1335-founder-idea-to-prd-tests-checkers.js");
 const p1334Checker = readText("scripts/check-p1334-command-center-idea-to-prd-ux.js");
 const p1333Checker = readText("scripts/check-p1333-founder-idea-to-prd-preview.js");
@@ -67,10 +69,10 @@ const p1332Checker = readText("scripts/check-p1332-founder-idea-to-prd-model.js"
 const p1331Checker = readText("scripts/check-p1331-founder-idea-to-prd-productization.js");
 const enterpriseChecker = readText("scripts/check-enterprise-readiness-roadmap.js");
 const p1327Checker = readText("scripts/check-p1327-founder-runtime-store-live-admission-execution.js");
-const checkerSource = readText("scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js");
 const changed = changedFiles();
-const enforceCurrentDiffScope = status.currentPhase === "P133.6";
+const completedP133Subphases = ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6", "P133.7"];
 const validationCommands = [
+  "npm run check:p1337-founder-idea-to-prd-final-validation",
   "npm run check:p1336-founder-idea-to-prd-docs-roadmap",
   "npm run check:p1335-founder-idea-to-prd-tests-checkers",
   "npm run check:p1334-command-center-idea-to-prd-ux",
@@ -95,6 +97,7 @@ const allowedFiles = new Set([
   "os-roadmap/nexus-phases.json",
   "os-roadmap/phase-status.json",
   "package.json",
+  "scripts/check-p1337-founder-idea-to-prd-final-validation.js",
   "scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js",
   "scripts/check-p1335-founder-idea-to-prd-tests-checkers.js",
   "scripts/check-p1334-command-center-idea-to-prd-ux.js",
@@ -104,6 +107,7 @@ const allowedFiles = new Set([
   "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
   REPORT_PATH,
+  "reports/p1336-founder-idea-to-prd-docs-roadmap-report.md",
   "reports/p1335-founder-idea-to-prd-tests-checkers-report.md",
   "reports/p1334-command-center-idea-to-prd-ux-report.md",
   "reports/p1333-founder-idea-to-prd-preview-report.md",
@@ -131,24 +135,6 @@ const forbiddenPrefixes = [
   "packages/",
   ".env",
 ];
-const p1336CompleteState =
-  status.currentPhase === "P133.6"
-  && status.previousPhase === "P133.5"
-  && status.nextPhase === "P133.7"
-  && roadmap.currentPhase === "P133.6"
-  && roadmap.previousPhase === "P133.5"
-  && roadmap.nextPhase === "P133.7"
-  && status.current?.phaseId === "P133.6"
-  && status.previous?.phaseId === "P133.5"
-  && status.next?.phaseId === "P133.7"
-  && roadmap.current?.phaseId === "P133.6"
-  && roadmap.previous?.phaseId === "P133.5"
-  && roadmap.next?.phaseId === "P133.7"
-  && statusById.get("P133")?.status === "in_progress"
-  && roadmapById.get("P133")?.status === "in_progress"
-  && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
-  && statusById.get("P133.7")?.status === "planned"
-  && roadmapById.get("P133.7")?.status === "planned";
 const p1337FinalState =
   status.currentPhase === "P133.7"
   && status.previousPhase === "P133.6"
@@ -164,38 +150,39 @@ const p1337FinalState =
   && roadmap.next?.phaseId === "P134"
   && statusById.get("P133")?.status === "complete"
   && roadmapById.get("P133")?.status === "complete"
-  && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6", "P133.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && completedP133Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P134")?.status === "planned"
   && roadmapById.get("P134")?.status === "planned";
-const p1336CompatibleState = p1336CompleteState || p1337FinalState;
 
-addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1336-founder-idea-to-prd-docs-roadmap"]));
+addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1337-founder-idea-to-prd-final-validation"]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract marks P133.6 complete", ["in_progress", "complete"].includes(contract.status) && p1336.status === "complete" && ((contract.currentSubphase === "P133.6" && contract.previousSubphase === "P133.5" && contract.nextSubphase === "P133.7") || (contract.currentSubphase === "P133.7" && contract.previousSubphase === "P133.6" && contract.nextSubphase === "P134")));
-addCheck("contract records P133.6 docs scope", p1336.expectedBaseCommit === "b084bd54" && p1336.allowedFiles?.includes("scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js") && p1336.allowedFiles?.includes(PLAN_PATH) && p1336.allowedFiles?.includes("README.md"));
-addCheck("P133.7 handoff remains safe", (p1337.status === "planned" && statusById.get("P133.7")?.status === "planned" && roadmapById.get("P133.7")?.status === "planned") || (p1337.status === "complete" && p1337FinalState));
-addCheck("P133.6 records validation commands", validationCommands.every((command) => p1336.validationCommands?.includes(command)));
-addCheck("P133 plan records P133.6", /## P133\.6 Docs \/ Roadmap \/ Status[\s\S]*Status:\s+complete/.test(plan));
-addCheck("README records P133.6", /P133\.6 founder idea-to-PRD docs/i.test(readme) && (/P133\.7 Final Validation is\s+next/i.test(readme) || /P133\.7 final validation/i.test(readme)));
-addCheck("platform roadmap records P133.6", /P133\.6 is complete/i.test(platformRoadmap) && (/P133\.7 Final Validation is next/i.test(platformRoadmap) || /P133\.7 is complete/i.test(platformRoadmap)));
-addCheck("enterprise roadmap records P133.6", (/P133\.6 is now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.6 are now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.7 are now complete/i.test(enterpriseRoadmap)) && (/P133\.7 is the next executable subphase/i.test(enterpriseRoadmap) || /P134 is the next executable phase/i.test(enterpriseRoadmap)));
+addCheck("contract closes P133", contract.status === "complete" && contract.currentSubphase === "P133.7" && contract.previousSubphase === "P133.6" && contract.nextSubphase === "P134" && p1337.status === "complete");
+addCheck("contract records P133.7 final validation scope", p1337.expectedBaseCommit === "67530192" && p1337.allowedFiles?.includes("scripts/check-p1337-founder-idea-to-prd-final-validation.js") && p1337.allowedFiles?.includes(REPORT_PATH));
+addCheck("P133.7 records validation commands", validationCommands.every((command) => p1337.validationCommands?.includes(command)));
+addCheck("P133.1-P133.7 contract entries complete", completedP133Subphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
 addCheck("prior P133 reports pass", [
+  "reports/p1336-founder-idea-to-prd-docs-roadmap-report.md",
   "reports/p1335-founder-idea-to-prd-tests-checkers-report.md",
   "reports/p1334-command-center-idea-to-prd-ux-report.md",
   "reports/p1333-founder-idea-to-prd-preview-report.md",
   "reports/p1332-founder-idea-to-prd-model-report.md",
   "reports/p1331-founder-idea-to-prd-productization-report.md",
 ].every(reportPassed));
-addCheck("prior P133 checkers accept P133.6", [p1335Checker, p1334Checker, p1333Checker, p1332Checker, p1331Checker].every((source) => source.includes("p1336CompleteState") && source.includes('status.currentPhase === "P133.6"')));
-addCheck("enterprise and P132.7 checkers accept P133.6", enterpriseChecker.includes("p1336CompleteState") && enterpriseChecker.includes("check:p1336-founder-idea-to-prd-docs-roadmap") && p1327Checker.includes("p1336CompleteState") && p1327Checker.includes('status.currentPhase === "P133.6"'));
-addCheck("phase status advanced", p1336CompatibleState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
-addCheck("completed P133.6 entries have required fields", [statusById.get("P133"), statusById.get("P133.6"), roadmapById.get("P133.6")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("changed files stay in P133.6 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
-addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P133.6 forbidden path check relaxed for ${status.currentPhase}`);
+addCheck("prior P133 checkers accept P133.7", [p1336Checker, p1335Checker, p1334Checker, p1333Checker, p1332Checker, p1331Checker].every((source) => source.includes("p1337FinalState") && source.includes('status.currentPhase === "P133.7"')));
+addCheck("enterprise and P132.7 checkers accept P133.7", enterpriseChecker.includes("p1337FinalState") && enterpriseChecker.includes("check:p1337-founder-idea-to-prd-final-validation") && p1327Checker.includes("p1337FinalState") && p1327Checker.includes('status.currentPhase === "P133.7"'));
+addCheck("P133 plan records P133.7", /## P133\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
+addCheck("README records P133.7", /P133\.7 final validation/i.test(readme) && /P134 durable DB and CRUD runtime is\s+planned-only next/i.test(readme));
+addCheck("platform roadmap records P133.7", /P133\.7 is complete/i.test(platformRoadmap) && /P134 Durable DB and CRUD\s+Runtime is planned-only next/i.test(platformRoadmap));
+addCheck("enterprise roadmap records P133 closure", /P133\.1-P133\.7 are now complete/i.test(enterpriseRoadmap) && /P134 is the next executable phase/i.test(enterpriseRoadmap));
+addCheck("phase status closes P133", p1337FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("completed P133 entries have required fields", [statusById.get("P133"), statusById.get("P133.7"), roadmapById.get("P133"), roadmapById.get("P133.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
+addCheck("P134 remains planned-only", p134.status === "planned" && p134.commit === "" && Array.isArray(p134.checksRun) && p134.checksRun.length === 0 && (p134.knownLimitations || []).join(" ").includes("planned-only"));
+addCheck("changed files stay in P133.7 allowed scope", changed.every((file) => allowedFiles.has(file)), changed.join(", "));
+addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid fake runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|write hosted db now|execute now|generate prd now|save now|persist now/i.test(docsBundle));
-addCheck("docs avoid unsafe positive claims", !hasUnsafePositiveClaim(docsBundle, /autonomous Q&A is enabled|PRD generation is enabled|provider PRD generation is enabled|agent dispatch is enabled|project mutation is enabled|DB writes are enabled|runtime writes are enabled|deploy is enabled|release is enabled|export is enabled|package creation is enabled|network calls are enabled|provider spend is enabled/i));
+addCheck("docs avoid unsafe positive claims", !hasUnsafePositiveClaim(docsBundle, /autonomous Q&A is enabled|PRD generation is enabled|provider PRD generation is enabled|agent dispatch is enabled|project mutation is enabled|DB writes are enabled|runtime writes are enabled|CRUD is live|deploy is enabled|release is enabled|export is enabled|package creation is enabled|network calls are enabled|provider spend is enabled/i));
 
 const failed = checks.filter((check) => check.status === "FAIL");
 
@@ -205,8 +192,8 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Validates P133.6 docs, roadmap, status, and report alignment for founder idea-to-PRD productization.",
-        "- Confirms P133.1-P133.6 are complete and P133.7 is either planned-only or complete under final validation.",
+        "- Validates final P133 closure, P133.1-P133.6 reports, checker handoffs, OS status, roadmap, and documentation.",
+        "- Confirms P134 is planned-only and no durable DB/CRUD runtime is enabled by P133.7.",
         "- Confirms this subphase does not call providers/models, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
     },
@@ -214,12 +201,12 @@ writeMarkdownReport(
     { title: "Validation Commands", body: validationCommands.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P133.6 is docs/roadmap/status validation only. P133.7 may close the phase, and live Q&A execution, provider/model PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, export, package creation, network calls, and provider spend remain blocked.",
+      body: "- P133.7 is final validation only. It does not enable live Q&A execution, provider/model PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, export, package creation, network calls, or provider spend. P134 remains planned-only until its own implementation-grade contract starts.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
-  { title: "P133.6 Founder Idea-to-PRD Docs Roadmap Report", phase: "P133.6" },
+  { title: "P133.7 Founder Idea-to-PRD Final Validation Report", phase: "P133.7" },
 );
 
-printCheckReport("P133.6 Founder Idea-to-PRD Docs Roadmap Check", checks, failed.length === 0 ? "PASS" : "FAIL");
+printCheckReport("P133.7 Founder Idea-to-PRD Final Validation Check", checks, failed.length === 0 ? "PASS" : "FAIL");
 if (failed.length > 0) process.exit(1);

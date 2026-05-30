@@ -282,7 +282,25 @@ const p1336CompleteState =
   && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P133.7")?.status === "planned"
   && roadmapById.get("P133.7")?.status === "planned";
-const p133SafeProgressState = p1331StartedState || p1332CompleteState || p1333CompleteState || p1334CompleteState || p1335CompleteState || p1336CompleteState;
+const p1337FinalState =
+  status.currentPhase === "P133.7"
+  && status.previousPhase === "P133.6"
+  && status.nextPhase === "P134"
+  && roadmap.currentPhase === "P133.7"
+  && roadmap.previousPhase === "P133.6"
+  && roadmap.nextPhase === "P134"
+  && status.current?.phaseId === "P133.7"
+  && status.previous?.phaseId === "P133.6"
+  && status.next?.phaseId === "P134"
+  && roadmap.current?.phaseId === "P133.7"
+  && roadmap.previous?.phaseId === "P133.6"
+  && roadmap.next?.phaseId === "P134"
+  && statusById.get("P133")?.status === "complete"
+  && roadmapById.get("P133")?.status === "complete"
+  && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6", "P133.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P134")?.status === "planned"
+  && roadmapById.get("P134")?.status === "planned";
+const p133SafeProgressState = p1331StartedState || p1332CompleteState || p1333CompleteState || p1334CompleteState || p1335CompleteState || p1336CompleteState || p1337FinalState;
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P132 final", contract.status === "complete" && contract.currentSubphase === "P132.7" && contract.previousSubphase === "P132.6" && contract.nextSubphase === "P133" && p1327.status === "complete");
@@ -332,7 +350,7 @@ writeMarkdownReport(
       body: [
         "- Validates final P132 closure, P132.1-P132.6 reports, scoped route coverage, checker handoffs, and OS status.",
         "- Confirms P132.5 Store Execution Scope remains scoped to Business Build and Agent Flow with Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
-        "- Confirms P133 remains planned-only or safely started at P133.1 without enabling DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+        "- Confirms P133 remains planned-only, safely in progress, or complete with P134 planned-only without enabling DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },

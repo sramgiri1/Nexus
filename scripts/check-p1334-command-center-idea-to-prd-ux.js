@@ -197,7 +197,25 @@ const p1336CompleteState =
   && ["P133.4", "P133.5", "P133.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P133.7")?.status === "planned"
   && roadmapById.get("P133.7")?.status === "planned";
-const p1334CompatibleState = p1334CompleteState || p1335CompleteState || p1336CompleteState;
+const p1337FinalState =
+  status.currentPhase === "P133.7"
+  && status.previousPhase === "P133.6"
+  && status.nextPhase === "P134"
+  && roadmap.currentPhase === "P133.7"
+  && roadmap.previousPhase === "P133.6"
+  && roadmap.nextPhase === "P134"
+  && status.current?.phaseId === "P133.7"
+  && status.previous?.phaseId === "P133.6"
+  && status.next?.phaseId === "P134"
+  && roadmap.current?.phaseId === "P133.7"
+  && roadmap.previous?.phaseId === "P133.6"
+  && roadmap.next?.phaseId === "P134"
+  && statusById.get("P133")?.status === "complete"
+  && roadmapById.get("P133")?.status === "complete"
+  && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6", "P133.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P134")?.status === "planned"
+  && roadmapById.get("P134")?.status === "planned";
+const p1334CompatibleState = p1334CompleteState || p1335CompleteState || p1336CompleteState || p1337FinalState;
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1334-command-center-idea-to-prd-ux"]));
 addCheck("Business Build reuses P133 model and preview helpers", businessSource.includes("buildFounderIdeaToPrdModel") && businessSource.includes("buildFounderIdeaToPrdPreview"));
@@ -211,9 +229,9 @@ addCheck("Business Build Local PRD renders P133 preview", localPrdSource.include
 addCheck("Agent Flow includes PRD context without dispatch", agentFlowSource.includes("Agent flow PRD context") && agentFlowSource.includes("PRD preview ready") && agentFlowSource.includes("Dispatch") && agentFlowSource.includes("Blocked"));
 addCheck("Playwright covers P133.4 UX", routeTests.includes("PRD preview ready") && routeTests.includes("Founder Idea-to-PRD Preview") && routeTests.includes("Acceptance Criteria") && routeTests.includes("Local in-memory preview only"));
 addCheck("route-wide safety assertions remain", routeTests.includes("DemoApp") && routeTests.includes("raw JSON") && routeTests.includes("private-project-") && routeTests.includes("dispatch agent now") && routeTests.includes("Use dark theme") && routeTests.includes("Use light theme") && routeTests.includes("Use system theme"));
-addCheck("contract marks P133.4 complete", contract.status === "in_progress" && p1334.status === "complete" && ((contract.currentSubphase === "P133.4" && contract.previousSubphase === "P133.3" && contract.nextSubphase === "P133.5") || (contract.currentSubphase === "P133.5" && contract.previousSubphase === "P133.4" && contract.nextSubphase === "P133.6") || (contract.currentSubphase === "P133.6" && contract.previousSubphase === "P133.5" && contract.nextSubphase === "P133.7")));
+addCheck("contract marks P133.4 complete", ["in_progress", "complete"].includes(contract.status) && p1334.status === "complete" && ((contract.currentSubphase === "P133.4" && contract.previousSubphase === "P133.3" && contract.nextSubphase === "P133.5") || (contract.currentSubphase === "P133.5" && contract.previousSubphase === "P133.4" && contract.nextSubphase === "P133.6") || (contract.currentSubphase === "P133.6" && contract.previousSubphase === "P133.5" && contract.nextSubphase === "P133.7") || (contract.currentSubphase === "P133.7" && contract.previousSubphase === "P133.6" && contract.nextSubphase === "P134")));
 addCheck("contract records P133.4 implementation scope", p1334.allowedFiles?.includes("dashboard/src/data/businessBuild.js") && p1334.allowedFiles?.includes("dashboard/src/pages/CommandCenterV2.jsx") && p1334.allowedFiles?.includes("dashboard/tests/routes.spec.js") && p1334.expectedExports?.includes("founderIdeaToPrdPreview"));
-addCheck("P133.5 handoff remains safe", (p1335.status === "planned" && statusById.get("P133.5")?.status === "planned" && roadmapById.get("P133.5")?.status === "planned") || (p1335.status === "complete" && (p1335CompleteState || p1336CompleteState)));
+addCheck("P133.5 handoff remains safe", (p1335.status === "planned" && statusById.get("P133.5")?.status === "planned" && roadmapById.get("P133.5")?.status === "planned") || (p1335.status === "complete" && (p1335CompleteState || p1336CompleteState || p1337FinalState)));
 addCheck("P133.4 records validation commands", validationCommands.every((command) => p1334.validationCommands?.includes(command)));
 addCheck("previous P133 checkers accept P133.4 handoff", p1333Checker.includes("p1334CompleteState") && p1332Checker.includes("p1334CompleteState") && p1331Checker.includes("p1334CompleteState"));
 addCheck("enterprise and P132.7 checkers accept P133.4/P133.5", enterpriseChecker.includes("p1334CompleteState") && enterpriseChecker.includes("p1335CompleteState") && enterpriseChecker.includes("check:p1334-command-center-idea-to-prd-ux") && enterpriseChecker.includes("check:p1335-founder-idea-to-prd-tests-checkers") && p1327Checker.includes("p1334CompleteState") && p1327Checker.includes("p1335CompleteState") && p1327Checker.includes('status.currentPhase === "P133.5"'));
@@ -221,7 +239,7 @@ addCheck("prior P133 reports pass", reportPassed("reports/p1333-founder-idea-to-
 addCheck("P133 plan records P133.4", /## P133\.4 Chat and PRD Command Center UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P133.4", /P133\.4 Command Center idea-to-PRD UX/i.test(readme));
 addCheck("platform roadmap records P133.4", /P133\.4 is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P133.4", (/P133\.4 is now complete/i.test(enterpriseRoadmap) || /P133\.1, P133\.2, P133\.3, and P133\.4 are now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.5 are now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.6 are now complete/i.test(enterpriseRoadmap)) && (/P133\.5 is the next executable subphase/i.test(enterpriseRoadmap) || /P133\.6 is the next executable subphase/i.test(enterpriseRoadmap) || /P133\.7 is the next executable subphase/i.test(enterpriseRoadmap)));
+addCheck("enterprise roadmap records P133.4", (/P133\.4 is now complete/i.test(enterpriseRoadmap) || /P133\.1, P133\.2, P133\.3, and P133\.4 are now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.5 are now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.6 are now complete/i.test(enterpriseRoadmap) || /P133\.1-P133\.7 are now complete/i.test(enterpriseRoadmap)) && (/P133\.5 is the next executable subphase/i.test(enterpriseRoadmap) || /P133\.6 is the next executable subphase/i.test(enterpriseRoadmap) || /P133\.7 is the next executable subphase/i.test(enterpriseRoadmap) || /P134 is the next executable phase/i.test(enterpriseRoadmap)));
 addCheck("phase status advanced", p1334CompatibleState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P133.4 entries have required fields", [statusById.get("P133"), statusById.get("P133.4"), roadmapById.get("P133.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck("changed files stay in P133.4 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);

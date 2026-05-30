@@ -3203,7 +3203,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P133.6 and P133.7 remains planned-only
+Current implementation is closed through P133.7 and P134 remains planned-only
 next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3242,7 +3242,12 @@ fake-action blocking.
 
 P133.6 is complete. NEXUS docs, README, platform roadmap, enterprise roadmap,
 OS status, phase index, and validation reports now agree that P133.1-P133.6 are
-complete and P133.7 Final Validation is next.
+complete.
+
+P133.7 is complete. NEXUS final validation now closes Founder Idea-to-PRD
+Productization with final checker evidence, compatibility gates, docs, roadmap,
+OS status, phase index, and validation reports. P134 Durable DB and CRUD
+Runtime is planned-only next.
 Autonomous Q&A execution, provider/model calls, PRD generation execution, agent
 dispatch, project creation or mutation, file writes, DB/runtime writes, deploy,
 release, export, package, network calls, and spend remain blocked.

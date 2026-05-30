@@ -234,6 +234,164 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P133.7 Final Validation
+
+Status: complete
+
+Scope classification:
+- `NEXUS_OS_CHANGE`
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `67530192`
+
+Narrow goal:
+- Close P133 with final validation evidence and a planned-only P134 handoff.
+
+Allowed files:
+- `contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json`
+- `docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1337-founder-idea-to-prd-final-validation.js`
+- P133.1-P133.6 compatibility checkers
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-p1327-founder-runtime-store-live-admission-execution.js`
+- Generated P133.7, compatibility, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- No runtime exports.
+- No DB schema.
+- No provider envelope.
+- No dispatch packet.
+- No project data.
+- Final validation emits only a markdown checker report.
+
+Command Center UX requirements:
+- Preserve existing Chat with NEXUS, Business Build, Agent Flow, DB Runtime,
+  OS Roadmap, and route-wide navigation behavior.
+- Do not expose DemoApp in full Command Center.
+- Do not show raw private IDs, raw JSON, raw logs, raw policy dumps, or raw
+  report internals in primary UX.
+- Do not add runnable provider, model, agent, project, DB, deploy, export, or
+  package actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Rerun route-wide Playwright coverage.
+
+Tests and checker updates:
+- Add `check:p1337-founder-idea-to-prd-final-validation`.
+- Update P133.1-P133.6 checkers to accept P133.7 final state.
+- Update P132.7 and enterprise readiness checkers to accept P133.7 final state.
+- Rerun existing route-wide Playwright coverage without editing dashboard test
+  source.
+
+Docs to update:
+- This P133 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+Reports to regenerate:
+- P133.7 report.
+- P133.6-P133.1 compatibility reports.
+- Enterprise readiness roadmap report.
+- P132.7 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P133 complete.
+- P133.7 complete.
+- Current phase P133.7.
+- Previous phase P133.6.
+- Next phase P134 planned-only.
+
+Known risks:
+- Closing P133 could be mistaken for live PRD generation or live business build.
+  P133.7 keeps execution blocked and records P134 as planned-only.
+- Compatibility checkers can drift when status advances. P133.7 explicitly
+  updates P133, P132.7, and enterprise readiness gates.
+
+Rollback plan:
+- Revert only the P133.7 implementation and stamp commits. P133.6 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1337-founder-idea-to-prd-final-validation`
+- `npm run check:p1336-founder-idea-to-prd-docs-roadmap`
+- `npm run check:p1335-founder-idea-to-prd-tests-checkers`
+- `npm run check:p1334-command-center-idea-to-prd-ux`
+- `npm run check:p1333-founder-idea-to-prd-preview`
+- `npm run check:p1332-founder-idea-to-prd-model`
+- `npm run check:p1331-founder-idea-to-prd-productization`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1327-founder-runtime-store-live-admission-execution`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P133.7 allowed files>`
+- `git commit -m "chore(nexus): implement p1337 idea to prd final validation"`
+- `git add <P133.7 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1337 idea to prd final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Live Q&A execution, provider/model PRD generation, agent dispatch, project
+  mutation, file writes, DB/runtime writes, deploy, release, export, package,
+  network calls, and spend remain blocked.
+- P134 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P133.6 Docs / Roadmap / Status
 
 Phase: P133 Founder Idea-to-PRD Productization
