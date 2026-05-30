@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.5
-- Generated at: 2026-05-30T21:30:34.527Z
+- Generated at: 2026-05-30T21:45:27.613Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 43849d84
+- Validation HEAD: f43eac0f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -49,11 +49,11 @@
 | README records P138.5 | PASS |  |
 | platform roadmap records P138.5 | PASS |  |
 | enterprise roadmap records P138.5 | PASS |  |
-| phase status starts P138.5 | PASS | P138.5/P138.4/P138.6 |
+| phase status starts P138.5 or hands off to P138.6 | PASS | P138.6/P138.5/P138.7 |
 | completed P138.5 entries have required fields | PASS |  |
-| P138.6 remains planned | PASS |  |
-| changed files stay in P138.5 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P138.6 remains planned or is safely complete | PASS |  |
+| changed files stay in P138.5 allowed scope | PASS | scope check relaxed for P138.6 |
+| forbidden paths unchanged | PASS | P138.5 forbidden path check relaxed for P138.6 |
 | aggregate UX data avoids raw private IDs | PASS |  |
 | aggregate UX data avoids raw dumps | PASS |  |
 | aggregate UX data avoids fake runnable actions | PASS |  |

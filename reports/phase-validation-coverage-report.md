@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T21:30:42.180Z
+- Generated at: 2026-05-30T21:45:36.133Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 43849d84
+- Validation HEAD: f43eac0f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -605,7 +605,7 @@
 | P137.5 validation coverage | PASS | 27 checkers, 23 reports |
 | P137.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P137.7 validation coverage | PASS | 48 checkers, 45 reports |
-| P138 validation coverage | PASS | 13 checkers, 5 reports |
+| P138 validation coverage | PASS | 15 checkers, 6 reports |
 | P139 validation coverage | PASS | dedicated_checker, validation_report |
 | P140 validation coverage | PASS | dedicated_checker, validation_report |
 | P141 validation coverage | PASS | dedicated_checker, validation_report |
@@ -615,7 +615,7 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P138.5; next=P138.6; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P138.6; next=P138.7; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
