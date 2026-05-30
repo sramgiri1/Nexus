@@ -24437,7 +24437,7 @@
       "order": 175,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a841b071",
       "commandCenterVisible": true,
       "detail": "P139 is in progress through P139.3. A read-only evidence preview now renders display-safe ledger relationships while every live write and execution authority remains blocked.",
       "summary": "P139.3 adds the zero-spend read-only evidence preview; P139.4 Command Center UX remains planned-only.",
@@ -24805,7 +24805,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T23:55:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "a841b071",
           "summary": "P139.3 adds a local read-only evidence preview for ledger relationships with zero-spend, non-runnable rows and sections.",
           "detail": "P139.3 reuses the P139.2 ledger model and shared guard/redaction/envelope helpers to render display-safe preview sections without live writes.",
           "checksRun": [
@@ -25401,7 +25401,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T23:55:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a841b071",
       "summary": "P139.3 adds a local read-only evidence preview for ledger relationships with zero-spend, non-runnable rows and sections.",
       "detail": "P139.3 reuses the P139.2 ledger model and shared guard/redaction/envelope helpers to render display-safe preview sections without live writes.",
       "checksRun": [
@@ -27122,7 +27122,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T23:55:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "a841b071",
     "summary": "P139.3 adds a local read-only evidence preview for ledger relationships with zero-spend, non-runnable rows and sections.",
     "detail": "P139.3 reuses the P139.2 ledger model and shared guard/redaction/envelope helpers to render display-safe preview sections without live writes.",
     "checksRun": [

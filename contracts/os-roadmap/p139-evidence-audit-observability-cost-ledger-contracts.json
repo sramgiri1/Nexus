@@ -436,7 +436,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T23:55:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a841b071",
       "summary": "P139.3 adds a local read-only evidence preview for ledger relationships with zero-spend, non-runnable rows and sections.",
       "detail": "P139.3 reuses the P139.2 ledger model and shared guard/redaction/envelope helpers to render display-safe preview sections without live writes.",
       "checksRun": [
@@ -643,7 +643,7 @@
   ],
   "completedAt": "2026-05-30T23:55:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "a841b071",
   "checksRun": [
     "npm run check:p1393-evidence-audit-observability-cost-ledger",
     "npm run check:p1392-evidence-audit-observability-cost-ledger",
