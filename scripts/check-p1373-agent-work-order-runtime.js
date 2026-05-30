@@ -154,6 +154,24 @@ const p1373CurrentState =
   && roadmapById.get("P137.3")?.status === "complete"
   && statusById.get("P137.4")?.status === "planned"
   && roadmapById.get("P137.4")?.status === "planned";
+const p1374CurrentState =
+  status.currentPhase === "P137.4"
+  && status.previousPhase === "P137.3"
+  && status.nextPhase === "P137.5"
+  && roadmap.currentPhase === "P137.4"
+  && roadmap.previousPhase === "P137.3"
+  && roadmap.nextPhase === "P137.5"
+  && status.current?.phaseId === "P137.4"
+  && status.previous?.phaseId === "P137.3"
+  && status.next?.phaseId === "P137.5"
+  && roadmap.current?.phaseId === "P137.4"
+  && roadmap.previous?.phaseId === "P137.3"
+  && roadmap.next?.phaseId === "P137.5"
+  && statusById.get("P137")?.status === "in_progress"
+  && roadmapById.get("P137")?.status === "in_progress"
+  && ["P137.1", "P137.2", "P137.3", "P137.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P137.5")?.status === "planned"
+  && roadmapById.get("P137.5")?.status === "planned";
 
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 const serializedDryRun = JSON.stringify(dryRun);
@@ -175,7 +193,7 @@ addCheck("all safety flags remain blocked", AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG
 addCheck("all authority candidate counts remain zero", Object.values(dryRun.candidateCounts || {}).every((value) => value === 0) && dryRun.dispatchSummary?.dispatchableCandidateCount === 0 && dryRun.dispatchSummary?.executableCandidateCount === 0);
 addCheck("dry run hides raw private ids and dumps", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedDryRun) && !/Bearer\s+|sk-[A-Za-z0-9]|DATABASE_URL|postgres(?:ql)?:\/\/|sqliteEntity|recordRef|requestKey|raw JSON|raw logs|raw policy dump/i.test(serializedDryRun));
 addCheck("dry run avoids fake runnable actions", !/dispatch agent now|run agent now|execute work order now|execute tool now|call provider now|call model now|write db now|mutate project now|deploy now|export now|package now|spend now/i.test(serializedDryRun));
-addCheck("contract advances P137.3", contract.phaseId === "P137" && contract.status === "in_progress" && contract.currentSubphase === "P137.3" && contract.previousSubphase === "P137.2" && contract.nextSubphase === "P137.4" && p1373.status === "complete" && p1374.status === "planned");
+addCheck("contract advances P137.3", contract.phaseId === "P137" && contract.status === "in_progress" && p1373.status === "complete" && ((contract.currentSubphase === "P137.3" && contract.previousSubphase === "P137.2" && contract.nextSubphase === "P137.4" && p1374.status === "planned") || (contract.currentSubphase === "P137.4" && contract.previousSubphase === "P137.3" && contract.nextSubphase === "P137.5" && p1374.status === "complete")));
 addCheck("contract records expected base commit", p1373.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records dry-run exports", EXPECTED_EXPORTS.every((name) => p1373.expectedExports?.includes(name)));
 addCheck("P137.2 report passes", reportPassed("reports/p1372-agent-work-order-runtime-report.md"));
@@ -189,10 +207,10 @@ addCheck("OS checker recognizes P137.4 handoff", ["P137.1", "P137.2", "P137.3", 
 addCheck("P137 plan records P137.3", /### P137\.3 Dispatch Dry Run[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P137.3", /P137\.3 agent work order dispatch dry run/i.test(readme));
 addCheck("platform roadmap records P137.3", /P137\.3 agent work order dispatch dry run is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P137.3", /P137\.3 is now complete/i.test(enterpriseRoadmap) && /P137\.4 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status starts P137.3", p1373CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P137.3", /P137\.3 is now complete/i.test(enterpriseRoadmap) && (/P137\.4 is the next executable subphase/i.test(enterpriseRoadmap) || (/P137\.4 is now complete/i.test(enterpriseRoadmap) && /P137\.5 is the next executable subphase/i.test(enterpriseRoadmap))));
+addCheck("phase status starts P137.3 or safely hands off to P137.4", p1373CurrentState || p1374CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P137.3 entries have required fields", [statusById.get("P137"), statusById.get("P137.3"), roadmapById.get("P137.3")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P137.4 remains planned-only", statusById.get("P137.4")?.status === "planned" && roadmapById.get("P137.4")?.status === "planned" && !(statusById.get("P137.4")?.checksRun || []).length);
+addCheck("P137.4 remains planned-only or safely complete", (statusById.get("P137.4")?.status === "planned" && roadmapById.get("P137.4")?.status === "planned" && !(statusById.get("P137.4")?.checksRun || []).length) || p1374CurrentState);
 addCheck(
   "changed files stay in P137.3 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),
@@ -234,7 +252,9 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P137.3 is local non-runnable dry-run work. It does not update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.4 remains planned-only.",
+      body: p1374CurrentState
+        ? "- P137.3 is local non-runnable dry-run work. P137.4 may now surface the display-safe Agent Flow UX. Provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked."
+        : "- P137.3 is local non-runnable dry-run work. It does not update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.4 remains planned-only.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

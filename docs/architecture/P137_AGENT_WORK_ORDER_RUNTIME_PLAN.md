@@ -476,13 +476,163 @@ Final response checklist:
 
 ### P137.4 Agent Flow Command Center UX
 
-Status: planned
+Status: complete
 
-- Surface P137.3 dry-run state in Agent Flow.
-- Show what changed, current state, next action, blockers, disabled reason,
-  owner agent/capability, evidence/activity location, and zero-spend cost
-  impact.
-- Preserve System/Dark/Light themes and route-wide safety.
+Narrow goal:
+- Surface the P137.3 non-runnable agent work order dispatch dry run on Agent
+  Flow as a concise, display-safe founder/operator view.
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `c2cd498a`
+
+Allowed files:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json`
+- `docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1374-agent-work-order-runtime.js`
+- `scripts/check-p1373-agent-work-order-runtime.js`
+- `scripts/check-p1372-agent-work-order-runtime.js`
+- `scripts/check-p1371-agent-work-order-runtime.js`
+- `scripts/check-p1367-secrets-providers-tool-governance-final-validation.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- P137.4, P137.3, P137.2, P137.1, P136.7, enterprise, OS status, and phase
+  coverage reports
+
+Forbidden files:
+- `projects/**`
+- `generated-projects/**`
+- `careloop/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules created or updated:
+- Add `buildAgentWorkOrderRuntimeDisplayModel` in
+  `dashboard/src/data/businessBuild.js`.
+- Add `AgentWorkOrderRuntimeCard` to `dashboard/src/pages/CommandCenterV2.jsx`
+  and render it only on Agent Flow.
+- Add focused Agent Flow Playwright coverage in `dashboard/tests/routes.spec.js`.
+- Add `scripts/check-p1374-agent-work-order-runtime.js` and package script.
+- Update P137.3, enterprise, and OS status checker handoffs.
+- Update P137 contract, this plan, README, platform roadmap, enterprise
+  roadmap, OS phase status, phase index, and generated reports.
+
+Expected exports, schemas, and data shapes:
+- `buildAgentWorkOrderRuntimeDisplayModel(founderIdeaSummary)`
+- Display model shape: current state, local planning mode, source state,
+  founder idea, work-order counts, owner capability, next action, disabled
+  reason, evidence location, activity location, cost impact, work-order lanes,
+  dispatch gates, safety rows, and blockers.
+- The Command Center adapter reuses browser-safe founder live handoff work-order
+  display data and the checker compares it against the P137.3 dry-run lane
+  shape. The dashboard must not import Node-side runtime helpers.
+- The display model excludes raw dry-run handles, scoped-context key arrays,
+  provider payloads, tool payloads, executable commands, runtime dispatch
+  requests, raw private IDs, raw JSON/log/policy/registry dumps, mutation
+  controls, dispatch controls, deploy controls, package controls, and spend
+  controls.
+
+Command Center UX requirements:
+- Agent Flow shows planned work-order lanes, dispatch gates, blockers, disabled
+  reason, owner capability, evidence/activity location, next action, and
+  zero-spend cost impact.
+- Chat/Lite stays clean.
+- Primary UX must not show raw JSON, raw logs, raw policy dumps, raw registry
+  dumps, raw private IDs, demo surfaces, or fake runnable actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Use existing Command Center CSS variables and card/grid/pill patterns.
+
+Playwright tests:
+- Add `Agent Flow agent work order runtime shows display-safe dry run`.
+- Run route-wide Command Center UX coverage.
+
+Checker updates:
+- Add `check:p1374-agent-work-order-runtime`.
+- Update P137.3 checker for P137.4 handoff compatibility.
+- Update enterprise readiness checker for P137.4 active state.
+- Update OS phase status checker for P137.5 handoff ID.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update README current implementation notes.
+- Update platform and enterprise roadmaps.
+- Update P137 OS phase status/index.
+
+OS phase status update:
+- P137 remains in progress.
+- P137.4 complete.
+- Current phase is P137.4.
+- Previous phase is P137.3.
+- Next phase is P137.5 planned-only.
+
+Validation commands:
+- `npm run check:p1374-agent-work-order-runtime`
+- `npm run check:p1373-agent-work-order-runtime`
+- `npm run check:p1372-agent-work-order-runtime`
+- `npm run check:p1371-agent-work-order-runtime`
+- `npm run check:p1367-secrets-providers-tool-governance-final-validation`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Agent Flow agent work order runtime"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- Browser verification at `/command-center/agent-flow`
+- `git diff --check`
+
+Final safety checks:
+- No forbidden paths changed.
+- No full registry/context loading into model context.
+- No provider/model calls, tool execution, MCP startup, agent dispatch,
+  DB/runtime writes, project mutation, network calls, deploy, release, export,
+  package, or spend.
+- P137.5 remains planned-only.
+- No stale implementation commit marker remains after status stamp.
+
+Git add/commit/push commands:
+- `git add <P137.4 allowed files>`
+- `git commit -m "chore(nexus): implement p1374 agent work order ux"`
+- `git add <P137.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1374 agent work order ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ### P137.5 Tests / Checkers
 

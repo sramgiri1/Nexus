@@ -233,6 +233,95 @@ function toReadinessLane(lane = {}) {
   };
 }
 
+export function buildAgentWorkOrderRuntimeDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA, workOrdersInput = null) {
+  const workOrders = workOrdersInput || buildFounderLiveHandoffDisplayModels({ founderIdea: founderIdeaSummary }).workOrders;
+  const workOrderRows = Array.isArray(workOrders?.workOrderRows) ? workOrders.workOrderRows : [];
+
+  return {
+    currentState: "Ready For Local Review Dispatch Blocked",
+    mode: "Local non-runnable planning",
+    sourceState: "Scoped work-order packets valid",
+    founderIdea: founderIdeaSummary,
+    dryRunCandidateCount: workOrders?.dryRunRowCount || workOrderRows.length,
+    dispatchableCandidateCount: 0,
+    executableCandidateCount: 0,
+    ownerCapability: workOrders?.ownerCapability || "NEXUS Agent Work Order Runtime Guard",
+    nextAction: "Review the planned agent lanes and keep dispatch blocked until a later explicit authority phase.",
+    disabledReason:
+      "Agent work orders are local planning records only. Provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+    evidenceLocation: "Agent work order dry-run report",
+    activityLocation: "Activity Log",
+    costImpact: "Zero-spend local planning. No provider calls, model calls, tool execution, network calls, deploy, package creation, or provider spend.",
+    lanes: workOrderRows.map((row) => ({
+      label: row.proposedAgent || "Agent lane",
+      workOrder: row.label || "Work order",
+      taskSummary: row.proposedWork || "Review the scoped work order before execution authority exists.",
+      currentState: "Ready For Review Dispatch Blocked",
+      ownerCapability: row.ownerAgentCapability || "NEXUS Agent Work Order Runtime Guard",
+      nextAction: "Review this work-order lane in Agent Flow before any future explicit dispatch authority.",
+      blocker: row.blocker || "Agent dispatch remains blocked.",
+      evidenceLocation: "Agent work order dry-run report",
+      activityLocation: "Activity Log",
+      costImpact: row.costImpact || "No provider spend.",
+      dispatchAllowed: "Blocked",
+      executionAllowed: "Blocked",
+    })),
+    gateRows: [
+      {
+        label: "Scoped context packet",
+        currentState: "Evidence ready",
+        nextAction: "Keep agent context limited to selected task, project, memory, trusted context, skill/tool, budget, policy, and evidence fields.",
+        disabledReason: "Scoped packet readiness does not grant dispatch or execution authority.",
+        liveAuthority: "Blocked",
+      },
+      {
+        label: "Provider and model boundary",
+        currentState: "Blocked",
+        nextAction: "Keep provider/model calls blocked until a later explicit authority phase.",
+        disabledReason: "Provider/model calls are not enabled from Agent Flow.",
+        liveAuthority: "Blocked",
+      },
+      {
+        label: "Tool and MCP boundary",
+        currentState: "Blocked",
+        nextAction: "Keep tool execution and MCP startup blocked until a later explicit authority phase.",
+        disabledReason: "Tool execution and MCP startup are not enabled from Agent Flow.",
+        liveAuthority: "Blocked",
+      },
+      {
+        label: "Runtime and project mutation boundary",
+        currentState: "Blocked",
+        nextAction: "Keep DB/runtime writes and project mutation blocked until a later explicit authority phase.",
+        disabledReason: "DB/runtime writes and project mutation are not enabled from Agent Flow.",
+        liveAuthority: "Blocked",
+      },
+      {
+        label: "Cost and release boundary",
+        currentState: "Blocked",
+        nextAction: "Keep deploy, release, export, package, network, and spend authority blocked.",
+        disabledReason: "Deploy, release, export, package, network calls, and spend are not enabled from Agent Flow.",
+        liveAuthority: "Blocked",
+      },
+    ],
+    safetyRows: [
+      { label: "Scoped packets", value: "Ready" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Provider/model calls", value: "Blocked" },
+      { label: "Tool/MCP execution", value: "Blocked" },
+      { label: "DB/runtime writes", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Deploy/package/network/spend", value: "Blocked" },
+    ],
+    blockers: workOrders?.blockers || [
+      "Agent dispatch remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Tool execution and MCP startup remain blocked.",
+      "DB/runtime writes and project mutation remain blocked.",
+      "Deploy, release, export, package, network calls, and spend remain blocked.",
+    ],
+  };
+}
+
 function buildBusinessBuildDryRunAdmissionView(founderDbWorkflow = {}) {
   const lanes = (founderDbWorkflow.lanes || FOUNDER_DB_LANES).map((lane) => ({
     label: lane.label || "Business Build lane",
@@ -4897,6 +4986,10 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderIdea: prdFields.founderIdea,
     founderLiveUseReview: founderLiveUse.review,
   });
+  const agentWorkOrderRuntime = buildAgentWorkOrderRuntimeDisplayModel(
+    prdFields.founderIdea || founderIdeaSummary,
+    founderLiveHandoff.workOrders,
+  );
   const founderLiveWorkAdmission = buildFounderLiveWorkAdmissionDisplayModels({
     founderIdea: prdFields.founderIdea,
   });
@@ -5119,6 +5212,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveAgentWorkQueueAdmission,
     founderLiveAgentWorkAssignment,
     founderLiveAgentDispatchReadiness,
+    agentWorkOrderRuntime,
     founderLiveRuntimeAdmissionReadiness,
     founderLiveRuntimeExecutionReadiness,
     founderRuntimeExecutionApprovalGate,

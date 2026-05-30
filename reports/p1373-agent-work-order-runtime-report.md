@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.3
-- Generated at: 2026-05-30T18:50:30.879Z
+- Generated at: 2026-05-30T19:13:42.284Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bb7caa3f
+- Validation HEAD: c2cd498a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -55,11 +55,11 @@
 | README records P137.3 | PASS |  |
 | platform roadmap records P137.3 | PASS |  |
 | enterprise roadmap records P137.3 | PASS |  |
-| phase status starts P137.3 | PASS | P137.3/P137.2/P137.4 |
+| phase status starts P137.3 or safely hands off to P137.4 | PASS | P137.4/P137.3/P137.5 |
 | completed P137.3 entries have required fields | PASS |  |
-| P137.4 remains planned-only | PASS |  |
-| changed files stay in P137.3 allowed scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P137.4 remains planned-only or safely complete | PASS |  |
+| changed files stay in P137.3 allowed scope | PASS | scope check relaxed for P137.4 |
+| forbidden paths unchanged | PASS | P137.3 forbidden path check relaxed for P137.4 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable work order actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -79,7 +79,7 @@
 - git diff --check
 ## Known Limitations
 
-- P137.3 is local non-runnable dry-run work. It does not update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.4 remains planned-only.
+- P137.3 is local non-runnable dry-run work. P137.4 may now surface the display-safe Agent Flow UX. Provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.
 ## Result
 
 PASS (41/41)

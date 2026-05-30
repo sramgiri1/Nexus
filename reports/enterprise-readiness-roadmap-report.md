@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T18:50:44.665Z
+- Generated at: 2026-05-30T19:13:43.108Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bb7caa3f
+- Validation HEAD: c2cd498a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,7 +36,7 @@
 | P133/P134/P135 checkers registered when active | PASS |  |
 | P136 checker registered when active | PASS |  |
 | P137 checker registered when active | PASS |  |
-| current enterprise handoff | PASS | P137.3/P137.2/P137.4 |
+| current enterprise handoff | PASS | P137.4/P137.3/P137.5 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -49,8 +49,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1367-secrets-providers-tool-governance-final-validation-report.md, reports/p1371-agent-work-order-runtime-report.md, reports/p1372-agent-work-order-runtime-report.md, reports/p1373-agent-work-order-runtime-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1367-secrets-providers-tool-governance-final-validation-report.md, reports/p1371-agent-work-order-runtime-report.md, reports/p1372-agent-work-order-runtime-report.md, reports/p1373-agent-work-order-runtime-report.md |
+| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1367-secrets-providers-tool-governance-final-validation-report.md, reports/p1371-agent-work-order-runtime-report.md, reports/p1372-agent-work-order-runtime-report.md, reports/p1373-agent-work-order-runtime-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1367-secrets-providers-tool-governance-final-validation.js, scripts/check-p1371-agent-work-order-runtime.js, scripts/check-p1372-agent-work-order-runtime.js, scripts/check-p1373-agent-work-order-runtime.js, reports/p1374-agent-work-order-runtime-report.md, scripts/check-p1374-agent-work-order-runtime.js |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1367-secrets-providers-tool-governance-final-validation-report.md, reports/p1371-agent-work-order-runtime-report.md, reports/p1372-agent-work-order-runtime-report.md, reports/p1373-agent-work-order-runtime-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1367-secrets-providers-tool-governance-final-validation.js, scripts/check-p1371-agent-work-order-runtime.js, scripts/check-p1372-agent-work-order-runtime.js, scripts/check-p1373-agent-work-order-runtime.js, reports/p1374-agent-work-order-runtime-report.md, scripts/check-p1374-agent-work-order-runtime.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -64,7 +64,7 @@
 - git diff --check
 ## Known Limitations
 
-- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, and P136.1-P136.7 may be complete. P137 may be in progress through P137.3. P138-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
+- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, and P136.1-P136.7 may be complete. P137 may be in progress through P137.4. P138-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
 ## Result
 
 PASS (24/24)

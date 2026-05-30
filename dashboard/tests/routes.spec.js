@@ -242,6 +242,39 @@ test("Agent Flow route loads local lanes directly", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Agent Flow agent work order runtime shows display-safe dry run", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+  await page.goto("/command-center/agent-flow");
+
+  const runtime = page.getByLabel("Agent work order runtime");
+  await expect(runtime).toBeVisible();
+  await expect(runtime).toContainText("Agent Work Order Runtime");
+  await expect(runtime).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(runtime).toContainText("Ready For Local Review Dispatch Blocked");
+  await expect(runtime).toContainText("Work orders");
+  await expect(runtime).toContainText("Dispatchable");
+  await expect(runtime).toContainText("Executable");
+  await expect(runtime).toContainText("Founder Intake Lead");
+  await expect(runtime).toContainText("Product Strategist");
+  await expect(runtime).toContainText("Program Architect");
+  await expect(runtime).toContainText("Provider/model calls");
+  await expect(runtime).toContainText("DB/runtime writes");
+  await expect(runtime).toContainText("Project mutation");
+  await expect(runtime).toContainText("Cost impact");
+  await expect(runtime).toContainText("Zero-spend local planning");
+
+  const runtimeText = await runtime.innerText();
+  expect(runtimeText).not.toMatch(/agent-work-order-dispatch-dry-run|raw JSON|raw logs|raw policy|providerPayload|toolPayload|runtimeDispatchRequest/i);
+  expect(runtimeText).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+  expect(runtimeText).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+
+  expect(errors).toEqual([]);
+});
+
 test("Founder operations pages show useful action boards", async ({ page }) => {
   const errors = captureClientErrors(page);
 

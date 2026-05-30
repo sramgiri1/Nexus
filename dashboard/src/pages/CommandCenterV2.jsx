@@ -3301,6 +3301,100 @@ function AgentFlowPanel({ envelope, prdPreview }) {
   );
 }
 
+function AgentWorkOrderRuntimeCard({ runtime }) {
+  if (!runtime) return null;
+
+  const lanes = Array.isArray(runtime.lanes) ? runtime.lanes.slice(0, 6) : [];
+  const gates = Array.isArray(runtime.gateRows) ? runtime.gateRows.slice(0, 5) : [];
+  const safetyRows = Array.isArray(runtime.safetyRows) ? runtime.safetyRows : [];
+  const blockers = Array.isArray(runtime.blockers) ? runtime.blockers.slice(0, 5) : [];
+
+  return (
+    <section className="ccv2-card" style={{ marginTop: 16 }} aria-label="Agent work order runtime">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Agent Work Order Runtime</div>
+          <h3>Planned agent work orders</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {runtime.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Dispatch blocked</span>
+      </div>
+      <div className="ccv2-stat-chips" style={{ marginTop: 12, marginBottom: 0 }} aria-label="Work order counts">
+        <div className="ccv2-stat-chip">
+          <span className="ccv2-stat-chip__label">Work orders</span>
+          <span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{runtime.dryRunCandidateCount}</span>
+        </div>
+        <div className="ccv2-stat-chip">
+          <span className="ccv2-stat-chip__label">Dispatchable</span>
+          <span className="ccv2-stat-chip__value ccv2-stat-chip__value--disabled">{runtime.dispatchableCandidateCount}</span>
+        </div>
+        <div className="ccv2-stat-chip">
+          <span className="ccv2-stat-chip__label">Executable</span>
+          <span className="ccv2-stat-chip__value ccv2-stat-chip__value--disabled">{runtime.executableCandidateCount}</span>
+        </div>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mode</span><span className="ccv2-page-summary-value">{runtime.mode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{runtime.founderIdea}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{runtime.sourceState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{runtime.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{runtime.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{runtime.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{runtime.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{runtime.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{runtime.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {lanes.map((lane) => (
+          <div
+            key={`${lane.label}-${lane.workOrder}`}
+            aria-label={`${lane.label} agent work order lane`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{lane.currentState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.workOrder}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.taskSummary}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.blocker}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {lane.ownerCapability}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {gates.map((gate) => (
+          <div
+            key={gate.label}
+            aria-label={`${gate.label} agent work order gate`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{gate.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{gate.liveAuthority}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{gate.currentState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{gate.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{gate.disabledReason}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className={row.value === "Ready" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
+    </section>
+  );
+}
+
 function AgentFlowPage() {
   const [envelope] = useState(getStoredLiteQnaState);
   const [founderIdea] = useState(getStoredLiteFounderIdea);
@@ -3331,6 +3425,7 @@ function AgentFlowPage() {
         }))}
       />
       <AgentFlowPanel envelope={envelope} prdPreview={businessBuild.founderIdeaToPrdPreview} />
+      <AgentWorkOrderRuntimeCard runtime={businessBuild.agentWorkOrderRuntime} />
       <FounderLiveUseReviewCard
         readiness={businessBuild.founderLiveUseReadiness}
         review={businessBuild.founderLiveUseReview}
