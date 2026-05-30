@@ -771,7 +771,8 @@
     "check:p1375-agent-work-order-runtime": "node scripts/check-p1375-agent-work-order-runtime.js",
     "check:p1376-agent-work-order-runtime": "node scripts/check-p1376-agent-work-order-runtime.js",
     "check:p1377-agent-work-order-runtime": "node scripts/check-p1377-agent-work-order-runtime.js",
-    "check:p1381-project-workspace-mutation-build-pipeline": "node scripts/check-p1381-project-workspace-mutation-build-pipeline.js"
+    "check:p1381-project-workspace-mutation-build-pipeline": "node scripts/check-p1381-project-workspace-mutation-build-pipeline.js",
+    "check:p1382-project-workspace-mutation-build-pipeline": "node scripts/check-p1382-project-workspace-mutation-build-pipeline.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

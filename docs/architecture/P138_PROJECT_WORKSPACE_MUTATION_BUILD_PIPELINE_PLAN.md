@@ -165,7 +165,7 @@ Final response checklist:
 
 ## P138.2 Workspace Mutation Model
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Define the read-only project workspace mutation model with project boundary,
@@ -174,13 +174,17 @@ Narrow goal:
 
 Starting branch and expected base commit:
 - Branch: `codex/nexus-e2e-phase-validation`
-- Expected base commit: `pending-p1381-final-commit`
+- Expected base commit: `1e9edfbd`
 
 Allowed files:
 - `shared/projectWorkspaceMutationModel.js`
+- `scripts/check-p1382-project-workspace-mutation-build-pipeline.js`
+- `scripts/check-p1381-project-workspace-mutation-build-pipeline.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
 - P138 contract, plan, README, platform roadmap, enterprise roadmap, phase
-  status, phase index, package script, P138.1/P138.2 checkers, enterprise/OS
-  checkers, and generated reports
+  status, phase index, package script, and generated P138.2, P138.1,
+  enterprise, OS status, and phase coverage reports
 
 Forbidden files:
 - `projects/**`, `generated-projects/**`, `careloop/**`, `dashboard/src/**`,
@@ -227,8 +231,11 @@ Docs/README/roadmap updates:
 - Update P138 plan and roadmap/status docs for P138.2 only.
 
 OS phase status update:
-- P138 in progress; P138.2 complete; current P138.2; previous P138.1; next
-  P138.3 planned-only.
+- P138 in progress.
+- P138.2 complete.
+- Current phase is P138.2.
+- Previous phase is P138.1.
+- Next phase is P138.3 planned-only.
 
 Validation commands:
 - `npm run check:p1382-project-workspace-mutation-build-pipeline`

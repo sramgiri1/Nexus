@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.1
-- Generated at: 2026-05-30T20:16:34.090Z
+- Generated at: 2026-05-30T20:30:49.409Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1e9edfbd
+- Validation HEAD: 9a4bc942
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | checker reuses shared report helpers | PASS |  |
 | contract starts P138 safely | PASS |  |
 | contract has seven implementation-grade subphases | PASS |  |
-| P138.1 complete and P138.2 planned | PASS |  |
+| P138.1 complete and P138.2 planned or complete | PASS |  |
 | P138.1 records expected base commit | PASS |  |
 | P138.1 records validation commands | PASS |  |
 | project boundary policy blocks mutation | PASS |  |
@@ -33,11 +33,11 @@
 | README records P138.1 | PASS |  |
 | platform roadmap records P138.1 | PASS |  |
 | enterprise roadmap records P138.1 | PASS |  |
-| phase status starts P138.1 | PASS | P138.1/P137.7/P138.2 |
+| phase status starts P138.1 or hands off to P138.2 | PASS | P138.2/P138.1/P138.3 |
 | completed P138.1 entries have required fields | PASS |  |
-| P138.2 remains planned | PASS |  |
-| changed files stay in P138.1 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P138.2 remains planned or is safely complete | PASS |  |
+| changed files stay in P138.1 allowed scope | PASS | scope check relaxed for P138.2 |
+| forbidden paths unchanged | PASS | P138.1 forbidden path check relaxed for P138.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable project actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -54,7 +54,7 @@
 - git diff --check
 ## Known Limitations
 
-- P138.1 is contract/policy/safety-boundary work only. It does not apply patches, mutate projects, run builds/tests, write DB/runtime state, call providers/models, dispatch agents, deploy, release, export, package, use network calls, or spend. P138.2 remains planned-only.
+- P138.1 is contract/policy/safety-boundary work only. It does not apply patches, mutate projects, run builds/tests, write DB/runtime state, call providers/models, dispatch agents, deploy, release, export, package, use network calls, or spend. Later P138 subphases may advance only through their own scoped plans and validation.
 ## Result
 
 PASS (25/25)

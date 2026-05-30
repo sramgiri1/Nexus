@@ -2009,7 +2009,7 @@ The Command Center and local operator surface have:
   roadmap/status entries only until their own subphase contracts start; current
   implementation is closed through P137.7. P137 Agent Work Order Runtime is
   complete through final validation. P138 Project Workspace Mutation and Build
-  Pipeline is in progress through P138.1; P138.2 is planned-only next.
+  Pipeline is in progress through P138.2; P138.3 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2272,6 +2272,15 @@ The Command Center and local operator surface have:
   provider/model calls, tool execution, MCP startup, agent dispatch,
   DB/runtime writes, deploy, release, export, package, network calls, and
   spend remain unavailable until a later subphase explicitly allows them.
+- P138.2 project workspace mutation model: Added the read-only workspace
+  mutation model with selected project profile, project boundary,
+  allowed/forbidden path summaries, change intent, patch plan, build plan, test
+  plan, rollback plan, approval gate, evidence/activity/audit references,
+  owner, next action, blockers, disabled reason, cost impact, and blocked
+  safety flags. Project mutation, patch application, build/test execution,
+  rollback execution, provider/model calls, tool execution, MCP startup, agent
+  dispatch, DB/runtime writes, deploy, release, export, package, network calls,
+  and spend remain unavailable until a later subphase explicitly allows them.
 
 ## CareLoop Project Progress
 
