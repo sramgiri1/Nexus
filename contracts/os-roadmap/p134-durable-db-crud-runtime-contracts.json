@@ -609,7 +609,7 @@
       "order": 170.5,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e1c93ea9",
       "summary": "Completed P134.5 by adding aggregate durable DB/CRUD test and checker coverage, route-wide DB Runtime regression assertions, P134.5 validation evidence in Command Center, checker handoff compatibility, docs, roadmap/status handoff, and validation reporting while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
         "P134.5 is test/checker hardening only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.6 remains planned-only."
@@ -780,7 +780,7 @@
     "title": "Tests / Checkers",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e1c93ea9",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "detail": "P134.5 is complete. P134.6 Docs / Roadmap / Status is planned-only next.",
     "summary": "Completed P134.5 by adding aggregate durable DB/CRUD test and checker coverage, route-wide DB Runtime regression assertions, P134.5 validation evidence in Command Center, checker handoff compatibility, docs, roadmap/status handoff, and validation reporting while DB/runtime writes and CRUD execution remain blocked.",
@@ -804,7 +804,7 @@
   },
   "summary": "P134 durable DB and CRUD runtime is complete through P134.5 test/checker hardening, with P134.6 planned-only next.",
   "detail": "P134 is in progress through P134.5. P134.6 Docs / Roadmap / Status is planned-only next.",
-  "commit": "pending-final-commit",
+  "commit": "e1c93ea9",
   "completedAt": "2026-05-30T00:00:00.000Z",
   "checksRun": [
     "npm run check:p1345-durable-db-crud-runtime-tests-checkers",
