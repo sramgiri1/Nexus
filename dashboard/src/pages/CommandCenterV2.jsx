@@ -3426,6 +3426,10 @@ function AgentFlowPage() {
       />
       <AgentFlowPanel envelope={envelope} prdPreview={businessBuild.founderIdeaToPrdPreview} />
       <AgentWorkOrderRuntimeCard runtime={businessBuild.agentWorkOrderRuntime} />
+      <ProjectPatchBuildPreviewCard
+        preview={businessBuild.projectPatchBuildPreview}
+        surfaceLabel="Agent Flow Project Build Preview"
+      />
       <FounderLiveUseReviewCard
         readiness={businessBuild.founderLiveUseReadiness}
         review={businessBuild.founderLiveUseReview}
@@ -3628,6 +3632,92 @@ function AgentFlowPage() {
         dryRun={businessBuild.executionAdmissionDryRun}
         surfaceLabel="Agent Flow Execution Admission"
       />
+    </div>
+  );
+}
+
+function ProjectPatchBuildPreviewCard({ preview, surfaceLabel = "Project Build Preview" }) {
+  if (!preview) return null;
+
+  const rows = Array.isArray(preview.previewRows) ? preview.previewRows.slice(0, 4) : [];
+  const pathRows = Array.isArray(preview.pathRows) ? preview.pathRows.slice(0, 4) : [];
+  const safetyRows = Array.isArray(preview.safetyRows) ? preview.safetyRows : [];
+  const blockers = Array.isArray(preview.blockers) ? preview.blockers.slice(0, 6) : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Project build preview">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Project Build Preview</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {preview.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">No project execution</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Source model</span><span className="ccv2-page-summary-value">{preview.sourceModelPhase}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview rows</span><span className="ccv2-page-summary-value">{preview.previewRowCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval</span><span className="ccv2-page-summary-value">{preview.approvalState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{preview.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{preview.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{preview.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{preview.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{preview.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{preview.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        <div style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}>
+          <div className="ccv2-section-heading">Build summary</div>
+          <div className="ccv2-pill ccv2-pill--disabled">Blocked</div>
+          <div className="ccv2-muted" style={{ marginTop: 10 }}>{preview.buildCommandSummary}</div>
+        </div>
+        <div style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}>
+          <div className="ccv2-section-heading">Test summary</div>
+          <div className="ccv2-pill ccv2-pill--disabled">Blocked</div>
+          <div className="ccv2-muted" style={{ marginTop: 10 }}>{preview.testCommandSummary}</div>
+        </div>
+        <div style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}>
+          <div className="ccv2-section-heading">Rollback summary</div>
+          <div className="ccv2-pill ccv2-pill--disabled">Blocked</div>
+          <div className="ccv2-muted" style={{ marginTop: 10 }}>{preview.rollbackSummary}</div>
+        </div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+        {rows.map((row) => (
+          <div key={row.label} style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}>
+            <div className="ccv2-section-heading">{row.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{row.currentState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.changeSummary}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Target: {row.targetScope}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>Validation: {row.validationSummary}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+        {pathRows.map((row) => (
+          <div key={`${row.label}-path`} style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}>
+            <div className="ccv2-section-heading">{row.label}</div>
+            <div className="ccv2-pill ccv2-pill--teal" style={{ marginTop: 8 }}>{row.classification}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.targetScope}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.allowedBoundary}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
     </div>
   );
 }
@@ -10899,6 +10989,10 @@ function BusinessBuildPage() {
               dryRun={build.executionAdmissionDryRun}
               surfaceLabel="Business Build Execution Admission"
             />
+            <ProjectPatchBuildPreviewCard
+              preview={build.projectPatchBuildPreview}
+              surfaceLabel="Business Build Project Build Preview"
+            />
             <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder DB workflow">
               <div className="ccv2-section-heading">Founder DB Workflow</div>
               <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
@@ -11085,6 +11179,13 @@ function BusinessBuildPage() {
                 </article>
               ))}
             </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="projectBuild" activeTab={activeTab}>
+            <ProjectPatchBuildPreviewCard
+              preview={build.projectPatchBuildPreview}
+              surfaceLabel="Business Build Project Build Preview"
+            />
           </CommandTabPanel>
 
           <CommandTabPanel tabId="dryRun" activeTab={activeTab}>

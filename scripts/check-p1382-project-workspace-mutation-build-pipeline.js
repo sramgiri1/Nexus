@@ -170,6 +170,26 @@ const p1383CurrentState =
   && roadmapById.get("P138.3")?.status === "complete"
   && statusById.get("P138.4")?.status === "planned"
   && roadmapById.get("P138.4")?.status === "planned";
+const p1384CurrentState =
+  status.currentPhase === "P138.4"
+  && status.previousPhase === "P138.3"
+  && status.nextPhase === "P138.5"
+  && roadmap.currentPhase === "P138.4"
+  && roadmap.previousPhase === "P138.3"
+  && roadmap.nextPhase === "P138.5"
+  && status.current?.phaseId === "P138.4"
+  && status.previous?.phaseId === "P138.3"
+  && status.next?.phaseId === "P138.5"
+  && roadmap.current?.phaseId === "P138.4"
+  && roadmap.previous?.phaseId === "P138.3"
+  && roadmap.next?.phaseId === "P138.5"
+  && statusById.get("P137")?.status === "complete"
+  && roadmapById.get("P137")?.status === "complete"
+  && statusById.get("P138")?.status === "in_progress"
+  && roadmapById.get("P138")?.status === "in_progress"
+  && ["P138.1", "P138.2", "P138.3", "P138.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P138.5")?.status === "planned"
+  && roadmapById.get("P138.5")?.status === "planned";
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 const serializedModel = JSON.stringify(model);
 
@@ -194,20 +214,20 @@ addCheck("plans do not expose executable commands", model.buildPlan?.executableC
 addCheck("model has operator-facing state", Boolean(model.ownerAgentCapability) && Boolean(model.nextAction) && Boolean(model.disabledReason) && Boolean(model.costImpact) && Array.isArray(model.blockers) && model.blockers.length >= 5);
 addCheck("model hides raw private ids and dumps", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedModel) && !/Bearer\s+|sk-[A-Za-z0-9]|DATABASE_URL|postgres(?:ql)?:\/\/|raw JSON|raw logs|raw policy dump|raw patch dump|raw diff dump/i.test(serializedModel));
 addCheck("model avoids fake runnable actions", !/apply patch now|mutate project now|run build now|run tests now|rollback now|deploy now|release now|export now|package now|call provider now|dispatch agent now|spend now/i.test(serializedModel));
-addCheck("contract advances P138.2", contract.phaseId === "P138" && contract.status === "in_progress" && ((contract.currentSubphase === "P138.2" && contract.previousSubphase === "P138.1" && contract.nextSubphase === "P138.3" && p1383.status === "planned") || (contract.currentSubphase === "P138.3" && contract.previousSubphase === "P138.2" && contract.nextSubphase === "P138.4" && p1383.status === "complete" && p1384.status === "planned")) && p1382.status === "complete");
+addCheck("contract advances P138.2", contract.phaseId === "P138" && contract.status === "in_progress" && ((contract.currentSubphase === "P138.2" && contract.previousSubphase === "P138.1" && contract.nextSubphase === "P138.3" && p1383.status === "planned") || (contract.currentSubphase === "P138.3" && contract.previousSubphase === "P138.2" && contract.nextSubphase === "P138.4" && p1383.status === "complete" && p1384.status === "planned") || (contract.currentSubphase === "P138.4" && contract.previousSubphase === "P138.3" && contract.nextSubphase === "P138.5" && p1383.status === "complete" && p1384.status === "complete")) && p1382.status === "complete");
 addCheck("contract records expected base commit", p1382.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((name) => p1382.expectedExports?.includes(name)) && !p1382.expectedExports?.includes("buildProjectPatchBuildPreview"));
 addCheck("P138.1 report passes", reportPassed("reports/p1381-project-workspace-mutation-build-pipeline-report.md"));
 addCheck("P138.1 checker accepts P138.2", p1381Checker.includes("p1382CurrentState") && p1381Checker.includes('status.currentPhase === "P138.2"'));
 addCheck("enterprise checker accepts P138.2", enterpriseChecker.includes("p1382CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("OS checker recognizes P138.3 handoff", ["P138.1", "P138.2", "P138.3", "P138.4"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
+addCheck("OS checker recognizes P138.3 handoff", ["P138.1", "P138.2", "P138.3", "P138.4", "P138.5"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
 addCheck("P138 plan records P138.2", /## P138\.2 Workspace Mutation Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P138.2", /P138\.2 project workspace mutation model/i.test(readme));
 addCheck("platform roadmap records P138.2", /P138\.2 project workspace mutation model is complete/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P138.2", /P138\.2 is now complete/i.test(enterpriseRoadmap) && (/P138\.3 is the next executable subphase/i.test(enterpriseRoadmap) || /P138\.3 is now complete/i.test(enterpriseRoadmap)));
-addCheck("phase status starts P138.2 or hands off to P138.3", p1382CurrentState || p1383CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts P138.2 or hands off through P138.4", p1382CurrentState || p1383CurrentState || p1384CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P138.2 entries have required fields", [statusById.get("P138"), statusById.get("P138.2"), roadmapById.get("P138.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P138.3 remains planned or is safely complete", (statusById.get("P138.3")?.status === "planned" && roadmapById.get("P138.3")?.status === "planned" && !(statusById.get("P138.3")?.checksRun || []).length) || p1383CurrentState);
+addCheck("P138.3 remains planned or is safely complete", (statusById.get("P138.3")?.status === "planned" && roadmapById.get("P138.3")?.status === "planned" && !(statusById.get("P138.3")?.checksRun || []).length) || p1383CurrentState || p1384CurrentState);
 addCheck(
   "changed files stay in P138.2 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),

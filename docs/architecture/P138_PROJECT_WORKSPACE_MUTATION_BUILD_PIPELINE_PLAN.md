@@ -339,16 +339,23 @@ Known limitations:
 
 ## P138.4 Project Build Command Center UX
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Expose the P138.3 preview in the relevant Command Center project/build surface
   with clean founder-operator state, next action, blockers, owner,
   evidence/activity, disabled reason, and cost impact.
 
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `7f7cd7f4`
+
 Allowed files:
-- P138 Command Center data/page/test files explicitly named in the subphase
-  plan, P138 contract/plan/docs/status, package, P138.3/P138.4/enterprise/OS
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- P138 contract/plan/docs/status, package, P138.1-P138.4/enterprise/OS
   checkers, and generated reports.
 
 Forbidden files:
@@ -356,19 +363,57 @@ Forbidden files:
   paths, package creation paths, and env files.
 
 Expected exports, schemas, and data shapes:
+- `projectPatchBuildPreview` in the Business Build view model.
+- `ProjectPatchBuildPreviewCard` in Command Center V2.
+- `BUSINESS_BUILD_TABS.projectBuild`.
 - Display-safe Command Center data only: labels, summary rows, state badges,
-  next action, blockers, disabled reason, owner/capability, evidence/activity
-  labels, and cost impact.
+  source model phase, preview row count, build/test/rollback summaries,
+  path-boundary summaries, next action, blockers, disabled reason,
+  owner/capability, evidence/activity labels, and cost impact.
 
 Command Center UX requirements:
+- Business Build overview shows the project build preview.
+- Business Build has a focused Project Build tab.
+- Agent Flow shows the same preview in agent context.
 - Preserve route-wide navigation, System/Dark/Light themes, no DemoApp leakage,
   no raw IDs, no raw JSON/log/policy/registry/patch/diff dumps, no fake runnable
   actions, and no project mutation/build execution controls.
 
 Tests/checkers, docs, status, validation, git, and final checks:
-- Add Playwright coverage for the project build UX, update route-wide safety
-  tests if labels/routes/states change, run the P138 validation command set,
-  commit, stamp, push, and leave P138.5 planned-only.
+- Added Playwright coverage for the project build UX on Business Build and
+  Agent Flow.
+- Added `check:p1384-project-workspace-mutation-build-pipeline`.
+- Updated P138.1-P138.3, enterprise, and OS handoff checkers.
+- Updated P138 contract, README, platform roadmap, enterprise roadmap, OS
+  phase status, phase index, and generated reports.
+
+OS phase status update:
+- P138 is in progress through P138.4.
+- P138.4 is complete.
+- Current subphase: P138.4.
+- Previous subphase: P138.3.
+- Next subphase: P138.5 planned-only.
+
+Validation commands:
+- `npm run check:p1384-project-workspace-mutation-build-pipeline`
+- `npm run check:p1383-project-workspace-mutation-build-pipeline`
+- `npm run check:p1382-project-workspace-mutation-build-pipeline`
+- `npm run check:p1381-project-workspace-mutation-build-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Known limitations:
+- P138.4 is Command Center UX only.
+- It does not apply patches, mutate projects, run builds/tests, execute
+  rollbacks, write DB/runtime state, call providers/models, execute tools, start
+  MCP servers, dispatch agents, deploy, release, export, package, use network
+  calls, or spend.
+- P138.5 remains planned-only.
 
 ## P138.5 Tests / Checkers
 

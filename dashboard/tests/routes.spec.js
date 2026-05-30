@@ -3786,6 +3786,52 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Project build preview appears in Business Build and Agent Flow without runnable actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    await page.goto("/command-center/business-build");
+    const businessPreview = page.getByLabel("Project build preview").filter({ hasText: "Business Build Project Build Preview" });
+    await expect(businessPreview).toContainText("Project Build Preview");
+    await expect(businessPreview).toContainText("No project execution");
+    await expect(businessPreview).toContainText("P138.2");
+    await expect(businessPreview).toContainText("Game loop implementation");
+    await expect(businessPreview).toContainText("Build summary");
+    await expect(businessPreview).toContainText("Test summary");
+    await expect(businessPreview).toContainText("Rollback summary");
+    await expect(businessPreview).toContainText("NEXUS Project Patch and Build Preview Guard");
+    await expect(businessPreview).toContainText("reports/p1383-project-workspace-mutation-build-pipeline-report.md");
+    await expect(businessPreview).toContainText("Project mutation");
+    await expect(businessPreview).toContainText("Patch application");
+    await expect(businessPreview).toContainText("Build execution");
+    await expect(businessPreview).toContainText("Provider spend");
+    await expect(businessPreview).toContainText("Blocked");
+
+    await commandTab(page, "Project Build").click();
+    const projectBuildPanel = activeCommandTabPanel(page);
+    await expect(projectBuildPanel).toContainText("Business Build Project Build Preview");
+    await expect(projectBuildPanel).toContainText("Game loop implementation");
+    await expect(projectBuildPanel).toContainText("approved project source files only");
+    await expect(projectBuildPanel).toContainText("Patch application");
+    await expect(projectBuildPanel).toContainText("No project command, provider call, model call");
+
+    await page.goto("/command-center/agent-flow");
+    const agentPreview = page.getByLabel("Project build preview").filter({ hasText: "Agent Flow Project Build Preview" });
+    await expect(agentPreview).toContainText("Project Build Preview");
+    await expect(agentPreview).toContainText("No project execution");
+    await expect(agentPreview).toContainText("Game loop implementation");
+    await expect(agentPreview).toContainText("NEXUS Project Patch and Build Preview Guard");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/private-project|raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Live workstream handoff appears in Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
     const errors = captureClientErrors(page);
 

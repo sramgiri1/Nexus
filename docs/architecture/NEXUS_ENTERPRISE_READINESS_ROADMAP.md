@@ -42,7 +42,8 @@ P137.7 is now complete as final validation only. P137 is complete.
 P138.1 is now complete as contract/policy/safety-boundary only.
 P138.2 is now complete as read-only workspace mutation model only.
 P138.3 is now complete as non-runnable patch/build preview only.
-P138.4 is the next executable subphase. P138.4-P145 remain planned-only. They
+P138.4 is now complete as Project Build Command Center UX only.
+P138.5 is the next executable subphase. P138.5-P145 remain planned-only. They
 do not enable secret values, DB writes, provider/model calls, tool execution,
 agent dispatch, project mutation, patch application, build/test execution,
 rollback execution, deploy, release, export, package, network calls, or spend
@@ -128,7 +129,9 @@ P137.6 is now complete as docs/roadmap/status closure only.
 P137.7 is now complete as final validation only. P137 is complete.
 P138.1 is now complete as contract/policy/safety-boundary only.
 P138.2 is now complete as read-only workspace mutation model only.
-P138.3 is the next executable subphase. P138.3-P145 are planned-only backlog
+P138.3 is now complete as non-runnable patch/build preview only.
+P138.4 is now complete as Project Build Command Center UX only.
+P138.5 is the next executable subphase. P138.5-P145 are planned-only backlog
 phases and must not be treated as complete or live.
 
 ## Validation
@@ -136,6 +139,8 @@ phases and must not be treated as complete or live.
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1384-project-workspace-mutation-build-pipeline`
+- `npm run check:p1383-project-workspace-mutation-build-pipeline`
 - `npm run check:p1382-project-workspace-mutation-build-pipeline`
 - `npm run check:p1381-project-workspace-mutation-build-pipeline`
 - `npm run check:p1366-secrets-providers-tool-governance-docs-roadmap`

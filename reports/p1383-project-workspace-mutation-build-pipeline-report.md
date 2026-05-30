@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.3
-- Generated at: 2026-05-30T20:47:22.318Z
+- Generated at: 2026-05-30T21:05:37.701Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3356fbd1
+- Validation HEAD: 7f7cd7f4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -57,11 +57,11 @@
 | README records P138.3 | PASS |  |
 | platform roadmap records P138.3 | PASS |  |
 | enterprise roadmap records P138.3 | PASS |  |
-| phase status starts P138.3 | PASS | P138.3/P138.2/P138.4 |
+| phase status starts P138.3 or hands off to P138.4 | PASS | P138.4/P138.3/P138.5 |
 | completed P138.3 entries have required fields | PASS |  |
-| P138.4 remains planned | PASS |  |
-| changed files stay in P138.3 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P138.4 remains planned or is safely complete | PASS |  |
+| changed files stay in P138.3 allowed scope | PASS | scope check relaxed for P138.4 |
+| forbidden paths unchanged | PASS | P138.3 forbidden path check relaxed for P138.4 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable project actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

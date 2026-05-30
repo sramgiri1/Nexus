@@ -233,6 +233,91 @@ function toReadinessLane(lane = {}) {
   };
 }
 
+function buildProjectPatchBuildPreviewDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const isSnakeGame = /snake|ios|iphone|app store|game/i.test(founderIdeaSummary);
+  const previewRows = [
+    {
+      label: isSnakeGame ? "Game loop implementation" : "Core application implementation",
+      targetScope: "approved project source files only",
+      changeSummary: isSnakeGame
+        ? "Add game state, movement, scoring, collision, pause, and restart behavior after approval."
+        : "Add application state, core workflow, persistence boundary, and user flow behavior after approval.",
+      validationSummary: "Would require selected project build and test summaries after explicit project boundary approval.",
+      rollbackSummary: "Would require baseline evidence and restore plan before any future write.",
+    },
+    {
+      label: "UI shell update",
+      targetScope: "approved project UI files only",
+      changeSummary: "Update the app surface after approval with scoped, reviewable UI changes.",
+      validationSummary: "Would require selected project build and test summaries after explicit project boundary approval.",
+      rollbackSummary: "Would require baseline evidence and restore plan before any future write.",
+    },
+    {
+      label: "Validation harness",
+      targetScope: "approved project test files only",
+      changeSummary: "Add or update tests after approval to cover the intended workflow.",
+      validationSummary: "Would require project test coverage after explicit project boundary approval.",
+      rollbackSummary: "Would require baseline evidence and restore plan before any future write.",
+    },
+    {
+      label: "Operator notes",
+      targetScope: "approved project documentation files only",
+      changeSummary: "Add implementation and validation notes after approval.",
+      validationSummary: "Would require selected project build and test summaries after explicit project boundary approval.",
+      rollbackSummary: "Would require baseline evidence and restore plan before any future write.",
+    },
+  ];
+
+  return {
+    currentState: "Patch Build Preview Ready Execution Blocked",
+    sourceModelPhase: "P138.2",
+    previewRowCount: previewRows.length,
+    ownerCapability: "NEXUS Project Patch and Build Preview Guard",
+    nextAction: "Route this non-runnable preview to P138.5 aggregate validation without applying patches or running project commands.",
+    disabledReason: "P138.4 only renders a non-runnable patch/build preview. Project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, and spend remain blocked.",
+    evidenceLocation: "reports/p1383-project-workspace-mutation-build-pipeline-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Zero-spend preview. No project command, provider call, model call, tool execution, network call, deploy, package creation, or provider spend.",
+    approvalState: "Required Not Granted",
+    buildCommandSummary: "Use the selected project profile build command after boundary approval.",
+    testCommandSummary: "Use the selected project profile test command after boundary approval.",
+    rollbackSummary: "Record approved boundary and baseline evidence.",
+    blockers: [
+      "Approved selected project boundary is required.",
+      "Mutation approval is required and not granted.",
+      "Patch application remains blocked.",
+      "Project build and test execution remain blocked.",
+      "Rollback execution remains blocked.",
+      "DB/runtime writes, provider/model calls, tool execution, MCP startup, and agent dispatch remain blocked.",
+      "Deploy, release, export, package, network calls, and spend remain blocked.",
+    ],
+    previewRows: previewRows.map((row) => ({
+      label: row.label,
+      currentState: "Blocked Preview",
+      targetScope: row.targetScope,
+      changeSummary: row.changeSummary,
+      validationSummary: row.validationSummary,
+      rollbackSummary: row.rollbackSummary,
+      disabledReason: "Project mutation and project command execution are blocked.",
+    })),
+    pathRows: previewRows.map((row) => ({
+      label: row.label,
+      targetScope: row.targetScope,
+      classification: "Display Safe Scope Summary",
+      allowedBoundary: "approved project boundary only",
+      forbiddenBoundary: "NEXUS OS, private roots outside the approved boundary, runtime state, provider/tool/worker/deploy/release/export/package/env paths",
+    })),
+    safetyRows: [
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Patch application", value: "Blocked" },
+      { label: "Build execution", value: "Blocked" },
+      { label: "Test execution", value: "Blocked" },
+      { label: "Rollback execution", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildAgentWorkOrderRuntimeDisplayModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA, workOrdersInput = null) {
   const workOrders = workOrdersInput || buildFounderLiveHandoffDisplayModels({ founderIdea: founderIdeaSummary }).workOrders;
   const workOrderRows = Array.isArray(workOrders?.workOrderRows) ? workOrders.workOrderRows : [];
@@ -4990,6 +5075,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     prdFields.founderIdea || founderIdeaSummary,
     founderLiveHandoff.workOrders,
   );
+  const projectPatchBuildPreview = buildProjectPatchBuildPreviewDisplayModel(prdFields.founderIdea || founderIdeaSummary);
   const founderLiveWorkAdmission = buildFounderLiveWorkAdmissionDisplayModels({
     founderIdea: prdFields.founderIdea,
   });
@@ -5199,6 +5285,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderLiveUseReview: founderLiveUse.review,
     founderLiveHandoffManifest: founderLiveHandoff.manifest,
     founderLiveHandoffWorkOrders: founderLiveHandoff.workOrders,
+    projectPatchBuildPreview,
     founderLiveWorkAdmission: founderLiveWorkAdmission.admission,
     founderLiveWorkAdmissionApproval: founderLiveWorkAdmission.approval,
     founderLiveExecutionBoundary,

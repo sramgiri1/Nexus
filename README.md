@@ -2009,7 +2009,7 @@ The Command Center and local operator surface have:
   roadmap/status entries only until their own subphase contracts start; current
   implementation is closed through P137.7. P137 Agent Work Order Runtime is
   complete through final validation. P138 Project Workspace Mutation and Build
-  Pipeline is in progress through P138.3; P138.4 is planned-only next.
+  Pipeline is in progress through P138.4; P138.5 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2290,6 +2290,16 @@ The Command Center and local operator surface have:
   tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy,
   release, export, package, network calls, and spend remain unavailable until a
   later subphase explicitly allows them.
+- P138.4 project build Command Center UX: Added the display-safe Project Build
+  preview to Business Build overview, Business Build Project Build tab, and
+  Agent Flow. Founders can see candidate change summaries, path-boundary
+  summaries, build/test/rollback summaries, blockers, owner, next action,
+  disabled reason, evidence/activity location, and cost impact without raw
+  project IDs, raw JSON/logs, raw patches/diffs, or runnable project/build
+  controls. Project mutation, patch application, build/test execution,
+  rollback execution, provider/model calls, tool execution, MCP startup, agent
+  dispatch, DB/runtime writes, deploy, release, export, package, network calls,
+  and spend remain unavailable until a later subphase explicitly allows them.
 
 ## CareLoop Project Progress
 

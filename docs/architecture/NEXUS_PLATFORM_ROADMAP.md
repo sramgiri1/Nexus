@@ -3195,7 +3195,7 @@ remain blocked.
 ## P133-P145 Enterprise Readiness Roadmap
 
 P133-P145 are enterprise readiness phases. P133, P134, P135, P136, and P137 are
-complete through final validation. P138 is in progress through P138.3.
+complete through final validation. P138 is in progress through P138.4.
 Later subphases and phases remain planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3205,7 +3205,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, and P138.3. P136.2
+Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, and P138.4. P136.2
 secret/provider model is complete, P136.3 provider dry run is complete, and
 P136.4 provider governance Command Center UX is complete. P136.5
 secrets/providers/tool governance tests/checkers is complete. P136.6
@@ -3218,7 +3218,7 @@ complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
 agent work order runtime docs/status is complete. P137.7 agent work order
 runtime final validation is complete. P138.1 project workspace mutation build
 pipeline contract is complete. P138.2 project workspace mutation model is
-complete. P138.3 project patch/build preview is complete. P138.4-P145 do not enable secret values,
+complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5-P145 do not enable secret values,
 DB/runtime writes, live CRUD,
 provider/model calls, tool execution, agent dispatch, project mutation, patch
 application, build/test execution, rollback execution, deploy, release, export,
@@ -3519,6 +3519,18 @@ application, build/test execution, rollback execution, provider/model calls,
 tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release,
 export, package, network calls, and spend remain blocked until a later subphase
 explicitly allows them.
+
+P138.4 project build Command Center UX is complete. NEXUS now shows the
+non-runnable project patch/build preview in Business Build overview, Business
+Build Project Build tab, and Agent Flow. The display includes candidate change
+summaries, path-boundary summaries, build/test/rollback summaries, blockers,
+owner, next action, disabled reason, evidence/activity location, and cost impact
+without raw project IDs, raw JSON/logs, raw patches/diffs, or runnable
+project/build controls. Project mutation, patch application, build/test
+execution, rollback execution, provider/model calls, tool execution, MCP
+startup, agent dispatch, DB/runtime writes, deploy, release, export, package,
+network calls, and spend remain blocked until a later subphase explicitly
+allows them.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
