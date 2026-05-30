@@ -231,7 +231,7 @@
         "Next phase/subphase"
       ],
       "narrowGoal": "Define the local execution request envelope shape, validation fields, blockers, and evidence references without persistence or execution.",
-      "commit": "pending-final-commit",
+      "commit": "0903bf6c",
       "completedAt": "2026-05-30T00:28:40.894Z",
       "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "knownLimitations": [
@@ -546,7 +546,7 @@
     "title": "Execution Request Envelope Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "0903bf6c",
     "completedAt": "2026-05-30T00:28:40.894Z",
     "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
@@ -571,7 +571,7 @@
     "title": "Founder Runtime Store Live Admission Execution Contract",
     "status": "in_progress",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "0903bf6c",
     "completedAt": "2026-05-30T00:28:40.894Z",
     "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
