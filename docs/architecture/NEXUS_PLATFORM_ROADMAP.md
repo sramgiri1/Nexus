@@ -3131,6 +3131,21 @@ agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
 raw SQL interface, deploy, release, export, package action, network call, and
 provider spend remain blocked.
 
+## P133-P145 Enterprise Readiness Roadmap
+
+P133-P145 are planned-only enterprise readiness phases. They cover founder
+idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
+secrets/provider/tool governance, agent work orders, project workspace mutation
+controls, evidence/audit/observability/cost, backup/DR, security/privacy/
+compliance, admin operations, release/deploy/export/package, billing/customer
+operations, and final enterprise GA certification.
+
+The detailed phase set lives in
+[`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
+Current implementation remains on P132.1 and P132.2 remains next. P133-P145 do
+not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch,
+project mutation, deploy, release, export, package, network calls, or spend.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 
