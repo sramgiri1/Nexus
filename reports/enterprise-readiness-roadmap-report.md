@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T17:27:43.985Z
+- Generated at: 2026-05-30T17:28:31.139Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9cee6788
+- Validation HEAD: 7f18f9a6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -48,8 +48,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1364-provider-governance-command-center-ux-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1364-provider-governance-command-center-ux.js, reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md, scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1364-provider-governance-command-center-ux-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1364-provider-governance-command-center-ux.js, reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md, scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js |
+| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1364-provider-governance-command-center-ux-report.md, reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1364-provider-governance-command-center-ux-report.md, reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

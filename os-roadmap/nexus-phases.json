@@ -18893,7 +18893,7 @@
       "order": 172,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7f18f9a6",
       "commandCenterVisible": true,
       "detail": "P136.5 is complete. P136.6 Docs / Roadmap / Status is planned-only next.",
       "summary": "P136 is complete through P136.5. Provider governance now includes the safety contract, display-safe governance model, non-runnable dry run, review-only Command Center UX, and aggregate checker coverage while all provider/model/tool execution, mutation, deploy, package, network, and spend authority remains blocked.",
@@ -19668,7 +19668,7 @@
             "P136.5 is tests/checkers hardening only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend paths."
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "7f18f9a6",
           "completedAt": "2026-05-30T00:00:00.000Z",
           "checksRun": [
             "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
@@ -22761,7 +22761,7 @@
         "P136.5 is tests/checkers hardening only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend paths."
       ],
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7f18f9a6",
       "completedAt": "2026-05-30T00:00:00.000Z",
       "checksRun": [
         "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
