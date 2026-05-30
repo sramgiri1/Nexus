@@ -2076,9 +2076,16 @@ The Command Center and local operator surface have:
   Runtime section to Durable State > DB Runtime, showing schema coverage,
   write-plan gates, blockers, disabled reason, owner capability, next action,
   evidence, activity, and cost impact with display-safe labels only. P134.5
-  Tests / Checkers is planned-only next; DB/runtime writes, migrations, raw SQL,
+  Tests / Checkers is now complete; DB/runtime writes, migrations, raw SQL,
   live CRUD, provider/model calls, agent dispatch, project mutation, deploy,
   release, export, package, network calls, and spend remain unavailable.
+- P134.5 durable DB/CRUD tests/checkers: Added aggregate P134 validation over
+  the durable DB/CRUD contract, prior reports, DB Runtime evidence, route-wide
+  Playwright assertions, checker handoffs, docs, roadmap, and OS status. The DB
+  Runtime panel now shows P134.5 validation evidence and P134.6 as the next
+  docs/status subphase. DB/runtime writes, migrations, raw SQL, live CRUD,
+  provider/model calls, agent dispatch, project mutation, deploy, release,
+  export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

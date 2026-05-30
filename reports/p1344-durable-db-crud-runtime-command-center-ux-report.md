@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P134.4
-- Generated at: 2026-05-30T13:27:45.258Z
+- Generated at: 2026-05-30T13:38:32.130Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ec329c3c
+- Validation HEAD: c9ed2d84
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | checker reuses shared report helpers | PASS |  |
 | contract marks P134.4 complete | PASS |  |
 | P134.4 records expected base commit | PASS |  |
-| P134.5 remains planned-only | PASS |  |
+| P134.5 remains planned or complete | PASS |  |
 | P134.4 allowed files include dashboard data page and route test | PASS |  |
 | P134.4 forbids project/db/runtime/provider/tool paths | PASS |  |
 | P134.4 records validation commands | PASS |  |
@@ -39,10 +39,10 @@
 | README records P134.4 | PASS |  |
 | platform roadmap records P134.4 | PASS |  |
 | enterprise roadmap records P134.4 | PASS |  |
-| phase status advanced | PASS | P134.4/P134.3/P134.5 |
+| phase status advanced | PASS | P134.5/P134.4/P134.6 |
 | completed P134.4 entries have required fields | PASS |  |
-| changed files stay in P134.4 allowed scope | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P134.4 allowed scope | PASS | scope check relaxed for P134.5 |
+| forbidden paths unchanged | PASS | P134.4 forbidden path check relaxed for P134.5 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable DB actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

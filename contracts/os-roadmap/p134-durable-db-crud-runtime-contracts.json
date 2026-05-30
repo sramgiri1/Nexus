@@ -2,16 +2,16 @@
   "phaseId": "P134",
   "title": "Durable DB and CRUD Runtime",
   "status": "in_progress",
-  "currentSubphase": "P134.4",
-  "previousSubphase": "P134.3",
-  "nextSubphase": "P134.5",
+  "currentSubphase": "P134.5",
+  "previousSubphase": "P134.4",
+  "nextSubphase": "P134.6",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "21133d6f",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "goal": "Create a governed durable data layer for OS-owned founder/business records with staged schema, repository, write preview, Command Center UX, tests, docs, and final validation.",
   "userImpact": "Operators get a clear DB/CRUD path without live mutation until each boundary is validated.",
-  "commandCenterImpact": "P134.4 shows display-safe P134 DB runtime readiness in Command Center without runnable DB controls.",
-  "safetyImpact": "P134.4 is UX-only and does not enable DB/runtime writes, CRUD execution, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+  "commandCenterImpact": "P134.5 keeps the existing DB Runtime P134 panel display-safe and adds validation evidence without runnable DB controls.",
+  "safetyImpact": "P134.5 is test/checker hardening only and does not enable DB/runtime writes, CRUD execution, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
   "costImpact": "No provider spend; local checks only.",
   "subphases": [
     {
@@ -509,18 +509,35 @@
     {
       "phaseId": "P134.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "narrowGoal": "Tests / Checkers for Durable DB and CRUD Runtime.",
-      "allowedFiles": [],
+      "expectedBaseCommit": "c9ed2d84",
+      "narrowGoal": "Harden P134 durable DB/CRUD tests and checkers, and surface validation evidence in the existing DB Runtime Command Center panel without enabling DB/runtime writes or CRUD execution.",
+      "allowedFiles": [
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js",
+        "scripts/check-p1344-durable-db-crud-runtime-command-center-ux.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json",
+        "docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "reports/p1345-durable-db-crud-runtime-tests-checkers-report.md",
+        "reports/p1344-durable-db-crud-runtime-command-center-ux-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
-        "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -530,36 +547,56 @@
         "release/**",
         "exports/**",
         "packages/**",
-        ".env*"
+        ".env*",
+        "dashboard/src/** except dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/tests/** except dashboard/tests/routes.spec.js"
       ],
       "expectedExports": [],
-      "dataShape": "Planned-only. No runtime exports, DB schema, migrations, repository module, DB adapter, CRUD packet, or live execution until this subphase has its own implementation-grade plan.",
-      "commandCenterUx": "Planned-only. Preserve existing Command Center UX until this subphase starts.",
+      "dataShape": "Adds P134.5 validation evidence to the existing durableCrudRuntimeUx DB Runtime view model. Creates an aggregate checker/report over P134.1-P134.4 reports, P134.5 route assertions, docs, roadmap/status, and safety wording. No DB schema, migrations, repository module, DB adapter, CRUD packet, or live execution is added.",
+      "commandCenterUx": "Durable State > DB Runtime keeps the existing P134 panel and adds P134.5 tests/checkers evidence plus P134.6 next action using display-safe labels only. No raw IDs, raw table names, raw logs, raw JSON, mutation buttons, or fake runnable actions are exposed.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not modify project-owned files."
+        "Do not modify project-owned files.",
+        "Do not modify db/** or local-state/runtime/** files in P134.5.",
+        "Do not add mutation buttons, fake working actions, raw SQL, migration controls, DB write controls, hosted DB controls, or provider/tool/project/deploy controls.",
+        "Do not call providers/models, dispatch agents, execute tools/workers, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
+        "Reuse existing dbRuntimeReadiness view model.",
+        "Reuse existing route-wide Playwright tests.",
         "Reuse shared/reportWriter.js.",
         "Reuse shared/checkResultFormatter.js.",
         "Reuse existing OS phase status and roadmap structures."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add P134.5 aggregate checker.",
+        "Update P134.4 checker for P134.5 handoff.",
+        "Update enterprise readiness checker for P134.5 handoff.",
+        "Update route-wide Playwright DB Runtime assertions for P134.5 validation evidence."
+      ],
+      "docsRoadmap": "Update P134 plan, README, platform roadmap, enterprise readiness roadmap, OS phase status, phase index, and generated reports.",
+      "phaseStatusUpdate": "P134 in progress; P134.1 through P134.5 complete; current P134.5; previous P134.4; next P134.6 planned-only.",
+      "validationCommands": [
+        "npm run check:p1345-durable-db-crud-runtime-tests-checkers",
+        "npm run check:p1344-durable-db-crud-runtime-command-center-ux",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
         "Files changed",
         "What was implemented",
-        "Command Center UX changes or preservation",
+        "Command Center UX changes",
         "Tests/checkers run",
         "Docs/roadmap/status updates",
         "Safety confirmations",
@@ -570,16 +607,26 @@
       "previousPhase": "P134.4",
       "nextPhase": "P134.6",
       "order": 170.5,
-      "completedAt": "",
+      "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "summary": "Planned-only future P134 subphase: Tests / Checkers.",
+      "commit": "pending-final-commit",
+      "summary": "Completed P134.5 by adding aggregate durable DB/CRUD test and checker coverage, route-wide DB Runtime regression assertions, P134.5 validation evidence in Command Center, checker handoff compatibility, docs, roadmap/status handoff, and validation reporting while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
-        "Planned-only; no implementation yet."
+        "P134.5 is test/checker hardening only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.6 remains planned-only."
       ],
       "commandCenterVisible": true,
-      "detail": "P134.5 is planned-only for Tests / Checkers.",
-      "checksRun": []
+      "detail": "P134.5 is complete. P134.6 Docs / Roadmap / Status is planned-only next.",
+      "checksRun": [
+        "npm run check:p1345-durable-db-crud-runtime-tests-checkers",
+        "npm run check:p1344-durable-db-crud-runtime-command-center-ux",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P134.6",
@@ -729,15 +776,128 @@
     }
   ],
   "current": {
+    "phaseId": "P134.5",
+    "title": "Tests / Checkers",
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:00:00.000Z",
+    "detail": "P134.5 is complete. P134.6 Docs / Roadmap / Status is planned-only next.",
+    "summary": "Completed P134.5 by adding aggregate durable DB/CRUD test and checker coverage, route-wide DB Runtime regression assertions, P134.5 validation evidence in Command Center, checker handoff compatibility, docs, roadmap/status handoff, and validation reporting while DB/runtime writes and CRUD execution remain blocked.",
+    "checksRun": [
+      "npm run check:p1345-durable-db-crud-runtime-tests-checkers",
+      "npm run check:p1344-durable-db-crud-runtime-command-center-ux",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P134.5 is test/checker hardening only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.6 remains planned-only."
+    ],
+    "previousPhase": "P134.4",
+    "nextPhase": "P134.6",
+    "commandCenterVisible": true
+  },
+  "summary": "P134 durable DB and CRUD runtime is complete through P134.5 test/checker hardening, with P134.6 planned-only next.",
+  "detail": "P134 is in progress through P134.5. P134.6 Docs / Roadmap / Status is planned-only next.",
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-30T00:00:00.000Z",
+  "checksRun": [
+    "npm run check:p1345-durable-db-crud-runtime-tests-checkers",
+    "npm run check:p1344-durable-db-crud-runtime-command-center-ux",
+    "npm run check:enterprise-readiness-roadmap",
+    "npm run check:os-phase-status",
+    "npm run check:phase-validation-coverage",
+    "cd dashboard && npm run build",
+    "cd dashboard && npm run test:unit",
+    "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+    "git diff --check"
+  ],
+  "knownLimitations": [
+    "P134.6 and P134.7 remain planned-only. DB/runtime writes, live CRUD, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
+  ],
+  "previous": {
     "phaseId": "P134.4",
     "title": "DB Runtime Command Center UX",
     "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "ec329c3c",
-    "completedAt": "2026-05-30T00:00:00.000Z",
-    "detail": "P134.4 is complete. P134.5 Tests / Checkers is planned-only next.",
-    "summary": "Completed P134.4 by adding a display-safe DB Runtime Command Center UX for the P134 durable DB/CRUD schema model and write-plan preview, with schema coverage, write-plan gates, blockers, next action, owner, evidence, activity, cost impact, Playwright assertions, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
-    "checksRun": [
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "startingBranch": "codex/nexus-e2e-phase-validation",
+    "expectedBaseCommit": "73c464ec",
+    "narrowGoal": "Render display-safe P134 durable DB/CRUD readiness in the existing Command Center DB Runtime tab without enabling DB reads, DB writes, migrations, runtime writes, or CRUD execution.",
+    "allowedFiles": [
+      "dashboard/src/data/dbRuntimeReadiness.js",
+      "dashboard/src/pages/CommandCenterV2.jsx",
+      "dashboard/tests/routes.spec.js",
+      "scripts/check-p1344-durable-db-crud-runtime-command-center-ux.js",
+      "scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json",
+      "docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "package.json",
+      "reports/p1344-durable-db-crud-runtime-command-center-ux-report.md",
+      "reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "forbiddenFiles": [
+      "projects/**",
+      "careloop/**",
+      "generated-projects/**",
+      "db/**",
+      "local-state/runtime/**",
+      "providers/**",
+      "tools/**",
+      "worker-runtime/**",
+      "deploy/**",
+      "release/**",
+      "exports/**",
+      "packages/**",
+      ".env*",
+      "dashboard/src/** except dashboard/src/data/dbRuntimeReadiness.js and dashboard/src/pages/CommandCenterV2.jsx",
+      "dashboard/tests/** except dashboard/tests/routes.spec.js"
+    ],
+    "expectedExports": [
+      "durableCrudRuntimeUx on dbRuntimeReadinessViewModel"
+    ],
+    "dataShape": "Adds durableCrudRuntimeUx to the DB runtime readiness view model with phase metadata, current state, disabled reason, owner capability, next action, cost impact, schema coverage groups, write-plan gates, repository intent rows, evidence rows, blockers, and safety rows. UI renders public labels only and no raw table names.",
+    "commandCenterUx": "Durable State > DB Runtime shows P134 schema coverage, write-plan gates, blockers, next action, owner capability, evidence/activity location, disabled reason, and cost impact while preserving non-runnable DB controls and all themes.",
+    "themeRequirements": [
+      "Preserve System theme.",
+      "Preserve Dark theme.",
+      "Preserve Light theme."
+    ],
+    "safetyRules": [
+      "Do not modify project-owned files.",
+      "Do not modify db/** or local-state/runtime/** files in P134.4.",
+      "Do not add mutation buttons, fake working actions, raw SQL, migration controls, DB write controls, hosted DB controls, or provider/tool/project/deploy controls.",
+      "Do not call providers/models, dispatch agents, execute tools/workers, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "reuseCheck": [
+      "Reuse existing dbRuntimeReadiness view model.",
+      "Reuse existing Command Center cards, summary rows, stat chips, safety rows, and route-wide Playwright tests.",
+      "Reuse shared/reportWriter.js.",
+      "Reuse shared/checkResultFormatter.js.",
+      "Reuse existing OS phase status and roadmap structures."
+    ],
+    "testsAndCheckers": [
+      "Add P134.4 checker.",
+      "Update P134.3 checker for P134.4 handoff.",
+      "Update enterprise readiness checker for P134.4 handoff.",
+      "Update route-wide Playwright DB Runtime assertions."
+    ],
+    "docsRoadmap": "Update P134 plan, README, platform roadmap, enterprise readiness roadmap, OS phase status, phase index, and generated reports.",
+    "phaseStatusUpdate": "P134 in progress; P134.1 through P134.4 complete; current P134.4; previous P134.3; next P134.5 planned-only.",
+    "validationCommands": [
       "npm run check:p1344-durable-db-crud-runtime-command-center-ux",
       "npm run check:p1343-durable-db-crud-runtime-write-plan-preview",
       "npm run check:enterprise-readiness-roadmap",
@@ -748,12 +908,114 @@
       "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
       "git diff --check"
     ],
-    "knownLimitations": [
-      "P134.4 is Command Center UX only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.5 remains planned-only."
+    "finalResponseChecklist": [
+      "Branch name",
+      "Commit hash",
+      "Files changed",
+      "What was implemented",
+      "Command Center UX changes",
+      "Tests/checkers run",
+      "Docs/roadmap/status updates",
+      "Safety confirmations",
+      "Forbidden paths confirmation",
+      "Known limitations",
+      "Next phase/subphase"
     ],
     "previousPhase": "P134.3",
     "nextPhase": "P134.5",
-    "commandCenterVisible": true
+    "order": 170.4,
+    "completedAt": "2026-05-30T00:00:00.000Z",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "ec329c3c",
+    "summary": "Completed P134.4 by adding a display-safe DB Runtime Command Center UX for the P134 durable DB/CRUD schema model and write-plan preview, with schema coverage, write-plan gates, blockers, next action, owner, evidence, activity, cost impact, Playwright assertions, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
+    "knownLimitations": [
+      "P134.4 is Command Center UX only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.5 remains planned-only."
+    ],
+    "commandCenterVisible": true,
+    "detail": "P134.4 is planned-only for DB Runtime Command Center UX.",
+    "checksRun": [
+      "npm run check:p1344-durable-db-crud-runtime-command-center-ux",
+      "npm run check:p1343-durable-db-crud-runtime-write-plan-preview",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ]
   },
-  "summary": "Completed P134.4 by adding a display-safe DB Runtime Command Center UX for the P134 durable DB/CRUD schema model and write-plan preview, with schema coverage, write-plan gates, blockers, next action, owner, evidence, activity, cost impact, Playwright assertions, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked."
+  "next": {
+    "phaseId": "P134.6",
+    "title": "Docs / Roadmap / Status",
+    "status": "planned",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "startingBranch": "codex/nexus-e2e-phase-validation",
+    "expectedBaseCommit": "",
+    "narrowGoal": "Docs / Roadmap / Status for Durable DB and CRUD Runtime.",
+    "allowedFiles": [],
+    "forbiddenFiles": [
+      "projects/**",
+      "careloop/**",
+      "generated-projects/**",
+      "dashboard/src/**",
+      "dashboard/tests/**",
+      "db/**",
+      "local-state/runtime/**",
+      "providers/**",
+      "tools/**",
+      "worker-runtime/**",
+      "deploy/**",
+      "release/**",
+      "exports/**",
+      "packages/**",
+      ".env*"
+    ],
+    "expectedExports": [],
+    "dataShape": "Planned-only. No runtime exports, DB schema, migrations, repository module, DB adapter, CRUD packet, or live execution until this subphase has its own implementation-grade plan.",
+    "commandCenterUx": "Planned-only. Preserve existing Command Center UX until this subphase starts.",
+    "themeRequirements": [
+      "Preserve System theme.",
+      "Preserve Dark theme.",
+      "Preserve Light theme."
+    ],
+    "safetyRules": [
+      "Do not implement this planned subphase until its own implementation-grade plan is written.",
+      "Do not modify project-owned files."
+    ],
+    "reuseCheck": [
+      "Search for existing helpers before adding any new helper.",
+      "Reuse shared/reportWriter.js.",
+      "Reuse shared/checkResultFormatter.js.",
+      "Reuse existing OS phase status and roadmap structures."
+    ],
+    "testsAndCheckers": [],
+    "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+    "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+    "validationCommands": [],
+    "finalResponseChecklist": [
+      "Branch name",
+      "Commit hash",
+      "Files changed",
+      "What was implemented",
+      "Command Center UX changes or preservation",
+      "Tests/checkers run",
+      "Docs/roadmap/status updates",
+      "Safety confirmations",
+      "Forbidden paths confirmation",
+      "Known limitations",
+      "Next phase/subphase"
+    ],
+    "previousPhase": "P134.5",
+    "nextPhase": "P134.7",
+    "order": 170.6,
+    "completedAt": "",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "",
+    "summary": "Planned-only future P134 subphase: Docs / Roadmap / Status.",
+    "knownLimitations": [
+      "Planned-only; no implementation yet."
+    ],
+    "commandCenterVisible": true
+  }
 }

@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P134.4 and P134.5 Tests / Checkers is
-planned-only next. P134.5-P145 do not enable DB/runtime writes, live CRUD, provider/model
+Current implementation is closed through P134.5 and P134.6 Docs / Roadmap is
+planned-only next. P134.6-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
@@ -3282,9 +3282,18 @@ P134.4 durable DB/CRUD Command Center UX is complete. NEXUS now shows P134
 schema coverage and DB write-plan gates in Durable State > DB Runtime, with
 current state, next action, blockers, disabled reason, owner capability,
 evidence, activity, and cost impact rendered as display-safe Command Center UX.
-P134.5 Tests / Checkers is planned-only next. DB/runtime writes, migrations,
+P134.5 Tests / Checkers is now complete. DB/runtime writes, migrations,
 raw SQL, live CRUD, provider/model calls, agent dispatch, project mutation,
 deploy, release, export, package, network calls, and spend remain blocked.
+
+P134.5 durable DB/CRUD tests/checkers is complete. NEXUS now has aggregate
+P134 validation over the durable DB/CRUD contract, P134.1-P134.4 reports,
+DB Runtime evidence, route-wide Playwright assertions, checker handoffs, docs,
+roadmap, and OS phase status. Durable State > DB Runtime shows P134.5
+validation evidence and P134.6 Docs / Roadmap as the next action.
+P134.6 Docs / Roadmap is planned-only next. DB/runtime writes, migrations, raw SQL, live
+CRUD, provider/model calls, agent dispatch, project mutation, deploy, release,
+export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

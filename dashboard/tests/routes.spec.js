@@ -2257,8 +2257,11 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Scope boundary");
     await expect(activeCommandTabPanel(page)).toContainText("Approval evidence");
     await expect(activeCommandTabPanel(page)).toContainText("Create intent");
+    await expect(activeCommandTabPanel(page)).toContainText("P134.5 tests/checkers complete");
+    await expect(activeCommandTabPanel(page)).toContainText("P134.6 to close docs and roadmap status");
     await expect(activeCommandTabPanel(page)).toContainText("reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md");
     await expect(activeCommandTabPanel(page)).toContainText("reports/p1344-durable-db-crud-runtime-command-center-ux-report.md");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p1345-durable-db-crud-runtime-tests-checkers-report.md");
     await expect(activeCommandTabPanel(page)).toContainText("Founder Workflow DB CRUD");
     await expect(activeCommandTabPanel(page)).toContainText("Local CRUD admission ready");
     await expect(activeCommandTabPanel(page)).toContainText("Mutation request envelopes ready for operator review");

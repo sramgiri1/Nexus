@@ -52,10 +52,10 @@ export function buildDbRuntimeReadinessViewModel() {
   const durableCrudRuntimeUx = {
     phaseId: "P134.4",
     title: "P134 Durable DB/CRUD Runtime",
-    currentState: "Display-safe readiness visible; DB writes and CRUD execution blocked",
+    currentState: "Display-safe readiness visible; P134.5 validation hardened; DB writes and CRUD execution blocked",
     disabledReason: "P134.4 renders DB runtime readiness only. It does not expose mutation buttons, raw SQL, migrations, hosted DB controls, project writes, provider calls, agent dispatch, deploy, package, network calls, or spend.",
     ownerCapability: "NEXUS Durable DB CRUD Runtime UX Guard",
-    nextAction: "Review the schema coverage and write-plan gates before P134.5 expands checker coverage.",
+    nextAction: "Use P134.6 to close docs and roadmap status after P134.5 validation evidence.",
     costImpact: "No provider spend. This view uses local roadmap and report evidence only.",
     schemaCoverage: {
       currentState: "P134.2 schema model mapped",
@@ -96,8 +96,9 @@ export function buildDbRuntimeReadinessViewModel() {
     },
     summaryRows: [
       { label: "What changed", value: "P134 schema coverage and write-plan gates are now visible in DB Runtime." },
-      { label: "Current state", value: "Readiness visible; DB writes and CRUD execution blocked." },
-      { label: "Next action", value: "Use P134.5 to harden tests and checker coverage before any later runtime authority." },
+      { label: "Current state", value: "Readiness visible; P134.5 validation hardened; DB writes and CRUD execution blocked." },
+      { label: "Validation state", value: "P134.5 tests/checkers complete; route-wide DB Runtime safety coverage retained." },
+      { label: "Next action", value: "Use P134.6 to close docs and roadmap status before final validation." },
       { label: "Owner capability", value: "NEXUS Durable DB CRUD Runtime UX Guard" },
       { label: "Disabled reason", value: "No mutation controls, raw SQL, migrations, hosted DB controls, provider calls, agent dispatch, or project writes are exposed." },
       { label: "Cost impact", value: "No provider spend." },
@@ -106,6 +107,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Schema model", value: "reports/p1342-durable-db-crud-runtime-schema-model-report.md" },
       { label: "Write-plan preview", value: "reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md" },
       { label: "UX validation", value: "reports/p1344-durable-db-crud-runtime-command-center-ux-report.md" },
+      { label: "Tests/checkers", value: "reports/p1345-durable-db-crud-runtime-tests-checkers-report.md" },
       { label: "Activity", value: "reports/os-phase-status-report.md" },
     ],
     blockers: [
