@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.3
-- Generated at: 2026-05-30T20:46:27.936Z
+- Generated at: 2026-05-30T20:47:22.318Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 950d8d2c
+- Validation HEAD: 3356fbd1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -60,8 +60,8 @@
 | phase status starts P138.3 | PASS | P138.3/P138.2/P138.4 |
 | completed P138.3 entries have required fields | PASS |  |
 | P138.4 remains planned | PASS |  |
-| changed files stay in P138.3 allowed scope | PASS | README.md, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, reports/p1382-project-workspace-mutation-build-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1381-project-workspace-mutation-build-pipeline.js, scripts/check-p1382-project-workspace-mutation-build-pipeline.js, reports/p1383-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1383-project-workspace-mutation-build-pipeline.js, shared/projectPatchBuildPreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, reports/p1382-project-workspace-mutation-build-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1381-project-workspace-mutation-build-pipeline.js, scripts/check-p1382-project-workspace-mutation-build-pipeline.js, reports/p1383-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1383-project-workspace-mutation-build-pipeline.js, shared/projectPatchBuildPreview.js |
+| changed files stay in P138.3 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable project actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
