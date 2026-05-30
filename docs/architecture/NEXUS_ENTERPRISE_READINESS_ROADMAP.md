@@ -37,7 +37,8 @@ P137.2 is now complete as read-only scoped work order model only.
 P137.3 is now complete as a local non-runnable dispatch dry run only.
 P137.4 is now complete as Agent Flow Command Center UX only.
 P137.5 is now complete as tests/checkers hardening only.
-P137.6 is the next executable subphase. P137.6 and P138-P145 remain
+P137.6 is now complete as docs/roadmap/status closure only.
+P137.7 is the next executable subphase. P137.7 and P138-P145 remain
 planned-only. They do not enable secret values, DB writes, provider/model
 calls, tool execution, agent dispatch, project mutation, deploy, release,
 export, package, network calls, or spend until each phase/subphase has its own
@@ -77,9 +78,9 @@ Every subphase must include:
 Forbidden by default unless a phase explicitly allows it:
 
 - `projects/**`, `careloop/**`, and `generated-projects/**` changes.
-- Provider/model calls, tool execution, worker execution, and agent dispatch.
-- Project mutation, deploy, release, export, package, and network calls.
-- DB/runtime writes, migrations, and hosted DB mutation.
+- Forbidden provider/model calls, tool execution, worker execution, and agent dispatch.
+- Forbidden project mutation, deploy, release, export, package, and network calls.
+- Forbidden DB/runtime writes, migrations, and hosted DB mutation.
 - Do not expose raw JSON, raw logs, raw policy dumps, raw table names, raw
   report paths, internal helper IDs, or private project IDs in primary UX.
 - DemoApp leakage into full Command Center.
@@ -119,7 +120,8 @@ P137.2 is now complete as read-only scoped work order model only.
 P137.3 is now complete as a local non-runnable dispatch dry run only.
 P137.4 is now complete as Agent Flow Command Center UX only.
 P137.5 is now complete as tests/checkers hardening only.
-P137.6 is the next executable subphase. P137.6 and P138-P145 are planned-only
+P137.6 is now complete as docs/roadmap/status closure only.
+P137.7 is the next executable subphase. P137.7 and P138-P145 are planned-only
 backlog phases and must not be treated as complete or live.
 
 ## Validation

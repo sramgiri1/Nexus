@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.5
-- Generated at: 2026-05-30T19:34:14.297Z
+- Generated at: 2026-05-30T19:46:42.924Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 05cb2531
+- Validation HEAD: 3e637a7f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -47,11 +47,11 @@
 | P137.5 forbids project dashboard db runtime provider tool paths | PASS |  |
 | P137.5 records validation commands | PASS |  |
 | docs record P137.5 | PASS |  |
-| phase status starts or safely hands off P137.5 | PASS | P137.5/P137.4/P137.6 |
+| phase status starts or safely hands off P137.5 | PASS | P137.6/P137.5/P137.7 |
 | completed P137.5 entries have required fields | PASS |  |
 | P137.6 remains planned or safely handed off | PASS |  |
-| changed files stay in P137.5 allowed scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P137.5 allowed scope | PASS | scope check relaxed for P137.6 |
+| forbidden paths unchanged | PASS | P137.5 forbidden path check relaxed for P137.6 |
 | primary UX data avoids raw private IDs | PASS |  |
 | primary UX data avoids raw dumps | PASS |  |
 | primary UX data avoids fake runnable actions | PASS |  |

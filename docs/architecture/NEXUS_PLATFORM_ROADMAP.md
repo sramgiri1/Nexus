@@ -3195,7 +3195,7 @@ remain blocked.
 ## P133-P145 Enterprise Readiness Roadmap
 
 P133-P145 are enterprise readiness phases. P133, P134, P135, and P136 are
-complete through final validation, and P137 is in progress through P137.5.
+complete through final validation, and P137 is in progress through P137.6.
 Later subphases and phases remain
 planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
@@ -3216,6 +3216,7 @@ P137.1 agent work order runtime contract is complete.
 P137.2 agent work order runtime model is complete. P137.3 agent work order
 dispatch dry run is complete. P137.4 agent work order Agent Flow UX is
 complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
+agent work order runtime docs/status is complete. P137.7
 and P138-P145 do not enable secret values, DB/runtime writes, live CRUD,
 provider/model calls, tool execution, agent dispatch, project mutation, deploy,
 release, export, package, network calls, or spend.
@@ -3474,10 +3475,14 @@ spend remain blocked.
 P137.5 agent work order runtime tests/checkers is complete. NEXUS now has
 aggregate P137 validation over the contract, scoped runtime model, dispatch
 dry run, Agent Flow UX coverage, route-wide safety assertions, checker
-handoffs, docs, roadmap, and OS phase status. P137.6 Docs / Roadmap / Status is
-planned-only next; provider/model calls, tool execution, MCP startup, agent
-dispatch, DB/runtime writes, project mutation, deploy, release, export,
-package, network calls, and spend remain blocked.
+handoffs, docs, roadmap, and OS phase status.
+
+P137.6 agent work order runtime docs/status is complete. NEXUS now has closed
+P137 docs, README, platform roadmap, enterprise roadmap, OS phase status,
+phase index, checker handoff, and report evidence through P137.6. P137.7 Final
+Validation is planned-only next; provider/model calls, tool execution, MCP
+startup, agent dispatch, DB/runtime writes, project mutation, deploy, release,
+export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

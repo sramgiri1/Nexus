@@ -2008,7 +2008,7 @@ The Command Center and local operator surface have:
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
   implementation is closed through P136.7. P137 Agent Work Order Runtime is
-  in progress through P137.5 with P137.6 planned-only next.
+  in progress through P137.6 with P137.7 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2237,7 +2237,7 @@ The Command Center and local operator surface have:
   tool execution, MCP startup, agent dispatch, DB/runtime writes, project
   mutation, deploy, release, export, package, network calls, and spend remain
   unavailable. P137.3 Dispatch Dry Run, P137.4 Agent Flow Command Center UX,
-  and P137.5 Tests / Checkers are complete.
+  P137.5 Tests / Checkers, and P137.6 Docs / Roadmap / Status are complete.
 - P137.3 agent work order dispatch dry run: Added a local non-runnable dry run
   from the scoped P137.2 model. It creates display-safe dispatch rows, gate
   rows, blocked authority rows, evidence/activity references, owner capability,
@@ -2253,7 +2253,10 @@ The Command Center and local operator surface have:
 - P137.5 agent work order runtime tests/checkers: Added aggregate P137
   validation over the contract, scoped runtime model, dispatch dry run, Agent
   Flow UX coverage, route-wide safety assertions, checker handoffs, docs,
-  roadmap, and OS phase status. P137.6 Docs / Roadmap / Status is next;
+  roadmap, and OS phase status.
+- P137.6 agent work order runtime docs/status: Closed the P137 docs, README,
+  platform roadmap, enterprise roadmap, OS phase status, phase index, checker
+  handoff, and report evidence through P137.6. P137.7 Final Validation is next;
   provider/model calls, tool execution, MCP startup, agent dispatch,
   DB/runtime writes, project mutation, deploy, release, export, package,
   network calls, and spend remain unavailable.
