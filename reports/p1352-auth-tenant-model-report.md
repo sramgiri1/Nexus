@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P135.2
-- Generated at: 2026-05-30T14:40:03.831Z
+- Generated at: 2026-05-30T14:43:56.271Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fc267945
+- Validation HEAD: c7810985
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -44,8 +44,8 @@
 | phase status starts P135.2 | PASS | P135.2/P135.1/P135.3 |
 | completed P135.2 entries have required fields | PASS |  |
 | P135.3 remains planned-only | PASS |  |
-| changed files stay in P135.2 allowed scope | PASS | README.md, contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1351-identity-tenant-roles-permissions-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1351-identity-tenant-roles-permissions.js, auth-governance/p135-2-auth-tenant-model.js, reports/p1352-auth-tenant-model-report.md, scripts/check-p1352-auth-tenant-model.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1351-identity-tenant-roles-permissions-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1351-identity-tenant-roles-permissions.js, auth-governance/p135-2-auth-tenant-model.js, reports/p1352-auth-tenant-model-report.md, scripts/check-p1352-auth-tenant-model.js |
+| changed files stay in P135.2 allowed scope | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable auth actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

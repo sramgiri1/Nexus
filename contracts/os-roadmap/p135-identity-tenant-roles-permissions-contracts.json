@@ -253,7 +253,7 @@
       "order": 171.2,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c7810985",
       "summary": "Added a read-only auth and tenant model that composes existing identity/session, RBAC, and tenant boundary contracts while login, sessions, tenant writes, role assignment, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
         "P135.2 is read-only model work. It does not create auth schemas, session stores, tenant stores, role stores, permission stores, permission engines, auth providers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.3 remains planned-only."
