@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.5
-- Generated at: 2026-05-30T09:46:32.570Z
+- Generated at: 2026-05-30T09:48:37.478Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9ec02306
+- Validation HEAD: 19fa4d4d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | platform roadmap records P132.5 | PASS |  |
 | phase status advanced | PASS | P132.5/P132.4/P132.6 |
 | completed P132.5 entries have required fields | PASS |  |
-| changed files stay in P132.5 allowed scope | PASS | README.md, contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1324-founder-runtime-store-live-admission-execution-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1324-founder-runtime-store-live-admission-execution.js, reports/p1325-founder-runtime-store-live-admission-execution-report.md, scripts/check-p1325-founder-runtime-store-live-admission-execution.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, reports/p1324-founder-runtime-store-live-admission-execution-report.md, reports/phase-validation-coverage-report.md, scripts/check-p1324-founder-runtime-store-live-admission-execution.js, reports/p1325-founder-runtime-store-live-admission-execution-report.md, scripts/check-p1325-founder-runtime-store-live-admission-execution.js |
+| changed files stay in P132.5 allowed scope | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | primary UX avoids DemoApp leakage | PASS |  |
 | primary UX avoids raw phase labels | PASS |  |
 | public docs avoid raw store table names | PASS |  |

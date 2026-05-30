@@ -575,7 +575,7 @@
       ],
       "narrowGoal": "Expose display-safe execution scope state on scoped founder pages without raw IDs, raw dumps, or runnable write controls.",
       "previousSubphase": "P132.4",
-      "commit": "pending-final-commit",
+      "commit": "19fa4d4d",
       "completedAt": "2026-05-30T09:44:23.478Z",
       "summary": "Added display-safe Store Execution Scope cards to Business Build and Agent Flow by reusing the P132.4 write-plan preview and existing Command Center boundary card while Chat with NEXUS, Lite, OS Roadmap, Live Readiness, DB writes, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
