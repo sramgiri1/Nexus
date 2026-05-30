@@ -21640,42 +21640,116 @@
       "title": "Identity, Tenant, Roles, and Permissions",
       "label": "Identity / RBAC",
       "order": 171,
-      "status": "planned",
+      "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P135 is planned-only for Identity, Tenant, Roles, and Permissions.",
-      "summary": "Planned-only future enterprise phase for identity, tenant isolation, roles, and permission gates.",
+      "detail": "P135.1 is complete. P135.2 Auth and Tenant Model is planned-only next.",
+      "summary": "P135 identity, tenant, roles, and permissions is in progress with P135.1 contract/policy/safety boundary complete and P135.2 planned-only next.",
       "previousPhase": "P134",
       "nextPhase": "P136",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1351-identity-tenant-roles-permissions",
+        "npm run check:p1347-durable-db-crud-runtime-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned-only; no implementation yet. Identity, tenant, role, permission, provider, dispatch, project mutation, deploy, export, package, network, and spend execution remain blocked."
+        "P135.1 is contract/policy/safety-boundary only. Login, sessions, tenant mutation, role mutation, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked. P135.2 remains planned-only."
       ],
       "subphases": [
         {
+          "track": "NEXUS_OS",
           "phaseId": "P135.1",
           "title": "Contract / Policy / Safety Boundary",
-          "status": "planned",
-          "narrowGoal": "Contract / Policy / Safety Boundary for Identity, Tenant, Roles, and Permissions.",
+          "label": "Contract / Policy / Safety Boundary",
+          "order": 171.1,
+          "status": "complete",
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-30T00:00:00.000Z",
+          "commandCenterVisible": true,
+          "detail": "P135.1 is complete. P135.2 Auth and Tenant Model is planned-only next.",
+          "summary": "Started P135 with an identity/tenant/RBAC contract, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff while auth execution and permission enforcement remain blocked.",
+          "previousPhase": "P134.7",
+          "nextPhase": "P135.2",
+          "checksRun": [
+            "npm run check:p1351-identity-tenant-roles-permissions",
+            "npm run check:p1347-durable-db-crud-runtime-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "knownLimitations": [
+            "P135.1 is contract/policy/safety-boundary work only. It does not enable login, sessions, tenant mutation, role mutation, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.2 remains planned-only."
+          ],
           "scopeClassification": "NEXUS_OS_CHANGE",
-          "requiredPlanFields": [
-            "narrow scope",
-            "starting branch and expected base commit",
-            "allowed files",
-            "forbidden files",
-            "exact files/modules",
-            "expected exports/schemas/data shapes",
-            "Command Center UX requirements",
-            "dark/light/system theme requirements",
-            "Playwright tests",
-            "checker updates",
-            "docs/README/roadmap updates",
-            "OS phase status update",
-            "validation commands",
-            "final safety checks",
-            "git add/commit/push commands",
-            "final response checklist"
+          "startingBranch": "codex/nexus-e2e-phase-validation",
+          "expectedBaseCommit": "4dd47e11",
+          "narrowGoal": "Start P135 with an implementation-grade identity/tenant/RBAC contract, seven-subphase split, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff.",
+          "dataShape": "Adds P135 contract, plan, checker, roadmap/status records, and validation report only. No auth schema, tenant store, role store, permission engine, session adapter, auth provider, DB adapter, dashboard source, Playwright source, or live execution is added.",
+          "commandCenterUx": "Preserve existing Command Center UX. P135.1 does not change dashboard source, labels, controls, routes, or theme behavior. P135.4 owns future scoped Auth Governance UX changes.",
+          "themeRequirements": [
+            "Preserve System theme.",
+            "Preserve Dark theme.",
+            "Preserve Light theme."
+          ],
+          "safetyRules": [
+            "Do not enable login, signup, logout, session creation, session refresh, password flows, OAuth flows, SSO flows, or auth provider calls in P135.1.",
+            "Do not mutate tenants, users, roles, permissions, memberships, sessions, or identity records in P135.1.",
+            "Do not enforce permissions, grant permissions, revoke permissions, assign roles, or evaluate access decisions as live authority in P135.1.",
+            "Do not write DB/runtime state, create auth schemas, run migrations, connect auth providers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+            "Do not expose raw private IDs, auth provider payloads, raw JSON, raw logs, raw policy dumps, mutation controls, provider controls, deploy controls, package controls, or spend controls in primary UX."
+          ],
+          "reuseCheck": [
+            "Reuse shared/reportWriter.js.",
+            "Reuse shared/checkResultFormatter.js.",
+            "Reuse existing P133/P134 contract and status handoff patterns.",
+            "Reuse existing enterprise readiness checker structure.",
+            "Reuse existing OS phase status and roadmap structures."
+          ],
+          "testsAndCheckers": [
+            "Add P135.1 contract checker.",
+            "Update P134.7 checker for P135.1 handoff compatibility.",
+            "Update enterprise readiness checker for P135.1 handoff compatibility.",
+            "Update OS phase status checker for P135.1/P135.2 handoff IDs."
+          ],
+          "docsRoadmap": "Add P135 plan and update README, platform roadmap, enterprise roadmap, OS phase status, phase index, and generated reports.",
+          "phaseStatusUpdate": "P135 in progress; P135.1 complete; current P135.1; previous P134.7; next P135.2 planned-only.",
+          "validationCommands": [
+            "npm run check:p1351-identity-tenant-roles-permissions",
+            "npm run check:p1347-durable-db-crud-runtime-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "finalResponseChecklist": [
+            "Branch name",
+            "Commit hash",
+            "Files changed",
+            "What was implemented",
+            "Command Center UX preservation",
+            "Tests/checkers run",
+            "Dashboard build/unit/page results",
+            "Docs/roadmap/status updates",
+            "Evidence/report records",
+            "Safety confirmations",
+            "Forbidden paths confirmation",
+            "Known limitations",
+            "Next phase/subphase"
           ]
         },
         {
@@ -21828,6 +21902,219 @@
             "final response checklist"
           ]
         }
+      ],
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "currentSubphase": "P135.1",
+      "previousSubphase": "P134.7",
+      "nextSubphase": "P135.2"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.1",
+      "title": "Contract / Policy / Safety Boundary",
+      "label": "Contract / Policy / Safety Boundary",
+      "order": 171.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "commandCenterVisible": true,
+      "detail": "P135.1 is complete. P135.2 Auth and Tenant Model is planned-only next.",
+      "summary": "Started P135 with an identity/tenant/RBAC contract, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff while auth execution and permission enforcement remain blocked.",
+      "previousPhase": "P134.7",
+      "nextPhase": "P135.2",
+      "checksRun": [
+        "npm run check:p1351-identity-tenant-roles-permissions",
+        "npm run check:p1347-durable-db-crud-runtime-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P135.1 is contract/policy/safety-boundary work only. It does not enable login, sessions, tenant mutation, role mutation, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.2 remains planned-only."
+      ],
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "4dd47e11",
+      "narrowGoal": "Start P135 with an implementation-grade identity/tenant/RBAC contract, seven-subphase split, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff.",
+      "dataShape": "Adds P135 contract, plan, checker, roadmap/status records, and validation report only. No auth schema, tenant store, role store, permission engine, session adapter, auth provider, DB adapter, dashboard source, Playwright source, or live execution is added.",
+      "commandCenterUx": "Preserve existing Command Center UX. P135.1 does not change dashboard source, labels, controls, routes, or theme behavior. P135.4 owns future scoped Auth Governance UX changes.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not enable login, signup, logout, session creation, session refresh, password flows, OAuth flows, SSO flows, or auth provider calls in P135.1.",
+        "Do not mutate tenants, users, roles, permissions, memberships, sessions, or identity records in P135.1.",
+        "Do not enforce permissions, grant permissions, revoke permissions, assign roles, or evaluate access decisions as live authority in P135.1.",
+        "Do not write DB/runtime state, create auth schemas, run migrations, connect auth providers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+        "Do not expose raw private IDs, auth provider payloads, raw JSON, raw logs, raw policy dumps, mutation controls, provider controls, deploy controls, package controls, or spend controls in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse existing P133/P134 contract and status handoff patterns.",
+        "Reuse existing enterprise readiness checker structure.",
+        "Reuse existing OS phase status and roadmap structures."
+      ],
+      "testsAndCheckers": [
+        "Add P135.1 contract checker.",
+        "Update P134.7 checker for P135.1 handoff compatibility.",
+        "Update enterprise readiness checker for P135.1 handoff compatibility.",
+        "Update OS phase status checker for P135.1/P135.2 handoff IDs."
+      ],
+      "docsRoadmap": "Add P135 plan and update README, platform roadmap, enterprise roadmap, OS phase status, phase index, and generated reports.",
+      "phaseStatusUpdate": "P135 in progress; P135.1 complete; current P135.1; previous P134.7; next P135.2 planned-only.",
+      "validationCommands": [
+        "npm run check:p1351-identity-tenant-roles-permissions",
+        "npm run check:p1347-durable-db-crud-runtime-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/roadmap/status updates",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.2",
+      "title": "Auth and Tenant Model",
+      "label": "Auth and Tenant Model",
+      "order": 171.2,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P135.2 is planned-only for Auth and Tenant Model.",
+      "summary": "Planned-only future P135 subphase: Auth and Tenant Model.",
+      "previousPhase": "P135.1",
+      "nextPhase": "P135.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.3",
+      "title": "Permission Preview",
+      "label": "Permission Preview",
+      "order": 171.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P135.3 is planned-only for Permission Preview.",
+      "summary": "Planned-only future P135 subphase: Permission Preview.",
+      "previousPhase": "P135.2",
+      "nextPhase": "P135.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.4",
+      "title": "Auth Governance Command Center UX",
+      "label": "Auth Governance Command Center UX",
+      "order": 171.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P135.4 is planned-only for Auth Governance Command Center UX.",
+      "summary": "Planned-only future P135 subphase: Auth Governance Command Center UX.",
+      "previousPhase": "P135.3",
+      "nextPhase": "P135.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.5",
+      "title": "Tests / Checkers",
+      "label": "Tests / Checkers",
+      "order": 171.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P135.5 is planned-only for Tests / Checkers.",
+      "summary": "Planned-only future P135 subphase: Tests / Checkers.",
+      "previousPhase": "P135.4",
+      "nextPhase": "P135.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.6",
+      "title": "Docs / Roadmap / Status",
+      "label": "Docs / Roadmap / Status",
+      "order": 171.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P135.6 is planned-only for Docs / Roadmap / Status.",
+      "summary": "Planned-only future P135 subphase: Docs / Roadmap / Status.",
+      "previousPhase": "P135.5",
+      "nextPhase": "P135.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P135.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 171.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P135.7 is planned-only for Final Validation.",
+      "summary": "Planned-only future P135 subphase: Final Validation.",
+      "previousPhase": "P135.6",
+      "nextPhase": "P136",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
       ]
     },
     {
@@ -24024,11 +24311,38 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-30T00:00:00.000Z",
-  "currentPhase": "P134.7",
-  "previousPhase": "P134.6",
-  "nextPhase": "P135",
+  "currentPhase": "P135.1",
+  "previousPhase": "P134.7",
+  "nextPhase": "P135.2",
   "currentPhaseStatus": "complete",
   "current": {
+    "phaseId": "P135.1",
+    "title": "Contract / Policy / Safety Boundary",
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:00:00.000Z",
+    "detail": "P135.1 is complete. P135.2 Auth and Tenant Model is planned-only next.",
+    "summary": "Started P135 with an identity/tenant/RBAC contract, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff while auth execution and permission enforcement remain blocked.",
+    "checksRun": [
+      "npm run check:p1351-identity-tenant-roles-permissions",
+      "npm run check:p1347-durable-db-crud-runtime-final-validation",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P135.1 is contract/policy/safety-boundary work only. It does not enable login, sessions, tenant mutation, role mutation, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.2 remains planned-only."
+    ],
+    "previousPhase": "P134.7",
+    "nextPhase": "P135.2",
+    "commandCenterVisible": true
+  },
+  "previous": {
     "phaseId": "P134.7",
     "title": "Final Validation",
     "status": "complete",
@@ -24060,47 +24374,21 @@
     "nextPhase": "P135",
     "commandCenterVisible": true
   },
-  "previous": {
-    "phaseId": "P134.6",
-    "title": "Docs / Roadmap / Status",
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "673b9b46",
-    "completedAt": "2026-05-30T00:00:00.000Z",
-    "detail": "P134.6 is complete. P134.7 Final Validation is planned-only next.",
-    "summary": "Completed P134.6 by aligning the P134 durable DB/CRUD docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P134.6 while preserving Command Center UX and leaving P134.7 planned-only.",
-    "checksRun": [
-      "npm run check:p1346-durable-db-crud-runtime-docs-roadmap",
-      "npm run check:p1345-durable-db-crud-runtime-tests-checkers",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P134.6 is docs/roadmap/status only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.7 remains planned-only."
-    ],
-    "previousPhase": "P134.5",
-    "nextPhase": "P134.7",
-    "commandCenterVisible": true
-  },
   "next": {
-    "phaseId": "P135",
-    "title": "Identity, Tenant, Roles, and Permissions",
+    "phaseId": "P135.2",
+    "title": "Auth and Tenant Model",
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
-    "detail": "P135 is planned-only for Identity, Tenant, Roles, and Permissions.",
-    "summary": "Planned-only future enterprise phase for identity, tenant isolation, roles, and permission gates.",
+    "completedAt": "",
+    "detail": "P135.2 is planned-only for Auth and Tenant Model.",
+    "summary": "Planned-only future P135 subphase: Auth and Tenant Model.",
     "checksRun": [],
     "knownLimitations": [
-      "Planned-only; no implementation yet. Identity, tenant, role, permission, provider, dispatch, project mutation, deploy, export, package, network, and spend execution remain blocked."
+      "Planned-only; no implementation yet."
     ],
-    "previousPhase": "P134",
-    "nextPhase": "P136",
+    "previousPhase": "P135.1",
+    "nextPhase": "P135.3",
     "commandCenterVisible": true
   }
 }

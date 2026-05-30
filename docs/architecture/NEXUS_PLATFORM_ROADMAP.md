@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P134.7 and P135 Identity, Tenant,
-Roles, and Permissions is planned-only next. P135-P145 do not enable
+Current implementation is closed through P135.1 and P135.2 Auth and Tenant
+Model is planned-only next. P135.2-P145 do not enable
 DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3311,6 +3311,15 @@ Tenant, Roles, and Permissions is planned-only next. DB/runtime writes,
 migrations, raw SQL, live CRUD, provider/model calls, agent dispatch, project
 mutation, deploy, release, export, package, network calls, and spend remain
 blocked.
+
+P135.1 identity/tenant/RBAC contract is complete. NEXUS now has the P135
+contract, seven-subphase split, safety boundary, checker, docs, roadmap, OS
+status, phase index, and validation report for enterprise identity, tenant,
+role, session, and permission governance. P135.2 Auth and Tenant Model is
+planned-only next. Login, sessions, tenant mutation, role mutation, permission
+grants, permission enforcement, auth providers, DB/runtime writes,
+provider/model calls, agent dispatch, project mutation, deploy, release,
+export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

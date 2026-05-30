@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T14:16:41.904Z
+- Generated at: 2026-05-30T14:26:27.825Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 34145463
+- Validation HEAD: 4dd47e11
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -581,7 +581,14 @@
 | P134.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P134.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P134.7 validation coverage | PASS | 52 checkers, 42 reports |
-| P135 validation coverage | PASS | dedicated_checker, validation_report |
+| P135 validation coverage | PASS | 6 checkers, 1 reports |
+| P135.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P135.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P135.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P135.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P135.5 validation coverage | PASS | 20 checkers, 20 reports |
+| P135.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P135.7 validation coverage | PASS | 42 checkers, 42 reports |
 | P136 validation coverage | PASS | dedicated_checker, validation_report |
 | P137 validation coverage | PASS | 6 checkers, 6 reports |
 | P138 validation coverage | PASS | dedicated_checker, validation_report |
@@ -594,14 +601,29 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P134.7; next=P135; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P135.1; next=P135.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P135 Identity, Tenant, Roles, and Permissions
+- P135.2 Auth and Tenant Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P135.3 Permission Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P135.4 Auth Governance Command Center UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P135.6 Docs / Roadmap / Status
   - status: planned
   - checkers: 0
   - reports: 0
@@ -653,4 +675,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (579/579)
+PASS (586/586)

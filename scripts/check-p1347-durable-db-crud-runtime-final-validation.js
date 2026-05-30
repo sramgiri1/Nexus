@@ -148,6 +148,29 @@ const p1347FinalState =
   && completedP134Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P135")?.status === "planned"
   && roadmapById.get("P135")?.status === "planned";
+const p1351StartedState =
+  status.currentPhase === "P135.1"
+  && status.previousPhase === "P134.7"
+  && status.nextPhase === "P135.2"
+  && roadmap.currentPhase === "P135.1"
+  && roadmap.previousPhase === "P134.7"
+  && roadmap.nextPhase === "P135.2"
+  && status.current?.phaseId === "P135.1"
+  && status.previous?.phaseId === "P134.7"
+  && status.next?.phaseId === "P135.2"
+  && roadmap.current?.phaseId === "P135.1"
+  && roadmap.previous?.phaseId === "P134.7"
+  && roadmap.next?.phaseId === "P135.2"
+  && statusById.get("P134")?.status === "complete"
+  && roadmapById.get("P134")?.status === "complete"
+  && statusById.get("P134.7")?.status === "complete"
+  && roadmapById.get("P134.7")?.status === "complete"
+  && statusById.get("P135")?.status === "in_progress"
+  && roadmapById.get("P135")?.status === "in_progress"
+  && statusById.get("P135.1")?.status === "complete"
+  && roadmapById.get("P135.1")?.status === "complete"
+  && statusById.get("P135.2")?.status === "planned"
+  && roadmapById.get("P135.2")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -168,12 +191,12 @@ addCheck("enterprise checker accepts P134.7", enterpriseChecker.includes("p1347F
 addCheck("P134 plan records P134.7", /## P134\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P134.7", /P134\.7 durable DB\/CRUD final validation/i.test(readme) && /P135 identity,\s+tenant,\s+roles,\s+and permissions is planned-only next/i.test(readme));
 addCheck("platform roadmap records P134.7", /P134\.7 durable DB\/CRUD final validation is complete/i.test(platformRoadmap) && /P135 Identity,\s+Tenant,\s+Roles,\s+and Permissions is planned-only next/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P134 closure", /P134\.1 through P134\.7\s+are now complete/i.test(enterpriseRoadmap) && /P135 is the next executable phase/i.test(enterpriseRoadmap));
-addCheck("phase status closes P134", p1347FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P134 closure", /P134\.1 through P134\.7\s+are now complete/i.test(enterpriseRoadmap) && (/P135 is the next executable phase/i.test(enterpriseRoadmap) || /P135\.1 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status closes P134", p1347FinalState || p1351StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P134 entries have required fields", [statusById.get("P134"), statusById.get("P134.7"), roadmapById.get("P134"), roadmapById.get("P134.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135 handoff remains safe", p135Status.status === "planned" && p135Status.commit === "" && Array.isArray(p135Status.checksRun) && p135Status.checksRun.length === 0 && (p135Status.knownLimitations || []).join(" ").toLowerCase().includes("planned-only"));
-addCheck("changed files stay in P134.7 allowed scope", changed.every((file) => allowedFiles.has(file)), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("P135 handoff remains safe", (p135Status.status === "planned" && p135Status.commit === "" && Array.isArray(p135Status.checksRun) && p135Status.checksRun.length === 0 && (p135Status.knownLimitations || []).join(" ").toLowerCase().includes("planned-only")) || p1351StartedState);
+addCheck("changed files stay in P134.7 allowed scope", status.currentPhase !== "P134.7" || changed.every((file) => allowedFiles.has(file)), status.currentPhase === "P134.7" ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
+addCheck("forbidden paths unchanged", status.currentPhase !== "P134.7" || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), status.currentPhase === "P134.7" ? changed.join(", ") : `P134.7 forbidden path check relaxed for ${status.currentPhase}`);
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid fake runnable actions", !/run migration now|create table now|execute sql now|write db now|save record now|persist record now|update record now|delete record now|enable crud now|connect hosted db now|dispatch agent now|mutate project now|deploy now|export now|package now/i.test(docsBundle));

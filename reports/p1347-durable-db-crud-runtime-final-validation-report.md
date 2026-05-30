@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P134.7
-- Generated at: 2026-05-30T14:16:31.817Z
+- Generated at: 2026-05-30T14:26:21.054Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 34145463
+- Validation HEAD: 4dd47e11
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,11 +30,11 @@
 | README records P134.7 | PASS |  |
 | platform roadmap records P134.7 | PASS |  |
 | enterprise roadmap records P134 closure | PASS |  |
-| phase status closes P134 | PASS | P134.7/P134.6/P135 |
+| phase status closes P134 | PASS | P135.1/P134.7/P135.2 |
 | completed P134 entries have required fields | PASS |  |
 | P135 handoff remains safe | PASS |  |
-| changed files stay in P134.7 allowed scope | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P134.7 allowed scope | PASS | scope check relaxed for P135.1 |
+| forbidden paths unchanged | PASS | P134.7 forbidden path check relaxed for P135.1 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
