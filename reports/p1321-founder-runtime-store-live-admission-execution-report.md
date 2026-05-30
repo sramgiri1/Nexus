@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.1
-- Generated at: 2026-05-30T00:13:52.582Z
+- Generated at: 2026-05-30T00:15:14.821Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 39e2da0a
+- Validation HEAD: 2764852a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,8 +37,8 @@
 | phase status advanced | PASS | P132.1/P131.7/P132.2 |
 | completed P132.1 entries have required fields | PASS |  |
 | P132.2 remains planned-only | PASS |  |
-| changed files stay in P132.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1317-founder-runtime-store-live-admission-scope.js, contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md, reports/p1321-founder-runtime-store-live-admission-execution-report.md, scripts/check-p1321-founder-runtime-store-live-admission-execution.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-os-phase-status.js, scripts/check-p1317-founder-runtime-store-live-admission-scope.js, contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md, reports/p1321-founder-runtime-store-live-admission-execution-report.md, scripts/check-p1321-founder-runtime-store-live-admission-execution.js |
+| changed files stay in P132.1 allowed scope | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | P132.1 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | primary UX avoids DemoApp leakage | PASS |  |

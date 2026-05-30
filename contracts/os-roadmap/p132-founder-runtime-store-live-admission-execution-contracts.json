@@ -120,7 +120,7 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "commit": "pending-final-commit",
+      "commit": "2764852a",
       "completedAt": "2026-05-29T23:58:16.871Z",
       "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
       "knownLimitations": [
@@ -494,7 +494,7 @@
     "title": "Store Live Execution Contract / Safety Boundary",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "2764852a",
     "completedAt": "2026-05-29T23:58:16.871Z",
     "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
     "checksRun": [
@@ -518,7 +518,7 @@
     "title": "Founder Runtime Store Live Admission Execution Contract",
     "status": "in_progress",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "2764852a",
     "completedAt": "2026-05-29T23:58:16.871Z",
     "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
     "checksRun": [
