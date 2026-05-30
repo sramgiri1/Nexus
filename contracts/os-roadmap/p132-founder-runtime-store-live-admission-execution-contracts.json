@@ -800,7 +800,7 @@
       "order": 168.7,
       "completedAt": "2026-05-30T10:04:57.052Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ca8413a5",
       "summary": "Closed P132 with final validation evidence, completed phase status, scoped UX preservation checks, checker handoff compatibility, and the planned-only P133 enterprise readiness handoff while DB writes, runtime writes, live CRUD, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
         "P132.7 is final validation closure only and P133 is planned-only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
@@ -812,7 +812,7 @@
     "title": "Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ca8413a5",
     "completedAt": "2026-05-30T10:04:57.052Z",
     "detail": "P132.7 final validation complete; P133 is planned-only next.",
     "summary": "Closed P132 with final validation evidence, completed phase status, scoped UX preservation checks, checker handoff compatibility, and the planned-only P133 enterprise readiness handoff while DB writes, runtime writes, live CRUD, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
@@ -837,7 +837,7 @@
     "title": "Founder Runtime Store Live Admission Execution Contract",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ca8413a5",
     "completedAt": "2026-05-30T10:04:57.052Z",
     "detail": "P132 complete; P132.7 final validation is complete and P133 is planned-only next.",
     "summary": "Closed P132 with final validation evidence, completed phase status, scoped UX preservation checks, checker handoff compatibility, and the planned-only P133 enterprise readiness handoff while DB writes, runtime writes, live CRUD, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
