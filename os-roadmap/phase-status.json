@@ -24723,7 +24723,7 @@
       "order": 173,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bb7caa3f5ad38a096bac21e530bc9c55ef3599fc",
       "commandCenterVisible": true,
       "detail": "P137.3 is complete. P137.4 Agent Flow Command Center UX is planned-only next.",
       "summary": "P137 is in progress through P137.3. The agent work order runtime now has a safety contract, scoped model, and non-runnable dispatch dry run while live dispatch remains blocked.",
@@ -24869,7 +24869,7 @@
           "previousPhase": "P137.2",
           "nextPhase": "P137.4",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "bb7caa3f5ad38a096bac21e530bc9c55ef3599fc",
           "completedAt": "2026-05-30T00:00:00.000Z",
           "checksRun": [
             "npm run check:p1373-agent-work-order-runtime",
@@ -25709,7 +25709,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bb7caa3f5ad38a096bac21e530bc9c55ef3599fc",
       "summary": "Implemented the local non-runnable agent work order dispatch dry run from the P137.2 scoped runtime model. Dispatch rows, gates, blocked authority, evidence, owner, next action, disabled reason, and zero-cost posture are available for later Agent Flow UX while live dispatch remains blocked.",
       "checksRun": [
         "npm run check:p1373-agent-work-order-runtime",
@@ -28859,7 +28859,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T00:00:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "bb7caa3f5ad38a096bac21e530bc9c55ef3599fc",
     "summary": "Implemented the local non-runnable agent work order dispatch dry run from the P137.2 scoped runtime model. Dispatch rows, gates, blocked authority, evidence, owner, next action, disabled reason, and zero-cost posture are available for later Agent Flow UX while live dispatch remains blocked.",
     "checksRun": [
       "npm run check:p1373-agent-work-order-runtime",
