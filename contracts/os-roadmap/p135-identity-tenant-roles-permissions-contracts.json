@@ -698,7 +698,7 @@
       "order": 171.5,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "90bd074a",
       "summary": "Added aggregate tests/checkers hardening for P135 identity, tenant, roles, permissions, and Auth Governance UX, including focused Playwright coverage, prior report validation, checker handoff compatibility, and docs/status evidence while auth execution, permission enforcement, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
         "P135.5 is tests/checkers hardening only. It does not create auth schemas, tenant stores, role stores, permission engines, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend paths. P135.6 remains planned-only."
@@ -1065,7 +1065,7 @@
     "order": 171.5,
     "completedAt": "2026-05-30T00:00:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "90bd074a",
     "summary": "Added aggregate tests/checkers hardening for P135 identity, tenant, roles, permissions, and Auth Governance UX, including focused Playwright coverage, prior report validation, checker handoff compatibility, and docs/status evidence while auth execution, permission enforcement, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
     "checksRun": [
       "npm run check:p1355-identity-tenant-roles-permissions-tests-checkers",
@@ -1348,7 +1348,7 @@
   },
   "summary": "P135 identity, tenant, roles, and permissions is in progress with P135.1 through P135.5 complete and P135.6 planned-only next.",
   "detail": "P135.5 is complete. P135.6 Docs / Roadmap / Status is planned-only next.",
-  "commit": "pending-final-commit",
+  "commit": "90bd074a",
   "completedAt": "2026-05-30T00:00:00.000Z",
   "checksRun": [
     "npm run check:p1355-identity-tenant-roles-permissions-tests-checkers",

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P135.5
-- Generated at: 2026-05-30T15:27:06.106Z
+- Generated at: 2026-05-30T15:33:34.607Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3d8f9afb
+- Validation HEAD: 90bd074a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -40,8 +40,8 @@
 | phase status starts P135.5 | PASS | P135.5/P135.4/P135.6 |
 | completed P135.5 entries have required fields | PASS |  |
 | P135.6 remains planned-only | PASS |  |
-| changed files stay in P135.5 allowed scope | PASS | README.md, contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1354-auth-governance-command-center-ux.js, scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1354-auth-governance-command-center-ux.js, scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js |
+| changed files stay in P135.5 allowed scope | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | primary UX data avoids raw private IDs | PASS |  |
 | primary UX data avoids tokens URLs and raw dumps | PASS |  |
 | primary UX data avoids internal phase labels | PASS |  |
