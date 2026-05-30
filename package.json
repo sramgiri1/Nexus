@@ -767,7 +767,8 @@
     "check:p1371-agent-work-order-runtime": "node scripts/check-p1371-agent-work-order-runtime.js",
     "check:p1372-agent-work-order-runtime": "node scripts/check-p1372-agent-work-order-runtime.js",
     "check:p1373-agent-work-order-runtime": "node scripts/check-p1373-agent-work-order-runtime.js",
-    "check:p1374-agent-work-order-runtime": "node scripts/check-p1374-agent-work-order-runtime.js"
+    "check:p1374-agent-work-order-runtime": "node scripts/check-p1374-agent-work-order-runtime.js",
+    "check:p1375-agent-work-order-runtime": "node scripts/check-p1375-agent-work-order-runtime.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

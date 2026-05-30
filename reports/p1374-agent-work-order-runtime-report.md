@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.4
-- Generated at: 2026-05-30T19:17:33.063Z
+- Generated at: 2026-05-30T19:33:44.771Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e8c226c2
+- Validation HEAD: 93d208f2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -51,15 +51,16 @@
 | P137.3 checker accepts P137.4 | PASS |  |
 | enterprise checker accepts P137.4 | PASS |  |
 | OS checker recognizes P137.5 handoff | PASS |  |
+| P137.5 checker handoff script is named | PASS |  |
 | P137 plan records P137.4 | PASS |  |
 | README records P137.4 | PASS |  |
 | platform roadmap records P137.4 | PASS |  |
 | enterprise roadmap records P137.4 | PASS |  |
-| phase status starts P137.4 | PASS | P137.4/P137.3/P137.5 |
+| phase status starts or safely hands off P137.4 | PASS | P137.5/P137.4/P137.6 |
 | completed P137.4 entries have required fields | PASS |  |
-| P137.5 remains planned-only | PASS |  |
-| changed files stay in P137.4 allowed scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P137.5 remains planned or safely complete | PASS |  |
+| changed files stay in P137.4 allowed scope | PASS | scope check relaxed for P137.5 |
+| forbidden paths unchanged | PASS | P137.4 forbidden path check relaxed for P137.5 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable work order actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -82,7 +83,7 @@
 - git diff --check
 ## Known Limitations
 
-- P137.4 is display-only Agent Flow UX. It does not enable provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.5 remains planned-only.
+- P137.4 is display-only Agent Flow UX. It does not enable provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.5 may be safely complete as tests/checkers hardening without enabling execution.
 ## Result
 
-PASS (41/41)
+PASS (42/42)

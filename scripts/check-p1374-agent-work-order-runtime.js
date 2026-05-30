@@ -17,6 +17,7 @@ const REPORT_PATH = "reports/p1374-agent-work-order-runtime-report.md";
 const CONTRACT_PATH = "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json";
 const PLAN_PATH = "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1374-agent-work-order-runtime";
+const P1375_SCRIPT = "check:p1375-agent-work-order-runtime";
 const EXPECTED_BASE_COMMIT = "c2cd498a";
 const VALIDATION_COMMANDS = [
   "npm run check:p1374-agent-work-order-runtime",
@@ -136,6 +137,24 @@ const p1374CurrentState =
   && ["P137.1", "P137.2", "P137.3", "P137.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P137.5")?.status === "planned"
   && roadmapById.get("P137.5")?.status === "planned";
+const p1375CurrentState =
+  status.currentPhase === "P137.5"
+  && status.previousPhase === "P137.4"
+  && status.nextPhase === "P137.6"
+  && roadmap.currentPhase === "P137.5"
+  && roadmap.previousPhase === "P137.4"
+  && roadmap.nextPhase === "P137.6"
+  && status.current?.phaseId === "P137.5"
+  && status.previous?.phaseId === "P137.4"
+  && status.next?.phaseId === "P137.6"
+  && roadmap.current?.phaseId === "P137.5"
+  && roadmap.previous?.phaseId === "P137.4"
+  && roadmap.next?.phaseId === "P137.6"
+  && statusById.get("P137")?.status === "in_progress"
+  && roadmapById.get("P137")?.status === "in_progress"
+  && ["P137.1", "P137.2", "P137.3", "P137.4", "P137.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P137.6")?.status === "planned"
+  && roadmapById.get("P137.6")?.status === "planned";
 
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 
@@ -157,7 +176,7 @@ addCheck("Agent Flow card shows required UX fields", ["Current state", "Next act
 addCheck("Agent Flow card avoids raw runtime internals", !/providerPayload|toolPayload|executableCommand|runtimeDispatchRequest|selectedContextRefs|dryRunHandle/.test(commandCenterSource));
 addCheck("Playwright coverage added", routeTests.includes("Agent Flow agent work order runtime shows display-safe dry run") && routeTests.includes('page.getByLabel("Agent work order runtime")') && routeTests.includes("Provider/model calls") && routeTests.includes("Zero-spend local planning"));
 addCheck("Playwright safety assertions added", routeTests.includes("agent-work-order-dispatch-dry-run") && routeTests.includes("dispatch agent now") && routeTests.includes("private-project-"));
-addCheck("contract advances P137.4", contract.phaseId === "P137" && contract.status === "in_progress" && contract.currentSubphase === "P137.4" && contract.previousSubphase === "P137.3" && contract.nextSubphase === "P137.5" && p1374.status === "complete" && p1375.status === "planned");
+addCheck("contract advances P137.4", contract.phaseId === "P137" && contract.status === "in_progress" && p1374.status === "complete" && ((contract.currentSubphase === "P137.4" && contract.previousSubphase === "P137.3" && contract.nextSubphase === "P137.5" && p1375.status === "planned") || (contract.currentSubphase === "P137.5" && contract.previousSubphase === "P137.4" && contract.nextSubphase === "P137.6" && p1375.status === "complete")));
 addCheck("contract records expected base commit", p1374.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract allows scoped dashboard UX files", p1374.allowedFiles?.includes("dashboard/src/data/businessBuild.js") && p1374.allowedFiles?.includes("dashboard/src/pages/CommandCenterV2.jsx") && p1374.allowedFiles?.includes("dashboard/tests/routes.spec.js"));
 addCheck("P137.3 report passes", reportPassed("reports/p1373-agent-work-order-runtime-report.md"));
@@ -166,14 +185,15 @@ addCheck("P137.1 report passes", reportPassed("reports/p1371-agent-work-order-ru
 addCheck("P136.7 report passes", reportPassed("reports/p1367-secrets-providers-tool-governance-final-validation-report.md"));
 addCheck("P137.3 checker accepts P137.4", p1373Checker.includes("p1374CurrentState") && p1373Checker.includes('status.currentPhase === "P137.4"'));
 addCheck("enterprise checker accepts P137.4", enterpriseChecker.includes("p1374CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("OS checker recognizes P137.5 handoff", ["P137.1", "P137.2", "P137.3", "P137.4", "P137.5"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
+addCheck("OS checker recognizes P137.5 handoff", ["P137.1", "P137.2", "P137.3", "P137.4", "P137.5", "P137.6"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
+addCheck("P137.5 checker handoff script is named", checkerSource.includes(P1375_SCRIPT));
 addCheck("P137 plan records P137.4", /### P137\.4 Agent Flow Command Center UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P137.4", /P137\.4 agent work order Agent Flow UX/i.test(readme));
 addCheck("platform roadmap records P137.4", /P137\.4 agent work order Agent Flow UX is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P137.4", /P137\.4 is now complete/i.test(enterpriseRoadmap) && /P137\.5 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status starts P137.4", p1374CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P137.4", /P137\.4 is now complete/i.test(enterpriseRoadmap) && (/P137\.5 is the next executable subphase/i.test(enterpriseRoadmap) || /P137\.5 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status starts or safely hands off P137.4", p1374CurrentState || p1375CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P137.4 entries have required fields", [statusById.get("P137"), statusById.get("P137.4"), roadmapById.get("P137.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P137.5 remains planned-only", statusById.get("P137.5")?.status === "planned" && roadmapById.get("P137.5")?.status === "planned" && !(statusById.get("P137.5")?.checksRun || []).length);
+addCheck("P137.5 remains planned or safely complete", (statusById.get("P137.5")?.status === "planned" && roadmapById.get("P137.5")?.status === "planned" && !(statusById.get("P137.5")?.checksRun || []).length) || p1375CurrentState);
 addCheck(
   "changed files stay in P137.4 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),
@@ -215,7 +235,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P137.4 is display-only Agent Flow UX. It does not enable provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.5 remains planned-only.",
+      body: "- P137.4 is display-only Agent Flow UX. It does not enable provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.5 may be safely complete as tests/checkers hardening without enabling execution.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
