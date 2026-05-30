@@ -18893,15 +18893,15 @@
       "order": 172,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "4bdc8a14",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P136.2 is complete. P136.3 Provider Dry Run is planned-only next.",
-      "summary": "Added a display-safe provider governance model that reuses existing secret boundary, provider credential, tool permission, budget, and result-envelope helpers while secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+      "detail": "P136.3 is complete. P136.4 Provider Governance Command Center UX is planned-only next.",
+      "summary": "Added a non-runnable provider/tool dry-run decision packet that reuses the P136.2 governance model and explains provider eligibility, model access, tool contract posture, approval needs, budget impact, blockers, evidence, audit references, owner, and next action while all live authority remains blocked.",
       "previousPhase": "P135",
       "nextPhase": "P137",
       "checksRun": [
+        "npm run check:p1363-provider-dry-run",
         "npm run check:p1362-secret-provider-model",
-        "npm run check:p1361-secrets-providers-tool-governance",
         "npm run check:enterprise-readiness-roadmap",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
@@ -18911,7 +18911,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P136.2 is read-only model work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.3 remains planned-only."
+        "P136.3 is non-runnable dry-run work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.4 remains planned-only."
       ],
       "subphases": [
         {
@@ -19221,10 +19221,10 @@
         {
           "phaseId": "P136.3",
           "title": "Provider Dry Run",
-          "status": "planned",
+          "status": "complete",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "pending-p1362-final-commit",
+          "expectedBaseCommit": "6473101b",
           "narrowGoal": "Create a non-runnable provider/tool dry-run decision packet that explains eligibility, blockers, approval needs, budget impact, evidence, and next action without calling any provider or executing any tool.",
           "allowedFiles": [
             "shared/providerGovernanceDryRun.js",
@@ -19348,14 +19348,24 @@
           "order": 172.3,
           "commandCenterVisible": true,
           "knownLimitations": [
-            "Planned-only; no implementation yet."
+            "P136.3 is non-runnable dry-run work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.4 remains planned-only."
           ],
-          "branch": "planned",
-          "commit": "",
-          "completedAt": "",
-          "checksRun": [],
-          "detail": "P136.3 is planned-only until its implementation-grade contract starts.",
-          "summary": "Planned-only next subphase for a non-runnable provider/tool dry-run decision packet."
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-30T00:00:00.000Z",
+          "checksRun": [
+            "npm run check:p1363-provider-dry-run",
+            "npm run check:p1362-secret-provider-model",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "detail": "P136.3 is complete. P136.4 Provider Governance Command Center UX is planned-only next.",
+          "summary": "Added a non-runnable provider/tool dry-run decision packet that reuses the P136.2 governance model and explains provider eligibility, model access, tool contract posture, approval needs, budget impact, blockers, evidence, audit references, owner, and next action while all live authority remains blocked."
         },
         {
           "phaseId": "P136.4",
@@ -19494,8 +19504,12 @@
           "order": 172.4,
           "commandCenterVisible": true,
           "knownLimitations": [
-            "Planned-only until P136.4 implementation starts."
-          ]
+            "Planned-only; no implementation yet."
+          ],
+          "branch": "planned",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": []
         },
         {
           "phaseId": "P136.5",
@@ -22234,10 +22248,10 @@
     {
       "phaseId": "P136.3",
       "title": "Provider Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1362-final-commit",
+      "expectedBaseCommit": "6473101b",
       "narrowGoal": "Create a non-runnable provider/tool dry-run decision packet that explains eligibility, blockers, approval needs, budget impact, evidence, and next action without calling any provider or executing any tool.",
       "allowedFiles": [
         "shared/providerGovernanceDryRun.js",
@@ -22361,25 +22375,330 @@
       "order": 172.3,
       "commandCenterVisible": true,
       "knownLimitations": [
+        "P136.3 is non-runnable dry-run work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.4 remains planned-only."
+      ],
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "checksRun": [
+        "npm run check:p1363-provider-dry-run",
+        "npm run check:p1362-secret-provider-model",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "detail": "P136.3 is complete. P136.4 Provider Governance Command Center UX is planned-only next.",
+      "summary": "Added a non-runnable provider/tool dry-run decision packet that reuses the P136.2 governance model and explains provider eligibility, model access, tool contract posture, approval needs, budget impact, blockers, evidence, audit references, owner, and next action while all live authority remains blocked.",
+      "track": "NEXUS_OS",
+      "label": "Provider Dry Run"
+    },
+    {
+      "phaseId": "P136.4",
+      "title": "Provider Governance Command Center UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1363-final-commit",
+      "narrowGoal": "Surface provider/tool governance state in Command Center with current state, blockers, next action, owner, evidence/activity locations, and cost impact while keeping all actions review-only.",
+      "allowedFiles": [
+        "dashboard/src/data/providerGovernanceReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+        "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1364-provider-governance-command-center-ux.js",
+        "scripts/check-p1363-provider-dry-run.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "reports/p1364-provider-governance-command-center-ux-report.md",
+        "reports/p1363-provider-dry-run-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "dashboard/src/data/providerGovernanceReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1364-provider-governance-command-center-ux.js",
+        "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+        "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "reports/p1364-provider-governance-command-center-ux-report.md",
+        "reports/p1363-provider-dry-run-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "providerGovernanceReadiness",
+        "providerGovernanceSummary"
+      ],
+      "dataShape": "Display-safe Command Center data with state cards, blocker rows, approval rows, cost-impact rows, evidence/activity labels, owner capability, next action, and disabled reasons. No raw JSON/log/policy/secret/provider payloads.",
+      "commandCenterUx": "Provider Governance page must show what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact. It must not expose raw dumps, private IDs, secret references as primary UX, mutation controls, provider call controls, tool run controls, deploy controls, package controls, or spend controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Playwright must cover theme switcher and route-wide navigation."
+      ],
+      "safetyRules": [
+        "No runnable provider/tool buttons.",
+        "No DemoApp leakage.",
+        "No raw secret/provider IDs in primary UX.",
+        "No backend execution changes."
+      ],
+      "reuseCheck": [
+        "Reuse existing dashboard tabs, cards, badges, and route matrix.",
+        "Reuse P136.3 dry-run data shape.",
+        "Do not duplicate UI card/tab/status components."
+      ],
+      "testsAndCheckers": [
+        "Add/extend Playwright route assertions for Provider Governance.",
+        "Add P136.4 UX checker.",
+        "Preserve no DemoApp leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap, and Projects separation tests."
+      ],
+      "docsRoadmap": "Update P136 docs, README, roadmaps, status, and reports.",
+      "phaseStatusUpdate": "P136 in progress; P136.4 complete; current P136.4; previous P136.3; next P136.5 planned-only.",
+      "validationCommands": [
+        "npm run check:p1364-provider-governance-command-center-ux",
+        "npm run check:p1363-provider-dry-run",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "P136.5 remains planned-only.",
+        "Primary UX is display-safe and non-runnable."
+      ],
+      "gitCommands": [
+        "git add <P136.4 allowed files>",
+        "git commit -m \"chore(nexus): implement p1364 provider governance ux\"",
+        "git add <P136.4 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1364 provider governance ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch",
+        "Commit",
+        "Files",
+        "Implementation",
+        "UX",
+        "Tests",
+        "Dashboard results",
+        "Docs/status",
+        "Safety",
+        "Known limitations",
+        "Next"
+      ],
+      "previousPhase": "P136.3",
+      "nextPhase": "P136.5",
+      "order": 172.4,
+      "commandCenterVisible": true,
+      "knownLimitations": [
         "Planned-only; no implementation yet."
       ],
       "branch": "planned",
       "commit": "",
       "completedAt": "",
-      "checksRun": [],
-      "detail": "P136.3 is planned-only until its implementation-grade contract starts.",
-      "summary": "Planned-only next subphase for a non-runnable provider/tool dry-run decision packet.",
-      "track": "NEXUS_OS",
-      "label": "Provider Dry Run"
+      "checksRun": []
     }
   ],
   "updatedAt": "2026-05-30T00:00:00.000Z",
-  "currentPhase": "P136.2",
-  "previousPhase": "P136.1",
-  "nextPhase": "P136.3",
+  "currentPhase": "P136.3",
+  "previousPhase": "P136.2",
+  "nextPhase": "P136.4",
   "currentPhaseStatus": "complete",
   "generatedAt": "2026-05-30T00:00:00.000Z",
   "current": {
+    "phaseId": "P136.3",
+    "title": "Provider Dry Run",
+    "status": "complete",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "startingBranch": "codex/nexus-e2e-phase-validation",
+    "expectedBaseCommit": "6473101b",
+    "narrowGoal": "Create a non-runnable provider/tool dry-run decision packet that explains eligibility, blockers, approval needs, budget impact, evidence, and next action without calling any provider or executing any tool.",
+    "allowedFiles": [
+      "shared/providerGovernanceDryRun.js",
+      "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+      "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "package.json",
+      "scripts/check-p1363-provider-dry-run.js",
+      "scripts/check-p1362-secret-provider-model.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "reports/p1363-provider-dry-run-report.md",
+      "reports/p1362-secret-provider-model-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "forbiddenFiles": [
+      "projects/**",
+      "careloop/**",
+      "generated-projects/**",
+      "dashboard/src/**",
+      "dashboard/tests/**",
+      "db/**",
+      "local-state/runtime/**",
+      "providers/**",
+      "tools/**",
+      "worker-runtime/**",
+      "deploy/**",
+      "release/**",
+      "exports/**",
+      "packages/**",
+      ".env*"
+    ],
+    "exactFilesToCreateOrUpdate": [
+      "shared/providerGovernanceDryRun.js",
+      "scripts/check-p1363-provider-dry-run.js",
+      "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+      "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+      "README.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "package.json",
+      "reports/p1363-provider-dry-run-report.md",
+      "reports/p1362-secret-provider-model-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "expectedExports": [
+      "PROVIDER_GOVERNANCE_DRY_RUN_PHASE",
+      "buildProviderGovernanceDryRun",
+      "validateProviderGovernanceDryRun"
+    ],
+    "dataShape": "ProviderGovernanceDryRun with requestedCapability, providerCategory, toolCategory, eligibilityDecision, blockedReasons, approvalNeeds, budgetImpact, evidenceRefs, auditRefs, ownerCapability, nextAction, and safetyFlags. It contains no provider payloads and no executable command.",
+    "commandCenterUx": "Preserve existing UX. P136.3 does not edit dashboard source or tests.",
+    "themeRequirements": [
+      "Preserve System theme.",
+      "Preserve Dark theme.",
+      "Preserve Light theme."
+    ],
+    "safetyRules": [
+      "Dry run must be non-runnable.",
+      "No provider/model/tool/network execution.",
+      "No secret values, DB/runtime writes, project mutation, deploy, package, or spend."
+    ],
+    "reuseCheck": [
+      "Reuse the P136.2 provider governance model.",
+      "Reuse shared result/report/check helpers.",
+      "Do not duplicate provider adapters or tool gateway helpers."
+    ],
+    "testsAndCheckers": [
+      "Add P136.3 dry-run checker.",
+      "Update P136.2 and enterprise checkers for P136.3 handoff.",
+      "Run route-wide Command Center Playwright coverage."
+    ],
+    "docsRoadmap": "Update P136 docs, README, roadmaps, status, and reports.",
+    "phaseStatusUpdate": "P136 in progress; P136.3 complete; current P136.3; previous P136.2; next P136.4 planned-only.",
+    "validationCommands": [
+      "npm run check:p1363-provider-dry-run",
+      "npm run check:p1362-secret-provider-model",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "finalSafetyChecks": [
+      "P136.4 remains planned-only.",
+      "No fake runnable provider/tool actions."
+    ],
+    "gitCommands": [
+      "git add <P136.3 allowed files>",
+      "git commit -m \"chore(nexus): implement p1363 provider dry run\"",
+      "git add <P136.3 status stamp files>",
+      "git commit -m \"chore(nexus): stamp p1363 provider dry run\"",
+      "git push origin codex/nexus-e2e-phase-validation"
+    ],
+    "finalResponseChecklist": [
+      "Branch",
+      "Commit",
+      "Files",
+      "Implementation",
+      "UX",
+      "Tests",
+      "Dashboard results",
+      "Docs/status",
+      "Safety",
+      "Known limitations",
+      "Next"
+    ],
+    "previousPhase": "P136.2",
+    "nextPhase": "P136.4",
+    "order": 172.3,
+    "commandCenterVisible": true,
+    "knownLimitations": [
+      "P136.3 is non-runnable dry-run work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.4 remains planned-only."
+    ],
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:00:00.000Z",
+    "checksRun": [
+      "npm run check:p1363-provider-dry-run",
+      "npm run check:p1362-secret-provider-model",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "detail": "P136.3 is complete. P136.4 Provider Governance Command Center UX is planned-only next.",
+    "summary": "Added a non-runnable provider/tool dry-run decision packet that reuses the P136.2 governance model and explains provider eligibility, model access, tool contract posture, approval needs, budget impact, blockers, evidence, audit references, owner, and next action while all live authority remains blocked.",
+    "track": "NEXUS_OS",
+    "label": "Provider Dry Run"
+  },
+  "previous": {
     "phaseId": "P136.2",
     "title": "Secret and Provider Model",
     "status": "complete",
@@ -22527,13 +22846,13 @@
     "knownLimitations": [
       "P136.2 is read-only model work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.3 remains planned-only."
     ],
-    "completedAt": "2026-05-30T00:00:00.000Z",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "4bdc8a14",
-    "summary": "Added a display-safe provider governance model that reuses existing secret boundary, provider credential, tool permission, budget, and result-envelope helpers while secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
-    "detail": "P136.2 is complete. P136.3 Provider Dry Run is planned-only next.",
     "track": "NEXUS_OS",
     "label": "Secret and Provider Model",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "4bdc8a14",
+    "completedAt": "2026-05-30T00:00:00.000Z",
+    "detail": "P136.2 is complete. P136.3 Provider Dry Run is planned-only next.",
+    "summary": "Added a display-safe provider governance model that reuses existing secret boundary, provider credential, tool permission, budget, and result-envelope helpers while secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
     "checksRun": [
       "npm run check:p1362-secret-provider-model",
       "npm run check:p1361-secrets-providers-tool-governance",
@@ -22546,168 +22865,20 @@
       "git diff --check"
     ]
   },
-  "previous": {
-    "phaseId": "P136.1",
-    "title": "Contract / Policy / Safety Boundary",
-    "status": "complete",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "9bbaedf9",
-    "narrowGoal": "Start P136 with an implementation-grade secrets/provider/tool governance contract, seven-subphase split, safety boundary, checker, docs/status handoff, and planned-only P136.2 handoff.",
-    "allowedFiles": [
-      "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
-      "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "package.json",
-      "scripts/check-p1361-secrets-providers-tool-governance.js",
-      "scripts/check-p1357-identity-tenant-roles-permissions-final-validation.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "scripts/check-os-phase-status.js",
-      "reports/p1361-secrets-providers-tool-governance-report.md",
-      "reports/p1357-identity-tenant-roles-permissions-final-validation-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "forbiddenFiles": [
-      "projects/**",
-      "careloop/**",
-      "generated-projects/**",
-      "dashboard/src/**",
-      "dashboard/tests/**",
-      "db/**",
-      "local-state/runtime/**",
-      "providers/**",
-      "tools/**",
-      "worker-runtime/**",
-      "deploy/**",
-      "release/**",
-      "exports/**",
-      "packages/**",
-      ".env*"
-    ],
-    "exactFilesToCreateOrUpdate": [
-      "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
-      "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "package.json",
-      "scripts/check-p1361-secrets-providers-tool-governance.js",
-      "scripts/check-p1357-identity-tenant-roles-permissions-final-validation.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "scripts/check-os-phase-status.js",
-      "reports/p1361-secrets-providers-tool-governance-report.md",
-      "reports/p1357-identity-tenant-roles-permissions-final-validation-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "expectedExports": [],
-    "dataShape": "Contract-only. Adds no secret values, secret stores, provider adapters, tool executors, model clients, budget ledgers, approval writers, dashboard source, Playwright source, DB/runtime writers, or live execution paths.",
-    "commandCenterUx": "Preserve existing Command Center UX. P136.1 does not edit dashboard source, labels, controls, routes, or theme behavior. P136.4 owns future scoped Provider Governance UX changes.",
-    "themeRequirements": [
-      "Preserve System theme.",
-      "Preserve Dark theme.",
-      "Preserve Light theme.",
-      "Validate through existing route-wide Command Center Playwright coverage."
-    ],
-    "safetyRules": [
-      "Do not create, read, print, persist, rotate, validate, or expose secret values in P136.1.",
-      "Do not connect providers, call models, call external APIs, use network calls, or spend in P136.1.",
-      "Do not execute tools, start MCP servers, run workers, dispatch agents, mutate projects, or write DB/runtime state in P136.1.",
-      "Do not create provider credentials, model clients, tool executors, budget ledgers, approval writers, deploy paths, release paths, export paths, or package paths in P136.1.",
-      "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, secret references as primary identifiers, provider payloads, mutation controls, provider controls, tool execution controls, deploy controls, package controls, or spend controls in primary UX."
-    ],
-    "reuseCheck": [
-      "Reuse shared/reportWriter.js.",
-      "Reuse shared/checkResultFormatter.js.",
-      "Reuse existing secrets boundary, provider preview, tool governance, budget, and approval artifacts as evidence only.",
-      "Reuse existing OS phase status and roadmap structures.",
-      "Do not duplicate report writers, checker formatters, redaction helpers, mode guards, result envelopes, route matrices, or activity/evidence appenders."
-    ],
-    "testsAndCheckers": [
-      "Add scripts/check-p1361-secrets-providers-tool-governance.js.",
-      "Update scripts/check-p1357-identity-tenant-roles-permissions-final-validation.js for P136.1 handoff compatibility.",
-      "Update scripts/check-enterprise-readiness-roadmap.js for P136.1 handoff compatibility.",
-      "Update scripts/check-os-phase-status.js so P136.1 and P136.2 are valid OS phase handoff IDs.",
-      "Run existing route-wide Command Center Playwright coverage without changing Playwright source."
-    ],
-    "docsRoadmap": "Add P136 plan and update README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, checker handoffs, and generated reports.",
-    "phaseStatusUpdate": "P136 in progress; P136.1 complete; current P136.1; previous P135.7; next P136.2 planned-only.",
-    "validationCommands": [
-      "npm run check:p1361-secrets-providers-tool-governance",
-      "npm run check:p1357-identity-tenant-roles-permissions-final-validation",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "finalSafetyChecks": [
-      "No projects/**, careloop/**, or generated-projects/** changes.",
-      "No dashboard source or Playwright source changes.",
-      "No db/**, local-state/runtime/**, provider runtime, tool runtime, worker runtime, deploy, release, export, package, or env changes.",
-      "No secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime write, project mutation, network call, deploy, release, export, package, or spend path.",
-      "P136.2 remains planned-only.",
-      "No stale implementation commit marker remains after the status stamp commit."
-    ],
-    "gitCommands": [
-      "git add <P136.1 allowed files>",
-      "git commit -m \"chore(nexus): implement p1361 provider governance contract\"",
-      "git add <P136.1 status stamp files>",
-      "git commit -m \"chore(nexus): stamp p1361 provider governance contract\"",
-      "git push origin codex/nexus-e2e-phase-validation"
-    ],
-    "finalResponseChecklist": [
-      "Branch name",
-      "Commit hash",
-      "Files changed",
-      "What was implemented",
-      "Command Center UX preservation",
-      "Tests/checkers run",
-      "Dashboard build/unit/page results",
-      "Docs/README/roadmap updates",
-      "OS phase status update",
-      "Evidence/report records",
-      "Safety confirmations",
-      "Forbidden paths confirmation",
-      "Known limitations",
-      "Next phase/subphase"
-    ],
-    "previousPhase": "P135.7",
-    "nextPhase": "P136.2",
-    "order": 172.1,
-    "completedAt": "2026-05-30T00:00:00.000Z",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "578779e5",
-    "summary": "Started P136 with a secrets/provider/tool governance contract, safety boundary, checker, docs/status handoff, and planned-only P136.2 handoff while secret values, provider/model calls, tool execution, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
-    "knownLimitations": [
-      "P136.1 is contract/policy/safety-boundary work only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. Later P136 subphases remain governed by their own implementation-grade contracts."
-    ],
-    "commandCenterVisible": true,
-    "detail": "P136.1 is complete. P136.2 advanced under its own model contract.",
-    "track": "NEXUS_OS",
-    "label": "Contract / Policy / Safety Boundary"
-  },
   "next": {
-    "phaseId": "P136.3",
-    "title": "Provider Dry Run",
+    "phaseId": "P136.4",
+    "title": "Provider Governance Command Center UX",
     "status": "planned",
     "scopeClassification": "NEXUS_OS_CHANGE",
     "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "pending-p1362-final-commit",
-    "narrowGoal": "Create a non-runnable provider/tool dry-run decision packet that explains eligibility, blockers, approval needs, budget impact, evidence, and next action without calling any provider or executing any tool.",
+    "expectedBaseCommit": "pending-p1363-final-commit",
+    "narrowGoal": "Surface provider/tool governance state in Command Center with current state, blockers, next action, owner, evidence/activity locations, and cost impact while keeping all actions review-only.",
     "allowedFiles": [
-      "shared/providerGovernanceDryRun.js",
+      "dashboard/src/data/providerGovernanceReadiness.js",
+      "dashboard/src/data/commandCenterTabs.js",
+      "dashboard/src/data/commandCenterRoutes.js",
+      "dashboard/src/pages/CommandCenterV2.jsx",
+      "dashboard/tests/routes.spec.js",
       "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
       "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
       "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
@@ -22716,11 +22887,11 @@
       "os-roadmap/nexus-phases.json",
       "os-roadmap/phase-status.json",
       "package.json",
+      "scripts/check-p1364-provider-governance-command-center-ux.js",
       "scripts/check-p1363-provider-dry-run.js",
-      "scripts/check-p1362-secret-provider-model.js",
       "scripts/check-enterprise-readiness-roadmap.js",
+      "reports/p1364-provider-governance-command-center-ux-report.md",
       "reports/p1363-provider-dry-run-report.md",
-      "reports/p1362-secret-provider-model-report.md",
       "reports/enterprise-readiness-roadmap-report.md",
       "reports/os-phase-status-report.md",
       "reports/phase-validation-coverage-report.md"
@@ -22729,8 +22900,6 @@
       "projects/**",
       "careloop/**",
       "generated-projects/**",
-      "dashboard/src/**",
-      "dashboard/tests/**",
       "db/**",
       "local-state/runtime/**",
       "providers/**",
@@ -22743,8 +22912,12 @@
       ".env*"
     ],
     "exactFilesToCreateOrUpdate": [
-      "shared/providerGovernanceDryRun.js",
-      "scripts/check-p1363-provider-dry-run.js",
+      "dashboard/src/data/providerGovernanceReadiness.js",
+      "dashboard/src/data/commandCenterTabs.js",
+      "dashboard/src/data/commandCenterRoutes.js",
+      "dashboard/src/pages/CommandCenterV2.jsx",
+      "dashboard/tests/routes.spec.js",
+      "scripts/check-p1364-provider-governance-command-center-ux.js",
       "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
       "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
       "README.md",
@@ -22753,44 +22926,45 @@
       "os-roadmap/nexus-phases.json",
       "os-roadmap/phase-status.json",
       "package.json",
+      "reports/p1364-provider-governance-command-center-ux-report.md",
       "reports/p1363-provider-dry-run-report.md",
-      "reports/p1362-secret-provider-model-report.md",
       "reports/enterprise-readiness-roadmap-report.md",
       "reports/os-phase-status-report.md",
       "reports/phase-validation-coverage-report.md"
     ],
     "expectedExports": [
-      "PROVIDER_GOVERNANCE_DRY_RUN_PHASE",
-      "buildProviderGovernanceDryRun",
-      "validateProviderGovernanceDryRun"
+      "providerGovernanceReadiness",
+      "providerGovernanceSummary"
     ],
-    "dataShape": "ProviderGovernanceDryRun with requestedCapability, providerCategory, toolCategory, eligibilityDecision, blockedReasons, approvalNeeds, budgetImpact, evidenceRefs, auditRefs, ownerCapability, nextAction, and safetyFlags. It contains no provider payloads and no executable command.",
-    "commandCenterUx": "Preserve existing UX. P136.3 does not edit dashboard source or tests.",
+    "dataShape": "Display-safe Command Center data with state cards, blocker rows, approval rows, cost-impact rows, evidence/activity labels, owner capability, next action, and disabled reasons. No raw JSON/log/policy/secret/provider payloads.",
+    "commandCenterUx": "Provider Governance page must show what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact. It must not expose raw dumps, private IDs, secret references as primary UX, mutation controls, provider call controls, tool run controls, deploy controls, package controls, or spend controls.",
     "themeRequirements": [
       "Preserve System theme.",
       "Preserve Dark theme.",
-      "Preserve Light theme."
+      "Preserve Light theme.",
+      "Playwright must cover theme switcher and route-wide navigation."
     ],
     "safetyRules": [
-      "Dry run must be non-runnable.",
-      "No provider/model/tool/network execution.",
-      "No secret values, DB/runtime writes, project mutation, deploy, package, or spend."
+      "No runnable provider/tool buttons.",
+      "No DemoApp leakage.",
+      "No raw secret/provider IDs in primary UX.",
+      "No backend execution changes."
     ],
     "reuseCheck": [
-      "Reuse the P136.2 provider governance model.",
-      "Reuse shared result/report/check helpers.",
-      "Do not duplicate provider adapters or tool gateway helpers."
+      "Reuse existing dashboard tabs, cards, badges, and route matrix.",
+      "Reuse P136.3 dry-run data shape.",
+      "Do not duplicate UI card/tab/status components."
     ],
     "testsAndCheckers": [
-      "Add P136.3 dry-run checker.",
-      "Update P136.2 and enterprise checkers for P136.3 handoff.",
-      "Run route-wide Command Center Playwright coverage."
+      "Add/extend Playwright route assertions for Provider Governance.",
+      "Add P136.4 UX checker.",
+      "Preserve no DemoApp leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap, and Projects separation tests."
     ],
     "docsRoadmap": "Update P136 docs, README, roadmaps, status, and reports.",
-    "phaseStatusUpdate": "P136 in progress; P136.3 complete; current P136.3; previous P136.2; next P136.4 planned-only.",
+    "phaseStatusUpdate": "P136 in progress; P136.4 complete; current P136.4; previous P136.3; next P136.5 planned-only.",
     "validationCommands": [
+      "npm run check:p1364-provider-governance-command-center-ux",
       "npm run check:p1363-provider-dry-run",
-      "npm run check:p1362-secret-provider-model",
       "npm run check:enterprise-readiness-roadmap",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
@@ -22800,14 +22974,14 @@
       "git diff --check"
     ],
     "finalSafetyChecks": [
-      "P136.4 remains planned-only.",
-      "No fake runnable provider/tool actions."
+      "P136.5 remains planned-only.",
+      "Primary UX is display-safe and non-runnable."
     ],
     "gitCommands": [
-      "git add <P136.3 allowed files>",
-      "git commit -m \"chore(nexus): implement p1363 provider dry run\"",
-      "git add <P136.3 status stamp files>",
-      "git commit -m \"chore(nexus): stamp p1363 provider dry run\"",
+      "git add <P136.4 allowed files>",
+      "git commit -m \"chore(nexus): implement p1364 provider governance ux\"",
+      "git add <P136.4 status stamp files>",
+      "git commit -m \"chore(nexus): stamp p1364 provider governance ux\"",
       "git push origin codex/nexus-e2e-phase-validation"
     ],
     "finalResponseChecklist": [
@@ -22823,9 +22997,9 @@
       "Known limitations",
       "Next"
     ],
-    "previousPhase": "P136.2",
-    "nextPhase": "P136.4",
-    "order": 172.3,
+    "previousPhase": "P136.3",
+    "nextPhase": "P136.5",
+    "order": 172.4,
     "commandCenterVisible": true,
     "knownLimitations": [
       "Planned-only; no implementation yet."
@@ -22833,10 +23007,6 @@
     "branch": "planned",
     "commit": "",
     "completedAt": "",
-    "checksRun": [],
-    "detail": "P136.3 is planned-only until its implementation-grade contract starts.",
-    "summary": "Planned-only next subphase for a non-runnable provider/tool dry-run decision packet.",
-    "track": "NEXUS_OS",
-    "label": "Provider Dry Run"
+    "checksRun": []
   }
 }

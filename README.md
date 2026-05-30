@@ -2007,7 +2007,7 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P136.2 with P136.3 planned-only next.
+  implementation is closed through P136.3 with P136.4 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2180,6 +2180,14 @@ The Command Center and local operator surface have:
   provider/model calls, tool execution, MCP server startup, agent dispatch,
   DB/runtime writes, project mutation, deploy, release, export, package, network
   calls, and spend remain unavailable.
+- P136.3 provider dry run: Added the non-runnable provider/tool decision packet
+  that reuses the P136.2 governance model and explains provider eligibility,
+  model access, tool contract posture, approval needs, budget impact, blockers,
+  evidence, audit references, owner, and next action. P136.4 Provider Governance
+  Command Center UX is planned-only next; secret values, provider/model calls,
+  tool execution, MCP server startup, provider payload preparation, agent
+  dispatch, DB/runtime writes, project mutation, deploy, release, export,
+  package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

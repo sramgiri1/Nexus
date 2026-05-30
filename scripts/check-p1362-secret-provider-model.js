@@ -83,6 +83,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1362 = subphaseById.get("P136.2") || {};
 const p1363 = subphaseById.get("P136.3") || {};
+const p1364 = subphaseById.get("P136.4") || {};
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
@@ -153,6 +154,29 @@ const p1362CurrentState =
   && roadmapById.get("P136.2")?.status === "complete"
   && statusById.get("P136.3")?.status === "planned"
   && roadmapById.get("P136.3")?.status === "planned";
+const p1363CurrentState =
+  status.currentPhase === "P136.3"
+  && status.previousPhase === "P136.2"
+  && status.nextPhase === "P136.4"
+  && roadmap.currentPhase === "P136.3"
+  && roadmap.previousPhase === "P136.2"
+  && roadmap.nextPhase === "P136.4"
+  && status.current?.phaseId === "P136.3"
+  && status.previous?.phaseId === "P136.2"
+  && status.next?.phaseId === "P136.4"
+  && roadmap.current?.phaseId === "P136.3"
+  && roadmap.previous?.phaseId === "P136.2"
+  && roadmap.next?.phaseId === "P136.4"
+  && statusById.get("P136")?.status === "in_progress"
+  && roadmapById.get("P136")?.status === "in_progress"
+  && statusById.get("P136.1")?.status === "complete"
+  && roadmapById.get("P136.1")?.status === "complete"
+  && statusById.get("P136.2")?.status === "complete"
+  && roadmapById.get("P136.2")?.status === "complete"
+  && statusById.get("P136.3")?.status === "complete"
+  && roadmapById.get("P136.3")?.status === "complete"
+  && statusById.get("P136.4")?.status === "planned"
+  && roadmapById.get("P136.4")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -171,7 +195,16 @@ addCheck("all authority flags blocked", PROVIDER_GOVERNANCE_FLAG_NAMES.every((fl
 addCheck("model includes required rows", model.providerEligibilityRows.length > 0 && model.modelAccessRows.length > 0 && model.toolContractRows.length > 0 && model.budgetPolicyRows.length > 0 && model.approvalGateRows.length > 0);
 addCheck("model hides secret references and values", !/secret-ref-|sk-[A-Za-z0-9]|Bearer\s+|DATABASE_URL/i.test(JSON.stringify(model)));
 addCheck("model has visible operator fields", Boolean(model.ownerCapability) && Boolean(model.nextAction) && Boolean(model.disabledReason) && Array.isArray(model.evidenceRefs) && Array.isArray(model.activityRefs) && Boolean(model.costImpact));
-addCheck("contract advances P136.2", contract.phaseId === "P136" && contract.status === "in_progress" && contract.currentSubphase === "P136.2" && contract.previousSubphase === "P136.1" && contract.nextSubphase === "P136.3" && p1362.status === "complete" && p1363.status === "planned");
+addCheck(
+  "contract advances P136.2",
+  contract.phaseId === "P136"
+    && contract.status === "in_progress"
+    && p1362.status === "complete"
+    && (
+      (contract.currentSubphase === "P136.2" && contract.previousSubphase === "P136.1" && contract.nextSubphase === "P136.3" && p1363.status === "planned")
+      || (contract.currentSubphase === "P136.3" && contract.previousSubphase === "P136.2" && contract.nextSubphase === "P136.4" && p1363.status === "complete" && p1364.status === "planned")
+    ),
+);
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((name) => p1362.expectedExports?.includes(name)));
 addCheck("P136.2 records validation commands", VALIDATION_COMMANDS.every((command) => p1362.validationCommands?.includes(command)));
 addCheck("P136.1 report passes", reportPassed("reports/p1361-secrets-providers-tool-governance-report.md"));
@@ -180,10 +213,10 @@ addCheck("enterprise checker accepts P136.2", enterpriseChecker.includes("p1362C
 addCheck("P136 plan records P136.2", /### P136\.2 Secret and Provider Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P136.2", /P136\.2 secret\/provider model/i.test(readme));
 addCheck("platform roadmap records P136.2", /P136\.2 secret\/provider model is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P136.2", /P136\.2 is now complete/i.test(enterpriseRoadmap) && /P136\.3 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advances P136.2", p1362CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P136.2", /P136\.2 is now complete/i.test(enterpriseRoadmap) && (/P136\.3 is the next executable subphase/i.test(enterpriseRoadmap) || (/P136\.3 is now complete/i.test(enterpriseRoadmap) && /P136\.4 is the next executable subphase/i.test(enterpriseRoadmap))));
+addCheck("phase status advances P136.2", p1362CurrentState || p1363CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P136.2 entries have required fields", [statusById.get("P136"), statusById.get("P136.2"), roadmapById.get("P136.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P136.3 remains planned-only", statusById.get("P136.3")?.status === "planned" && roadmapById.get("P136.3")?.status === "planned" && !(statusById.get("P136.3")?.checksRun || []).length);
+addCheck("P136.3 remains planned or safely handed off", (statusById.get("P136.3")?.status === "planned" && roadmapById.get("P136.3")?.status === "planned" && !(statusById.get("P136.3")?.checksRun || []).length) || p1363CurrentState);
 addCheck(
   "changed files stay in P136.2 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),
@@ -217,7 +250,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P136.2 is read-only model work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.3 remains planned-only.",
+      body: "- P136.2 is read-only model work. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. Later P136 subphases remain governed by their own implementation-grade contracts.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

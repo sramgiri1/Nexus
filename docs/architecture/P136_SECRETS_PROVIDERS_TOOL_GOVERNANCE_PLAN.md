@@ -3,9 +3,9 @@
 P136 governs secrets, provider eligibility, model access, tool contracts,
 budgets, approvals, and evidence before any live external execution can be
 considered. The phase is intentionally staged. P136.1 started the contract and
-safety boundary, and P136.2 adds the read-only governance model. Later
-subphases own the non-runnable dry run, Command Center UX, tests, docs, and
-final validation.
+safety boundary, P136.2 adds the read-only governance model, and P136.3 adds
+the non-runnable dry run. Later subphases own Command Center UX, tests, docs,
+and final validation.
 
 ## Subphases
 
@@ -216,7 +216,7 @@ Status handoff:
 
 ### P136.3 Provider Dry Run
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Create a non-runnable provider/tool dry-run decision packet that explains
@@ -241,6 +241,15 @@ Tests/checkers and validation:
 - Add `check:p1363-provider-dry-run`.
 - Run P136.3, P136.2, enterprise, OS status, phase coverage, dashboard build,
   unit, route-wide Playwright, and `git diff --check`.
+
+Status handoff:
+- Current phase is P136.3.
+- Previous phase is P136.2.
+- Next phase is P136.4 planned-only.
+- The dry run is non-runnable and creates no provider payload, tool payload,
+  executable command, approval write, budget spend, DB/runtime write, agent
+  dispatch, project mutation, deploy, release, export, package, network call, or
+  provider spend.
 
 ### P136.4 Provider Governance Command Center UX
 
