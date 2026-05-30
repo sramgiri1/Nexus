@@ -27277,7 +27277,7 @@
       "order": 174,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d9688336",
       "commandCenterVisible": true,
       "detail": "P138.7 final validation verifies P138.1-P138.6 reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P139 handoff without enabling project mutation or execution.",
       "summary": "P138 is complete through final validation, with project workspace mutation/build pipeline evidence closed and all mutation/execution authority still blocked.",
@@ -28536,7 +28536,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T21:59:27.555Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "d9688336",
           "summary": "P138.7 completes final validation for P138 by verifying prior reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P139 handoff.",
           "detail": "P138.7 is final validation only. It does not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend.",
           "checksRun": [
@@ -30840,7 +30840,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T21:59:27.555Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d9688336",
       "summary": "P138.7 completes final validation for P138 by verifying prior reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P139 handoff.",
       "detail": "P138.7 is final validation only. It does not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend.",
       "checksRun": [
@@ -31041,7 +31041,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T21:59:27.555Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d9688336",
     "summary": "P138.7 completes final validation for P138 by verifying prior reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P139 handoff.",
     "detail": "P138.7 is final validation only. It does not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend.",
     "checksRun": [

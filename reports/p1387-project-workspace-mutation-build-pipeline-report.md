@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.7
-- Generated at: 2026-05-30T22:11:44.364Z
+- Generated at: 2026-05-30T22:12:35.329Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8e9628f6
+- Validation HEAD: d9688336
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,8 +41,8 @@
 | phase status closes P138.7 | PASS | P138.7/P138.6/P139 |
 | completed P138.7 entries have required fields | PASS |  |
 | P139 remains planned-only | PASS |  |
-| changed files stay in P138.7 allowed scope | PASS | README.md, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, reports/p1382-project-workspace-mutation-build-pipeline-report.md, reports/p1383-project-workspace-mutation-build-pipeline-report.md, reports/p1384-project-workspace-mutation-build-pipeline-report.md, reports/p1385-project-workspace-mutation-build-pipeline-report.md, reports/p1386-project-workspace-mutation-build-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1381-project-workspace-mutation-build-pipeline.js, scripts/check-p1382-project-workspace-mutation-build-pipeline.js, scripts/check-p1383-project-workspace-mutation-build-pipeline.js, scripts/check-p1384-project-workspace-mutation-build-pipeline.js, scripts/check-p1385-project-workspace-mutation-build-pipeline.js, scripts/check-p1386-project-workspace-mutation-build-pipeline.js, reports/p1387-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1387-project-workspace-mutation-build-pipeline.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, reports/p1382-project-workspace-mutation-build-pipeline-report.md, reports/p1383-project-workspace-mutation-build-pipeline-report.md, reports/p1384-project-workspace-mutation-build-pipeline-report.md, reports/p1385-project-workspace-mutation-build-pipeline-report.md, reports/p1386-project-workspace-mutation-build-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1381-project-workspace-mutation-build-pipeline.js, scripts/check-p1382-project-workspace-mutation-build-pipeline.js, scripts/check-p1383-project-workspace-mutation-build-pipeline.js, scripts/check-p1384-project-workspace-mutation-build-pipeline.js, scripts/check-p1385-project-workspace-mutation-build-pipeline.js, scripts/check-p1386-project-workspace-mutation-build-pipeline.js, reports/p1387-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1387-project-workspace-mutation-build-pipeline.js |
+| changed files stay in P138.7 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | route-wide safety coverage retained | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable project actions | PASS |  |
