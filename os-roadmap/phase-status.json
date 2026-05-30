@@ -20102,7 +20102,7 @@
       "order": 170,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "673b9b46",
       "commandCenterVisible": true,
       "detail": "P134 is in progress through P134.6. P134.7 Final Validation is planned-only next.",
       "summary": "P134 durable DB and CRUD runtime is complete through P134.6 docs/roadmap/status closure, with P134.7 planned-only next.",
@@ -20821,7 +20821,7 @@
           "order": 170.6,
           "completedAt": "2026-05-30T00:00:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "673b9b46",
           "summary": "Completed P134.6 by aligning the P134 durable DB/CRUD docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P134.6 while preserving Command Center UX and leaving P134.7 planned-only.",
           "knownLimitations": [
             "P134.6 is docs/roadmap/status only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.7 remains planned-only."
@@ -21511,7 +21511,7 @@
       "order": 170.6,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "673b9b46",
       "summary": "Completed P134.6 by aligning the P134 durable DB/CRUD docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P134.6 while preserving Command Center UX and leaving P134.7 planned-only.",
       "knownLimitations": [
         "P134.6 is docs/roadmap/status only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.7 remains planned-only."
@@ -23949,7 +23949,7 @@
     "title": "Docs / Roadmap / Status",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "673b9b46",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "detail": "P134.6 is complete. P134.7 Final Validation is planned-only next.",
     "summary": "Completed P134.6 by aligning the P134 durable DB/CRUD docs, README, enterprise roadmap, platform roadmap, OS phase status, phase index, checker handoffs, and validation reports through P134.6 while preserving Command Center UX and leaving P134.7 planned-only.",
