@@ -168,6 +168,162 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P135.6 Docs / Roadmap / Status
+
+Status: complete
+
+Scope classification:
+- NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `819348a7`
+
+Narrow goal:
+- Close P135 identity, tenant, roles, and permissions docs, README, roadmap,
+  checker handoff, and OS phase status evidence without changing Command
+  Center source or enabling live auth, tenant, permission, DB/runtime,
+  provider, agent, project, deploy, package, network, or spend actions.
+
+Allowed files:
+- `contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json`
+- `docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1356-identity-tenant-roles-permissions-docs-roadmap.js`
+- `scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- P135.6, P135.5, enterprise, OS status, and phase coverage reports.
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `scripts/check-p1356-identity-tenant-roles-permissions-docs-roadmap.js`.
+- Update `scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js`.
+- Update `scripts/check-enterprise-readiness-roadmap.js`.
+- Update `scripts/check-os-phase-status.js`.
+- Update package scripts, README, platform roadmap, enterprise roadmap, OS
+  phase status, phase index, contract, and generated reports.
+
+Expected exports, schemas, and data shapes:
+- No runtime exports.
+- No auth schema, tenant store, role store, permission engine, session adapter,
+  auth provider, DB adapter, runtime writer, dashboard source, Playwright
+  source, or live execution is added.
+- P135.6 data shape is docs/status/checker evidence only:
+  - phase status records
+  - roadmap records
+  - validation command list
+  - known limitations
+  - checker/report evidence
+  - handoff to P135.7 planned-only
+
+Command Center UX requirements:
+- Preserve Auth Governance review-only UX from P135.4.
+- Do not edit Command Center source in P135.6.
+- Validate UX preservation through route-wide Playwright coverage.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, auth
+  provider payloads, private IDs, mutation controls, provider controls, deploy
+  controls, package controls, or spend controls.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through existing route-wide Command Center Playwright coverage.
+
+Playwright tests:
+- Do not edit Playwright source in this subphase.
+- Run `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"` to prove UX preservation.
+
+Checker updates:
+- Add `scripts/check-p1356-identity-tenant-roles-permissions-docs-roadmap.js`.
+- Update `scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js`
+  for P135.6 handoff compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P135.6 handoff
+  compatibility.
+- Update `scripts/check-os-phase-status.js` so P135.7 is a valid OS phase
+  handoff ID.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update `README.md`.
+- Update `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- Update `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+OS phase status update:
+- P135 is in progress.
+- P135.1 through P135.6 are complete.
+- Current phase P135.6.
+- Previous phase P135.5.
+- Next phase P135.7 planned-only.
+
+Validation commands:
+- `npm run check:p1356-identity-tenant-roles-permissions-docs-roadmap`
+- `npm run check:p1355-identity-tenant-roles-permissions-tests-checkers`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P135.6 allowed files>`
+- `git commit -m "chore(nexus): implement p1356 identity tenant docs roadmap"`
+- `git add <P135.6 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1356 identity tenant docs roadmap"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or Playwright source changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- Login, sessions, tenant mutation, role mutation, permission grants,
+  permission revokes, permission enforcement, access decisions as live
+  authority, auth providers, DB/runtime writes, provider/model calls, agent
+  dispatch, project mutation, network calls, and spend remain blocked.
+- P135.7 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P135.3 Permission Preview
 
 Status: complete

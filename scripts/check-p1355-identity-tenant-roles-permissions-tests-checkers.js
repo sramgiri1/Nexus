@@ -125,6 +125,24 @@ const p1355CurrentState =
   && ["P135.1", "P135.2", "P135.3", "P135.4", "P135.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P135.6")?.status === "planned"
   && roadmapById.get("P135.6")?.status === "planned";
+const p1356CurrentState =
+  status.currentPhase === "P135.6"
+  && status.previousPhase === "P135.5"
+  && status.nextPhase === "P135.7"
+  && roadmap.currentPhase === "P135.6"
+  && roadmap.previousPhase === "P135.5"
+  && roadmap.nextPhase === "P135.7"
+  && status.current?.phaseId === "P135.6"
+  && status.previous?.phaseId === "P135.5"
+  && status.next?.phaseId === "P135.7"
+  && roadmap.current?.phaseId === "P135.6"
+  && roadmap.previous?.phaseId === "P135.5"
+  && roadmap.next?.phaseId === "P135.7"
+  && statusById.get("P135")?.status === "in_progress"
+  && roadmapById.get("P135")?.status === "in_progress"
+  && ["P135.1", "P135.2", "P135.3", "P135.4", "P135.5", "P135.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P135.7")?.status === "planned"
+  && roadmapById.get("P135.7")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -144,18 +162,19 @@ addCheck("P135.5 Playwright keeps unsafe actions blocked", ["sign in now", "assi
 addCheck("route-wide safety assertions retained", testSource.includes("DemoApp") && testSource.includes("raw JSON") && testSource.includes("Bearer") && testSource.includes("postgres") && testSource.includes("P135\\."));
 addCheck("P135.4 checker accepts P135.5 handoff", p1354Checker.includes("p1355CurrentState") && p1354Checker.includes('status.currentPhase === "P135.5"') && p1354Checker.includes(REQUIRED_SCRIPT));
 addCheck("enterprise checker accepts P135.5", enterpriseChecker.includes("p1355CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("OS checker recognizes P135.6 handoff", ["P135.4", "P135.5", "P135.6"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
-addCheck("contract marks P135.5 complete", contract.currentSubphase === "P135.5" && contract.previousSubphase === "P135.4" && contract.nextSubphase === "P135.6" && p1355.status === "complete" && p1356.status === "planned");
+addCheck("OS checker recognizes P135.6 handoff", ["P135.4", "P135.5", "P135.6", "P135.7"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
+addCheck("P135.6 checker registered when handed off", !p1356CurrentState || Boolean(packageJson.scripts?.["check:p1356-identity-tenant-roles-permissions-docs-roadmap"]));
+addCheck("contract marks P135.5 complete", p1355.status === "complete" && ((contract.currentSubphase === "P135.5" && contract.previousSubphase === "P135.4" && contract.nextSubphase === "P135.6" && p1356.status === "planned") || (p1356CurrentState && contract.currentSubphase === "P135.6" && contract.previousSubphase === "P135.5" && contract.nextSubphase === "P135.7" && p1356.status === "complete")));
 addCheck("P135.5 records expected base commit", p1355.expectedBaseCommit === "3d8f9afb");
 addCheck("P135.5 allowed files include checker and route test", [TEST_PATH, "scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js"].every((file) => p1355.allowedFiles?.includes(file)));
 addCheck("P135.5 forbids project/dashboard-src/db/runtime/provider/tool paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1355.forbiddenFiles?.includes(path)));
 addCheck("P135.5 records validation commands", VALIDATION_COMMANDS.every((command) => p1355.validationCommands?.includes(command)));
 addCheck("docs record P135.5", /## P135\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan) && /P135\.5 identity\/tenant\/RBAC tests\/checkers/i.test(readme) && /P135\.5 identity\/tenant\/RBAC tests\/checkers is complete/i.test(platformRoadmap) && /P135\.5 is now complete/i.test(enterpriseRoadmap));
-addCheck("phase status starts P135.5", p1355CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status starts or safely hands off P135.5", p1355CurrentState || p1356CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.5 entries have required fields", [statusById.get("P135"), statusById.get("P135.5"), roadmapById.get("P135.5")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135.6 remains planned-only", statusById.get("P135.6")?.status === "planned" && roadmapById.get("P135.6")?.status === "planned" && !(statusById.get("P135.6")?.checksRun || []).length);
-addCheck("changed files stay in P135.5 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => file === TEST_PATH || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("P135.6 remains planned or safely handed off", (statusById.get("P135.6")?.status === "planned" && roadmapById.get("P135.6")?.status === "planned" && !(statusById.get("P135.6")?.checksRun || []).length) || p1356CurrentState);
+addCheck("changed files stay in P135.5 allowed scope", status.currentPhase !== "P135.5" || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), status.currentPhase === "P135.5" ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
+addCheck("forbidden paths unchanged", status.currentPhase !== "P135.5" || changed.every((file) => file === TEST_PATH || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), status.currentPhase === "P135.5" ? changed.join(", ") : `P135.5 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("primary UX data avoids raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedAuthGovernance));
 addCheck("primary UX data avoids tokens URLs and raw dumps", !/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i.test(serializedAuthGovernance) && !/raw JSON|raw logs|raw policy dump/i.test(serializedAuthGovernance));
 addCheck("primary UX data avoids internal phase labels", !/P73\.|P135\./.test(serializedAuthGovernance));

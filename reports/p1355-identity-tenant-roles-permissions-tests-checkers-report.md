@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P135.5
-- Generated at: 2026-05-30T15:33:34.607Z
+- Generated at: 2026-05-30T15:42:36.024Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 90bd074a
+- Validation HEAD: 819348a7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,17 +31,18 @@
 | P135.4 checker accepts P135.5 handoff | PASS |  |
 | enterprise checker accepts P135.5 | PASS |  |
 | OS checker recognizes P135.6 handoff | PASS |  |
+| P135.6 checker registered when handed off | PASS |  |
 | contract marks P135.5 complete | PASS |  |
 | P135.5 records expected base commit | PASS |  |
 | P135.5 allowed files include checker and route test | PASS |  |
 | P135.5 forbids project/dashboard-src/db/runtime/provider/tool paths | PASS |  |
 | P135.5 records validation commands | PASS |  |
 | docs record P135.5 | PASS |  |
-| phase status starts P135.5 | PASS | P135.5/P135.4/P135.6 |
+| phase status starts or safely hands off P135.5 | PASS | P135.6/P135.5/P135.7 |
 | completed P135.5 entries have required fields | PASS |  |
-| P135.6 remains planned-only | PASS |  |
-| changed files stay in P135.5 allowed scope | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P135.6 remains planned or safely handed off | PASS |  |
+| changed files stay in P135.5 allowed scope | PASS | scope check relaxed for P135.6 |
+| forbidden paths unchanged | PASS | P135.5 forbidden path check relaxed for P135.6 |
 | primary UX data avoids raw private IDs | PASS |  |
 | primary UX data avoids tokens URLs and raw dumps | PASS |  |
 | primary UX data avoids internal phase labels | PASS |  |
@@ -67,4 +68,4 @@
 - P135.5 is tests/checkers hardening only. It does not create auth schemas, tenant stores, role stores, permission engines, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend paths.
 ## Result
 
-PASS (33/33)
+PASS (34/34)

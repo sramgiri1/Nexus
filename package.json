@@ -754,7 +754,8 @@
     "check:p1353-permission-preview": "node scripts/check-p1353-permission-preview.js",
     "check:p1354-auth-governance-command-center-ux": "node scripts/check-p1354-auth-governance-command-center-ux.js",
     "check:p1355-identity-tenant-roles-permissions-tests-checkers": "node scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js",
-    "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
+    "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js",
+    "check:p1356-identity-tenant-roles-permissions-docs-roadmap": "node scripts/check-p1356-identity-tenant-roles-permissions-docs-roadmap.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
