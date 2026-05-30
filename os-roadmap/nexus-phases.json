@@ -18893,7 +18893,7 @@
       "order": 172,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "efc9c472",
       "commandCenterVisible": true,
       "detail": "P136.4 is complete. P136.5 Tests / Checkers is planned-only next.",
       "summary": "P136 is complete through P136.4. Provider governance now includes the safety contract, display-safe governance model, non-runnable dry run, and review-only Command Center UX while all provider/model/tool execution, mutation, deploy, package, network, and spend authority remains blocked.",
@@ -19507,7 +19507,7 @@
             "P136.4 is Command Center UX only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.5 remains planned-only."
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "efc9c472",
           "completedAt": "2026-05-30T00:00:00.000Z",
           "checksRun": [
             "npm run check:p1364-provider-governance-command-center-ux",
@@ -22556,7 +22556,7 @@
         "P136.4 is Command Center UX only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.5 remains planned-only."
       ],
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "efc9c472",
       "completedAt": "2026-05-30T00:00:00.000Z",
       "checksRun": [
         "npm run check:p1364-provider-governance-command-center-ux",
@@ -22855,7 +22855,7 @@
       "P136.4 is Command Center UX only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.5 remains planned-only."
     ],
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "efc9c472",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "checksRun": [
       "npm run check:p1364-provider-governance-command-center-ux",
