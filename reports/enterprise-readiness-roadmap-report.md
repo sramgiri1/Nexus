@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T12:19:40.641Z
+- Generated at: 2026-05-30T12:32:39.712Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 0206ebdc
+- Validation HEAD: 4def3d02
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | Check | Status | Details |
 | --- | --- | --- |
 | package script registered | PASS |  |
-| P133 checkers registered when active | PASS |  |
-| current enterprise handoff | PASS | P133.7/P133.6/P134 |
+| P133/P134 checkers registered when active | PASS |  |
+| current enterprise handoff | PASS | P134.1/P133.7/P134.2 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -42,13 +42,13 @@
 | enterprise phases are Command Center visible | PASS |  |
 | roadmap entries include details and limitations | PASS |  |
 | roadmap entries include subphase details | PASS |  |
-| P133 active subphase records are present | PASS |  |
+| P133/P134 active subphase records are present | PASS |  |
 | enterprise roadmap doc covers all phases | PASS |  |
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1332-founder-idea-to-prd-model-report.md, reports/p1334-command-center-idea-to-prd-ux-report.md, reports/p1335-founder-idea-to-prd-tests-checkers-report.md, reports/p1336-founder-idea-to-prd-docs-roadmap-report.md, reports/p1337-founder-idea-to-prd-final-validation-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1332-founder-idea-to-prd-model-report.md, reports/p1334-command-center-idea-to-prd-ux-report.md, reports/p1335-founder-idea-to-prd-tests-checkers-report.md, reports/p1336-founder-idea-to-prd-docs-roadmap-report.md, reports/p1337-founder-idea-to-prd-final-validation-report.md |
+| changed files stay in enterprise roadmap scope | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1337-founder-idea-to-prd-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1337-founder-idea-to-prd-final-validation.js, contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md, reports/p1341-durable-db-crud-runtime-report.md, scripts/check-p1341-durable-db-crud-runtime.js |
+| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1337-founder-idea-to-prd-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1337-founder-idea-to-prd-final-validation.js, contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md, reports/p1341-durable-db-crud-runtime-report.md, scripts/check-p1341-durable-db-crud-runtime.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

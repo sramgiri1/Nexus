@@ -6,8 +6,9 @@ NEXUS, complete guided discovery, generate a PRD, coordinate governed agents,
 build a product/business workspace, and operate that workflow with enterprise
 controls.
 
-P133.1-P133.7 are now complete and P133 is complete.
-P134-P145 remain planned-only. They do not enable DB writes,
+P133.1-P133.7 are now complete and P133 is complete. P134.1 is now complete
+and P134 is in progress.
+P134.2-P134.7 and P135-P145 remain planned-only. They do not enable DB writes,
 provider/model calls, agent dispatch, project mutation, deploy, release,
 export, package, network calls, or spend until each phase/subphase has its own
 implementation-grade plan, checker coverage, Command Center UX when applicable,
@@ -74,15 +75,16 @@ Forbidden by default unless a phase explicitly allows it:
 
 ## Current Handoff
 
-Current implementation is on P133.7. P134 is the next executable phase.
-P134-P145 are planned-only backlog phases and must not be treated as complete
-or live.
+Current implementation is on P134.1. P134.2 is the next executable subphase.
+P134.2-P134.7 and P135-P145 are planned-only backlog phases and must not be
+treated as complete or live.
 
 ## Validation
 
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1341-durable-db-crud-runtime`
 - `npm run check:p1337-founder-idea-to-prd-final-validation`
 - `npm run check:p1336-founder-idea-to-prd-docs-roadmap`
 - `npm run check:p1335-founder-idea-to-prd-tests-checkers`

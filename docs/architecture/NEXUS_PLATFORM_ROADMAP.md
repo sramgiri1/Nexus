@@ -3203,8 +3203,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P133.7 and P134 remains planned-only
-next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
+Current implementation is closed through P134.1 and P134.2 remains planned-only
+next. P134.2-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
@@ -3251,6 +3251,13 @@ Runtime is planned-only next.
 Autonomous Q&A execution, provider/model calls, PRD generation execution, agent
 dispatch, project creation or mutation, file writes, DB/runtime writes, deploy,
 release, export, package, network calls, and spend remain blocked.
+
+P134.1 is complete. NEXUS now has an implementation-grade Durable DB and CRUD
+Runtime contract, safety boundary, checker, docs, roadmap, OS status handoff,
+and validation report. P134.2 Schema and Repository Model is planned-only next.
+DB/runtime writes, migrations, raw SQL, live CRUD, provider/model calls, agent
+dispatch, project mutation, deploy, release, export, package, network calls,
+and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

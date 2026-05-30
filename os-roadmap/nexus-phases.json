@@ -15293,23 +15293,33 @@
       "title": "Durable DB and CRUD Runtime",
       "label": "Durable DB / CRUD",
       "order": 170,
-      "status": "planned",
+      "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P134 is planned-only enterprise readiness work. NEXUS gets a governed durable data layer for OS-owned founder/business records with clear migration, repository, and rollback boundaries.",
-      "summary": "Planned-only enterprise readiness phase: NEXUS gets a governed durable data layer for OS-owned founder/business records with clear migration, repository, and rollback boundaries.",
+      "detail": "P134 in progress; P134.1 complete and P134.2 Schema and Repository Model is planned-only next.",
+      "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
       "previousPhase": "P133",
       "nextPhase": "P135",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1341-durable-db-crud-runtime",
+        "npm run check:p1337-founder-idea-to-prd-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P134 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
+        "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.2 remains planned-only."
       ],
       "subphases": [
         {
           "phaseId": "P134.1",
           "title": "Contract / Policy / Safety Boundary",
-          "status": "planned",
+          "status": "complete",
           "narrowGoal": "Contract / Policy / Safety Boundary for Durable DB and CRUD Runtime.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
@@ -15329,7 +15339,26 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-30T12:26:26.371Z",
+          "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
+          "checksRun": [
+            "npm run check:p1341-durable-db-crud-runtime",
+            "npm run check:p1337-founder-idea-to-prd-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "knownLimitations": [
+            "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+          ],
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P134.2",
@@ -15481,6 +15510,157 @@
             "final response checklist"
           ]
         }
+      ],
+      "completedAt": "2026-05-30T12:26:26.371Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.1",
+      "title": "Contract / Policy / Safety Boundary",
+      "label": "Contract / Policy / Safety Boundary",
+      "order": 170.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-30T12:26:26.371Z",
+      "commandCenterVisible": true,
+      "detail": "P134.1 complete: Durable DB and CRUD Runtime contract and safety boundary are in place.",
+      "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
+      "previousPhase": "P133.7",
+      "nextPhase": "P134.2",
+      "checksRun": [
+        "npm run check:p1341-durable-db-crud-runtime",
+        "npm run check:p1337-founder-idea-to-prd-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.2 remains planned-only."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.2",
+      "title": "Schema and Repository Model",
+      "label": "Schema and Repository Model",
+      "order": 170.2,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P134.2 is planned-only for Schema and Repository Model.",
+      "summary": "Planned-only future P134 subphase: Schema and Repository Model.",
+      "previousPhase": "P134.1",
+      "nextPhase": "P134.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.3",
+      "title": "DB Write Plan Preview",
+      "label": "DB Write Plan Preview",
+      "order": 170.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P134.3 is planned-only for DB Write Plan Preview.",
+      "summary": "Planned-only future P134 subphase: DB Write Plan Preview.",
+      "previousPhase": "P134.2",
+      "nextPhase": "P134.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.4",
+      "title": "DB Runtime Command Center UX",
+      "label": "DB Runtime Command Center UX",
+      "order": 170.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P134.4 is planned-only for DB Runtime Command Center UX.",
+      "summary": "Planned-only future P134 subphase: DB Runtime Command Center UX.",
+      "previousPhase": "P134.3",
+      "nextPhase": "P134.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.5",
+      "title": "Tests / Checkers",
+      "label": "Tests / Checkers",
+      "order": 170.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P134.5 is planned-only for Tests / Checkers.",
+      "summary": "Planned-only future P134 subphase: Tests / Checkers.",
+      "previousPhase": "P134.4",
+      "nextPhase": "P134.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.6",
+      "title": "Docs / Roadmap / Status",
+      "label": "Docs / Roadmap / Status",
+      "order": 170.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P134.6 is planned-only for Docs / Roadmap / Status.",
+      "summary": "Planned-only future P134 subphase: Docs / Roadmap / Status.",
+      "previousPhase": "P134.5",
+      "nextPhase": "P134.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P134.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 170.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true,
+      "detail": "P134.7 is planned-only for Final Validation.",
+      "summary": "Planned-only future P134 subphase: Final Validation.",
+      "previousPhase": "P134.6",
+      "nextPhase": "P135",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
       ]
     },
     {
@@ -17872,12 +18052,42 @@
     }
   ],
   "updatedAt": "2026-05-30T11:57:41.258Z",
-  "currentPhase": "P133.7",
-  "previousPhase": "P133.6",
-  "nextPhase": "P134",
+  "currentPhase": "P134.1",
+  "previousPhase": "P133.7",
+  "nextPhase": "P134.2",
   "currentPhaseStatus": "complete",
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P134.1",
+    "title": "Contract / Policy / Safety Boundary",
+    "label": "Contract / Policy / Safety Boundary",
+    "order": 170.1,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T12:26:26.371Z",
+    "commandCenterVisible": true,
+    "detail": "P134.1 complete: Durable DB and CRUD Runtime contract and safety boundary are in place.",
+    "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
+    "previousPhase": "P133.7",
+    "nextPhase": "P134.2",
+    "checksRun": [
+      "npm run check:p1341-durable-db-crud-runtime",
+      "npm run check:p1337-founder-idea-to-prd-final-validation",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.2 remains planned-only."
+    ]
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P133.7",
     "title": "Final Validation",
@@ -17913,235 +18123,24 @@
     ],
     "completedAt": "2026-05-30T12:12:49.924Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P133.6",
-    "title": "Docs / Roadmap / Status",
-    "label": "Docs / Roadmap / Status",
-    "order": 169.6,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "88bcd87079ea3b8f70dcd7e801dad2e1d2e32155",
-    "commandCenterVisible": true,
-    "detail": "P133.6 complete: docs, roadmap, status, and report alignment are current.",
-    "summary": "Completed P133.6 by aligning founder idea-to-PRD docs, README, platform roadmap, enterprise roadmap, OS status, phase index, and validation reports around P133.1-P133.6 complete with P133.7 final validation planned next.",
-    "previousPhase": "P133.5",
-    "nextPhase": "P133.7",
-    "checksRun": [
-      "npm run check:p1336-founder-idea-to-prd-docs-roadmap",
-      "npm run check:p1335-founder-idea-to-prd-tests-checkers",
-      "npm run check:p1334-command-center-idea-to-prd-ux",
-      "npm run check:p1333-founder-idea-to-prd-preview",
-      "npm run check:p1332-founder-idea-to-prd-model",
-      "npm run check:p1331-founder-idea-to-prd-productization",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:p1327-founder-runtime-store-live-admission-execution",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P133.6 is docs/roadmap/status validation only. P133.7 remains planned-only, and live Q&A execution, provider/model calls, PRD generation execution, agent dispatch, project creation, project mutation, DB/runtime writes, network calls, deploy, release, export, package creation, and provider spend remain blocked."
-    ],
-    "completedAt": "2026-05-30T11:57:41.258Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P134",
-    "title": "Durable DB and CRUD Runtime",
-    "label": "Durable DB / CRUD",
-    "order": 170,
+    "phaseId": "P134.2",
+    "title": "Schema and Repository Model",
+    "label": "Schema and Repository Model",
+    "order": 170.2,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
+    "completedAt": "",
     "commandCenterVisible": true,
-    "detail": "P134 is planned-only enterprise readiness work. NEXUS gets a governed durable data layer for OS-owned founder/business records with clear migration, repository, and rollback boundaries.",
-    "summary": "Planned-only enterprise readiness phase: NEXUS gets a governed durable data layer for OS-owned founder/business records with clear migration, repository, and rollback boundaries.",
-    "previousPhase": "P133",
-    "nextPhase": "P135",
+    "detail": "P134.2 is planned-only for Schema and Repository Model.",
+    "summary": "Planned-only future P134 subphase: Schema and Repository Model.",
+    "previousPhase": "P134.1",
+    "nextPhase": "P134.3",
     "checksRun": [],
     "knownLimitations": [
-      "P134 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
-    ],
-    "subphases": [
-      {
-        "phaseId": "P134.1",
-        "title": "Contract / Policy / Safety Boundary",
-        "status": "planned",
-        "narrowGoal": "Contract / Policy / Safety Boundary for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P134.2",
-        "title": "Schema and Repository Model",
-        "status": "planned",
-        "narrowGoal": "Schema and Repository Model for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P134.3",
-        "title": "DB Write Plan Preview",
-        "status": "planned",
-        "narrowGoal": "DB Write Plan Preview for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P134.4",
-        "title": "DB Runtime Command Center UX",
-        "status": "planned",
-        "narrowGoal": "DB Runtime Command Center UX for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P134.5",
-        "title": "Tests / Checkers",
-        "status": "planned",
-        "narrowGoal": "Tests / Checkers for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P134.6",
-        "title": "Docs / Roadmap / Status",
-        "status": "planned",
-        "narrowGoal": "Docs / Roadmap / Status for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P134.7",
-        "title": "Final Validation",
-        "status": "planned",
-        "narrowGoal": "Final Validation for Durable DB and CRUD Runtime.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      }
+      "Planned-only; no implementation yet."
     ]
   }
 }

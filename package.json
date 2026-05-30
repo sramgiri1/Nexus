@@ -742,6 +742,7 @@
     "check:p1335-founder-idea-to-prd-tests-checkers": "node scripts/check-p1335-founder-idea-to-prd-tests-checkers.js",
     "check:p1336-founder-idea-to-prd-docs-roadmap": "node scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js",
     "check:p1337-founder-idea-to-prd-final-validation": "node scripts/check-p1337-founder-idea-to-prd-final-validation.js",
+    "check:p1341-durable-db-crud-runtime": "node scripts/check-p1341-durable-db-crud-runtime.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {

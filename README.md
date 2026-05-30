@@ -2052,6 +2052,12 @@ The Command Center and local operator surface have:
   autonomous Q&A execution, provider/model calls, PRD generation execution,
   agent dispatch, project creation or mutation, file writes, DB/runtime writes,
   deploy, release, export, package, network calls, and spend remain unavailable.
+- P134.1 durable DB/CRUD contract: Started P134 with an implementation-grade
+  durable DB and CRUD runtime contract, safety boundary, checker, docs, roadmap,
+  and OS status handoff. P134.2 Schema and Repository Model is planned-only
+  next; DB/runtime writes, migrations, raw SQL, live CRUD, provider/model calls,
+  agent dispatch, project mutation, deploy, release, export, package, network
+  calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 
