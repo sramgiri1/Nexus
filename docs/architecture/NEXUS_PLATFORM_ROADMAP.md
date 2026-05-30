@@ -3203,7 +3203,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P133.4 and P133.5 remains planned-only
+Current implementation is closed through P133.5 and P133.6 remains planned-only
 next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3233,7 +3233,12 @@ blockers, evidence, and safety state for Command Center rendering.
 P133.4 is complete. NEXUS now wires the P133.2 local model and P133.3 safe PRD
 preview into Command Center: Chat with NEXUS stays focused on conversation,
 Business Build owns the readable local PRD preview, and Agent Flow shows PRD
-preview context beside non-dispatching lanes. P133.5 Tests / Checkers is next.
+preview context beside non-dispatching lanes.
+
+P133.5 is complete. NEXUS now has aggregate checker and route-wide Playwright
+coverage for Chat with NEXUS, Business Build Local PRD, Agent Flow,
+dark/light/system themes, DemoApp leakage, raw/private ID redaction, and
+fake-action blocking. P133.6 Docs / Roadmap / Status is next.
 Autonomous Q&A execution, provider/model calls, PRD generation execution, agent
 dispatch, project creation or mutation, file writes, DB/runtime writes, deploy,
 release, export, package, network calls, and spend remain blocked.

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133.4
-- Generated at: 2026-05-30T11:26:36.830Z
+- Generated at: 2026-05-30T11:39:36.273Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9e095535
+- Validation HEAD: d286e640
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,19 +31,19 @@
 | route-wide safety assertions remain | PASS |  |
 | contract marks P133.4 complete | PASS |  |
 | contract records P133.4 implementation scope | PASS |  |
-| P133.5 handoff remains planned-only | PASS |  |
+| P133.5 handoff remains safe | PASS |  |
 | P133.4 records validation commands | PASS |  |
 | previous P133 checkers accept P133.4 handoff | PASS |  |
-| enterprise and P132.7 checkers accept P133.4 | PASS |  |
+| enterprise and P132.7 checkers accept P133.4/P133.5 | PASS |  |
 | prior P133 reports pass | PASS |  |
 | P133 plan records P133.4 | PASS |  |
 | README records P133.4 | PASS |  |
 | platform roadmap records P133.4 | PASS |  |
 | enterprise roadmap records P133.4 | PASS |  |
-| phase status advanced | PASS | P133.4/P133.3/P133.5 |
+| phase status advanced | PASS | P133.5/P133.4/P133.6 |
 | completed P133.4 entries have required fields | PASS |  |
-| changed files stay in P133.4 allowed scope | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md |
+| changed files stay in P133.4 allowed scope | PASS | scope check relaxed for P133.5 |
+| forbidden paths unchanged | PASS | P133.4 forbidden path check relaxed for P133.5 |
 | primary UX avoids raw private IDs | PASS |  |
 | primary UX avoids fake runnable actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

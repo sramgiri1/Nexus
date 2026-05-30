@@ -238,7 +238,29 @@ const p1334CompleteState =
   && roadmapById.get("P133.4")?.status === "complete"
   && statusById.get("P133.5")?.status === "planned"
   && roadmapById.get("P133.5")?.status === "planned";
-const p133SafeProgressState = p1331StartedState || p1332CompleteState || p1333CompleteState || p1334CompleteState;
+const p1335CompleteState =
+  status.currentPhase === "P133.5"
+  && status.previousPhase === "P133.4"
+  && status.nextPhase === "P133.6"
+  && roadmap.currentPhase === "P133.5"
+  && roadmap.previousPhase === "P133.4"
+  && roadmap.nextPhase === "P133.6"
+  && status.current?.phaseId === "P133.5"
+  && status.previous?.phaseId === "P133.4"
+  && status.next?.phaseId === "P133.6"
+  && roadmap.current?.phaseId === "P133.5"
+  && roadmap.previous?.phaseId === "P133.4"
+  && roadmap.next?.phaseId === "P133.6"
+  && statusById.get("P132")?.status === "complete"
+  && roadmapById.get("P132")?.status === "complete"
+  && statusById.get("P132.7")?.status === "complete"
+  && roadmapById.get("P132.7")?.status === "complete"
+  && statusById.get("P133")?.status === "in_progress"
+  && roadmapById.get("P133")?.status === "in_progress"
+  && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P133.6")?.status === "planned"
+  && roadmapById.get("P133.6")?.status === "planned";
+const p133SafeProgressState = p1331StartedState || p1332CompleteState || p1333CompleteState || p1334CompleteState || p1335CompleteState;
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P132 final", contract.status === "complete" && contract.currentSubphase === "P132.7" && contract.previousSubphase === "P132.6" && contract.nextSubphase === "P133" && p1327.status === "complete");

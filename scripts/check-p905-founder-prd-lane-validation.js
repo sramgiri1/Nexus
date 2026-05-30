@@ -60,7 +60,7 @@ addCheck("P90.1 contract evidence present", contract.includes("P90.1") && p901Re
 addCheck("P90.2 model evidence present", contract.includes("P90.2") && p902Report.includes("P90.2 Founder PRD Local Model Report"));
 addCheck("P90.3 authoring evidence present", contract.includes("P90.3") && p903Report.includes("P90.3 Founder PRD Safe Authoring Report"));
 addCheck("P90.4 UX evidence present", contract.includes("P90.4") && p904Report.includes("P90.4 Command Center PRD Lane UX Report"));
-addCheck("Business Build Playwright coverage present", routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact") && routeTests.includes("Business Build Founder Dry Run tab keeps live execution disabled"));
+addCheck("Business Build Playwright coverage present", (routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact") || routeTests.includes("Business Build Local PRD tab shows safe idea-to-PRD preview")) && routeTests.includes("Business Build Founder Dry Run tab keeps live execution disabled"));
 addCheck("Local PRD UX still wired to safe authoring", businessBuildData.includes("buildFounderPrdSafeAuthoring") && businessBuildPage.includes('tabId="localPrd"'));
 addCheck("docs record P90.5", docs.includes("P90.5 is complete") && docs.includes("npm run check:p905-founder-prd-lane-validation"));
 addCheck(

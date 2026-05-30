@@ -3,9 +3,9 @@
   "title": "Founder Idea-to-PRD Productization",
   "status": "in_progress",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P133.4",
-  "previousSubphase": "P133.3",
-  "nextSubphase": "P133.5",
+  "currentSubphase": "P133.5",
+  "previousSubphase": "P133.4",
+  "nextSubphase": "P133.6",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "c1f61bfe",
   "owner": "NEXUS OS",
@@ -23,7 +23,7 @@
     "Reuse existing enterprise roadmap and OS phase status checker patterns.",
     "Do not duplicate report writers, checker formatters, mode guards, redaction helpers, route matrices, status helpers, UI components, or evidence/audit/activity appenders."
   ],
-  "commandCenterUx": "P133.1 preserves existing founder-facing Command Center pages, repairs route-wide safety copy/test drift, and does not add P133 feature controls. P133.4 will own future scoped UX changes.",
+  "commandCenterUx": "P133.5 preserves existing Command Center UX and adds regression coverage proving Chat with NEXUS, Business Build Local PRD, and Agent Flow remain separated, useful, themed, and safe.",
   "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
   "subphases": [
     {
@@ -491,18 +491,46 @@
     {
       "phaseId": "P133.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "narrowGoal": "Aggregate P133 checker, route, safety, theme, and regression coverage.",
-      "allowedFiles": [],
+      "expectedBaseCommit": "d286e640",
+      "narrowGoal": "Aggregate P133 checker, route, safety, theme, and regression coverage for founder idea-to-PRD productization.",
+      "allowedFiles": [
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1335-founder-idea-to-prd-tests-checkers.js",
+        "scripts/check-p1334-command-center-idea-to-prd-ux.js",
+        "scripts/check-p1333-founder-idea-to-prd-preview.js",
+        "scripts/check-p1332-founder-idea-to-prd-model.js",
+        "scripts/check-p1331-founder-idea-to-prd-productization.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
+        "scripts/check-p904-command-center-prd-lane-ux.js",
+        "scripts/check-p905-founder-prd-lane-validation.js",
+        "scripts/check-p907-founder-prd-final.js",
+        "package.json",
+        "contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json",
+        "docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1335-founder-idea-to-prd-tests-checkers-report.md",
+        "reports/p1334-command-center-idea-to-prd-ux-report.md",
+        "reports/p1333-founder-idea-to-prd-preview-report.md",
+        "reports/p1332-founder-idea-to-prd-model-report.md",
+        "reports/p1331-founder-idea-to-prd-productization-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
         "generated-projects/**",
         "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -515,25 +543,49 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "Planned-only. No runtime exports, DB schema, provider envelope, dispatch packet, project data, or live execution.",
-      "commandCenterUx": "Planned-only. Preserve existing Command Center UX until this subphase has its own implementation-grade plan.",
+      "dataShape": "Checker/report and Playwright coverage only. No runtime exports, DB schema, migration, provider envelope, dispatch packet, project data, live execution, hosted DB write, or project mutation.",
+      "commandCenterUx": "Preserve current Command Center UX. Playwright verifies Chat with NEXUS remains chat-only and interactive, Business Build Local PRD owns PRD detail, Agent Flow owns PRD lane context, and primary UX avoids raw dumps, private IDs, DemoApp leakage, and fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not modify project-owned files."
+        "Do not enable live Q&A execution, provider/model calls, PRD generation execution, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
+        "Do not modify project-owned files.",
+        "Do not change Command Center production source in this tests/checkers subphase."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
-        "Reuse shared report/check/status/dashboard patterns."
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse existing Business Build view model and existing Command Center route test helpers.",
+        "Reuse existing P133 checker/status compatibility patterns.",
+        "Do not duplicate report writers, checker formatters, route matrices, UI components, or status helpers."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add P133.5 aggregate checker.",
+        "Add Playwright route-wide regression coverage for Chat with NEXUS, Business Build Local PRD, Agent Flow, dark/light/system themes, and safety boundaries.",
+        "Update P133.1-P133.4 checkers for P133.5 handoff compatibility.",
+        "Update P132.7 and enterprise readiness checkers for P133.5 compatibility.",
+        "Update legacy PRD lane checker expectations for the current Local PRD test title."
+      ],
+      "docsRoadmap": "Update P133 plan, README, platform roadmap, enterprise roadmap, phase-status.json, nexus-phases.json, and validation reports.",
+      "phaseStatusUpdate": "P133 in progress; P133.5 complete; current P133.5; previous P133.4; next P133.6 planned-only.",
+      "validationCommands": [
+        "npm run check:p1335-founder-idea-to-prd-tests-checkers",
+        "npm run check:p1334-command-center-idea-to-prd-ux",
+        "npm run check:p1333-founder-idea-to-prd-preview",
+        "npm run check:p1332-founder-idea-to-prd-model",
+        "npm run check:p1331-founder-idea-to-prd-productization",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:p1327-founder-runtime-store-live-admission-execution",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
@@ -550,12 +602,12 @@
       "previousPhase": "P133.4",
       "nextPhase": "P133.6",
       "order": 169.5,
-      "completedAt": "",
+      "completedAt": "2026-05-30T11:37:39.402Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "summary": "Planned-only future P133 subphase: Tests / Checkers.",
+      "commit": "pending-final-commit",
+      "summary": "Completed P133.5 by adding aggregate founder idea-to-PRD test/checker coverage. The route suite now verifies Chat with NEXUS stays chat-only and interactive, Business Build owns PRD preview detail, Agent Flow owns PRD lane context, dark/light/system themes remain visible, and unsafe actions/private IDs/raw dumps stay out of primary UX.",
       "knownLimitations": [
-        "Planned-only; no implementation yet."
+        "P133.5 adds local regression coverage only. P133.6-P133.7 remain planned-only, and live Q&A execution, provider/model calls, PRD generation execution, agent dispatch, project creation, project mutation, DB/runtime writes, network calls, deploy, release, export, package creation, and provider spend remain blocked."
       ],
       "commandCenterVisible": true
     },

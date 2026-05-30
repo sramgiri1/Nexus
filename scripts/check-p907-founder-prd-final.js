@@ -60,7 +60,7 @@ addCheck("platform roadmap creates P91 handoff", platformRoadmap.includes("P91 i
 addCheck("P90 reports pass", [p904Report, p905Report, p906Report].every((report) => /Result: PASS|PASS \(/.test(report)));
 addCheck("safe PRD artifact is useful", safeAuthoring.prdArtifact?.title?.includes("Snake") && safeAuthoring.prdArtifact?.sections?.some((section) => /casual iPhone players/i.test(section.content)));
 addCheck("Business Build Local PRD view model ready", businessBuild.founderPrdAuthoring?.title?.includes("Snake") && businessBuild.founderPrdAuthoring?.reviewState === "Ready For Operator Review");
-addCheck("Business Build Playwright coverage retained", routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact") && routeTests.includes("Business Build route renders founder workstream dry-run state"));
+addCheck("Business Build Playwright coverage retained", (routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact") || routeTests.includes("Business Build Local PRD tab shows safe idea-to-PRD preview")) && routeTests.includes("Business Build route renders founder workstream dry-run state"));
 addCheck(
   "phase status closed",
   statusById.get("P90")?.status === "complete"

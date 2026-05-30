@@ -4761,6 +4761,64 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P133.5 founder idea-to-PRD regression coverage keeps surfaces separated", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.removeItem("nexus-lite-founder-qna-state");
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/lite", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themeState = await getThemeState(page);
+      expect(themeState.rootTheme).toBe(theme);
+      await expect(page.getByLabel("Chat with NEXUS")).toBeVisible();
+      await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
+      await expect(page.getByRole("button", { name: "Reset" })).toBeVisible();
+    }
+
+    await page.getByLabel("Founder message").fill("The first customers are iPhone players who want clean swipe controls.");
+    await page.getByRole("button", { name: "Send" }).click();
+    await expect(page.getByLabel("Chat with NEXUS")).toContainText("Captured Target Customer");
+
+    const liteBody = await page.locator("body").innerText();
+    expect(liteBody).not.toContain("Founder Idea-to-PRD Preview");
+    expect(liteBody).not.toContain("Review Checklist");
+    expect(liteBody).not.toContain("Agent flow PRD context");
+    expect(liteBody).not.toContain("reports/");
+    expect(liteBody).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+    expect(liteBody).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+
+    await page.goto("/command-center/business-build", { waitUntil: "domcontentloaded" });
+    await commandTab(page, "Local PRD").click();
+    const localPrdPanel = activeCommandTabPanel(page);
+    await expect(localPrdPanel).toContainText("Founder Idea-to-PRD Preview");
+    await expect(localPrdPanel).toContainText("Review Checklist");
+    await expect(localPrdPanel).toContainText("Acceptance Criteria");
+    await expect(localPrdPanel).toContainText("Local in-memory preview only");
+    await expect(localPrdPanel).toContainText("Provider calls");
+    await expect(localPrdPanel).toContainText("Blocked");
+
+    await page.goto("/command-center/agent-flow", { waitUntil: "domcontentloaded" });
+    const agentFlow = page.getByLabel("Agent action flow");
+    await expect(agentFlow).toContainText("Agent Flow");
+    await expect(agentFlow).toContainText("PRD preview ready");
+    await expect(agentFlow).toContainText("Product");
+    await expect(agentFlow).toContainText("Dispatch");
+    await expect(agentFlow).toContainText("Blocked");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Founder Dry Run tab keeps live execution disabled", async ({ page }) => {
     const errors = captureClientErrors(page);
 

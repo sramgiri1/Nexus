@@ -5,7 +5,8 @@
 NEXUS_OS_CHANGE. P133 is NEXUS OS work only. P133.1 is
 contract/checker/docs/status work only. P133.2 adds a deterministic local
 founder idea-to-PRD model. P133.3 adds a safe local PRD preview. P133.4 wires
-the model and preview into clean Command Center UX. P133 must not modify
+the model and preview into clean Command Center UX. P133.5 adds aggregate
+tests/checkers and route-wide regression coverage. P133 must not modify
 project, generated project, provider, tool, worker runtime, deploy, release,
 export, package, local runtime state, DB, or environment files.
 
@@ -215,6 +216,162 @@ Final safety checks:
   mutation, DB/runtime writes, deploy, release, export, package, network calls,
   and spend remain blocked.
 - P133.2 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
+## P133.5 Tests / Checkers
+
+Phase: P133 Founder Idea-to-PRD Productization
+
+Subphase: P133.5
+
+Goal:
+Aggregate and harden P133 founder idea-to-PRD checker and Playwright coverage
+so chat, PRD preview, agent-flow context, theme safety, and forbidden-action
+boundaries stay verified as P133 advances.
+
+Why this is needed:
+P133.4 made the founder-facing UX useful. P133.5 locks that behavior with
+regression coverage before docs/status and final validation.
+
+User/operator impact:
+Founders can verify Chat with NEXUS remains clean and interactive, Business
+Build owns PRD details, and Agent Flow shows planned work without fake
+execution.
+
+Command Center impact:
+No production Command Center source changes. Route-wide Playwright coverage now
+checks Lite chat, Business Build Local PRD, Agent Flow PRD context, and
+dark/light/system themes.
+
+Safety impact:
+P133.5 is tests/checkers/status/docs only. Provider/model calls, live Q&A
+execution, PRD generation execution, agent dispatch, project mutation,
+DB/runtime writes, deploy, release, export, package, network calls, and spend
+remain blocked.
+
+Cost impact:
+No provider calls, model calls, network calls, runtime execution, DB writes,
+deploy/package creation, or provider spend.
+
+Project/OS scope:
+NEXUS_OS_CHANGE. NEXUS OS files only. Project-owned files are forbidden.
+
+Files expected to change:
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1335-founder-idea-to-prd-tests-checkers.js`
+- P133.1-P133.4 checker compatibility files
+- P132.7 and enterprise roadmap compatibility checkers
+- Legacy PRD lane checker string compatibility files
+- `package.json`
+- P133 contract, docs, README, platform/enterprise roadmap
+- OS status/roadmap JSON and generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Tests to add/update/remove:
+- Add P133.5 route-wide Playwright regression coverage for Lite chat, Business
+  Build Local PRD, Agent Flow, themes, raw/private ID redaction, and fake-action
+  blocking.
+- Add P133.5 aggregate checker.
+- Update P133.1-P133.4, P132.7, enterprise, and legacy PRD lane checkers for
+  current handoff/test-title compatibility.
+- Do not remove route-wide safety tests.
+
+Docs to update:
+- This P133 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+Reports to regenerate:
+- `reports/p1335-founder-idea-to-prd-tests-checkers-report.md`
+- `reports/p1334-command-center-idea-to-prd-ux-report.md`
+- `reports/p1333-founder-idea-to-prd-preview-report.md`
+- `reports/p1332-founder-idea-to-prd-model-report.md`
+- `reports/p1331-founder-idea-to-prd-productization-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/p1327-founder-runtime-store-live-admission-execution-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update:
+- P133 remains in progress.
+- P133.5 complete.
+- Current phase P133.5.
+- Previous phase P133.4.
+- Next phase P133.6 planned-only.
+
+Known risks:
+- Tests can become brittle if UX labels change. P133.5 keeps checks focused on
+  core founder-visible ownership and safety boundaries.
+- Compatibility checkers can drift from renamed route tests. P133.5 updates
+  legacy PRD lane expectations to accept the current Local PRD coverage name.
+
+Rollback plan:
+- Revert only the P133.5 implementation and status stamp commits. P133.4
+  remains the complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1335-founder-idea-to-prd-tests-checkers`
+- `npm run check:p1334-command-center-idea-to-prd-ux`
+- `npm run check:p1333-founder-idea-to-prd-preview`
+- `npm run check:p1332-founder-idea-to-prd-model`
+- `npm run check:p1331-founder-idea-to-prd-productization`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1327-founder-runtime-store-live-admission-execution`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P133.5 allowed files>`
+- `git commit -m "chore(nexus): implement p1335 idea to prd test coverage"`
+- `git add <P133.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1335 idea to prd test coverage"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No Command Center production source changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Provider/model calls, live PRD generation, agent dispatch, project mutation,
+  DB/runtime writes, deploy, release, export, package, network calls, and spend
+  remain blocked.
+- P133.6 remains planned-only.
 - No stale `pending-final-commit` remains after the status stamp commit.
 
 Final response checklist:

@@ -51,7 +51,7 @@ addCheck("Local PRD UX avoids raw markdown dumps", !localPrdPanel.includes("mark
 addCheck("Local PRD UX avoids internal phase labels", !/P90\./.test(localPrdPanel + serialized));
 addCheck("Local PRD UX avoids runnable unsafe actions", !/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i.test(localPrdPanel + serialized));
 addCheck("Local PRD UX avoids DemoApp/private IDs", !/DemoApp|private-project-01|private-project-governed-build-mission|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d/.test(localPrdPanel + serialized));
-addCheck("route tests cover Local PRD", routeTests.includes('commandTab(page, "Local PRD")') && routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact"));
+addCheck("route tests cover Local PRD", routeTests.includes('commandTab(page, "Local PRD")') && (routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact") || routeTests.includes("Business Build Local PRD tab shows safe idea-to-PRD preview")));
 addCheck("contract tracks P90.4 files", contract.includes("P90.4") && contract.includes("dashboard/src/pages/CommandCenterV2.jsx") && contract.includes("check:p904-command-center-prd-lane-ux"));
 addCheck("docs record P90.4", docs.includes("P90.4 is complete") && docs.includes("npm run check:p904-command-center-prd-lane-ux"));
 addCheck(

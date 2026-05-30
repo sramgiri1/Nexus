@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P133.4
-  with P133.5 planned-only next.
+  roadmap/status entries only; current implementation is closed through P133.5
+  with P133.6 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2034,6 +2034,13 @@ The Command Center and local operator surface have:
   generation execution, agent dispatch, project creation or mutation, file
   writes, DB/runtime writes, deploy, release, export, package, network calls,
   and spend remain unavailable.
+- P133.5 founder idea-to-PRD tests/checkers: Added aggregate checker and
+  route-wide Playwright coverage for Chat with NEXUS, Business Build Local PRD,
+  Agent Flow, dark/light/system themes, DemoApp leakage, raw/private ID
+  redaction, and fake-action blocking. P133.6 Docs / Roadmap / Status is next;
+  autonomous Q&A execution, provider/model calls, PRD generation execution,
+  agent dispatch, project creation or mutation, file writes, DB/runtime writes,
+  deploy, release, export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 
