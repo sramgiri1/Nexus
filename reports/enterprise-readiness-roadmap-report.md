@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T19:56:18.030Z
+- Generated at: 2026-05-30T20:00:22.244Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2dae40b5
+- Validation HEAD: b7547457
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -49,8 +49,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1376-agent-work-order-runtime-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1376-agent-work-order-runtime.js, reports/p1377-agent-work-order-runtime-report.md, scripts/check-p1377-agent-work-order-runtime.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1376-agent-work-order-runtime-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1376-agent-work-order-runtime.js, reports/p1377-agent-work-order-runtime-report.md, scripts/check-p1377-agent-work-order-runtime.js |
+| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
