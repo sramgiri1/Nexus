@@ -2,16 +2,16 @@
   "phaseId": "P134",
   "title": "Durable DB and CRUD Runtime",
   "status": "in_progress",
-  "currentSubphase": "P134.2",
-  "previousSubphase": "P134.1",
-  "nextSubphase": "P134.3",
+  "currentSubphase": "P134.3",
+  "previousSubphase": "P134.2",
+  "nextSubphase": "P134.4",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "21133d6f",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "goal": "Create a governed durable data layer for OS-owned founder/business records with staged schema, repository, write preview, Command Center UX, tests, docs, and final validation.",
   "userImpact": "Operators get a clear DB/CRUD path without live mutation until each boundary is validated.",
-  "commandCenterImpact": "P134.2 preserves current Command Center UX and prepares display-safe DB runtime model data for P134.4.",
-  "safetyImpact": "P134.2 is model-only and does not enable DB/runtime writes, CRUD execution, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+  "commandCenterImpact": "P134.3 preserves current Command Center UX and prepares display-safe DB write-plan data for P134.4.",
+  "safetyImpact": "P134.3 is preview-only and does not enable DB/runtime writes, CRUD execution, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
   "costImpact": "No provider spend; local checks only.",
   "subphases": [
     {
@@ -258,12 +258,29 @@
     {
       "phaseId": "P134.3",
       "title": "DB Write Plan Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "narrowGoal": "DB Write Plan Preview for Durable DB and CRUD Runtime.",
-      "allowedFiles": [],
+      "expectedBaseCommit": "17de74c6",
+      "narrowGoal": "Add a local, display-safe DB write-plan preview for P134 durable DB/CRUD readiness without enabling DB reads, DB writes, migrations, runtime writes, or CRUD execution.",
+      "allowedFiles": [
+        "shared/durableDbCrudRuntimeWritePlanPreview.js",
+        "scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js",
+        "contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json",
+        "docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md",
+        "reports/p1342-durable-db-crud-runtime-schema-model-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -281,28 +298,53 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Planned-only. No runtime exports, DB schema, migrations, repository module, DB adapter, CRUD packet, or live execution until this subphase has its own implementation-grade plan.",
-      "commandCenterUx": "Planned-only. Preserve existing Command Center UX until this subphase starts.",
+      "expectedExports": [
+        "DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_PHASE",
+        "DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_VERSION",
+        "DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_STEP_NAMES",
+        "DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_FLAGS",
+        "buildDurableDbCrudRuntimeWritePlanPreview",
+        "validateDurableDbCrudRuntimeWritePlanPreview"
+      ],
+      "dataShape": "Exports a local preview object with metadata, P134.2 source model reference, blocked write-plan evidence steps, entity-group readiness rows, repository operation readiness rows, blockers, next action, owner capability, cost impact, zero candidate counts, and all authority flags set false.",
+      "commandCenterUx": "Preserve existing Command Center UX. P134.3 does not edit dashboard source or tests, does not show raw table names or raw JSON in primary UX, and prepares display-safe data for P134.4 DB Runtime Command Center UX.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not modify project-owned files."
+        "Do not modify project-owned files.",
+        "Do not modify dashboard source or tests in P134.3.",
+        "Do not modify db/** or local-state/runtime/** files in P134.3.",
+        "Do not create schema, migrations, DB adapters, repository executors, runtime persistence, approval persistence, or CRUD execution.",
+        "Do not call providers/models, dispatch agents, execute tools/workers, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
+        "Reuse shared/durableDbCrudRuntimeSchemaModel.js from P134.2.",
         "Reuse shared/reportWriter.js.",
         "Reuse shared/checkResultFormatter.js.",
         "Reuse existing OS phase status and roadmap structures."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add P134.3 checker.",
+        "Update enterprise readiness checker for P134.3 handoff.",
+        "Keep P134.2 checker compatible with P134.3 handoff.",
+        "Rerun route-wide Playwright coverage without editing Playwright source."
+      ],
+      "docsRoadmap": "Update P134 plan, README, platform roadmap, enterprise readiness roadmap, OS phase status, phase index, and generated reports.",
+      "phaseStatusUpdate": "P134 in progress; P134.1, P134.2, and P134.3 complete; current P134.3; previous P134.2; next P134.4 planned-only.",
+      "validationCommands": [
+        "npm run check:p1343-durable-db-crud-runtime-write-plan-preview",
+        "npm run check:p1342-durable-db-crud-runtime-schema-model",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
@@ -319,15 +361,25 @@
       "previousPhase": "P134.2",
       "nextPhase": "P134.4",
       "order": 170.3,
-      "completedAt": "",
+      "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "summary": "Planned-only future P134 subphase: DB Write Plan Preview.",
+      "commit": "pending-final-commit",
+      "summary": "Completed P134.3 by adding a local, display-safe DB write-plan preview over the P134.2 schema model, with blocked evidence gates, grouped readiness rows, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
-        "Planned-only; no implementation yet."
+        "P134.3 is a write-plan preview only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.4 remains planned-only."
       ],
       "commandCenterVisible": true,
-      "checksRun": []
+      "checksRun": [
+        "npm run check:p1343-durable-db-crud-runtime-write-plan-preview",
+        "npm run check:p1342-durable-db-crud-runtime-schema-model",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P134.4",
@@ -400,7 +452,9 @@
       "knownLimitations": [
         "Planned-only; no implementation yet."
       ],
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "detail": "P134.4 is planned-only for DB Runtime Command Center UX.",
+      "checksRun": []
     },
     {
       "phaseId": "P134.5",
@@ -623,17 +677,17 @@
     }
   ],
   "current": {
-    "phaseId": "P134.1",
-    "title": "Contract / Policy / Safety Boundary",
+    "phaseId": "P134.3",
+    "title": "DB Write Plan Preview",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "754b334060adc38233930f52add1221c7086e8d9",
-    "completedAt": "2026-05-30T12:26:26.371Z",
-    "detail": "P134.1 complete: Durable DB and CRUD Runtime contract and safety boundary are in place.",
-    "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:00:00.000Z",
+    "detail": "P134.3 is complete. P134.4 DB Runtime Command Center UX is planned-only next.",
+    "summary": "Completed P134.3 by adding a local, display-safe DB write-plan preview over the P134.2 schema model, with blocked evidence gates, grouped readiness rows, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
     "checksRun": [
-      "npm run check:p1341-durable-db-crud-runtime",
-      "npm run check:p1337-founder-idea-to-prd-final-validation",
+      "npm run check:p1343-durable-db-crud-runtime-write-plan-preview",
+      "npm run check:p1342-durable-db-crud-runtime-schema-model",
       "npm run check:enterprise-readiness-roadmap",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
@@ -643,37 +697,11 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.2 remains planned-only."
+      "P134.3 is a write-plan preview only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.4 remains planned-only."
     ],
-    "previousPhase": "P133.7",
-    "nextPhase": "P134.2",
+    "previousPhase": "P134.2",
+    "nextPhase": "P134.4",
     "commandCenterVisible": true
   },
-  "summary": {
-    "phaseId": "P134",
-    "title": "Durable DB and CRUD Runtime",
-    "status": "in_progress",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "754b334060adc38233930f52add1221c7086e8d9",
-    "completedAt": "2026-05-30T12:26:26.371Z",
-    "detail": "P134 in progress; P134.1 complete and P134.2 Schema and Repository Model is planned-only next.",
-    "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
-    "checksRun": [
-      "npm run check:p1341-durable-db-crud-runtime",
-      "npm run check:p1337-founder-idea-to-prd-final-validation",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.2 remains planned-only."
-    ],
-    "previousPhase": "P133",
-    "nextPhase": "P135",
-    "commandCenterVisible": true
-  }
+  "summary": "Completed P134.3 by adding a local, display-safe DB write-plan preview over the P134.2 schema model, with blocked evidence gates, grouped readiness rows, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked."
 }

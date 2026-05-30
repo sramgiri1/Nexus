@@ -192,7 +192,32 @@ const p1342CurrentState =
   && indexById.get("P134.2")?.status === "complete"
   && statusById.get("P134.3")?.status === "planned"
   && indexById.get("P134.3")?.status === "planned";
-const p134ActiveState = p1341StartedState || p1342CurrentState;
+const p1343CurrentState =
+  phaseStatus.currentPhase === "P134.3"
+  && phaseStatus.previousPhase === "P134.2"
+  && phaseStatus.nextPhase === "P134.4"
+  && phaseIndex.currentPhase === "P134.3"
+  && phaseIndex.previousPhase === "P134.2"
+  && phaseIndex.nextPhase === "P134.4"
+  && phaseStatus.current?.phaseId === "P134.3"
+  && phaseStatus.previous?.phaseId === "P134.2"
+  && phaseStatus.next?.phaseId === "P134.4"
+  && phaseIndex.current?.phaseId === "P134.3"
+  && phaseIndex.previous?.phaseId === "P134.2"
+  && phaseIndex.next?.phaseId === "P134.4"
+  && statusById.get("P133")?.status === "complete"
+  && indexById.get("P133")?.status === "complete"
+  && statusById.get("P134")?.status === "in_progress"
+  && indexById.get("P134")?.status === "in_progress"
+  && statusById.get("P134.1")?.status === "complete"
+  && indexById.get("P134.1")?.status === "complete"
+  && statusById.get("P134.2")?.status === "complete"
+  && indexById.get("P134.2")?.status === "complete"
+  && statusById.get("P134.3")?.status === "complete"
+  && indexById.get("P134.3")?.status === "complete"
+  && statusById.get("P134.4")?.status === "planned"
+  && indexById.get("P134.4")?.status === "planned";
+const p134ActiveState = p1341StartedState || p1342CurrentState || p1343CurrentState;
 const enterpriseActiveState = p133ActiveState || p134ActiveState;
 const currentP133CheckCommand = p1337FinalState
   ? "npm run check:p1337-founder-idea-to-prd-final-validation"
@@ -208,7 +233,9 @@ const currentP133CheckCommand = p1337FinalState
         ? "npm run check:p1332-founder-idea-to-prd-model"
         : "npm run check:p1331-founder-idea-to-prd-productization";
 
-const currentP134CheckCommand = p1342CurrentState
+const currentP134CheckCommand = p1343CurrentState
+  ? "npm run check:p1343-durable-db-crud-runtime-write-plan-preview"
+  : p1342CurrentState
   ? "npm run check:p1342-durable-db-crud-runtime-schema-model"
   : p1341StartedState
   ? "npm run check:p1341-durable-db-crud-runtime"
@@ -249,6 +276,7 @@ const allowedFiles = new Set([
   "scripts/check-p1337-founder-idea-to-prd-final-validation.js",
   "scripts/check-p1341-durable-db-crud-runtime.js",
   "scripts/check-p1342-durable-db-crud-runtime-schema-model.js",
+  "scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js",
   "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-os-phase-status.js",
   "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
@@ -258,6 +286,7 @@ const allowedFiles = new Set([
   "live-ready/founderIdeaToPrdModel.js",
   "live-ready/founderIdeaToPrdPreview.js",
   "shared/durableDbCrudRuntimeSchemaModel.js",
+  "shared/durableDbCrudRuntimeWritePlanPreview.js",
   "dashboard/src/data/businessBuild.js",
   "dashboard/src/pages/CommandCenterV2.jsx",
   "dashboard/tests/routes.spec.js",
@@ -270,6 +299,7 @@ const allowedFiles = new Set([
   "reports/p1337-founder-idea-to-prd-final-validation-report.md",
   "reports/p1341-durable-db-crud-runtime-report.md",
   "reports/p1342-durable-db-crud-runtime-schema-model-report.md",
+  "reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md",
   "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -297,7 +327,7 @@ const allowedDashboardFiles = new Set([
 ]);
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:enterprise-readiness-roadmap"]));
-addCheck("P133/P134 checkers registered when active", (!p133ActiveState || (Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]) && (!p1332CompleteState || Boolean(packageJson.scripts?.["check:p1332-founder-idea-to-prd-model"])) && (!p1333CompleteState || Boolean(packageJson.scripts?.["check:p1333-founder-idea-to-prd-preview"])) && (!p1334CompleteState || Boolean(packageJson.scripts?.["check:p1334-command-center-idea-to-prd-ux"])) && (!p1335CompleteState || Boolean(packageJson.scripts?.["check:p1335-founder-idea-to-prd-tests-checkers"])) && (!p1336CompleteState || Boolean(packageJson.scripts?.["check:p1336-founder-idea-to-prd-docs-roadmap"])) && (!p1337FinalState || Boolean(packageJson.scripts?.["check:p1337-founder-idea-to-prd-final-validation"])))) && (!p134ActiveState || (Boolean(packageJson.scripts?.["check:p1341-durable-db-crud-runtime"]) && (!p1342CurrentState || Boolean(packageJson.scripts?.["check:p1342-durable-db-crud-runtime-schema-model"])))));
+addCheck("P133/P134 checkers registered when active", (!p133ActiveState || (Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]) && (!p1332CompleteState || Boolean(packageJson.scripts?.["check:p1332-founder-idea-to-prd-model"])) && (!p1333CompleteState || Boolean(packageJson.scripts?.["check:p1333-founder-idea-to-prd-preview"])) && (!p1334CompleteState || Boolean(packageJson.scripts?.["check:p1334-command-center-idea-to-prd-ux"])) && (!p1335CompleteState || Boolean(packageJson.scripts?.["check:p1335-founder-idea-to-prd-tests-checkers"])) && (!p1336CompleteState || Boolean(packageJson.scripts?.["check:p1336-founder-idea-to-prd-docs-roadmap"])) && (!p1337FinalState || Boolean(packageJson.scripts?.["check:p1337-founder-idea-to-prd-final-validation"])))) && (!p134ActiveState || (Boolean(packageJson.scripts?.["check:p1341-durable-db-crud-runtime"]) && (!p1342CurrentState || Boolean(packageJson.scripts?.["check:p1342-durable-db-crud-runtime-schema-model"])) && (!p1343CurrentState || Boolean(packageJson.scripts?.["check:p1343-durable-db-crud-runtime-write-plan-preview"])))));
 addCheck("current enterprise handoff", enterpriseActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
@@ -407,6 +437,7 @@ const p134ActiveSubphaseRecordsPresent = !p134ActiveState || (
   && (
     (p1341StartedState && statusById.get("P134.2")?.status === "planned" && indexById.get("P134.2")?.status === "planned")
     || (p1342CurrentState && statusById.get("P134.2")?.status === "complete" && indexById.get("P134.2")?.status === "complete" && statusById.get("P134.3")?.status === "planned" && indexById.get("P134.3")?.status === "planned")
+    || (p1343CurrentState && statusById.get("P134.2")?.status === "complete" && indexById.get("P134.2")?.status === "complete" && statusById.get("P134.3")?.status === "complete" && indexById.get("P134.3")?.status === "complete" && statusById.get("P134.4")?.status === "planned" && indexById.get("P134.4")?.status === "planned")
   )
 );
 addCheck("P133/P134 active subphase records are present", p133ActiveSubphaseRecordsPresent && p134ActiveSubphaseRecordsPresent);

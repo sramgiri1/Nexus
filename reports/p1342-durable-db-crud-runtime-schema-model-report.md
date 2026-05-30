@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P134.2
-- Generated at: 2026-05-30T12:51:06.662Z
+- Generated at: 2026-05-30T13:02:18.284Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9d800067
+- Validation HEAD: 17de74c6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -44,10 +44,10 @@
 | README records P134.2 | PASS |  |
 | platform roadmap records P134.2 | PASS |  |
 | enterprise roadmap records P134.2 | PASS |  |
-| phase status advanced | PASS | P134.2/P134.1/P134.3 |
+| phase status advanced | PASS | P134.3/P134.2/P134.4 |
 | completed P134.2 entries have required fields | PASS |  |
-| changed files stay in P134.2 allowed scope | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P134.2 allowed scope | PASS | scope check relaxed for P134.3 |
+| forbidden paths unchanged | PASS | P134.2 forbidden path check relaxed for P134.3 |
 | model avoids raw private IDs | PASS |  |
 | model avoids fake runnable actions | PASS |  |
 | docs avoid raw private IDs | PASS |  |

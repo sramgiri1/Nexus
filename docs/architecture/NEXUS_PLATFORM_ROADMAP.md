@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P134.2 and P134.3 remains planned-only
-next. P134.3-P145 do not enable DB/runtime writes, live CRUD, provider/model
+Current implementation is closed through P134.3 and P134.4 remains planned-only
+next. P134.4-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
@@ -3268,6 +3268,15 @@ repository intent rows. P134.3 is next for DB write-plan preview. DB/runtime
 writes, migrations, raw SQL, live CRUD, provider/model calls, agent dispatch,
 project mutation, deploy, release, export, package, network calls, and spend
 remain blocked.
+
+P134.3 durable DB/CRUD write-plan preview is complete. P134.4 DB Runtime Command Center UX is planned-only next.
+NEXUS now has a local durable DB/CRUD write-plan preview
+that reuses the P134.2 schema model and exposes display-safe blocked evidence
+steps, entity-group readiness rows, repository-operation readiness rows,
+owner, blockers, next action, and zero executable candidates. DB/runtime writes,
+migrations, raw SQL,
+live CRUD, provider/model calls, agent dispatch, project mutation, deploy,
+release, export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

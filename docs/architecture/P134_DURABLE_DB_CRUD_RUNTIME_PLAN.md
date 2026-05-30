@@ -321,3 +321,154 @@ Final response checklist:
 - Forbidden paths confirmation.
 - Known limitations.
 - Next phase/subphase.
+
+## P134.3 DB Write Plan Preview
+
+Status: complete
+
+Scope classification:
+- `NEXUS_OS_CHANGE`
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `17de74c6`
+
+Narrow goal:
+- Add a local, display-safe DB write-plan preview for P134 durable DB/CRUD
+  readiness without enabling DB reads, DB writes, migrations, runtime writes,
+  approval persistence, or CRUD execution.
+
+Allowed files:
+- `shared/durableDbCrudRuntimeWritePlanPreview.js`
+- `scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js`
+- `contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json`
+- `docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- Generated P134.3, P134.2, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_PHASE`
+- `DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_VERSION`
+- `DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_STEP_NAMES`
+- `DURABLE_DB_CRUD_RUNTIME_WRITE_PLAN_PREVIEW_FLAGS`
+- `buildDurableDbCrudRuntimeWritePlanPreview()`
+- `validateDurableDbCrudRuntimeWritePlanPreview(preview)`
+- Data shape includes metadata, P134.2 source model reference, blocked
+  evidence steps, entity-group readiness rows, repository-operation readiness
+  rows, owner capability, evidence/activity labels, blockers, next action, cost
+  impact, zero candidate counts, and authority flags set false.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX.
+- Do not edit dashboard source or tests in P134.3.
+- Do not expose raw table names, raw SQL, raw JSON, raw logs, raw policy dumps,
+  internal helper IDs, or private project IDs in primary UX.
+- P134.4 owns the visible DB Runtime Command Center UX.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Rerun existing route-wide Playwright coverage.
+
+Tests and checker updates:
+- Add `check:p1343-durable-db-crud-runtime-write-plan-preview`.
+- Update enterprise readiness checker for P134.3 handoff compatibility.
+- Keep P134.2 checker compatible with P134.3 handoff.
+- Do not edit Playwright source in this subphase.
+
+Docs to update:
+- This P134 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+Reports to regenerate:
+- P134.3 report.
+- P134.2 report.
+- Enterprise readiness roadmap report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P134 in progress.
+- P134.1, P134.2, and P134.3 complete.
+- Current phase P134.3.
+- Previous phase P134.2.
+- Next phase P134.4 planned-only.
+
+Known risks:
+- Operators could mistake the preview for live DB capability. P134.3 keeps DB
+  reads, DB writes, migrations, and CRUD execution blocked.
+- The preview must stay display-safe and must not expose raw table names.
+
+Rollback plan:
+- Revert only the P134.3 implementation and stamp commits. P134.2 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1343-durable-db-crud-runtime-write-plan-preview`
+- `npm run check:p1342-durable-db-crud-runtime-schema-model`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P134.3 allowed files>`
+- `git commit -m "chore(nexus): implement p1343 db write plan preview"`
+- `git add <P134.3 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1343 db write plan preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- DB/runtime writes, live CRUD, migrations, raw SQL UX, provider/model calls,
+  agent dispatch, project mutation, network calls, and spend remain blocked.
+- P134.4 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
