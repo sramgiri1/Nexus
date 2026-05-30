@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.4
-- Generated at: 2026-05-30T19:13:42.055Z
+- Generated at: 2026-05-30T19:17:33.063Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c2cd498a
+- Validation HEAD: e8c226c2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -58,8 +58,8 @@
 | phase status starts P137.4 | PASS | P137.4/P137.3/P137.5 |
 | completed P137.4 entries have required fields | PASS |  |
 | P137.5 remains planned-only | PASS |  |
-| changed files stay in P137.4 allowed scope | PASS | README.md, contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1367-secrets-providers-tool-governance-final-validation-report.md, reports/p1371-agent-work-order-runtime-report.md, reports/p1372-agent-work-order-runtime-report.md, reports/p1373-agent-work-order-runtime-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1367-secrets-providers-tool-governance-final-validation.js, scripts/check-p1371-agent-work-order-runtime.js, scripts/check-p1372-agent-work-order-runtime.js, scripts/check-p1373-agent-work-order-runtime.js, reports/p1374-agent-work-order-runtime-report.md, scripts/check-p1374-agent-work-order-runtime.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, dashboard/src/data/businessBuild.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1367-secrets-providers-tool-governance-final-validation-report.md, reports/p1371-agent-work-order-runtime-report.md, reports/p1372-agent-work-order-runtime-report.md, reports/p1373-agent-work-order-runtime-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1367-secrets-providers-tool-governance-final-validation.js, scripts/check-p1371-agent-work-order-runtime.js, scripts/check-p1372-agent-work-order-runtime.js, scripts/check-p1373-agent-work-order-runtime.js, reports/p1374-agent-work-order-runtime-report.md, scripts/check-p1374-agent-work-order-runtime.js |
+| changed files stay in P137.4 allowed scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable work order actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

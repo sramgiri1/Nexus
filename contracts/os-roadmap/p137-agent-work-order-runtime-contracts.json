@@ -787,7 +787,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T19:01:05.218Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e8c226c2",
       "summary": "Surfaced the scoped agent work order runtime dry run on Agent Flow with display-safe work-order lanes, gates, blockers, owner, evidence/activity, next action, disabled reason, and zero-cost impact while live dispatch remains blocked.",
       "checksRun": [
         "npm run check:p1374-agent-work-order-runtime",
@@ -818,7 +818,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1374-final-commit",
+      "expectedBaseCommit": "e8c226c2",
       "narrowGoal": "Aggregate P137 checker, route-wide Playwright, docs, status, and forbidden-path coverage without enabling dispatch.",
       "allowedFiles": [
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
