@@ -745,6 +745,7 @@
     "check:p1341-durable-db-crud-runtime": "node scripts/check-p1341-durable-db-crud-runtime.js",
     "check:p1342-durable-db-crud-runtime-schema-model": "node scripts/check-p1342-durable-db-crud-runtime-schema-model.js",
     "check:p1343-durable-db-crud-runtime-write-plan-preview": "node scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js",
+    "check:p1344-durable-db-crud-runtime-command-center-ux": "node scripts/check-p1344-durable-db-crud-runtime-command-center-ux.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {

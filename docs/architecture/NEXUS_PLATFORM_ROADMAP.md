@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P134.3 and P134.4 remains planned-only
-next. P134.4-P145 do not enable DB/runtime writes, live CRUD, provider/model
+Current implementation is closed through P134.4 and P134.5 Tests / Checkers is
+planned-only next. P134.5-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
@@ -3269,7 +3269,7 @@ writes, migrations, raw SQL, live CRUD, provider/model calls, agent dispatch,
 project mutation, deploy, release, export, package, network calls, and spend
 remain blocked.
 
-P134.3 durable DB/CRUD write-plan preview is complete. P134.4 DB Runtime Command Center UX is planned-only next.
+P134.3 durable DB/CRUD write-plan preview is complete.
 NEXUS now has a local durable DB/CRUD write-plan preview
 that reuses the P134.2 schema model and exposes display-safe blocked evidence
 steps, entity-group readiness rows, repository-operation readiness rows,
@@ -3277,6 +3277,14 @@ owner, blockers, next action, and zero executable candidates. DB/runtime writes,
 migrations, raw SQL,
 live CRUD, provider/model calls, agent dispatch, project mutation, deploy,
 release, export, package, network calls, and spend remain blocked.
+
+P134.4 durable DB/CRUD Command Center UX is complete. NEXUS now shows P134
+schema coverage and DB write-plan gates in Durable State > DB Runtime, with
+current state, next action, blockers, disabled reason, owner capability,
+evidence, activity, and cost impact rendered as display-safe Command Center UX.
+P134.5 Tests / Checkers is planned-only next. DB/runtime writes, migrations,
+raw SQL, live CRUD, provider/model calls, agent dispatch, project mutation,
+deploy, release, export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

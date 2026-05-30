@@ -8358,6 +8358,7 @@ function DurableStatePage({ vm }) {
   const founderPersistenceControls = buildFounderPersistenceControlsViewModel(dbRuntime.founderRuntime);
   const businessBuildRuntimeView = buildBusinessBuildViewModel(dbRuntime.founderRuntime?.founderIdea);
   const businessBuildRuntime = businessBuildRuntimeView.businessBuildDbCrud;
+  const durableCrudRuntimeUx = dbRuntime.durableCrudRuntimeUx;
 
   return (
     <div className="ccv2-content">
@@ -8445,6 +8446,68 @@ function DurableStatePage({ vm }) {
               {dbRuntime.statusChips.map((chip) => (
                 <div key={chip.label} className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">{chip.label}</span><span className={`ccv2-stat-chip__value ccv2-stat-chip__value--${chip.tone}`}>{chip.value}</span></div>
               ))}
+            </div>
+            <div className="ccv2-card" aria-label="P134 Durable DB CRUD Runtime">
+              <div className="ccv2-card-header-row">
+                <div>
+                  <div className="ccv2-eyebrow">{durableCrudRuntimeUx.phaseId} Command Center UX</div>
+                  <h3>{durableCrudRuntimeUx.title}</h3>
+                  <div className="ccv2-muted" style={{ marginTop: 6 }}>{durableCrudRuntimeUx.currentState}</div>
+                </div>
+                <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+              </div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                {durableCrudRuntimeUx.summaryRows.map((row) => (
+                  <div key={row.label} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{row.label}</span><span className="ccv2-page-summary-value">{row.value}</span></div>
+                ))}
+              </div>
+              <div className="ccv2-stat-chips" style={{ marginTop: 12, marginBottom: 8 }}>
+                <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Schema model groups</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{durableCrudRuntimeUx.schemaCoverage.summary}</span></div>
+                <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Write-plan gates</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">{durableCrudRuntimeUx.writePlan.summary}</span></div>
+                <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Cost impact</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--green">No provider spend</span></div>
+              </div>
+              <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 12 }}>
+                {durableCrudRuntimeUx.schemaCoverage.groups.map((group) => (
+                  <div key={group.label} aria-label={`${group.label} durable DB group`} style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}>
+                    <div className="ccv2-section-heading">{group.label}</div>
+                    <div className="ccv2-pill ccv2-pill--teal" style={{ marginTop: 8 }}>{group.state}</div>
+                    <div className="ccv2-muted" style={{ marginTop: 10 }}>{group.records}</div>
+                    <div className="ccv2-muted" style={{ marginTop: 8 }}>{group.owner}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {durableCrudRuntimeUx.writePlan.steps.map((step) => (
+                  <div key={step.label} className="ccv2-safety-row">
+                    <span className="ccv2-safety-row__label">{step.label}</span>
+                    <span className="ccv2-safety-row__value--disabled">{step.state} · {step.evidence}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="ccv2-stat-chips" style={{ marginTop: 12, marginBottom: 8 }}>
+                {durableCrudRuntimeUx.writePlan.repositoryRows.map((row) => (
+                  <div key={row.label} className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">{row.label}</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--red">{row.state}</span></div>
+                ))}
+              </div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                {durableCrudRuntimeUx.evidenceRows.map((row) => (
+                  <div key={row.label} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{row.label}</span><span className="ccv2-page-summary-value">{row.value}</span></div>
+                ))}
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {durableCrudRuntimeUx.safetyRows.map((row) => (
+                  <div key={row.label} className="ccv2-safety-row">
+                    <span className="ccv2-safety-row__label">{row.label}</span>
+                    <span className="ccv2-safety-row__value--ready">{row.value}</span>
+                  </div>
+                ))}
+                {durableCrudRuntimeUx.blockers.map((blocker) => (
+                  <div key={blocker} className="ccv2-safety-row">
+                    <span className="ccv2-safety-row__label">{blocker}</span>
+                    <span className="ccv2-safety-row__value--disabled">Blocked</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Enterprise Runtime CRUD</div>

@@ -2068,11 +2068,17 @@ The Command Center and local operator surface have:
 - P134.3 durable DB/CRUD write-plan preview: Added a local display-safe write
   plan preview over the P134.2 schema model, with blocked evidence steps,
   entity-group readiness rows, repository-operation readiness rows, owner,
-  blockers, next action, and zero executable candidates. P134.4 DB Runtime
-  Command Center UX is planned-only next; DB/runtime writes, migrations, raw
-  SQL, live CRUD, provider/model calls, agent dispatch, project mutation,
-  deploy, release, export, package, network calls, and spend remain
+  blockers, next action, and zero executable candidates. DB/runtime writes,
+  migrations, raw SQL, live CRUD, provider/model calls, agent dispatch, project
+  mutation, deploy, release, export, package, network calls, and spend remain
   unavailable.
+- P134.4 durable DB/CRUD Command Center UX: Added the P134 Durable DB/CRUD
+  Runtime section to Durable State > DB Runtime, showing schema coverage,
+  write-plan gates, blockers, disabled reason, owner capability, next action,
+  evidence, activity, and cost impact with display-safe labels only. P134.5
+  Tests / Checkers is planned-only next; DB/runtime writes, migrations, raw SQL,
+  live CRUD, provider/model calls, agent dispatch, project mutation, deploy,
+  release, export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

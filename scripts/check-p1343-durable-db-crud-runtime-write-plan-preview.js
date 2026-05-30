@@ -88,6 +88,7 @@ const preview = buildDurableDbCrudRuntimeWritePlanPreview();
 const previewValidation = validateDurableDbCrudRuntimeWritePlanPreview(preview);
 const serializedPreview = JSON.stringify(preview);
 const changed = changedFiles();
+const enforceCurrentDiffScope = status.currentPhase === "P134.3";
 const allowedFiles = new Set(p1343.allowedFiles || []);
 const forbiddenPrefixes = [
   "projects/",
@@ -124,12 +125,30 @@ const p1343CurrentState =
   && ["P134.1", "P134.2", "P134.3"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P134.4")?.status === "planned"
   && roadmapById.get("P134.4")?.status === "planned";
+const p1344CurrentState =
+  status.currentPhase === "P134.4"
+  && status.previousPhase === "P134.3"
+  && status.nextPhase === "P134.5"
+  && roadmap.currentPhase === "P134.4"
+  && roadmap.previousPhase === "P134.3"
+  && roadmap.nextPhase === "P134.5"
+  && status.current?.phaseId === "P134.4"
+  && status.previous?.phaseId === "P134.3"
+  && status.next?.phaseId === "P134.5"
+  && roadmap.current?.phaseId === "P134.4"
+  && roadmap.previous?.phaseId === "P134.3"
+  && roadmap.next?.phaseId === "P134.5"
+  && statusById.get("P134")?.status === "in_progress"
+  && roadmapById.get("P134")?.status === "in_progress"
+  && ["P134.1", "P134.2", "P134.3", "P134.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P134.5")?.status === "planned"
+  && roadmapById.get("P134.5")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract marks P134.3 complete", contract.status === "in_progress" && contract.currentSubphase === "P134.3" && contract.previousSubphase === "P134.2" && contract.nextSubphase === "P134.4" && p1343.status === "complete");
+addCheck("contract marks P134.3 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P134.3" && contract.previousSubphase === "P134.2" && contract.nextSubphase === "P134.4") || (contract.currentSubphase === "P134.4" && contract.previousSubphase === "P134.3" && contract.nextSubphase === "P134.5")) && p1343.status === "complete");
 addCheck("P134.3 records expected base commit", p1343.expectedBaseCommit === "17de74c6");
-addCheck("P134.4 remains planned-only", p1344.status === "planned" && p1344.allowedFiles?.length === 0);
+addCheck("P134.4 remains planned or complete", ["planned", "complete"].includes(p1344.status));
 addCheck("P134.3 allowed files include preview and checker", p1343.allowedFiles?.includes(PREVIEW_PATH) && p1343.allowedFiles?.includes("scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js"));
 addCheck("P134.3 forbids project/dashboard/db/runtime paths", ["projects/**", "careloop/**", "generated-projects/**", "dashboard/src/**", "dashboard/tests/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1343.forbiddenFiles?.includes(path)));
 addCheck("P134.3 records validation commands", VALIDATION_COMMANDS.every((command) => p1343.validationCommands?.includes(command)));
@@ -183,12 +202,12 @@ addCheck("P134.2 checker accepts P134.3 handoff", p1342Checker.includes("p1343St
 addCheck("enterprise checker accepts P134.3", enterpriseChecker.includes("p1343CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("plan records P134.3 implementation", /## P134\.3 DB Write Plan Preview[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P134.3", /P134\.3 durable DB\/CRUD write-plan preview/i.test(readme));
-addCheck("platform roadmap records P134.3", /P134\.3 durable DB\/CRUD write-plan preview/i.test(platformRoadmap) && /P134\.4 DB Runtime Command Center UX is planned-only next/i.test(platformRoadmap));
+addCheck("platform roadmap records P134.3", /P134\.3 durable DB\/CRUD write-plan preview/i.test(platformRoadmap) && (/P134\.4 DB Runtime Command Center UX is planned-only next/i.test(platformRoadmap) || /P134\.4 durable DB\/CRUD Command Center UX is complete/i.test(platformRoadmap)));
 addCheck("enterprise roadmap records P134.3", /P134\.3 is now complete/i.test(enterpriseRoadmap) && /P134\.4 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advanced", p1343CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status advanced", p1343CurrentState || p1344CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P134.3 entries have required fields", [statusById.get("P134"), statusById.get("P134.3"), roadmapById.get("P134.3")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("changed files stay in P134.3 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("changed files stay in P134.3 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
+addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P134.3 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("preview avoids raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedPreview));
 addCheck("preview avoids fake runnable actions", !/run migration now|create table now|execute sql now|write db now|save record now|persist record now|update record now|delete record now|enable crud now|dispatch agent now|mutate project now|deploy now|spend now/i.test(serializedPreview));
 const readmeP134Slice = readme.match(/P134\.1 durable DB\/CRUD contract[\s\S]*?(?:P135|$)/)?.[0] || readme;

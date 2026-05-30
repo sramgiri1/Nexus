@@ -49,6 +49,78 @@ export function buildDbRuntimeReadinessViewModel() {
       "Deploy, release, export, package, and spend remain blocked",
     ],
   };
+  const durableCrudRuntimeUx = {
+    phaseId: "P134.4",
+    title: "P134 Durable DB/CRUD Runtime",
+    currentState: "Display-safe readiness visible; DB writes and CRUD execution blocked",
+    disabledReason: "P134.4 renders DB runtime readiness only. It does not expose mutation buttons, raw SQL, migrations, hosted DB controls, project writes, provider calls, agent dispatch, deploy, package, network calls, or spend.",
+    ownerCapability: "NEXUS Durable DB CRUD Runtime UX Guard",
+    nextAction: "Review the schema coverage and write-plan gates before P134.5 expands checker coverage.",
+    costImpact: "No provider spend. This view uses local roadmap and report evidence only.",
+    schemaCoverage: {
+      currentState: "P134.2 schema model mapped",
+      summary: "9 groups / 29 OS records",
+      groups: [
+        { label: "Founder idea to PRD", state: "Modeled", records: "4 records", owner: "Founder Runtime" },
+        { label: "Business build planning", state: "Modeled", records: "4 records", owner: "Business Build" },
+        { label: "Agent work orders", state: "Modeled", records: "3 records", owner: "Agent Work Orders" },
+        { label: "Agent work queue", state: "Modeled", records: "3 records", owner: "Agent Queue" },
+        { label: "Agent assignments", state: "Modeled", records: "3 records", owner: "Agent Assignment" },
+        { label: "Agent dispatch readiness", state: "Modeled", records: "3 records", owner: "Dispatch Governance" },
+        { label: "Runtime admission", state: "Modeled", records: "3 records", owner: "Runtime Admission" },
+        { label: "Runtime execution readiness", state: "Modeled", records: "3 records", owner: "Runtime Execution" },
+        { label: "Execution approval evidence", state: "Modeled", records: "3 records", owner: "Approval Evidence" },
+      ],
+    },
+    writePlan: {
+      currentState: "P134.3 write-plan preview validated",
+      summary: "8 blocked gates / 6 blocked repository intents",
+      steps: [
+        { label: "Scope boundary", state: "Blocked", evidence: "OS-owned boundary and forbidden project path confirmation" },
+        { label: "Schema evidence", state: "Blocked", evidence: "P134.2 schema model validation" },
+        { label: "Write intent", state: "Blocked", evidence: "Display-safe purpose and owner capability" },
+        { label: "Approval evidence", state: "Blocked", evidence: "Approval owner, reason, and disabled reason" },
+        { label: "Rollback evidence", state: "Blocked", evidence: "Rollback owner and validation gate" },
+        { label: "Audit evidence", state: "Blocked", evidence: "Evidence, activity, and audit owner" },
+        { label: "Validation evidence", state: "Blocked", evidence: "Checker, page, and OS status gates" },
+        { label: "Cost evidence", state: "Blocked", evidence: "No network call, hosted DB mutation, or provider spend" },
+      ],
+      repositoryRows: [
+        { label: "Create intent", state: "Blocked" },
+        { label: "Read intent", state: "Blocked" },
+        { label: "Update intent", state: "Blocked" },
+        { label: "Upsert intent", state: "Blocked" },
+        { label: "List intent", state: "Blocked" },
+        { label: "Delete intent", state: "Blocked" },
+      ],
+    },
+    summaryRows: [
+      { label: "What changed", value: "P134 schema coverage and write-plan gates are now visible in DB Runtime." },
+      { label: "Current state", value: "Readiness visible; DB writes and CRUD execution blocked." },
+      { label: "Next action", value: "Use P134.5 to harden tests and checker coverage before any later runtime authority." },
+      { label: "Owner capability", value: "NEXUS Durable DB CRUD Runtime UX Guard" },
+      { label: "Disabled reason", value: "No mutation controls, raw SQL, migrations, hosted DB controls, provider calls, agent dispatch, or project writes are exposed." },
+      { label: "Cost impact", value: "No provider spend." },
+    ],
+    evidenceRows: [
+      { label: "Schema model", value: "reports/p1342-durable-db-crud-runtime-schema-model-report.md" },
+      { label: "Write-plan preview", value: "reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md" },
+      { label: "UX validation", value: "reports/p1344-durable-db-crud-runtime-command-center-ux-report.md" },
+      { label: "Activity", value: "reports/os-phase-status-report.md" },
+    ],
+    blockers: [
+      "DB reads and writes remain blocked for this P134 surface.",
+      "CRUD execution, delete, raw SQL, migrations, and hosted DB mutation remain blocked.",
+      "Provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+    ],
+    safetyRows: [
+      { label: "Raw table names", value: "Hidden" },
+      { label: "Mutation buttons", value: "Not shown" },
+      { label: "Demo content", value: "Hidden" },
+      { label: "Private IDs", value: "Hidden" },
+      { label: "Theme support", value: "System, dark, light" },
+    ],
+  };
 
   return {
     summaryRows: [
@@ -112,6 +184,7 @@ export function buildDbRuntimeReadinessViewModel() {
       { label: "Disabled reason", value: enterpriseRuntime.disabledReason },
     ],
     enterpriseRuntime,
+    durableCrudRuntimeUx,
     founderRuntime,
     operatorDecisionLedgerPersistence,
     agentWorkOrderPersistence,

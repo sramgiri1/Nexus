@@ -2248,6 +2248,17 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Approved local only");
     await expect(activeCommandTabPanel(page)).toContainText("Blockers");
     await expect(activeCommandTabPanel(page)).toContainText("Enterprise Runtime CRUD");
+    await expect(activeCommandTabPanel(page)).toContainText("P134 Durable DB/CRUD Runtime");
+    await expect(activeCommandTabPanel(page)).toContainText("P134.4 Command Center UX");
+    await expect(activeCommandTabPanel(page)).toContainText("Schema model groups");
+    await expect(activeCommandTabPanel(page)).toContainText("9 groups / 29 OS records");
+    await expect(activeCommandTabPanel(page)).toContainText("Write-plan gates");
+    await expect(activeCommandTabPanel(page)).toContainText("8 blocked gates / 6 blocked repository intents");
+    await expect(activeCommandTabPanel(page)).toContainText("Scope boundary");
+    await expect(activeCommandTabPanel(page)).toContainText("Approval evidence");
+    await expect(activeCommandTabPanel(page)).toContainText("Create intent");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p1344-durable-db-crud-runtime-command-center-ux-report.md");
     await expect(activeCommandTabPanel(page)).toContainText("Founder Workflow DB CRUD");
     await expect(activeCommandTabPanel(page)).toContainText("Local CRUD admission ready");
     await expect(activeCommandTabPanel(page)).toContainText("Mutation request envelopes ready for operator review");

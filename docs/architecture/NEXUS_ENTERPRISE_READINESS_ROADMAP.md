@@ -6,12 +6,14 @@ NEXUS, complete guided discovery, generate a PRD, coordinate governed agents,
 build a product/business workspace, and operate that workflow with enterprise
 controls.
 
-P133.1-P133.7 are now complete and P133 is complete. P134.1, P134.2, and
-P134.3 are now complete, and P134 is in progress.
+P133.1-P133.7 are now complete and P133 is complete. P134.1 through P134.4
+are now complete, and P134 is in progress.
 P134.2 is now complete. P134.3 is the next executable subphase after P134.2
 and is also complete.
 P134.3 is now complete as a write-plan preview only.
-P134.4-P134.7 and P135-P145 remain planned-only. They do not enable DB writes,
+P134.4 is the next executable subphase after P134.3 and is now complete.
+P134.4 is now complete as Command Center UX only.
+P134.5-P134.7 and P135-P145 remain planned-only. They do not enable DB writes,
 provider/model calls, agent dispatch, project mutation, deploy, release,
 export, package, network calls, or spend until each phase/subphase has its own
 implementation-grade plan, checker coverage, Command Center UX when applicable,
@@ -78,8 +80,8 @@ Forbidden by default unless a phase explicitly allows it:
 
 ## Current Handoff
 
-Current implementation is on P134.3. P134.4 is the next executable subphase.
-P134.4-P134.7 and P135-P145 are planned-only backlog phases and must not be
+Current implementation is on P134.4. P134.5 is the next executable subphase.
+P134.5-P134.7 and P135-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
@@ -87,6 +89,7 @@ treated as complete or live.
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1344-durable-db-crud-runtime-command-center-ux`
 - `npm run check:p1343-durable-db-crud-runtime-write-plan-preview`
 - `npm run check:p1342-durable-db-crud-runtime-schema-model`
 - `npm run check:p1341-durable-db-crud-runtime`
