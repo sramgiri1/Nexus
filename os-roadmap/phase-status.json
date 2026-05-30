@@ -24723,7 +24723,7 @@
       "order": 173,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "046dad68e0972976fa4ba9a4938b09269e9eb0a1",
       "commandCenterVisible": true,
       "detail": "P137.2 is complete. P137.3 Dispatch Dry Run is planned-only next.",
       "summary": "P137 is in progress through P137.2. The agent work order runtime now has a safety contract and read-only scoped work order model while live dispatch remains blocked.",
@@ -24819,7 +24819,7 @@
           "previousPhase": "P137.1",
           "nextPhase": "P137.3",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "046dad68e0972976fa4ba9a4938b09269e9eb0a1",
           "completedAt": "2026-05-30T00:00:00.000Z",
           "checksRun": [
             "npm run check:p1372-agent-work-order-runtime",
@@ -25212,7 +25212,7 @@
       "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1371-final-commit",
+      "expectedBaseCommit": "fad26b65",
       "narrowGoal": "Define the read-only agent work order model and scoped context packet shape without dispatching agents or loading full registries.",
       "allowedFiles": [
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
@@ -25354,7 +25354,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "046dad68e0972976fa4ba9a4938b09269e9eb0a1",
       "summary": "Implemented the read-only P137.2 agent work order runtime model with scoped task, project, memory, trusted context, selected skill/tool, budget, policy, and evidence packets while dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
       "checksRun": [
         "npm run check:p1372-agent-work-order-runtime",

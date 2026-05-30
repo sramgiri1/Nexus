@@ -407,7 +407,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "046dad68e0972976fa4ba9a4938b09269e9eb0a1",
       "summary": "Implemented the read-only P137.2 agent work order runtime model with scoped task, project, memory, trusted context, selected skill/tool, budget, policy, and evidence packets while dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
       "checksRun": [
         "npm run check:p1372-agent-work-order-runtime",
