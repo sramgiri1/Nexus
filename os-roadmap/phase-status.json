@@ -25806,7 +25806,7 @@
       "order": 174,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1e9edfbd",
       "commandCenterVisible": true,
       "detail": "P138.1 is complete as contract/policy/safety-boundary only. P138.2 Workspace Mutation Model is planned-only next.",
       "summary": "P138 started with a project workspace mutation and build pipeline contract, project-boundary safety policy, checker, docs/status handoff, and planned-only P138.2 handoff while project mutation and build execution remain blocked.",
@@ -25944,7 +25944,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.1 allowed files>",
@@ -25975,7 +25975,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T20:07:46.177Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "1e9edfbd",
           "summary": "Started P138 with a project workspace mutation and build pipeline contract, project-boundary safety policy, checker, docs/status handoff, and planned-only P138.2 handoff without enabling project mutation or build execution.",
           "detail": "P138.1 is complete as contract/policy/safety-boundary only. P138.2 Workspace Mutation Model is planned-only next.",
           "checksRun": [
@@ -26000,7 +26000,7 @@
           "status": "planned",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "pending-p1381-final-commit",
+          "expectedBaseCommit": "1e9edfbd",
           "narrowGoal": "Define the read-only project workspace mutation model with project boundary, allowed/forbidden path globs, patch plan, build/test plan, rollback plan, approval gate, evidence, and cost posture without writing project files.",
           "allowedFiles": [
             "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -26108,7 +26108,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.2 allowed files>",
@@ -26259,7 +26259,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.3 allowed files>",
@@ -26410,7 +26410,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.4 allowed files>",
@@ -26558,7 +26558,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.5 allowed files>",
@@ -26706,7 +26706,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.6 allowed files>",
@@ -26854,7 +26854,7 @@
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after the stamp commit."
+            "No stale 1e9edfbd marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.7 allowed files>",
@@ -27013,7 +27013,7 @@
         "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
         "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
         "P138.2 remains planned-only.",
-        "No stale pending-final-commit marker remains after the stamp commit."
+        "No stale 1e9edfbd marker remains after the stamp commit."
       ],
       "gitCommands": [
         "git add <P138.1 allowed files>",
@@ -27044,7 +27044,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T20:07:46.177Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1e9edfbd",
       "summary": "Started P138 with a project workspace mutation and build pipeline contract, project-boundary safety policy, checker, docs/status handoff, and planned-only P138.2 handoff without enabling project mutation or build execution.",
       "detail": "P138.1 is complete as contract/policy/safety-boundary only. P138.2 Workspace Mutation Model is planned-only next.",
       "checksRun": [
@@ -27069,7 +27069,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1381-final-commit",
+      "expectedBaseCommit": "1e9edfbd",
       "narrowGoal": "Define the read-only project workspace mutation model with project boundary, allowed/forbidden path globs, patch plan, build/test plan, rollback plan, approval gate, evidence, and cost posture without writing project files.",
       "allowedFiles": [
         "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -27177,7 +27177,7 @@
         "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
         "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
         "P138.2 remains planned-only.",
-        "No stale pending-final-commit marker remains after the stamp commit."
+        "No stale 1e9edfbd marker remains after the stamp commit."
       ],
       "gitCommands": [
         "git add <P138.2 allowed files>",
@@ -30184,7 +30184,7 @@
       "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
       "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
       "P138.2 remains planned-only.",
-      "No stale pending-final-commit marker remains after the stamp commit."
+      "No stale 1e9edfbd marker remains after the stamp commit."
     ],
     "gitCommands": [
       "git add <P138.1 allowed files>",
@@ -30215,7 +30215,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T20:07:46.177Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "1e9edfbd",
     "summary": "Started P138 with a project workspace mutation and build pipeline contract, project-boundary safety policy, checker, docs/status handoff, and planned-only P138.2 handoff without enabling project mutation or build execution.",
     "detail": "P138.1 is complete as contract/policy/safety-boundary only. P138.2 Workspace Mutation Model is planned-only next.",
     "checksRun": [
@@ -30272,7 +30272,7 @@
     "status": "planned",
     "scopeClassification": "NEXUS_OS_CHANGE",
     "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "pending-p1381-final-commit",
+    "expectedBaseCommit": "1e9edfbd",
     "narrowGoal": "Define the read-only project workspace mutation model with project boundary, allowed/forbidden path globs, patch plan, build/test plan, rollback plan, approval gate, evidence, and cost posture without writing project files.",
     "allowedFiles": [
       "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -30380,7 +30380,7 @@
       "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
       "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
       "P138.2 remains planned-only.",
-      "No stale pending-final-commit marker remains after the stamp commit."
+      "No stale 1e9edfbd marker remains after the stamp commit."
     ],
     "gitCommands": [
       "git add <P138.2 allowed files>",

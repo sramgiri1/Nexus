@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.1
-- Generated at: 2026-05-30T20:15:59.702Z
+- Generated at: 2026-05-30T20:16:34.090Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 0497036f
+- Validation HEAD: 1e9edfbd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,8 +36,8 @@
 | phase status starts P138.1 | PASS | P138.1/P137.7/P138.2 |
 | completed P138.1 entries have required fields | PASS |  |
 | P138.2 remains planned | PASS |  |
-| changed files stay in P138.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1381-project-workspace-mutation-build-pipeline.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md, reports/p1381-project-workspace-mutation-build-pipeline-report.md, scripts/check-p1381-project-workspace-mutation-build-pipeline.js |
+| changed files stay in P138.1 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable project actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
