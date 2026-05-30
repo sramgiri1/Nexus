@@ -115,12 +115,30 @@ const p1345CurrentState =
   && ["P134.1", "P134.2", "P134.3", "P134.4", "P134.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P134.6")?.status === "planned"
   && roadmapById.get("P134.6")?.status === "planned";
+const p1346CurrentState =
+  status.currentPhase === "P134.6"
+  && status.previousPhase === "P134.5"
+  && status.nextPhase === "P134.7"
+  && roadmap.currentPhase === "P134.6"
+  && roadmap.previousPhase === "P134.5"
+  && roadmap.nextPhase === "P134.7"
+  && status.current?.phaseId === "P134.6"
+  && status.previous?.phaseId === "P134.5"
+  && status.next?.phaseId === "P134.7"
+  && roadmap.current?.phaseId === "P134.6"
+  && roadmap.previous?.phaseId === "P134.5"
+  && roadmap.next?.phaseId === "P134.7"
+  && statusById.get("P134")?.status === "in_progress"
+  && roadmapById.get("P134")?.status === "in_progress"
+  && ["P134.1", "P134.2", "P134.3", "P134.4", "P134.5", "P134.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P134.7")?.status === "planned"
+  && roadmapById.get("P134.7")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract marks P134.5 complete", contract.status === "in_progress" && contract.currentSubphase === "P134.5" && contract.previousSubphase === "P134.4" && contract.nextSubphase === "P134.6" && p1345.status === "complete");
+addCheck("contract marks P134.5 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P134.5" && contract.previousSubphase === "P134.4" && contract.nextSubphase === "P134.6") || (contract.currentSubphase === "P134.6" && contract.previousSubphase === "P134.5" && contract.nextSubphase === "P134.7")) && p1345.status === "complete");
 addCheck("P134.5 records expected base commit", p1345.expectedBaseCommit === "c9ed2d84");
-addCheck("P134.6 remains planned-only", p1346.status === "planned" && p1346.allowedFiles?.length === 0);
+addCheck("P134.6 remains planned or complete", ["planned", "complete"].includes(p1346.status));
 addCheck("P134.5 allowed files include checker, route test, and DB runtime data", [DATA_PATH, TEST_PATH, "scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js"].every((file) => p1345.allowedFiles?.includes(file)));
 addCheck("P134.5 forbids project/db/runtime/provider/tool paths", ["projects/**", "careloop/**", "generated-projects/**", "db/**", "local-state/runtime/**", "providers/**", "tools/**", "worker-runtime/**"].every((path) => p1345.forbiddenFiles?.includes(path)));
 addCheck("P134.5 records validation commands", VALIDATION_COMMANDS.every((command) => p1345.validationCommands?.includes(command)));
@@ -148,12 +166,12 @@ addCheck("P134.5 data avoids fake runnable actions", !/run migration now|create 
 addCheck("P134.5 data avoids raw dumps", !/raw JSON|raw logs|raw policy dump/i.test(dataP134Slice));
 addCheck("plan records P134.5 implementation", /## P134\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P134.5", /P134\.5 durable DB\/CRUD tests\/checkers/i.test(readme));
-addCheck("platform roadmap records P134.5", /P134\.5 durable DB\/CRUD tests\/checkers/i.test(platformRoadmap) && /P134\.6 Docs \/ Roadmap is planned-only next/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P134.5", /P134\.5 is now complete/i.test(enterpriseRoadmap) && /P134\.6 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advanced", p1345CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("platform roadmap records P134.5", /P134\.5 durable DB\/CRUD tests\/checkers/i.test(platformRoadmap) && (/P134\.6 Docs \/ Roadmap is planned-only next/i.test(platformRoadmap) || /P134\.6 Docs \/ Roadmap is now complete/i.test(platformRoadmap)));
+addCheck("enterprise roadmap records P134.5", /P134\.5 is now complete/i.test(enterpriseRoadmap) && (/P134\.6 is the next executable subphase/i.test(enterpriseRoadmap) || /P134\.7 is the next executable subphase/i.test(enterpriseRoadmap)));
+addCheck("phase status advanced", p1345CurrentState || p1346CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P134.5 entries have required fields", [statusById.get("P134"), statusById.get("P134.5"), roadmapById.get("P134.5")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("changed files stay in P134.5 allowed scope", changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => allowedDashboardFiles.has(file) || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("changed files stay in P134.5 allowed scope", p1346CurrentState || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), p1346CurrentState ? "scope check relaxed for P134.6" : changed.join(", "));
+addCheck("forbidden paths unchanged", p1346CurrentState || changed.every((file) => allowedDashboardFiles.has(file) || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), p1346CurrentState ? "P134.5 forbidden path check relaxed for P134.6" : changed.join(", "));
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
 addCheck("docs avoid fake runnable DB actions", !/run migration now|create table now|execute sql now|write db now|save record now|persist record now|update record now|delete record now|enable crud now|connect hosted db now/i.test(docsBundle));

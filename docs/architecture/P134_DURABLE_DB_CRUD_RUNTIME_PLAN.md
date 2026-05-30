@@ -261,7 +261,7 @@ OS phase status update:
 - P134.1 through P134.5 complete.
 - Current phase P134.5.
 - Previous phase P134.4.
-- Next phase P134.6 planned-only.
+- Next phase P134.6 now complete; P134.7 planned-only.
 
 Validation commands:
 - `npm run check:p1345-durable-db-crud-runtime-tests-checkers`
@@ -287,7 +287,7 @@ Final safety checks:
   release, export, package, or env changes.
 - DB/runtime writes, live CRUD, migrations, raw SQL UX, provider/model calls,
   agent dispatch, project mutation, network calls, and spend remain blocked.
-- P134.6 remains planned-only.
+- P134.6 is now complete; P134.7 remains planned-only.
 - No stale `pending-final-commit` remains after the status stamp commit.
 
 Final response checklist:
@@ -296,6 +296,143 @@ Final response checklist:
 - Files changed.
 - What was implemented.
 - Command Center UX changes.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
+## P134.6 Docs / Roadmap / Status
+
+Status: complete
+
+Scope classification:
+- NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `a57e5bc6`
+
+Narrow goal:
+- Close P134 durable DB/CRUD docs, README, roadmap, OS phase status, and
+  validation-report alignment while keeping P134.7 final validation
+  planned-only.
+
+Allowed files:
+- `contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json`
+- `docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js`
+- `scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `reports/p1346-durable-db-crud-runtime-docs-roadmap-report.md`
+- regenerated P134.5, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- No new runtime export, DB schema, migration, repository module, DB adapter,
+  CRUD packet, dashboard source, Playwright source, or live execution.
+- Create `check:p1346-durable-db-crud-runtime-docs-roadmap` and report.
+- Update only docs, roadmap/status JSON, checker handoff logic, package script,
+  and generated reports.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX.
+- Do not edit dashboard source or Playwright source.
+- Validate UX preservation through route-wide Playwright coverage.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw SQL, raw table names,
+  private project IDs, mutation controls, provider controls, deploy controls,
+  package controls, or spend controls.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through the existing route-wide Playwright suite.
+
+Playwright tests:
+- Do not edit Playwright source in this subphase.
+- Run `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"` to prove UX preservation.
+
+Checker updates:
+- Add `scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js`.
+- Update `scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js`
+  for P134.6 handoff compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P134.6 handoff
+  compatibility.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update `README.md`.
+- Update `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- Update `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+OS phase status update:
+- P134 remains in progress.
+- P134.1 through P134.6 complete.
+- Current phase P134.6.
+- Previous phase P134.5.
+- Next phase P134.7 planned-only.
+
+Validation commands:
+- `npm run check:p1346-durable-db-crud-runtime-docs-roadmap`
+- `npm run check:p1345-durable-db-crud-runtime-tests-checkers`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P134.6 allowed files>`
+- `git commit -m "chore(nexus): implement p1346 db runtime docs roadmap"`
+- `git add <P134.6 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1346 db runtime docs roadmap"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or Playwright source changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- DB/runtime writes, live CRUD, migrations, raw SQL UX, provider/model calls,
+  agent dispatch, project mutation, network calls, and spend remain blocked.
+- P134.7 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
 - Tests/checkers run.
 - Dashboard build/unit/page results.
 - Docs/README/roadmap updates.
@@ -402,7 +539,7 @@ OS phase status update:
 - P134.1 through P134.4 complete.
 - Current phase P134.4.
 - Previous phase P134.3.
-- Next phase P134.5 now complete; P134.6 planned-only.
+- Next phase P134.5 now complete; P134.6 now complete; P134.7 planned-only.
 
 Known risks:
 - Existing DB Runtime page is already dense. P134.4 must add useful readiness
@@ -437,7 +574,7 @@ Final safety checks:
   release, export, package, or env changes.
 - DB/runtime writes, live CRUD, migrations, raw SQL UX, provider/model calls,
   agent dispatch, project mutation, network calls, and spend remain blocked.
-- P134.5 is now complete; P134.6 remains planned-only.
+- P134.5 and P134.6 are now complete; P134.7 remains planned-only.
 - No stale `pending-final-commit` remains after the status stamp commit.
 
 Final response checklist:

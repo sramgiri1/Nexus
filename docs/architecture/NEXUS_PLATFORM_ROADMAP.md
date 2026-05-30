@@ -3204,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P134.5 and P134.6 Docs / Roadmap is
-planned-only next. P134.6-P145 do not enable DB/runtime writes, live CRUD, provider/model
+Current implementation is closed through P134.6 and P134.7 Final Validation is
+planned-only next. P134.7-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
@@ -3291,9 +3291,17 @@ P134 validation over the durable DB/CRUD contract, P134.1-P134.4 reports,
 DB Runtime evidence, route-wide Playwright assertions, checker handoffs, docs,
 roadmap, and OS phase status. Durable State > DB Runtime shows P134.5
 validation evidence and P134.6 Docs / Roadmap as the next action.
-P134.6 Docs / Roadmap is planned-only next. DB/runtime writes, migrations, raw SQL, live
+P134.6 Docs / Roadmap is now complete. DB/runtime writes, migrations, raw SQL, live
 CRUD, provider/model calls, agent dispatch, project mutation, deploy, release,
 export, package, network calls, and spend remain blocked.
+
+P134.6 durable DB/CRUD docs/roadmap is complete. NEXUS now has aligned P134
+docs, README, enterprise roadmap, platform roadmap, OS phase status, phase
+index, checker handoffs, and validation reports through P134.6 while preserving
+Command Center UX. P134.7 Final Validation is planned-only next. DB/runtime
+writes, migrations, raw SQL, live CRUD, provider/model calls, agent dispatch,
+project mutation, deploy, release, export, package, network calls, and spend
+remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
