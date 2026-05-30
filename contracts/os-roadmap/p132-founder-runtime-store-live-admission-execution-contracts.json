@@ -679,7 +679,7 @@
       ],
       "narrowGoal": "Aggregate P132.1-P132.5 evidence, docs, status, and checker coverage before final validation.",
       "previousSubphase": "P132.5",
-      "commit": "pending-final-commit",
+      "commit": "472c2001",
       "completedAt": "2026-05-30T09:54:13.439Z",
       "summary": "Added aggregate validation/docs evidence for P132.1-P132.5, P132.6 checker coverage, P132.5 handoff compatibility, scoped UX preservation checks, and refreshed OS phase reports while DB writes, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
