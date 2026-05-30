@@ -2007,9 +2007,11 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P137.7. P137 Agent Work Order Runtime is
+  implementation is closed through P139.1. P137 Agent Work Order Runtime is
   complete through final validation. P138 Project Workspace Mutation and Build
-  Pipeline is complete through final validation; P139 is planned-only next.
+  Pipeline is complete through final validation. P139.1 evidence, audit,
+  observability, and cost ledger contract is complete; P139.2 is planned-only
+  next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2322,6 +2324,13 @@ The Command Center and local operator surface have:
   rollback execution, provider/model calls, tool execution, MCP startup, agent
   dispatch, DB/runtime writes, deploy, release, export, package, network calls,
   and spend remain unavailable until a later phase explicitly allows them.
+- P139.1 evidence, audit, observability, and cost ledger contract: Started P139
+  with a contract-only enterprise ledger boundary, future display-safe ledger
+  shape, reuse requirements, safety rules, checker, docs/status handoff, and
+  planned-only P139.2 handoff. Live ledger persistence, DB/runtime writes,
+  provider/model calls, tool execution, MCP startup, agent dispatch, project
+  mutation, deploy, release, export, package, network calls, and spend remain
+  unavailable until a later subphase explicitly allows them.
 
 ## CareLoop Project Progress
 
