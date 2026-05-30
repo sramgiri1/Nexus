@@ -526,7 +526,7 @@
       "order": 171.4,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "98c6f7fc",
       "summary": "Surfaced the P135.3 permission preview in the Auth Governance Command Center route with review-only role, tenant-scope, surface, blocked-workflow, evidence, blocker, and disabled-action views while auth execution, permission enforcement, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
         "P135.4 is Command Center UX only. It does not create auth schemas, tenant stores, role stores, permission engines, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend paths. P135.5 remains planned-only."
@@ -563,7 +563,7 @@
         "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
         "No raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, or fake runnable auth actions in primary UX.",
         "P135.5 remains planned-only.",
-        "No stale pending-final-commit remains after status stamp."
+        "No stale 98c6f7fc remains after status stamp."
       ],
       "gitCommands": [
         "git add <P135.4 allowed files>",
@@ -958,7 +958,7 @@
       "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
       "No raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, or fake runnable auth actions in primary UX.",
       "P135.5 remains planned-only.",
-      "No stale pending-final-commit remains after status stamp."
+      "No stale 98c6f7fc remains after status stamp."
     ],
     "gitCommands": [
       "git add <P135.4 allowed files>",
@@ -987,7 +987,7 @@
     "order": 171.4,
     "completedAt": "2026-05-30T00:00:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "98c6f7fc",
     "summary": "Surfaced the P135.3 permission preview in the Auth Governance Command Center route with review-only role, tenant-scope, surface, blocked-workflow, evidence, blocker, and disabled-action views while auth execution, permission enforcement, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
     "checksRun": [
       "npm run check:p1354-auth-governance-command-center-ux",
@@ -1229,7 +1229,7 @@
   },
   "summary": "P135 identity, tenant, roles, and permissions is in progress with P135.1 through P135.4 complete and P135.5 planned-only next.",
   "detail": "P135.4 is complete. P135.5 Tests / Checkers is planned-only next.",
-  "commit": "pending-final-commit",
+  "commit": "98c6f7fc",
   "completedAt": "2026-05-30T00:00:00.000Z",
   "checksRun": [
     "npm run check:p1354-auth-governance-command-center-ux",
