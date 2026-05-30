@@ -51,6 +51,19 @@ const readmeEnterpriseSlice = readme.match(/- P133-P145 enterprise readiness roa
 const platformEnterpriseSlice = platformRoadmap.match(/## P133-P145 Enterprise Readiness Roadmap[\s\S]*?Implementation follows/)?.[0] || platformRoadmap;
 const checkerSource = readText("scripts/check-enterprise-readiness-roadmap.js");
 const changed = changedFiles();
+const p1331StartedState =
+  phaseStatus.currentPhase === "P133.1"
+  && phaseStatus.previousPhase === "P132.7"
+  && phaseStatus.nextPhase === "P133.2"
+  && phaseIndex.currentPhase === "P133.1"
+  && phaseIndex.previousPhase === "P132.7"
+  && phaseIndex.nextPhase === "P133.2"
+  && phaseStatus.current?.phaseId === "P133.1"
+  && phaseStatus.previous?.phaseId === "P132.7"
+  && phaseStatus.next?.phaseId === "P133.2"
+  && phaseIndex.current?.phaseId === "P133.1"
+  && phaseIndex.previous?.phaseId === "P132.7"
+  && phaseIndex.next?.phaseId === "P133.2";
 
 const enterprisePhases = [
   ["P133", "Founder Idea-to-PRD Productization"],
@@ -68,13 +81,22 @@ const enterprisePhases = [
   ["P145", "Enterprise Certification and GA Readiness"],
 ];
 const allowedFiles = new Set([
+  "contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json",
+  "docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md",
   "os-roadmap/nexus-phases.json",
   "os-roadmap/phase-status.json",
   DOC_PATH,
   "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
   "README.md",
   "package.json",
+  "scripts/check-p1331-founder-idea-to-prd-productization.js",
   "scripts/check-enterprise-readiness-roadmap.js",
+  "scripts/check-os-phase-status.js",
+  "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
+  "dashboard/src/pages/CommandCenterV2.jsx",
+  "dashboard/tests/routes.spec.js",
+  "reports/p1331-founder-idea-to-prd-productization-report.md",
+  "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
   "reports/phase-validation-coverage-report.md",
@@ -83,8 +105,6 @@ const forbiddenPrefixes = [
   "projects/",
   "careloop/",
   "generated-projects/",
-  "dashboard/src/",
-  "dashboard/tests/",
   "db/",
   "local-state/runtime/",
   "providers/",
@@ -96,14 +116,29 @@ const forbiddenPrefixes = [
   "packages/",
   ".env",
 ];
+const allowedDashboardFiles = new Set([
+  "dashboard/src/pages/CommandCenterV2.jsx",
+  "dashboard/tests/routes.spec.js",
+]);
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:enterprise-readiness-roadmap"]));
-addCheck("current handoff unchanged", phaseStatus.currentPhase === "P132.1" && phaseStatus.previousPhase === "P131.7" && phaseStatus.nextPhase === "P132.2" && phaseIndex.currentPhase === "P132.1" && phaseIndex.previousPhase === "P131.7" && phaseIndex.nextPhase === "P132.2");
+addCheck("P133.1 checker registered when active", !p1331StartedState || Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]));
+addCheck("current enterprise handoff", p1331StartedState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
 addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([phaseId]) => {
   const status = statusById.get(phaseId);
   const index = indexById.get(phaseId);
+  if (phaseId === "P133" && p1331StartedState) {
+    return status?.status === "in_progress"
+      && index?.status === "in_progress"
+      && Boolean(status.commit)
+      && Boolean(index.commit)
+      && Array.isArray(status.checksRun)
+      && status.checksRun.includes("npm run check:p1331-founder-idea-to-prd-productization")
+      && Array.isArray(index.checksRun)
+      && index.checksRun.includes("npm run check:p1331-founder-idea-to-prd-productization");
+  }
   return status?.status === "planned"
     && index?.status === "planned"
     && status.commit === ""
@@ -137,6 +172,7 @@ addCheck("roadmap entries include subphase details", enterprisePhases.every(([ph
   const indexSubphases = indexById.get(phaseId)?.subphases || [];
   return statusSubphases.length === 7 && indexSubphases.length === 7 && statusSubphases.every((entry) => entry.phaseId?.startsWith(`${phaseId}.`));
 }));
+addCheck("P133.1 active subphase records are present", !p1331StartedState || (statusById.get("P133.1")?.status === "complete" && indexById.get("P133.1")?.status === "complete" && statusById.get("P133.2")?.status === "planned" && indexById.get("P133.2")?.status === "planned"));
 addCheck("enterprise roadmap doc covers all phases", enterprisePhases.every(([phaseId, title]) => doc.includes(`| ${phaseId} | ${title} |`)));
 addCheck("enterprise roadmap doc records required subphase contract", [
   "Narrow scope",
@@ -153,7 +189,7 @@ addCheck("enterprise roadmap doc records required subphase contract", [
 addCheck("README records enterprise roadmap", readmeEnterpriseSlice.includes("P133-P145 enterprise readiness roadmap"));
 addCheck("platform roadmap records enterprise roadmap", platformEnterpriseSlice.includes("P133-P145 Enterprise Readiness Roadmap"));
 addCheck("changed files stay in enterprise roadmap scope", changed.every((file) => allowedFiles.has(file)), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("forbidden paths unchanged", changed.every((file) => allowedDashboardFiles.has(file) || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 addCheck("checker reuses report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
 const enterpriseDocsBundle = `${doc}\n${readmeEnterpriseSlice}\n${platformEnterpriseSlice}`;
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(enterpriseDocsBundle));
@@ -169,8 +205,8 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Adds planned-only P133-P145 enterprise-readiness roadmap phases after P132.",
-        "- Keeps current implementation handoff at P132.1 -> P132.2.",
+        "- Tracks P133-P145 enterprise-readiness roadmap phases after P132.",
+        "- Allows P133.1 to start the enterprise roadmap while P133.2-P133.7 and P134-P145 remain planned-only.",
         "- Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -187,7 +223,7 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P133-P145 are planned-only roadmap phases. They do not create runtime capability, DB schemas, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      body: "- P133.1 is contract/checker/docs/status only. P133.2-P133.7 and P134-P145 remain planned-only. They do not create runtime capability, DB schemas, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

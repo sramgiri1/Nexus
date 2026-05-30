@@ -1048,7 +1048,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Worker Runtime");
     await expect(page.locator("body")).toContainText("Durable background execution foundation for future governed tasks.");
-    await expect(page.locator("body")).toContainText("P60 defines runtime primitives only");
+    await expect(page.locator("body")).toContainText("Runtime primitives are defined for review only");
     await expect(page.locator("body")).toContainText("Worker queue");
     await expect(page.locator("body")).toContainText("Leases");
     await expect(page.locator("body")).toContainText("Heartbeats");
@@ -1620,8 +1620,8 @@ test.describe("Command Center route-wide UX", () => {
 
     const topbar = await page.locator(".ccv2-topbar").innerText();
     expect(topbar).toContain("NEXUS");
-    expect(topbar).toContain("Chat with NEXUS");
-    expect(topbar).toContain("NEXUS OS");
+    expect(topbar).toContain("Start here");
+    expect(topbar).toContain("Ask NEXUS");
     expect(topbar).not.toContain("Environment:");
     expect(topbar).not.toContain("Desktop");
     expect(topbar).not.toContain("Local API");
@@ -1915,7 +1915,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Evidence").click();
     await expect(activeCommandTabPanel(page)).toContainText("Project Evidence");
-    await expect(activeCommandTabPanel(page)).toContainText("Raw payloads and raw JSON stay out of the primary UI.");
+    await expect(activeCommandTabPanel(page)).toContainText("Sensitive details and raw JSON stay out of the primary UI.");
 
     await commandTab(page, "Settings / Adapter").click();
     await expect(activeCommandTabPanel(page)).toContainText("Project adapter not enabled yet");
@@ -2548,7 +2548,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/safety");
 
-    await expect(page.getByText("Safety Summary", { exact: false })).toBeVisible();
+    await expect(page.getByText("Safety Summary", { exact: true })).toBeVisible();
     await expect(page.locator("body")).toContainText("Public/demo boundary");
     await expect(page.locator("body")).toContainText("Private project boundary");
     const body = await page.locator("body").innerText();
@@ -4776,7 +4776,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(panel).toContainText("spend remain blocked");
     await expect(panel).toContainText("Future review lanes: 4 of 4");
     await expect(panel).toContainText("Admitted for execution: 0");
-    await expect(panel.getByLabel("Business Build dry-run admission lanes")).toContainText("Founder PRD artifact");
+    await expect(panel.getByLabel("Business Build dry-run admission lanes")).toContainText("PRD artifact");
     await expect(panel.getByLabel("Business Build dry-run admission lanes")).toContainText("Execution: Blocked");
 
     const body = await page.locator("body").innerText();

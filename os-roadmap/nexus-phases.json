@@ -14860,24 +14860,34 @@
       "title": "Founder Idea-to-PRD Productization",
       "label": "Idea-to-PRD",
       "order": 169,
-      "status": "planned",
+      "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P133 is planned-only enterprise readiness work. Founder-facing idea intake becomes a usable guided workflow with structured Q&A, feasibility framing, PRD versioning, and agent handoff readiness.",
-      "summary": "Planned-only enterprise readiness phase: Founder-facing idea intake becomes a usable guided workflow with structured Q&A, feasibility framing, PRD versioning, and agent handoff readiness.",
+      "detail": "P133 in progress; P133.1 contract and safety boundary complete and P133.2 is planned-only next.",
+      "summary": "Started P133 with an implementation-grade founder idea-to-PRD productization contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned-only P133.2 handoff while live Q&A, PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.",
       "previousPhase": "P132.7",
       "nextPhase": "P134",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1331-founder-idea-to-prd-productization",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:p1327-founder-runtime-store-live-admission-execution",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P133 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
+        "P133.1 is contract/checker/docs/status only and P133.2 is planned-only. It does not execute founder Q&A, generate PRDs with providers/models, dispatch agents, create or mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend."
       ],
       "subphases": [
         {
           "phaseId": "P133.1",
           "title": "Contract / Policy / Safety Boundary",
-          "status": "planned",
-          "narrowGoal": "Contract / Policy / Safety Boundary for Founder Idea-to-PRD Productization.",
+          "status": "complete",
+          "narrowGoal": "Create the P133 implementation-grade contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned P133.2 handoff.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -14902,7 +14912,7 @@
           "phaseId": "P133.2",
           "title": "Intake and PRD Model",
           "status": "planned",
-          "narrowGoal": "Intake and PRD Model for Founder Idea-to-PRD Productization.",
+          "narrowGoal": "Define the deterministic founder intake and PRD model for structured Q&A, feasibility, readiness, blockers, evidence, and safe local state.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -14927,7 +14937,7 @@
           "phaseId": "P133.3",
           "title": "Safe PRD Preview",
           "status": "planned",
-          "narrowGoal": "Safe PRD Preview for Founder Idea-to-PRD Productization.",
+          "narrowGoal": "Create a safe local PRD preview that uses the P133.2 model without provider/model calls, DB writes, project mutation, or agent dispatch.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -14952,7 +14962,7 @@
           "phaseId": "P133.4",
           "title": "Chat and PRD Command Center UX",
           "status": "planned",
-          "narrowGoal": "Chat and PRD Command Center UX for Founder Idea-to-PRD Productization.",
+          "narrowGoal": "Expose the founder chat, PRD readiness, and non-dispatching agent handoff state in clean Command Center UX.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -14977,7 +14987,7 @@
           "phaseId": "P133.5",
           "title": "Tests / Checkers",
           "status": "planned",
-          "narrowGoal": "Tests / Checkers for Founder Idea-to-PRD Productization.",
+          "narrowGoal": "Aggregate P133 checker, route, safety, theme, and regression coverage.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -15002,7 +15012,7 @@
           "phaseId": "P133.6",
           "title": "Docs / Roadmap / Status",
           "status": "planned",
-          "narrowGoal": "Docs / Roadmap / Status for Founder Idea-to-PRD Productization.",
+          "narrowGoal": "Refresh P133 docs, README, roadmap, status, and reports before final validation.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -15027,7 +15037,7 @@
           "phaseId": "P133.7",
           "title": "Final Validation",
           "status": "planned",
-          "narrowGoal": "Final Validation for Founder Idea-to-PRD Productization.",
+          "narrowGoal": "Close P133 with final validation evidence and a planned-only P134 handoff.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -15049,7 +15059,7 @@
           ]
         }
       ],
-      "completedAt": ""
+      "completedAt": "2026-05-30T10:12:54.169Z"
     },
     {
       "track": "NEXUS_OS",
@@ -17402,15 +17412,195 @@
           ]
         }
       ]
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.1",
+      "title": "Contract / Policy / Safety Boundary",
+      "label": "Contract / Policy / Safety Boundary",
+      "order": 169.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P133.1 contract and safety boundary complete; P133.2 is planned-only next.",
+      "summary": "Started P133 with an implementation-grade founder idea-to-PRD productization contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned-only P133.2 handoff while live Q&A, PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.",
+      "previousPhase": "P132.7",
+      "nextPhase": "P133.2",
+      "checksRun": [
+        "npm run check:p1331-founder-idea-to-prd-productization",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:p1327-founder-runtime-store-live-admission-execution",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P133.1 is contract/checker/docs/status only and P133.2 is planned-only. It does not execute founder Q&A, generate PRDs with providers/models, dispatch agents, create or mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-30T10:12:54.169Z"
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.2",
+      "title": "Intake and PRD Model",
+      "label": "Intake and PRD Model",
+      "order": 169.2,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P133.2 is planned-only for Intake and PRD Model.",
+      "summary": "Planned-only future P133 subphase: Intake and PRD Model.",
+      "previousPhase": "P133.1",
+      "nextPhase": "P133.3",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.3",
+      "title": "Safe PRD Preview",
+      "label": "Safe PRD Preview",
+      "order": 169.3,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P133.3 is planned-only for Safe PRD Preview.",
+      "summary": "Planned-only future P133 subphase: Safe PRD Preview.",
+      "previousPhase": "P133.2",
+      "nextPhase": "P133.4",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.4",
+      "title": "Chat and PRD Command Center UX",
+      "label": "Chat and PRD Command Center UX",
+      "order": 169.4,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P133.4 is planned-only for Chat and PRD Command Center UX.",
+      "summary": "Planned-only future P133 subphase: Chat and PRD Command Center UX.",
+      "previousPhase": "P133.3",
+      "nextPhase": "P133.5",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.5",
+      "title": "Tests / Checkers",
+      "label": "Tests / Checkers",
+      "order": 169.5,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P133.5 is planned-only for Tests / Checkers.",
+      "summary": "Planned-only future P133 subphase: Tests / Checkers.",
+      "previousPhase": "P133.4",
+      "nextPhase": "P133.6",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.6",
+      "title": "Docs / Roadmap / Status",
+      "label": "Docs / Roadmap / Status",
+      "order": 169.6,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P133.6 is planned-only for Docs / Roadmap / Status.",
+      "summary": "Planned-only future P133 subphase: Docs / Roadmap / Status.",
+      "previousPhase": "P133.5",
+      "nextPhase": "P133.7",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "phaseId": "P133.7",
+      "title": "Final Validation",
+      "label": "Final Validation",
+      "order": 169.7,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "commandCenterVisible": true,
+      "detail": "P133.7 is planned-only for Final Validation.",
+      "summary": "Planned-only future P133 subphase: Final Validation.",
+      "previousPhase": "P133.6",
+      "nextPhase": "P134",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only; no implementation yet."
+      ],
+      "completedAt": ""
     }
   ],
-  "updatedAt": "2026-05-30T10:04:57.052Z",
-  "currentPhase": "P132.7",
-  "previousPhase": "P132.6",
-  "nextPhase": "P133",
+  "updatedAt": "2026-05-30T10:12:54.169Z",
+  "currentPhase": "P133.1",
+  "previousPhase": "P132.7",
+  "nextPhase": "P133.2",
   "currentPhaseStatus": "complete",
   "generatedAt": "2026-05-29T20:45:11.059Z",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P133.1",
+    "title": "Contract / Policy / Safety Boundary",
+    "label": "Contract / Policy / Safety Boundary",
+    "order": 169.1,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "commandCenterVisible": true,
+    "detail": "P133.1 contract and safety boundary complete; P133.2 is planned-only next.",
+    "summary": "Started P133 with an implementation-grade founder idea-to-PRD productization contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned-only P133.2 handoff while live Q&A, PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.",
+    "previousPhase": "P132.7",
+    "nextPhase": "P133.2",
+    "checksRun": [
+      "npm run check:p1331-founder-idea-to-prd-productization",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:p1327-founder-runtime-store-live-admission-execution",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P133.1 is contract/checker/docs/status only and P133.2 is planned-only. It does not execute founder Q&A, generate PRDs with providers/models, dispatch agents, create or mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend."
+    ],
+    "completedAt": "2026-05-30T10:12:54.169Z"
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P132.7",
     "title": "Final Validation",
@@ -17439,230 +17629,23 @@
     ],
     "completedAt": "2026-05-30T10:04:57.052Z"
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P132.6",
-    "title": "Validation / Docs",
-    "label": "Validation / Docs",
-    "order": 168.6,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "472c2001",
-    "commandCenterVisible": true,
-    "detail": "P132.6 validation/docs aggregation complete; P132.7 final validation is next.",
-    "summary": "Added aggregate validation/docs evidence for P132.1-P132.5, P132.6 checker coverage, P132.5 handoff compatibility, scoped UX preservation checks, and refreshed OS phase reports while DB writes, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
-    "previousPhase": "P132.5",
-    "nextPhase": "P132.7",
-    "checksRun": [
-      "npm run check:p1326-founder-runtime-store-live-admission-execution",
-      "npm run check:p1325-founder-runtime-store-live-admission-execution",
-      "npm run check:p1324-founder-runtime-store-live-admission-execution",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P132.6 is validation/docs closure only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "completedAt": "2026-05-30T09:54:13.439Z"
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P133",
-    "title": "Founder Idea-to-PRD Productization",
-    "label": "Idea-to-PRD",
-    "order": 169,
+    "phaseId": "P133.2",
+    "title": "Intake and PRD Model",
+    "label": "Intake and PRD Model",
+    "order": 169.2,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "commandCenterVisible": true,
-    "detail": "P133 is planned-only enterprise readiness work. Founder-facing idea intake becomes a usable guided workflow with structured Q&A, feasibility framing, PRD versioning, and agent handoff readiness.",
-    "summary": "Planned-only enterprise readiness phase: Founder-facing idea intake becomes a usable guided workflow with structured Q&A, feasibility framing, PRD versioning, and agent handoff readiness.",
-    "previousPhase": "P132.7",
-    "nextPhase": "P134",
+    "detail": "P133.2 is planned-only for Intake and PRD Model.",
+    "summary": "Planned-only future P133 subphase: Intake and PRD Model.",
+    "previousPhase": "P133.1",
+    "nextPhase": "P133.3",
     "checksRun": [],
     "knownLimitations": [
-      "P133 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
-    ],
-    "subphases": [
-      {
-        "phaseId": "P133.1",
-        "title": "Contract / Policy / Safety Boundary",
-        "status": "planned",
-        "narrowGoal": "Contract / Policy / Safety Boundary for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P133.2",
-        "title": "Intake and PRD Model",
-        "status": "planned",
-        "narrowGoal": "Intake and PRD Model for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P133.3",
-        "title": "Safe PRD Preview",
-        "status": "planned",
-        "narrowGoal": "Safe PRD Preview for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P133.4",
-        "title": "Chat and PRD Command Center UX",
-        "status": "planned",
-        "narrowGoal": "Chat and PRD Command Center UX for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P133.5",
-        "title": "Tests / Checkers",
-        "status": "planned",
-        "narrowGoal": "Tests / Checkers for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P133.6",
-        "title": "Docs / Roadmap / Status",
-        "status": "planned",
-        "narrowGoal": "Docs / Roadmap / Status for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      },
-      {
-        "phaseId": "P133.7",
-        "title": "Final Validation",
-        "status": "planned",
-        "narrowGoal": "Final Validation for Founder Idea-to-PRD Productization.",
-        "scopeClassification": "NEXUS_OS_CHANGE",
-        "requiredPlanFields": [
-          "narrow scope",
-          "starting branch and expected base commit",
-          "allowed files",
-          "forbidden files",
-          "exact files/modules",
-          "expected exports/schemas/data shapes",
-          "Command Center UX requirements",
-          "dark/light/system theme requirements",
-          "Playwright tests",
-          "checker updates",
-          "docs/README/roadmap updates",
-          "OS phase status update",
-          "validation commands",
-          "final safety checks",
-          "git add/commit/push commands",
-          "final response checklist"
-        ]
-      }
+      "Planned-only; no implementation yet."
     ],
     "completedAt": ""
   }

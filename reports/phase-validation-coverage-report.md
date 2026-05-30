@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T10:08:28.248Z
+- Generated at: 2026-05-30T10:28:29.506Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 96cb6421
+- Validation HEAD: c1f61bfe
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -567,7 +567,14 @@
 | P132.5 validation coverage | PASS | 5 checkers, 2 reports |
 | P132.6 validation coverage | PASS | 6 checkers, 2 reports |
 | P132.7 validation coverage | PASS | 44 checkers, 41 reports |
-| P133 validation coverage | PASS | dedicated_checker |
+| P133 validation coverage | PASS | 6 checkers, 2 reports |
+| P133.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P133.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P133.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P133.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P133.5 validation coverage | PASS | 18 checkers, 18 reports |
+| P133.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P133.7 validation coverage | PASS | 40 checkers, 40 reports |
 | P134 validation coverage | PASS | dedicated_checker, validation_report |
 | P135 validation coverage | PASS | dedicated_checker, validation_report |
 | P136 validation coverage | PASS | dedicated_checker, validation_report |
@@ -582,18 +589,33 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P132.7; next=P133; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P133.1; next=P133.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P133 Founder Idea-to-PRD Productization
+- P133.2 Intake and PRD Model
   - status: planned
   - checkers: 0
-  - reports: 1
-  - gaps: dedicated_checker
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P133.3 Safe PRD Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P133.4 Chat and PRD Command Center UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P133.6 Docs / Roadmap / Status
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 - P134 Durable DB and CRUD Runtime
   - status: planned
   - checkers: 0
@@ -651,4 +673,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (567/567)
+PASS (574/574)

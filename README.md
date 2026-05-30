@@ -2008,6 +2008,12 @@ The Command Center and local operator surface have:
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only; current implementation is closed through P132.7
   with P133 planned-only next.
+- P133.1 founder idea-to-PRD contract: Started P133 with an
+  implementation-grade founder idea-to-PRD productization contract, seven
+  subphases, safety boundary, checker, docs, status handoff, and planned-only
+  P133.2 handoff. Founder Q&A execution, provider/model PRD generation, agent
+  dispatch, project creation or mutation, DB/runtime writes, deploy, release,
+  export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

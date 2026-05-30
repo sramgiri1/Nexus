@@ -3208,6 +3208,14 @@ next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
+P133.1 is complete. NEXUS started Founder Idea-to-PRD Productization with an
+implementation-grade contract, seven-subphase split, safety boundary, checker,
+docs, status handoff, and planned-only P133.2 handoff. Existing Command Center
+founder pages remain unchanged while P133.4 owns future scoped UX changes.
+Founder Q&A execution, provider/model PRD generation, agent dispatch, project
+creation or mutation, DB/runtime writes, deploy, release, export, package,
+network calls, and spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

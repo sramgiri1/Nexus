@@ -134,6 +134,29 @@ const p1327FinalState =
   && roadmapById.get("P132.7")?.status === "complete"
   && statusById.get("P133")?.status === "planned"
   && roadmapById.get("P133")?.status === "planned";
+const p1331StartedState =
+  status.currentPhase === "P133.1"
+  && status.previousPhase === "P132.7"
+  && status.nextPhase === "P133.2"
+  && roadmap.currentPhase === "P133.1"
+  && roadmap.previousPhase === "P132.7"
+  && roadmap.nextPhase === "P133.2"
+  && status.current?.phaseId === "P133.1"
+  && status.previous?.phaseId === "P132.7"
+  && status.next?.phaseId === "P133.2"
+  && roadmap.current?.phaseId === "P133.1"
+  && roadmap.previous?.phaseId === "P132.7"
+  && roadmap.next?.phaseId === "P133.2"
+  && statusById.get("P132")?.status === "complete"
+  && roadmapById.get("P132")?.status === "complete"
+  && statusById.get("P132.7")?.status === "complete"
+  && roadmapById.get("P132.7")?.status === "complete"
+  && statusById.get("P133")?.status === "in_progress"
+  && roadmapById.get("P133")?.status === "in_progress"
+  && statusById.get("P133.1")?.status === "complete"
+  && roadmapById.get("P133.1")?.status === "complete"
+  && statusById.get("P133.2")?.status === "planned"
+  && roadmapById.get("P133.2")?.status === "planned";
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P132 final", contract.status === "complete" && contract.currentSubphase === "P132.7" && contract.previousSubphase === "P132.6" && contract.nextSubphase === "P133" && p1327.status === "complete");
@@ -151,9 +174,9 @@ addCheck("P132.5 scoped route coverage remains", routeTests.includes("store live
 addCheck("P132 plan records P132.7", /## P132\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P132.7", /P132\.7 final validation/i.test(readme) && /P133-P145 enterprise readiness roadmap/i.test(readme));
 addCheck("platform roadmap records P132.7", /P132\.7 is complete/i.test(platformRoadmap) && /P133-P145 Enterprise Readiness Roadmap/i.test(platformRoadmap));
-addCheck("phase status closes P132", p1327FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status closes P132", p1327FinalState || p1331StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P132.7 entries have required fields", [statusById.get("P132"), statusById.get("P132.7"), roadmapById.get("P132.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P133 handoff remains planned-only", statusById.get("P133")?.status === "planned" && roadmapById.get("P133")?.status === "planned" && !(statusById.get("P133")?.checksRun || []).length && !(roadmapById.get("P133")?.checksRun || []).length);
+addCheck("P133 handoff remains safe", (statusById.get("P133")?.status === "planned" && roadmapById.get("P133")?.status === "planned" && !(statusById.get("P133")?.checksRun || []).length && !(roadmapById.get("P133")?.checksRun || []).length) || p1331StartedState);
 addCheck(
   "changed files stay in P132.7 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
@@ -183,7 +206,7 @@ writeMarkdownReport(
       body: [
         "- Validates final P132 closure, P132.1-P132.6 reports, scoped route coverage, checker handoffs, and OS status.",
         "- Confirms P132.5 Store Execution Scope remains scoped to Business Build and Agent Flow with Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
-        "- Confirms P133 remains planned-only and does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+        "- Confirms P133 remains planned-only or safely started at P133.1 without enabling DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },

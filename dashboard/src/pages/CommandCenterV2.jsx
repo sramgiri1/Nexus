@@ -4779,7 +4779,7 @@ function EvidencePage({ vm }) {
           purpose="Verify what NEXUS did, which task or agent produced it, and whether records are redacted."
           currentState={`${total} evidence records, ${redactedCount} redacted`}
           nextAction={latestEvidence ? "Open the evidence timeline and trace the linked task, agent, and result." : "Run governed work later to create evidence records."}
-          blocker={latestEvidence ? "Raw payloads remain hidden from primary UX." : "No evidence exists until governed work creates it."}
+          blocker={latestEvidence ? "Sensitive details remain hidden from primary UX." : "No evidence exists until governed work creates it."}
           owner="AUDITOR Evidence Ledger"
           evidence={latestEvidence ? "Evidence timeline" : "No evidence records yet"}
           activity={liveOnline ? "Live local API activity" : "Snapshot fallback activity"}
@@ -4849,7 +4849,7 @@ function EvidencePage({ vm }) {
               <div className="ccv2-section-heading">Developer Details</div>
               <div className="ccv2-page-summary-grid">
                 <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence IDs</span><span className="ccv2-page-summary-value">{recent.length ? "Available as linked references only" : "No IDs available yet"}</span></div>
-                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Raw payloads</span><span className="ccv2-page-summary-value">Not shown in primary UI</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Sensitive details</span><span className="ccv2-page-summary-value">Not shown in primary UI</span></div>
                 {Object.entries(byType).map(([type, count]) => (
                   <div key={type} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{type.replace(/_/g, " ")}</span><span className="ccv2-page-summary-value">{count}</span></div>
                 ))}
@@ -5449,7 +5449,7 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-card ccv2-page-summary-card">
               <div className="ccv2-section-heading">Project Evidence</div>
               <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-                Evidence is scoped to the selected project and summarized. Raw payloads and raw JSON stay out of the primary UI.
+                Evidence is scoped to the selected project and summarized. Sensitive details and raw JSON stay out of the primary UI.
               </p>
               <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
                 {evidenceSummary.map((item) => (
@@ -13237,7 +13237,7 @@ function ActivityTracePanel({ trace, selectedCorrelationId, traceSource, onClear
       {!selectedCorrelationId ? (
         <p className="ccv2-activity-copy">
           Select a correlation ID from the activity list to inspect the full trace. The trace view shows summarized,
-          redacted events only and never exposes raw payloads, raw logs, secrets, or private content.
+          redacted events only and never exposes sensitive details, raw logs, secrets, or private content.
         </p>
       ) : (
         <>
