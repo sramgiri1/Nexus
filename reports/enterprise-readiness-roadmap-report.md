@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T18:14:23.871Z
+- Generated at: 2026-05-30T18:14:49.953Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a0db996c
+- Validation HEAD: 2b9beb82
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -49,8 +49,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1367-secrets-providers-tool-governance-final-validation-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1367-secrets-providers-tool-governance-final-validation-report.md |
+| changed files stay in enterprise roadmap scope | PASS |  |
+| forbidden paths unchanged | PASS |  |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
