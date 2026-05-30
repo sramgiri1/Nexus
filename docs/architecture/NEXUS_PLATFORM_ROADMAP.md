@@ -3203,7 +3203,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P133.3 and P133.4 remains planned-only
+Current implementation is closed through P133.4 and P133.5 remains planned-only
 next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3219,19 +3219,24 @@ network calls, and spend remain blocked.
 P133.2 is complete. NEXUS now has a deterministic local founder idea-to-PRD
 model that composes existing founder intake, next-question, comprehension, and
 Business Build PRD helpers into readiness, feasibility, blockers, evidence, and
-safe local state. P133.3 safe PRD preview is next. Autonomous Q&A execution,
-provider/model calls, PRD generation execution, agent dispatch, project
-creation or mutation, DB/runtime writes, deploy, release, export, package,
-network calls, and spend remain blocked.
+safe local state. P133.3 safe PRD preview and P133.4 Command Center UX now
+build on this model. Autonomous Q&A execution, provider/model calls, PRD
+generation execution, agent dispatch, project creation or mutation, DB/runtime
+writes, deploy, release, export, package, network calls, and spend remain
+blocked.
 
 P133.3 is complete. NEXUS now has a read-only in-memory founder idea-to-PRD
 preview that composes the P133.2 model with the existing safe PRD authoring
 helper. It exposes PRD sections, acceptance criteria, a review checklist,
-blockers, evidence, and safety state for later Command Center rendering. P133.4
-Chat and PRD Command Center UX is next. Autonomous Q&A execution,
-provider/model calls, PRD generation execution, agent dispatch, project
-creation or mutation, file writes, DB/runtime writes, deploy, release, export,
-package, network calls, and spend remain blocked.
+blockers, evidence, and safety state for Command Center rendering.
+
+P133.4 is complete. NEXUS now wires the P133.2 local model and P133.3 safe PRD
+preview into Command Center: Chat with NEXUS stays focused on conversation,
+Business Build owns the readable local PRD preview, and Agent Flow shows PRD
+preview context beside non-dispatching lanes. P133.5 Tests / Checkers is next.
+Autonomous Q&A execution, provider/model calls, PRD generation execution, agent
+dispatch, project creation or mutation, file writes, DB/runtime writes, deploy,
+release, export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

@@ -3232,7 +3232,7 @@ function CommandCenterLitePage() {
             ))}
           </div>
           <div className="ccv2-lite-disabled-note">
-            Planning only: NEXUS will not call providers, dispatch agents, write project files, use hosted DBs, deploy, package, or spend. Local SQLite founder records require explicit approval and write flags.
+            Planning only: NEXUS will not call providers, dispatch agents, write project files, use hosted DBs, deploy, package, or spend from chat.
           </div>
         </section>
       </div>
@@ -3240,11 +3240,12 @@ function CommandCenterLitePage() {
   );
 }
 
-function AgentFlowPanel({ envelope }) {
+function AgentFlowPanel({ envelope, prdPreview }) {
   const prdFields = envelope?.prdDraft?.fields || {};
   const agentFlow = Array.isArray(envelope?.agentFlow) ? envelope.agentFlow : [];
   const disabledActions = Array.isArray(envelope?.disabledActions) ? envelope.disabledActions : [];
   const blockedLaneReason = "Execution stays blocked until PRD review and live gates pass.";
+  const previewReadyLabel = prdPreview?.ready ? "PRD preview ready" : "PRD input needed";
 
   return (
     <section className="ccv2-card ccv2-agent-flow" aria-label="Agent action flow">
@@ -3257,6 +3258,20 @@ function AgentFlowPanel({ envelope }) {
           </div>
         </div>
         <span className="ccv2-pill ccv2-pill--disabled">Planning only</span>
+      </div>
+      <div className="ccv2-stat-chips" style={{ marginTop: 12, marginBottom: 0 }} aria-label="Agent flow PRD context">
+        <div className="ccv2-stat-chip">
+          <span className="ccv2-stat-chip__label">PRD preview</span>
+          <span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{previewReadyLabel}</span>
+        </div>
+        <div className="ccv2-stat-chip">
+          <span className="ccv2-stat-chip__label">Sections</span>
+          <span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{prdPreview?.sectionCount || 0}</span>
+        </div>
+        <div className="ccv2-stat-chip">
+          <span className="ccv2-stat-chip__label">Dispatch</span>
+          <span className="ccv2-stat-chip__value ccv2-stat-chip__value--disabled">Blocked</span>
+        </div>
       </div>
       <div className="ccv2-agent-flow__rail">
         {agentFlow.map((lane, index) => (
@@ -3313,7 +3328,7 @@ function AgentFlowPage() {
           value: row.status,
         }))}
       />
-      <AgentFlowPanel envelope={envelope} />
+      <AgentFlowPanel envelope={envelope} prdPreview={businessBuild.founderIdeaToPrdPreview} />
       <FounderLiveUseReviewCard
         readiness={businessBuild.founderLiveUseReadiness}
         review={businessBuild.founderLiveUseReview}
@@ -10560,26 +10575,27 @@ function BusinessBuildPage() {
 
           <CommandTabPanel tabId="localPrd" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--2">
-              <article className="ccv2-card">
-                <div className="ccv2-section-heading">Local PRD Artifact</div>
-                <div className="ccv2-pill ccv2-pill--pass">{build.founderPrdAuthoring.reviewState}</div>
-                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.founderPrdAuthoring.title}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Current state: {build.founderPrdAuthoring.currentState}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {build.founderPrdAuthoring.nextAction}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {build.founderPrdAuthoring.ownerCapability}</div>
+              <article className="ccv2-card" aria-label="Founder Idea-to-PRD preview">
+                <div className="ccv2-section-heading">Founder Idea-to-PRD Preview</div>
+                <div className="ccv2-pill ccv2-pill--pass">{build.founderIdeaToPrdPreview.reviewState}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.founderIdeaToPrdPreview.title}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Current state: {build.founderIdeaToPrdPreview.currentState}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>PRD readiness: {build.founderIdeaToPrdPreview.readinessScore}%</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {build.founderIdeaToPrdPreview.nextAction}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {build.founderIdeaToPrdPreview.ownerCapability}</div>
               </article>
               <article className="ccv2-card">
                 <div className="ccv2-section-heading">Safety Boundary</div>
                 <div className="ccv2-pill ccv2-pill--disabled">Local In Memory Only</div>
-                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.founderPrdAuthoring.disabledReason}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {build.founderPrdAuthoring.evidenceLocation}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.founderPrdAuthoring.activityLocation}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.founderPrdAuthoring.costImpact}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.founderIdeaToPrdPreview.disabledReason}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {build.founderIdeaToPrdPreview.evidenceLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.founderIdeaToPrdPreview.activityLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.founderIdeaToPrdPreview.costImpact}</div>
               </article>
             </div>
 
             <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
-              {build.founderPrdAuthoring.safetyRows.map((row) => (
+              {build.founderIdeaToPrdPreview.safetyRows.map((row) => (
                 <article className="ccv2-card" key={row.label}>
                   <div className="ccv2-section-heading">{row.label}</div>
                   <div className="ccv2-pill ccv2-pill--disabled">{row.value}</div>
@@ -10588,7 +10604,7 @@ function BusinessBuildPage() {
             </div>
 
             <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
-              {build.founderPrdAuthoring.sections.map((section) => (
+              {build.founderIdeaToPrdPreview.sections.map((section) => (
                 <article className="ccv2-card" key={section.label}>
                   <div className="ccv2-section-heading">{section.label}</div>
                   <div className="ccv2-pill ccv2-pill--teal">{section.status}</div>
@@ -10598,9 +10614,21 @@ function BusinessBuildPage() {
             </div>
 
             <div className="ccv2-card" style={{ marginTop: 16 }}>
-              <div className="ccv2-section-heading">Operator Review Checklist</div>
+              <div className="ccv2-section-heading">Review Checklist</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {build.founderIdeaToPrdPreview.reviewChecklist.map((item) => (
+                  <div className="ccv2-safety-row" key={item.label}>
+                    <span className="ccv2-safety-row__label">{item.label}</span>
+                    <span className="ccv2-safety-row__value--disabled">{item.state}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="ccv2-card" style={{ marginTop: 16 }}>
+              <div className="ccv2-section-heading">Acceptance Criteria</div>
               <ul className="ccv2-list" style={{ marginTop: 12 }}>
-                {build.founderPrdAuthoring.acceptanceCriteria.map((criterion) => (
+                {build.founderIdeaToPrdPreview.acceptanceCriteria.map((criterion) => (
                   <li key={criterion}>{criterion}</li>
                 ))}
               </ul>

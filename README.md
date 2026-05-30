@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P133.3
-  with P133.4 planned-only next.
+  roadmap/status entries only; current implementation is closed through P133.4
+  with P133.5 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2017,18 +2017,23 @@ The Command Center and local operator surface have:
 - P133.2 founder idea-to-PRD model: Added the deterministic local founder
   idea-to-PRD model that composes existing founder intake, next-question,
   comprehension, and Business Build PRD helpers into readiness, feasibility,
-  blockers, evidence, and safe local state. P133.3 safe PRD preview is next;
+  blockers, evidence, and safe local state. P133.3 safe PRD preview and P133.4
+  Command Center UX now build on this model;
   autonomous Q&A execution, provider/model calls, PRD generation execution,
   agent dispatch, project creation or mutation, DB/runtime writes, deploy,
   release, export, package, network calls, and spend remain unavailable.
 - P133.3 safe PRD preview: Added a read-only in-memory founder idea-to-PRD
   preview that composes the P133.2 model with the existing safe PRD authoring
   helper. It exposes PRD sections, acceptance criteria, a review checklist,
-  blockers, evidence, and safety state for later Command Center rendering.
-  P133.4 Chat and PRD Command Center UX is next; autonomous Q&A execution,
-  provider/model calls, PRD generation execution, agent dispatch, project
-  creation or mutation, file writes, DB/runtime writes, deploy, release,
-  export, package, network calls, and spend remain unavailable.
+  blockers, evidence, and safety state for Command Center rendering.
+- P133.4 Command Center idea-to-PRD UX: Wired the P133.2 local model and P133.3
+  safe PRD preview into Command Center. Chat with NEXUS stays focused on the
+  founder conversation, Business Build owns the readable local PRD preview, and
+  Agent Flow shows PRD preview context beside non-dispatching lanes. P133.5
+  Tests / Checkers is next; autonomous Q&A execution, provider/model calls, PRD
+  generation execution, agent dispatch, project creation or mutation, file
+  writes, DB/runtime writes, deploy, release, export, package, network calls,
+  and spend remain unavailable.
 
 ## CareLoop Project Progress
 

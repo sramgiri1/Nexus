@@ -4,9 +4,10 @@
 
 NEXUS_OS_CHANGE. P133 is NEXUS OS work only. P133.1 is
 contract/checker/docs/status work only. P133.2 adds a deterministic local
-founder idea-to-PRD model. P133.3 adds a safe local PRD preview. P133 must not
-modify project, generated project, provider, tool, worker runtime, deploy,
-release, export, package, local runtime state, DB, or environment files.
+founder idea-to-PRD model. P133.3 adds a safe local PRD preview. P133.4 wires
+the model and preview into clean Command Center UX. P133 must not modify
+project, generated project, provider, tool, worker runtime, deploy, release,
+export, package, local runtime state, DB, or environment files.
 
 ## P133 Subphase Split
 
@@ -222,6 +223,175 @@ Final response checklist:
 - Files changed.
 - What was implemented.
 - Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
+## P133.4 Chat and PRD Command Center UX
+
+Status: complete
+Phase: P133
+Subphase: P133.4
+Goal: Wire the P133.2 founder idea-to-PRD model and P133.3 safe PRD preview
+into Command Center while keeping Chat with NEXUS clean and execution blocked.
+Why this is needed: Founders need a useful chat-first workflow, a readable PRD
+preview in Business Build, and a clear Agent Flow view without raw report,
+runtime, or evidence dumps in chat.
+User/operator impact: The founder can send messages in Chat with NEXUS, then
+review the local PRD preview and planned agent lanes on the corresponding pages.
+Command Center impact: Chat stays chat-only; Business Build Local PRD renders
+the safe idea-to-PRD preview with sections, acceptance criteria, review
+checklist, and blocked safety rows; Agent Flow shows PRD preview context beside
+non-dispatching lanes.
+Safety impact: P133.4 is rendering and display-safe view-model integration only.
+It does not execute Q&A, call providers/models, generate live PRDs, dispatch
+agents, create or mutate projects, write files, write DB/runtime state, deploy,
+release, export, package, use network calls, or spend.
+Cost impact: Local deterministic view-model/rendering only. No provider spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `200f802b`
+
+Files expected to change:
+- `dashboard/src/data/businessBuild.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `scripts/check-p1334-command-center-idea-to-prd-ux.js`
+- `scripts/check-p1333-founder-idea-to-prd-preview.js`
+- `scripts/check-p1332-founder-idea-to-prd-model.js`
+- `scripts/check-p1331-founder-idea-to-prd-productization.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-p1327-founder-runtime-store-live-admission-execution.js`
+- `package.json`
+- `contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1334-command-center-idea-to-prd-ux-report.md`
+- P133, enterprise, P132.7, OS status, and validation coverage reports.
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- `buildBusinessBuildViewModel().founderIdeaToPrdModel`
+- `buildBusinessBuildViewModel().founderIdeaToPrdPreview`
+- Display fields include current state, readiness score, next question/action,
+  feasibility rows, PRD sections, acceptance criteria, review checklist, safety
+  rows, disabled reason, owner, evidence/activity/cost labels, and no raw IDs.
+- No DB schema, migration, provider envelope, agent dispatch packet, project
+  data, file write, raw report dump, or live execution.
+
+Command Center UX requirements:
+- Chat with NEXUS shows only transcript, next question, prompt starters,
+  Send/Reset controls, answer counts, and a short local-only safety note.
+- Business Build owns PRD detail and renders the safe local preview.
+- Agent Flow owns graphical agent-lane context and keeps dispatch blocked.
+- Full Command Center must not expose DemoApp, raw logs, raw JSON, raw policy
+  dumps, internal private IDs, or fake runnable actions.
+
+Dark/light/system theme requirements:
+- Reuse existing Command Center cards, grids, pills, tabs, and theme tokens.
+- Preserve route-wide theme switching across system, dark, and light.
+
+Tests to add/update/remove:
+- Add `scripts/check-p1334-command-center-idea-to-prd-ux.js`.
+- Update Playwright route-wide coverage for chat-only UX, Business Build PRD
+  preview, Agent Flow PRD context, and route safety boundaries.
+- Update prior P133, P132.7, and enterprise checkers for P133.4 compatibility.
+
+Docs to update:
+- P133 plan, README, platform roadmap, enterprise roadmap, phase status, phase
+  index, OS status report, enterprise report, P132.7 report, P133 reports, and
+  phase validation coverage.
+
+Reports to regenerate:
+- `reports/p1334-command-center-idea-to-prd-ux-report.md`
+- `reports/p1333-founder-idea-to-prd-preview-report.md`
+- `reports/p1332-founder-idea-to-prd-model-report.md`
+- `reports/p1331-founder-idea-to-prd-productization-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/p1327-founder-runtime-store-live-admission-execution-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update:
+- P133 remains in progress.
+- P133.4 complete.
+- Current phase P133.4.
+- Previous phase P133.3.
+- Next phase P133.5 planned-only.
+
+Known risks:
+- PRD preview UX could be mistaken for live PRD generation. The page explicitly
+  labels local in-memory preview and keeps execution blocked.
+- Adding new helper wrappers could duplicate P133.2/P133.3 logic. P133.4 only
+  composes existing helpers through the Business Build view model.
+
+Rollback plan:
+- Revert the P133.4 implementation and status stamp commits. P133.1-P133.3
+  remain valid and P133.4 returns to planned-only.
+
+Validation commands:
+- `npm run check:p1334-command-center-idea-to-prd-ux`
+- `npm run check:p1333-founder-idea-to-prd-preview`
+- `npm run check:p1332-founder-idea-to-prd-model`
+- `npm run check:p1331-founder-idea-to-prd-productization`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1327-founder-runtime-store-live-admission-execution`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- Browser inspection of `/command-center/lite`, `/command-center/business-build`,
+  and `/command-center/agent-flow`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P133.4 allowed files>`
+- `git commit -m "chore(nexus): implement p1334 command center idea to prd ux"`
+- `git add <P133.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1334 command center idea to prd ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Provider/model calls, live PRD generation, agent dispatch, project mutation,
+  DB/runtime writes, deploy, release, export, package, network calls, and spend
+  remain blocked.
+- Chat with NEXUS remains chat-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX changes.
 - Tests/checkers run.
 - Dashboard build/unit/page results.
 - Docs/README/roadmap updates.

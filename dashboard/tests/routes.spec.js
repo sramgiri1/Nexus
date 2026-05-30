@@ -227,6 +227,7 @@ test("Agent Flow route loads local lanes directly", async ({ page }) => {
 
   await expect(page.locator(".ccv2-page-head__title")).toContainText("Agent Flow");
   await expect(page.getByLabel("Agent action flow")).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Agent action flow")).toContainText("PRD preview ready");
   await expect(page.getByLabel("Agent action flow")).toContainText("Product");
   await expect(page.getByLabel("Agent action flow")).toContainText("Engineering");
   await expect(page.getByLabel("Agent action flow")).toContainText("Agent dispatch");
@@ -3543,15 +3544,17 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Founder intake answers");
     await expect(activeCommandTabPanel(page)).toContainText("SpriteKit Snake game");
     await commandTab(page, "Local PRD").click();
-    await expect(activeCommandTabPanel(page)).toContainText("Local PRD Artifact");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Idea-to-PRD Preview");
     await expect(activeCommandTabPanel(page)).toContainText("PRD - Build a simple iOS Snake game for the App Store");
-    await expect(activeCommandTabPanel(page)).toContainText("Operator Review");
+    await expect(activeCommandTabPanel(page)).toContainText("Review Checklist");
+    await expect(activeCommandTabPanel(page)).toContainText("Acceptance Criteria");
     await expect(activeCommandTabPanel(page)).toContainText("casual iPhone players");
     await expect(activeCommandTabPanel(page)).toContainText("Project writes");
+    await expect(activeCommandTabPanel(page)).toContainText("DB writes");
     await expect(activeCommandTabPanel(page)).toContainText("Agent dispatch");
     await expect(activeCommandTabPanel(page)).toContainText("Provider calls");
     await expect(activeCommandTabPanel(page)).toContainText("Blocked");
-    await expect(activeCommandTabPanel(page)).toContainText("Founder PRD safety report");
+    await expect(activeCommandTabPanel(page)).toContainText("P133.3 preview report");
     await expect(activeCommandTabPanel(page)).toContainText("No provider calls, model calls, network calls");
     await commandTab(page, "Workstreams").click();
     await expect(activeCommandTabPanel(page)).toContainText("Product");
@@ -4717,7 +4720,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
+  test("Business Build Local PRD tab shows safe idea-to-PRD preview", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
@@ -4727,7 +4730,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Local PRD").click();
     const panel = activeCommandTabPanel(page);
-    await expect(panel).toContainText("Local PRD Artifact");
+    await expect(panel).toContainText("Founder Idea-to-PRD Preview");
     await expect(panel).toContainText("Ready For Operator Review");
     await expect(panel).toContainText("PRD - Build a simple iOS Snake game for the App Store");
     await expect(panel).toContainText("Problem");
@@ -4735,9 +4738,11 @@ test.describe("Command Center route-wide UX", () => {
     await expect(panel).toContainText("Solution");
     await expect(panel).toContainText("Business Model");
     await expect(panel).toContainText("Success Criteria");
-    await expect(panel).toContainText("Operator Review Checklist");
-    await expect(panel).toContainText("Local in-memory authoring only");
+    await expect(panel).toContainText("Review Checklist");
+    await expect(panel).toContainText("Acceptance Criteria");
+    await expect(panel).toContainText("Local in-memory preview only");
     await expect(panel).toContainText("Project writes");
+    await expect(panel).toContainText("DB writes");
     await expect(panel).toContainText("Project mutation");
     await expect(panel).toContainText("Agent dispatch");
     await expect(panel).toContainText("Provider calls");

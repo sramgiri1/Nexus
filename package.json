@@ -738,6 +738,7 @@
     "check:p1331-founder-idea-to-prd-productization": "node scripts/check-p1331-founder-idea-to-prd-productization.js",
     "check:p1332-founder-idea-to-prd-model": "node scripts/check-p1332-founder-idea-to-prd-model.js",
     "check:p1333-founder-idea-to-prd-preview": "node scripts/check-p1333-founder-idea-to-prd-preview.js",
+    "check:p1334-command-center-idea-to-prd-ux": "node scripts/check-p1334-command-center-idea-to-prd-ux.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {

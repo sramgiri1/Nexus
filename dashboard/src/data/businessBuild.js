@@ -1,4 +1,6 @@
 import { buildBusinessBuildPlan } from "../../../business-build/businessBuildPlan.js";
+import { buildFounderIdeaToPrdModel } from "../../../live-ready/founderIdeaToPrdModel.js";
+import { buildFounderIdeaToPrdPreview } from "../../../live-ready/founderIdeaToPrdPreview.js";
 import { buildFounderActivationReviewPacket } from "../../../live-ready/founderActivationReviewPacket.js";
 import { buildFounderPrdSafeAuthoring } from "../../../live-ready/founderPrdSafeAuthoring.js";
 import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
@@ -277,6 +279,90 @@ function buildBusinessBuildDryRunAdmissionView(founderDbWorkflow = {}) {
       { label: "Deploy/package", value: "Blocked" },
       { label: "Provider spend", value: "Blocked" },
     ],
+  };
+}
+
+function buildIdeaToPrdDisplayModels({ modelEnvelope = {}, previewEnvelope = {} } = {}) {
+  const model = modelEnvelope.data || {};
+  const preview = previewEnvelope.data || {};
+  const prdReadiness = model.prdReadiness || {};
+  const prdPreview = preview.prdPreview || {};
+  const previewSafety = preview.previewSafety || {};
+  const sourceModel = preview.sourceModel || {};
+  const displayCostImpact = String(preview.costImpact || "Local in-memory preview only. No provider/model calls, network calls, deploy, package creation, or provider spend.")
+    .replace("provider/model calls", "provider calls, model calls");
+
+  const safetyRows = [
+    ["Project writes", previewSafety.writesFiles],
+    ["DB writes", previewSafety.writesDb],
+    ["Project mutation", previewSafety.mutatesProjects],
+    ["Agent dispatch", previewSafety.dispatchesAgents],
+    ["Provider calls", previewSafety.callsProviders],
+    ["Network", previewSafety.usesNetwork],
+    ["Deploy/package", previewSafety.exportsPackages],
+    ["Spend", previewSafety.spendsBudget],
+  ].map(([label, allowed]) => ({
+    label,
+    value: allowed === true ? "Allowed" : "Blocked",
+  }));
+
+  return {
+    model: {
+      currentState: toTitle(model.currentState),
+      readinessScore: Math.round((prdReadiness.score || 0) * 100),
+      answeredCount: model.intake?.answeredCount || 0,
+      missingCount: model.intake?.missingCount || 0,
+      nextQuestion: model.question?.prompt || "Ask the founder for the next missing PRD input.",
+      nextAction: model.nextAction || "Review founder answers before safe PRD preview.",
+      disabledReason: model.disabledReason,
+      ownerCapability: model.ownerCapability || "NEXUS Founder Idea-to-PRD Model",
+      evidenceLocation: "P133.2 model report",
+      activityLocation: model.activityLocation || "OS phase status report",
+      costImpact: model.costImpact || "Local deterministic modeling only. No provider spend.",
+      feasibilityRows: (model.feasibility?.signals || []).map((signal) => ({
+        label: signal.label,
+        state: toTitle(signal.state),
+        ownerCapability: signal.ownerCapability,
+        blocker: signal.blocker || "Ready for founder/operator review.",
+      })),
+      safetyRows: [
+        { label: "Provider calls", value: model.localState?.callsProviders === false ? "Blocked" : "Allowed" },
+        { label: "Agent dispatch", value: model.localState?.dispatchesAgents === false ? "Blocked" : "Allowed" },
+        { label: "Project mutation", value: model.localState?.mutatesProjects === false ? "Blocked" : "Allowed" },
+        { label: "DB writes", value: model.localState?.writesDb === false ? "Blocked" : "Allowed" },
+        { label: "Network", value: model.localState?.usesNetwork === false ? "Blocked" : "Allowed" },
+        { label: "Spend", value: model.localState?.spendsBudget === false ? "Blocked" : "Allowed" },
+      ],
+    },
+    preview: {
+      title: prdPreview.title || "PRD - Founder Idea",
+      currentState: toTitle(preview.currentState),
+      reviewState: toTitle(prdPreview.reviewState),
+      previewMode: toTitle(preview.previewMode),
+      readinessScore: Math.round((sourceModel.readinessScore || 0) * 100),
+      ready: sourceModel.readyForSafePreview === true,
+      sectionCount: prdPreview.sectionCount || 0,
+      missingSections: prdPreview.missingSections || [],
+      sections: (prdPreview.sections || []).map((section) => ({
+        label: section.title,
+        status: toTitle(section.state),
+        content: section.content || "Founder input required before safe preview.",
+      })),
+      acceptanceCriteria: prdPreview.acceptanceCriteria || [],
+      reviewChecklist: (preview.reviewChecklist || []).map((item) => ({
+        label: item.label,
+        state: toTitle(item.state),
+        disabledReason: item.disabledReason,
+      })),
+      nextAction: preview.nextAction || "Review the safe local PRD preview.",
+      blockers: preview.blockers || [],
+      disabledReason: preview.disabledReason,
+      ownerCapability: preview.ownerCapability || "NEXUS Founder Idea-to-PRD Preview",
+      evidenceLocation: "P133.3 preview report",
+      activityLocation: preview.activityLocation || "OS phase status report",
+      costImpact: displayCostImpact,
+      safetyRows,
+    },
   };
 }
 
@@ -4772,6 +4858,17 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const prdAuthoringEnvelope = buildFounderPrdSafeAuthoring({ founderIdeaSummary }).data;
   const activationReviewPacket = buildFounderActivationReviewPacket({ founderIdeaSummary }).data;
   const prdFields = founderEnvelope.prdDraft?.fields || {};
+  const ideaToPrdModelEnvelope = buildFounderIdeaToPrdModel({
+    founderIdeaSummary: prdFields.founderIdea || founderIdeaSummary,
+    answers: toBusinessBuildAnswers(prdFields),
+    evidenceRefs: ["reports/p1332-founder-idea-to-prd-model-report.md"],
+    activityRefs: ["reports/os-phase-status-report.md"],
+  });
+  const ideaToPrdPreviewEnvelope = buildFounderIdeaToPrdPreview({ model: ideaToPrdModelEnvelope });
+  const ideaToPrd = buildIdeaToPrdDisplayModels({
+    modelEnvelope: ideaToPrdModelEnvelope,
+    previewEnvelope: ideaToPrdPreviewEnvelope,
+  });
   const plan = buildBusinessBuildPlan({
     founderIdeaSummary: prdFields.founderIdea,
     answers: toBusinessBuildAnswers(prdFields),
@@ -4918,6 +5015,8 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
       source: "Founder intake answers mapped to local PRD fields.",
       fields: prdFields,
     },
+    founderIdeaToPrdModel: ideaToPrd.model,
+    founderIdeaToPrdPreview: ideaToPrd.preview,
     founderPrdAuthoring: {
       title: prdAuthoringEnvelope.prdArtifact?.title || "Local PRD Artifact",
       currentState: toTitle(prdAuthoringEnvelope.currentState),
