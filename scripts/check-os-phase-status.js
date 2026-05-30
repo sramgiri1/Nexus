@@ -721,6 +721,13 @@ const CURRENT_PHASE_IDS = new Set([
   "P131.6",
   "P131.7",
   "P132",
+  "P132.1",
+  "P132.2",
+  "P132.3",
+  "P132.4",
+  "P132.5",
+  "P132.6",
+  "P132.7",
 ]);
 
 const sections = {

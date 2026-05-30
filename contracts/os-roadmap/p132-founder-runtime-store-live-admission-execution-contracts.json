@@ -1,0 +1,540 @@
+{
+  "phaseId": "P132",
+  "title": "Founder Runtime Store Live Admission Execution Contract",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "currentSubphase": "P132.1",
+  "previousSubphase": "P131.7",
+  "nextSubphase": "P132.2",
+  "branch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "39e2da0a",
+  "owner": "NEXUS OS",
+  "goal": "Define the store live admission execution contract and safety boundary before any governed DB-backed or live execution behavior is added.",
+  "safetyRules": [
+    "P132.1 is contract/checker/docs/status only.",
+    "Do not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+    "Do not expose raw JSON, raw logs, raw policy dumps, raw table names, raw report paths, private IDs, or fake runnable actions in primary UX.",
+    "Do not modify project-owned files."
+  ],
+  "reuseCheck": [
+    "Reuse shared/reportWriter.js.",
+    "Reuse shared/checkResultFormatter.js.",
+    "Reuse P131.7 handoff checker behavior.",
+    "Reuse P131.5 scoped Command Center UX evidence.",
+    "Do not duplicate report writers, checker formatters, mode guards, redaction helpers, route matrices, status helpers, UI components, or evidence/audit/activity appenders."
+  ],
+  "commandCenterUx": "P132.1 does not change dashboard source. The P131.5 scoped Store Live Admission Scope cards remain visible only on Business Build and Agent Flow. Chat with NEXUS and Lite stay clean.",
+  "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
+  "subphases": [
+    {
+      "phaseId": "P132.1",
+      "title": "Store Live Execution Contract / Safety Boundary",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "39e2da0a",
+      "narrowGoal": "Create the P132 implementation-grade execution contract, seven-subphase split, safety boundary, checker, docs, status handoff, and planned P132.2 handoff.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json",
+        "docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md",
+        "scripts/check-p1321-founder-runtime-store-live-admission-execution.js",
+        "scripts/check-p1317-founder-runtime-store-live-admission-scope.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1321-founder-runtime-store-live-admission-execution-report.md",
+        "reports/p1317-founder-runtime-store-live-admission-scope-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Contract/status/report evidence only. No DB schema, migration file, query, runtime record, write adapter, live CRUD executor, provider envelope, dispatch packet, raw private ID, raw table name, raw report dump, or project data.",
+      "commandCenterUx": "Preserve the scoped Store Live Admission Scope cards on Business Build and Agent Flow. Keep Chat with NEXUS and Lite clean.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Contract/checker/docs/status only.",
+        "No DB schemas, migrations, DB reads, DB writes, runtime writes, request persistence, CRUD execution, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+        "No raw JSON/log/policy dumps, raw table names, raw report paths, private IDs, or fake runnable actions in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse P131.7 handoff checker behavior.",
+        "Reuse P131.5 scoped Command Center UX evidence."
+      ],
+      "testsAndCheckers": [
+        "Add check:p1321-founder-runtime-store-live-admission-execution.",
+        "Update P131.7 checker for P132.1 handoff compatibility.",
+        "Run OS phase status and phase validation coverage.",
+        "Run dashboard build, unit tests, and scoped Playwright route coverage."
+      ],
+      "docsRoadmap": "Update P132 plan, README, platform roadmap, OS phase status, roadmap, and generated reports.",
+      "phaseStatusUpdate": "P132 in progress; P132.1 complete; current P132.1; previous P131.7; next P132.2 planned-only.",
+      "validationCommands": [
+        "npm run check:p1321-founder-runtime-store-live-admission-execution",
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-29T23:58:16.871Z",
+      "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
+      "knownLimitations": [
+        "P132.1 is contract/checker/docs/status only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "nextPhase": "P132.2"
+    },
+    {
+      "phaseId": "P132.2",
+      "title": "Execution Request Envelope Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
+      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not implement this planned subphase until its own implementation-grade plan is written.",
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "reuseCheck": [
+        "Search for existing helpers before adding any new helper.",
+        "Reuse shared report/check/status/dashboard patterns."
+      ],
+      "testsAndCheckers": [],
+      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+      "validationCommands": [],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes or preservation",
+        "Tests/checkers run",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "narrowGoal": "Define the local execution request envelope shape, validation fields, blockers, and evidence references without persistence or execution."
+    },
+    {
+      "phaseId": "P132.3",
+      "title": "Store Adapter Capability Gate",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
+      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not implement this planned subphase until its own implementation-grade plan is written.",
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "reuseCheck": [
+        "Search for existing helpers before adding any new helper.",
+        "Reuse shared report/check/status/dashboard patterns."
+      ],
+      "testsAndCheckers": [],
+      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+      "validationCommands": [],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes or preservation",
+        "Tests/checkers run",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "narrowGoal": "Define the capability gate that separates future DB-backed adapters from provider, agent, project, deploy, and package actions."
+    },
+    {
+      "phaseId": "P132.4",
+      "title": "DB Write Plan Preview",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
+      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not implement this planned subphase until its own implementation-grade plan is written.",
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "reuseCheck": [
+        "Search for existing helpers before adding any new helper.",
+        "Reuse shared report/check/status/dashboard patterns."
+      ],
+      "testsAndCheckers": [],
+      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+      "validationCommands": [],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes or preservation",
+        "Tests/checkers run",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "narrowGoal": "Create a safe preview of future DB write plans without creating schemas, running migrations, or writing records."
+    },
+    {
+      "phaseId": "P132.5",
+      "title": "Command Center Execution Scope UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
+      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not implement this planned subphase until its own implementation-grade plan is written.",
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "reuseCheck": [
+        "Search for existing helpers before adding any new helper.",
+        "Reuse shared report/check/status/dashboard patterns."
+      ],
+      "testsAndCheckers": [],
+      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+      "validationCommands": [],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes or preservation",
+        "Tests/checkers run",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "narrowGoal": "Expose display-safe execution scope state on scoped founder pages without raw IDs, raw dumps, or runnable write controls."
+    },
+    {
+      "phaseId": "P132.6",
+      "title": "Validation / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
+      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not implement this planned subphase until its own implementation-grade plan is written.",
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "reuseCheck": [
+        "Search for existing helpers before adding any new helper.",
+        "Reuse shared report/check/status/dashboard patterns."
+      ],
+      "testsAndCheckers": [],
+      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+      "validationCommands": [],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes or preservation",
+        "Tests/checkers run",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "narrowGoal": "Aggregate P132.1-P132.5 evidence, docs, status, and checker coverage before final validation."
+    },
+    {
+      "phaseId": "P132.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [],
+      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
+      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "safetyRules": [
+        "Do not implement this planned subphase until its own implementation-grade plan is written.",
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "reuseCheck": [
+        "Search for existing helpers before adding any new helper.",
+        "Reuse shared report/check/status/dashboard patterns."
+      ],
+      "testsAndCheckers": [],
+      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
+      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
+      "validationCommands": [],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes or preservation",
+        "Tests/checkers run",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "narrowGoal": "Close P132 with final validation evidence and a planned-only next-phase handoff."
+    }
+  ],
+  "current": {
+    "phaseId": "P132.1",
+    "title": "Store Live Execution Contract / Safety Boundary",
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T23:58:16.871Z",
+    "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
+    "checksRun": [
+      "npm run check:p1321-founder-runtime-store-live-admission-execution",
+      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P132.1 is contract/checker/docs/status only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "nextPhase": "P132.2",
+    "commandCenterVisible": true
+  },
+  "summary": {
+    "phaseId": "P132",
+    "title": "Founder Runtime Store Live Admission Execution Contract",
+    "status": "in_progress",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-29T23:58:16.871Z",
+    "summary": "Started P132 with an implementation-grade store live execution contract, seven-subphase split, safety boundary, checker, docs, and status handoff while live execution remains blocked.",
+    "checksRun": [
+      "npm run check:p1321-founder-runtime-store-live-admission-execution",
+      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P132 is in progress but contract-gated. P132.1 does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "nextPhase": "P132.2",
+    "commandCenterVisible": true
+  }
+}

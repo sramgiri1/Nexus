@@ -3121,6 +3121,16 @@ provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, raw SQL interface, deploy, release, export, package action,
 network call, and provider spend remain blocked.
 
+P132.1 is complete. NEXUS started the store live execution phase with an
+implementation-grade execution contract, seven-subphase split, safety boundary,
+checker, docs, status handoff, and planned-only P132.2 handoff. P132.2 is planned-only
+and has no implementation yet. DB schemas, migrations, DB/runtime
+reads or writes, request persistence, live CRUD execution, approval capture,
+handoff acceptance, authority grant, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+raw SQL interface, deploy, release, export, package action, network call, and
+provider spend remain blocked.
+
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
 

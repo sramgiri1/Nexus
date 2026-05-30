@@ -117,6 +117,42 @@ const validationCommands = [
   "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
   "git diff --check",
 ];
+const p1317FinalState =
+  status.currentPhase === "P131.7"
+  && status.previousPhase === "P131.6"
+  && status.nextPhase === "P132"
+  && roadmap.currentPhase === "P131.7"
+  && roadmap.previousPhase === "P131.6"
+  && roadmap.nextPhase === "P132"
+  && statusById.get("P131")?.status === "complete"
+  && roadmapById.get("P131")?.status === "complete"
+  && statusById.get("P131.7")?.status === "complete"
+  && roadmapById.get("P131.7")?.status === "complete"
+  && statusById.get("P132")?.status === "planned"
+  && roadmapById.get("P132")?.status === "planned";
+const p1321StartedState =
+  status.currentPhase === "P132.1"
+  && status.previousPhase === "P131.7"
+  && status.nextPhase === "P132.2"
+  && roadmap.currentPhase === "P132.1"
+  && roadmap.previousPhase === "P131.7"
+  && roadmap.nextPhase === "P132.2"
+  && status.current?.phaseId === "P132.1"
+  && status.previous?.phaseId === "P131.7"
+  && status.next?.phaseId === "P132.2"
+  && roadmap.current?.phaseId === "P132.1"
+  && roadmap.previous?.phaseId === "P131.7"
+  && roadmap.next?.phaseId === "P132.2"
+  && statusById.get("P131")?.status === "complete"
+  && roadmapById.get("P131")?.status === "complete"
+  && statusById.get("P131.7")?.status === "complete"
+  && roadmapById.get("P131.7")?.status === "complete"
+  && statusById.get("P132")?.status === "in_progress"
+  && roadmapById.get("P132")?.status === "in_progress"
+  && statusById.get("P132.1")?.status === "complete"
+  && roadmapById.get("P132.1")?.status === "complete"
+  && statusById.get("P132.2")?.status === "planned"
+  && roadmapById.get("P132.2")?.status === "planned";
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P131 final", contract.status === "complete" && contract.currentSubphase === "P131.7" && contract.previousSubphase === "P131.6" && contract.nextSubphase === "P132" && p1317.status === "complete");
@@ -136,31 +172,15 @@ addCheck("README records P131.7", /P131\.7 final validation/i.test(readme) && /P
 addCheck("platform roadmap records P131.7", /P131\.7 is complete/i.test(platformRoadmap) && /P132 is planned-only/i.test(platformRoadmap));
 addCheck(
   "phase status closes P131",
-  status.currentPhase === "P131.7"
-    && status.previousPhase === "P131.6"
-    && status.nextPhase === "P132"
-    && roadmap.currentPhase === "P131.7"
-    && roadmap.previousPhase === "P131.6"
-    && roadmap.nextPhase === "P132"
-    && statusById.get("P131")?.status === "complete"
-    && roadmapById.get("P131")?.status === "complete"
-    && statusById.get("P131.7")?.status === "complete"
-    && roadmapById.get("P131.7")?.status === "complete"
-    && statusById.get("P132")?.status === "planned"
-    && roadmapById.get("P132")?.status === "planned",
+  p1317FinalState || p1321StartedState,
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck(
   "phase status summary objects close P131",
-  status.current?.phaseId === "P131.7"
-    && status.previous?.phaseId === "P131.6"
-    && status.next?.phaseId === "P132"
-    && roadmap.current?.phaseId === "P131.7"
-    && roadmap.previous?.phaseId === "P131.6"
-    && roadmap.next?.phaseId === "P132",
+  p1317FinalState || p1321StartedState,
 );
 addCheck("completed P131.7 entries have required fields", [statusById.get("P131"), statusById.get("P131.7"), roadmapById.get("P131.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P132 remains planned-only", statusById.get("P132")?.status === "planned" && roadmapById.get("P132")?.status === "planned" && !(statusById.get("P132")?.checksRun || []).length && !(roadmapById.get("P132")?.checksRun || []).length);
+addCheck("P132 handoff remains safe", (statusById.get("P132")?.status === "planned" && roadmapById.get("P132")?.status === "planned" && !(statusById.get("P132")?.checksRun || []).length && !(roadmapById.get("P132")?.checksRun || []).length) || p1321StartedState);
 addCheck(
   "changed files stay in P131.7 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
@@ -190,7 +210,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates P131.7 final validation closure for P131.",
-        "- Confirms P131 is complete, P131.7 is complete/current, and P132 is planned-only.",
+        "- Confirms P131 is complete, P131.7 is complete, and the P132 handoff remains safe.",
         "- Confirms the P131.5 Store Live Admission Scope UX remains scoped to Business Build and Agent Flow with Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean.",
         "- Does not modify dashboard source/tests, create runtime exports, create schemas, write DB/runtime records, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
@@ -199,7 +219,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: p1317.validationCommands.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P131.7 is final validation closure only. P132 is planned-only. This does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+      body: "- P131.7 is final validation closure only. The P132 handoff is contract-gated. This does not capture approvals, persist decisions, submit requests, persist requests, create DB schemas, run migrations, read or write DB/runtime records, persist acceptance capture, run CRUD actions, capture acceptance, accept handoff, hand off authority, grant authority, activate authority, apply approvals, record approve/reject decisions, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
