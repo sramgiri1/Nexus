@@ -22564,7 +22564,7 @@
       "order": 174,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "78b47205",
       "commandCenterVisible": true,
       "detail": "P138.4 adds Command Center UX for display-safe patch/build preview summaries. P138.5 remains next.",
       "summary": "P138 is in progress through P138.4, with project workspace mutation/build pipeline work still non-runnable and governed.",
@@ -23093,17 +23093,17 @@
           "knownLimitations": [
             "P138.3 is non-runnable preview work only.",
             "It does not apply patches, mutate projects, run builds/tests, execute rollbacks, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend.",
-            "P138.4 remains planned-only."
+            "P138.4 is complete; P138.5 remains planned-only."
           ]
         },
         {
           "phaseId": "P138.4",
           "title": "Project Build Command Center UX",
-          "status": "planned",
+          "status": "complete",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "3356fbd1",
-          "narrowGoal": "Expose the P138.3 patch/build preview in the relevant Command Center project/build surface with clean founder-operator state, next action, blockers, owner, evidence/activity, disabled reason, and cost impact.",
+          "expectedBaseCommit": "7f7cd7f4",
+          "narrowGoal": "Expose the P138.3 non-runnable patch/build preview in Business Build and Agent Flow with clean founder/operator state, next action, blockers, owner, evidence/activity, disabled reason, and cost impact.",
           "allowedFiles": [
             "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
             "docs/architecture/P138_PROJECT_WORKSPACE_MUTATION_BUILD_PIPELINE_PLAN.md",
@@ -23113,9 +23113,19 @@
             "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
             "package.json",
+            "dashboard/src/data/businessBuild.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "scripts/check-p1381-project-workspace-mutation-build-pipeline.js",
+            "scripts/check-p1382-project-workspace-mutation-build-pipeline.js",
+            "scripts/check-p1383-project-workspace-mutation-build-pipeline.js",
             "scripts/check-p1384-project-workspace-mutation-build-pipeline.js",
             "scripts/check-enterprise-readiness-roadmap.js",
             "scripts/check-os-phase-status.js",
+            "reports/p1381-project-workspace-mutation-build-pipeline-report.md",
+            "reports/p1382-project-workspace-mutation-build-pipeline-report.md",
+            "reports/p1383-project-workspace-mutation-build-pipeline-report.md",
             "reports/p1384-project-workspace-mutation-build-pipeline-report.md",
             "reports/enterprise-readiness-roadmap-report.md",
             "reports/os-phase-status-report.md",
@@ -23124,9 +23134,7 @@
           "forbiddenFiles": [
             "projects/**",
             "generated-projects/**",
-            "private project roots/**",
-            "dashboard/src/**",
-            "dashboard/tests/**",
+            "private project roots/***",
             "db/**",
             "local-state/runtime/**",
             "providers/**",
@@ -23147,22 +23155,33 @@
             "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
             "package.json",
+            "dashboard/src/data/businessBuild.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "scripts/check-p1381-project-workspace-mutation-build-pipeline.js",
+            "scripts/check-p1382-project-workspace-mutation-build-pipeline.js",
+            "scripts/check-p1383-project-workspace-mutation-build-pipeline.js",
             "scripts/check-p1384-project-workspace-mutation-build-pipeline.js",
             "scripts/check-enterprise-readiness-roadmap.js",
             "scripts/check-os-phase-status.js",
+            "reports/p1381-project-workspace-mutation-build-pipeline-report.md",
+            "reports/p1382-project-workspace-mutation-build-pipeline-report.md",
+            "reports/p1383-project-workspace-mutation-build-pipeline-report.md",
             "reports/p1384-project-workspace-mutation-build-pipeline-report.md",
             "reports/enterprise-readiness-roadmap-report.md",
             "reports/os-phase-status-report.md",
             "reports/phase-validation-coverage-report.md"
           ],
           "expectedExports": [
-            "PROJECT_WORKSPACE_MUTATION_ROUTE_COPY",
-            "PROJECT_WORKSPACE_MUTATION_CARD_MODEL"
+            "projectPatchBuildPreview",
+            "ProjectPatchBuildPreviewCard",
+            "BUSINESS_BUILD_TABS.projectBuild"
           ],
           "futureExports": [],
-          "dataShape": "Display-safe Command Center data only: labels, summary rows, state badges, next action, blockers, disabled reason, owner/capability, evidence/activity labels, and cost impact; no raw IDs, raw JSON, raw logs, raw patches, or raw diffs.",
+          "dataShape": "Business Build display model includes projectPatchBuildPreview with currentState, sourceModelPhase, previewRowCount, ownerCapability, nextAction, disabledReason, evidenceLocation, activityLocation, costImpact, approvalState, buildCommandSummary, testCommandSummary, rollbackSummary, blockers, previewRows, pathRows, and safetyRows. Command Center renders display-safe summaries only.",
           "futureDataShape": "Future subphase shape remains bounded by selectedProjectProfile, allowedPathGlobs, forbiddenPathGlobs, patchPlan, buildPlan, testPlan, rollbackPlan, approvalGate, evidenceRefs, activityRefs, blockers, disabledReason, and costImpact with unsafe execution flags blocked until explicitly allowed.",
-          "commandCenterUx": "Update only allowed Command Center data/page/test files. Preserve route-wide navigation, System/Dark/Light themes, no demo app leakage, no raw IDs, no fake runnable action buttons, and no project mutation controls.",
+          "commandCenterUx": "Business Build overview and Project Build tab show the project build preview. Agent Flow shows the same preview in agent context. The UI preserves route-wide navigation and System/Dark/Light themes, hides demo app, raw private IDs, raw JSON/log/policy/patch/diff dumps, and exposes no runnable project/build actions.",
           "themeRequirements": [
             "Preserve System theme.",
             "Preserve Dark theme.",
@@ -23170,11 +23189,10 @@
             "Validate through existing route-wide Command Center Playwright coverage."
           ],
           "safetyRules": [
-            "Do not mutate project files in P138.1.",
-            "Do not run builds against project workspaces in P138.1.",
-            "Do not apply patches, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend in P138.1.",
-            "Do not expose project/private raw IDs, raw JSON, raw logs, raw policy dumps, raw registry dumps, raw patch dumps, raw diff dumps, secret values, mutation controls, build controls, deploy controls, package controls, or spend controls in primary UX.",
-            "Future workspace mutation packets must include explicit selected project profile, allowed path globs, forbidden path globs, patch plan, build/test plan, rollback plan, approval gate, evidence refs, activity refs, and cost impact before any live project mutation is considered."
+            "Do not mutate project files in P138.4.",
+            "Do not apply patches or run builds/tests against project workspaces in P138.4.",
+            "Do not execute rollbacks, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend in P138.4.",
+            "Do not expose project/private raw IDs, raw JSON, raw logs, raw policy dumps, raw registry dumps, raw patch dumps, raw diff dumps, secret values, mutation controls, build controls, deploy controls, package controls, or spend controls in primary UX."
           ],
           "reuseCheck": [
             "Reuse shared/reportWriter.js.",
@@ -23186,13 +23204,17 @@
             "Do not duplicate report writers, checker formatters, result envelopes, mode guards, redaction helpers, phase status updaters, route matrices, UI cards/tabs/badges, or activity/evidence/audit appenders."
           ],
           "testsAndCheckers": [
-            "Add Playwright assertions for project build UX route/state.",
-            "Update route-wide safety tests if labels/routes/states change.",
+            "Add Playwright assertions for project build preview UX on Business Build and Agent Flow.",
+            "Add P138.4 checker coverage for dashboard data shape, route wiring, tab wiring, Playwright coverage, docs/status handoff, and forbidden path safety.",
+            "Update P138.1-P138.3 and enterprise/OS checkers to accept the P138.4 handoff.",
             "Run dashboard build, unit, and route-wide Playwright coverage."
           ],
           "docsRoadmap": "Update P138 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, checker handoffs, and generated reports for this subphase only.",
-          "phaseStatusUpdate": "P138.4 planned; previous P138.3; next P138.5; do not advance later subphases until implementation-grade work and validation complete.",
+          "phaseStatusUpdate": "P138.4 complete; previous P138.3; next P138.5 planned-only.",
           "validationCommands": [
+            "npm run check:p1384-project-workspace-mutation-build-pipeline",
+            "npm run check:p1383-project-workspace-mutation-build-pipeline",
+            "npm run check:p1382-project-workspace-mutation-build-pipeline",
             "npm run check:p1381-project-workspace-mutation-build-pipeline",
             "npm run check:enterprise-readiness-roadmap",
             "npm run check:os-phase-status",
@@ -23203,11 +23225,11 @@
             "git diff --check"
           ],
           "finalSafetyChecks": [
-            "No projects/**, generated-projects/**, private project roots/**, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes unless explicitly allowed by a later subphase.",
+            "No projects/**, generated-projects/**, private project roots/***, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
-            "P138.2 remains planned-only.",
-            "No stale 1e9edfbd marker remains after the stamp commit."
+            "P138.5 remains planned-only.",
+            "No stale implementation commit marker remains after the stamp commit."
           ],
           "gitCommands": [
             "git add <P138.4 allowed files>",
@@ -23236,15 +23258,29 @@
           "nextPhase": "P138.5",
           "order": 174.4,
           "commandCenterVisible": true,
-          "completedAt": "",
+          "completedAt": "2026-05-30T20:58:12Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "",
-          "summary": "P138.4 is planned-only and must not be treated as complete or live until its own implementation-grade subphase is implemented and validated.",
-          "detail": "P138.4 is planned-only. No project mutation or build execution is enabled.",
-          "checksRun": [],
+          "commit": "78b47205",
+          "summary": "P138.4 surfaces the non-runnable project patch/build preview in Business Build and Agent Flow with display-safe summaries and blocked execution posture.",
+          "detail": "The Command Center Project Build preview shows current state, next action, blockers, disabled reason, owner, evidence/activity location, cost, patch/build/test/rollback summaries, and blocked safety rows without exposing raw IDs, raw dumps, or runnable controls.",
+          "checksRun": [
+            "npm run check:p1384-project-workspace-mutation-build-pipeline",
+            "npm run check:p1383-project-workspace-mutation-build-pipeline",
+            "npm run check:p1382-project-workspace-mutation-build-pipeline",
+            "npm run check:p1381-project-workspace-mutation-build-pipeline",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
           "knownLimitations": [
-            "P138.4 is planned-only.",
-            "It must not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend until explicitly implemented and validated."
+            "P138.4 is Command Center UX only.",
+            "It does not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend.",
+            "It shows display-safe summaries only and does not expose project/private raw IDs, raw JSON, raw logs, raw patch data, or raw diffs.",
+            "P138.5 remains planned-only."
           ]
         },
         {
@@ -23253,7 +23289,7 @@
           "status": "planned",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "pending-p1384-final-commit",
+          "expectedBaseCommit": "78b47205",
           "narrowGoal": "Aggregate P138.1-P138.4 checker coverage, reports, Command Center UX validation, safety wording, allowed/forbidden path enforcement, and enterprise handoff compatibility.",
           "allowedFiles": [
             "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -23275,7 +23311,7 @@
           "forbiddenFiles": [
             "projects/**",
             "generated-projects/**",
-            "private project roots/**",
+            "private project roots/***",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -23351,7 +23387,7 @@
             "git diff --check"
           ],
           "finalSafetyChecks": [
-            "No projects/**, generated-projects/**, private project roots/**, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes unless explicitly allowed by a later subphase.",
+            "No projects/**, generated-projects/**, private project roots/***, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes unless explicitly allowed by a later subphase.",
             "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
             "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, demo app leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
             "P138.2 remains planned-only.",
@@ -23387,8 +23423,8 @@
           "completedAt": "",
           "branch": "codex/nexus-e2e-phase-validation",
           "commit": "",
-          "summary": "P138.5 is planned-only and must not be treated as complete or live until its own implementation-grade subphase is implemented and validated.",
-          "detail": "P138.5 is planned-only. No project mutation or build execution is enabled.",
+          "summary": "P138.5 is planned-only and will aggregate P138.1-P138.4 validation, reports, safety wording, route-wide UX coverage, and enterprise handoff compatibility.",
+          "detail": "P138.5 remains planned-only. No project mutation or build execution is enabled.",
           "checksRun": [],
           "knownLimitations": [
             "P138.5 is planned-only.",
@@ -24197,7 +24233,7 @@
       "knownLimitations": [
         "P138.3 is non-runnable preview work only.",
         "It does not apply patches, mutate projects, run builds/tests, execute rollbacks, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend.",
-        "P138.4 remains planned-only."
+        "P138.4 is complete; P138.5 remains planned-only."
       ]
     },
     {
@@ -24209,7 +24245,7 @@
       "commandCenterVisible": true,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "78b47205",
       "completedAt": "2026-05-30T20:58:12Z",
       "expectedBaseCommit": "3356fbd1",
       "summary": "P138.4 surfaces the non-runnable project patch/build preview in Business Build and Agent Flow with display-safe summaries and blocked execution posture.",
@@ -24253,7 +24289,8 @@
       "knownLimitations": [
         "P138.5 is planned-only.",
         "It must not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend until explicitly implemented and validated."
-      ]
+      ],
+      "expectedBaseCommit": "78b47205"
     },
     {
       "track": "NEXUS_OS",
@@ -25628,12 +25665,12 @@
       ]
     }
   ],
-  "updatedAt": "2026-05-30T19:53:00.317Z",
+  "updatedAt": "2026-05-30T20:58:12Z",
   "currentPhase": "P138.4",
   "previousPhase": "P138.3",
   "nextPhase": "P138.5",
   "currentPhaseStatus": "complete",
-  "generatedAt": "2026-05-30T20:24:01.099Z",
+  "generatedAt": "2026-05-30T20:58:12Z",
   "current": {
     "track": "enterprise-readiness",
     "phaseId": "P138.4",
@@ -25643,7 +25680,7 @@
     "commandCenterVisible": true,
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "78b47205",
     "completedAt": "2026-05-30T20:58:12Z",
     "expectedBaseCommit": "3356fbd1",
     "summary": "P138.4 surfaces the non-runnable project patch/build preview in Business Build and Agent Flow with display-safe summaries and blocked execution posture.",
@@ -25830,7 +25867,7 @@
     "knownLimitations": [
       "P138.3 is non-runnable preview work only.",
       "It does not apply patches, mutate projects, run builds/tests, execute rollbacks, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend.",
-      "P138.4 remains planned-only."
+      "P138.4 is complete; P138.5 remains planned-only."
     ]
   },
   "next": {
@@ -25850,7 +25887,8 @@
     "knownLimitations": [
       "P138.5 is planned-only.",
       "It must not enable project mutation, patch application, build/test execution, rollback execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, deploy, release, export, package, network calls, or spend until explicitly implemented and validated."
-    ]
+    ],
+    "expectedBaseCommit": "78b47205"
   },
   "currentPhaseSummary": "Added the P138.3 non-runnable patch/build preview with candidate change rows, touched-path classifications, redacted patch summary, build/test command summaries, rollback summary, approval gate, evidence, activity, audit, owner, blocker, disabled reason, cost, and blocked safety flag data without applying patches or running project commands.",
   "nextSubphase": "P138.5",

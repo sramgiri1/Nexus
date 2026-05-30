@@ -570,7 +570,7 @@
         "No projects/**, generated-projects/**, careloop/**, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes unless explicitly allowed by a later subphase.",
         "No project mutation, patch application, build execution, test execution against projects, rollback execution, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
         "No project/private raw IDs, raw JSON/log/policy/registry/patch/diff dumps, DemoApp leakage, stale labels, fake runnable actions, or unsafe positive claims in primary UX/docs.",
-        "P138.4 remains planned-only.",
+        "P138.4 is complete; P138.5 remains planned-only.",
         "No stale implementation commit marker remains after the stamp commit."
       ],
       "gitCommands": [
@@ -620,7 +620,7 @@
       "knownLimitations": [
         "P138.3 is non-runnable preview work only.",
         "It does not apply patches, mutate projects, run builds/tests, execute rollbacks, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend.",
-        "P138.4 remains planned-only."
+        "P138.4 is complete; P138.5 remains planned-only."
       ]
     },
     {
@@ -787,9 +787,9 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T20:58:12Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "summary": "P138.4 surfaces the non-runnable project patch/build preview in Business Build and Agent Flow with display-safe project change, build, test, rollback, blocker, owner, evidence/activity, and cost summaries.",
-      "detail": "Command Center now has a Project Build preview tab and cards for Business Build and Agent Flow. Project mutation and project command execution remain blocked.",
+      "commit": "78b47205",
+      "summary": "P138.4 surfaces the non-runnable project patch/build preview in Business Build and Agent Flow with display-safe summaries and blocked execution posture.",
+      "detail": "The Command Center Project Build preview shows current state, next action, blockers, disabled reason, owner, evidence/activity location, cost, patch/build/test/rollback summaries, and blocked safety rows without exposing raw IDs, raw dumps, or runnable controls.",
       "checksRun": [
         "npm run check:p1384-project-workspace-mutation-build-pipeline",
         "npm run check:p1383-project-workspace-mutation-build-pipeline",
@@ -816,7 +816,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1384-final-commit",
+      "expectedBaseCommit": "78b47205",
       "narrowGoal": "Aggregate P138.1-P138.4 checker coverage, reports, Command Center UX validation, safety wording, allowed/forbidden path enforcement, and enterprise handoff compatibility.",
       "allowedFiles": [
         "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -1256,5 +1256,5 @@
     }
   ],
   "summary": "P138 is in progress through P138.3 with contract, read-only workspace model, and non-runnable patch/build preview complete while project mutation and command execution remain blocked.",
-  "updatedAt": "2026-05-30T20:40:48.336Z"
+  "updatedAt": "2026-05-30T20:58:12Z"
 }
