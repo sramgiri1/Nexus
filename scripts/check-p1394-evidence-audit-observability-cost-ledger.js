@@ -14,6 +14,7 @@ const REPORT_PATH = "reports/p1394-evidence-audit-observability-cost-ledger-repo
 const CONTRACT_PATH = "contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json";
 const PLAN_PATH = "docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1394-evidence-audit-observability-cost-ledger";
+const P1395_SCRIPT = "check:p1395-evidence-audit-observability-cost-ledger";
 const EXPECTED_BASE_COMMIT = "1bf5a3f6";
 const EXPECTED_EXPORTS = [
   "EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_UX_PROJECTION_PHASE",
@@ -139,6 +140,24 @@ const p1394CurrentState =
   && ["P139.1", "P139.2", "P139.3", "P139.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P139.5")?.status === "planned"
   && roadmapById.get("P139.5")?.status === "planned";
+const p1395CurrentState =
+  status.currentPhase === "P139.5"
+  && status.previousPhase === "P139.4"
+  && status.nextPhase === "P139.6"
+  && roadmap.currentPhase === "P139.5"
+  && roadmap.previousPhase === "P139.4"
+  && roadmap.nextPhase === "P139.6"
+  && status.current?.phaseId === "P139.5"
+  && status.previous?.phaseId === "P139.4"
+  && status.next?.phaseId === "P139.6"
+  && roadmap.current?.phaseId === "P139.5"
+  && roadmap.previous?.phaseId === "P139.4"
+  && roadmap.next?.phaseId === "P139.6"
+  && statusById.get("P139")?.status === "in_progress"
+  && roadmapById.get("P139")?.status === "in_progress"
+  && ["P139.1", "P139.2", "P139.3", "P139.4", "P139.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P139.6")?.status === "planned"
+  && roadmapById.get("P139.6")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1394-evidence-audit-observability-cost-ledger.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -188,21 +207,22 @@ addCheck("Command Center card avoids raw phase/report identifiers", !/reports\/p
 addCheck("Command Center card avoids fake runnable actions", !/write ledger now|run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i.test(uiBundle));
 addCheck("Playwright coverage added", routeTests.includes("P139.4 evidence audit observability cost ledger UX is read-only and scoped") && routeTests.includes("Evidence audit observability cost ledger preview") && routeTests.includes("not.toMatch(/P139"));
 addCheck("route-wide safety coverage retained", ["Command Center route-wide UX", "DemoApp", "raw JSON", "private-project", "dispatch agent now", "Use system theme", "Use dark theme", "Use light theme"].every((text) => routeTests.includes(text)));
-addCheck("contract advances P139.4 safely", contract.phaseId === "P139" && contract.status === "in_progress" && contract.currentSubphase === "P139.4" && contract.previousSubphase === "P139.3" && contract.nextSubphase === "P139.5");
+addCheck("contract advances P139.4 safely", contract.phaseId === "P139" && contract.status === "in_progress" && ["P139.4", "P139.5"].includes(contract.currentSubphase) && ["P139.3", "P139.4"].includes(contract.previousSubphase) && ["P139.5", "P139.6"].includes(contract.nextSubphase));
 addCheck("contract records expected base commit", contract.expectedBaseCommit === "afe98694" && p1394.expectedBaseCommit === EXPECTED_BASE_COMMIT);
-addCheck("P139.4 complete and P139.5 planned", p1394.status === "complete" && p1395.status === "planned" && p1394.nextPhase === "P139.5");
+addCheck("P139.4 complete and P139.5 handoff known", p1394.status === "complete" && ["planned", "complete"].includes(p1395.status) && p1394.nextPhase === "P139.5");
+addCheck("P139.5 checker registered when handed off", !p1395CurrentState || Boolean(packageJson.scripts?.[P1395_SCRIPT]));
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1394.expectedExports?.includes(entry)));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1394.validationCommands?.includes(command)));
 addCheck("contract scope stays UX-only", /Command Center/i.test(p1394.dataShape || "") && p1394.forbiddenFiles?.includes("db/**") && p1394.forbiddenFiles?.includes("projects/**"));
 addCheck("P139.3 report passes", reportPassed("reports/p1393-evidence-audit-observability-cost-ledger-report.md"));
 addCheck("enterprise checker accepts P139.4", enterpriseChecker.includes("p1394CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("P139 plan records P139.4", /## P139\.4 Observability Command Center UX[\s\S]*Status:\s+complete/.test(plan) && /P139\.5 remains planned-only/i.test(plan));
-addCheck("README records P139.4", /P139\.4 Observability Command Center UX/i.test(readme) && /P139\.5 is planned-only\s+next/i.test(readme));
+addCheck("README records P139.4", /P139\.4 Observability Command Center UX/i.test(readme) && (/P139\.5 is planned-only\s+next/i.test(readme) || /P139\.5\s+tests\/checkers is complete/i.test(readme)));
 addCheck("platform roadmap records P139.4", /P139\.4 Observability Command Center UX is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P139.4", /P139\.4 is now complete/i.test(enterpriseRoadmap) && /P139\.5 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status starts P139.4", p1394CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P139.4", /P139\.4 is now complete/i.test(enterpriseRoadmap) && (/P139\.5 is the next executable subphase/i.test(enterpriseRoadmap) || /P139\.5 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status keeps P139.4 complete", p1394CurrentState || p1395CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P139.4 entries have required fields", [statusById.get("P139"), statusById.get("P139.4"), roadmapById.get("P139"), roadmapById.get("P139.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P139.5 remains planned-only", statusById.get("P139.5")?.status === "planned" && roadmapById.get("P139.5")?.status === "planned" && !(statusById.get("P139.5")?.checksRun || []).length);
+addCheck("P139.5 remains planned or safely complete", (p1394CurrentState && statusById.get("P139.5")?.status === "planned" && roadmapById.get("P139.5")?.status === "planned" && !(statusById.get("P139.5")?.checksRun || []).length) || p1395CurrentState);
 addCheck("changed files stay in P139.4 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P139.4 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("projection/docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy|ledger)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(`${serializedProjection}\n${docsBundle}`));

@@ -824,10 +824,173 @@ Final response checklist:
 
 ## P139.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: Harden coverage for ledger model, preview, UX, redaction, and
 route-wide safety.
+
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- `codex/nexus-e2e-phase-validation`
+- `30f9d0f7`
+
+Allowed files:
+- `package.json`
+- `scripts/check-p1395-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1394-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1393-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json`
+- `docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1393-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1394-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1395-evidence-audit-observability-cost-ledger-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `generated-projects/**`
+- private project roots
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules created or updated:
+- Created `scripts/check-p1395-evidence-audit-observability-cost-ledger.js`.
+- Updated P139.3/P139.4 checker handoffs.
+- Updated enterprise readiness checker handoff.
+- Updated P139 contract, README, platform roadmap, enterprise roadmap, OS
+  phase status, phase index, package script, and generated reports.
+
+Expected exports, schemas, and data shapes:
+- No new exports.
+- No new runtime schemas.
+- P139.5 data shape is checker/report aggregation only.
+- It validates the existing P139.2 ledger model, P139.3 preview, and P139.4
+  UX projection/view model.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX.
+- Verify existing Observability, Evidence, Cost Center, Business Build, Agent
+  Flow, and Lite exclusion coverage.
+- Do not add new UI in this subphase.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw ledger
+  payloads, project/private raw IDs, or fake runnable actions.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through existing route-wide Command Center Playwright coverage.
+
+Safety rules:
+- P139.5 is validation-only.
+- Do not write ledger records or DB/runtime state.
+- Do not call providers or models.
+- Do not execute tools, start MCP servers, dispatch agents, mutate project
+  files, apply patches, run project builds/tests, execute rollbacks, deploy,
+  release, export, package, use network calls, or spend.
+
+Reuse check:
+- Reuse `shared/reportWriter.js`.
+- Reuse `shared/checkResultFormatter.js`.
+- Reuse `shared/evidenceAuditObservabilityCostLedgerModel.js`.
+- Reuse `shared/evidenceAuditObservabilityCostLedgerPreview.js`.
+- Reuse `shared/evidenceAuditObservabilityCostLedgerUxProjection.js`.
+- Reuse `dashboard/src/data/evidenceAuditObservabilityCostLedgerUx.js` for
+  display-safe view-model validation.
+- Do not duplicate model, preview, projection, report writer, checker
+  formatter, redaction, or route safety helpers.
+
+Tests/checkers:
+- Added `check:p1395-evidence-audit-observability-cost-ledger`.
+- Added aggregate checker coverage for P139.1-P139.4 reports, model, preview,
+  UX projection, view model, redaction, zero-spend posture, docs/status, and
+  forbidden path safety.
+- Updated P139.3 and P139.4 checkers to accept the P139.5 handoff.
+- Updated enterprise readiness checker to accept the P139.5 handoff.
+- Preserved existing P139.4 targeted Playwright and route-wide Command Center
+  Playwright coverage.
+
+Docs/roadmap:
+- Updated this P139 plan.
+- Updated README.
+- Updated platform roadmap.
+- Updated enterprise readiness roadmap.
+- Updated OS phase status and phase index.
+- Regenerated P139.3, P139.4, P139.5, enterprise readiness, OS status, and
+  phase validation reports.
+
+OS phase status update:
+- P139 parent remains in progress.
+- P139.1-P139.5 are complete.
+- Current phase/subphase is P139.5.
+- Previous phase/subphase is P139.4.
+- Next phase/subphase is P139.6.
+- P139.6-P139.7 remain planned-only.
+
+Validation commands:
+- `npm run check:p1395-evidence-audit-observability-cost-ledger`
+- `npm run check:p1394-evidence-audit-observability-cost-ledger`
+- `npm run check:p1393-evidence-audit-observability-cost-ledger`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P139.4"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No project, generated project, private project root, dashboard source/test,
+  DB/runtime state, provider, tool, worker runtime, deploy, release, export,
+  package, or env changes.
+- No ledger writes, DB/runtime writes, live CRUD, provider/model calls, tool
+  execution, MCP startup, agent dispatch, project mutation, patch application,
+  build/test execution, rollback execution, deploy, release, export, package,
+  network calls, or spend.
+- No stale P139.5 pending marker remains after the stamp commit.
+
+Git add/commit/push commands:
+- `git add <P139.5 allowed files>`
+- `git commit -m "chore(nexus): implement p1395 evidence audit observability cost ledger"`
+- `git add <P139.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1395 evidence audit observability cost ledger"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ## P139.6 Docs / Roadmap / Status
 
