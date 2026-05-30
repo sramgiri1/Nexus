@@ -23575,7 +23575,7 @@
       "order": 172,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0d97ae67",
       "commandCenterVisible": true,
       "detail": "P136.7 is complete. P137 Agent Work Order Runtime is planned-only next.",
       "summary": "P136 is complete through P136.7. Provider governance now includes the safety contract, display-safe governance model, non-runnable dry run, review-only Command Center UX, aggregate checker coverage, aligned docs/status, and final validation while all provider/model/tool execution, mutation, deploy, package, network, and spend authority remains blocked.",
@@ -24689,7 +24689,7 @@
           "label": "Provider Governance Final Validation",
           "completedAt": "2026-05-30T00:00:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "0d97ae67",
           "summary": "Closed P136 with final validation evidence, prior report verification, checker handoff compatibility, docs/roadmap/status closure, route-wide Command Center safety validation, and planned-only P137 handoff.",
           "checksRun": [
             "npm run check:p1367-secrets-providers-tool-governance-final-validation",
@@ -27826,7 +27826,7 @@
       "label": "Provider Governance Final Validation",
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0d97ae67",
       "summary": "Closed P136 with final validation evidence, prior report verification, checker handoff compatibility, docs/roadmap/status closure, route-wide Command Center safety validation, and planned-only P137 handoff.",
       "checksRun": [
         "npm run check:p1367-secrets-providers-tool-governance-final-validation",
