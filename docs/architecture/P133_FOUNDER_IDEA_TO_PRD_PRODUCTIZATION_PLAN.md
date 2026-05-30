@@ -4,9 +4,9 @@
 
 NEXUS_OS_CHANGE. P133 is NEXUS OS work only. P133.1 is
 contract/checker/docs/status work only. P133.2 adds a deterministic local
-founder idea-to-PRD model. P133 must not modify project, generated project,
-provider, tool, worker runtime, deploy, release, export, package, local runtime
-state, DB, or environment files.
+founder idea-to-PRD model. P133.3 adds a safe local PRD preview. P133 must not
+modify project, generated project, provider, tool, worker runtime, deploy,
+release, export, package, local runtime state, DB, or environment files.
 
 ## P133 Subphase Split
 
@@ -421,6 +421,216 @@ Final safety checks:
   project mutation, DB/runtime writes, deploy, release, export, package,
   network calls, and spend remain blocked.
 - P133.3 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
+## P133.3 Safe PRD Preview
+
+Status: complete
+Phase: P133
+Subphase: P133.3
+Goal: Create a safe local PRD preview that uses the P133.2 model without
+provider/model calls, DB writes, project mutation, file writes, or agent
+dispatch.
+Why this is needed: Founder workflow UX needs an inspectable PRD preview before
+the Command Center chat and PRD page can show useful next actions.
+User/operator impact: Operators can review PRD sections, acceptance criteria,
+readiness, blockers, and a review checklist while execution remains disabled.
+Command Center impact: Preserve existing Command Center UX in P133.3. The
+preview is Command Center visible in data, but P133.4 owns rendering changes.
+Existing route-wide Playwright coverage remains the UX safety guard.
+Safety impact: P133.3 is an in-memory read-only preview only. It does not
+execute autonomous Q&A, call providers/models, generate PRDs with
+providers/models, dispatch agents, create or mutate projects, write files,
+write DB/runtime state, use network calls, deploy, release, export, package, or
+spend.
+Cost impact: Local deterministic preview and validation only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `5c017716`
+
+Files expected to change:
+- `live-ready/founderIdeaToPrdPreview.js`
+- `scripts/check-p1333-founder-idea-to-prd-preview.js`
+- `scripts/check-p1332-founder-idea-to-prd-model.js`
+- `scripts/check-p1331-founder-idea-to-prd-productization.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-p1327-founder-runtime-store-live-admission-execution.js`
+- `contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json`
+- `docs/architecture/P133_FOUNDER_IDEA_TO_PRD_PRODUCTIZATION_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `reports/p1333-founder-idea-to-prd-preview-report.md`
+- `reports/p1332-founder-idea-to-prd-model-report.md`
+- `reports/p1331-founder-idea-to-prd-productization-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/p1327-founder-runtime-store-live-admission-execution-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `live-ready/founderIdeaToPrdPreview.js`.
+- Create `scripts/check-p1333-founder-idea-to-prd-preview.js`.
+- Update P133.1, P133.2, P132.7, and enterprise roadmap checkers for P133.3
+  handoff compatibility.
+- Update package scripts, P133 contract, docs, roadmap, OS phase status, and
+  generated reports listed above.
+
+Expected exports, schemas, and data shapes:
+- `P133_FOUNDER_IDEA_TO_PRD_PREVIEW_PHASE`
+- `buildFounderIdeaToPrdPreview(input)`
+- `validateFounderIdeaToPrdPreview(envelope)`
+- Data shape: result envelope with `schemaVersion`, `currentState`,
+  `previewMode`, `sourceModel`, `prdPreview`, `previewSafety`,
+  `reviewChecklist`, `allowedLocalOperations`, `forbiddenOperations`,
+  `safetyFlags`, `nextAction`, `blockers`, `disabledReason`,
+  `ownerCapability`, `evidenceRefs`, `activityLocation`, `costImpact`, and
+  `commandCenterVisible`.
+- No DB schema, migration, table, query, runtime write, provider envelope,
+  agent dispatch packet, raw private ID, file write, raw report dump, or
+  project data.
+
+Reuse check:
+- Reuse `live-ready/founderIdeaToPrdModel.js`.
+- Reuse `live-ready/founderPrdSafeAuthoring.js`.
+- Reuse `shared/resultEnvelope.js`, `shared/reportWriter.js`, and
+  `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- No Command Center source changes in P133.3.
+- Preserve Chat with NEXUS, Founder Intake, Business Build, Agent Flow,
+  route-wide navigation, and display-safe labels.
+- Preserve no DemoApp leakage, no raw JSON/log/policy dumps, no raw private
+  project IDs, and no fake runnable actions.
+- Preserve route-wide Playwright coverage as the P133.3 UX guard.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run dashboard build, unit tests, and route-wide Playwright coverage without
+  editing dashboard source/tests.
+
+Tests to add/update/remove:
+- Add `check:p1333-founder-idea-to-prd-preview`.
+- Update P133.2 checker for P133.3 handoff compatibility.
+- Update P133.1 checker for P133.3 handoff compatibility.
+- Update enterprise roadmap checker for P133.3.
+- Update P132.7 checker for safe P133.3 progress.
+- Preserve existing route-wide Command Center Playwright tests; add no
+  dashboard tests because no dashboard UX is changed in this subphase.
+- Remove no tests.
+
+Checker updates:
+- Validate the P133.3 preview envelope and validator.
+- Validate reuse of the P133.2 model and existing safe PRD authoring helper.
+- Validate P133.3 allowed/forbidden files, validation commands, docs, status,
+  reports, P133.4 planned-only handoff, and safe wording.
+- Validate P133.1, P133.2, P132.7, and enterprise roadmap checkers remain
+  compatible.
+
+Docs to update:
+- This P133 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+Reports to regenerate:
+- P133.3 report.
+- P133.2 report.
+- P133.1 report.
+- Enterprise readiness roadmap report.
+- P132.7 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P133 in progress.
+- P133.3 complete.
+- Current phase P133.3.
+- Previous phase P133.2.
+- Next phase P133.4 planned-only.
+
+Known risks:
+- The preview can be mistaken for live PRD generation. P133.3 keeps the preview
+  read-only and in memory.
+- Rebuilding PRD artifact logic would create drift. P133.3 composes the
+  existing safe authoring helper.
+
+Rollback plan:
+- Revert only the P133.3 implementation and stamp commits. P133.2 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1333-founder-idea-to-prd-preview`
+- `npm run check:p1332-founder-idea-to-prd-model`
+- `npm run check:p1331-founder-idea-to-prd-productization`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1327-founder-runtime-store-live-admission-execution`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P133.3 allowed files>`
+- `git commit -m "chore(nexus): implement p1333 idea to prd preview"`
+- `git add <P133.3 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1333 idea to prd preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Autonomous Q&A execution, provider/model PRD generation, agent dispatch,
+  project mutation, file writes, DB/runtime writes, deploy, release, export,
+  package, network calls, and spend remain blocked.
+- P133.4 remains planned-only.
 - No stale `pending-final-commit` remains after the status stamp commit.
 
 Final response checklist:

@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P133.2
-  with P133.3 planned-only next.
+  roadmap/status entries only; current implementation is closed through P133.3
+  with P133.4 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2021,6 +2021,14 @@ The Command Center and local operator surface have:
   autonomous Q&A execution, provider/model calls, PRD generation execution,
   agent dispatch, project creation or mutation, DB/runtime writes, deploy,
   release, export, package, network calls, and spend remain unavailable.
+- P133.3 safe PRD preview: Added a read-only in-memory founder idea-to-PRD
+  preview that composes the P133.2 model with the existing safe PRD authoring
+  helper. It exposes PRD sections, acceptance criteria, a review checklist,
+  blockers, evidence, and safety state for later Command Center rendering.
+  P133.4 Chat and PRD Command Center UX is next; autonomous Q&A execution,
+  provider/model calls, PRD generation execution, agent dispatch, project
+  creation or mutation, file writes, DB/runtime writes, deploy, release,
+  export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

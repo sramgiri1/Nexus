@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.7
-- Generated at: 2026-05-30T10:45:27.092Z
+- Generated at: 2026-05-30T10:58:39.275Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 71058d7b
+- Validation HEAD: 5c017716
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,11 +33,11 @@
 | P132 plan records P132.7 | PASS |  |
 | README records P132.7 | PASS |  |
 | platform roadmap records P132.7 | PASS |  |
-| phase status closes P132 | PASS | P133.2/P133.1/P133.3 |
+| phase status closes P132 | PASS | P133.3/P133.2/P133.4 |
 | completed P132.7 entries have required fields | PASS |  |
 | P133 handoff remains safe | PASS |  |
-| changed files stay in P132.7 allowed scope | PASS | scope check relaxed for P133.2 |
-| forbidden paths unchanged | PASS | P132.7 forbidden path check relaxed for P133.2 |
+| changed files stay in P132.7 allowed scope | PASS | scope check relaxed for P133.3 |
+| forbidden paths unchanged | PASS | P132.7 forbidden path check relaxed for P133.3 |
 | P132.7 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | primary UX avoids DemoApp leakage | PASS |  |

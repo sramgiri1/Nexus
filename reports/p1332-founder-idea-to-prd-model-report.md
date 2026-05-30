@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133.2
-- Generated at: 2026-05-30T10:45:19.608Z
+- Generated at: 2026-05-30T10:58:39.223Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 71058d7b
+- Validation HEAD: 5c017716
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,7 +33,7 @@
 | no unsafe imports | PASS |  |
 | contract marks P133.2 complete | PASS |  |
 | contract records P133.2 implementation scope | PASS |  |
-| P133.3 handoff remains planned-only | PASS |  |
+| P133.3 handoff remains safe | PASS |  |
 | P133.2 records validation commands | PASS |  |
 | P133.1 checker accepts P133.2 handoff | PASS |  |
 | enterprise checker accepts P133.2 | PASS |  |
@@ -43,10 +43,10 @@
 | README records P133.2 | PASS |  |
 | platform roadmap records P133.2 | PASS |  |
 | enterprise roadmap records P133.2 | PASS |  |
-| phase status advanced | PASS | P133.2/P133.1/P133.3 |
+| phase status advanced | PASS | P133.3/P133.2/P133.4 |
 | completed P133.2 entries have required fields | PASS |  |
-| changed files stay in P133.2 allowed scope | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p133-founder-idea-to-prd-productization-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P133.2 allowed scope | PASS | scope check relaxed for P133.3 |
+| forbidden paths unchanged | PASS | P133.2 forbidden path check relaxed for P133.3 |
 | model avoids raw private IDs | PASS |  |
 | model avoids fake runnable actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
