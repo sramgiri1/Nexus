@@ -116,6 +116,7 @@ export const AUTH_GOVERNANCE_TABS = [
 export const OBSERVABILITY_TABS = [
   { id: "overview", label: "Overview", description: "Telemetry, SLO, health posture, and next action", badge: "Preview" },
   { id: "posture", label: "Posture", description: "Disabled telemetry and incident automation posture", badge: "Blocked" },
+  { id: "ledger", label: "Ledger", description: "Evidence, audit, activity, observability, and cost preview", badge: "Read-only" },
   { id: "evidence", label: "Evidence", description: "Evidence, activity, cost, and blockers", badge: "Read-only" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable observability actions and reasons", badge: "Disabled" },
 ];

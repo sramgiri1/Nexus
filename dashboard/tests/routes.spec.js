@@ -2503,6 +2503,71 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P139.4 evidence audit observability cost ledger UX is read-only and scoped", async ({ page }) => {
+    test.setTimeout(90000);
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/observability", { waitUntil: "domcontentloaded" });
+      await pickTheme(page, theme);
+      const themedCard = page.getByLabel("Evidence audit observability cost ledger preview").filter({ hasText: "Observability Ledger Preview" });
+      await expect(themedCard).toHaveCount(1);
+      await expect(themedCard).toContainText("Enterprise Traceability");
+      await expect(themedCard).toContainText("Redacted cost ledger preview");
+      await expect(themedCard).toContainText("Trace rows");
+      await expect(themedCard).toContainText("Blocked rows");
+      await expect(themedCard).toContainText("No provider/model calls");
+    }
+
+    await commandTab(page, "Ledger").click();
+    const ledgerPanel = activeCommandTabPanel(page);
+    await expect(ledgerPanel.getByLabel("Evidence audit observability cost ledger preview")).toContainText("Observability Ledger Preview");
+    await expect(ledgerPanel).toContainText("Ledger preview evidence report");
+    await expect(ledgerPanel).toContainText("OS phase status report");
+    await expect(ledgerPanel).toContainText("Ledger writes");
+    await expect(ledgerPanel).toContainText("Blocked");
+    const observabilityBody = await page.locator("body").innerText();
+    expect(observabilityBody).not.toMatch(/P139|reports\/p139|ledger-p139|corr[_-]p139|record-p139|cost-p139/i);
+
+    for (const [path, label] of [
+      ["/command-center/evidence", "Evidence Traceability Ledger"],
+      ["/command-center/business-build", "Business Build Traceability Ledger"],
+      ["/command-center/agent-flow", "Agent Flow Traceability Ledger"],
+    ]) {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const card = page.getByLabel("Evidence audit observability cost ledger preview").filter({ hasText: label });
+      await expect(card).toHaveCount(1);
+      await expect(card).toContainText("Trace rows");
+      await expect(card).toContainText("Zero");
+      await expect(card).toContainText("Writes, execution, provider calls, project mutation, network calls, and spend remain blocked");
+      const scopedBody = await page.locator("body").innerText();
+      expect(scopedBody).not.toMatch(/P139|reports\/p139|ledger-p139|corr[_-]p139|record-p139|cost-p139/i);
+    }
+
+    await page.goto("/command-center/cost", { waitUntil: "domcontentloaded" });
+    await commandTab(page, "Ledger").click();
+    const costCard = activeCommandTabPanel(page).getByLabel("Evidence audit observability cost ledger preview").filter({ hasText: "Cost Ledger Traceability" });
+    await expect(costCard).toHaveCount(1);
+    await expect(costCard).toContainText("Cost Ledger Traceability");
+    await expect(costCard).toContainText("Redacted cost ledger preview");
+    const costBody = await page.locator("body").innerText();
+    expect(costBody).not.toMatch(/P139|reports\/p139|ledger-p139|corr[_-]p139|record-p139|cost-p139/i);
+
+    await page.goto("/command-center/lite", { waitUntil: "domcontentloaded" });
+    await expect(page.getByLabel("Evidence audit observability cost ledger preview")).toHaveCount(0);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/P139|reports\/p139|ledger-p139|corr[_-]p139|record-p139|cost-p139/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now|write ledger now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Backup DR route renders readiness without runnable recovery actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 

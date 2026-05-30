@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P139.3
-- Generated at: 2026-05-30T23:01:14.434Z
+- Generated at: 2026-05-30T23:30:48.027Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a841b071
+- Validation HEAD: 1bf5a3f6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,10 +29,10 @@
 - validateEvidenceAuditObservabilityCostLedgerPreview
 ## Phase Status
 
-- Current subphase: P139.3
-- Previous subphase: P139.2
-- Next subphase: P139.4
-- P139.4 remains planned-only.
+- Current subphase: P139.4
+- Previous subphase: P139.3
+- Next subphase: P139.5
+- P139.4 has advanced from the P139.3 handoff.
 ## Checks
 
 | Check | Status | Details |
@@ -50,7 +50,7 @@
 | preview remains zero-spend | PASS |  |
 | contract advances P139.3 safely | PASS |  |
 | contract records expected base commit | PASS |  |
-| P139.3 complete and P139.4 planned | PASS |  |
+| P139.3 complete and P139.4 handoff known | PASS |  |
 | contract records expected exports | PASS |  |
 | contract records validation commands | PASS |  |
 | contract scope stays preview-only | PASS |  |
@@ -60,11 +60,11 @@
 | README records P139.3 | PASS |  |
 | platform roadmap records P139.3 | PASS |  |
 | enterprise roadmap records P139.3 | PASS |  |
-| phase status starts P139.3 | PASS | P139.3/P139.2/P139.4 |
+| phase status keeps P139.3 complete | PASS | P139.4/P139.3/P139.5 |
 | completed P139.3 entries have required fields | PASS |  |
-| P139.4 remains planned-only | PASS |  |
-| changed files stay in P139.3 allowed scope | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P139.4 handoff remains valid | PASS |  |
+| changed files stay in P139.3 allowed scope | PASS | scope check relaxed for P139.4 |
+| forbidden paths unchanged | PASS | P139.3 forbidden path check relaxed for P139.4 |
 | route-wide safety coverage retained | PASS |  |
 | preview and docs avoid raw private IDs | PASS |  |
 | preview avoids fake runnable actions | PASS |  |
@@ -84,7 +84,7 @@
 - git diff --check
 ## Known Limitations
 
-- P139.3 is preview-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.4 remains planned-only.
+- P139.3 is preview-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.4 has advanced through a separate Command Center UX subphase.
 ## Result
 
 PASS (34/34)

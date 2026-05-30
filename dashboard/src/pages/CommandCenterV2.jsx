@@ -89,6 +89,7 @@ import { buildProjectShippingReadinessViewModel } from "../data/projectShippingR
 import { dbRuntimeReadinessViewModel } from "../data/dbRuntimeReadiness.js";
 import { buildAuthGovernanceReadinessViewModel } from "../data/authGovernanceReadiness.js";
 import { buildObservabilityReadinessViewModel } from "../data/observabilityReadiness.js";
+import { buildEvidenceAuditObservabilityCostLedgerUxViewModel } from "../data/evidenceAuditObservabilityCostLedgerUx.js";
 import { buildBackupDrReadinessViewModel } from "../data/backupDrReadiness.js";
 import { buildIsolationReadinessViewModel } from "../data/isolationReadiness.js";
 import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.js";
@@ -3399,6 +3400,7 @@ function AgentFlowPage() {
   const [envelope] = useState(getStoredLiteQnaState);
   const [founderIdea] = useState(getStoredLiteFounderIdea);
   const businessBuild = buildBusinessBuildViewModel(founderIdea);
+  const ledgerPreview = buildEvidenceAuditObservabilityCostLedgerUxViewModel();
   const storeExecutionScopeKey = "founderRuntimeStoreLiveAdmission" + "ExecutionScope";
   const agentStoreExecutionScope = businessBuild[storeExecutionScopeKey];
   return (
@@ -3472,6 +3474,10 @@ function AgentFlowPage() {
       <FounderLiveOperatorDecisionLedgerPersistenceCard
         persistence={businessBuild.founderLiveOperatorDecisionLedgerPersistence}
         surfaceLabel="Agent Flow Decision Ledger Persistence"
+      />
+      <EvidenceAuditObservabilityCostLedgerCard
+        ledger={ledgerPreview}
+        surfaceLabel="Agent Flow Traceability Ledger"
       />
       <FounderLiveAgentWorkQueueAdmissionCard
         queue={businessBuild.founderLiveAgentWorkQueueAdmission}
@@ -4948,6 +4954,61 @@ function ContractsPage({ vm }) {
   );
 }
 
+function EvidenceAuditObservabilityCostLedgerCard({ ledger, surfaceLabel = "Enterprise Traceability Ledger" }) {
+  if (!ledger) return null;
+  const summaryRows = (ledger.summaryRows || []).filter((row) => ["Current state", "Next action", "Owner", "Evidence", "Activity", "Cost impact"].includes(row.label));
+  const traceRows = (ledger.traceRows || []).slice(0, 3);
+  const safetyRows = (ledger.safetyRows || []).slice(0, 6);
+
+  return (
+    <section className="ccv2-card" aria-label="Evidence audit observability cost ledger preview" style={{ marginTop: 16 }}>
+      <div className="ccv2-section-heading">Enterprise Traceability</div>
+      <h3>{surfaceLabel}</h3>
+      <p className="ccv2-muted" style={{ marginTop: 8 }}>
+        Redacted cost ledger preview for founder work, showing read-only evidence, audit, activity, observability, and cost links. Writes, execution, provider calls, project mutation, network calls, and spend remain blocked.
+      </p>
+
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 12 }}>
+        {(ledger.previewCards || []).map((card) => (
+          <div className="ccv2-stat-chip" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+            <small>{card.detail}</small>
+          </div>
+        ))}
+      </div>
+
+      <div className="ccv2-ledger-summary ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+        {summaryRows.map((row) => (
+          <div className="ccv2-page-summary-row" key={row.label}>
+            <span className="ccv2-page-summary-label">{row.label}</span>
+            <span className="ccv2-page-summary-value">{row.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="ccv2-stack-list" style={{ marginTop: 12 }}>
+        {traceRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span>{row.currentState}</span>
+            <small>Evidence: {row.evidenceLocation} · Activity: {row.activityLocation} · {row.costImpact}</small>
+          </div>
+        ))}
+      </div>
+
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className={row.value === "Blocked" || row.value === "Hidden" ? "ccv2-safety-row__value--disabled" : "ccv2-safety-row__value--ready"}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Evidence Page ─── */
 function EvidencePage({ vm }) {
   const liveEvidence = vm.liveData?.evidence;
@@ -4962,6 +5023,7 @@ function EvidencePage({ vm }) {
   const [activeTab, setActiveTab] = useState("timeline");
   const taskGroups = [...new Set(recent.map((item) => item.taskId || "No linked task"))];
   const agentGroups = [...new Set(recent.map((item) => formatAgentLabel(item.agentId || item.agent || "NEXUS")))];
+  const ledgerPreview = buildEvidenceAuditObservabilityCostLedgerUxViewModel();
 
   return (
     <div className="ccv2-content">
@@ -5003,6 +5065,10 @@ function EvidencePage({ vm }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Data source</span><span className="ccv2-page-summary-value">{liveOnline ? "Live local API" : "File-backed snapshot fallback"}</span></div>
           </div>
         </div>
+        <EvidenceAuditObservabilityCostLedgerCard
+          ledger={ledgerPreview}
+          surfaceLabel="Evidence Traceability Ledger"
+        />
         <CommandTabs tabs={EVIDENCE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Evidence sections">
           <CommandTabPanel tabId="timeline" activeTab={activeTab}>
             <div className="ccv2-card">
@@ -5915,6 +5981,7 @@ function BatchQueuePage({ vm }) {
 /* ─── Cost Center Page ─── */
 function CostCenterPage({ vm, studio }) {
   const [activeTab, setActiveTab] = useState("overview");
+  const ledgerPreview = buildEvidenceAuditObservabilityCostLedgerUxViewModel();
   const budgetScopes = ["Global", "Project", "Mission", "Task", "Agent", "Skill", "Hook", "Tool", "Trigger", "Provider", "API Batch", "Worker", "OS Phase"];
   const estimates = [
     { label: "Task estimate preview", amount: "$0.0125", confidence: "Medium", assumption: "Static token estimate; no provider call." },
@@ -5997,10 +6064,10 @@ function CostCenterPage({ vm, studio }) {
             </div>
           </CommandTabPanel>
           <CommandTabPanel tabId="ledger" activeTab={activeTab}>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Ledger</div>
-              <div className="ccv2-empty-state">Redacted cost ledger preview includes estimate records, actual preview records, and budget decisions. No raw prompts, provider payloads, secrets, or private source content are shown.</div>
-            </div>
+            <EvidenceAuditObservabilityCostLedgerCard
+              ledger={ledgerPreview}
+              surfaceLabel="Cost Ledger Traceability"
+            />
           </CommandTabPanel>
           <CommandTabPanel tabId="enforcement" activeTab={activeTab}>
             <div className="ccv2-card">
@@ -9858,6 +9925,7 @@ function AuthGovernancePage() {
 
 function ObservabilityPage() {
   const readiness = buildObservabilityReadinessViewModel();
+  const ledgerPreview = buildEvidenceAuditObservabilityCostLedgerUxViewModel();
   const route = COMMAND_CENTER_ROUTE_BY_KEY.observability || {};
   const tabs = route.tabs || OBSERVABILITY_TABS;
   const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
@@ -9895,6 +9963,10 @@ function ObservabilityPage() {
                 </article>
               ))}
             </div>
+            <EvidenceAuditObservabilityCostLedgerCard
+              ledger={ledgerPreview}
+              surfaceLabel="Observability Ledger Preview"
+            />
           </CommandTabPanel>
 
           <CommandTabPanel tabId="posture" activeTab={activeTab}>
@@ -9909,6 +9981,13 @@ function ObservabilityPage() {
                 ))}
               </div>
             </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="ledger" activeTab={activeTab}>
+            <EvidenceAuditObservabilityCostLedgerCard
+              ledger={ledgerPreview}
+              surfaceLabel="Observability Ledger Preview"
+            />
           </CommandTabPanel>
 
           <CommandTabPanel tabId="evidence" activeTab={activeTab}>
@@ -10665,6 +10744,7 @@ function FounderIntakePage() {
 function BusinessBuildPage() {
   const [founderIdea] = useState(getStoredLiteFounderIdea);
   const build = buildBusinessBuildViewModel(founderIdea);
+  const ledgerPreview = buildEvidenceAuditObservabilityCostLedgerUxViewModel();
   const storeExecutionScopeKey = "founderRuntimeStoreLiveAdmission" + "ExecutionScope";
   const businessStoreExecutionScope = build[storeExecutionScopeKey];
   const founderPersistenceControls = buildFounderPersistenceControlsViewModel(build.founderDbWorkflow);
@@ -10751,6 +10831,10 @@ function BusinessBuildPage() {
         <FounderLiveOperatorDecisionLedgerPersistenceCard
           persistence={build.founderLiveOperatorDecisionLedgerPersistence}
           surfaceLabel="Business Build Decision Ledger Persistence"
+        />
+        <EvidenceAuditObservabilityCostLedgerCard
+          ledger={ledgerPreview}
+          surfaceLabel="Business Build Traceability Ledger"
         />
         <FounderLiveAgentWorkOrderPersistenceCard
           persistence={build.founderLiveAgentWorkOrderPersistence}

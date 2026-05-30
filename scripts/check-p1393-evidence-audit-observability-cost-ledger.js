@@ -136,6 +136,25 @@ const p1393CurrentState =
   && ["P139.1", "P139.2", "P139.3"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P139.4")?.status === "planned"
   && roadmapById.get("P139.4")?.status === "planned";
+const p1394CurrentState =
+  status.currentPhase === "P139.4"
+  && status.previousPhase === "P139.3"
+  && status.nextPhase === "P139.5"
+  && roadmap.currentPhase === "P139.4"
+  && roadmap.previousPhase === "P139.3"
+  && roadmap.nextPhase === "P139.5"
+  && status.current?.phaseId === "P139.4"
+  && status.previous?.phaseId === "P139.3"
+  && status.next?.phaseId === "P139.5"
+  && roadmap.current?.phaseId === "P139.4"
+  && roadmap.previous?.phaseId === "P139.3"
+  && roadmap.next?.phaseId === "P139.5"
+  && statusById.get("P139")?.status === "in_progress"
+  && roadmapById.get("P139")?.status === "in_progress"
+  && ["P139.1", "P139.2", "P139.3", "P139.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P139.5")?.status === "planned"
+  && roadmapById.get("P139.5")?.status === "planned";
+const p1393OrLaterState = p1393CurrentState || p1394CurrentState;
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1393-evidence-audit-observability-cost-ledger.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -153,21 +172,21 @@ addCheck("preview rows and sections are useful", preview.data?.previewSummary?.r
 addCheck("preview reuses valid P139.2 model", preview.data?.sourceModel?.phase === "P139.2" && preview.data?.sourceModelValidation === "valid");
 addCheck("all authority flags remain blocked", EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PREVIEW_SAFETY_FLAG_NAMES.every((flag) => preview.data?.[flag] === false && preview.data?.safetyFlags?.[flag] === false));
 addCheck("preview remains zero-spend", preview.data?.previewSummary?.zeroSpend === true && /Zero-spend/i.test(preview.data?.costImpact || ""));
-addCheck("contract advances P139.3 safely", contract.phaseId === "P139" && contract.status === "in_progress" && contract.currentSubphase === "P139.3" && contract.previousSubphase === "P139.2" && contract.nextSubphase === "P139.4");
+addCheck("contract advances P139.3 safely", contract.phaseId === "P139" && contract.status === "in_progress" && ["P139.3", "P139.4"].includes(contract.currentSubphase) && ["P139.2", "P139.3"].includes(contract.previousSubphase) && ["P139.4", "P139.5"].includes(contract.nextSubphase));
 addCheck("contract records expected base commit", contract.expectedBaseCommit === "afe98694" && p1393.expectedBaseCommit === EXPECTED_BASE_COMMIT);
-addCheck("P139.3 complete and P139.4 planned", p1393.status === "complete" && p1394.status === "planned" && p1393.nextPhase === "P139.4");
+addCheck("P139.3 complete and P139.4 handoff known", p1393.status === "complete" && ["planned", "complete"].includes(p1394.status) && p1393.nextPhase === "P139.4");
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1393.expectedExports?.includes(entry)));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1393.validationCommands?.includes(command)));
 addCheck("contract scope stays preview-only", /read-only evidence preview/i.test(p1393.dataShape || "") && p1393.forbiddenFiles?.includes("dashboard/src/**") && p1393.forbiddenFiles?.includes("db/**") && p1393.forbiddenFiles?.includes("projects/**"));
 addCheck("P139.2 report passes", reportPassed("reports/p1392-evidence-audit-observability-cost-ledger-report.md"));
 addCheck("enterprise checker accepts P139.3", enterpriseChecker.includes("p1393CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("P139 plan records P139.3", /## P139\.3 Evidence Preview[\s\S]*Status:\s+complete/.test(plan) && /P139\.4 remains planned-only/i.test(plan));
-addCheck("README records P139.3", /P139\.3 evidence preview/i.test(readme) && /P139\.4 is planned-only\s+next/i.test(readme));
+addCheck("P139 plan records P139.3", /## P139\.3 Evidence Preview[\s\S]*Status:\s+complete/.test(plan) && (/P139\.4 remains planned-only/i.test(plan) || /P139\.4 is complete/i.test(plan)));
+addCheck("README records P139.3", /P139\.3 evidence preview/i.test(readme) && (/P139\.4 is planned-only\s+next/i.test(readme) || /P139\.4 Observability Command Center UX/i.test(readme)));
 addCheck("platform roadmap records P139.3", /P139\.3 evidence preview is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P139.3", /P139\.3 is now complete/i.test(enterpriseRoadmap) && /P139\.4 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status starts P139.3", p1393CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P139.3", /P139\.3 is now complete/i.test(enterpriseRoadmap) && (/P139\.4 is the next executable subphase/i.test(enterpriseRoadmap) || /P139\.4 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status keeps P139.3 complete", p1393OrLaterState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P139.3 entries have required fields", [statusById.get("P139"), statusById.get("P139.3"), roadmapById.get("P139"), roadmapById.get("P139.3")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P139.4 remains planned-only", statusById.get("P139.4")?.status === "planned" && roadmapById.get("P139.4")?.status === "planned" && !(statusById.get("P139.4")?.checksRun || []).length);
+addCheck("P139.4 handoff remains valid", (p1393CurrentState && statusById.get("P139.4")?.status === "planned" && roadmapById.get("P139.4")?.status === "planned" && !(statusById.get("P139.4")?.checksRun || []).length) || p1394CurrentState);
 addCheck("changed files stay in P139.3 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P139.3 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("route-wide safety coverage retained", ["Command Center route-wide UX", "DemoApp", "raw JSON", "private-project", "dispatch agent now", "Use system theme", "Use dark theme", "Use light theme"].every((text) => routeTests.includes(text)));
@@ -210,14 +229,16 @@ writeMarkdownReport(
         `- Current subphase: ${status.currentPhase}`,
         `- Previous subphase: ${status.previousPhase}`,
         `- Next subphase: ${status.nextPhase}`,
-        "- P139.4 remains planned-only.",
+        p1394CurrentState ? "- P139.4 has advanced from the P139.3 handoff." : "- P139.4 remains planned-only.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P139.3 is preview-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.4 remains planned-only.",
+      body: p1394CurrentState
+        ? "- P139.3 is preview-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.4 has advanced through a separate Command Center UX subphase."
+        : "- P139.3 is preview-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.4 remains planned-only.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
