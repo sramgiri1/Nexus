@@ -624,9 +624,33 @@ const p1367FinalState =
   && ["P136.1", "P136.2", "P136.3", "P136.4", "P136.5", "P136.6", "P136.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete")
   && statusById.get("P137")?.status === "planned"
   && indexById.get("P137")?.status === "planned";
+const p1371StartedState =
+  phaseStatus.currentPhase === "P137.1"
+  && phaseStatus.previousPhase === "P136.7"
+  && phaseStatus.nextPhase === "P137.2"
+  && phaseIndex.currentPhase === "P137.1"
+  && phaseIndex.previousPhase === "P136.7"
+  && phaseIndex.nextPhase === "P137.2"
+  && phaseStatus.current?.phaseId === "P137.1"
+  && phaseStatus.previous?.phaseId === "P136.7"
+  && phaseStatus.next?.phaseId === "P137.2"
+  && phaseIndex.current?.phaseId === "P137.1"
+  && phaseIndex.previous?.phaseId === "P136.7"
+  && phaseIndex.next?.phaseId === "P137.2"
+  && statusById.get("P136")?.status === "complete"
+  && indexById.get("P136")?.status === "complete"
+  && statusById.get("P136.7")?.status === "complete"
+  && indexById.get("P136.7")?.status === "complete"
+  && statusById.get("P137")?.status === "in_progress"
+  && indexById.get("P137")?.status === "in_progress"
+  && statusById.get("P137.1")?.status === "complete"
+  && indexById.get("P137.1")?.status === "complete"
+  && statusById.get("P137.2")?.status === "planned"
+  && indexById.get("P137.2")?.status === "planned";
 const p135ActiveState = p1351StartedState || p1352CurrentState || p1353CurrentState || p1354CurrentState || p1355CurrentState || p1356CurrentState || p1357FinalState;
 const p136ActiveState = p1361StartedState || p1362CurrentState || p1363CurrentState || p1364CurrentState || p1365CurrentState || p1366CurrentState || p1367FinalState;
-const enterpriseActiveState = p133ActiveState || p134ActiveState || p135ActiveState || p136ActiveState;
+const p137ActiveState = p1371StartedState;
+const enterpriseActiveState = p133ActiveState || p134ActiveState || p135ActiveState || p136ActiveState || p137ActiveState;
 const currentP133CheckCommand = p1337FinalState
   ? "npm run check:p1337-founder-idea-to-prd-final-validation"
   : p1336CompleteState
@@ -686,6 +710,9 @@ const currentP136CheckCommand = p1367FinalState
   : p1361StartedState
   ? "npm run check:p1361-secrets-providers-tool-governance"
   : "";
+const currentP137CheckCommand = p1371StartedState
+  ? "npm run check:p1371-agent-work-order-runtime"
+  : "";
 
 const enterprisePhases = [
   ["P133", "Founder Idea-to-PRD Productization"],
@@ -707,6 +734,7 @@ const allowedFiles = new Set([
   "contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json",
   "contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json",
 	  "contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json",
+  "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
 	  "auth-governance/p135-2-auth-tenant-model.js",
 	  "auth-governance/p135-3-permission-preview.js",
 	  "shared/providerGovernanceModel.js",
@@ -721,6 +749,7 @@ const allowedFiles = new Set([
   "docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md",
   "docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md",
   "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN.md",
+  "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
   "os-roadmap/nexus-phases.json",
   "os-roadmap/phase-status.json",
   DOC_PATH,
@@ -755,6 +784,7 @@ const allowedFiles = new Set([
   "scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js",
   "scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js",
   "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
+  "scripts/check-p1371-agent-work-order-runtime.js",
 	  "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-os-phase-status.js",
   "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
@@ -795,6 +825,7 @@ const allowedFiles = new Set([
   "reports/p1365-secrets-providers-tool-governance-tests-checkers-report.md",
   "reports/p1366-secrets-providers-tool-governance-docs-roadmap-report.md",
   "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
+  "reports/p1371-agent-work-order-runtime-report.md",
 	  "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -829,13 +860,14 @@ const allowedDashboardFiles = new Set([
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:enterprise-readiness-roadmap"]));
 addCheck("P133/P134/P135 checkers registered when active", (!p133ActiveState || (Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]) && (!p1332CompleteState || Boolean(packageJson.scripts?.["check:p1332-founder-idea-to-prd-model"])) && (!p1333CompleteState || Boolean(packageJson.scripts?.["check:p1333-founder-idea-to-prd-preview"])) && (!p1334CompleteState || Boolean(packageJson.scripts?.["check:p1334-command-center-idea-to-prd-ux"])) && (!p1335CompleteState || Boolean(packageJson.scripts?.["check:p1335-founder-idea-to-prd-tests-checkers"])) && (!p1336CompleteState || Boolean(packageJson.scripts?.["check:p1336-founder-idea-to-prd-docs-roadmap"])) && (!p1337FinalState || Boolean(packageJson.scripts?.["check:p1337-founder-idea-to-prd-final-validation"])))) && (!p134ActiveState || (Boolean(packageJson.scripts?.["check:p1341-durable-db-crud-runtime"]) && (!p1342CurrentState || Boolean(packageJson.scripts?.["check:p1342-durable-db-crud-runtime-schema-model"])) && (!p1343CurrentState || Boolean(packageJson.scripts?.["check:p1343-durable-db-crud-runtime-write-plan-preview"])) && (!p1344CurrentState || Boolean(packageJson.scripts?.["check:p1344-durable-db-crud-runtime-command-center-ux"])) && (!p1345CurrentState || Boolean(packageJson.scripts?.["check:p1345-durable-db-crud-runtime-tests-checkers"])) && (!p1346CurrentState || Boolean(packageJson.scripts?.["check:p1346-durable-db-crud-runtime-docs-roadmap"])) && (!p1347FinalState || Boolean(packageJson.scripts?.["check:p1347-durable-db-crud-runtime-final-validation"])))) && (!p135ActiveState || (Boolean(packageJson.scripts?.["check:p1351-identity-tenant-roles-permissions"]) && (!p1352CurrentState || Boolean(packageJson.scripts?.["check:p1352-auth-tenant-model"])) && (!(p1353CurrentState || p1354CurrentState || p1355CurrentState || p1356CurrentState || p1357FinalState) || Boolean(packageJson.scripts?.["check:p1353-permission-preview"])) && (!(p1354CurrentState || p1355CurrentState || p1356CurrentState || p1357FinalState) || Boolean(packageJson.scripts?.["check:p1354-auth-governance-command-center-ux"])) && (!(p1355CurrentState || p1356CurrentState || p1357FinalState) || Boolean(packageJson.scripts?.["check:p1355-identity-tenant-roles-permissions-tests-checkers"])) && (!(p1356CurrentState || p1357FinalState) || Boolean(packageJson.scripts?.["check:p1356-identity-tenant-roles-permissions-docs-roadmap"])) && (!p1357FinalState || Boolean(packageJson.scripts?.["check:p1357-identity-tenant-roles-permissions-final-validation"])))));
 addCheck("P136 checker registered when active", !p136ActiveState || (Boolean(packageJson.scripts?.["check:p1361-secrets-providers-tool-governance"]) && (!(p1362CurrentState || p1363CurrentState || p1364CurrentState || p1365CurrentState || p1366CurrentState || p1367FinalState) || Boolean(packageJson.scripts?.["check:p1362-secret-provider-model"])) && (!(p1363CurrentState || p1364CurrentState || p1365CurrentState || p1366CurrentState || p1367FinalState) || Boolean(packageJson.scripts?.["check:p1363-provider-dry-run"])) && (!(p1364CurrentState || p1365CurrentState || p1366CurrentState || p1367FinalState) || Boolean(packageJson.scripts?.["check:p1364-provider-governance-command-center-ux"])) && (!(p1365CurrentState || p1366CurrentState || p1367FinalState) || Boolean(packageJson.scripts?.["check:p1365-secrets-providers-tool-governance-tests-checkers"])) && (!(p1366CurrentState || p1367FinalState) || Boolean(packageJson.scripts?.["check:p1366-secrets-providers-tool-governance-docs-roadmap"])) && (!p1367FinalState || Boolean(packageJson.scripts?.["check:p1367-secrets-providers-tool-governance-final-validation"]))));
+addCheck("P137 checker registered when active", !p137ActiveState || (p1371StartedState && Boolean(packageJson.scripts?.["check:p1371-agent-work-order-runtime"])));
 addCheck("current enterprise handoff", enterpriseActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
 addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([phaseId]) => {
   const status = statusById.get(phaseId);
   const index = indexById.get(phaseId);
-  if (phaseId === "P133" && (p134ActiveState || p135ActiveState || p136ActiveState)) {
+  if (phaseId === "P133" && (p134ActiveState || p135ActiveState || p136ActiveState || p137ActiveState)) {
     return status?.status === "complete"
       && index?.status === "complete"
       && Boolean(status.commit)
@@ -855,7 +887,7 @@ addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([p
       && Array.isArray(index.checksRun)
       && index.checksRun.includes(currentP133CheckCommand);
   }
-  if (phaseId === "P134" && (p135ActiveState || p136ActiveState)) {
+  if (phaseId === "P134" && (p135ActiveState || p136ActiveState || p137ActiveState)) {
     return status?.status === "complete"
       && index?.status === "complete"
       && Boolean(status.commit)
@@ -885,7 +917,7 @@ addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([p
       && Array.isArray(index.checksRun)
       && index.checksRun.includes(currentP135CheckCommand);
   }
-  if (phaseId === "P135" && p136ActiveState) {
+  if (phaseId === "P135" && (p136ActiveState || p137ActiveState)) {
     return status?.status === "complete"
       && index?.status === "complete"
       && Boolean(status.commit)
@@ -904,6 +936,26 @@ addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([p
       && status.checksRun.includes(currentP136CheckCommand)
       && Array.isArray(index.checksRun)
       && index.checksRun.includes(currentP136CheckCommand);
+  }
+  if (phaseId === "P136" && p137ActiveState) {
+    return status?.status === "complete"
+      && index?.status === "complete"
+      && Boolean(status.commit)
+      && Boolean(index.commit)
+      && Array.isArray(status.checksRun)
+      && status.checksRun.includes("npm run check:p1367-secrets-providers-tool-governance-final-validation")
+      && Array.isArray(index.checksRun)
+      && index.checksRun.includes("npm run check:p1367-secrets-providers-tool-governance-final-validation");
+  }
+  if (phaseId === "P137" && p137ActiveState) {
+    return status?.status === "in_progress"
+      && index?.status === "in_progress"
+      && Boolean(status.commit)
+      && Boolean(index.commit)
+      && Array.isArray(status.checksRun)
+      && status.checksRun.includes(currentP137CheckCommand)
+      && Array.isArray(index.checksRun)
+      && index.checksRun.includes(currentP137CheckCommand);
   }
   return status?.status === "planned"
     && index?.status === "planned"
@@ -1011,7 +1063,13 @@ const p136ActiveSubphaseRecordsPresent = !p136ActiveState || (
 	    || (p1367FinalState && ["P136.2", "P136.3", "P136.4", "P136.5", "P136.6", "P136.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P137")?.status === "planned" && indexById.get("P137")?.status === "planned")
 	  )
 	);
-addCheck("P133/P134/P135/P136 active subphase records are present", p133ActiveSubphaseRecordsPresent && p134ActiveSubphaseRecordsPresent && p135ActiveSubphaseRecordsPresent && p136ActiveSubphaseRecordsPresent);
+const p137ActiveSubphaseRecordsPresent = !p137ActiveState || (
+  statusById.get("P137.1")?.status === "complete"
+  && indexById.get("P137.1")?.status === "complete"
+  && statusById.get("P137.2")?.status === "planned"
+  && indexById.get("P137.2")?.status === "planned"
+);
+addCheck("P133/P134/P135/P136/P137 active subphase records are present", p133ActiveSubphaseRecordsPresent && p134ActiveSubphaseRecordsPresent && p135ActiveSubphaseRecordsPresent && p136ActiveSubphaseRecordsPresent && p137ActiveSubphaseRecordsPresent);
 addCheck("enterprise roadmap doc covers all phases", enterprisePhases.every(([phaseId, title]) => doc.includes(`| ${phaseId} | ${title} |`)));
 addCheck("enterprise roadmap doc records required subphase contract", [
   "Narrow scope",
@@ -1045,7 +1103,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Tracks P133-P145 enterprise-readiness roadmap phases after P132.",
-        "- Allows P133-P136 to close through implementation-grade enterprise-readiness subphases while later enterprise phases remain planned-only.",
+        "- Allows P133-P136 to close and P137 to advance through implementation-grade agent work order runtime subphases while later enterprise phases remain planned-only.",
         "- Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -1062,7 +1120,7 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, and P136.1-P136.7 may be complete. P137-P145 remain planned-only. Current enterprise work does not enable secret values, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      body: "- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, and P136.1-P136.7 may be complete. P137 may be in progress through P137.1. P138-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

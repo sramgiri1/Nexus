@@ -31,10 +31,12 @@ P136.4 is now complete as Provider Governance Command Center UX only.
 P136.5 is now complete as tests/checkers hardening only.
 P136.6 is now complete as docs/roadmap/status closure only.
 P136.7 is now complete as final validation only. P136.1 through P136.7 are
-now complete, and P136 is complete. P137 is the next executable phase.
-P137-P145 remain planned-only. They do not enable secret values, DB writes,
-provider/model calls, tool execution, agent dispatch, project mutation, deploy,
-release, export, package, network calls, or spend until each phase/subphase has its own
+now complete, and P136 is complete.
+P137.1 is now complete as contract/policy/safety-boundary only.
+P137.2 is the next executable subphase. P137.2 and P138-P145 remain
+planned-only. They do not enable secret values, DB writes, provider/model
+calls, tool execution, agent dispatch, project mutation, deploy, release,
+export, package, network calls, or spend until each phase/subphase has its own
 implementation-grade plan, checker coverage, Command Center UX when applicable,
 and final validation.
 
@@ -107,9 +109,10 @@ run. P136.4 is now complete as Provider Governance Command Center UX only.
 P136.5 is now complete as tests/checkers hardening only.
 P136.6 is now complete as docs/roadmap/status closure only.
 P136.7 is now complete as final validation only. P136.1 through P136.7 are
-now complete, and P136 is complete. P137 is the next executable phase.
-P137-P145 are planned-only backlog phases and must not be treated as complete
-or live.
+now complete, and P136 is complete.
+P137.1 is now complete as contract/policy/safety-boundary only.
+P137.2 is the next executable subphase. P137.2 and P138-P145 are planned-only
+backlog phases and must not be treated as complete or live.
 
 ## Validation
 

@@ -2007,7 +2007,8 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P136.7. P137 Agent Work Order Runtime is planned-only next.
+  implementation is closed through P136.7. P137 Agent Work Order Runtime is
+  in progress through P137.1 with P137.2 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2220,6 +2221,14 @@ The Command Center and local operator surface have:
   provider payload preparation, agent dispatch, DB/runtime writes, project
   mutation, deploy, release, export, package, network calls, and spend remain
   unavailable.
+- P137.1 agent work order runtime contract: Started P137 with a scoped agent
+  work order runtime contract, context-loading safety boundary, seven-subphase
+  split, checker, docs/status handoff, and planned-only P137.2 handoff. Runtime
+  owns full registries; agents receive only scoped task, project, memory,
+  trusted context, selected skill/tool, budget, policy, and evidence packets.
+  Provider/model calls, tool execution, MCP server startup, agent dispatch,
+  DB/runtime writes, project mutation, deploy, release, export, package,
+  network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

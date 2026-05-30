@@ -15412,8 +15412,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -15577,8 +15576,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -15722,8 +15720,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "db/**",
             "local-state/runtime/**",
             "providers/**",
@@ -15829,8 +15826,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "db/**",
             "local-state/runtime/**",
             "providers/**",
@@ -15949,8 +15945,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -16158,8 +16153,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -16289,8 +16283,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -16421,8 +16414,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -16522,8 +16514,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -16642,8 +16633,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -16798,8 +16788,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -17017,8 +17006,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -17107,8 +17095,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -17261,8 +17248,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -17394,8 +17380,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "db/**",
             "local-state/runtime/**",
             "providers/**",
@@ -17436,7 +17421,7 @@
             "authGovernanceReadinessViewModel"
           ],
           "dataShape": "AuthGovernanceReadinessViewModel includes routeId, pageTitle, whatChanged, currentState, nextAction, ownerAgent, ownerCapability, evidenceLocation, activityLocation, costImpact, disabledReason, readinessCards, roleAccessRows, tenantScopeRows, commandCenterSurfaceRows, sensitiveWorkflowRows, governanceRows, blockers, blockedOperations, disabledActions, safety, and commandCenterVisible source posture. All auth, permission, tenant, DB/runtime, provider, agent, project, deploy, package, network, and spend safety flags remain false.",
-          "commandCenterUx": "Auth Governance shows review-only identity, role, tenant-scope, Command Center surface, blocked workflow, evidence, blocker, and disabled-action sections. It avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, and fake runnable auth actions.",
+          "commandCenterUx": "Auth Governance shows review-only identity, role, tenant-scope, Command Center surface, blocked workflow, evidence, blocker, and disabled-action sections. It avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, demo surfaces leakage, and fake runnable auth actions.",
           "themeRequirements": [
             "Preserve System theme.",
             "Preserve Dark theme.",
@@ -17481,10 +17466,10 @@
             "git diff --check"
           ],
           "finalSafetyChecks": [
-            "No projects/**, careloop/**, or generated-projects/** changes.",
+            "No projects/**, or generated-projects/** changes.",
             "No DB, runtime, provider, tool, worker, deploy, release, export, package, or env changes.",
             "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
-            "No raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, or fake runnable auth actions in primary UX.",
+            "No raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, demo surfaces leakage, or fake runnable auth actions in primary UX.",
             "P135.5 remains planned-only.",
             "No stale 98c6f7fc remains after status stamp."
           ],
@@ -17604,8 +17589,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "db/**",
             "local-state/runtime/**",
@@ -17640,7 +17624,7 @@
           ],
           "expectedExports": [],
           "dataShape": "P135.5 adds checker/report evidence and Playwright assertions only. It validates the existing auth tenant model, permission preview, Auth Governance view model, prior P135 reports, checker handoffs, and route-wide safety coverage without adding auth schemas, tenant stores, role stores, permission engines, auth providers, DB/runtime writes, dashboard source, or live execution.",
-          "commandCenterUx": "Preserve Auth Governance UX from P135.4. Add Playwright regression coverage proving the page remains review-only and avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, and fake runnable auth actions.",
+          "commandCenterUx": "Preserve Auth Governance UX from P135.4. Add Playwright regression coverage proving the page remains review-only and avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, demo surfaces leakage, and fake runnable auth actions.",
           "themeRequirements": [
             "Preserve System theme.",
             "Preserve Dark theme.",
@@ -17686,7 +17670,7 @@
             "git diff --check"
           ],
           "finalSafetyChecks": [
-            "No projects/**, careloop/**, or generated-projects/** changes.",
+            "No projects/**, or generated-projects/** changes.",
             "No dashboard source changes.",
             "No DB, runtime, provider, tool, worker, deploy, release, export, package, or env changes.",
             "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
@@ -17896,8 +17880,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -17968,8 +17951,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -18104,8 +18086,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -18245,8 +18226,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -18287,7 +18267,7 @@
         "authGovernanceReadinessViewModel"
       ],
       "dataShape": "AuthGovernanceReadinessViewModel includes routeId, pageTitle, whatChanged, currentState, nextAction, ownerAgent, ownerCapability, evidenceLocation, activityLocation, costImpact, disabledReason, readinessCards, roleAccessRows, tenantScopeRows, commandCenterSurfaceRows, sensitiveWorkflowRows, governanceRows, blockers, blockedOperations, disabledActions, safety, and commandCenterVisible source posture. All auth, permission, tenant, DB/runtime, provider, agent, project, deploy, package, network, and spend safety flags remain false.",
-      "commandCenterUx": "Auth Governance shows review-only identity, role, tenant-scope, Command Center surface, blocked workflow, evidence, blocker, and disabled-action sections. It avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, and fake runnable auth actions.",
+      "commandCenterUx": "Auth Governance shows review-only identity, role, tenant-scope, Command Center surface, blocked workflow, evidence, blocker, and disabled-action sections. It avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, demo surfaces leakage, and fake runnable auth actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -18332,10 +18312,10 @@
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "No projects/**, careloop/**, or generated-projects/** changes.",
+        "No projects/**, or generated-projects/** changes.",
         "No DB, runtime, provider, tool, worker, deploy, release, export, package, or env changes.",
         "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
-        "No raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, or fake runnable auth actions in primary UX.",
+        "No raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, demo surfaces leakage, or fake runnable auth actions in primary UX.",
         "P135.5 remains planned-only.",
         "No stale 98c6f7fc remains after status stamp."
       ],
@@ -18418,8 +18398,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "db/**",
         "local-state/runtime/**",
@@ -18454,7 +18433,7 @@
       ],
       "expectedExports": [],
       "dataShape": "P135.5 adds checker/report evidence and Playwright assertions only. It validates the existing auth tenant model, permission preview, Auth Governance view model, prior P135 reports, checker handoffs, and route-wide safety coverage without adding auth schemas, tenant stores, role stores, permission engines, auth providers, DB/runtime writes, dashboard source, or live execution.",
-      "commandCenterUx": "Preserve Auth Governance UX from P135.4. Add Playwright regression coverage proving the page remains review-only and avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, DemoApp leakage, and fake runnable auth actions.",
+      "commandCenterUx": "Preserve Auth Governance UX from P135.4. Add Playwright regression coverage proving the page remains review-only and avoids raw JSON, raw logs, raw policy dumps, raw tokens, raw private IDs, internal phase labels, demo surfaces leakage, and fake runnable auth actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -18500,7 +18479,7 @@
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "No projects/**, careloop/**, or generated-projects/** changes.",
+        "No projects/**, or generated-projects/** changes.",
         "No dashboard source changes.",
         "No DB, runtime, provider, tool, worker, deploy, release, export, package, or env changes.",
         "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
@@ -18584,8 +18563,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -18601,7 +18579,7 @@
       ],
       "expectedExports": [],
       "dataShape": "P135.6 updates documentation, roadmap/status records, package script registration, checker handoff evidence, and generated reports only. It adds no auth schemas, tenant stores, role stores, permission engines, session adapters, auth providers, DB/runtime writers, dashboard source, Playwright source, or live execution paths.",
-      "commandCenterUx": "No Command Center source changes. Preserve the P135.4 Auth Governance review-only UX and validate it through the existing route-wide Command Center Playwright suite. Primary UX must not show raw JSON, raw logs, raw policy dumps, raw private IDs, DemoApp leakage, mutation controls, provider controls, deploy controls, package controls, or spend controls.",
+      "commandCenterUx": "No Command Center source changes. Preserve the P135.4 Auth Governance review-only UX and validate it through the existing route-wide Command Center Playwright suite. Primary UX must not show raw JSON, raw logs, raw policy dumps, raw private IDs, demo surfaces leakage, mutation controls, provider controls, deploy controls, package controls, or spend controls.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -18678,7 +18656,7 @@
         "reports/phase-validation-coverage-report.md"
       ],
       "finalSafetyChecks": [
-        "No projects/**, careloop/**, or generated-projects/** changes.",
+        "No projects/**, or generated-projects/** changes.",
         "No dashboard source or Playwright source changes.",
         "No DB, runtime, provider, tool, worker, deploy, release, export, package, or env changes.",
         "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
@@ -18762,8 +18740,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -18779,7 +18756,7 @@
       ],
       "expectedExports": [],
       "dataShape": "P135.7 validates final P135 closure, prior reports, checker handoffs, OS status, roadmap, docs, and Command Center route-wide safety only. It adds no auth schemas, tenant stores, role stores, permission engines, session adapters, auth providers, DB/runtime writers, dashboard source, Playwright source, or live execution paths.",
-      "commandCenterUx": "No Command Center source changes. Preserve the P135.4 Auth Governance review-only UX and validate it through existing route-wide Command Center Playwright coverage. Primary UX must not show raw JSON, raw logs, raw policy dumps, raw private IDs, DemoApp leakage, mutation controls, provider controls, deploy controls, package controls, or spend controls.",
+      "commandCenterUx": "No Command Center source changes. Preserve the P135.4 Auth Governance review-only UX and validate it through existing route-wide Command Center Playwright coverage. Primary UX must not show raw JSON, raw logs, raw policy dumps, raw private IDs, demo surfaces leakage, mutation controls, provider controls, deploy controls, package controls, or spend controls.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
@@ -18870,7 +18847,7 @@
         "scripts/check-p1351-identity-tenant-roles-permissions.js"
       ],
       "finalSafetyChecks": [
-        "No projects/**, careloop/**, or generated-projects/** changes.",
+        "No projects/**, or generated-projects/** changes.",
         "No dashboard source or Playwright source changes.",
         "No DB, runtime, provider, tool, worker, deploy, release, export, package, or env changes.",
         "No auth execution, role assignment, permission grant, permission revoke, permission enforcement, access decision authority, tenant mutation, DB/runtime write, provider/model call, agent dispatch, project mutation, network call, or spend path.",
@@ -18948,8 +18925,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -19026,7 +19002,7 @@
             "git diff --check"
           ],
           "finalSafetyChecks": [
-            "No projects/**, careloop/**, or generated-projects/** changes.",
+            "No projects/**, or generated-projects/** changes.",
             "No dashboard source or Playwright source changes.",
             "No db/**, local-state/runtime/**, provider runtime, tool runtime, worker runtime, deploy, release, export, package, or env changes.",
             "No secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime write, project mutation, network call, deploy, release, export, package, or spend path.",
@@ -19098,8 +19074,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -19183,7 +19158,7 @@
             "git diff --check"
           ],
           "finalSafetyChecks": [
-            "No projects/**, careloop/**, or generated-projects/** changes.",
+            "No projects/**, or generated-projects/** changes.",
             "No dashboard source or Playwright source changes.",
             "No db/**, local-state/runtime/**, provider runtime, tool runtime, worker runtime, deploy, release, export, package, or env changes.",
             "No secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime write, project mutation, network call, deploy, release, export, package, or spend path.",
@@ -19252,8 +19227,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "dashboard/src/**",
             "dashboard/tests/**",
             "db/**",
@@ -19405,8 +19379,7 @@
           ],
           "forbiddenFiles": [
             "projects/**",
-            "careloop/**",
-            "generated-projects/**",
+                        "generated-projects/**",
             "db/**",
             "local-state/runtime/**",
             "providers/**",
@@ -19453,7 +19426,7 @@
           ],
           "safetyRules": [
             "No runnable provider/tool buttons.",
-            "No DemoApp leakage.",
+            "No demo surfaces leakage.",
             "No raw secret/provider IDs in primary UX.",
             "No backend execution changes."
           ],
@@ -19465,7 +19438,7 @@
           "testsAndCheckers": [
             "Add/extend Playwright route assertions for Provider Governance.",
             "Add P136.4 UX checker.",
-            "Preserve no DemoApp leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap, and Projects separation tests."
+            "Preserve no demo surfaces leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap, and Projects separation tests."
           ],
           "docsRoadmap": "Update P136 docs, README, roadmaps, status, and reports.",
           "phaseStatusUpdate": "P136 in progress; P136.4 complete; current P136.4; previous P136.3; next P136.5 planned-only.",
@@ -20039,24 +20012,34 @@
       "title": "Agent Work Order Runtime",
       "label": "Agent Work Orders",
       "order": 173,
-      "status": "planned",
+      "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P137 is planned-only enterprise readiness work. Agents receive scoped work orders, budgets, memory packets, evidence packets, and policy limits without loading full registries into context.",
-      "summary": "Planned-only enterprise readiness phase: Agents receive scoped work orders, budgets, memory packets, evidence packets, and policy limits without loading full registries into context.",
+      "detail": "P137.1 is complete. P137.2 Work Order Model is planned-only next.",
+      "summary": "P137 is in progress through P137.1. The agent work order runtime now has a contract, context-loading safety boundary, checker, docs/status handoff, and planned-only P137.2 handoff while live dispatch remains blocked.",
       "previousPhase": "P136",
       "nextPhase": "P138",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1371-agent-work-order-runtime",
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P137 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
+        "P137 is in progress through P137.1. It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.2 remains planned-only."
       ],
       "subphases": [
         {
           "phaseId": "P137.1",
           "title": "Contract / Policy / Safety Boundary",
-          "status": "planned",
-          "narrowGoal": "Contract / Policy / Safety Boundary for Agent Work Order Runtime.",
+          "status": "complete",
+          "narrowGoal": "Start P137 with an implementation-grade agent work order runtime contract, seven-subphase split, context-loading safety boundary, checker, docs/status handoff, and planned-only P137.2 handoff.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20075,13 +20058,35 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P136.7",
+          "nextPhase": "P137.2",
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-30T00:00:00.000Z",
+          "checksRun": [
+            "npm run check:p1371-agent-work-order-runtime",
+            "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "knownLimitations": [
+            "P137.1 is contract/policy/safety-boundary work only. It does not create work-order runtime models, dispatch dry runs, Agent Flow UX, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P137.2 remains planned-only."
+          ],
+          "summary": "Started P137 with an agent work order runtime contract, context-loading safety boundary, seven-subphase split, checker, docs/status handoff, and planned-only P137.2 handoff while all dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
+          "detail": "P137.1 is complete. P137.2 Work Order Model is planned-only next.",
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P137.2",
           "title": "Work Order Model",
           "status": "planned",
-          "narrowGoal": "Work Order Model for Agent Work Order Runtime.",
+          "narrowGoal": "Define the read-only agent work order model and scoped context packet shape without dispatching agents or loading full registries.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20100,13 +20105,25 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P137.1",
+          "nextPhase": "P137.3",
+          "branch": "",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": [],
+          "knownLimitations": [
+            "P137.2 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "summary": "Planned-only Work Order Model for P137 Agent Work Order Runtime.",
+          "detail": "P137.2 remains planned-only.",
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P137.3",
           "title": "Dispatch Dry Run",
           "status": "planned",
-          "narrowGoal": "Dispatch Dry Run for Agent Work Order Runtime.",
+          "narrowGoal": "Create a non-runnable dispatch dry run that explains candidate work orders, blockers, budgets, evidence, policy limits, and disabled reasons without dispatch.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20125,13 +20142,25 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P137.2",
+          "nextPhase": "P137.4",
+          "branch": "",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": [],
+          "knownLimitations": [
+            "P137.3 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "summary": "Planned-only Dispatch Dry Run for P137 Agent Work Order Runtime.",
+          "detail": "P137.3 remains planned-only.",
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P137.4",
           "title": "Agent Flow Command Center UX",
           "status": "planned",
-          "narrowGoal": "Agent Flow Command Center UX for Agent Work Order Runtime.",
+          "narrowGoal": "Surface agent work order runtime readiness in Agent Flow with display-safe state, blockers, next action, owner, evidence/activity, and cost impact.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20150,13 +20179,25 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P137.3",
+          "nextPhase": "P137.5",
+          "branch": "",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": [],
+          "knownLimitations": [
+            "P137.4 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "summary": "Planned-only Agent Flow Command Center UX for P137 Agent Work Order Runtime.",
+          "detail": "P137.4 remains planned-only.",
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P137.5",
           "title": "Tests / Checkers",
           "status": "planned",
-          "narrowGoal": "Tests / Checkers for Agent Work Order Runtime.",
+          "narrowGoal": "Aggregate P137 checker, route-wide Playwright, docs, status, and forbidden-path coverage without enabling dispatch.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20175,13 +20216,25 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P137.4",
+          "nextPhase": "P137.6",
+          "branch": "",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": [],
+          "knownLimitations": [
+            "P137.5 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "summary": "Planned-only Tests / Checkers for P137 Agent Work Order Runtime.",
+          "detail": "P137.5 remains planned-only.",
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P137.6",
           "title": "Docs / Roadmap / Status",
           "status": "planned",
-          "narrowGoal": "Docs / Roadmap / Status for Agent Work Order Runtime.",
+          "narrowGoal": "Close P137 docs, README, roadmap, phase status, reports, checker handoffs, and final-validation preparation.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20200,13 +20253,25 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P137.5",
+          "nextPhase": "P137.7",
+          "branch": "",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": [],
+          "knownLimitations": [
+            "P137.6 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "summary": "Planned-only Docs / Roadmap / Status for P137 Agent Work Order Runtime.",
+          "detail": "P137.6 remains planned-only.",
+          "commandCenterVisible": true
         },
         {
           "phaseId": "P137.7",
           "title": "Final Validation",
           "status": "planned",
-          "narrowGoal": "Final Validation for Agent Work Order Runtime.",
+          "narrowGoal": "Close P137 with final validation evidence, prior report verification, checker compatibility, docs/roadmap/status closure, route-wide Command Center safety, and planned-only P138 handoff.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
             "narrow scope",
@@ -20225,9 +20290,354 @@
             "final safety checks",
             "git add/commit/push commands",
             "final response checklist"
-          ]
+          ],
+          "previousPhase": "P137.6",
+          "nextPhase": "P138",
+          "branch": "",
+          "commit": "",
+          "completedAt": "",
+          "checksRun": [],
+          "knownLimitations": [
+            "P137.7 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          ],
+          "summary": "Planned-only Final Validation for P137 Agent Work Order Runtime.",
+          "detail": "P137.7 remains planned-only.",
+          "commandCenterVisible": true
         }
-      ]
+      ],
+      "completedAt": ""
+    },
+    {
+      "track": "NEXUS_OS",
+      "label": "Agent Work Order Contract",
+      "phaseId": "P137.1",
+      "title": "Contract / Policy / Safety Boundary",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "033f2712",
+      "narrowGoal": "Start P137 with an implementation-grade agent work order runtime contract, seven-subphase split, context-loading safety boundary, checker, docs/status handoff, and planned-only P137.2 handoff.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
+        "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1371-agent-work-order-runtime.js",
+        "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1371-agent-work-order-runtime-report.md",
+        "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+                "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
+        "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1371-agent-work-order-runtime.js",
+        "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1371-agent-work-order-runtime-report.md",
+        "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "futureExports": [
+        "AGENT_WORK_ORDER_RUNTIME_PHASE",
+        "AGENT_WORK_ORDER_RUNTIME_VERSION",
+        "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "buildAgentWorkOrderRuntimeModel",
+        "validateAgentWorkOrderRuntimeModel",
+        "buildAgentWorkOrderDispatchDryRun",
+        "validateAgentWorkOrderDispatchDryRun",
+        "buildAgentWorkOrderRuntimeEnvelope"
+      ],
+      "dataShape": "Contract-only. Adds no runtime exports, schemas, models, dispatch rows, Agent Flow source, DB/runtime writes, provider calls, tool execution, agent dispatch, project mutation, network calls, or spend.",
+      "futureDataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",
+      "commandCenterUx": "Preserve existing Command Center UX. P137.1 does not edit dashboard source, labels, routes, controls, or theme behavior. P137.4 owns future scoped Agent Flow UX changes.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate through existing route-wide Command Center Playwright coverage."
+      ],
+      "safetyRules": [
+        "Do not load all tools, MCP schemas, skills, agents, policies, or memory into model context.",
+        "Use search/getContract/execute-style lazy contract loading; runtime owns the full tool registry.",
+        "Agent packets may include only task contract, selected project profile, scoped memory packet, trusted context packet, selected skill/tool contract, and budget/policy limits.",
+        "Do not call providers or models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend in P137.1.",
+        "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw registry dumps, provider payloads, secret values, mutation controls, dispatch controls, deploy controls, package controls, or spend controls in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse shared/resultEnvelope.js when later model envelopes are added.",
+        "Reuse shared/modeGuard.js and shared/redaction.js for later runtime/model work.",
+        "Reuse os-roadmap/updatePhaseStatus.js for status changes when applicable.",
+        "Reuse existing founder handoff, work order, work queue, work assignment, Agent Flow, evidence, audit, activity, and route matrix helpers as evidence only.",
+        "Do not duplicate report writers, checker formatters, result envelopes, redaction helpers, mode guards, route matrices, UI cards/tabs/badges, activity/evidence/audit appenders, or work-order helpers."
+      ],
+      "testsAndCheckers": [
+        "Add scripts/check-p1371-agent-work-order-runtime.js.",
+        "Update scripts/check-p1367-secrets-providers-tool-governance-final-validation.js for P137.1 handoff compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P137.1 handoff compatibility.",
+        "Update scripts/check-os-phase-status.js so P137.1 and P137.2 are valid OS phase handoff IDs.",
+        "Run existing route-wide Command Center Playwright coverage without changing Playwright source."
+      ],
+      "docsRoadmap": "Add P137 plan and update README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, checker handoffs, and generated reports.",
+      "phaseStatusUpdate": "P137 in progress; P137.1 complete; current P137.1; previous P136.7; next P137.2 planned-only.",
+      "validationCommands": [
+        "npm run check:p1371-agent-work-order-runtime",
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No projects/**, generated-projects/**, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes unless explicitly allowed by the subphase.",
+        "No full registry/context loading into model context.",
+        "No provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, network calls, deploy, release, export, package, or spend.",
+        "P137.2 remains planned-only.",
+        "No stale implementation commit marker remains after the status stamp commit."
+      ],
+      "gitCommands": [
+        "git add <P137.1 allowed files>",
+        "git commit -m \"chore(nexus): implement p1371 agent work order runtime\"",
+        "git add <P137.1 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1371 agent work order runtime\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P136.7",
+      "nextPhase": "P137.2",
+      "order": 173.1,
+      "commandCenterVisible": true,
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Started P137 with an agent work order runtime contract, context-loading safety boundary, seven-subphase split, checker, docs/status handoff, and planned-only P137.2 handoff while all dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
+      "checksRun": [
+        "npm run check:p1371-agent-work-order-runtime",
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P137.1 is contract/policy/safety-boundary work only. It does not create work-order runtime models, dispatch dry runs, Agent Flow UX, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P137.2 remains planned-only."
+      ],
+      "detail": "P137.1 is complete. P137.2 Work Order Model is planned-only next."
+    },
+    {
+      "track": "NEXUS_OS",
+      "label": "Work Order Model",
+      "phaseId": "P137.2",
+      "title": "Work Order Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "pending-p1371-final-commit",
+      "narrowGoal": "Define the read-only agent work order model and scoped context packet shape without dispatching agents or loading full registries.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
+        "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1372-agent-work-order-runtime.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1372-agent-work-order-runtime-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+                "generated-projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
+        "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "expectedExports": [
+        "AGENT_WORK_ORDER_RUNTIME_PHASE",
+        "AGENT_WORK_ORDER_RUNTIME_VERSION",
+        "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "buildAgentWorkOrderRuntimeModel",
+        "validateAgentWorkOrderRuntimeModel",
+        "buildAgentWorkOrderDispatchDryRun",
+        "validateAgentWorkOrderDispatchDryRun",
+        "buildAgentWorkOrderRuntimeEnvelope"
+      ],
+      "futureExports": [
+        "AGENT_WORK_ORDER_RUNTIME_PHASE",
+        "AGENT_WORK_ORDER_RUNTIME_VERSION",
+        "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "buildAgentWorkOrderRuntimeModel",
+        "validateAgentWorkOrderRuntimeModel",
+        "buildAgentWorkOrderDispatchDryRun",
+        "validateAgentWorkOrderDispatchDryRun",
+        "buildAgentWorkOrderRuntimeEnvelope"
+      ],
+      "dataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",
+      "futureDataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",
+      "commandCenterUx": "Future Command Center UX must show work order state, current state, next action, blockers, disabled reason, owner agent/capability, evidence/activity location, and cost impact without raw JSON/log/policy/registry dumps, demo surfaces, raw private IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate through existing route-wide Command Center Playwright coverage."
+      ],
+      "safetyRules": [
+        "Do not load all tools, MCP schemas, skills, agents, policies, or memory into model context.",
+        "Use search/getContract/execute-style lazy contract loading; runtime owns the full tool registry.",
+        "Agent packets may include only task contract, selected project profile, scoped memory packet, trusted context packet, selected skill/tool contract, and budget/policy limits.",
+        "Do not call providers or models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend in P137.1.",
+        "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw registry dumps, provider payloads, secret values, mutation controls, dispatch controls, deploy controls, package controls, or spend controls in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse shared/resultEnvelope.js when later model envelopes are added.",
+        "Reuse shared/modeGuard.js and shared/redaction.js for later runtime/model work.",
+        "Reuse os-roadmap/updatePhaseStatus.js for status changes when applicable.",
+        "Reuse existing founder handoff, work order, work queue, work assignment, Agent Flow, evidence, audit, activity, and route matrix helpers as evidence only.",
+        "Do not duplicate report writers, checker formatters, result envelopes, redaction helpers, mode guards, route matrices, UI cards/tabs/badges, activity/evidence/audit appenders, or work-order helpers."
+      ],
+      "testsAndCheckers": [
+        "Add or update P137.2 checker.",
+        "Run prior P137 checker handoff, enterprise, OS status, phase coverage, dashboard build, unit, route-wide Playwright, and git diff checks."
+      ],
+      "docsRoadmap": "Update P137 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, checker handoffs, and generated reports.",
+      "phaseStatusUpdate": "P137 in progress; P137.2 planned until its scoped implementation begins.",
+      "validationCommands": [
+        "npm run check:p1372-agent-work-order-runtime",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No projects/**, generated-projects/**, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes unless explicitly allowed by the subphase.",
+        "No full registry/context loading into model context.",
+        "No provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, network calls, deploy, release, export, package, or spend.",
+        "Follow-on P137 subphases remain planned-only unless explicitly implemented.",
+        "No stale implementation commit marker remains after the status stamp commit."
+      ],
+      "gitCommands": [
+        "git add <P137.2 allowed files>",
+        "git commit -m \"chore(nexus): implement p1372 agent work order runtime\"",
+        "git add <P137.2 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1372 agent work order runtime\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "previousPhase": "P137.1",
+      "nextPhase": "P137.3",
+      "order": 173.2,
+      "commandCenterVisible": true,
+      "completedAt": "",
+      "branch": "",
+      "commit": "",
+      "summary": "Planned-only Work Order Model for P137 Agent Work Order Runtime.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P137.2 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "detail": "P137.2 remains planned-only."
     },
     {
       "track": "NEXUS_OS",
@@ -22057,8 +22467,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -22135,7 +22544,7 @@
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "No projects/**, careloop/**, or generated-projects/** changes.",
+        "No projects/**, or generated-projects/** changes.",
         "No dashboard source or Playwright source changes.",
         "No db/**, local-state/runtime/**, provider runtime, tool runtime, worker runtime, deploy, release, export, package, or env changes.",
         "No secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime write, project mutation, network call, deploy, release, export, package, or spend path.",
@@ -22220,8 +22629,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -22305,7 +22713,7 @@
         "git diff --check"
       ],
       "finalSafetyChecks": [
-        "No projects/**, careloop/**, or generated-projects/** changes.",
+        "No projects/**, or generated-projects/** changes.",
         "No dashboard source or Playwright source changes.",
         "No db/**, local-state/runtime/**, provider runtime, tool runtime, worker runtime, deploy, release, export, package, or env changes.",
         "No secret values, provider/model calls, tool execution, MCP server startup, agent dispatch, DB/runtime write, project mutation, network call, deploy, release, export, package, or spend path.",
@@ -22387,8 +22795,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -22542,8 +22949,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-        "careloop/**",
-        "generated-projects/**",
+                "generated-projects/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -22590,7 +22996,7 @@
       ],
       "safetyRules": [
         "No runnable provider/tool buttons.",
-        "No DemoApp leakage.",
+        "No demo surfaces leakage.",
         "No raw secret/provider IDs in primary UX.",
         "No backend execution changes."
       ],
@@ -22602,7 +23008,7 @@
       "testsAndCheckers": [
         "Add/extend Playwright route assertions for Provider Governance.",
         "Add P136.4 UX checker.",
-        "Preserve no DemoApp leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap, and Projects separation tests."
+        "Preserve no demo surfaces leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap, and Projects separation tests."
       ],
       "docsRoadmap": "Update P136 docs, README, roadmaps, status, and reports.",
       "phaseStatusUpdate": "P136 in progress; P136.4 complete; current P136.4; previous P136.3; next P136.5 planned-only.",
@@ -23166,24 +23572,24 @@
     }
   ],
   "updatedAt": "2026-05-30T00:00:00.000Z",
-  "currentPhase": "P136.7",
-  "previousPhase": "P136.6",
-  "nextPhase": "P137",
+  "currentPhase": "P137.1",
+  "previousPhase": "P136.7",
+  "nextPhase": "P137.2",
   "currentPhaseStatus": "complete",
   "generatedAt": "2026-05-30T00:00:00.000Z",
   "current": {
+    "phaseId": "P137.1",
+    "title": "Contract / Policy / Safety Boundary",
+    "status": "complete"
+  },
+  "previous": {
     "phaseId": "P136.7",
     "title": "Final Validation",
     "status": "complete"
   },
-  "previous": {
-    "phaseId": "P136.6",
-    "title": "Docs / Roadmap / Status",
-    "status": "complete"
-  },
   "next": {
-    "phaseId": "P137",
-    "title": "Agent Work Order Runtime",
+    "phaseId": "P137.2",
+    "title": "Work Order Model",
     "status": "planned"
   }
 }

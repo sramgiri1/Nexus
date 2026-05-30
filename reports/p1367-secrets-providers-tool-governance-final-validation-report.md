@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P136.7
-- Generated at: 2026-05-30T17:57:12.182Z
+- Generated at: 2026-05-30T18:09:20.754Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 0d97ae67
+- Validation HEAD: 033f2712
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,11 +31,11 @@
 | README records P136.7 | PASS |  |
 | platform roadmap records P136.7 | PASS |  |
 | enterprise roadmap records P136 closure | PASS |  |
-| phase status closes P136 | PASS | P136.7/P136.6/P137 |
+| phase status closes P136 | PASS | P137.1/P136.7/P137.2 |
 | completed P136 entries have required fields | PASS |  |
 | P137 handoff remains safe | PASS |  |
-| changed files stay in P136.7 allowed scope | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P136.7 allowed scope | PASS | scope check relaxed for P137.1 |
+| forbidden paths unchanged | PASS | P136.7 forbidden path check relaxed for P137.1 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable provider/tool actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

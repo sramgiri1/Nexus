@@ -3195,7 +3195,8 @@ remain blocked.
 ## P133-P145 Enterprise Readiness Roadmap
 
 P133-P145 are enterprise readiness phases. P133, P134, P135, and P136 are
-complete through final validation. Later subphases and phases remain
+complete through final validation, and P137 is in progress through P137.1.
+Later subphases and phases remain
 planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3205,13 +3206,14 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7 and P136.7. P136.2
+Current implementation is closed through P135.7, P136.7, and P137.1. P136.2
 secret/provider model is complete, P136.3 provider dry run is complete, and
 P136.4 provider governance Command Center UX is complete. P136.5
 secrets/providers/tool governance tests/checkers is complete. P136.6
 secrets/providers/tool governance docs/roadmap is complete.
 P136.7 secrets/providers/tool governance final validation is complete.
-P137-P145 do not enable secret values, DB/runtime writes, live
+P137.1 agent work order runtime contract is complete. P137.2 and P138-P145 do
+not enable secret values, DB/runtime writes, live
 CRUD, provider/model calls, tool execution, agent dispatch, project mutation,
 deploy, release, export, package, network calls, or spend.
 
@@ -3438,6 +3440,15 @@ coverage, OS status closure, and P137 planned-only handoff. P137 Agent Work Orde
 execution, MCP server startup, provider payload preparation, agent dispatch,
 DB/runtime writes, project mutation, deploy, release, export, package, network
 calls, and spend remain blocked.
+
+P137.1 agent work order runtime contract is complete. NEXUS now has the P137
+contract, context-loading safety boundary, seven-subphase split, checker,
+docs/status handoff, and P137.2 planned-only handoff. Runtime owns the full
+tool, MCP schema, skill, agent, policy, and memory registries; agents receive
+only scoped task, project, memory, trusted context, selected skill/tool, budget,
+policy, and evidence packets. Provider/model calls, tool execution, MCP server
+startup, agent dispatch, DB/runtime writes, project mutation, deploy, release,
+export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
