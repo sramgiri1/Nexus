@@ -64,6 +64,20 @@ const p1331StartedState =
   && phaseIndex.current?.phaseId === "P133.1"
   && phaseIndex.previous?.phaseId === "P132.7"
   && phaseIndex.next?.phaseId === "P133.2";
+const p1332CompleteState =
+  phaseStatus.currentPhase === "P133.2"
+  && phaseStatus.previousPhase === "P133.1"
+  && phaseStatus.nextPhase === "P133.3"
+  && phaseIndex.currentPhase === "P133.2"
+  && phaseIndex.previousPhase === "P133.1"
+  && phaseIndex.nextPhase === "P133.3"
+  && phaseStatus.current?.phaseId === "P133.2"
+  && phaseStatus.previous?.phaseId === "P133.1"
+  && phaseStatus.next?.phaseId === "P133.3"
+  && phaseIndex.current?.phaseId === "P133.2"
+  && phaseIndex.previous?.phaseId === "P133.1"
+  && phaseIndex.next?.phaseId === "P133.3";
+const p133ActiveState = p1331StartedState || p1332CompleteState;
 
 const enterprisePhases = [
   ["P133", "Founder Idea-to-PRD Productization"],
@@ -90,12 +104,15 @@ const allowedFiles = new Set([
   "README.md",
   "package.json",
   "scripts/check-p1331-founder-idea-to-prd-productization.js",
+  "scripts/check-p1332-founder-idea-to-prd-model.js",
   "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-os-phase-status.js",
   "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
+  "live-ready/founderIdeaToPrdModel.js",
   "dashboard/src/pages/CommandCenterV2.jsx",
   "dashboard/tests/routes.spec.js",
   "reports/p1331-founder-idea-to-prd-productization-report.md",
+  "reports/p1332-founder-idea-to-prd-model-report.md",
   "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -122,22 +139,22 @@ const allowedDashboardFiles = new Set([
 ]);
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:enterprise-readiness-roadmap"]));
-addCheck("P133.1 checker registered when active", !p1331StartedState || Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]));
-addCheck("current enterprise handoff", p1331StartedState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
+addCheck("P133 checkers registered when active", !p133ActiveState || (Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]) && (!p1332CompleteState || Boolean(packageJson.scripts?.["check:p1332-founder-idea-to-prd-model"]))));
+addCheck("current enterprise handoff", p133ActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
 addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([phaseId]) => {
   const status = statusById.get(phaseId);
   const index = indexById.get(phaseId);
-  if (phaseId === "P133" && p1331StartedState) {
+  if (phaseId === "P133" && p133ActiveState) {
     return status?.status === "in_progress"
       && index?.status === "in_progress"
       && Boolean(status.commit)
       && Boolean(index.commit)
       && Array.isArray(status.checksRun)
-      && status.checksRun.includes("npm run check:p1331-founder-idea-to-prd-productization")
+      && status.checksRun.includes(p1332CompleteState ? "npm run check:p1332-founder-idea-to-prd-model" : "npm run check:p1331-founder-idea-to-prd-productization")
       && Array.isArray(index.checksRun)
-      && index.checksRun.includes("npm run check:p1331-founder-idea-to-prd-productization");
+      && index.checksRun.includes(p1332CompleteState ? "npm run check:p1332-founder-idea-to-prd-model" : "npm run check:p1331-founder-idea-to-prd-productization");
   }
   return status?.status === "planned"
     && index?.status === "planned"
@@ -172,7 +189,7 @@ addCheck("roadmap entries include subphase details", enterprisePhases.every(([ph
   const indexSubphases = indexById.get(phaseId)?.subphases || [];
   return statusSubphases.length === 7 && indexSubphases.length === 7 && statusSubphases.every((entry) => entry.phaseId?.startsWith(`${phaseId}.`));
 }));
-addCheck("P133.1 active subphase records are present", !p1331StartedState || (statusById.get("P133.1")?.status === "complete" && indexById.get("P133.1")?.status === "complete" && statusById.get("P133.2")?.status === "planned" && indexById.get("P133.2")?.status === "planned"));
+addCheck("P133 active subphase records are present", !p133ActiveState || (statusById.get("P133.1")?.status === "complete" && indexById.get("P133.1")?.status === "complete" && ((statusById.get("P133.2")?.status === "planned" && indexById.get("P133.2")?.status === "planned") || (statusById.get("P133.2")?.status === "complete" && indexById.get("P133.2")?.status === "complete" && statusById.get("P133.3")?.status === "planned" && indexById.get("P133.3")?.status === "planned"))));
 addCheck("enterprise roadmap doc covers all phases", enterprisePhases.every(([phaseId, title]) => doc.includes(`| ${phaseId} | ${title} |`)));
 addCheck("enterprise roadmap doc records required subphase contract", [
   "Narrow scope",
@@ -206,7 +223,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Tracks P133-P145 enterprise-readiness roadmap phases after P132.",
-        "- Allows P133.1 to start the enterprise roadmap while P133.2-P133.7 and P134-P145 remain planned-only.",
+        "- Allows P133 to advance through completed implementation-grade subphases while later P133 subphases and P134-P145 remain planned-only.",
         "- Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -223,7 +240,7 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P133.1 is contract/checker/docs/status only. P133.2-P133.7 and P134-P145 remain planned-only. They do not create runtime capability, DB schemas, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      body: "- P133.1 and P133.2 are complete. P133.3-P133.7 and P134-P145 remain planned-only. They do not create runtime capability, DB schemas, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

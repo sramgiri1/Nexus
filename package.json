@@ -736,6 +736,7 @@
     "check:p1326-founder-runtime-store-live-admission-execution": "node scripts/check-p1326-founder-runtime-store-live-admission-execution.js",
     "check:p1327-founder-runtime-store-live-admission-execution": "node scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
     "check:p1331-founder-idea-to-prd-productization": "node scripts/check-p1331-founder-idea-to-prd-productization.js",
+    "check:p1332-founder-idea-to-prd-model": "node scripts/check-p1332-founder-idea-to-prd-model.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {

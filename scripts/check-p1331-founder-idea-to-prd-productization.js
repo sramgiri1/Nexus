@@ -126,12 +126,34 @@ const p1331StartedState =
   && roadmapById.get("P133.1")?.status === "complete"
   && statusById.get("P133.2")?.status === "planned"
   && roadmapById.get("P133.2")?.status === "planned";
+const p1332CompleteState =
+  status.currentPhase === "P133.2"
+  && status.previousPhase === "P133.1"
+  && status.nextPhase === "P133.3"
+  && roadmap.currentPhase === "P133.2"
+  && roadmap.previousPhase === "P133.1"
+  && roadmap.nextPhase === "P133.3"
+  && status.current?.phaseId === "P133.2"
+  && status.previous?.phaseId === "P133.1"
+  && status.next?.phaseId === "P133.3"
+  && roadmap.current?.phaseId === "P133.2"
+  && roadmap.previous?.phaseId === "P133.1"
+  && roadmap.next?.phaseId === "P133.3"
+  && statusById.get("P133")?.status === "in_progress"
+  && roadmapById.get("P133")?.status === "in_progress"
+  && statusById.get("P133.1")?.status === "complete"
+  && roadmapById.get("P133.1")?.status === "complete"
+  && statusById.get("P133.2")?.status === "complete"
+  && roadmapById.get("P133.2")?.status === "complete"
+  && statusById.get("P133.3")?.status === "planned"
+  && roadmapById.get("P133.3")?.status === "planned";
+const p1331CompatibleState = p1331StartedState || p1332CompleteState;
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]));
-addCheck("contract marks P133.1 complete", contract.status === "in_progress" && contract.currentSubphase === "P133.1" && contract.previousSubphase === "P132.7" && contract.nextSubphase === "P133.2" && p1331.status === "complete");
+addCheck("contract marks P133.1 complete", contract.status === "in_progress" && p1331.status === "complete" && ((contract.currentSubphase === "P133.1" && contract.previousSubphase === "P132.7" && contract.nextSubphase === "P133.2") || (contract.currentSubphase === "P133.2" && contract.previousSubphase === "P133.1" && contract.nextSubphase === "P133.3")));
 addCheck("contract records expected base commit", contract.expectedBaseCommit === "c1f61bfe" && p1331.expectedBaseCommit === "c1f61bfe");
 addCheck("contract has seven implementation-grade subphases", expectedSubphases.every((phaseId) => subphaseById.has(phaseId)) && expectedSubphases.every((phaseId) => subphaseById.get(phaseId)?.scopeClassification === "NEXUS_OS_CHANGE"));
-addCheck("P133.1 complete and P133.2 planned", p1331.status === "complete" && p1332.status === "planned");
+addCheck("P133.1 complete and P133.2 safely advanced", p1331.status === "complete" && ["planned", "complete"].includes(p1332.status));
 addCheck("P133.1 allowed files include contract, checkers, docs, reports", [
   CONTRACT_PATH,
   PLAN_PATH,
@@ -157,10 +179,10 @@ addCheck("Command Center route-wide tests remain present", routeTests.includes("
 addCheck("P133 plan records P133.1 implementation", /## P133\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P133.1", /P133\.1 founder idea-to-PRD contract/i.test(readme));
 addCheck("platform roadmap records P133.1", /P133\.1 is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records active P133.1", /P133\.1 is now complete/i.test(enterpriseRoadmap) && /P133\.2 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advanced", p1331StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P133 progress", /P133\.1/i.test(enterpriseRoadmap) && (/P133\.2 is the next executable subphase/i.test(enterpriseRoadmap) || /P133\.3 is the next executable subphase/i.test(enterpriseRoadmap)));
+addCheck("phase status advanced", p1331CompatibleState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P133.1 entries have required fields", [statusById.get("P133"), statusById.get("P133.1"), roadmapById.get("P133.1")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P133.2 handoff remains planned-only", statusById.get("P133.2")?.status === "planned" && roadmapById.get("P133.2")?.status === "planned" && !(statusById.get("P133.2")?.checksRun || []).length && !(roadmapById.get("P133.2")?.checksRun || []).length);
+addCheck("P133.2 handoff remains safe", (statusById.get("P133.2")?.status === "planned" && roadmapById.get("P133.2")?.status === "planned" && !(statusById.get("P133.2")?.checksRun || []).length && !(roadmapById.get("P133.2")?.checksRun || []).length) || p1332CompleteState);
 addCheck(
   "changed files stay in P133.1 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH),
@@ -189,7 +211,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Starts P133 with an implementation-grade founder idea-to-PRD productization contract.",
-        "- Keeps P133.2 planned-only and preserves existing founder-facing Command Center pages.",
+        "- Confirms P133.1 remains complete as P133 safely advances into later P133 subphases.",
         "- Does not enable founder Q&A execution, provider/model PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -198,7 +220,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: validationCommands.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P133.1 is contract/checker/docs/status only and P133.2 is planned-only. It does not execute founder Q&A, generate PRDs with providers/models, dispatch agents, create or mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend.",
+      body: "- P133.1 is contract/checker/docs/status only. Later P133 subphases must keep founder Q&A execution, provider/model PRD generation, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend blocked unless their own contract explicitly allows them.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

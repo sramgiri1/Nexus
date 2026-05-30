@@ -3203,7 +3203,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P132.7 and P133 remains planned-only
+Current implementation is closed through P133.2 and P133.3 remains planned-only
 next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
@@ -3213,6 +3213,14 @@ implementation-grade contract, seven-subphase split, safety boundary, checker,
 docs, status handoff, and planned-only P133.2 handoff. Existing Command Center
 founder pages remain unchanged while P133.4 owns future scoped UX changes.
 Founder Q&A execution, provider/model PRD generation, agent dispatch, project
+creation or mutation, DB/runtime writes, deploy, release, export, package,
+network calls, and spend remain blocked.
+
+P133.2 is complete. NEXUS now has a deterministic local founder idea-to-PRD
+model that composes existing founder intake, next-question, comprehension, and
+Business Build PRD helpers into readiness, feasibility, blockers, evidence, and
+safe local state. P133.3 safe PRD preview is next. Autonomous Q&A execution,
+provider/model calls, PRD generation execution, agent dispatch, project
 creation or mutation, DB/runtime writes, deploy, release, export, package,
 network calls, and spend remain blocked.
 

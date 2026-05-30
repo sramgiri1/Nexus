@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-30T10:29:11.867Z
+- Generated at: 2026-05-30T10:44:42.706Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: dc3694c0
+- Validation HEAD: ce53b7f8
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P133.1
-- Previous phase: P132.7
-- Next phase: P133.2
+- Current phase: P133.2
+- Previous phase: P133.1
+- Next phase: P133.3
 
 ## Checks
 
