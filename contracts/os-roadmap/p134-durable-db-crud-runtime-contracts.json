@@ -487,7 +487,7 @@
       "order": 170.4,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec329c3c",
       "summary": "Completed P134.4 by adding a display-safe DB Runtime Command Center UX for the P134 durable DB/CRUD schema model and write-plan preview, with schema coverage, write-plan gates, blockers, next action, owner, evidence, activity, cost impact, Playwright assertions, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
         "P134.4 is Command Center UX only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.5 remains planned-only."
@@ -733,7 +733,7 @@
     "title": "DB Runtime Command Center UX",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ec329c3c",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "detail": "P134.4 is complete. P134.5 Tests / Checkers is planned-only next.",
     "summary": "Completed P134.4 by adding a display-safe DB Runtime Command Center UX for the P134 durable DB/CRUD schema model and write-plan preview, with schema coverage, write-plan gates, blockers, next action, owner, evidence, activity, cost impact, Playwright assertions, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
