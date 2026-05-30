@@ -5,8 +5,8 @@ budgets, approvals, and evidence before any live external execution can be
 considered. The phase is intentionally staged. P136.1 started the contract and
 safety boundary, P136.2 added the read-only governance model, P136.3 added the
 non-runnable dry run, and P136.4 surfaces that posture in Command Center as
-review-only UX. Later subphases own aggregate tests, docs, and final
-validation.
+review-only UX. P136.5 adds aggregate tests/checkers hardening. Later
+subphases own docs/status closure and final validation.
 
 ## Subphases
 
@@ -289,7 +289,7 @@ Tests/checkers and validation:
   runnable provider/tool actions.
 - Current phase is P136.4.
 - Previous phase is P136.3.
-- Next phase is P136.5 planned-only.
+- P136.5 Tests / Checkers followed next.
 - Primary UX is display-safe and non-runnable. It shows P136.3 dry-run state,
   approval needs, blockers, evidence/activity locations, and zero-spend cost
   posture without exposing raw provider payloads, secret references, private
@@ -297,7 +297,7 @@ Tests/checkers and validation:
 
 ### P136.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Aggregate P136 checker and Playwright coverage across contract, model, dry
@@ -315,7 +315,13 @@ Command Center UX requirements:
 - Preserve P136.4 UX and route-wide safety tests.
 
 Tests/checkers and validation:
-- Add `check:p1365-secrets-providers-tool-governance-tests-checkers`.
+- Added `check:p1365-secrets-providers-tool-governance-tests-checkers`.
+- Aggregated P136.1-P136.4 report evidence, P136.2 model validation, P136.3
+  dry-run validation, P136.4 Provider Governance route coverage, route-wide
+  safety assertions, docs/status handoff checks, and forbidden path checks.
+- Current phase is P136.5.
+- Previous phase is P136.4.
+- Next phase is P136.6 planned-only.
 - Run P136.5, P136.4, enterprise, OS status, phase coverage, dashboard build,
   unit, route-wide Playwright, and `git diff --check`.
 

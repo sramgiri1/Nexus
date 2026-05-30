@@ -28,7 +28,8 @@ P136.1 is now complete as contract/policy/safety-boundary only.
 P136.2 is now complete as a read-only secret/provider/tool governance model.
 P136.3 is now complete as a non-runnable provider/tool dry run.
 P136.4 is now complete as Provider Governance Command Center UX only.
-P136.5 is the next executable subphase. P136.5-P136.7 and P137-P145 remain
+P136.5 is now complete as tests/checkers hardening only.
+P136.6 is the next executable subphase. P136.6-P136.7 and P137-P145 remain
 planned-only. They do not enable secret values, DB writes, provider/model calls,
 tool execution, agent dispatch, project mutation, deploy, release, export,
 package, network calls, or spend until each phase/subphase has its own
@@ -101,7 +102,8 @@ P136.1 is now complete as a secrets/provider/tool governance contract and
 safety boundary. P136.2 is now complete as a read-only secret/provider/tool
 governance model. P136.3 is now complete as a non-runnable provider/tool dry
 run. P136.4 is now complete as Provider Governance Command Center UX only.
-P136.5 is the next executable subphase. P136.5-P136.7 and P137-P145 are
+P136.5 is now complete as tests/checkers hardening only.
+P136.6 is the next executable subphase. P136.6-P136.7 and P137-P145 are
 planned-only backlog phases and must not be treated as complete
 or live.
 
@@ -110,6 +112,8 @@ or live.
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1365-secrets-providers-tool-governance-tests-checkers`
+- `npm run check:p1364-provider-governance-command-center-ux`
 - `npm run check:p1363-provider-dry-run`
 - `npm run check:p1362-secret-provider-model`
 - `npm run check:p1361-secrets-providers-tool-governance`
