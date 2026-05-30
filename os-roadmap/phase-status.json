@@ -29500,7 +29500,7 @@
       "order": 175,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d63b420d",
       "commandCenterVisible": true,
       "detail": "P139 ledger chain now has aggregate validation across contract, model, preview, UX projection, route coverage, docs, reports, roadmap, and OS status while all writes and execution remain blocked.",
       "summary": "P139.5 aggregate tests/checkers hardening is complete; P139.6 docs/status closure remains planned-only.",
@@ -30129,7 +30129,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T23:59:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "d63b420d",
           "summary": "Aggregated P139.1-P139.4 validation across contract, model, preview, Command Center UX projection, route coverage, docs, reports, roadmap, OS phase status, redaction, zero-spend, and forbidden-path safety.",
           "detail": "P139.5 adds a validation-only aggregate checker and report for the P139 ledger chain. It does not modify dashboard UX or enable live ledger persistence.",
           "checksRun": [
@@ -30880,7 +30880,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T23:59:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d63b420d",
       "summary": "Aggregated P139.1-P139.4 validation across contract, model, preview, Command Center UX projection, route coverage, docs, reports, roadmap, OS phase status, redaction, zero-spend, and forbidden-path safety.",
       "detail": "P139.5 adds a validation-only aggregate checker and report for the P139 ledger chain. It does not modify dashboard UX or enable live ledger persistence.",
       "checksRun": [
@@ -32278,7 +32278,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T23:59:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d63b420d",
     "summary": "Aggregated P139.1-P139.4 validation across contract, model, preview, Command Center UX projection, route coverage, docs, reports, roadmap, OS phase status, redaction, zero-spend, and forbidden-path safety.",
     "detail": "P139.5 adds a validation-only aggregate checker and report for the P139 ledger chain. It does not modify dashboard UX or enable live ledger persistence.",
     "checksRun": [

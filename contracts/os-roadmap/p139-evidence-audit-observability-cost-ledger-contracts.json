@@ -769,7 +769,7 @@
       "label": "P139.5 Tests / Checkers",
       "completedAt": "2026-05-30T23:59:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d63b420d",
       "summary": "Aggregated P139.1-P139.4 validation across contract, model, preview, Command Center UX projection, route coverage, docs, reports, roadmap, OS phase status, redaction, zero-spend, and forbidden-path safety.",
       "detail": "P139.5 adds a validation-only aggregate checker and report for the P139 ledger chain. It does not modify dashboard UX or enable live ledger persistence.",
       "checksRun": [
@@ -985,7 +985,7 @@
   ],
   "completedAt": "2026-05-30T23:59:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "d63b420d",
   "checksRun": [
     "npm run check:p1395-evidence-audit-observability-cost-ledger",
     "npm run check:p1394-evidence-audit-observability-cost-ledger",
