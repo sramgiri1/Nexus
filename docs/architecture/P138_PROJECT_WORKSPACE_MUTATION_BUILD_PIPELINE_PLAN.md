@@ -324,7 +324,7 @@ Validation commands:
 - `git diff --check`
 
 OS phase status update:
-- P138 is in progress through P138.3.
+- At this step, P138 was in progress through P138.3.
 - P138.3 is complete.
 - Current subphase: P138.3.
 - Previous subphase: P138.2.
@@ -388,11 +388,11 @@ Tests/checkers, docs, status, validation, git, and final checks:
   phase status, phase index, and generated reports.
 
 OS phase status update:
-- P138 is in progress through P138.6.
+- P138 is complete through P138.7.
 - P138.4 is complete.
 - Current subphase: P138.4.
 - Previous subphase: P138.3.
-- Later handoff: P138.5 and P138.6 are complete; P138.7 planned-only.
+- Later handoff: P138.5, P138.6, and P138.7 are complete; P139 planned-only.
 
 Validation commands:
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`
@@ -413,7 +413,7 @@ Known limitations:
   rollbacks, write DB/runtime state, call providers/models, execute tools, start
   MCP servers, dispatch agents, deploy, release, export, package, use network
   calls, or spend.
-- P138.5 and P138.6 are complete; P138.7 remains planned-only.
+- P138.5, P138.6, and P138.7 are complete; P139 remains planned-only.
 
 ## P138.5 Tests / Checkers
 
@@ -455,15 +455,15 @@ Tests/checkers:
 Docs/roadmap/status:
 - README, platform roadmap, enterprise roadmap, P138 contract, phase status,
   phase index, and generated reports record P138.5 as complete.
-- Later handoff: P138.6 is complete and P138.7 remains planned-only next.
+- Later handoff: P138.6 and P138.7 are complete and P139 remains planned-only next.
 
 OS phase status update:
-- P138 is in progress through P138.6.
+- P138 is complete through P138.7.
 - P138.5 is complete.
 - P138.5 was the current subphase for this validation step; later handoff is
   P138.6 complete.
 - Previous subphase: P138.4.
-- Later handoff: P138.6 complete; P138.7 planned-only.
+- Later handoff: P138.6 and P138.7 complete; P139 planned-only.
 
 Validation commands:
 - `npm run check:p1385-project-workspace-mutation-build-pipeline`
@@ -485,7 +485,7 @@ Known limitations:
   rollbacks, write DB/runtime state, call providers/models, execute tools, start
   MCP servers, dispatch agents, deploy, release, export, package, use network
   calls, or spend.
-- P138.6 is complete; P138.7 remains planned-only.
+- P138.6 and P138.7 are complete; P139 remains planned-only.
 
 ## P138.6 Docs / Roadmap / Status
 
@@ -537,11 +537,11 @@ Tests/checkers, docs, status, validation, git, and final checks:
   mutation, patch application, build/test execution, rollback execution,
   DB/runtime writes, provider/model calls, tool execution, MCP startup, agent
   dispatch, deploy, release, export, package, network calls, or spend.
-- P138.7 remains planned-only next.
+- P138.7 is complete; P139 remains planned-only next.
 
 ## P138.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Finalize P138 with prior report verification, checker compatibility,
@@ -559,11 +559,37 @@ Forbidden files:
 
 Expected exports, schemas, and data shapes:
 - Final validation only. No new runtime exports.
+- Expected exports: none.
 
 Command Center UX requirements:
 - Preserve Command Center UX and validate route-wide navigation, themes, no
-  DemoApp leakage, no raw internals, and no fake runnable actions.
+  demo app leakage, no raw internals, and no fake runnable actions.
 
 Tests/checkers, docs, status, validation, git, and final checks:
-- Add final validation checker, verify P138.1-P138.6 PASS reports, run the P138
-  validation command set, commit, stamp, push, and hand off to P139 planned-only.
+- Added P138.7 final validation checker.
+- Updated P138.1-P138.6, enterprise, and OS checkers for the P138.7 final
+  state.
+- Verified P138.1-P138.6 PASS reports and P138 route-wide safety coverage.
+- Updated this plan, README, platform roadmap, enterprise roadmap, OS phase
+  status, phase index, package script, checker handoffs, and generated reports.
+- Validation commands:
+  - `npm run check:p1387-project-workspace-mutation-build-pipeline`
+  - `npm run check:p1386-project-workspace-mutation-build-pipeline`
+  - `npm run check:p1385-project-workspace-mutation-build-pipeline`
+  - `npm run check:p1384-project-workspace-mutation-build-pipeline`
+  - `npm run check:p1383-project-workspace-mutation-build-pipeline`
+  - `npm run check:p1382-project-workspace-mutation-build-pipeline`
+  - `npm run check:p1381-project-workspace-mutation-build-pipeline`
+  - `npm run check:enterprise-readiness-roadmap`
+  - `npm run check:os-phase-status`
+  - `npm run check:phase-validation-coverage`
+  - `cd dashboard && npm run build`
+  - `cd dashboard && npm run test:unit`
+  - `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+  - `git diff --check`
+- P138.7 is final validation only. It does not enable project mutation, patch
+  application, build/test execution, rollback execution, DB/runtime writes,
+  provider/model calls, tool execution, MCP startup, agent dispatch, deploy,
+  release, export, package, network calls, or spend.
+- P138 is complete through final validation.
+- P139 remains planned-only next.

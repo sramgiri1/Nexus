@@ -2009,7 +2009,7 @@ The Command Center and local operator surface have:
   roadmap/status entries only until their own subphase contracts start; current
   implementation is closed through P137.7. P137 Agent Work Order Runtime is
   complete through final validation. P138 Project Workspace Mutation and Build
-  Pipeline is in progress through P138.6; P138.7 is planned-only next.
+  Pipeline is complete through final validation; P139 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2310,11 +2310,18 @@ The Command Center and local operator surface have:
   subphase explicitly allows them.
 - P138.6 docs/roadmap/status closure: Closed the P138 docs, README, platform
   roadmap, enterprise roadmap, OS phase status, phase index, checker handoffs,
-  package script, and generated reports through P138.6. P138.7 is planned-only
-  next; project mutation, patch application, build/test execution, rollback
+  package script, and generated reports through P138.6. Later handoff completed
+  P138.7 and left P139 planned-only next; project mutation, patch application, build/test execution, rollback
   execution, provider/model calls, tool execution, MCP startup, agent dispatch,
   DB/runtime writes, deploy, release, export, package, network calls, and spend
   remain unavailable until a later subphase explicitly allows them.
+- P138.7 final validation: Completed P138 final validation by verifying
+  P138.1-P138.6 reports, checker compatibility, docs/status closure,
+  route-wide Command Center safety, and planned-only P139 handoff. P139 is
+  planned-only next; project mutation, patch application, build/test execution,
+  rollback execution, provider/model calls, tool execution, MCP startup, agent
+  dispatch, DB/runtime writes, deploy, release, export, package, network calls,
+  and spend remain unavailable until a later phase explicitly allows them.
 
 ## CareLoop Project Progress
 
