@@ -188,7 +188,11 @@ addCheck("OS checker recognizes P136 subphases", ["P136", "P136.1", "P136.2"].ev
 addCheck("P136 plan records P136.1", /## P136\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P136.1", /P136\.1 secrets\/providers\/tool governance contract/i.test(readme));
 addCheck("platform roadmap records P136.1", /P136\.1 secrets\/providers\/tool governance contract is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P136.1", /P136\.1 is now complete/i.test(enterpriseRoadmap) && /P136\.2 is the next executable subphase/i.test(enterpriseRoadmap));
+addCheck(
+  "enterprise roadmap records P136.1",
+  /P136\.1 is now complete/i.test(enterpriseRoadmap)
+    && (/P136\.2 is the next executable subphase/i.test(enterpriseRoadmap) || (/P136\.2 is now complete/i.test(enterpriseRoadmap) && /P136\.3 is the next executable subphase/i.test(enterpriseRoadmap))),
+);
 addCheck("phase status starts P136.1", p1361StartedState || p1362CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P136.1 entries have required fields", [statusById.get("P136"), statusById.get("P136.1"), roadmapById.get("P136.1")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck("P136.2 remains planned or safely handed off", (statusById.get("P136.2")?.status === "planned" && roadmapById.get("P136.2")?.status === "planned" && !(statusById.get("P136.2")?.checksRun || []).length) || p1362CurrentState);
@@ -225,7 +229,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P136.1 is contract/policy/safety-boundary work only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.2 remains planned-only.",
+      body: "- P136.1 is contract/policy/safety-boundary work only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. Later P136 subphases remain governed by their own implementation-grade contracts.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

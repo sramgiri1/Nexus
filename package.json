@@ -757,7 +757,8 @@
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js",
     "check:p1356-identity-tenant-roles-permissions-docs-roadmap": "node scripts/check-p1356-identity-tenant-roles-permissions-docs-roadmap.js",
     "check:p1357-identity-tenant-roles-permissions-final-validation": "node scripts/check-p1357-identity-tenant-roles-permissions-final-validation.js",
-    "check:p1361-secrets-providers-tool-governance": "node scripts/check-p1361-secrets-providers-tool-governance.js"
+    "check:p1361-secrets-providers-tool-governance": "node scripts/check-p1361-secrets-providers-tool-governance.js",
+    "check:p1362-secret-provider-model": "node scripts/check-p1362-secret-provider-model.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

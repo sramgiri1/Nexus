@@ -2007,7 +2007,7 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P136.1 with P136.2 planned-only next.
+  implementation is closed through P136.2 with P136.3 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2167,10 +2167,19 @@ The Command Center and local operator surface have:
   implementation-grade secrets, provider eligibility, model access, tool
   contract, budget, approval, and evidence governance contract. It adds the
   seven-subphase split, safety boundary, checker, docs, roadmap, OS status
-  handoff, and validation report. P136.2 Secret and Provider Model is
-  planned-only next; secret values, provider/model calls, tool execution, MCP
+  handoff, and validation report. P136.2 Secret and Provider Model followed
+  next; secret values, provider/model calls, tool execution, MCP
   server startup, agent dispatch, DB/runtime writes, project mutation, deploy,
   release, export, package, network calls, and spend remain unavailable.
+- P136.2 secret/provider model: Added the read-only governance model that reuses
+  existing secret access, provider credential boundary, tool permission matrix,
+  budget policy, and result-envelope helpers. It exposes display-safe secret
+  policy, provider eligibility, model access, tool contract, budget policy,
+  approval gate, blocker, evidence, activity, cost impact, owner, and
+  next-action rows. P136.3 Provider Dry Run is planned-only next; secret values,
+  provider/model calls, tool execution, MCP server startup, agent dispatch,
+  DB/runtime writes, project mutation, deploy, release, export, package, network
+  calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

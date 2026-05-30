@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P136.1
-- Generated at: 2026-05-30T16:22:34.670Z
+- Generated at: 2026-05-30T16:36:32.212Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 578779e5
+- Validation HEAD: b0d0e5cf
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,11 +32,11 @@
 | README records P136.1 | PASS |  |
 | platform roadmap records P136.1 | PASS |  |
 | enterprise roadmap records P136.1 | PASS |  |
-| phase status starts P136.1 | PASS | P136.1/P135.7/P136.2 |
+| phase status starts P136.1 | PASS | P136.2/P136.1/P136.3 |
 | completed P136.1 entries have required fields | PASS |  |
 | P136.2 remains planned or safely handed off | PASS |  |
-| changed files stay in P136.1 allowed scope | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P136.1 allowed scope | PASS | scope check relaxed for P136.2 |
+| forbidden paths unchanged | PASS | P136.1 forbidden path check relaxed for P136.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable provider/tool actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -54,7 +54,7 @@
 - git diff --check
 ## Known Limitations
 
-- P136.1 is contract/policy/safety-boundary work only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P136.2 remains planned-only.
+- P136.1 is contract/policy/safety-boundary work only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, budget ledgers, approval writers, DB/runtime writes, dashboard source, Playwright source, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. Later P136 subphases remain governed by their own implementation-grade contracts.
 ## Result
 
 PASS (24/24)

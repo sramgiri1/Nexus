@@ -25,12 +25,13 @@ P135.6 is now complete as docs/roadmap/status closure only.
 P135.7 is now complete as final validation only. P135.1 through P135.7 are
 now complete, and P135 is complete.
 P136.1 is now complete as contract/policy/safety-boundary only.
-P136.2 is the next executable subphase. P136.2-P136.7 and P137-P145 remain
-planned-only. They do not enable secret values, DB writes,
-provider/model calls, tool execution, agent dispatch, project mutation, deploy,
-release, export, package, network calls, or spend until each
-phase/subphase has its own implementation-grade plan, checker coverage,
-Command Center UX when applicable, and final validation.
+P136.2 is now complete as a read-only secret/provider/tool governance model.
+P136.3 is the next executable subphase. P136.3-P136.7 and P137-P145 remain
+planned-only. They do not enable secret values, DB writes, provider/model calls,
+tool execution, agent dispatch, project mutation, deploy, release, export,
+package, network calls, or spend until each phase/subphase has its own
+implementation-grade plan, checker coverage, Command Center UX when applicable,
+and final validation.
 
 ## Global Subphase Contract
 
@@ -95,7 +96,8 @@ Forbidden by default unless a phase explicitly allows it:
 
 Current implementation has closed P135.1 through P135.7 and P135 is complete.
 P136.1 is now complete as a secrets/provider/tool governance contract and
-safety boundary. P136.2 is the next executable subphase. P136.2-P136.7 and
+safety boundary. P136.2 is now complete as a read-only secret/provider/tool
+governance model. P136.3 is the next executable subphase. P136.3-P136.7 and
 P137-P145 are planned-only backlog phases and must not be treated as complete
 or live.
 
@@ -104,6 +106,7 @@ or live.
 Required validation for this roadmap update:
 
 - `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1362-secret-provider-model`
 - `npm run check:p1361-secrets-providers-tool-governance`
 - `npm run check:p1357-identity-tenant-roles-permissions-final-validation`
 - `npm run check:p1356-identity-tenant-roles-permissions-docs-roadmap`

@@ -2,9 +2,10 @@
 
 P136 governs secrets, provider eligibility, model access, tool contracts,
 budgets, approvals, and evidence before any live external execution can be
-considered. The phase is intentionally staged. P136.1 starts the contract and
-safety boundary only. Later subphases own the read-only governance model,
-non-runnable dry run, Command Center UX, tests, docs, and final validation.
+considered. The phase is intentionally staged. P136.1 started the contract and
+safety boundary, and P136.2 adds the read-only governance model. Later
+subphases own the non-runnable dry run, Command Center UX, tests, docs, and
+final validation.
 
 ## Subphases
 
@@ -166,15 +167,15 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
-## Planned P136.2-P136.7 Implementation Boundaries
+## P136.2-P136.7 Implementation Boundaries
 
-Each planned subphase must be implemented separately and must keep the same
+Each subphase must be implemented separately and must keep the same
 forbidden paths unless its own implementation-grade plan explicitly allows a
 narrow exception.
 
 ### P136.2 Secret and Provider Model
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Define a display-safe secret reference, provider eligibility, model access,
@@ -193,6 +194,7 @@ Expected exports, schemas, and data shapes:
 - `PROVIDER_GOVERNANCE_FLAG_NAMES`
 - `buildProviderGovernanceModel`
 - `validateProviderGovernanceModel`
+- `buildProviderGovernanceModelEnvelope`
 - Data must expose display-safe rows only, with all execution, network, spend,
   write, dispatch, and mutation flags false.
 
@@ -203,6 +205,14 @@ Tests/checkers and validation:
 - Add `check:p1362-secret-provider-model`.
 - Run P136.2, P136.1, enterprise, OS status, phase coverage, dashboard build,
   unit, route-wide Playwright, and `git diff --check`.
+
+Status handoff:
+- Current phase is P136.2.
+- Previous phase is P136.1.
+- Next phase is P136.3 planned-only.
+- Secret values, provider/model calls, tool execution, MCP server startup,
+  agent dispatch, DB/runtime writes, project mutation, deploy, release, export,
+  package, network calls, and spend remain blocked.
 
 ### P136.3 Provider Dry Run
 

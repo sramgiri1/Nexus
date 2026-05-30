@@ -3195,7 +3195,7 @@ remain blocked.
 ## P133-P145 Enterprise Readiness Roadmap
 
 P133-P145 are enterprise readiness phases. P133, P134, and P135 are complete,
-and P136 is in progress through P136.1. Later subphases and phases remain
+and P136 is in progress through P136.2. Later subphases and phases remain
 planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3205,11 +3205,11 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7 and P136.1. P136.2 Secret and
-Provider Model is planned-only next. P136.2-P136.7 and P137-P145 do not enable
-secret values, DB/runtime writes, live CRUD, provider/model calls, tool
-execution, agent dispatch, project mutation, deploy, release, export, package,
-network calls, or spend.
+Current implementation is closed through P135.7 and P136.2. P136.2
+secret/provider model is complete. P136.3 Provider Dry Run is planned-only next.
+P136.3-P136.7 and P137-P145 do not enable secret values, DB/runtime writes, live
+CRUD, provider/model calls, tool execution, agent dispatch, project mutation,
+deploy, release, export, package, network calls, or spend.
 
 P133.1 is complete. NEXUS started Founder Idea-to-PRD Productization with an
 implementation-grade contract, seven-subphase split, safety boundary, checker,
@@ -3387,10 +3387,20 @@ P136.1 secrets/providers/tool governance contract is complete. NEXUS now has
 the P136 contract, seven-subphase split, safety boundary, checker, docs,
 roadmap, OS status, phase index, and validation report for secrets, provider
 eligibility, model access, tool contracts, budgets, approvals, and evidence.
-P136.2 Secret and Provider Model is planned-only next. Secret values,
+P136.2 Secret and Provider Model followed next. Secret values,
 provider/model calls, tool execution, MCP server startup, agent dispatch,
 DB/runtime writes, project mutation, deploy, release, export, package, network
 calls, and spend remain blocked.
+
+P136.2 secret/provider model is complete. NEXUS now has a read-only
+secret/provider/tool governance model that reuses existing secret access,
+provider credential boundary, tool permission matrix, budget policy, and result
+envelope helpers. It exposes display-safe secret policy, provider eligibility,
+model access, tool contract, budget policy, approval gate, blocker, evidence,
+activity, cost impact, owner, and next-action rows. P136.3 Provider Dry Run is
+planned-only next. Secret values, provider/model calls, tool execution, MCP
+server startup, agent dispatch, DB/runtime writes, project mutation, deploy,
+release, export, package, network calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
