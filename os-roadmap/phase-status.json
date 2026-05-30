@@ -29500,7 +29500,7 @@
       "order": 175,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8a82b39b",
       "commandCenterVisible": true,
       "detail": "P139 is in progress through P139.4. Command Center now shows read-only ledger traceability while every live write and execution authority remains blocked.",
       "summary": "P139.4 adds Command Center ledger preview UX; P139.5 tests/checkers hardening remains planned-only.",
@@ -30101,7 +30101,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T23:59:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "8a82b39b",
           "summary": "P139.4 adds read-only Command Center ledger preview UX across Observability, Evidence, Cost Center, Business Build, and Agent Flow.",
           "detail": "P139.4 projects display-safe evidence, audit, activity, observability, and zero-spend cost ledger context into scoped Command Center surfaces while Chat with NEXUS stays clean.",
           "checksRun": [
@@ -30656,7 +30656,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T23:59:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8a82b39b",
       "summary": "P139.4 adds read-only Command Center ledger preview UX across Observability, Evidence, Cost Center, Business Build, and Agent Flow.",
       "detail": "P139.4 projects display-safe evidence, audit, activity, observability, and zero-spend cost ledger context into scoped Command Center surfaces while Chat with NEXUS stays clean.",
       "checksRun": [
@@ -31895,7 +31895,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T23:59:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "8a82b39b",
     "summary": "P139.4 adds read-only Command Center ledger preview UX across Observability, Evidence, Cost Center, Business Build, and Agent Flow.",
     "detail": "P139.4 projects display-safe evidence, audit, activity, observability, and zero-spend cost ledger context into scoped Command Center surfaces while Chat with NEXUS stays clean.",
     "checksRun": [

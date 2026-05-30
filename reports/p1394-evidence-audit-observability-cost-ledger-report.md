@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P139.4
-- Generated at: 2026-05-30T23:30:47.812Z
+- Generated at: 2026-05-30T23:31:40.875Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1bf5a3f6
+- Validation HEAD: 8a82b39b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -72,8 +72,8 @@
 | phase status starts P139.4 | PASS | P139.4/P139.3/P139.5 |
 | completed P139.4 entries have required fields | PASS |  |
 | P139.5 remains planned-only | PASS |  |
-| changed files stay in P139.4 allowed scope | PASS | README.md, contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, dashboard/src/data/commandCenterTabs.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1393-evidence-audit-observability-cost-ledger-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1393-evidence-audit-observability-cost-ledger.js, dashboard/src/data/evidenceAuditObservabilityCostLedgerUx.js, reports/p1394-evidence-audit-observability-cost-ledger-report.md, scripts/check-p1394-evidence-audit-observability-cost-ledger.js, shared/evidenceAuditObservabilityCostLedgerUxProjection.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, dashboard/src/data/commandCenterTabs.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1393-evidence-audit-observability-cost-ledger-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1393-evidence-audit-observability-cost-ledger.js, dashboard/src/data/evidenceAuditObservabilityCostLedgerUx.js, reports/p1394-evidence-audit-observability-cost-ledger-report.md, scripts/check-p1394-evidence-audit-observability-cost-ledger.js, shared/evidenceAuditObservabilityCostLedgerUxProjection.js |
+| changed files stay in P139.4 allowed scope | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | projection/docs avoid raw private IDs | PASS |  |
 | projection avoids fake runnable actions | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
