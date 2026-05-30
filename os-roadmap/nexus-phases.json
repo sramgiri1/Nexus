@@ -21097,7 +21097,7 @@
       "order": 174,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "22610014",
       "commandCenterVisible": true,
       "detail": "P138.2 is complete as read-only workspace mutation model only. P138.3 Patch and Build Preview is planned-only next.",
       "summary": "P138 is in progress through P138.2 with contract/policy safety boundary and read-only workspace mutation model complete while patch application, project mutation, build/test execution, and rollback execution remain blocked.",
@@ -21442,7 +21442,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T20:24:01.099Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "22610014",
           "summary": "Added the read-only P138.2 project workspace mutation model with scoped boundary, path, patch, build, test, rollback, approval, evidence, activity, audit, owner, blocker, disabled reason, cost, and blocked safety flag data without enabling project mutation or build execution.",
           "detail": "P138.2 is complete as read-only workspace mutation model only. P138.3 Patch and Build Preview is planned-only next.",
           "checksRun": [
@@ -21468,7 +21468,7 @@
           "status": "planned",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "pending-p1382-final-commit",
+          "expectedBaseCommit": "22610014",
           "narrowGoal": "Build a non-runnable patch/build preview from the P138.2 model showing display-safe candidate changes, validation commands, rollback plan, blockers, disabled reason, and zero-spend posture without applying patches or running project commands.",
           "allowedFiles": [
             "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -22533,7 +22533,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T20:24:01.099Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "22610014",
       "summary": "Added the read-only P138.2 project workspace mutation model with scoped boundary, path, patch, build, test, rollback, approval, evidence, activity, audit, owner, blocker, disabled reason, cost, and blocked safety flag data without enabling project mutation or build execution.",
       "detail": "P138.2 is complete as read-only workspace mutation model only. P138.3 Patch and Build Preview is planned-only next.",
       "checksRun": [
@@ -22559,7 +22559,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1382-final-commit",
+      "expectedBaseCommit": "22610014",
       "narrowGoal": "Build a non-runnable patch/build preview from the P138.2 model showing display-safe candidate changes, validation commands, rollback plan, blockers, disabled reason, and zero-spend posture without applying patches or running project commands.",
       "allowedFiles": [
         "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
@@ -25706,7 +25706,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T20:24:01.099Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "22610014",
     "summary": "Added the read-only P138.2 project workspace mutation model with scoped boundary, path, patch, build, test, rollback, approval, evidence, activity, audit, owner, blocker, disabled reason, cost, and blocked safety flag data without enabling project mutation or build execution.",
     "detail": "P138.2 is complete as read-only workspace mutation model only. P138.3 Patch and Build Preview is planned-only next.",
     "checksRun": [
@@ -25899,7 +25899,7 @@
     "status": "planned",
     "scopeClassification": "NEXUS_OS_CHANGE",
     "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "pending-p1382-final-commit",
+    "expectedBaseCommit": "22610014",
     "narrowGoal": "Build a non-runnable patch/build preview from the P138.2 model showing display-safe candidate changes, validation commands, rollback plan, blockers, disabled reason, and zero-spend posture without applying patches or running project commands.",
     "allowedFiles": [
       "contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json",
