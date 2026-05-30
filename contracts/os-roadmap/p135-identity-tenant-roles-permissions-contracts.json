@@ -863,7 +863,7 @@
       "order": 171.5,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ed127243",
       "summary": "Closed P135 identity, tenant, roles, and permissions docs, README, roadmap, checker handoff, and OS phase status evidence while keeping Auth Governance review-only and all live auth, tenant, permission, DB/runtime, provider, agent, project, deploy, export, package, network, and spend actions blocked.",
       "knownLimitations": [
         "P135.6 is docs/roadmap/status only. It does not enable login, sessions, tenant mutation, role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.7 remains planned-only."
@@ -1109,7 +1109,7 @@
     "nextPhase": "P135.7",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ed127243",
     "summary": "Closed P135 identity, tenant, roles, and permissions docs, README, roadmap, checker handoff, and OS phase status evidence while keeping Auth Governance review-only and all live auth, tenant, permission, DB/runtime, provider, agent, project, deploy, export, package, network, and spend actions blocked.",
     "knownLimitations": [
       "P135.6 is docs/roadmap/status only. It does not enable login, sessions, tenant mutation, role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.7 remains planned-only."
@@ -1417,7 +1417,7 @@
   },
   "summary": "P135 identity, tenant, roles, and permissions is in progress with P135.1 through P135.6 complete and P135.7 planned-only next.",
   "detail": "P135.6 is complete. P135.7 Final Validation is planned-only next.",
-  "commit": "pending-final-commit",
+  "commit": "ed127243",
   "completedAt": "2026-05-30T00:00:00.000Z",
   "checksRun": [
     "npm run check:p1356-identity-tenant-roles-permissions-docs-roadmap",
