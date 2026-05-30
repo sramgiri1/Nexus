@@ -106,6 +106,7 @@ const allowedFiles = new Set([
   "scripts/check-p1331-founder-idea-to-prd-productization.js",
   "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
+  "scripts/check-os-phase-status.js",
   REPORT_PATH,
   "reports/p1336-founder-idea-to-prd-docs-roadmap-report.md",
   "reports/p1335-founder-idea-to-prd-tests-checkers-report.md",

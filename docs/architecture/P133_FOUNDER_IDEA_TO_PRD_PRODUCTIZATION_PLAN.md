@@ -261,6 +261,7 @@ Allowed files:
 - P133.1-P133.6 compatibility checkers
 - `scripts/check-enterprise-readiness-roadmap.js`
 - `scripts/check-p1327-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-os-phase-status.js`
 - Generated P133.7, compatibility, enterprise, OS status, and phase coverage reports
 
 Forbidden files:
