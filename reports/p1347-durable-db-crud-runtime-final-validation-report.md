@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P134.7
-- Generated at: 2026-05-30T14:15:42.471Z
+- Generated at: 2026-05-30T14:16:31.817Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b028a0b0
+- Validation HEAD: 34145463
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,8 +33,8 @@
 | phase status closes P134 | PASS | P134.7/P134.6/P135 |
 | completed P134 entries have required fields | PASS |  |
 | P135 handoff remains safe | PASS |  |
-| changed files stay in P134.7 allowed scope | PASS | README.md, contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1341-durable-db-crud-runtime-report.md, reports/p1342-durable-db-crud-runtime-schema-model-report.md, reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md, reports/p1344-durable-db-crud-runtime-command-center-ux-report.md, reports/p1345-durable-db-crud-runtime-tests-checkers-report.md, reports/p1346-durable-db-crud-runtime-docs-roadmap-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1341-durable-db-crud-runtime.js, scripts/check-p1342-durable-db-crud-runtime-schema-model.js, scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js, scripts/check-p1344-durable-db-crud-runtime-command-center-ux.js, scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js, scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js, reports/p1347-durable-db-crud-runtime-final-validation-report.md, scripts/check-p1347-durable-db-crud-runtime-final-validation.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1341-durable-db-crud-runtime-report.md, reports/p1342-durable-db-crud-runtime-schema-model-report.md, reports/p1343-durable-db-crud-runtime-write-plan-preview-report.md, reports/p1344-durable-db-crud-runtime-command-center-ux-report.md, reports/p1345-durable-db-crud-runtime-tests-checkers-report.md, reports/p1346-durable-db-crud-runtime-docs-roadmap-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1341-durable-db-crud-runtime.js, scripts/check-p1342-durable-db-crud-runtime-schema-model.js, scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js, scripts/check-p1344-durable-db-crud-runtime-command-center-ux.js, scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js, scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js, reports/p1347-durable-db-crud-runtime-final-validation-report.md, scripts/check-p1347-durable-db-crud-runtime-final-validation.js |
+| changed files stay in P134.7 allowed scope | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
