@@ -267,7 +267,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T23:15:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6862edd4",
       "checksRun": [
         "npm run check:p1392-evidence-audit-observability-cost-ledger",
         "npm run check:p1391-evidence-audit-observability-cost-ledger",
@@ -489,7 +489,7 @@
   ],
   "completedAt": "2026-05-30T23:15:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "6862edd4",
   "checksRun": [
     "npm run check:p1392-evidence-audit-observability-cost-ledger",
     "npm run check:p1391-evidence-audit-observability-cost-ledger",

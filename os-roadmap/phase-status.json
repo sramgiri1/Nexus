@@ -29150,7 +29150,7 @@
       "order": 175,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6862edd4",
       "commandCenterVisible": true,
       "detail": "P139 is in progress through P139.2. A read-only ledger model now normalizes evidence, audit, observability, and cost references while every live write and execution authority remains blocked.",
       "summary": "P139.2 adds the zero-spend read-only ledger model; P139.3 evidence preview remains planned-only.",
@@ -29332,7 +29332,7 @@
           "commandCenterVisible": true,
           "completedAt": "2026-05-30T23:15:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "6862edd4",
           "summary": "P139.2 adds a read-only evidence, audit, observability, and cost ledger model with zero-spend, non-runnable records.",
           "detail": "P139.2 reuses existing evidence record, activity event, cost ledger, redaction, mode guard, and result envelope helpers to normalize traceability metadata without live writes.",
           "checksRun": [
@@ -29789,7 +29789,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T23:15:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6862edd4",
       "summary": "P139.2 adds a read-only evidence, audit, observability, and cost ledger model with zero-spend, non-runnable records.",
       "detail": "P139.2 reuses existing evidence record, activity event, cost ledger, redaction, mode guard, and result envelope helpers to normalize traceability metadata without live writes.",
       "checksRun": [
@@ -31513,7 +31513,7 @@
     "commandCenterVisible": true,
     "completedAt": "2026-05-30T23:15:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "6862edd4",
     "summary": "P139.2 adds a read-only evidence, audit, observability, and cost ledger model with zero-spend, non-runnable records.",
     "detail": "P139.2 reuses existing evidence record, activity event, cost ledger, redaction, mode guard, and result envelope helpers to normalize traceability metadata without live writes.",
     "checksRun": [
