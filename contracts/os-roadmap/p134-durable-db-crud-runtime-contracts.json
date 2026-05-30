@@ -119,7 +119,7 @@
       "order": 170.1,
       "completedAt": "2026-05-30T12:26:26.371Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "754b334060adc38233930f52add1221c7086e8d9",
       "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
         "P134.1 is contract/policy/safety-boundary work only. It does not create DB schemas, run migrations, connect databases, write DB/runtime records, expose CRUD actions, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.2 remains planned-only."
@@ -570,7 +570,7 @@
     "title": "Contract / Policy / Safety Boundary",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "754b334060adc38233930f52add1221c7086e8d9",
     "completedAt": "2026-05-30T12:26:26.371Z",
     "detail": "P134.1 complete: Durable DB and CRUD Runtime contract and safety boundary are in place.",
     "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
@@ -597,7 +597,7 @@
     "title": "Durable DB and CRUD Runtime",
     "status": "in_progress",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "754b334060adc38233930f52add1221c7086e8d9",
     "completedAt": "2026-05-30T12:26:26.371Z",
     "detail": "P134 in progress; P134.1 complete and P134.2 Schema and Repository Model is planned-only next.",
     "summary": "Completed P134.1 by starting Durable DB and CRUD Runtime with an implementation-grade contract, safety boundary, checker, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
