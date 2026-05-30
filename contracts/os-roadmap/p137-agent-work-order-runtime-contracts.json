@@ -969,7 +969,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T19:24:22.128Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "05cb2531",
       "summary": "Aggregated P137 contract, scoped work-order model, dispatch dry run, Agent Flow UX coverage, route-wide safety assertions, docs, roadmap, and OS phase status into tests/checkers evidence without enabling live dispatch.",
       "checksRun": [
         "npm run check:p1375-agent-work-order-runtime",
@@ -995,7 +995,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1375-final-commit",
+      "expectedBaseCommit": "05cb2531",
       "narrowGoal": "Close P137 docs, README, roadmap, phase status, reports, checker handoffs, and final-validation preparation.",
       "allowedFiles": [
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
