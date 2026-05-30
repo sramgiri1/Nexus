@@ -764,7 +764,8 @@
     "check:p1365-secrets-providers-tool-governance-tests-checkers": "node scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js",
     "check:p1366-secrets-providers-tool-governance-docs-roadmap": "node scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js",
     "check:p1367-secrets-providers-tool-governance-final-validation": "node scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
-    "check:p1371-agent-work-order-runtime": "node scripts/check-p1371-agent-work-order-runtime.js"
+    "check:p1371-agent-work-order-runtime": "node scripts/check-p1371-agent-work-order-runtime.js",
+    "check:p1372-agent-work-order-runtime": "node scripts/check-p1372-agent-work-order-runtime.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

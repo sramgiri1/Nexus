@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.1
-- Generated at: 2026-05-30T18:14:49.954Z
+- Generated at: 2026-05-30T18:31:06.869Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2b9beb82
+- Validation HEAD: fad26b65
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | checker reuses shared report helpers | PASS |  |
 | contract starts P137 safely | PASS |  |
 | contract has seven implementation-grade subphases | PASS |  |
-| P137.1 complete and P137.2 planned | PASS |  |
+| P137.1 complete and P137.2 planned or complete | PASS |  |
 | P137.1 records expected base commit | PASS |  |
 | P137.1 records validation commands | PASS |  |
 | runtime context rule limits model context | PASS |  |
@@ -35,11 +35,11 @@
 | README records P137.1 | PASS |  |
 | platform roadmap records P137.1 | PASS |  |
 | enterprise roadmap records P137.1 | PASS |  |
-| phase status starts P137.1 | PASS | P137.1/P136.7/P137.2 |
+| phase status starts P137.1 or safely hands off to P137.2 | PASS | P137.2/P137.1/P137.3 |
 | completed P137.1 entries have required fields | PASS |  |
-| P137.2 remains planned-only | PASS |  |
-| changed files stay in P137.1 allowed scope | PASS |  |
-| forbidden paths unchanged | PASS |  |
+| P137.2 remains planned or safely complete | PASS |  |
+| changed files stay in P137.1 allowed scope | PASS | scope check relaxed for P137.2 |
+| forbidden paths unchanged | PASS | P137.1 forbidden path check relaxed for P137.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable work order actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

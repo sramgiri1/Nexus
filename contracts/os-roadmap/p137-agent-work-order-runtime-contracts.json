@@ -2,9 +2,9 @@
   "phaseId": "P137",
   "title": "Agent Work Order Runtime",
   "status": "in_progress",
-  "currentSubphase": "P137.1",
-  "previousSubphase": "P136.7",
-  "nextSubphase": "P137.2",
+  "currentSubphase": "P137.2",
+  "previousSubphase": "P137.1",
+  "nextSubphase": "P137.3",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "033f2712",
   "scopeClassification": "NEXUS_OS_CHANGE",
@@ -239,12 +239,13 @@
     {
       "phaseId": "P137.2",
       "title": "Work Order Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1371-final-commit",
+      "expectedBaseCommit": "fad26b65",
       "narrowGoal": "Define the read-only agent work order model and scoped context packet shape without dispatching agents or loading full registries.",
       "allowedFiles": [
+        "shared/agentWorkOrderRuntimeModel.js",
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
         "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
         "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
@@ -254,9 +255,13 @@
         "os-roadmap/phase-status.json",
         "package.json",
         "scripts/check-p1372-agent-work-order-runtime.js",
+        "scripts/check-p1371-agent-work-order-runtime.js",
+        "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
         "scripts/check-enterprise-readiness-roadmap.js",
         "scripts/check-os-phase-status.js",
         "reports/p1372-agent-work-order-runtime-report.md",
+        "reports/p1371-agent-work-order-runtime-report.md",
+        "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
         "reports/enterprise-readiness-roadmap-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
@@ -278,6 +283,7 @@
         ".env*"
       ],
       "exactFilesToCreateOrUpdate": [
+        "shared/agentWorkOrderRuntimeModel.js",
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
         "docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md",
         "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
@@ -285,30 +291,41 @@
         "README.md",
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
-        "package.json"
+        "package.json",
+        "scripts/check-p1372-agent-work-order-runtime.js",
+        "scripts/check-p1371-agent-work-order-runtime.js",
+        "scripts/check-p1367-secrets-providers-tool-governance-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1372-agent-work-order-runtime-report.md",
+        "reports/p1371-agent-work-order-runtime-report.md",
+        "reports/p1367-secrets-providers-tool-governance-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "expectedExports": [
         "AGENT_WORK_ORDER_RUNTIME_PHASE",
         "AGENT_WORK_ORDER_RUNTIME_VERSION",
         "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES",
         "buildAgentWorkOrderRuntimeModel",
         "validateAgentWorkOrderRuntimeModel",
-        "buildAgentWorkOrderDispatchDryRun",
-        "validateAgentWorkOrderDispatchDryRun",
         "buildAgentWorkOrderRuntimeEnvelope"
       ],
       "futureExports": [
         "AGENT_WORK_ORDER_RUNTIME_PHASE",
         "AGENT_WORK_ORDER_RUNTIME_VERSION",
         "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES",
         "buildAgentWorkOrderRuntimeModel",
         "validateAgentWorkOrderRuntimeModel",
+        "buildAgentWorkOrderRuntimeEnvelope",
         "buildAgentWorkOrderDispatchDryRun",
-        "validateAgentWorkOrderDispatchDryRun",
-        "buildAgentWorkOrderRuntimeEnvelope"
+        "validateAgentWorkOrderDispatchDryRun"
       ],
-      "dataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",
-      "futureDataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",
+      "dataShape": "Read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, workOrderPackets, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registries. Agent packets do not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, dispatch controls, mutation controls, or spend controls.",
+      "futureDataShape": "Read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, workOrderPackets, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registries. Agent packets do not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, dispatch controls, mutation controls, or spend controls.",
       "commandCenterUx": "Future Command Center UX must show work order state, current state, next action, blockers, disabled reason, owner agent/capability, evidence/activity location, and cost impact without raw JSON/log/policy/registry dumps, demo surfaces, raw private IDs, or fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
@@ -333,13 +350,19 @@
         "Do not duplicate report writers, checker formatters, result envelopes, redaction helpers, mode guards, route matrices, UI cards/tabs/badges, activity/evidence/audit appenders, or work-order helpers."
       ],
       "testsAndCheckers": [
-        "Add or update P137.2 checker.",
-        "Run prior P137 checker handoff, enterprise, OS status, phase coverage, dashboard build, unit, route-wide Playwright, and git diff checks."
+        "Add scripts/check-p1372-agent-work-order-runtime.js.",
+        "Update scripts/check-p1371-agent-work-order-runtime.js for P137.2 handoff compatibility.",
+        "Update scripts/check-p1367-secrets-providers-tool-governance-final-validation.js for P137.2 handoff compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P137.2 active state.",
+        "Update scripts/check-os-phase-status.js so P137.3 is a valid OS phase handoff ID.",
+        "Run existing route-wide Command Center Playwright coverage without changing Playwright source."
       ],
-      "docsRoadmap": "Update P137 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, checker handoffs, and generated reports.",
-      "phaseStatusUpdate": "P137 in progress; P137.2 planned until its scoped implementation begins.",
+      "docsRoadmap": "Update P137 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, checker handoffs, and generated reports for the read-only work order model.",
+      "phaseStatusUpdate": "P137 in progress; P137.2 complete; current P137.2; previous P137.1; next P137.3 planned-only.",
       "validationCommands": [
         "npm run check:p1372-agent-work-order-runtime",
+        "npm run check:p1371-agent-work-order-runtime",
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
         "npm run check:enterprise-readiness-roadmap",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
@@ -382,15 +405,26 @@
       "nextPhase": "P137.3",
       "order": 173.2,
       "commandCenterVisible": true,
-      "completedAt": "",
-      "branch": "",
-      "commit": "",
-      "summary": "Planned-only Work Order Model for P137 Agent Work Order Runtime.",
-      "checksRun": [],
-      "knownLimitations": [
-        "P137.2 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Implemented the read-only P137.2 agent work order runtime model with scoped task, project, memory, trusted context, selected skill/tool, budget, policy, and evidence packets while dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
+      "checksRun": [
+        "npm run check:p1372-agent-work-order-runtime",
+        "npm run check:p1371-agent-work-order-runtime",
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
       ],
-      "detail": "P137.2 remains planned-only."
+      "knownLimitations": [
+        "P137.2 is read-only model work. It does not create dispatch dry-run rows, update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.3 remains planned-only."
+      ],
+      "detail": "P137.2 is complete. P137.3 Dispatch Dry Run is planned-only next."
     },
     {
       "phaseId": "P137.3",
@@ -398,7 +432,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1371-final-commit",
+      "expectedBaseCommit": "pending-p1372-final-commit",
       "narrowGoal": "Create a non-runnable dispatch dry run that explains candidate work orders, blockers, budgets, evidence, policy limits, and disabled reasons without dispatch.",
       "allowedFiles": [
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
@@ -447,21 +481,23 @@
         "AGENT_WORK_ORDER_RUNTIME_PHASE",
         "AGENT_WORK_ORDER_RUNTIME_VERSION",
         "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES",
         "buildAgentWorkOrderRuntimeModel",
         "validateAgentWorkOrderRuntimeModel",
+        "buildAgentWorkOrderRuntimeEnvelope",
         "buildAgentWorkOrderDispatchDryRun",
-        "validateAgentWorkOrderDispatchDryRun",
-        "buildAgentWorkOrderRuntimeEnvelope"
+        "validateAgentWorkOrderDispatchDryRun"
       ],
       "futureExports": [
         "AGENT_WORK_ORDER_RUNTIME_PHASE",
         "AGENT_WORK_ORDER_RUNTIME_VERSION",
         "AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES",
+        "AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES",
         "buildAgentWorkOrderRuntimeModel",
         "validateAgentWorkOrderRuntimeModel",
+        "buildAgentWorkOrderRuntimeEnvelope",
         "buildAgentWorkOrderDispatchDryRun",
-        "validateAgentWorkOrderDispatchDryRun",
-        "buildAgentWorkOrderRuntimeEnvelope"
+        "validateAgentWorkOrderDispatchDryRun"
       ],
       "dataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",
       "futureDataShape": "Future read-only model returns phase, version, taskContract, selectedProjectProfile, scopedMemoryPacket, trustedContextPacket, selectedSkillToolContracts, budgetPolicyLimits, policyLimits, evidenceRefs, auditRefs, activityRefs, ownerAgentCapability, nextAction, blockers, disabledReason, costImpact, commandCenterVisible, and safetyFlags. Runtime owns full registry. Agent packets must not include full tool registries, all MCP schemas, all skills, all agents, all policies, all memory, raw private IDs, raw logs, raw JSON dumps, provider payloads, secret values, network payloads, or spend controls.",

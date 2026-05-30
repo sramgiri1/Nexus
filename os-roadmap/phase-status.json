@@ -24723,13 +24723,14 @@
       "order": 173,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "a0db996cb4ea1ad29e724fe83c6c4e7499c01185",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P137.1 is complete. P137.2 Work Order Model is planned-only next.",
-      "summary": "P137 is in progress through P137.1. The agent work order runtime now has a contract, context-loading safety boundary, checker, docs/status handoff, and planned-only P137.2 handoff while live dispatch remains blocked.",
+      "detail": "P137.2 is complete. P137.3 Dispatch Dry Run is planned-only next.",
+      "summary": "P137 is in progress through P137.2. The agent work order runtime now has a safety contract and read-only scoped work order model while live dispatch remains blocked.",
       "previousPhase": "P136",
       "nextPhase": "P138",
       "checksRun": [
+        "npm run check:p1372-agent-work-order-runtime",
         "npm run check:p1371-agent-work-order-runtime",
         "npm run check:p1367-secrets-providers-tool-governance-final-validation",
         "npm run check:enterprise-readiness-roadmap",
@@ -24741,7 +24742,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P137 is in progress through P137.1. It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.2 remains planned-only."
+        "P137 is in progress through P137.2. It does not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend. P137.3 remains planned-only."
       ],
       "subphases": [
         {
@@ -24794,7 +24795,7 @@
         {
           "phaseId": "P137.2",
           "title": "Work Order Model",
-          "status": "planned",
+          "status": "complete",
           "narrowGoal": "Define the read-only agent work order model and scoped context packet shape without dispatching agents or loading full registries.",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "requiredPlanFields": [
@@ -24817,16 +24818,28 @@
           ],
           "previousPhase": "P137.1",
           "nextPhase": "P137.3",
-          "branch": "",
-          "commit": "",
-          "completedAt": "",
-          "checksRun": [],
-          "knownLimitations": [
-            "P137.2 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-30T00:00:00.000Z",
+          "checksRun": [
+            "npm run check:p1372-agent-work-order-runtime",
+            "npm run check:p1371-agent-work-order-runtime",
+            "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
           ],
-          "summary": "Planned-only Work Order Model for P137 Agent Work Order Runtime.",
-          "detail": "P137.2 remains planned-only.",
-          "commandCenterVisible": true
+          "knownLimitations": [
+            "P137.2 is read-only model work. It does not create dispatch dry-run rows, update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.3 remains planned-only."
+          ],
+          "summary": "Implemented the read-only P137.2 agent work order runtime model with scoped task, project, memory, trusted context, selected skill/tool, budget, policy, and evidence packets while dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
+          "detail": "P137.2 is complete. P137.3 Dispatch Dry Run is planned-only next.",
+          "commandCenterVisible": true,
+          "order": 173.2
         },
         {
           "phaseId": "P137.3",
@@ -24863,7 +24876,8 @@
           ],
           "summary": "Planned-only Dispatch Dry Run for P137 Agent Work Order Runtime.",
           "detail": "P137.3 remains planned-only.",
-          "commandCenterVisible": true
+          "commandCenterVisible": true,
+          "order": 173.3
         },
         {
           "phaseId": "P137.4",
@@ -25047,7 +25061,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-                "generated-projects/**",
+        "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -25195,7 +25209,7 @@
       "label": "Work Order Model",
       "phaseId": "P137.2",
       "title": "Work Order Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "pending-p1371-final-commit",
@@ -25219,7 +25233,7 @@
       ],
       "forbiddenFiles": [
         "projects/**",
-                "generated-projects/**",
+        "generated-projects/**",
         "dashboard/src/**",
         "dashboard/tests/**",
         "db/**",
@@ -25338,15 +25352,44 @@
       "nextPhase": "P137.3",
       "order": 173.2,
       "commandCenterVisible": true,
+      "completedAt": "2026-05-30T00:00:00.000Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Implemented the read-only P137.2 agent work order runtime model with scoped task, project, memory, trusted context, selected skill/tool, budget, policy, and evidence packets while dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
+      "checksRun": [
+        "npm run check:p1372-agent-work-order-runtime",
+        "npm run check:p1371-agent-work-order-runtime",
+        "npm run check:p1367-secrets-providers-tool-governance-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P137.2 is read-only model work. It does not create dispatch dry-run rows, update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.3 remains planned-only."
+      ],
+      "detail": "P137.2 is complete. P137.3 Dispatch Dry Run is planned-only next."
+    },
+    {
+      "phaseId": "P137.3",
+      "title": "Dispatch Dry Run",
+      "status": "planned",
+      "order": 173.3,
+      "previousPhase": "P137.2",
+      "nextPhase": "P137.4",
       "completedAt": "",
       "branch": "",
       "commit": "",
-      "summary": "Planned-only Work Order Model for P137 Agent Work Order Runtime.",
+      "summary": "Planned-only Dispatch Dry Run for P137 Agent Work Order Runtime.",
+      "detail": "P137.3 remains planned-only.",
       "checksRun": [],
       "knownLimitations": [
-        "P137.2 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
+        "P137.3 is planned-only until implemented. It must not enable full registry loading into model context, provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, or spend."
       ],
-      "detail": "P137.2 remains planned-only."
+      "commandCenterVisible": true
     },
     {
       "track": "NEXUS_OS",
@@ -28286,23 +28329,22 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-30T00:00:00.000Z",
-  "currentPhase": "P137.1",
-  "previousPhase": "P136.7",
-  "nextPhase": "P137.2",
+  "currentPhase": "P137.2",
+  "previousPhase": "P137.1",
+  "nextPhase": "P137.3",
   "currentPhaseStatus": "complete",
   "current": {
-    "phaseId": "P137.1",
-    "title": "Contract / Policy / Safety Boundary",
-    "status": "complete"
+    "phaseId": "P137.2",
+    "title": "Work Order Model"
   },
   "previous": {
-    "phaseId": "P136.7",
-    "title": "Final Validation",
-    "status": "complete"
+    "phaseId": "P137.1",
+    "title": "Contract / Policy / Safety Boundary"
   },
   "next": {
-    "phaseId": "P137.2",
-    "title": "Work Order Model",
-    "status": "planned"
-  }
+    "phaseId": "P137.3",
+    "title": "Dispatch Dry Run"
+  },
+  "currentPhaseSummary": "Implemented the read-only P137.2 agent work order runtime model with scoped task, project, memory, trusted context, selected skill/tool, budget, policy, and evidence packets while dispatch, execution, mutation, DB/runtime writes, provider/model calls, network calls, and spend remain blocked.",
+  "nextSubphase": "P137.3"
 }
