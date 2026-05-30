@@ -3179,7 +3179,18 @@ DB/runtime reads or writes, request persistence, live CRUD execution, approval
 capture, handoff acceptance, authority grant, execution unlock, provider/model
 calls, agent dispatch, worker/tool execution, project mutation, hosted DB
 mutation, deploy, release, export, package action, network call, and provider
-spend remain blocked. P132.7 is next.
+spend remain blocked. P132.7 final validation is now complete.
+
+P132.7 is complete. NEXUS closed P132 with final validation evidence, completed
+phase status, scoped UX preservation checks, checker handoff compatibility, and
+the planned-only P133 enterprise readiness handoff. Business Build and Agent
+Flow keep the scoped Store Execution Scope cards, while Chat with NEXUS, Lite,
+OS Roadmap, and Live Readiness remain clean. DB schemas, migrations, DB/runtime
+reads or writes, request persistence, live CRUD execution, approval capture,
+handoff acceptance, authority grant, execution unlock, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, hosted DB mutation,
+deploy, release, export, package action, network call, and provider spend
+remain blocked.
 
 ## P133-P145 Enterprise Readiness Roadmap
 
@@ -3192,9 +3203,10 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation remains on P132.6 and P132.7 remains next. P133-P145 do
-not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch,
-project mutation, deploy, release, export, package, network calls, or spend.
+Current implementation is closed through P132.7 and P133 remains planned-only
+next. P133-P145 do not enable DB/runtime writes, live CRUD, provider/model
+calls, agent dispatch, project mutation, deploy, release, export, package,
+network calls, or spend.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

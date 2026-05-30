@@ -1,11 +1,11 @@
 {
   "phaseId": "P132",
   "title": "Founder Runtime Store Live Admission Execution Contract",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
-  "currentSubphase": "P132.6",
-  "previousSubphase": "P132.5",
-  "nextSubphase": "P132.7",
+  "currentSubphase": "P132.7",
+  "previousSubphase": "P132.6",
+  "nextSubphase": "P133",
   "branch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "39e2da0a",
   "owner": "NEXUS OS",
@@ -23,7 +23,7 @@
     "Reuse P131.5 scoped Command Center UX evidence.",
     "Do not duplicate report writers, checker formatters, mode guards, redaction helpers, route matrices, status helpers, UI components, or evidence/audit/activity appenders."
   ],
-  "commandCenterUx": "P132.6 preserves Business Build and Agent Flow Store Execution Scope cards. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean.",
+  "commandCenterUx": "P132.7 preserves the scoped Business Build and Agent Flow Store Execution Scope cards. Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean while P133 stays planned-only.",
   "costImpact": "No provider calls, model calls, network calls, runtime execution, DB writes, deploy/package creation, or provider spend.",
   "subphases": [
     {
@@ -690,11 +690,26 @@
     {
       "phaseId": "P132.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "allowedFiles": [],
+      "expectedBaseCommit": "b94b6081",
+      "allowedFiles": [
+        "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
+        "scripts/check-p1326-founder-runtime-store-live-admission-execution.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json",
+        "docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md",
+        "package.json",
+        "README.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
+        "reports/p1326-founder-runtime-store-live-admission-execution-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -713,25 +728,44 @@
         ".env*"
       ],
       "expectedExports": [],
-      "dataShape": "Planned-only. No implementation files, DB schema, runtime record, provider envelope, dispatch packet, project data, or live CRUD executor.",
-      "commandCenterUx": "Planned-only. Preserve scoped Command Center UX until this subphase has its own implementation-grade plan.",
+      "dataShape": "Validation/checker/report/status evidence only for completed P132.1-P132.7 entries, previous reports, scoped UX preservation, allowed files, forbidden paths, validation commands, and safe wording. No DB schema, migration file, table, query, runtime record, selected adapter, connected adapter, write adapter, live CRUD executor, provider envelope, dispatch packet, raw private ID, raw table name, raw report dump, or project data.",
+      "commandCenterUx": "Preserve the scoped Business Build and Agent Flow Store Execution Scope cards. Keep Chat with NEXUS, Lite, OS Roadmap, and Live Readiness clean, with no raw JSON, raw logs, raw report paths, raw helper names, raw table names, raw SQL, private project IDs, or fake runnable actions.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+        "Do not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+        "Do not modify project-owned files.",
+        "Do not modify dashboard source or dashboard tests in this final validation subphase.",
+        "Do not expose raw JSON, raw logs, raw policy dumps, raw table names, raw report paths, private IDs, or fake runnable actions in primary UX."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
-        "Reuse shared report/check/status/dashboard patterns."
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse existing P132.6 handoff checker behavior.",
+        "Reuse existing P132.5 scoped route coverage instead of duplicating route tests."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add P132.7 final validation checker.",
+        "Update P132.6 checker handoff compatibility.",
+        "Update OS phase status checker for P133 planned-only handoff recognition.",
+        "Run OS status and phase validation coverage checkers.",
+        "Run dashboard build, unit tests, and scoped Playwright route coverage without changing dashboard source/tests."
+      ],
+      "docsRoadmap": "Update P132 plan, README, platform roadmap, contract, status, and reports to close P132 and hand off to planned-only P133.",
+      "phaseStatusUpdate": "P132 complete; P132.7 complete; current phase P132.7; previous P132.6; next phase P133 planned-only.",
+      "validationCommands": [
+        "npm run check:p1327-founder-runtime-store-live-admission-execution",
+        "npm run check:p1326-founder-runtime-store-live-admission-execution",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
@@ -745,24 +779,46 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "narrowGoal": "Close P132 with final validation evidence and a planned-only next-phase handoff."
+      "narrowGoal": "Close P132 with final validation evidence and a planned-only P133 enterprise readiness handoff.",
+      "playwrightTests": [
+        "Run existing scoped store live readiness route coverage for Business Build and Agent Flow only."
+      ],
+      "checkerUpdates": [
+        "Add P132.7 final validation checker.",
+        "Update P132.6 checker so it accepts the P132.7 final state after status closure.",
+        "Update OS phase status checker to recognize the P133 planned-only handoff.",
+        "Validate P132.1-P132.6 reports, P132.6 handoff compatibility, scoped UX preservation, P133 planned-only handoff, forbidden paths, and safe wording."
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm P133 remains planned-only with no checksRun and no commit.",
+        "Confirm no DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no pending-final-commit remains after the status stamp commit."
+      ],
+      "previousPhase": "P132.6",
+      "nextPhase": "P133",
+      "order": 168.7,
+      "completedAt": "2026-05-30T10:04:57.052Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Closed P132 with final validation evidence, completed phase status, scoped UX preservation checks, checker handoff compatibility, and the planned-only P133 enterprise readiness handoff while DB writes, runtime writes, live CRUD, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+      "knownLimitations": [
+        "P132.7 is final validation closure only and P133 is planned-only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ]
     }
   ],
   "current": {
-    "phaseId": "P132.4",
-    "title": "DB Write Plan Preview",
+    "phaseId": "P132.7",
+    "title": "Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "5d2d07c4",
-    "completedAt": "2026-05-30T00:54:38.171Z",
-    "detail": "P132.4 DB write-plan preview complete; P132.5 Command Center execution scope UX is next.",
-    "summary": "Added a local DB write-plan preview model that reuses P132.3 adapter capability gate evidence and keeps schemas, migrations, tables, DB reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter connection, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T10:04:57.052Z",
+    "detail": "P132.7 final validation complete; P133 is planned-only next.",
+    "summary": "Closed P132 with final validation evidence, completed phase status, scoped UX preservation checks, checker handoff compatibility, and the planned-only P133 enterprise readiness handoff while DB writes, runtime writes, live CRUD, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
     "checksRun": [
-      "npm run check:p1324-founder-runtime-store-live-admission-execution",
-      "npm run check:p1323-founder-runtime-store-live-admission-execution",
-      "npm run check:p1322-founder-runtime-store-live-admission-execution",
-      "npm run check:p1321-founder-runtime-store-live-admission-execution",
-      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:p1327-founder-runtime-store-live-admission-execution",
+      "npm run check:p1326-founder-runtime-store-live-admission-execution",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -771,26 +827,23 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P132.4 is a DB write-plan preview model only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P132.7 is final validation closure only and P133 is planned-only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P132.5",
+    "nextPhase": "P133",
     "commandCenterVisible": true
   },
   "summary": {
     "phaseId": "P132",
     "title": "Founder Runtime Store Live Admission Execution Contract",
-    "status": "in_progress",
+    "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "5d2d07c4",
-    "completedAt": "2026-05-30T00:54:38.171Z",
-    "detail": "P132 in progress; P132.4 DB write-plan preview complete and P132.5 is planned-only next.",
-    "summary": "Added a local DB write-plan preview model that reuses P132.3 adapter capability gate evidence and keeps schemas, migrations, tables, DB reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter connection, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T10:04:57.052Z",
+    "detail": "P132 complete; P132.7 final validation is complete and P133 is planned-only next.",
+    "summary": "Closed P132 with final validation evidence, completed phase status, scoped UX preservation checks, checker handoff compatibility, and the planned-only P133 enterprise readiness handoff while DB writes, runtime writes, live CRUD, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
     "checksRun": [
-      "npm run check:p1324-founder-runtime-store-live-admission-execution",
-      "npm run check:p1323-founder-runtime-store-live-admission-execution",
-      "npm run check:p1322-founder-runtime-store-live-admission-execution",
-      "npm run check:p1321-founder-runtime-store-live-admission-execution",
-      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:p1327-founder-runtime-store-live-admission-execution",
+      "npm run check:p1326-founder-runtime-store-live-admission-execution",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
@@ -799,9 +852,9 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P132 is in progress but contract-gated. P132.4 does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      "P132.7 is final validation closure only and P133 is planned-only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
-    "nextPhase": "P132.5",
+    "nextPhase": "P133",
     "commandCenterVisible": true
   }
 }

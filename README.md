@@ -1921,7 +1921,7 @@ The Command Center and local operator surface have:
 - P132.1 store live execution contract: Started P132 with an
   implementation-grade execution contract, seven-subphase split, safety
   boundary, checker, docs, status handoff, and planned-only P132.2 handoff.
-  P132.2, P132.3, P132.4, P132.5, and P132.6 are now complete.
+  P132.2, P132.3, P132.4, P132.5, P132.6, and P132.7 are now complete.
   DB schemas, migrations, DB/runtime reads or writes, request persistence,
   live CRUD execution, approval capture, handoff acceptance, authority grant,
   execution unlock, provider/model calls, agent dispatch, worker/tool
@@ -1982,7 +1982,18 @@ The Command Center and local operator surface have:
 - P132.6 validation/docs aggregation: Added aggregate validation/docs evidence
   for P132.1-P132.5, P132.6 checker coverage, P132.5 handoff compatibility,
   scoped UX preservation checks, and refreshed OS phase reports. P132.7 final
-  validation is next.
+  validation is now complete.
+  DB schemas, migrations, DB/runtime reads or writes, request persistence,
+  live CRUD execution, approval capture, handoff acceptance, authority grant,
+  execution unlock, provider/model calls, agent dispatch, worker/tool
+  execution, project mutation, hosted DB mutation, raw SQL interface, deploy,
+  release, export, package, network call, and provider spend remain
+  unavailable.
+- P132.7 final validation: Closed P132 with final validation evidence,
+  completed phase status, scoped UX preservation checks, checker handoff
+  compatibility, and the planned-only P133 enterprise readiness handoff.
+  Business Build and Agent Flow keep the scoped Store Execution Scope cards,
+  while Chat with NEXUS, Lite, OS Roadmap, and Live Readiness remain clean.
   DB schemas, migrations, DB/runtime reads or writes, request persistence,
   live CRUD execution, approval capture, handoff acceptance, authority grant,
   execution unlock, provider/model calls, agent dispatch, worker/tool
@@ -1995,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation remains on P132.6 with
-  P132.7 next.
+  roadmap/status entries only; current implementation is closed through P132.7
+  with P133 planned-only next.
 
 ## CareLoop Project Progress
 

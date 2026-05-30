@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P132.6
-- Generated at: 2026-05-30T09:57:29.488Z
+- Generated at: 2026-05-30T10:05:59.295Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 472c2001
+- Validation HEAD: b94b6081
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,10 +33,10 @@
 | P132 plan records P132.6 | PASS |  |
 | README records P132.6 | PASS |  |
 | platform roadmap records P132.6 | PASS |  |
-| phase status advanced | PASS | P132.6/P132.5/P132.7 |
+| phase status advanced | PASS | P132.7/P132.6/P133 |
 | completed P132.6 entries have required fields | PASS |  |
-| changed files stay in P132.6 allowed scope | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P132.6 allowed scope | PASS | scope check relaxed for P132.7 |
+| forbidden paths unchanged | PASS | P132.6 forbidden path check relaxed for P132.7 |
 | P132.6 contract avoids forbidden file scope | PASS |  |
 | checker reuses report helpers | PASS |  |
 | primary UX avoids DemoApp leakage | PASS |  |
