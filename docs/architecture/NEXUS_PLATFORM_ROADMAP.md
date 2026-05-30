@@ -3194,7 +3194,8 @@ remain blocked.
 
 ## P133-P145 Enterprise Readiness Roadmap
 
-P133-P145 are planned-only enterprise readiness phases. They cover founder
+P133-P145 are enterprise readiness phases. P133 is complete, P134 is in
+progress, and later phases remain planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3203,8 +3204,8 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P134.1 and P134.2 remains planned-only
-next. P134.2-P145 do not enable DB/runtime writes, live CRUD, provider/model
+Current implementation is closed through P134.2 and P134.3 remains planned-only
+next. P134.3-P145 do not enable DB/runtime writes, live CRUD, provider/model
 calls, agent dispatch, project mutation, deploy, release, export, package,
 network calls, or spend.
 
@@ -3258,6 +3259,15 @@ and validation report. P134.2 Schema and Repository Model is planned-only next.
 DB/runtime writes, migrations, raw SQL, live CRUD, provider/model calls, agent
 dispatch, project mutation, deploy, release, export, package, network calls,
 and spend remain blocked.
+
+P134.2 is complete. NEXUS now has a unified durable DB/CRUD schema and
+repository model that reuses existing local SQLite schema/repository descriptors
+and exposes display-safe founder, business build, agent work, runtime
+admission, runtime execution, and approval evidence groups with blocked
+repository intent rows. P134.3 is next for DB write-plan preview. DB/runtime
+writes, migrations, raw SQL, live CRUD, provider/model calls, agent dispatch,
+project mutation, deploy, release, export, package, network calls, and spend
+remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

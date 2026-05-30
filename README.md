@@ -2058,6 +2058,13 @@ The Command Center and local operator surface have:
   next; DB/runtime writes, migrations, raw SQL, live CRUD, provider/model calls,
   agent dispatch, project mutation, deploy, release, export, package, network
   calls, and spend remain unavailable.
+- P134.2 durable DB/CRUD schema model: Added a unified display-safe schema and
+  repository model over existing OS SQLite descriptors, with grouped founder,
+  business build, agent work, runtime admission, runtime execution, and approval
+  evidence records plus blocked repository intent rows. P134.3 DB Write Plan
+  Preview is planned-only next; DB/runtime writes, migrations, raw SQL, live
+  CRUD, provider/model calls, agent dispatch, project mutation, deploy, release,
+  export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

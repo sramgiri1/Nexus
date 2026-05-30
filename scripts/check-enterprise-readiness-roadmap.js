@@ -169,7 +169,30 @@ const p1341StartedState =
   && indexById.get("P134.1")?.status === "complete"
   && statusById.get("P134.2")?.status === "planned"
   && indexById.get("P134.2")?.status === "planned";
-const p134ActiveState = p1341StartedState;
+const p1342CurrentState =
+  phaseStatus.currentPhase === "P134.2"
+  && phaseStatus.previousPhase === "P134.1"
+  && phaseStatus.nextPhase === "P134.3"
+  && phaseIndex.currentPhase === "P134.2"
+  && phaseIndex.previousPhase === "P134.1"
+  && phaseIndex.nextPhase === "P134.3"
+  && phaseStatus.current?.phaseId === "P134.2"
+  && phaseStatus.previous?.phaseId === "P134.1"
+  && phaseStatus.next?.phaseId === "P134.3"
+  && phaseIndex.current?.phaseId === "P134.2"
+  && phaseIndex.previous?.phaseId === "P134.1"
+  && phaseIndex.next?.phaseId === "P134.3"
+  && statusById.get("P133")?.status === "complete"
+  && indexById.get("P133")?.status === "complete"
+  && statusById.get("P134")?.status === "in_progress"
+  && indexById.get("P134")?.status === "in_progress"
+  && statusById.get("P134.1")?.status === "complete"
+  && indexById.get("P134.1")?.status === "complete"
+  && statusById.get("P134.2")?.status === "complete"
+  && indexById.get("P134.2")?.status === "complete"
+  && statusById.get("P134.3")?.status === "planned"
+  && indexById.get("P134.3")?.status === "planned";
+const p134ActiveState = p1341StartedState || p1342CurrentState;
 const enterpriseActiveState = p133ActiveState || p134ActiveState;
 const currentP133CheckCommand = p1337FinalState
   ? "npm run check:p1337-founder-idea-to-prd-final-validation"
@@ -185,7 +208,9 @@ const currentP133CheckCommand = p1337FinalState
         ? "npm run check:p1332-founder-idea-to-prd-model"
         : "npm run check:p1331-founder-idea-to-prd-productization";
 
-const currentP134CheckCommand = p1341StartedState
+const currentP134CheckCommand = p1342CurrentState
+  ? "npm run check:p1342-durable-db-crud-runtime-schema-model"
+  : p1341StartedState
   ? "npm run check:p1341-durable-db-crud-runtime"
   : "";
 
@@ -223,6 +248,7 @@ const allowedFiles = new Set([
   "scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js",
   "scripts/check-p1337-founder-idea-to-prd-final-validation.js",
   "scripts/check-p1341-durable-db-crud-runtime.js",
+  "scripts/check-p1342-durable-db-crud-runtime-schema-model.js",
   "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-os-phase-status.js",
   "scripts/check-p1327-founder-runtime-store-live-admission-execution.js",
@@ -231,6 +257,7 @@ const allowedFiles = new Set([
   "scripts/check-p907-founder-prd-final.js",
   "live-ready/founderIdeaToPrdModel.js",
   "live-ready/founderIdeaToPrdPreview.js",
+  "shared/durableDbCrudRuntimeSchemaModel.js",
   "dashboard/src/data/businessBuild.js",
   "dashboard/src/pages/CommandCenterV2.jsx",
   "dashboard/tests/routes.spec.js",
@@ -242,6 +269,7 @@ const allowedFiles = new Set([
   "reports/p1336-founder-idea-to-prd-docs-roadmap-report.md",
   "reports/p1337-founder-idea-to-prd-final-validation-report.md",
   "reports/p1341-durable-db-crud-runtime-report.md",
+  "reports/p1342-durable-db-crud-runtime-schema-model-report.md",
   "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -269,7 +297,7 @@ const allowedDashboardFiles = new Set([
 ]);
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:enterprise-readiness-roadmap"]));
-addCheck("P133/P134 checkers registered when active", (!p133ActiveState || (Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]) && (!p1332CompleteState || Boolean(packageJson.scripts?.["check:p1332-founder-idea-to-prd-model"])) && (!p1333CompleteState || Boolean(packageJson.scripts?.["check:p1333-founder-idea-to-prd-preview"])) && (!p1334CompleteState || Boolean(packageJson.scripts?.["check:p1334-command-center-idea-to-prd-ux"])) && (!p1335CompleteState || Boolean(packageJson.scripts?.["check:p1335-founder-idea-to-prd-tests-checkers"])) && (!p1336CompleteState || Boolean(packageJson.scripts?.["check:p1336-founder-idea-to-prd-docs-roadmap"])) && (!p1337FinalState || Boolean(packageJson.scripts?.["check:p1337-founder-idea-to-prd-final-validation"])))) && (!p134ActiveState || Boolean(packageJson.scripts?.["check:p1341-durable-db-crud-runtime"])));
+addCheck("P133/P134 checkers registered when active", (!p133ActiveState || (Boolean(packageJson.scripts?.["check:p1331-founder-idea-to-prd-productization"]) && (!p1332CompleteState || Boolean(packageJson.scripts?.["check:p1332-founder-idea-to-prd-model"])) && (!p1333CompleteState || Boolean(packageJson.scripts?.["check:p1333-founder-idea-to-prd-preview"])) && (!p1334CompleteState || Boolean(packageJson.scripts?.["check:p1334-command-center-idea-to-prd-ux"])) && (!p1335CompleteState || Boolean(packageJson.scripts?.["check:p1335-founder-idea-to-prd-tests-checkers"])) && (!p1336CompleteState || Boolean(packageJson.scripts?.["check:p1336-founder-idea-to-prd-docs-roadmap"])) && (!p1337FinalState || Boolean(packageJson.scripts?.["check:p1337-founder-idea-to-prd-final-validation"])))) && (!p134ActiveState || (Boolean(packageJson.scripts?.["check:p1341-durable-db-crud-runtime"]) && (!p1342CurrentState || Boolean(packageJson.scripts?.["check:p1342-durable-db-crud-runtime-schema-model"])))));
 addCheck("current enterprise handoff", enterpriseActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
@@ -376,8 +404,10 @@ const p133ActiveSubphaseRecordsPresent = !p133ActiveState || (
 const p134ActiveSubphaseRecordsPresent = !p134ActiveState || (
   statusById.get("P134.1")?.status === "complete"
   && indexById.get("P134.1")?.status === "complete"
-  && statusById.get("P134.2")?.status === "planned"
-  && indexById.get("P134.2")?.status === "planned"
+  && (
+    (p1341StartedState && statusById.get("P134.2")?.status === "planned" && indexById.get("P134.2")?.status === "planned")
+    || (p1342CurrentState && statusById.get("P134.2")?.status === "complete" && indexById.get("P134.2")?.status === "complete" && statusById.get("P134.3")?.status === "planned" && indexById.get("P134.3")?.status === "planned")
+  )
 );
 addCheck("P133/P134 active subphase records are present", p133ActiveSubphaseRecordsPresent && p134ActiveSubphaseRecordsPresent);
 addCheck("enterprise roadmap doc covers all phases", enterprisePhases.every(([phaseId, title]) => doc.includes(`| ${phaseId} | ${title} |`)));
@@ -413,7 +443,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Tracks P133-P145 enterprise-readiness roadmap phases after P132.",
-        "- Allows P133 to advance through completed implementation-grade subphases and then close with P134-P145 still planned-only.",
+        "- Allows P133 to close and P134 to advance through completed implementation-grade durable DB/CRUD subphases while later enterprise phases remain planned-only.",
         "- Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -430,7 +460,7 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P133.1-P133.7 may be complete. P134-P145 remain planned-only. They do not create runtime capability, DB schemas, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      body: "- P133.1-P133.7 may be complete and P134 may be in progress through implementation-grade durable DB/CRUD subphases. P135-P145 remain planned-only. Current P134 work does not create runtime capability, run migrations, write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

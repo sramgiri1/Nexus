@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-30T12:33:38.924Z
+- Generated at: 2026-05-30T12:50:12.667Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 754b3340
+- Validation HEAD: 21133d6f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Tracks P133-P145 enterprise-readiness roadmap phases after P132.
-- Allows P133 to advance through completed implementation-grade subphases and then close with P134-P145 still planned-only.
+- Allows P133 to close and P134 to advance through completed implementation-grade durable DB/CRUD subphases while later enterprise phases remain planned-only.
 - Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
 ## Enterprise Phases
 
@@ -34,7 +34,7 @@
 | --- | --- | --- |
 | package script registered | PASS |  |
 | P133/P134 checkers registered when active | PASS |  |
-| current enterprise handoff | PASS | P134.1/P133.7/P134.2 |
+| current enterprise handoff | PASS | P134.2/P134.1/P134.3 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -47,8 +47,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1337-founder-idea-to-prd-final-validation-report.md, reports/p1341-durable-db-crud-runtime-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1337-founder-idea-to-prd-final-validation-report.md, reports/p1341-durable-db-crud-runtime-report.md |
+| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1341-durable-db-crud-runtime-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1341-durable-db-crud-runtime.js, reports/p1342-durable-db-crud-runtime-schema-model-report.md, scripts/check-p1342-durable-db-crud-runtime-schema-model.js, shared/durableDbCrudRuntimeSchemaModel.js |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1341-durable-db-crud-runtime-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1341-durable-db-crud-runtime.js, reports/p1342-durable-db-crud-runtime-schema-model-report.md, scripts/check-p1342-durable-db-crud-runtime-schema-model.js, shared/durableDbCrudRuntimeSchemaModel.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -62,7 +62,7 @@
 - git diff --check
 ## Known Limitations
 
-- P133.1-P133.7 may be complete. P134-P145 remain planned-only. They do not create runtime capability, DB schemas, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
+- P133.1-P133.7 may be complete and P134 may be in progress through implementation-grade durable DB/CRUD subphases. P135-P145 remain planned-only. Current P134 work does not create runtime capability, run migrations, write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Result
 
 PASS (22/22)

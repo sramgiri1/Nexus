@@ -2,16 +2,16 @@
   "phaseId": "P134",
   "title": "Durable DB and CRUD Runtime",
   "status": "in_progress",
-  "currentSubphase": "P134.1",
-  "previousSubphase": "P133.7",
-  "nextSubphase": "P134.2",
+  "currentSubphase": "P134.2",
+  "previousSubphase": "P134.1",
+  "nextSubphase": "P134.3",
   "startingBranch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "4def3d02",
+  "expectedBaseCommit": "21133d6f",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "goal": "Create a governed durable data layer for OS-owned founder/business records with staged schema, repository, write preview, Command Center UX, tests, docs, and final validation.",
   "userImpact": "Operators get a clear DB/CRUD path without live mutation until each boundary is validated.",
-  "commandCenterImpact": "P134.1 preserves current Command Center UX and records that DB Runtime remains non-runnable.",
-  "safetyImpact": "P134.1 does not enable DB/runtime writes, CRUD execution, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+  "commandCenterImpact": "P134.2 preserves current Command Center UX and prepares display-safe DB runtime model data for P134.4.",
+  "safetyImpact": "P134.2 is model-only and does not enable DB/runtime writes, CRUD execution, migrations, raw SQL, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
   "costImpact": "No provider spend; local checks only.",
   "subphases": [
     {
@@ -129,12 +129,30 @@
     {
       "phaseId": "P134.2",
       "title": "Schema and Repository Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "narrowGoal": "Schema and Repository Model for Durable DB and CRUD Runtime.",
-      "allowedFiles": [],
+      "expectedBaseCommit": "21133d6f",
+      "narrowGoal": "Define a unified durable DB schema and repository model for OS-owned founder/business runtime records without enabling DB reads, DB writes, migrations, or CRUD execution.",
+      "allowedFiles": [
+        "shared/durableDbCrudRuntimeSchemaModel.js",
+        "scripts/check-p1342-durable-db-crud-runtime-schema-model.js",
+        "contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json",
+        "docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1341-durable-db-crud-runtime.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "reports/p1342-durable-db-crud-runtime-schema-model-report.md",
+        "reports/p1341-durable-db-crud-runtime-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -152,28 +170,55 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Planned-only. No runtime exports, DB schema, migrations, repository module, DB adapter, CRUD packet, or live execution until this subphase has its own implementation-grade plan.",
-      "commandCenterUx": "Planned-only. Preserve existing Command Center UX until this subphase starts.",
+      "expectedExports": [
+        "DURABLE_DB_CRUD_RUNTIME_SCHEMA_MODEL_PHASE",
+        "DURABLE_DB_CRUD_RUNTIME_SCHEMA_MODEL_VERSION",
+        "DURABLE_DB_CRUD_RUNTIME_ENTITY_GROUP_NAMES",
+        "DURABLE_DB_CRUD_RUNTIME_REPOSITORY_OPERATION_NAMES",
+        "DURABLE_DB_CRUD_RUNTIME_SCHEMA_MODEL_FLAGS",
+        "buildDurableDbCrudRuntimeSchemaModel",
+        "validateDurableDbCrudRuntimeSchemaModel"
+      ],
+      "dataShape": "Model-only local schema/repository metadata with display-safe entity groups, blocked repository operation intent rows, source pointers to existing db/schema.json and db/sqliteCrudRepository.js, authority flags set false, blockers, next action, owner capability, evidence labels, activity labels, and no raw SQL UX.",
+      "commandCenterUx": "Preserve existing Command Center UX. P134.2 does not edit dashboard source or tests and does not add runnable DB controls. P134.4 will consume this model for display-safe UX.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not modify project-owned files."
+        "Do not modify project-owned files.",
+        "Do not modify dashboard source or tests in P134.2.",
+        "Do not modify db/** or local-state/runtime/** files in P134.2.",
+        "Reuse existing db/schema.json and db/sqliteCrudRepository.js descriptors without duplicating repository helpers.",
+        "Do not create DB schemas, run migrations, connect hosted databases, read or write DB/runtime records, or execute CRUD.",
+        "Do not call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
         "Reuse shared/reportWriter.js.",
         "Reuse shared/checkResultFormatter.js.",
-        "Reuse existing OS phase status and roadmap structures."
+        "Reuse db/sqliteCrudRepository.js descriptor exports.",
+        "Reuse existing OS phase status and roadmap structures.",
+        "Do not duplicate SQLite CRUD repository helpers, report writers, checker formatters, mode guards, redaction helpers, or phase status updaters."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add P134.2 checker.",
+        "Update P134.1 and enterprise readiness checkers for P134.2 handoff.",
+        "Rerun existing route-wide Playwright coverage."
+      ],
+      "docsRoadmap": "Update README, P134 plan, platform roadmap, enterprise roadmap, OS roadmap/status JSON, and validation reports.",
+      "phaseStatusUpdate": "P134 in progress; P134.2 complete; current P134.2; previous P134.1; next P134.3 planned-only.",
+      "validationCommands": [
+        "npm run check:p1342-durable-db-crud-runtime-schema-model",
+        "npm run check:p1341-durable-db-crud-runtime",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
@@ -190,14 +235,25 @@
       "previousPhase": "P134.1",
       "nextPhase": "P134.3",
       "order": 170.2,
-      "completedAt": "",
+      "completedAt": "2026-05-30T12:42:48.420Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "summary": "Planned-only future P134 subphase: Schema and Repository Model.",
+      "commit": "pending-final-commit",
+      "summary": "Completed P134.2 by adding a unified, display-safe durable DB/CRUD schema and repository model over existing OS SQLite schema descriptors, with blocked repository intent rows, checker coverage, docs, roadmap/status handoff, and validation report while DB/runtime writes and CRUD execution remain blocked.",
       "knownLimitations": [
-        "Planned-only; no implementation yet."
+        "P134.2 is schema/repository model metadata only. It does not create DB schemas, run migrations, connect databases, read or write DB/runtime records, execute CRUD, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P134.3 remains planned-only."
       ],
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "checksRun": [
+        "npm run check:p1342-durable-db-crud-runtime-schema-model",
+        "npm run check:p1341-durable-db-crud-runtime",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P134.3",
@@ -270,7 +326,8 @@
       "knownLimitations": [
         "Planned-only; no implementation yet."
       ],
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "checksRun": []
     },
     {
       "phaseId": "P134.4",

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P134.1
-- Generated at: 2026-05-30T12:33:36.466Z
+- Generated at: 2026-05-30T12:50:09.069Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 754b3340
+- Validation HEAD: 21133d6f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | checker reuses shared report helpers | PASS |  |
 | contract starts P134 safely | PASS |  |
 | contract has seven implementation-grade subphases | PASS |  |
-| P134.1 complete and P134.2 planned | PASS |  |
+| P134.1 complete and P134.2 planned or complete | PASS |  |
 | P134.1 records safety boundary | PASS |  |
 | P134.1 records validation commands | PASS |  |
 | P133.7 report passes | PASS |  |
@@ -32,11 +32,11 @@
 | README records P134.1 | PASS |  |
 | platform roadmap records P134.1 | PASS |  |
 | enterprise roadmap records P134.1 | PASS |  |
-| phase status starts P134.1 | PASS | P134.1/P133.7/P134.2 |
+| phase status starts P134.1 | PASS | P134.2/P134.1/P134.3 |
 | completed P134.1 entries have required fields | PASS |  |
-| P134.2 remains planned-only | PASS |  |
-| changed files stay in P134.1 allowed scope | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1337-founder-idea-to-prd-final-validation-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1337-founder-idea-to-prd-final-validation-report.md |
+| P134.2 remains planned or safely handed off | PASS |  |
+| changed files stay in P134.1 allowed scope | PASS | scope check relaxed for P134.2 |
+| forbidden paths unchanged | PASS | P134.1 forbidden path check relaxed for P134.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable DB actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
