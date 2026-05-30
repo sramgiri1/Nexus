@@ -119,7 +119,7 @@
       "order": 171.1,
       "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "294e7e58",
       "summary": "Started P135 with an identity/tenant/RBAC contract, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff while auth execution and permission enforcement remain blocked.",
       "knownLimitations": [
         "P135.1 is contract/policy/safety-boundary work only. It does not enable login, sessions, tenant mutation, role mutation, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P135.2 remains planned-only."
@@ -630,7 +630,7 @@
     "title": "Contract / Policy / Safety Boundary",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "294e7e58",
     "completedAt": "2026-05-30T00:00:00.000Z",
     "detail": "P135.1 is complete. P135.2 Auth and Tenant Model is planned-only next.",
     "summary": "Started P135 with an identity/tenant/RBAC contract, safety boundary, checker, docs/status handoff, and planned-only P135.2 handoff while auth execution and permission enforcement remain blocked.",
@@ -690,7 +690,7 @@
   },
   "summary": "P135 identity, tenant, roles, and permissions is in progress with P135.1 contract/policy/safety boundary complete and P135.2 planned-only next.",
   "detail": "P135.1 is complete. P135.2 Auth and Tenant Model is planned-only next.",
-  "commit": "pending-final-commit",
+  "commit": "294e7e58",
   "completedAt": "2026-05-30T00:00:00.000Z",
   "checksRun": [
     "npm run check:p1351-identity-tenant-roles-permissions",
