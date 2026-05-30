@@ -2,16 +2,16 @@
   "phaseId": "P135",
   "title": "Identity, Tenant, Roles, and Permissions",
   "status": "in_progress",
-  "currentSubphase": "P135.2",
-  "previousSubphase": "P135.1",
-  "nextSubphase": "P135.3",
+  "currentSubphase": "P135.3",
+  "previousSubphase": "P135.2",
+  "nextSubphase": "P135.4",
   "startingBranch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "fc267945",
+  "expectedBaseCommit": "b1aa2826",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "goal": "Make identity, tenant isolation, role governance, session state, and permission checks explicit enterprise gates before sensitive workflows become live.",
   "userImpact": "Founders and operators get a governed path toward multi-user enterprise use without enabling auth execution yet.",
-  "commandCenterImpact": "P135.2 preserves current Command Center UX. P135.4 will own scoped Auth Governance UX changes.",
-  "safetyImpact": "P135.2 creates a read-only model only. Login, sessions, tenant mutation, role mutation, permission grants, permission enforcement, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+  "commandCenterImpact": "P135.3 preserves current Command Center UX. P135.4 will own scoped Auth Governance UX changes.",
+  "safetyImpact": "P135.3 creates a permission preview only. Permission grants, revokes, enforcement, access decisions as authority, login, sessions, tenant mutation, role mutation, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
   "costImpact": "No provider spend. Local metadata/checker validation only.",
   "subphases": [
     {
@@ -277,12 +277,31 @@
     {
       "phaseId": "P135.3",
       "title": "Permission Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "",
-      "narrowGoal": "Permission Preview for Identity, Tenant, Roles, and Permissions.",
-      "allowedFiles": [],
+      "expectedBaseCommit": "b1aa2826",
+      "narrowGoal": "Add a display-safe permission preview that composes the P135.2 auth/tenant model into role, tenant-scope, Command Center surface, and sensitive-workflow permission rows without granting permissions, enforcing access, or enabling runtime authorization.",
+      "allowedFiles": [
+        "auth-governance/p135-3-permission-preview.js",
+        "contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json",
+        "docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1353-permission-preview.js",
+        "scripts/check-p1352-auth-tenant-model.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p1353-permission-preview-report.md",
+        "reports/p1352-auth-tenant-model-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -300,33 +319,56 @@
         "packages/**",
         ".env*"
       ],
-      "expectedExports": [],
-      "dataShape": "Planned-only. No auth schema, tenant store, role store, permission engine, session adapter, auth provider, DB/runtime write, dashboard source, Playwright source, or live execution until this subphase has its own implementation-grade plan.",
-      "commandCenterUx": "Planned-only. Preserve existing Command Center UX until this subphase starts.",
+      "expectedExports": [
+        "P135_3_REQUIRED_FIELDS",
+        "P135_3_SAFETY_FLAG_NAMES",
+        "P135_3_SAMPLE_PREVIEWS",
+        "createPermissionPreview",
+        "validatePermissionPreview",
+        "buildPermissionPreviewEnvelope"
+      ],
+      "dataShape": "Exports a preview-only PermissionPreview with authTenantModel, rolePreviewRows, tenantScopePreviewRows, commandCenterSurfaceRows, sensitiveWorkflowRows, permissionPreviewPolicy, safetyFlags, displayFields, blockers, forbiddenFiles, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction, and commandCenterVisible. All grant, revoke, enforcement, access-decision, mutation, execution, network, and spend flags are false.",
+      "commandCenterUx": "Preserve existing Command Center UX. P135.3 does not edit dashboard source, labels, controls, routes, or theme behavior. P135.4 owns scoped Auth Governance UX changes that can surface this preview.",
       "themeRequirements": [
         "Preserve System theme.",
         "Preserve Dark theme.",
         "Preserve Light theme."
       ],
       "safetyRules": [
-        "Do not implement this planned subphase until its own implementation-grade plan is written.",
-        "Do not modify project-owned files.",
-        "Do not enable login, signup, logout, session creation, session refresh, password flows, OAuth flows, SSO flows, or auth provider calls in P135.1.",
-        "Do not mutate tenants, users, roles, permissions, memberships, sessions, or identity records in P135.1.",
-        "Do not enforce permissions, grant permissions, revoke permissions, assign roles, or evaluate access decisions as live authority in P135.1.",
+        "Do not enable login, signup, logout, session creation, session refresh, password flows, OAuth flows, SSO flows, token exchange, or auth provider calls in P135.3.",
+        "Do not mutate tenants, users, roles, permissions, memberships, sessions, workspaces, identity records, or access grants in P135.3.",
+        "Do not enforce permissions, evaluate access decisions as live authority, or use the preview as runtime authorization in P135.3.",
+        "Do not grant permissions, revoke permissions, assign roles, or mutate permission records in P135.3.",
         "Do not write DB/runtime state, create auth schemas, run migrations, connect auth providers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
         "Do not expose raw private IDs, auth provider payloads, raw JSON, raw logs, raw policy dumps, mutation controls, provider controls, deploy controls, package controls, or spend controls in primary UX."
       ],
       "reuseCheck": [
-        "Search for existing helpers before adding any new helper.",
+        "Reuse shared/resultEnvelope.js.",
         "Reuse shared/reportWriter.js.",
         "Reuse shared/checkResultFormatter.js.",
+        "Reuse auth-governance/p135-2-auth-tenant-model.js.",
         "Reuse existing OS phase status and roadmap structures."
       ],
-      "testsAndCheckers": [],
-      "docsRoadmap": "Update docs, README, roadmap, status, and reports when this subphase is implemented.",
-      "phaseStatusUpdate": "Remain planned-only until implementation starts.",
-      "validationCommands": [],
+      "testsAndCheckers": [
+        "Add P135.3 permission preview checker.",
+        "Update P135.2 checker for P135.3 handoff compatibility.",
+        "Update enterprise readiness checker for P135.3 handoff compatibility.",
+        "Update OS phase status checker for P135.4 handoff ID.",
+        "Run route-wide Command Center Playwright coverage without editing dashboard tests."
+      ],
+      "docsRoadmap": "Update P135 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase index, and generated reports.",
+      "phaseStatusUpdate": "P135 in progress; P135.1 complete; P135.2 complete; P135.3 complete; current P135.3; previous P135.2; next P135.4 planned-only.",
+      "validationCommands": [
+        "npm run check:p1353-permission-preview",
+        "npm run check:p1352-auth-tenant-model",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "finalResponseChecklist": [
         "Branch name",
         "Commit hash",
@@ -342,18 +384,31 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "previousPhase": "P135.1",
-      "nextPhase": "P135.3",
-      "order": 171.2,
-      "completedAt": "",
+      "previousPhase": "P135.2",
+      "nextPhase": "P135.4",
+      "order": 171.3,
+      "completedAt": "2026-05-30T00:00:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "summary": "Planned-only future P135 subphase: Permission Preview.",
+      "commit": "pending-final-commit",
+      "summary": "Added a display-safe permission preview over the P135.2 auth and tenant model while role assignment, permission grants, permission revokes, permission enforcement, access decisions as live authority, login, sessions, tenant writes, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "knownLimitations": [
-        "Planned-only; no implementation yet."
+        "P135.3 is preview-only. It does not create a permission engine, auth schema, tenant store, role store, grant store, enforcement adapter, auth provider, DB/runtime write, dashboard source, Playwright source, provider/model call, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path. P135.4 remains planned-only."
       ],
       "commandCenterVisible": true,
-      "detail": "P135.3 is planned-only for Permission Preview."
+      "detail": "P135.3 is complete. P135.4 Auth Governance Command Center UX is planned-only next.",
+      "track": "NEXUS_OS",
+      "label": "Permission Preview",
+      "checksRun": [
+        "npm run check:p1353-permission-preview",
+        "npm run check:p1352-auth-tenant-model",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P135.4",

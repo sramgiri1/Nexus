@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-30T14:44:03.125Z
+- Generated at: 2026-05-30T14:53:01.408Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c7810985
+- Validation HEAD: b1aa2826
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -581,10 +581,10 @@
 | P134.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P134.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P134.7 validation coverage | PASS | 52 checkers, 42 reports |
-| P135 validation coverage | PASS | 7 checkers, 2 reports |
+| P135 validation coverage | PASS | 8 checkers, 3 reports |
 | P135.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P135.2 validation coverage | PASS | 5 checkers, 1 reports |
-| P135.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P135.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P135.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P135.5 validation coverage | PASS | 20 checkers, 20 reports |
 | P135.6 validation coverage | PASS | dedicated_checker, validation_report |
@@ -601,18 +601,13 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P135.2; next=P135.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P135.3; next=P135.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P135.3 Permission Preview
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P135.4 Auth Governance Command Center UX
   - status: planned
   - checkers: 0

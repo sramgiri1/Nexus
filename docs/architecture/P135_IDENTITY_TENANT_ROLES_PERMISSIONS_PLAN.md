@@ -168,6 +168,187 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P135.3 Permission Preview
+
+Status: complete
+
+Scope classification:
+- NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `b1aa2826`
+
+Narrow goal:
+- Add a display-safe permission preview that composes the P135.2 auth/tenant
+  model into role, tenant-scope, Command Center surface, and sensitive-workflow
+  permission rows without granting permissions, enforcing access, or enabling
+  runtime authorization.
+
+Allowed files:
+- `auth-governance/p135-3-permission-preview.js`
+- `contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json`
+- `docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1353-permission-preview.js`
+- `scripts/check-p1352-auth-tenant-model.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `reports/p1353-permission-preview-report.md`
+- regenerated P135.2, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `auth-governance/p135-3-permission-preview.js`.
+- Create `scripts/check-p1353-permission-preview.js`.
+- Update package scripts, P135.2 checker, enterprise checker, OS phase status
+  checker, README, platform roadmap, enterprise roadmap, OS phase status,
+  phase index, and this plan.
+
+Expected exports, schemas, and data shapes:
+- Exports:
+  - `P135_3_REQUIRED_FIELDS`
+  - `P135_3_SAFETY_FLAG_NAMES`
+  - `P135_3_SAMPLE_PREVIEWS`
+  - `createPermissionPreview`
+  - `validatePermissionPreview`
+  - `buildPermissionPreviewEnvelope`
+- Data shape:
+  - `permissionPreviewId`
+  - `previewState`
+  - `authTenantModel`
+  - `rolePreviewRows`
+  - `tenantScopePreviewRows`
+  - `commandCenterSurfaceRows`
+  - `sensitiveWorkflowRows`
+  - `permissionPreviewPolicy`
+  - `safetyFlags`
+  - `displayFields`
+  - `blockedOperations`
+  - `disabledReason`
+  - `blockers`
+  - `forbiddenFiles`
+  - `evidenceRefs`
+  - `activityRefs`
+  - `costImpact`
+  - `ownerCapability`
+  - `nextAction`
+  - `commandCenterVisible`
+- No permission engine, authorization adapter, grant store, auth schema, tenant
+  store, role store, session store, auth provider, DB adapter, runtime writer,
+  dashboard source, Playwright source, or live execution is added.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX.
+- Do not edit dashboard source or Playwright source.
+- Validate UX preservation through route-wide Playwright coverage.
+- P135.4 owns scoped Auth Governance UX updates that can surface this preview.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw auth provider
+  payloads, private IDs, tenant IDs, user IDs, role IDs, permission IDs,
+  mutation controls, provider controls, deploy controls, package controls, or
+  spend controls.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through the existing route-wide Playwright suite.
+
+Playwright tests:
+- Do not edit Playwright source in this subphase.
+- Run `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"` to prove UX preservation.
+
+Checker updates:
+- Add `scripts/check-p1353-permission-preview.js`.
+- Update `scripts/check-p1352-auth-tenant-model.js` for P135.3 handoff
+  compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P135.3 handoff
+  compatibility.
+- Update `scripts/check-os-phase-status.js` so P135.4 is a valid OS phase
+  handoff ID.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update `README.md`.
+- Update `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- Update `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+OS phase status update:
+- P135 is in progress.
+- P135.1 complete.
+- P135.2 complete.
+- P135.3 complete.
+- Current phase P135.3.
+- Previous phase P135.2.
+- Next phase P135.4 planned-only.
+
+Validation commands:
+- `npm run check:p1353-permission-preview`
+- `npm run check:p1352-auth-tenant-model`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P135.3 allowed files>`
+- `git commit -m "chore(nexus): implement p1353 permission preview"`
+- `git add <P135.3 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1353 permission preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or Playwright source changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- Role assignment, permission grants, permission revokes, permission
+  enforcement, access decisions as live authority, login, sessions, tenant
+  mutation, auth providers, DB/runtime writes, provider/model calls, agent
+  dispatch, project mutation, network calls, and spend remain blocked.
+- P135.4 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P135.2 Auth and Tenant Model
 
 Status: complete

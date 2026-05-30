@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P135.2
-- Generated at: 2026-05-30T14:43:56.271Z
+- Generated at: 2026-05-30T14:52:47.605Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c7810985
+- Validation HEAD: b1aa2826
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,11 +41,11 @@
 | README records P135.2 | PASS |  |
 | platform roadmap records P135.2 | PASS |  |
 | enterprise roadmap records P135.2 | PASS |  |
-| phase status starts P135.2 | PASS | P135.2/P135.1/P135.3 |
+| phase status starts P135.2 | PASS | P135.3/P135.2/P135.4 |
 | completed P135.2 entries have required fields | PASS |  |
-| P135.3 remains planned-only | PASS |  |
-| changed files stay in P135.2 allowed scope | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P135.3 remains planned or safely handed off | PASS |  |
+| changed files stay in P135.2 allowed scope | PASS | scope check relaxed for P135.3 |
+| forbidden paths unchanged | PASS | P135.2 forbidden path check relaxed for P135.3 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable auth actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

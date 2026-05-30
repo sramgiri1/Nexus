@@ -68,6 +68,7 @@ const p1351Checker = readText("scripts/check-p1351-identity-tenant-roles-permiss
 const modelSource = readText("auth-governance/p135-2-auth-tenant-model.js");
 const checkerSource = readText("scripts/check-p1352-auth-tenant-model.js");
 const changed = changedFiles();
+const enforceCurrentDiffScope = status.currentPhase === "P135.2";
 const generatedModel = createAuthTenantModel({
   evidenceRefs: [REPORT_PATH],
   activityRefs: ["os-roadmap/phase-status.json#P135.2"],
@@ -148,6 +149,24 @@ const p1352CurrentState =
   && roadmapById.get("P135.2")?.status === "complete"
   && statusById.get("P135.3")?.status === "planned"
   && roadmapById.get("P135.3")?.status === "planned";
+const p1353CurrentState =
+  status.currentPhase === "P135.3"
+  && status.previousPhase === "P135.2"
+  && status.nextPhase === "P135.4"
+  && roadmap.currentPhase === "P135.3"
+  && roadmap.previousPhase === "P135.2"
+  && roadmap.nextPhase === "P135.4"
+  && status.current?.phaseId === "P135.3"
+  && status.previous?.phaseId === "P135.2"
+  && status.next?.phaseId === "P135.4"
+  && roadmap.current?.phaseId === "P135.3"
+  && roadmap.previous?.phaseId === "P135.2"
+  && roadmap.next?.phaseId === "P135.4"
+  && statusById.get("P135")?.status === "in_progress"
+  && roadmapById.get("P135")?.status === "in_progress"
+  && ["P135.1", "P135.2", "P135.3"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P135.4")?.status === "planned"
+  && roadmapById.get("P135.4")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -163,7 +182,7 @@ addCheck("blocked operations and blockers visible", models.every((model) => mode
 addCheck("evidence activity and cost visible", models.every((model) => model.evidenceRefs.includes(REPORT_PATH) && model.activityRefs.includes("os-roadmap/phase-status.json#P135.2") && model.costImpact.includes("No auth provider calls")));
 addCheck("envelope pass", envelope.status === "PASS" && envelope.phase === "P135.2" && envelope.data.model.safetyFlags.loginAllowed === false);
 addCheck("private IDs tokens and URLs hidden", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedModels) && !/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i.test(serializedModels));
-addCheck("contract records P135.2 completion", contract.currentSubphase === "P135.2" && contract.previousSubphase === "P135.1" && contract.nextSubphase === "P135.3" && p1352.status === "complete" && p1353.status === "planned");
+addCheck("contract records P135.2 completion", ((contract.currentSubphase === "P135.2" && contract.previousSubphase === "P135.1" && contract.nextSubphase === "P135.3" && p1353.status === "planned") || (contract.currentSubphase === "P135.3" && contract.previousSubphase === "P135.2" && contract.nextSubphase === "P135.4" && p1353.status === "complete")) && p1352.status === "complete");
 addCheck("P135.2 records implementation-grade scope", p1352.scopeClassification === "NEXUS_OS_CHANGE" && p1352.allowedFiles?.includes("auth-governance/p135-2-auth-tenant-model.js") && p1352.expectedExports?.includes("createAuthTenantModel") && p1352.validationCommands?.includes("npm run check:p1352-auth-tenant-model"));
 addCheck("P135.2 records safety boundary", p1352.safetyRules?.join(" ").includes("Do not enable login") && p1352.safetyRules?.join(" ").includes("Do not mutate tenants") && p1352.safetyRules?.join(" ").includes("Do not enforce permissions") && p1352.forbiddenFiles?.includes("db/**") && p1352.forbiddenFiles?.includes("local-state/runtime/**"));
 addCheck("P135.1 checker accepts P135.2 handoff", p1351Checker.includes("p1352CurrentState") && p1351Checker.includes('status.currentPhase === "P135.2"'));
@@ -172,12 +191,20 @@ addCheck("OS checker recognizes P135.3 handoff", ["P135.1", "P135.2", "P135.3"].
 addCheck("P135 plan records P135.2", /## P135\.2 Auth and Tenant Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P135.2", /P135\.2 auth\/tenant model/i.test(readme));
 addCheck("platform roadmap records P135.2", /P135\.2 auth\/tenant model is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P135.2", /P135\.2 is now complete/i.test(enterpriseRoadmap) && /P135\.3 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status starts P135.2", p1352CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P135.2", /P135\.2 is now complete/i.test(enterpriseRoadmap) && (/P135\.3 is the next executable subphase/i.test(enterpriseRoadmap) || /P135\.3 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status starts P135.2", p1352CurrentState || p1353CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P135.2 entries have required fields", [statusById.get("P135"), statusById.get("P135.2"), roadmapById.get("P135.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P135.3 remains planned-only", statusById.get("P135.3")?.status === "planned" && roadmapById.get("P135.3")?.status === "planned" && !(statusById.get("P135.3")?.checksRun || []).length);
-addCheck("changed files stay in P135.2 allowed scope", changed.every((file) => allowedFiles.has(file)), changed.join(", "));
-addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
+addCheck("P135.3 remains planned or safely handed off", (statusById.get("P135.3")?.status === "planned" && roadmapById.get("P135.3")?.status === "planned" && !(statusById.get("P135.3")?.checksRun || []).length) || p1353CurrentState);
+addCheck(
+  "changed files stay in P135.2 allowed scope",
+  !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),
+  enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`,
+);
+addCheck(
+  "forbidden paths unchanged",
+  !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))),
+  enforceCurrentDiffScope ? changed.join(", ") : `P135.2 forbidden path check relaxed for ${status.currentPhase}`,
+);
 
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
