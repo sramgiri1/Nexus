@@ -774,7 +774,8 @@
     "check:p1381-project-workspace-mutation-build-pipeline": "node scripts/check-p1381-project-workspace-mutation-build-pipeline.js",
     "check:p1382-project-workspace-mutation-build-pipeline": "node scripts/check-p1382-project-workspace-mutation-build-pipeline.js",
     "check:p1383-project-workspace-mutation-build-pipeline": "node scripts/check-p1383-project-workspace-mutation-build-pipeline.js",
-    "check:p1384-project-workspace-mutation-build-pipeline": "node scripts/check-p1384-project-workspace-mutation-build-pipeline.js"
+    "check:p1384-project-workspace-mutation-build-pipeline": "node scripts/check-p1384-project-workspace-mutation-build-pipeline.js",
+    "check:p1385-project-workspace-mutation-build-pipeline": "node scripts/check-p1385-project-workspace-mutation-build-pipeline.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

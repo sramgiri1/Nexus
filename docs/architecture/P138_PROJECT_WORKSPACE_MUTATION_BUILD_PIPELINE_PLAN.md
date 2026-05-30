@@ -388,11 +388,11 @@ Tests/checkers, docs, status, validation, git, and final checks:
   phase status, phase index, and generated reports.
 
 OS phase status update:
-- P138 is in progress through P138.4.
+- P138 is in progress through P138.5.
 - P138.4 is complete.
 - Current subphase: P138.4.
 - Previous subphase: P138.3.
-- Next subphase: P138.5 planned-only.
+- Later handoff: P138.5 is complete; P138.6 planned-only.
 
 Validation commands:
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`
@@ -413,11 +413,11 @@ Known limitations:
   rollbacks, write DB/runtime state, call providers/models, execute tools, start
   MCP servers, dispatch agents, deploy, release, export, package, use network
   calls, or spend.
-- P138.5 remains planned-only.
+- P138.5 is complete; P138.6 remains planned-only.
 
 ## P138.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Aggregate P138.1-P138.4 checker coverage, reports, Command Center UX
@@ -439,10 +439,52 @@ Expected exports, schemas, and data shapes:
 Command Center UX requirements:
 - Preserve Command Center UX and validate existing route-wide safety coverage.
 
-Tests/checkers, docs, status, validation, git, and final checks:
-- Add aggregate checker, update handoffs, update docs/status/reports, run the
-  P138 validation command set, commit, stamp, push, and leave P138.6
-  planned-only.
+Reuse check:
+- Reused `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Reused existing P138 model, preview, dashboard display model, route-wide
+  tests, and enterprise/OS status checkers.
+- No duplicate report writer, result envelope, redaction helper, mode guard,
+  route matrix, or Command Center card/tab helper was added.
+
+Tests/checkers:
+- Added `scripts/check-p1385-project-workspace-mutation-build-pipeline.js`.
+- Updated P138.1-P138.4 and enterprise/OS checkers for the P138.5 handoff.
+- Validated existing Playwright Project Build preview coverage and route-wide
+  Command Center safety checks.
+
+Docs/roadmap/status:
+- README, platform roadmap, enterprise roadmap, P138 contract, phase status,
+  phase index, and generated reports record P138.5 as complete.
+- P138.6 remains planned-only next.
+
+OS phase status update:
+- P138 is in progress through P138.5.
+- P138.5 is complete.
+- Current subphase: P138.5.
+- Previous subphase: P138.4.
+- Next subphase: P138.6 planned-only.
+
+Validation commands:
+- `npm run check:p1385-project-workspace-mutation-build-pipeline`
+- `npm run check:p1384-project-workspace-mutation-build-pipeline`
+- `npm run check:p1383-project-workspace-mutation-build-pipeline`
+- `npm run check:p1382-project-workspace-mutation-build-pipeline`
+- `npm run check:p1381-project-workspace-mutation-build-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Known limitations:
+- P138.5 is validation-only.
+- It does not mutate project files, apply patches, run builds/tests, execute
+  rollbacks, write DB/runtime state, call providers/models, execute tools, start
+  MCP servers, dispatch agents, deploy, release, export, package, use network
+  calls, or spend.
+- P138.6 remains planned-only.
 
 ## P138.6 Docs / Roadmap / Status
 

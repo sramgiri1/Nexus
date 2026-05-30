@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P138.4
-- Generated at: 2026-05-30T21:15:14.384Z
+- Generated at: 2026-05-30T21:25:55.695Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 78b47205
+- Validation HEAD: 31cd0afe
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -51,11 +51,11 @@
 | README records P138.4 | PASS |  |
 | platform roadmap records P138.4 | PASS |  |
 | enterprise roadmap records P138.4 | PASS |  |
-| phase status starts P138.4 | PASS | P138.4/P138.3/P138.5 |
+| phase status starts P138.4 or hands off to P138.5 | PASS | P138.5/P138.4/P138.6 |
 | completed P138.4 entries have required fields | PASS |  |
-| P138.5 remains planned | PASS |  |
-| changed files stay in P138.4 allowed scope | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1384-project-workspace-mutation-build-pipeline-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p138-project-workspace-mutation-build-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1384-project-workspace-mutation-build-pipeline-report.md |
+| P138.5 remains planned or is safely complete | PASS |  |
+| changed files stay in P138.4 allowed scope | PASS | scope check relaxed for P138.5 |
+| forbidden paths unchanged | PASS | P138.4 forbidden path check relaxed for P138.5 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable project actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

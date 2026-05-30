@@ -43,7 +43,8 @@ P138.1 is now complete as contract/policy/safety-boundary only.
 P138.2 is now complete as read-only workspace mutation model only.
 P138.3 is now complete as non-runnable patch/build preview only.
 P138.4 is now complete as Project Build Command Center UX only.
-P138.5 is the next executable subphase. P138.5-P145 remain planned-only. They
+P138.5 is now complete as aggregate tests/checkers only.
+P138.6 is the next executable subphase. P138.6-P145 remain planned-only. They
 do not enable secret values, DB writes, provider/model calls, tool execution,
 agent dispatch, project mutation, patch application, build/test execution,
 rollback execution, deploy, release, export, package, network calls, or spend
@@ -131,7 +132,8 @@ P138.1 is now complete as contract/policy/safety-boundary only.
 P138.2 is now complete as read-only workspace mutation model only.
 P138.3 is now complete as non-runnable patch/build preview only.
 P138.4 is now complete as Project Build Command Center UX only.
-P138.5 is the next executable subphase. P138.5-P145 are planned-only backlog
+P138.5 is now complete as aggregate tests/checkers only.
+P138.6 is the next executable subphase. P138.6-P145 are planned-only backlog
 phases and must not be treated as complete or live.
 
 ## Validation
