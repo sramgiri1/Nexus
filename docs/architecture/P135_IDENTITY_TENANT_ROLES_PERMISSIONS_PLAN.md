@@ -533,6 +533,163 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P135.5 Tests / Checkers
+
+Status: complete
+
+Scope classification:
+- NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `3d8f9afb`
+
+Narrow goal:
+- Add aggregate test/checker hardening for the P135 identity, tenant, role,
+  permission, Auth Governance UX chain without changing dashboard source or
+  enabling live auth, permission, tenant, DB/runtime, provider, agent, project,
+  deploy, package, network, or spend actions.
+
+Allowed files:
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json`
+- `docs/architecture/P135_IDENTITY_TENANT_ROLES_PERMISSIONS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js`
+- `scripts/check-p1354-auth-governance-command-center-ux.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `reports/p1355-identity-tenant-roles-permissions-tests-checkers-report.md`
+- regenerated P135.4, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Add focused Auth Governance Playwright regression coverage.
+- Add `scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js`.
+- Update package scripts, P135.4 checker, enterprise checker, OS phase status
+  checker, README, platform roadmap, enterprise roadmap, OS phase status,
+  phase index, and this plan.
+
+Expected exports, schemas, and data shapes:
+- No new runtime exports.
+- No auth schema, tenant store, role store, permission engine, auth provider,
+  DB/runtime write, dashboard source, or live execution.
+- P135.5 report validates prior P135 reports, auth/tenant model shape,
+  permission preview shape, Auth Governance view model, Playwright regression,
+  checker handoffs, allowed-file scope, safety wording, and docs/status.
+
+Command Center UX requirements:
+- Preserve P135.4 Auth Governance UX.
+- Add Playwright coverage proving Auth Governance remains review-only.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw auth provider
+  payloads, private IDs, tenant IDs, user IDs, role IDs, permission IDs,
+  mutation controls, provider controls, deploy controls, package controls, or
+  spend controls.
+- Do not expose internal phase labels in primary UX.
+- Do not expose DemoApp in full Command Center.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through focused Auth Governance and route-wide Playwright coverage.
+
+Playwright tests:
+- Add a focused Auth Governance regression that verifies roles, tenant scope,
+  surfaces, blocked workflows, evidence, disabled actions, no DemoApp leakage,
+  no raw dumps, no tokens/URLs, no internal phase labels, and no fake runnable
+  auth actions.
+
+Checker updates:
+- Add `scripts/check-p1355-identity-tenant-roles-permissions-tests-checkers.js`.
+- Update `scripts/check-p1354-auth-governance-command-center-ux.js` for
+  P135.5 handoff compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P135.5 handoff
+  compatibility.
+- Update `scripts/check-os-phase-status.js` so P135.6 is a valid OS phase
+  handoff ID.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update `README.md`.
+- Update `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- Update `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+OS phase status update:
+- P135 is in progress.
+- P135.1 through P135.5 complete.
+- Current phase P135.5.
+- Previous phase P135.4.
+- Next phase P135.6 planned-only.
+
+Validation commands:
+- `npm run check:p1355-identity-tenant-roles-permissions-tests-checkers`
+- `npm run check:p1354-auth-governance-command-center-ux`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "P135.5 identity tenant roles permissions"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P135.5 allowed files>`
+- `git commit -m "chore(nexus): implement p1355 identity tenant tests checkers"`
+- `git add <P135.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1355 identity tenant tests checkers"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- Login, sessions, token exchange, role assignment, permission grants,
+  permission revokes, permission enforcement, access decisions as live
+  authority, tenant mutation, auth providers, DB/runtime writes,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- P135.6 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P135.2 Auth and Tenant Model
 
 Status: complete

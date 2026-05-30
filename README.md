@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P135.4
-  with P135.5 planned-only next.
+  roadmap/status entries only; current implementation is closed through P135.5
+  with P135.6 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2130,7 +2130,16 @@ The Command Center and local operator surface have:
 - P135.4 Auth Governance Command Center UX: Surfaced the P135.3 permission
   preview in the Auth Governance route with review-only role, tenant-scope,
   Command Center surface, blocked workflow, evidence, blocker, and
-  disabled-action sections. P135.5 Tests / Checkers is planned-only next; role
+  disabled-action sections. P135.5 Tests / Checkers followed next; role
+  assignment, permission grants, permission revokes, permission
+  enforcement, access decisions as live authority, login, sessions, tenant
+  mutation, auth providers, DB/runtime writes, provider/model calls, agent
+  dispatch, project mutation, deploy, release, export, package, network calls,
+  and spend remain unavailable.
+- P135.5 identity/tenant/RBAC tests/checkers: Added aggregate validation over
+  the P135 identity/tenant/RBAC contract, prior reports, Auth Governance
+  regression coverage, checker handoffs, docs, roadmap, and OS status. P135.6
+  Docs / Roadmap / Status is planned-only next; role
   assignment, permission grants, permission revokes, permission
   enforcement, access decisions as live authority, login, sessions, tenant
   mutation, auth providers, DB/runtime writes, provider/model calls, agent

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P135.4
-- Generated at: 2026-05-30T15:18:52.893Z
+- Generated at: 2026-05-30T15:27:11.051Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 98c6f7fc
+- Validation HEAD: 3d8f9afb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -18,6 +18,7 @@
 | Check | Status | Details |
 | --- | --- | --- |
 | package script registered | PASS |  |
+| P135.5 checker registered when handed off | PASS |  |
 | checker reuses shared report helpers | PASS |  |
 | view model reuses P135.3 preview | PASS |  |
 | route and tabs registered | PASS |  |
@@ -37,11 +38,11 @@
 | P135.4 records implementation-grade scope | PASS |  |
 | P135.4 records safety boundary | PASS |  |
 | docs record P135.4 | PASS |  |
-| phase status starts P135.4 | PASS | P135.4/P135.3/P135.5 |
+| phase status starts or safely hands off P135.4 | PASS | P135.5/P135.4/P135.6 |
 | completed P135.4 entries have required fields | PASS |  |
-| P135.5 remains planned-only | PASS |  |
-| changed files stay in P135.4 allowed scope | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p135-identity-tenant-roles-permissions-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P135.5 remains planned or safely handed off | PASS |  |
+| changed files stay in P135.4 allowed scope | PASS | scope check relaxed for P135.5 |
+| forbidden paths unchanged | PASS | P135.4 forbidden path check relaxed for P135.5 |
 | primary UX avoids raw private IDs | PASS |  |
 | primary UX avoids tokens URLs and raw dumps | PASS |  |
 | primary UX avoids internal phase labels | PASS |  |
@@ -70,4 +71,4 @@
 - P135.4 is Command Center UX only. It does not create auth schemas, tenant stores, role stores, permission engines, auth providers, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend paths.
 ## Result
 
-PASS (32/32)
+PASS (33/33)

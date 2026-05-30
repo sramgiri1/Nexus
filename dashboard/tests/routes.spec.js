@@ -2407,6 +2407,36 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P135.5 identity tenant roles permissions coverage keeps Auth Governance review-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/auth-governance");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Auth Governance");
+    await expect(page.locator("body")).toContainText("Review-only governance posture");
+    await commandTab(page, "Roles").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Visible, not assignable");
+    await commandTab(page, "Tenant Scope").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Tenant, workspace, membership, and access mutation remain disabled");
+    await commandTab(page, "Surfaces").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Permission state");
+    await commandTab(page, "Blocked Workflows").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Required gate");
+    await commandTab(page, "Evidence").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Governance Posture");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Connect provider disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/sign in now|assign role now|grant permission now|revoke permission now|enforce permission now|connect provider now|create tenant now|execute now/i);
+    expect(body).not.toMatch(/raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P73\.|P135\./);
+    expect(body).not.toContain("DemoApp");
+
+    expect(errors).toEqual([]);
+  });
+
   test("Observability route renders readiness without runnable telemetry actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
