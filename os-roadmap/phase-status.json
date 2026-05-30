@@ -19430,13 +19430,14 @@
       "order": 168,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6d8f8305",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P132 in progress; P132.3 store adapter capability gate complete and P132.4 is planned-only next.",
-      "summary": "Added a local store adapter capability gate that reuses P132.2 execution request envelope evidence and keeps adapter selection, DB reads, DB writes, CRUD execution, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
+      "detail": "P132 in progress; P132.4 DB write-plan preview complete and P132.5 is planned-only next.",
+      "summary": "Added a local DB write-plan preview model that reuses P132.3 adapter capability gate evidence and keeps schemas, migrations, tables, DB reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter connection, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "previousPhase": "P131.7",
-      "nextPhase": "P132.4",
+      "nextPhase": "P132.5",
       "checksRun": [
+        "npm run check:p1324-founder-runtime-store-live-admission-execution",
         "npm run check:p1323-founder-runtime-store-live-admission-execution",
         "npm run check:p1322-founder-runtime-store-live-admission-execution",
         "npm run check:p1321-founder-runtime-store-live-admission-execution",
@@ -19449,9 +19450,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P132 is in progress but contract-gated. P132.3 does not create DB schemas, run migrations, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+        "P132 is in progress but contract-gated. P132.4 does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
       ],
-      "completedAt": "2026-05-30T00:41:24.427Z"
+      "completedAt": "2026-05-30T00:54:38.171Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19522,7 +19523,7 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "6d8f8305",
       "commandCenterVisible": true,
-      "detail": "P132.3 store adapter capability gate complete; P132.4 DB write plan preview is next.",
+      "detail": "P132.3 store adapter capability gate complete; P132.4 DB write-plan preview is now complete and P132.5 is next.",
       "summary": "Added a local store adapter capability gate that reuses P132.2 execution request envelope evidence and keeps adapter selection, DB reads, DB writes, CRUD execution, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "previousPhase": "P132.2",
       "nextPhase": "P132.4",
@@ -19549,19 +19550,31 @@
       "title": "DB Write Plan Preview",
       "label": "Write Plan Preview",
       "order": 168.4,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "commandCenterVisible": false,
-      "detail": "P132.4 is planned-only.",
-      "summary": "Planned-only next subphase for safe DB write plan preview. No implementation exists yet.",
+      "commit": "pending-final-commit",
+      "commandCenterVisible": true,
+      "detail": "P132.4 DB write-plan preview complete; P132.5 Command Center execution scope UX is next.",
+      "summary": "Added a local DB write-plan preview model that reuses P132.3 adapter capability gate evidence and keeps schemas, migrations, tables, DB reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter connection, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
       "previousPhase": "P132.3",
       "nextPhase": "P132.5",
-      "checksRun": [],
-      "knownLimitations": [
-        "P132.4 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "checksRun": [
+        "npm run check:p1324-founder-runtime-store-live-admission-execution",
+        "npm run check:p1323-founder-runtime-store-live-admission-execution",
+        "npm run check:p1322-founder-runtime-store-live-admission-execution",
+        "npm run check:p1321-founder-runtime-store-live-admission-execution",
+        "npm run check:p1317-founder-runtime-store-live-admission-scope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+        "git diff --check"
       ],
-      "completedAt": ""
+      "knownLimitations": [
+        "P132.4 is a DB write-plan preview model only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+      ],
+      "completedAt": "2026-05-30T00:54:38.171Z"
     },
     {
       "track": "NEXUS_OS",
@@ -19572,15 +19585,16 @@
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
-      "commandCenterVisible": true,
-      "detail": "P132.5 is planned-only.",
-      "summary": "Planned-only future scoped Command Center execution UX.",
+      "commandCenterVisible": false,
+      "detail": "P132.5 is planned-only. It will expose display-safe execution scope state on scoped founder pages without runnable write controls.",
+      "summary": "Planned-only next subphase for display-safe Command Center execution scope UX. No implementation exists yet.",
       "previousPhase": "P132.4",
       "nextPhase": "P132.6",
       "checksRun": [],
       "knownLimitations": [
-        "Planned-only; no implementation yet."
-      ]
+        "P132.5 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "completedAt": ""
     },
     {
       "track": "NEXUS_OS",
@@ -22171,17 +22185,46 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-29T23:47:33.019Z",
-  "currentPhase": "P132.3",
-  "previousPhase": "P132.2",
-  "nextPhase": "P132.4",
+  "currentPhase": "P132.4",
+  "previousPhase": "P132.3",
+  "nextPhase": "P132.5",
   "currentPhaseStatus": "complete",
   "current": {
+    "phaseId": "P132.4",
+    "title": "DB Write Plan Preview",
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-30T00:54:38.171Z",
+    "detail": "P132.4 DB write-plan preview complete; P132.5 Command Center execution scope UX is next.",
+    "summary": "Added a local DB write-plan preview model that reuses P132.3 adapter capability gate evidence and keeps schemas, migrations, tables, DB reads, DB writes, CRUD execution, runtime writes, adapter selection, adapter connection, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
+    "checksRun": [
+      "npm run check:p1324-founder-runtime-store-live-admission-execution",
+      "npm run check:p1323-founder-runtime-store-live-admission-execution",
+      "npm run check:p1322-founder-runtime-store-live-admission-execution",
+      "npm run check:p1321-founder-runtime-store-live-admission-execution",
+      "npm run check:p1317-founder-runtime-store-live-admission-scope",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P132.4 is a DB write-plan preview model only. It does not create DB schemas, run migrations, create tables, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
+    ],
+    "nextPhase": "P132.5",
+    "commandCenterVisible": true
+  },
+  "previous": {
     "phaseId": "P132.3",
     "title": "Store Adapter Capability Gate",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "6d8f8305",
     "completedAt": "2026-05-30T00:41:24.427Z",
+    "detail": "P132.3 store adapter capability gate complete; P132.4 DB write-plan preview is now complete and P132.5 is next.",
     "summary": "Added a local store adapter capability gate that reuses P132.2 execution request envelope evidence and keeps adapter selection, DB reads, DB writes, CRUD execution, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
     "checksRun": [
       "npm run check:p1323-founder-runtime-store-live-admission-execution",
@@ -22199,48 +22242,22 @@
       "P132.3 is a store adapter capability gate model only. It does not create DB schemas, run migrations, read or write DB/runtime records, select or connect adapters, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
     ],
     "nextPhase": "P132.4",
-    "commandCenterVisible": true,
-    "detail": "P132.3 store adapter capability gate complete; P132.4 DB write plan preview is next."
-  },
-  "previous": {
-    "phaseId": "P132.2",
-    "title": "Execution Request Envelope Model",
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "0903bf6c",
-    "completedAt": "2026-05-30T00:28:40.894Z",
-    "summary": "Added a local execution request envelope model that reuses P131.2 admission request evidence and keeps persistence, DB writes, CRUD execution, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend blocked.",
-    "checksRun": [
-      "npm run check:p1322-founder-runtime-store-live-admission-execution",
-      "npm run check:p1321-founder-runtime-store-live-admission-execution",
-      "npm run check:p1317-founder-runtime-store-live-admission-scope",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"store live readiness gate appears only on scoped pages\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P132.2 is an execution request envelope model only. It does not create DB schemas, run migrations, read or write DB/runtime records, persist requests, execute CRUD, capture approvals, accept handoff, grant authority, unlock execution, call providers/models, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend."
-    ],
-    "nextPhase": "P132.3",
-    "commandCenterVisible": true,
-    "detail": "P132.2 execution request envelope model complete; P132.3 store adapter capability gate is now complete and P132.4 is next."
+    "commandCenterVisible": true
   },
   "next": {
-    "phaseId": "P132.4",
-    "title": "DB Write Plan Preview",
+    "phaseId": "P132.5",
+    "title": "Command Center Execution Scope UX",
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "completedAt": "",
-    "summary": "Planned-only next subphase for safe DB write plan preview. No implementation exists yet.",
+    "detail": "P132.5 is planned-only. It will expose display-safe execution scope state on scoped founder pages without runnable write controls.",
+    "summary": "Planned-only next subphase for display-safe Command Center execution scope UX. No implementation exists yet.",
     "checksRun": [],
     "knownLimitations": [
-      "P132.4 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      "P132.5 is planned-only until its own implementation-grade plan is written. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
     ],
-    "nextPhase": "P132.5",
+    "nextPhase": "P132.6",
     "commandCenterVisible": false
   }
 }

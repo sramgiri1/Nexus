@@ -19,6 +19,228 @@ P132 is split into seven implementation-grade subphases:
 - P132.6 Validation / Docs
 - P132.7 Final Validation
 
+## P132.4 DB Write Plan Preview
+
+Status: complete
+Phase: P132
+Subphase: P132.4
+Goal: Add a local DB write-plan preview model that reuses the P132.3 adapter
+capability gate and lists future write-plan prerequisites while keeping schemas,
+migrations, DB reads, DB writes, CRUD execution, runtime writes, adapter
+selection, adapter connection, provider calls, agent dispatch, project
+mutation, deploy, release, export, package, network calls, and spend blocked.
+Why this is needed: P132.3 separates adapter capability readiness from live
+actions. P132.4 previews the write-plan safety envelope before P132.5 exposes
+execution scope state in Command Center.
+User/operator impact: Operators get a verifiable local model of write-plan
+steps, missing evidence, boundaries, blockers, next action, owner capability,
+evidence/activity labels, and cost posture without any runnable action.
+Command Center impact: No dashboard source changes. Business Build and Agent
+Flow keep the scoped Store Live Admission Scope cards. Chat with NEXUS and Lite
+remain chat-focused and clean.
+Safety impact: P132.4 is model/checker/docs/status only. It does not create DB
+schemas, run migrations, create tables, read or write DB/runtime records, select
+or connect adapters, persist requests, execute CRUD, capture approvals, accept
+handoff, grant authority, unlock execution, call providers/models, dispatch
+agents, mutate projects, deploy, release, export, package, use network calls,
+or spend.
+Cost impact: Local model, checkers, docs, build, and tests only. No provider
+spend.
+Project/OS scope: NEXUS OS only.
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `de20e30f`
+
+Files expected to change:
+- `shared/founderRuntimeStoreLiveAdmissionDbWritePlanPreview.js`
+- `scripts/check-p1324-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1323-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1322-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1321-founder-runtime-store-live-admission-execution.js`
+- `scripts/check-p1317-founder-runtime-store-live-admission-scope.js`
+- `contracts/os-roadmap/p132-founder-runtime-store-live-admission-execution-contracts.json`
+- `docs/architecture/P132_FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_EXECUTION_PLAN.md`
+- `package.json`
+- `README.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `os-roadmap/phase-status.json`
+- `os-roadmap/nexus-phases.json`
+- `reports/p1324-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1323-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1322-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1321-founder-runtime-store-live-admission-execution-report.md`
+- `reports/p1317-founder-runtime-store-live-admission-scope-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules to create or update:
+- Create `shared/founderRuntimeStoreLiveAdmissionDbWritePlanPreview.js`.
+- Create `scripts/check-p1324-founder-runtime-store-live-admission-execution.js`.
+- Update P132.3/P132.2/P132.1/P131.7 checkers and reports for P132.4 handoff
+  compatibility.
+- Update P132 contract, plan, package scripts, README, platform roadmap, OS
+  status, roadmap, and generated reports listed above.
+
+Expected exports, schemas, and data shapes:
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_DB_WRITE_PLAN_PREVIEW_PHASE`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_DB_WRITE_PLAN_PREVIEW_VERSION`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_DB_WRITE_PLAN_PREVIEW_STEP_NAMES`.
+- Export `FOUNDER_RUNTIME_STORE_LIVE_ADMISSION_DB_WRITE_PLAN_PREVIEW_FLAGS`.
+- Export `buildFounderRuntimeStoreLiveAdmissionDbWritePlanPreview`.
+- Export `validateFounderRuntimeStoreLiveAdmissionDbWritePlanPreview`.
+- Data shape: local preview-only object with source P132.3/P132.2/P131.2
+  lineage, write-plan step names, blocked preview rows, missing evidence,
+  boundaries, blocker rows, disabled reason, owner capability, evidence/activity
+  labels, cost posture, zero candidate counts, and all live/write/dispatch/
+  spend flags false.
+- No DB schema, migration file, table, query, runtime record, selected adapter,
+  connected adapter, write adapter, live CRUD executor, provider envelope,
+  dispatch packet, raw private ID, raw table name, raw report dump, or project
+  data.
+
+Reuse check:
+- Reuse `shared/founderRuntimeStoreLiveAdmissionStoreAdapterCapabilityGate.js`.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Reuse P132.3/P132.2/P132.1/P131.7 handoff patterns and P131.5 scoped UX
+  evidence.
+- Do not duplicate report writers, checker formatters, result envelopes, mode
+  guards, redaction helpers, route matrices, status helpers, UI card/tab/status
+  components, or evidence/audit/activity appenders.
+
+Command Center UX requirements:
+- Preserve Store Live Admission Scope cards on Business Build and Agent Flow.
+- Chat with NEXUS and Lite remain chat-focused and clean.
+- OS Roadmap remains the only surface for OS phase labels.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw table
+  names, raw report paths, internal helper IDs, internal phase labels outside OS
+  Roadmap, or private project IDs.
+- No provider/tool/project mutation, DB read, DB write, runtime write, live
+  CRUD, migration, schema, table, approval capture, handoff acceptance,
+  authority grant, adapter selection, adapter connection, deploy, release,
+  export, package, network, or spend controls appear.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Run existing scoped route coverage.
+
+Tests to add/update/remove:
+- Add `check:p1324-founder-runtime-store-live-admission-execution`.
+- Update P132.3/P132.2/P132.1/P131.7 checkers for P132.4 handoff
+  compatibility.
+- Run P132.3, P132.2, P132.1, P131.7, OS phase status, and phase validation
+  coverage.
+- Run dashboard build, unit tests, and the existing scoped Playwright route
+  coverage without editing dashboard tests.
+
+Checker updates:
+- Validate P132.4 model exports, lineage, blocked flags, candidate counts,
+  write-plan boundaries, docs, and status.
+- Validate P132.3/P132.2/P132.1/P131.7 checkers accept P132.4 handoff.
+- Validate P131.5 scoped data, page labels, and route coverage remain intact.
+- Validate P132 is in progress, P132.4 complete, and P132.5 planned-only.
+- Validate docs, status, forbidden paths, reuse, no SQL/table names, and safe
+  wording.
+
+Docs to update:
+- This P132 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+
+Reports to regenerate:
+- P131.7 report.
+- P132.1 report.
+- P132.2 report.
+- P132.3 report.
+- P132.4 report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P132 in progress.
+- P132.4 complete.
+- Current phase P132.4.
+- Previous phase P132.3.
+- Next phase P132.5 planned-only.
+
+Known risks:
+- Write-plan preview wording can imply DB write enablement. P132.4 keeps the
+  model preview-only and states that all live actions remain blocked.
+- Model details can leak internals. The checker enforces no raw private IDs,
+  raw table names, raw SQL snippets, raw dumps, fake runnable actions, unsafe
+  imports, or unsafe URLs.
+
+Rollback plan:
+- Revert only the P132.4 implementation and stamp commits. P132.3 remains the
+  complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1324-founder-runtime-store-live-admission-execution`
+- `npm run check:p1323-founder-runtime-store-live-admission-execution`
+- `npm run check:p1322-founder-runtime-store-live-admission-execution`
+- `npm run check:p1321-founder-runtime-store-live-admission-execution`
+- `npm run check:p1317-founder-runtime-store-live-admission-scope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "store live readiness gate appears only on scoped pages"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P132.4 allowed files>`
+- `git commit -m "chore(nexus): implement p1324 db write plan preview"`
+- `git add <P132.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1324 db write plan preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or dashboard test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- DB schemas, migrations, tables, DB/runtime reads or writes, adapter selection,
+  adapter connection, request persistence, live CRUD execution, acceptance
+  capture, handoff acceptance, authority grant, execution unlock,
+  provider/model calls, agent dispatch, project mutation, network calls, and
+  spend remain blocked.
+- P132.5 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P132.3 Store Adapter Capability Gate
 
 Status: complete

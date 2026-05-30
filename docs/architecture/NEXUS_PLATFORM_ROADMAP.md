@@ -3142,6 +3142,23 @@ dispatch, worker/tool execution, project mutation, hosted DB mutation, raw SQL
 interface, deploy, release, export, package action, network call, and provider
 spend remain blocked.
 
+P132.3 is complete. NEXUS added a local store adapter capability gate that
+reuses the P132.2 execution request envelope, records adapter capability
+evidence gates, separation boundaries, blockers, disabled reason, owner
+capability, evidence/activity labels, and no-spend cost posture while adapter
+selection, adapter connection, DB reads, DB writes, CRUD execution, runtime
+writes, provider/model calls, agent dispatch, project mutation, deploy, release,
+export, package action, network call, and provider spend remain blocked.
+
+P132.4 is complete. NEXUS added a local DB write-plan preview model that reuses
+the P132.3 adapter capability gate, records write-plan prerequisite steps,
+boundaries, blockers, disabled reason, owner capability, evidence/activity
+labels, and no-spend cost posture while schemas, migrations, tables, DB reads,
+DB writes, CRUD execution, runtime writes, adapter selection, adapter
+connection, provider/model calls, agent dispatch, project mutation, deploy,
+release, export, package action, network call, and provider spend remain
+blocked. P132.5 is next.
+
 ## P133-P145 Enterprise Readiness Roadmap
 
 P133-P145 are planned-only enterprise readiness phases. They cover founder
@@ -3153,7 +3170,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation remains on P132.3 and P132.4 remains next. P133-P145 do
+Current implementation remains on P132.4 and P132.5 remains next. P133-P145 do
 not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch,
 project mutation, deploy, release, export, package, network calls, or spend.
 
@@ -3330,15 +3347,6 @@ Readiness stay clean. Assignment writes, provider/model calls, agent dispatch,
 worker/tool execution, project mutation, hosted DB mutation, raw SQL interface,
 runtime admission, deploy, release, export, package action, network call, and
 provider spend remain blocked.
-
-P132.3 is complete. NEXUS added a local store adapter capability gate that
-reuses the P132.2 execution request envelope, records adapter capability
-evidence gates, separation boundaries, blockers, disabled reason, owner
-capability, evidence/activity labels, and no-spend cost posture while adapter
-selection, adapter connection, DB reads, DB writes, CRUD execution, runtime
-writes, provider/model calls, agent dispatch, project mutation, deploy, release,
-export, package action, network call, and provider spend remain blocked. P132.4
-is next.
 
 P113.6 is complete. P113.1-P113.5 are now validated together through an
 aggregate checker that confirms scripts, prior reports, docs, README, platform
