@@ -1141,7 +1141,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-30T19:41:21.429Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1ae05fe9",
       "summary": "Closed P137 docs, README, platform roadmap, enterprise roadmap, OS phase status, phase index, checker handoff, and report evidence through P137.6 without enabling live dispatch or execution.",
       "checksRun": [
         "npm run check:p1376-agent-work-order-runtime",
@@ -1167,7 +1167,7 @@
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1376-final-commit",
+      "expectedBaseCommit": "1ae05fe9",
       "narrowGoal": "Close P137 with final validation evidence, prior report verification, checker compatibility, docs/roadmap/status closure, route-wide Command Center safety, and planned-only P138 handoff.",
       "allowedFiles": [
         "contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json",
