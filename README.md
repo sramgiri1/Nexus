@@ -2007,10 +2007,11 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P139.1. P137 Agent Work Order Runtime is
+  implementation is closed through P139.2. P137 Agent Work Order Runtime is
   complete through final validation. P138 Project Workspace Mutation and Build
   Pipeline is complete through final validation. P139.1 evidence, audit,
-  observability, and cost ledger contract is complete; P139.2 is planned-only
+  observability, and cost ledger contract is complete. P139.2 evidence, audit,
+  observability, and cost ledger model is complete; P139.3 is planned-only
   next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
@@ -2328,6 +2329,13 @@ The Command Center and local operator surface have:
   with a contract-only enterprise ledger boundary, future display-safe ledger
   shape, reuse requirements, safety rules, checker, docs/status handoff, and
   planned-only P139.2 handoff. Live ledger persistence, DB/runtime writes,
+  provider/model calls, tool execution, MCP startup, agent dispatch, project
+  mutation, deploy, release, export, package, network calls, and spend remain
+  unavailable until a later subphase explicitly allows them.
+- P139.2 evidence, audit, observability, and cost ledger model: Added the
+  read-only ledger model and checker using existing evidence record, activity
+  event, cost ledger, redaction, mode guard, and result envelope helpers.
+  P139.3 remains planned-only next. Ledger writes, DB/runtime writes,
   provider/model calls, tool execution, MCP startup, agent dispatch, project
   mutation, deploy, release, export, package, network calls, and spend remain
   unavailable until a later subphase explicitly allows them.

@@ -778,7 +778,8 @@
     "check:p1385-project-workspace-mutation-build-pipeline": "node scripts/check-p1385-project-workspace-mutation-build-pipeline.js",
     "check:p1386-project-workspace-mutation-build-pipeline": "node scripts/check-p1386-project-workspace-mutation-build-pipeline.js",
     "check:p1387-project-workspace-mutation-build-pipeline": "node scripts/check-p1387-project-workspace-mutation-build-pipeline.js",
-    "check:p1391-evidence-audit-observability-cost-ledger": "node scripts/check-p1391-evidence-audit-observability-cost-ledger.js"
+    "check:p1391-evidence-audit-observability-cost-ledger": "node scripts/check-p1391-evidence-audit-observability-cost-ledger.js",
+    "check:p1392-evidence-audit-observability-cost-ledger": "node scripts/check-p1392-evidence-audit-observability-cost-ledger.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

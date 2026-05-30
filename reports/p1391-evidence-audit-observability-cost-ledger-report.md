@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P139.1
-- Generated at: 2026-05-30T22:27:39.761Z
+- Generated at: 2026-05-30T22:44:44.846Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 504a08ad
+- Validation HEAD: 28dc465a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Starts P139 with an enterprise evidence, audit, observability, and cost ledger contract.
-- Defines future display-safe ledger record shape, reuse requirements, safety rules, validation commands, and planned-only P139.2 handoff.
+- Defines future display-safe ledger record shape, reuse requirements, safety rules, validation commands, and the P139.2 handoff.
 - Does not write ledger records, DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Ledger Contract Fields
 
@@ -30,10 +30,10 @@
 - createdAt
 ## Phase Status
 
-- Current subphase: P139.1
-- Previous subphase: P138.7
-- Next subphase: P139.2
-- P139.2 remains planned-only.
+- Current subphase: P139.2
+- Previous subphase: P139.1
+- Next subphase: P139.3
+- P139.2 has advanced from the P139.1 handoff.
 ## Checks
 
 | Check | Status | Details |
@@ -43,7 +43,7 @@
 | contract starts P139 safely | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract has seven implementation-grade subphases | PASS |  |
-| P139.1 complete and P139.2 planned | PASS |  |
+| P139.1 complete and P139.2 handoff known | PASS |  |
 | contract records validation commands | PASS |  |
 | future ledger shape is display-safe and complete | PASS |  |
 | all authority flags remain blocked | PASS |  |
@@ -56,11 +56,11 @@
 | README records P139.1 | PASS |  |
 | platform roadmap records P139.1 | PASS |  |
 | enterprise roadmap records P139.1 | PASS |  |
-| phase status starts P139.1 | PASS | P139.1/P138.7/P139.2 |
+| phase status keeps P139.1 complete | PASS | P139.2/P139.1/P139.3 |
 | completed P139.1 entries have required fields | PASS |  |
-| P139.2 remains planned-only | PASS |  |
-| changed files stay in P139.1 allowed scope | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P139.2 handoff remains valid | PASS |  |
+| changed files stay in P139.1 allowed scope | PASS | scope check relaxed for P139.2 |
+| forbidden paths unchanged | PASS | P139.1 forbidden path check relaxed for P139.2 |
 | route-wide safety coverage retained | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -78,7 +78,7 @@
 - git diff --check
 ## Known Limitations
 
-- P139.1 is contract-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.2 remains planned-only.
+- P139.1 is contract-only. It does not enable live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.2 has advanced through a separate read-only model subphase.
 ## Result
 
 PASS (28/28)

@@ -2,14 +2,14 @@
   "phaseId": "P139",
   "title": "Evidence, Audit, Observability, and Cost Ledger",
   "status": "in_progress",
-  "currentSubphase": "P139.1",
-  "previousSubphase": "P138.7",
-  "nextSubphase": "P139.2",
+  "currentSubphase": "P139.2",
+  "previousSubphase": "P139.1",
+  "nextSubphase": "P139.3",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "afe98694",
-  "summary": "P139 starts enterprise evidence, audit, observability, and cost ledger readiness with a contract-only safety boundary.",
-  "detail": "P139.1 defines the future enterprise ledger contract without enabling DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+  "summary": "P139.2 adds the read-only evidence, audit, observability, and cost ledger model while every live write and execution authority remains blocked.",
+  "detail": "P139 remains in progress. P139.2 normalizes ledger records and summaries using existing evidence, activity, cost, redaction, mode guard, and result envelope helpers without persistence or execution.",
   "allowedFiles": [
     "contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json",
     "docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md",
@@ -24,7 +24,10 @@
     "reports/p1391-evidence-audit-observability-cost-ledger-report.md",
     "reports/enterprise-readiness-roadmap-report.md",
     "reports/os-phase-status-report.md",
-    "reports/phase-validation-coverage-report.md"
+    "reports/phase-validation-coverage-report.md",
+    "shared/evidenceAuditObservabilityCostLedgerModel.js",
+    "scripts/check-p1392-evidence-audit-observability-cost-ledger.js",
+    "reports/p1392-evidence-audit-observability-cost-ledger-report.md"
   ],
   "forbiddenFiles": [
     "projects/**",
@@ -255,31 +258,189 @@
     {
       "phaseId": "P139.2",
       "title": "Ledger Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Define the read-only enterprise ledger model for evidence, audit/activity, observability, and cost attribution.",
+      "narrowGoal": "Add a read-only evidence, audit, observability, and cost ledger model without adding persistence, runtime writes, provider calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
       "previousPhase": "P139.1",
       "nextPhase": "P139.3",
       "order": 175.2,
       "commandCenterVisible": true,
-      "completedAt": "",
+      "completedAt": "2026-05-30T23:15:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p1392-evidence-audit-observability-cost-ledger",
+        "npm run check:p1391-evidence-audit-observability-cost-ledger",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P139.2 remains planned-only until its own implementation-grade plan, checker, docs/status update, validation, and commit are complete."
-      ]
+        "P139.2 is model-only and read-only.",
+        "Evidence preview, Observability Command Center UX, tests/checker hardening, docs/status closure, and final validation remain planned.",
+        "Ledger writes, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
+      ],
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "28dc465a",
+      "allowedFiles": [
+        "shared/evidenceAuditObservabilityCostLedgerModel.js",
+        "contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json",
+        "docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json",
+        "scripts/check-p1391-evidence-audit-observability-cost-ledger.js",
+        "scripts/check-p1392-evidence-audit-observability-cost-ledger.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "reports/p1391-evidence-audit-observability-cost-ledger-report.md",
+        "reports/p1392-evidence-audit-observability-cost-ledger-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "private-project-roots/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExports": [
+        "EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PHASE",
+        "EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_VERSION",
+        "EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_SAFETY_FLAG_NAMES",
+        "buildEvidenceAuditObservabilityCostLedgerRecord",
+        "validateEvidenceAuditObservabilityCostLedgerRecord",
+        "buildEvidenceAuditObservabilityCostLedgerModel",
+        "validateEvidenceAuditObservabilityCostLedgerModel",
+        "buildEvidenceAuditObservabilityCostLedgerEnvelope"
+      ],
+      "schemas": [
+        "ledgerRecords",
+        "ledgerSummary",
+        "evidenceRefs",
+        "auditRefs",
+        "activityRefs",
+        "observabilityRefs",
+        "costLedgerRecords",
+        "costSummary",
+        "safetyFlags"
+      ],
+      "dataShape": "Read-only ledger model with ledgerRecords, ledgerSummary, evidenceRefs, auditRefs, activityRefs, observabilityRefs, costLedgerRecords, costSummary, redaction, modeGuard, safetyFlags, disabledReason, ownerAgentCapability, nextAction, and costImpact. No live persistence or execution authority is enabled.",
+      "commandCenterUx": "Preserve existing Command Center pages. OS Roadmap may show P139.2 as complete/current and P139.3 as next. No primary UX may expose raw JSON, raw logs, raw policy dumps, raw ledger payloads, project/private raw IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate through existing route-wide Command Center Playwright coverage."
+      ],
+      "safetyRules": [
+        "Do not write ledger records in P139.2.",
+        "Do not write DB/runtime state in P139.2.",
+        "Do not call providers or models in P139.2.",
+        "Do not execute tools, start MCP servers, dispatch agents, mutate project files, apply patches, run project builds/tests, execute rollbacks, deploy, release, export, package, use network calls, or spend in P139.2.",
+        "Do not expose raw/private identifiers, raw JSON, raw logs, raw policy dumps, raw ledger payloads, or fake working actions in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/resultEnvelope.js.",
+        "Reuse shared/modeGuard.js.",
+        "Reuse shared/redaction.js.",
+        "Reuse runtime/evidenceRecord.js.",
+        "Reuse observability/activitySchema.js.",
+        "Reuse cost-center/costLedgerSchema.js.",
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Do not duplicate evidence, activity, cost, report, redaction, mode guard, or result envelope helpers."
+      ],
+      "testsAndCheckers": [
+        "Add P139.2 model checker.",
+        "Update P139.1 checker to accept the P139.2 handoff.",
+        "Update enterprise roadmap checker to accept the P139.2 handoff.",
+        "Run OS phase status, phase validation coverage, dashboard build, dashboard unit, route-wide Command Center Playwright, and git diff validation."
+      ],
+      "docsRoadmap": "Update P139 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase index, package script, and generated reports for P139.2 only.",
+      "phaseStatusUpdate": "P139.2 complete; P139 in progress; previous P139.1; next P139.3 planned-only.",
+      "validationCommands": [
+        "npm run check:p1392-evidence-audit-observability-cost-ledger",
+        "npm run check:p1391-evidence-audit-observability-cost-ledger",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No projects/**, generated-projects/**, private project roots, dashboard/src/**, dashboard/tests/**, db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
+        "No ledger writes, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, patch application, project build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.",
+        "No raw/private IDs, raw JSON/log/policy/ledger dumps, demo leakage, stale labels, fake runnable actions, or unsafe positive claims.",
+        "P139.3 remains planned-only.",
+        "No stale P139.2 pending marker remains after the stamp commit."
+      ],
+      "gitCommands": [
+        "git add <P139.2 allowed files>",
+        "git commit -m \"chore(nexus): implement p1392 evidence audit observability cost ledger\"",
+        "git add <P139.2 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1392 evidence audit observability cost ledger\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "summary": "P139.2 adds a read-only evidence, audit, observability, and cost ledger model with zero-spend, non-runnable records.",
+      "detail": "P139.2 reuses existing evidence record, activity event, cost ledger, redaction, mode guard, and result envelope helpers to normalize traceability metadata without live writes."
     },
     {
       "phaseId": "P139.3",
       "title": "Evidence Preview",
       "status": "planned",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Preview display-safe evidence, audit, observability, and cost attribution packets without live writes.",
+      "narrowGoal": "Render a safe preview of ledger evidence relationships without persistence or execution.",
       "previousPhase": "P139.2",
       "nextPhase": "P139.4",
       "order": 175.3,
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "completedAt": "",
+      "branch": "",
+      "commit": "",
+      "summary": "Planned-only evidence preview for the P139 ledger model.",
+      "detail": "P139.3 will preview evidence/audit/activity/observability/cost linkages without writing ledger records or enabling execution.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned-only.",
+        "No ledger persistence, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ]
     },
     {
       "phaseId": "P139.4",
@@ -326,10 +487,11 @@
       "commandCenterVisible": true
     }
   ],
-  "completedAt": "",
+  "completedAt": "2026-05-30T23:15:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "504a08ad",
+  "commit": "pending-final-commit",
   "checksRun": [
+    "npm run check:p1392-evidence-audit-observability-cost-ledger",
     "npm run check:p1391-evidence-audit-observability-cost-ledger",
     "npm run check:enterprise-readiness-roadmap",
     "npm run check:os-phase-status",
@@ -340,9 +502,9 @@
     "git diff --check"
   ],
   "knownLimitations": [
-    "P139.1 is contract-only.",
-    "P139.2-P139.7 remain planned-only.",
-    "No live ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend is enabled."
+    "P139 is complete through P139.2 only.",
+    "P139.3-P139.7 remain planned-only.",
+    "Ledger writes, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
   ],
   "previousPhase": "P138",
   "nextPhase": "P140",
