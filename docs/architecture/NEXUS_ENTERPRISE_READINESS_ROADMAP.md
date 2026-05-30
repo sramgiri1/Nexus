@@ -47,9 +47,10 @@ P138.5 is now complete as aggregate tests/checkers only.
 P138.6 is now complete as docs/roadmap/status closure only.
 P138.7 is now complete as final validation only. P138 is complete.
 P139.1 is now complete as contract/policy/safety-boundary only.
-P139.2 is now complete as read-only ledger model only. P139 is in progress,
-and P139.3 is the next executable subphase. P139.3-P139.7 and P140-P145
-remain planned-only. They
+P139.2 is now complete as read-only ledger model only.
+P139.3 is now complete as read-only evidence preview only. P139 is in
+progress, and P139.4 is the next executable subphase. P139.4-P139.7 and
+P140-P145 remain planned-only. They
 do not enable secret values, DB writes, provider/model calls, tool execution,
 agent dispatch, project mutation, patch application, build/test execution,
 rollback execution, deploy, release, export, package, network calls, or spend
@@ -141,9 +142,11 @@ P138.5 is now complete as aggregate tests/checkers only.
 P138.6 is now complete as docs/roadmap/status closure only.
 P138.7 is now complete as final validation only. P138 is complete.
 P139.1 is now complete as contract/policy/safety-boundary only.
-P139.2 is now complete as read-only ledger model only. P139 is in progress,
-and P139.3 is the next executable subphase. P139.3-P139.7 and P140-P145 are
-planned-only backlog phases and must not be treated as complete or live.
+P139.2 is now complete as read-only ledger model only.
+P139.3 is now complete as read-only evidence preview only. P139 is in
+progress, and P139.4 is the next executable subphase. P139.4-P139.7 and
+P140-P145 are planned-only backlog phases and must not be treated as complete
+or live.
 
 ## Validation
 
