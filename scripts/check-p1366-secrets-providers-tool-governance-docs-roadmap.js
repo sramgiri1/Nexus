@@ -11,6 +11,7 @@ const PLAN_PATH = "docs/architecture/P136_SECRETS_PROVIDERS_TOOL_GOVERNANCE_PLAN
 const ENTERPRISE_PATH = "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md";
 const PLATFORM_PATH = "docs/architecture/NEXUS_PLATFORM_ROADMAP.md";
 const REQUIRED_SCRIPT = "check:p1366-secrets-providers-tool-governance-docs-roadmap";
+const P1367_SCRIPT = "check:p1367-secrets-providers-tool-governance-final-validation";
 const VALIDATION_COMMANDS = [
   "npm run check:p1366-secrets-providers-tool-governance-docs-roadmap",
   "npm run check:p1365-secrets-providers-tool-governance-tests-checkers",
@@ -114,12 +115,30 @@ const p1366CurrentState =
   && ["P136.1", "P136.2", "P136.3", "P136.4", "P136.5", "P136.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P136.7")?.status === "planned"
   && roadmapById.get("P136.7")?.status === "planned";
+const p1367FinalState =
+  status.currentPhase === "P136.7"
+  && status.previousPhase === "P136.6"
+  && status.nextPhase === "P137"
+  && roadmap.currentPhase === "P136.7"
+  && roadmap.previousPhase === "P136.6"
+  && roadmap.nextPhase === "P137"
+  && status.current?.phaseId === "P136.7"
+  && status.previous?.phaseId === "P136.6"
+  && status.next?.phaseId === "P137"
+  && roadmap.current?.phaseId === "P136.7"
+  && roadmap.previous?.phaseId === "P136.6"
+  && roadmap.next?.phaseId === "P137"
+  && statusById.get("P136")?.status === "complete"
+  && roadmapById.get("P136")?.status === "complete"
+  && ["P136.1", "P136.2", "P136.3", "P136.4", "P136.5", "P136.6", "P136.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P137")?.status === "planned"
+  && roadmapById.get("P137")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[REQUIRED_SCRIPT]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract marks P136.6 complete", contract.status === "in_progress" && contract.currentSubphase === "P136.6" && contract.previousSubphase === "P136.5" && contract.nextSubphase === "P136.7" && p1366.status === "complete" && p1367.status === "planned");
+addCheck("contract marks P136.6 complete", p1366.status === "complete" && ((contract.status === "in_progress" && contract.currentSubphase === "P136.6" && contract.previousSubphase === "P136.5" && contract.nextSubphase === "P136.7" && p1367.status === "planned") || p1367FinalState));
 addCheck("P136.6 records expected base commit", p1366.expectedBaseCommit === "febd58f5");
-addCheck("P136.7 remains planned-only", p1367.status === "planned" && statusById.get("P136.7")?.status === "planned" && roadmapById.get("P136.7")?.status === "planned" && !(statusById.get("P136.7")?.checksRun || []).length);
+addCheck("P136.7 remains planned or final-only", (p1367.status === "planned" && statusById.get("P136.7")?.status === "planned" && roadmapById.get("P136.7")?.status === "planned" && !(statusById.get("P136.7")?.checksRun || []).length) || p1367FinalState);
 addCheck("P136.6 allowed files include docs status and checker files", [
   PLAN_PATH,
   ENTERPRISE_PATH,
@@ -153,12 +172,13 @@ addCheck("P136.1-P136.5 reports pass", [
 ].every((reportPath) => reportPassed(reportPath)));
 addCheck("P136.5 checker accepts P136.6 handoff", p1365Checker.includes("p1366CurrentState") && p1365Checker.includes('status.currentPhase === "P136.6"') && p1365Checker.includes(REQUIRED_SCRIPT));
 addCheck("enterprise checker accepts P136.6", enterpriseChecker.includes("p1366CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
+addCheck("P136.7 checker registered when handed off", !p1367FinalState || Boolean(packageJson.scripts?.[P1367_SCRIPT]));
 addCheck("OS checker recognizes P136.7 handoff", ["P136.5", "P136.6", "P136.7"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
 addCheck("plan records P136.6 implementation", /### P136\.6 Docs \/ Roadmap \/ Status[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P136.6", /P136\.6 secrets\/providers\/tool governance docs\/roadmap/i.test(readme));
-addCheck("platform roadmap records P136.6", /P136\.6 secrets\/providers\/tool governance docs\/roadmap/i.test(platformRoadmap) && /P136\.7\s+Final Validation is planned-only next/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P136.6", /P136\.6 is now complete/i.test(enterpriseRoadmap) && /P136\.7 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advanced", p1366CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("platform roadmap records P136.6", /P136\.6 secrets\/providers\/tool governance docs\/roadmap/i.test(platformRoadmap) && (/P136\.7\s+Final Validation is planned-only next/i.test(platformRoadmap) || /P136\.7 secrets\/providers\/tool governance final validation is complete/i.test(platformRoadmap)));
+addCheck("enterprise roadmap records P136.6", /P136\.6 is now complete/i.test(enterpriseRoadmap) && (/P136\.7 is the next executable subphase/i.test(enterpriseRoadmap) || /P136\.1 through P136\.7\s+are\s+now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status advanced", p1366CurrentState || p1367FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P136.6 entries have required fields", [statusById.get("P136"), statusById.get("P136.6"), roadmapById.get("P136.6")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck("changed files stay in P136.6 allowed scope", status.currentPhase !== "P136.6" || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), status.currentPhase === "P136.6" ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", status.currentPhase !== "P136.6" || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), status.currentPhase === "P136.6" ? changed.join(", ") : `P136.6 forbidden path check relaxed for ${status.currentPhase}`);

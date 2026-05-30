@@ -762,7 +762,8 @@
     "check:p1363-provider-dry-run": "node scripts/check-p1363-provider-dry-run.js",
     "check:p1364-provider-governance-command-center-ux": "node scripts/check-p1364-provider-governance-command-center-ux.js",
     "check:p1365-secrets-providers-tool-governance-tests-checkers": "node scripts/check-p1365-secrets-providers-tool-governance-tests-checkers.js",
-    "check:p1366-secrets-providers-tool-governance-docs-roadmap": "node scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js"
+    "check:p1366-secrets-providers-tool-governance-docs-roadmap": "node scripts/check-p1366-secrets-providers-tool-governance-docs-roadmap.js",
+    "check:p1367-secrets-providers-tool-governance-final-validation": "node scripts/check-p1367-secrets-providers-tool-governance-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

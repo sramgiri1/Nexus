@@ -5,8 +5,8 @@ budgets, approvals, and evidence before any live external execution can be
 considered. The phase is intentionally staged. P136.1 started the contract and
 safety boundary, P136.2 added the read-only governance model, P136.3 added the
 non-runnable dry run, and P136.4 surfaces that posture in Command Center as
-review-only UX. P136.5 adds aggregate tests/checkers hardening, and P136.6
-aligns docs, roadmap, reports, and OS status. P136.7 owns final validation.
+review-only UX. P136.5 adds aggregate tests/checkers hardening, P136.6 aligns
+docs, roadmap, reports, and OS status, and P136.7 closes final validation.
 
 ## Subphases
 
@@ -356,7 +356,7 @@ Tests/checkers and validation:
 
 ### P136.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal:
 - Close P136 with final validation evidence, prior report verification,
@@ -375,6 +375,22 @@ Command Center UX requirements:
   safety.
 
 Tests/checkers and validation:
-- Add `check:p1367-secrets-providers-tool-governance-final-validation`.
+- Added `check:p1367-secrets-providers-tool-governance-final-validation`.
+- Verified P136.1-P136.6 reports, P136.6 checker handoff, enterprise checker
+  handoff, OS status, docs, roadmap, and P137 planned-only handoff.
 - Run full P136 checker chain, enterprise, OS status, phase coverage,
   dashboard build, unit, route-wide Playwright, and `git diff --check`.
+
+Docs/roadmap/status:
+- P136 is complete.
+- P136.1 through P136.7 are complete.
+- Current phase is P136.7.
+- Previous phase is P136.6.
+- Next phase is P137 planned-only.
+
+Known limitations:
+- P136.7 is final validation only. It does not enable secret values,
+  provider/model calls, tool execution, MCP startup, DB/runtime writes, agent
+  dispatch, project mutation, deploy, release, export, package, network calls,
+  or spend.
+- P137 remains planned-only under its own implementation-grade contract.

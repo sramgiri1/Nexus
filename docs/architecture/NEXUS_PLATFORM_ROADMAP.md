@@ -3194,8 +3194,8 @@ remain blocked.
 
 ## P133-P145 Enterprise Readiness Roadmap
 
-P133-P145 are enterprise readiness phases. P133, P134, and P135 are complete,
-and P136 is in progress through P136.6. Later subphases and phases remain
+P133-P145 are enterprise readiness phases. P133, P134, P135, and P136 are
+complete through final validation. Later subphases and phases remain
 planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3205,12 +3205,13 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7 and P136.6. P136.2
+Current implementation is closed through P135.7 and P136.7. P136.2
 secret/provider model is complete, P136.3 provider dry run is complete, and
 P136.4 provider governance Command Center UX is complete. P136.5
 secrets/providers/tool governance tests/checkers is complete. P136.6
 secrets/providers/tool governance docs/roadmap is complete.
-P136.7 and P137-P145 do not enable secret values, DB/runtime writes, live
+P136.7 secrets/providers/tool governance final validation is complete.
+P137-P145 do not enable secret values, DB/runtime writes, live
 CRUD, provider/model calls, tool execution, agent dispatch, project mutation,
 deploy, release, export, package, network calls, or spend.
 
@@ -3429,10 +3430,14 @@ P136.6 secrets/providers/tool governance docs/roadmap is complete. NEXUS now
 has aligned P136 docs, README, enterprise roadmap, platform roadmap, OS phase
 status, phase index, checker handoffs, and validation reports through P136.6
 while preserving the review-only Provider Governance Command Center UX. P136.7
-Final Validation is planned-only next. Secret values, provider/model calls,
-tool execution, MCP server startup, provider payload preparation, agent
-dispatch, DB/runtime writes, project mutation, deploy, release, export,
-package, network calls, and spend remain blocked.
+Final Validation followed next.
+
+P136.7 secrets/providers/tool governance final validation is complete. NEXUS
+now has final P136 closure evidence, prior report verification, checker handoff
+coverage, OS status closure, and P137 planned-only handoff. P137 Agent Work Order Runtime is planned-only next. Secret values, provider/model calls, tool
+execution, MCP server startup, provider payload preparation, agent dispatch,
+DB/runtime writes, project mutation, deploy, release, export, package, network
+calls, and spend remain blocked.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

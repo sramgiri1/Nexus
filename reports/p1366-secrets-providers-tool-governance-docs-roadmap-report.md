@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P136.6
-- Generated at: 2026-05-30T17:38:31.445Z
+- Generated at: 2026-05-30T17:51:43.803Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 790a33d3
+- Validation HEAD: 18e0960a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,22 +21,23 @@
 | checker reuses shared report helpers | PASS |  |
 | contract marks P136.6 complete | PASS |  |
 | P136.6 records expected base commit | PASS |  |
-| P136.7 remains planned-only | PASS |  |
+| P136.7 remains planned or final-only | PASS |  |
 | P136.6 allowed files include docs status and checker files | PASS |  |
 | P136.6 forbids project dashboard db runtime provider tool paths | PASS |  |
 | P136.6 records validation commands | PASS |  |
 | P136.1-P136.5 reports pass | PASS |  |
 | P136.5 checker accepts P136.6 handoff | PASS |  |
 | enterprise checker accepts P136.6 | PASS |  |
+| P136.7 checker registered when handed off | PASS |  |
 | OS checker recognizes P136.7 handoff | PASS |  |
 | plan records P136.6 implementation | PASS |  |
 | README records P136.6 | PASS |  |
 | platform roadmap records P136.6 | PASS |  |
 | enterprise roadmap records P136.6 | PASS |  |
-| phase status advanced | PASS | P136.6/P136.5/P136.7 |
+| phase status advanced | PASS | P136.7/P136.6/P137 |
 | completed P136.6 entries have required fields | PASS |  |
-| changed files stay in P136.6 allowed scope | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p136-secrets-providers-tool-governance-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P136.6 allowed scope | PASS | scope check relaxed for P136.7 |
+| forbidden paths unchanged | PASS | P136.6 forbidden path check relaxed for P136.7 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable provider/tool actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -57,4 +58,4 @@
 - P136.6 is docs/roadmap/status only. It does not create secret stores, provider adapters, model clients, tool executors, MCP servers, approval writers, budget ledgers, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.
 ## Result
 
-PASS (24/24)
+PASS (25/25)
