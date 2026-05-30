@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P134.4
-- Generated at: 2026-05-30T13:43:26.812Z
+- Generated at: 2026-05-30T14:11:14.301Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e1c93ea9
+- Validation HEAD: b028a0b0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,10 +39,10 @@
 | README records P134.4 | PASS |  |
 | platform roadmap records P134.4 | PASS |  |
 | enterprise roadmap records P134.4 | PASS |  |
-| phase status advanced | PASS | P134.5/P134.4/P134.6 |
+| phase status advanced | PASS | P134.7/P134.6/P135 |
 | completed P134.4 entries have required fields | PASS |  |
-| changed files stay in P134.4 allowed scope | PASS | scope check relaxed for P134.5 |
-| forbidden paths unchanged | PASS | P134.4 forbidden path check relaxed for P134.5 |
+| changed files stay in P134.4 allowed scope | PASS | scope check relaxed for P134.7 |
+| forbidden paths unchanged | PASS | P134.4 forbidden path check relaxed for P134.7 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable DB actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |

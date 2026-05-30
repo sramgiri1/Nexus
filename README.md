@@ -2006,8 +2006,8 @@ The Command Center and local operator surface have:
   project build mutation controls, audit/observability/cost, backup/DR,
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
-  roadmap/status entries only; current implementation is closed through P133.7
-  with P134 planned-only next.
+  roadmap/status entries only; current implementation is closed through P134.7
+  with P135 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2093,6 +2093,12 @@ The Command Center and local operator surface have:
   migrations, raw SQL, live CRUD,
   provider/model calls, agent dispatch, project mutation, deploy, release,
   export, package, network calls, and spend remain unavailable.
+- P134.7 durable DB/CRUD final validation: Closed P134 Durable DB and CRUD
+  Runtime with final checker evidence, compatibility gates, docs, roadmap, OS
+  status, phase index, and validation reports. P135 identity, tenant, roles,
+  and permissions is planned-only next; DB/runtime writes, migrations, raw SQL,
+  live CRUD, provider/model calls, agent dispatch, project mutation, deploy,
+  release, export, package, network calls, and spend remain unavailable.
 
 ## CareLoop Project Progress
 

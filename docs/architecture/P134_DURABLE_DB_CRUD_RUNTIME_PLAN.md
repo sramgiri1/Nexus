@@ -443,6 +443,159 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P134.7 Final Validation
+
+Status: complete
+
+Scope classification:
+- NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `b028a0b0`
+
+Narrow goal:
+- Close P134 durable DB/CRUD runtime with final validation evidence, checker
+  handoff compatibility, docs/roadmap/status updates, and a safe planned-only
+  handoff to P135.
+
+Allowed files:
+- `contracts/os-roadmap/p134-durable-db-crud-runtime-contracts.json`
+- `docs/architecture/P134_DURABLE_DB_CRUD_RUNTIME_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1341-durable-db-crud-runtime.js`
+- `scripts/check-p1342-durable-db-crud-runtime-schema-model.js`
+- `scripts/check-p1343-durable-db-crud-runtime-write-plan-preview.js`
+- `scripts/check-p1344-durable-db-crud-runtime-command-center-ux.js`
+- `scripts/check-p1345-durable-db-crud-runtime-tests-checkers.js`
+- `scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js`
+- `scripts/check-p1347-durable-db-crud-runtime-final-validation.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `reports/p1347-durable-db-crud-runtime-final-validation-report.md`
+- regenerated P134.6, enterprise, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- No runtime export, DB schema, migration, repository module, DB adapter,
+  CRUD packet, identity/tenant/RBAC execution, dashboard source, Playwright
+  source, or live execution is added.
+- Add `check:p1347-durable-db-crud-runtime-final-validation` and report.
+- Update only docs, roadmap/status JSON, checker handoff logic, package script,
+  and generated reports.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX.
+- Do not edit dashboard source or Playwright source.
+- Validate UX preservation through route-wide Playwright coverage.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw SQL, raw table names,
+  private project IDs, mutation controls, provider controls, deploy controls,
+  package controls, or spend controls.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through the existing route-wide Playwright suite.
+
+Playwright tests:
+- Do not edit Playwright source in this subphase.
+- Run `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"` to prove UX preservation.
+
+Checker updates:
+- Add `scripts/check-p1347-durable-db-crud-runtime-final-validation.js`.
+- Update P134.1-P134.5 checkers so they remain valid when P134 is closed at
+  P134.7.
+- Update `scripts/check-p1346-durable-db-crud-runtime-docs-roadmap.js`
+  for P134.7 handoff compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P134.7 handoff
+  compatibility.
+- Update `scripts/check-os-phase-status.js` so the P134.7 to P135 handoff is
+  accepted by the OS phase status checker.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update `README.md`.
+- Update `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- Update `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+OS phase status update:
+- P134 is complete.
+- P134.1 through P134.7 complete.
+- Current phase P134.7.
+- Previous phase P134.6.
+- Next phase P135 planned-only.
+
+Validation commands:
+- `npm run check:p1347-durable-db-crud-runtime-final-validation`
+- `npm run check:p1346-durable-db-crud-runtime-docs-roadmap`
+- `npm run check:p1345-durable-db-crud-runtime-tests-checkers`
+- `npm run check:p1344-durable-db-crud-runtime-command-center-ux`
+- `npm run check:p1343-durable-db-crud-runtime-write-plan-preview`
+- `npm run check:p1342-durable-db-crud-runtime-schema-model`
+- `npm run check:p1341-durable-db-crud-runtime`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P134.7 allowed files>`
+- `git commit -m "chore(nexus): implement p1347 db runtime final validation"`
+- `git add <P134.7 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1347 db runtime final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source or Playwright source changes.
+- No `db/**`, `local-state/runtime/**`, provider, tool, worker, deploy,
+  release, export, package, or env changes.
+- DB/runtime writes, live CRUD, migrations, raw SQL UX, provider/model calls,
+  agent dispatch, project mutation, network calls, and spend remain blocked.
+- P135 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P134.4 DB Runtime Command Center UX
 
 Status: complete

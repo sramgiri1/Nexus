@@ -152,10 +152,28 @@ const p1343StartedState =
   && roadmapById.get("P134.3")?.status === "complete"
   && statusById.get("P134.4")?.status === "planned"
   && roadmapById.get("P134.4")?.status === "planned";
+const p1347FinalState =
+  status.currentPhase === "P134.7"
+  && status.previousPhase === "P134.6"
+  && status.nextPhase === "P135"
+  && roadmap.currentPhase === "P134.7"
+  && roadmap.previousPhase === "P134.6"
+  && roadmap.nextPhase === "P135"
+  && status.current?.phaseId === "P134.7"
+  && status.previous?.phaseId === "P134.6"
+  && status.next?.phaseId === "P135"
+  && roadmap.current?.phaseId === "P134.7"
+  && roadmap.previous?.phaseId === "P134.6"
+  && roadmap.next?.phaseId === "P135"
+  && statusById.get("P134")?.status === "complete"
+  && roadmapById.get("P134")?.status === "complete"
+  && ["P134.1", "P134.2", "P134.3", "P134.4", "P134.5", "P134.6", "P134.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P135")?.status === "planned"
+  && roadmapById.get("P135")?.status === "planned";
 
 addCheck("package script registered", Boolean(packageJson.scripts?.[requiredScript]));
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
-addCheck("contract marks P134.2 complete", contract.status === "in_progress" && ((contract.currentSubphase === "P134.2" && contract.previousSubphase === "P134.1" && contract.nextSubphase === "P134.3") || (contract.currentSubphase === "P134.3" && contract.previousSubphase === "P134.2" && contract.nextSubphase === "P134.4")) && p1342.status === "complete");
+addCheck("contract marks P134.2 complete", (contract.status === "in_progress" || contract.status === "complete") && ((contract.currentSubphase === "P134.2" && contract.previousSubphase === "P134.1" && contract.nextSubphase === "P134.3") || (contract.currentSubphase === "P134.3" && contract.previousSubphase === "P134.2" && contract.nextSubphase === "P134.4") || (contract.currentSubphase === "P134.7" && contract.previousSubphase === "P134.6" && contract.nextSubphase === "P135")) && p1342.status === "complete");
 addCheck("P134.2 records expected base commit", p1342.expectedBaseCommit === "21133d6f");
 addCheck("P134.3 remains planned or complete", ["planned", "complete"].includes(p1343.status));
 addCheck("P134.2 allowed files include model and checker", p1342.allowedFiles?.includes(MODEL_PATH) && p1342.allowedFiles?.includes("scripts/check-p1342-durable-db-crud-runtime-schema-model.js"));
@@ -205,7 +223,7 @@ addCheck("plan records P134.2 implementation", /## P134\.2 Schema and Repository
 addCheck("README records P134.2", /P134\.2 durable DB\/CRUD schema model/i.test(readme));
 addCheck("platform roadmap records P134.2", /P134\.2 is complete/i.test(platformRoadmap) && /P134\.3\s+is next/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P134.2", /P134\.2 is now complete/i.test(enterpriseRoadmap) && /P134\.3 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advanced", p1342CurrentState || p1343StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status advanced", p1342CurrentState || p1343StartedState || p1347FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P134.2 entries have required fields", [statusById.get("P134"), statusById.get("P134.2"), roadmapById.get("P134.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
 addCheck("changed files stay in P134.2 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file) || file === REPORT_PATH), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P134.2 forbidden path check relaxed for ${status.currentPhase}`);
