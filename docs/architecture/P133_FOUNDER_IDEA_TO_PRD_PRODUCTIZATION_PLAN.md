@@ -234,6 +234,160 @@ Final response checklist:
 - Known limitations.
 - Next phase/subphase.
 
+## P133.6 Docs / Roadmap / Status
+
+Phase: P133 Founder Idea-to-PRD Productization
+
+Subphase: P133.6
+
+Goal:
+Close the P133 documentation/status layer by verifying README, P133 plan,
+platform roadmap, enterprise roadmap, OS roadmap JSON, status JSON, and
+generated reports all agree that P133.1-P133.6 are complete with P133.7
+planned next.
+
+Why this is needed:
+P133 now has contract, model, preview, UX, and test coverage. Enterprise
+readiness requires consistent operator-facing roadmap/status evidence before
+final validation.
+
+User/operator impact:
+Founders and operators see accurate next-step information: P133.6 complete,
+P133.7 final validation next, and no false live-execution claims.
+
+Command Center impact:
+No production Command Center source changes. Existing Command Center pages are
+preserved.
+
+Safety impact:
+P133.6 is docs/checker/status only. Provider/model calls, live Q&A execution,
+PRD generation execution, agent dispatch, project mutation, DB/runtime writes,
+deploy, release, export, package, network calls, and spend remain blocked.
+
+Cost impact:
+No provider calls, model calls, network calls, runtime execution, DB writes,
+deploy/package creation, or provider spend.
+
+Project/OS scope:
+NEXUS_OS_CHANGE. NEXUS OS docs/checker/status files only.
+
+Files expected to change:
+- `scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js`
+- P133.1-P133.5 checker compatibility files
+- P132.7 and enterprise roadmap compatibility checkers
+- `package.json`
+- P133 contract, docs, README, platform/enterprise roadmap
+- OS status/roadmap JSON and generated reports
+
+Files forbidden to change:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Tests to add/update/remove:
+- Add P133.6 docs/roadmap/status checker.
+- Update P133.1-P133.5, P132.7, and enterprise checkers for P133.6
+  compatibility.
+- Do not edit Playwright tests or Command Center production source.
+- Rerun existing route-wide Command Center Playwright coverage.
+
+Docs to update:
+- This P133 plan.
+- `README.md`.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`.
+
+Reports to regenerate:
+- `reports/p1336-founder-idea-to-prd-docs-roadmap-report.md`
+- `reports/p1335-founder-idea-to-prd-tests-checkers-report.md`
+- `reports/p1334-command-center-idea-to-prd-ux-report.md`
+- `reports/p1333-founder-idea-to-prd-preview-report.md`
+- `reports/p1332-founder-idea-to-prd-model-report.md`
+- `reports/p1331-founder-idea-to-prd-productization-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/p1327-founder-runtime-store-live-admission-execution-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update:
+- P133 remains in progress.
+- P133.6 complete.
+- Current phase P133.6.
+- Previous phase P133.5.
+- Next phase P133.7 planned-only.
+
+Known risks:
+- Docs/status drift can make Command Center roadmap labels misleading. P133.6
+  adds a checker to keep docs, status JSON, and generated reports aligned.
+- Docs can overstate live capability. P133.6 keeps all live execution claims
+  explicitly blocked.
+
+Rollback plan:
+- Revert only the P133.6 implementation and status stamp commits. P133.5
+  remains the complete pushed baseline.
+
+Validation commands:
+- `npm run check:p1336-founder-idea-to-prd-docs-roadmap`
+- `npm run check:p1335-founder-idea-to-prd-tests-checkers`
+- `npm run check:p1334-command-center-idea-to-prd-ux`
+- `npm run check:p1333-founder-idea-to-prd-preview`
+- `npm run check:p1332-founder-idea-to-prd-model`
+- `npm run check:p1331-founder-idea-to-prd-productization`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:p1327-founder-runtime-store-live-admission-execution`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+- `git add <P133.6 allowed files>`
+- `git commit -m "chore(nexus): implement p1336 idea to prd docs roadmap"`
+- `git add <P133.6 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1336 idea to prd docs roadmap"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final safety checks:
+- No `projects/**`, `careloop/**`, or `generated-projects/**` changes.
+- No dashboard source/test changes.
+- No DB, runtime, provider, tool, worker, deploy, release, export, package, or
+  env changes.
+- Provider/model calls, live PRD generation, agent dispatch, project mutation,
+  DB/runtime writes, deploy, release, export, package, network calls, and spend
+  remain blocked.
+- P133.7 remains planned-only.
+- No stale `pending-final-commit` remains after the status stamp commit.
+
+Final response checklist:
+- Branch name.
+- Commit hash.
+- Files changed.
+- What was implemented.
+- Command Center UX preservation.
+- Tests/checkers run.
+- Dashboard build/unit/page results.
+- Docs/README/roadmap updates.
+- OS phase status update.
+- Evidence/report records.
+- Safety confirmations.
+- Forbidden paths confirmation.
+- Known limitations.
+- Next phase/subphase.
+
 ## P133.5 Tests / Checkers
 
 Phase: P133 Founder Idea-to-PRD Productization

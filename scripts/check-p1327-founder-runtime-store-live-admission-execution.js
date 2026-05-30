@@ -260,7 +260,29 @@ const p1335CompleteState =
   && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P133.6")?.status === "planned"
   && roadmapById.get("P133.6")?.status === "planned";
-const p133SafeProgressState = p1331StartedState || p1332CompleteState || p1333CompleteState || p1334CompleteState || p1335CompleteState;
+const p1336CompleteState =
+  status.currentPhase === "P133.6"
+  && status.previousPhase === "P133.5"
+  && status.nextPhase === "P133.7"
+  && roadmap.currentPhase === "P133.6"
+  && roadmap.previousPhase === "P133.5"
+  && roadmap.nextPhase === "P133.7"
+  && status.current?.phaseId === "P133.6"
+  && status.previous?.phaseId === "P133.5"
+  && status.next?.phaseId === "P133.7"
+  && roadmap.current?.phaseId === "P133.6"
+  && roadmap.previous?.phaseId === "P133.5"
+  && roadmap.next?.phaseId === "P133.7"
+  && statusById.get("P132")?.status === "complete"
+  && roadmapById.get("P132")?.status === "complete"
+  && statusById.get("P132.7")?.status === "complete"
+  && roadmapById.get("P132.7")?.status === "complete"
+  && statusById.get("P133")?.status === "in_progress"
+  && roadmapById.get("P133")?.status === "in_progress"
+  && ["P133.1", "P133.2", "P133.3", "P133.4", "P133.5", "P133.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P133.7")?.status === "planned"
+  && roadmapById.get("P133.7")?.status === "planned";
+const p133SafeProgressState = p1331StartedState || p1332CompleteState || p1333CompleteState || p1334CompleteState || p1335CompleteState || p1336CompleteState;
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("contract marks P132 final", contract.status === "complete" && contract.currentSubphase === "P132.7" && contract.previousSubphase === "P132.6" && contract.nextSubphase === "P133" && p1327.status === "complete");

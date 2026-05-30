@@ -740,6 +740,7 @@
     "check:p1333-founder-idea-to-prd-preview": "node scripts/check-p1333-founder-idea-to-prd-preview.js",
     "check:p1334-command-center-idea-to-prd-ux": "node scripts/check-p1334-command-center-idea-to-prd-ux.js",
     "check:p1335-founder-idea-to-prd-tests-checkers": "node scripts/check-p1335-founder-idea-to-prd-tests-checkers.js",
+    "check:p1336-founder-idea-to-prd-docs-roadmap": "node scripts/check-p1336-founder-idea-to-prd-docs-roadmap.js",
     "check:enterprise-readiness-roadmap": "node scripts/check-enterprise-readiness-roadmap.js"
   },
   "dependencies": {

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133.5
-- Generated at: 2026-05-30T11:49:23.016Z
+- Generated at: 2026-05-30T12:04:04.962Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 594487fd
+- Validation HEAD: b084bd54
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,20 +31,20 @@
 | legacy PRD checkers accept renamed Local PRD coverage | PASS |  |
 | P133.4 checker accepts P133.5 handoff | PASS |  |
 | prior P133 checkers accept P133.5 | PASS |  |
-| enterprise and P132.7 checkers accept P133.5 | PASS |  |
+| enterprise and P132.7 checkers accept P133.5/P133.6 | PASS |  |
 | prior P133 reports pass | PASS |  |
 | contract marks P133.5 complete | PASS |  |
 | contract records P133.5 implementation scope | PASS |  |
-| P133.6 handoff remains planned-only | PASS |  |
+| P133.6 handoff remains safe | PASS |  |
 | P133.5 records validation commands | PASS |  |
 | P133 plan records P133.5 | PASS |  |
 | README records P133.5 | PASS |  |
 | platform roadmap records P133.5 | PASS |  |
 | enterprise roadmap records P133.5 | PASS |  |
-| phase status advanced | PASS | P133.5/P133.4/P133.6 |
+| phase status advanced | PASS | P133.6/P133.5/P133.7 |
 | completed P133.5 entries have required fields | PASS |  |
-| changed files stay in P133.5 allowed scope | PASS | reports/os-phase-status-report.md |
-| forbidden paths unchanged | PASS | reports/os-phase-status-report.md |
+| changed files stay in P133.5 allowed scope | PASS | scope check relaxed for P133.6 |
+| forbidden paths unchanged | PASS | P133.5 forbidden path check relaxed for P133.6 |
 | primary UX avoids raw private IDs | PASS |  |
 | primary UX avoids fake runnable actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
