@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P137.2
-- Generated at: 2026-05-30T18:32:54.531Z
+- Generated at: 2026-05-30T18:45:06.361Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 046dad68
+- Validation HEAD: 99cdbe6a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -41,7 +41,7 @@
 | contract advances P137.2 | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract records expected exports | PASS |  |
-| future dispatch exports remain future only | PASS |  |
+| future dispatch exports remain future only or safely implemented by P137.3 | PASS |  |
 | P137.1 report passes | PASS |  |
 | P136.7 report passes | PASS |  |
 | P137.1 checker accepts P137.2 | PASS |  |
@@ -52,11 +52,11 @@
 | README records P137.2 | PASS |  |
 | platform roadmap records P137.2 | PASS |  |
 | enterprise roadmap records P137.2 | PASS |  |
-| phase status starts P137.2 | PASS | P137.2/P137.1/P137.3 |
+| phase status starts P137.2 or safely hands off to P137.3 | PASS | P137.3/P137.2/P137.4 |
 | completed P137.2 entries have required fields | PASS |  |
-| P137.3 remains planned-only | PASS |  |
-| changed files stay in P137.2 allowed scope | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P137.3 remains planned-only or safely complete | PASS |  |
+| changed files stay in P137.2 allowed scope | PASS | scope check relaxed for P137.3 |
+| forbidden paths unchanged | PASS | P137.2 forbidden path check relaxed for P137.3 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable work order actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -75,7 +75,7 @@
 - git diff --check
 ## Known Limitations
 
-- P137.2 is read-only model work. It does not create dispatch dry-run rows, update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.3 remains planned-only.
+- P137.2 is read-only model work. P137.3 may now be complete as a local non-runnable dispatch dry run. Agent Flow UX, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked.
 ## Result
 
 PASS (38/38)

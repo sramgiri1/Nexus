@@ -34,7 +34,8 @@ P136.7 is now complete as final validation only. P136.1 through P136.7 are
 now complete, and P136 is complete.
 P137.1 is now complete as contract/policy/safety-boundary only.
 P137.2 is now complete as read-only scoped work order model only.
-P137.3 is the next executable subphase. P137.3 and P138-P145 remain
+P137.3 is now complete as a local non-runnable dispatch dry run only.
+P137.4 is the next executable subphase. P137.4 and P138-P145 remain
 planned-only. They do not enable secret values, DB writes, provider/model
 calls, tool execution, agent dispatch, project mutation, deploy, release,
 export, package, network calls, or spend until each phase/subphase has its own
@@ -113,7 +114,8 @@ P136.7 is now complete as final validation only. P136.1 through P136.7 are
 now complete, and P136 is complete.
 P137.1 is now complete as contract/policy/safety-boundary only.
 P137.2 is now complete as read-only scoped work order model only.
-P137.3 is the next executable subphase. P137.3 and P138-P145 are planned-only
+P137.3 is now complete as a local non-runnable dispatch dry run only.
+P137.4 is the next executable subphase. P137.4 and P138-P145 are planned-only
 backlog phases and must not be treated as complete or live.
 
 ## Validation

@@ -318,13 +318,161 @@ Final response checklist:
 
 ### P137.3 Dispatch Dry Run
 
-Status: planned
+Status: complete
 
-- Build non-runnable dispatch dry-run rows that explain candidate work orders,
-  blockers, budget/policy limits, selected context, evidence, owner, disabled
-  reason, and next action.
-- No runnable agent dispatch, tool execution, model calls, network calls,
-  project mutation, DB/runtime writes, or spend.
+Narrow goal:
+- Create a local, non-runnable agent work order dispatch dry run from the
+  P137.2 scoped runtime model without dispatching agents or loading full
+  registries.
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `99cdbe6a`
+
+Allowed files:
+- `shared/agentWorkOrderRuntimeModel.js`
+- `contracts/os-roadmap/p137-agent-work-order-runtime-contracts.json`
+- `docs/architecture/P137_AGENT_WORK_ORDER_RUNTIME_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `package.json`
+- `scripts/check-p1373-agent-work-order-runtime.js`
+- `scripts/check-p1372-agent-work-order-runtime.js`
+- `scripts/check-p1371-agent-work-order-runtime.js`
+- `scripts/check-p1367-secrets-providers-tool-governance-final-validation.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- P137.3, P137.2, P137.1, P136.7, enterprise, OS status, and phase coverage
+  reports
+
+Forbidden files:
+- `projects/**`
+- `project-specific app/**`
+- `generated-projects/**`
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules created or updated:
+- Update `shared/agentWorkOrderRuntimeModel.js` with the P137.3 dry-run
+  builders and validator.
+- Add `scripts/check-p1373-agent-work-order-runtime.js`.
+- Update P137.2, P137.1, and P136.7 handoff checkers.
+- Update enterprise and OS phase checkers.
+- Update P137 contract, this plan, README, platform roadmap, enterprise
+  roadmap, package script, OS phase status, phase index, and generated reports.
+
+Expected exports, schemas, and data shapes:
+- `AGENT_WORK_ORDER_DISPATCH_DRY_RUN_PHASE`
+- `buildAgentWorkOrderDispatchDryRun`
+- `validateAgentWorkOrderDispatchDryRun`
+- `buildAgentWorkOrderDispatchDryRunEnvelope`
+- Data shape: phase, version, source model state, dispatch summary, dispatch
+  rows, gate rows, blocked authority rows, scoped context refs, evidence refs,
+  audit refs, activity refs, owner agent/capability, next action, blockers,
+  disabled reason, cost impact, redaction summary, candidate counts, null
+  provider/tool/executable/runtime payloads, command center visibility, and
+  all-false safety flags.
+- The dry run is display-safe and non-runnable. It does not create dispatch
+  requests, provider payloads, tool payloads, executable commands, DB/runtime
+  writes, project mutations, deploy/release/export/package actions, network
+  calls, or spend.
+
+Command Center UX requirements:
+- Preserve existing Command Center UX and route-wide navigation.
+- Do not edit dashboard source in P137.3.
+- P137.4 owns model-to-Agent-Flow UX wiring.
+- Primary UX must not show raw JSON, raw logs, raw policy dumps, raw registry
+  dumps, raw private IDs, fake runnable actions, dispatch controls, mutation
+  controls, deploy controls, package controls, or spend controls.
+
+Dark/light/system theme requirements:
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate with existing route-wide Command Center Playwright coverage.
+
+Playwright tests:
+- No Playwright source update in P137.3 because no dashboard source changes.
+- Run existing route-wide Command Center coverage.
+- P137.4 must add focused Agent Flow UX coverage for the dry-run display.
+
+Checker updates:
+- Add `check:p1373-agent-work-order-runtime`.
+- Update P137.2, P137.1, and P136.7 checkers for P137.3 handoff
+  compatibility.
+- Update enterprise readiness checker for P137.3 active state.
+- Update OS phase status checker for P137.4 handoff ID.
+
+Docs/README/roadmap updates:
+- Update this plan.
+- Update README current implementation notes.
+- Update platform and enterprise roadmaps.
+- Update P137 OS phase status/index.
+
+OS phase status update:
+- P137 remains in progress.
+- P137.3 complete.
+- Current phase is P137.3.
+- Previous phase is P137.2.
+- Next phase is P137.4 planned-only.
+
+Validation commands:
+- `npm run check:p1373-agent-work-order-runtime`
+- `npm run check:p1372-agent-work-order-runtime`
+- `npm run check:p1371-agent-work-order-runtime`
+- `npm run check:p1367-secrets-providers-tool-governance-final-validation`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No forbidden paths changed.
+- No full registry/context loading into model context.
+- No provider/model calls, tool execution, MCP startup, agent dispatch,
+  DB/runtime writes, project mutation, network calls, deploy, release, export,
+  package, or spend.
+- P137.4 remains planned-only.
+- No stale implementation commit marker remains after status stamp.
+
+Git add/commit/push commands:
+- `git add <P137.3 allowed files>`
+- `git commit -m "chore(nexus): implement p1373 agent work order dry run"`
+- `git add <P137.3 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1373 agent work order dry run"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX preservation
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ### P137.4 Agent Flow Command Center UX
 

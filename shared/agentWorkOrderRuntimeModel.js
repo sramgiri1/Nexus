@@ -5,6 +5,7 @@ import { summarizeRedaction } from "./redaction.js";
 import { createPassResult, validateResultEnvelope } from "./resultEnvelope.js";
 
 export const AGENT_WORK_ORDER_RUNTIME_PHASE = "P137.2";
+export const AGENT_WORK_ORDER_DISPATCH_DRY_RUN_PHASE = "P137.3";
 export const AGENT_WORK_ORDER_RUNTIME_VERSION = "1.0";
 
 export const AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES = Object.freeze([
@@ -44,6 +45,8 @@ export const AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES = Object.freeze([
 
 const OWNER_CAPABILITY = "NEXUS Agent Work Order Runtime Guard";
 const DISABLED_REASON = "P137.2 defines read-only scoped agent work order packets. Provider/model calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project mutation, deploy, release, export, package, network calls, and spend remain blocked.";
+const DISPATCH_DRY_RUN_OWNER = "NEXUS Agent Work Order Dispatch Dry Run";
+const DISPATCH_DRY_RUN_DISABLED_REASON = "P137.3 is a non-runnable dispatch dry run. It prepares no provider payload, tool payload, executable command, runtime dispatch request, DB/runtime write, project mutation, deploy, release, export, package, network call, or spend.";
 const DEFAULT_FOUNDER_IDEA = "Founder wants NEXUS to validate a startup idea, draft a PRD, and map governed agent work without live execution.";
 
 function blockedSafetyFlags() {
@@ -259,6 +262,113 @@ function buildWorkOrderPackets(workOrdersData = {}, admissionData = {}) {
   });
 }
 
+function buildDispatchDryRunRows(runtimeModel = {}) {
+  return (runtimeModel.workOrderPackets || []).map((packet, index) => ({
+    dryRunHandle: `agent-work-order-dispatch-dry-run-${index + 1}`,
+    packetLabel: packet.packetLabel,
+    proposedDispatchLane: packet.proposedAgent,
+    taskSummary: packet.taskSummary,
+    dispatchPosition: index + 1,
+    dispatchState: "dry_run_ready_dispatch_blocked",
+    dryRunReady: true,
+    selectedContextRefs: [...AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES],
+    ownerAgentCapability: packet.ownerAgentCapability || DISPATCH_DRY_RUN_OWNER,
+    nextAction: "Review this dry-run row in P137.4 Agent Flow before any future explicit dispatch authority.",
+    blockers: [
+      packet.blocker || "Agent dispatch remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Tool execution and MCP startup remain blocked.",
+      "DB/runtime writes and project mutation remain blocked.",
+      "Deploy, release, export, package, network calls, and spend remain blocked.",
+    ],
+    disabledReason: DISPATCH_DRY_RUN_DISABLED_REASON,
+    evidenceRefs: [...new Set(["reports/p1373-agent-work-order-runtime-report.md", ...(packet.evidenceRefs || [])])],
+    auditRefs: ["reports/p1373-agent-work-order-runtime-report.md"],
+    activityLocation: packet.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: packet.costImpact || "No provider spend.",
+    providerPayload: null,
+    toolPayload: null,
+    executableCommand: null,
+    runtimeDispatchRequest: null,
+    dispatchAllowed: false,
+    executionAllowed: false,
+    toolExecutionAllowed: false,
+    providerCallsAllowed: false,
+    modelCallsAllowed: false,
+    mcpServerStartupAllowed: false,
+    dbRuntimeWritesAllowed: false,
+    projectMutationAllowed: false,
+    networkCallsAllowed: false,
+    spendAllowed: false,
+    fullRegistryLoaded: false,
+  }));
+}
+
+function buildDispatchGateRows(runtimeModel = {}) {
+  return [
+    {
+      gateLabel: "Scoped context packet",
+      currentState: "dry-run evidence ready",
+      requiredBeforeDispatch: true,
+      satisfiedForDryRun: runtimeModel.packetCount > 0,
+      liveAuthoritySatisfied: false,
+      bypassAllowed: false,
+      nextAction: "Keep agent context limited to selected task, project, memory, trusted context, skill/tool, budget, policy, and evidence fields.",
+      disabledReason: "Scoped packet readiness does not grant dispatch or execution authority.",
+    },
+    {
+      gateLabel: "Provider and model boundary",
+      currentState: "blocked",
+      requiredBeforeDispatch: true,
+      satisfiedForDryRun: true,
+      liveAuthoritySatisfied: false,
+      bypassAllowed: false,
+      nextAction: "Keep provider/model calls blocked until a later explicit authority phase.",
+      disabledReason: "Provider/model calls are not enabled by P137.3.",
+    },
+    {
+      gateLabel: "Tool and MCP boundary",
+      currentState: "blocked",
+      requiredBeforeDispatch: true,
+      satisfiedForDryRun: true,
+      liveAuthoritySatisfied: false,
+      bypassAllowed: false,
+      nextAction: "Keep tool execution and MCP startup blocked until a later explicit authority phase.",
+      disabledReason: "Tool execution and MCP startup are not enabled by P137.3.",
+    },
+    {
+      gateLabel: "Runtime and project mutation boundary",
+      currentState: "blocked",
+      requiredBeforeDispatch: true,
+      satisfiedForDryRun: true,
+      liveAuthoritySatisfied: false,
+      bypassAllowed: false,
+      nextAction: "Keep DB/runtime writes and project mutation blocked until a later explicit authority phase.",
+      disabledReason: "DB/runtime writes and project mutation are not enabled by P137.3.",
+    },
+    {
+      gateLabel: "Cost and release boundary",
+      currentState: "blocked",
+      requiredBeforeDispatch: true,
+      satisfiedForDryRun: true,
+      liveAuthoritySatisfied: false,
+      bypassAllowed: false,
+      nextAction: "Keep deploy, release, export, package, network, and spend authority blocked.",
+      disabledReason: "Deploy, release, export, package, network calls, and spend are not enabled by P137.3.",
+    },
+  ];
+}
+
+function buildBlockedAuthorityRows() {
+  return AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES.map((flag) => ({
+    authorityFlag: flag,
+    currentState: "blocked",
+    allowed: false,
+    candidateCount: 0,
+    disabledReason: DISPATCH_DRY_RUN_DISABLED_REASON,
+  }));
+}
+
 export function buildAgentWorkOrderRuntimeModel(input = {}) {
   const founderIdeaSummary = normalizeFounderIdea(input.founderIdeaSummary);
   const modeGuard = buildModeGuardResult(input.mode || "public-safe", ["public-safe", "test", "local-private"]);
@@ -344,6 +454,105 @@ export function buildAgentWorkOrderRuntimeModel(input = {}) {
   };
 }
 
+export function buildAgentWorkOrderDispatchDryRun(input = {}) {
+  const runtimeModel = input.runtimeModel || buildAgentWorkOrderRuntimeModel(input);
+  const sourceValidation = validateAgentWorkOrderRuntimeModel(runtimeModel);
+  const dispatchRows = sourceValidation.valid ? buildDispatchDryRunRows(runtimeModel) : [];
+  const gateRows = buildDispatchGateRows(runtimeModel);
+  const blockedAuthorityRows = buildBlockedAuthorityRows();
+  const dryRunPayload = {
+    dispatchRows,
+    gateRows,
+    blockedAuthorityRows,
+  };
+  const redactionSummary = summarizeRedaction(dryRunPayload);
+
+  return {
+    phase: AGENT_WORK_ORDER_DISPATCH_DRY_RUN_PHASE,
+    version: AGENT_WORK_ORDER_RUNTIME_VERSION,
+    sourceModelPhase: runtimeModel.phase,
+    sourceModelVersion: runtimeModel.version,
+    sourceModelValidation: sourceValidation.valid ? "valid" : "invalid",
+    sourceModelErrors: [...sourceValidation.errors],
+    mode: "agent-work-order-dispatch-dry-run",
+    dryRunOnly: true,
+    nonRunnable: true,
+    localOnly: true,
+    commandCenterVisible: true,
+    currentState: sourceValidation.valid
+      ? "dispatch_dry_run_ready_dispatch_blocked"
+      : "dispatch_dry_run_blocked_invalid_source_model",
+    runtimeOwnsFullRegistries: true,
+    agentReceivesOnly: [...AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES],
+    dispatchSummary: {
+      dryRunReady: sourceValidation.valid,
+      sourcePacketCount: runtimeModel.packetCount || 0,
+      dryRunCandidateCount: dispatchRows.length,
+      blockedDryRunCandidateCount: dispatchRows.length,
+      dispatchableCandidateCount: 0,
+      executableCandidateCount: 0,
+      providerCallCandidateCount: 0,
+      modelCallCandidateCount: 0,
+      toolExecutionCandidateCount: 0,
+      mcpStartupCandidateCount: 0,
+      dbRuntimeWriteCandidateCount: 0,
+      projectMutationCandidateCount: 0,
+      networkCallCandidateCount: 0,
+      providerSpendCandidateCount: 0,
+    },
+    dispatchRows,
+    gateRows,
+    blockedAuthorityRows,
+    evidenceRefs: [
+      "reports/p1373-agent-work-order-runtime-report.md",
+      ...(runtimeModel.evidenceRefs || []),
+    ],
+    auditRefs: [
+      "reports/p1373-agent-work-order-runtime-report.md",
+      ...(runtimeModel.auditRefs || []),
+    ],
+    activityRefs: runtimeModel.activityRefs || ["reports/os-phase-status-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    ownerAgentCapability: DISPATCH_DRY_RUN_OWNER,
+    nextAction: "Route this dry run to P137.4 Agent Flow UX without dispatching agents.",
+    blockers: [
+      "P137.3 dry-run rows are local and non-runnable.",
+      "Agent dispatch remains blocked.",
+      "Provider/model calls remain blocked.",
+      "Tool execution and MCP startup remain blocked.",
+      "DB/runtime writes and project mutation remain blocked.",
+      "Deploy, release, export, package, network calls, and spend remain blocked.",
+    ],
+    disabledReason: DISPATCH_DRY_RUN_DISABLED_REASON,
+    costImpact: "Zero-spend dispatch dry run. No provider calls, model calls, tool execution, network calls, deploy, package creation, or provider spend.",
+    providerPayload: null,
+    toolPayload: null,
+    executableCommand: null,
+    runtimeDispatchRequest: null,
+    redaction: {
+      changed: redactionSummary.changed,
+      redactionCount: redactionSummary.redactionCount,
+    },
+    safetyFlags: blockedSafetyFlags(),
+    candidateCounts: {
+      providerCallCandidates: 0,
+      modelCallCandidates: 0,
+      toolExecutionCandidates: 0,
+      mcpStartupCandidates: 0,
+      dbRuntimeWriteCandidates: 0,
+      agentDispatchCandidates: 0,
+      projectMutationCandidates: 0,
+      deployCandidates: 0,
+      releaseCandidates: 0,
+      exportCandidates: 0,
+      packageCandidates: 0,
+      networkCallCandidates: 0,
+      providerSpendCandidates: 0,
+    },
+    ...blockedSafetyFlags(),
+  };
+}
+
 export function validateAgentWorkOrderRuntimeModel(model = {}) {
   const errors = [];
   if (model.phase !== AGENT_WORK_ORDER_RUNTIME_PHASE) errors.push("phase must be P137.2");
@@ -391,6 +600,73 @@ export function validateAgentWorkOrderRuntimeModel(model = {}) {
   return { valid: errors.length === 0, errors };
 }
 
+export function validateAgentWorkOrderDispatchDryRun(dryRun = {}) {
+  const errors = [];
+  if (dryRun.phase !== AGENT_WORK_ORDER_DISPATCH_DRY_RUN_PHASE) errors.push("phase must be P137.3");
+  if (dryRun.version !== AGENT_WORK_ORDER_RUNTIME_VERSION) errors.push("version must be 1.0");
+  if (dryRun.sourceModelPhase !== AGENT_WORK_ORDER_RUNTIME_PHASE) errors.push("source model phase must be P137.2");
+  if (dryRun.sourceModelValidation !== "valid" || dryRun.sourceModelErrors?.length !== 0) errors.push("source model must validate");
+  if (dryRun.mode !== "agent-work-order-dispatch-dry-run") errors.push("mode must be agent-work-order-dispatch-dry-run");
+  if (dryRun.dryRunOnly !== true || dryRun.nonRunnable !== true || dryRun.localOnly !== true) errors.push("dry run must be local and non-runnable");
+  if (dryRun.commandCenterVisible !== true) errors.push("commandCenterVisible must be true");
+  if (dryRun.runtimeOwnsFullRegistries !== true) errors.push("runtime must own full registries");
+  if (!Array.isArray(dryRun.agentReceivesOnly) || !AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES.every((name) => dryRun.agentReceivesOnly.includes(name))) {
+    errors.push("agentReceivesOnly must include scoped packet names");
+  }
+  if (dryRun.dispatchSummary?.dryRunReady !== true) errors.push("dispatch dry run must be ready only when source model validates");
+  if (dryRun.dispatchSummary?.sourcePacketCount !== dryRun.dispatchRows?.length) errors.push("dry-run row count must match source packets");
+  for (const countField of [
+    "dispatchableCandidateCount",
+    "executableCandidateCount",
+    "providerCallCandidateCount",
+    "modelCallCandidateCount",
+    "toolExecutionCandidateCount",
+    "mcpStartupCandidateCount",
+    "dbRuntimeWriteCandidateCount",
+    "projectMutationCandidateCount",
+    "networkCallCandidateCount",
+    "providerSpendCandidateCount",
+  ]) {
+    if (dryRun.dispatchSummary?.[countField] !== 0) errors.push(`${countField} must be 0`);
+  }
+  if (!Array.isArray(dryRun.dispatchRows) || dryRun.dispatchRows.length < 5) errors.push("dispatchRows must cover source work-order packets");
+  for (const row of dryRun.dispatchRows || []) {
+    for (const field of ["dryRunHandle", "packetLabel", "proposedDispatchLane", "taskSummary", "dispatchPosition", "dispatchState", "selectedContextRefs", "ownerAgentCapability", "nextAction", "blockers", "disabledReason", "evidenceRefs", "auditRefs", "activityLocation", "costImpact"]) {
+      if (!(field in row)) errors.push(`${row.packetLabel || "dispatch row"}.${field} missing`);
+    }
+    if (!AGENT_WORK_ORDER_CONTEXT_LIMIT_NAMES.every((name) => row.selectedContextRefs?.includes(name))) errors.push(`${row.packetLabel || "dispatch row"} missing scoped context refs`);
+    if (row.dispatchState !== "dry_run_ready_dispatch_blocked" || row.dryRunReady !== true) errors.push(`${row.packetLabel || "dispatch row"} must remain blocked dry-run ready`);
+    if (row.providerPayload !== null || row.toolPayload !== null || row.executableCommand !== null || row.runtimeDispatchRequest !== null) errors.push(`${row.packetLabel || "dispatch row"} payloads and runtime request must be null`);
+    for (const flag of ["dispatchAllowed", "executionAllowed", "toolExecutionAllowed", "providerCallsAllowed", "modelCallsAllowed", "mcpServerStartupAllowed", "dbRuntimeWritesAllowed", "projectMutationAllowed", "networkCallsAllowed", "spendAllowed", "fullRegistryLoaded"]) {
+      if (row[flag] !== false) errors.push(`${row.packetLabel || "dispatch row"}.${flag} must be false`);
+    }
+  }
+  if (!Array.isArray(dryRun.gateRows) || dryRun.gateRows.length < 5) errors.push("gateRows must describe dispatch gates");
+  for (const gate of dryRun.gateRows || []) {
+    if (gate.liveAuthoritySatisfied !== false || gate.bypassAllowed !== false) errors.push(`${gate.gateLabel || "gate"}.live authority and bypass must remain false`);
+  }
+  if (!Array.isArray(dryRun.blockedAuthorityRows) || dryRun.blockedAuthorityRows.length !== AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES.length) errors.push("blockedAuthorityRows must cover safety flags");
+  for (const row of dryRun.blockedAuthorityRows || []) {
+    if (row.allowed !== false || row.candidateCount !== 0 || row.currentState !== "blocked") errors.push(`${row.authorityFlag || "authority"}.authority must remain blocked`);
+  }
+  for (const flag of AGENT_WORK_ORDER_RUNTIME_SAFETY_FLAG_NAMES) {
+    if (dryRun[flag] !== false) errors.push(`${flag} must be false`);
+    if (dryRun.safetyFlags?.[flag] !== false) errors.push(`safetyFlags.${flag} must be false`);
+  }
+  if (Object.values(dryRun.candidateCounts || {}).some((value) => value !== 0)) errors.push("all authority candidate counts must remain zero");
+  if (!Array.isArray(dryRun.evidenceRefs) || !Array.isArray(dryRun.auditRefs) || !Array.isArray(dryRun.activityRefs)) errors.push("evidenceRefs, auditRefs, and activityRefs must be arrays");
+  if (!dryRun.ownerAgentCapability || !dryRun.nextAction || !dryRun.disabledReason || !dryRun.costImpact) errors.push("operator-facing summary fields are required");
+  if (dryRun.providerPayload !== null || dryRun.toolPayload !== null || dryRun.executableCommand !== null || dryRun.runtimeDispatchRequest !== null) errors.push("top-level payloads and runtime request must be null");
+  if (typeof dryRun.redaction?.changed !== "boolean" || typeof dryRun.redaction?.redactionCount !== "number") errors.push("dry-run redaction summary is required");
+
+  const serialized = JSON.stringify(dryRun);
+  if (/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("dry run must not expose raw private IDs");
+  if (/Bearer\s+|sk-[A-Za-z0-9]|DATABASE_URL|postgres(?:ql)?:\/\/|sqliteEntity|recordRef|requestKey/i.test(serialized)) errors.push("dry run must not expose tokens, DB URLs, DB table names, or record keys");
+  if (/dispatch agent now|run agent now|execute work order now|execute tool now|call provider now|call model now|write db now|mutate project now|deploy now|export now|package now|spend now/i.test(serialized)) errors.push("dry run must not expose fake runnable work-order actions");
+  if (/raw JSON|raw logs|raw policy dump|raw registry dump|raw memory dump|raw tool dump/i.test(serialized)) errors.push("dry run must not expose raw dumps");
+  return { valid: errors.length === 0, errors };
+}
+
 export function buildAgentWorkOrderRuntimeEnvelope(input = {}) {
   const model = buildAgentWorkOrderRuntimeModel(input);
   const validation = validateAgentWorkOrderRuntimeModel(model);
@@ -403,6 +679,31 @@ export function buildAgentWorkOrderRuntimeEnvelope(input = {}) {
     evidence: model.evidenceRefs,
     warnings: [
       "P137.2 is read-only model work. It does not dispatch agents, execute tools, call providers/models, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend.",
+    ],
+  });
+  const envelopeValidation = validateResultEnvelope(envelope);
+  return {
+    ...envelope,
+    errors: [
+      ...(envelope.errors || []),
+      ...validation.errors,
+      ...envelopeValidation.errors,
+    ],
+  };
+}
+
+export function buildAgentWorkOrderDispatchDryRunEnvelope(input = {}) {
+  const dryRun = buildAgentWorkOrderDispatchDryRun(input);
+  const validation = validateAgentWorkOrderDispatchDryRun(dryRun);
+  const envelope = createPassResult({
+    phase: AGENT_WORK_ORDER_DISPATCH_DRY_RUN_PHASE,
+    mode: "agent-work-order-dispatch-dry-run",
+    source: "shared/agentWorkOrderRuntimeModel.js",
+    summary: "Scoped agent work order dispatch dry run is ready for Agent Flow display while dispatch and execution remain blocked.",
+    data: dryRun,
+    evidence: dryRun.evidenceRefs,
+    warnings: [
+      "P137.3 is non-runnable dry-run work. It does not dispatch agents, execute tools, call providers/models, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend.",
     ],
   });
   const envelopeValidation = validateResultEnvelope(envelope);

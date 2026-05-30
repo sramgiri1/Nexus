@@ -142,6 +142,31 @@ const p1372CurrentState =
   && roadmapById.get("P137.2")?.status === "complete"
   && statusById.get("P137.3")?.status === "planned"
   && roadmapById.get("P137.3")?.status === "planned";
+const p1373CurrentState =
+  status.currentPhase === "P137.3"
+  && status.previousPhase === "P137.2"
+  && status.nextPhase === "P137.4"
+  && roadmap.currentPhase === "P137.3"
+  && roadmap.previousPhase === "P137.2"
+  && roadmap.nextPhase === "P137.4"
+  && status.current?.phaseId === "P137.3"
+  && status.previous?.phaseId === "P137.2"
+  && status.next?.phaseId === "P137.4"
+  && roadmap.current?.phaseId === "P137.3"
+  && roadmap.previous?.phaseId === "P137.2"
+  && roadmap.next?.phaseId === "P137.4"
+  && statusById.get("P136")?.status === "complete"
+  && roadmapById.get("P136")?.status === "complete"
+  && statusById.get("P137")?.status === "in_progress"
+  && roadmapById.get("P137")?.status === "in_progress"
+  && statusById.get("P137.1")?.status === "complete"
+  && roadmapById.get("P137.1")?.status === "complete"
+  && statusById.get("P137.2")?.status === "complete"
+  && roadmapById.get("P137.2")?.status === "complete"
+  && statusById.get("P137.3")?.status === "complete"
+  && roadmapById.get("P137.3")?.status === "complete"
+  && statusById.get("P137.4")?.status === "planned"
+  && roadmapById.get("P137.4")?.status === "planned";
 
 const docsBundle = `${JSON.stringify(contract)}\n${plan}\n${readme}\n${platformRoadmap}\n${enterpriseRoadmap}`;
 const serializedModel = JSON.stringify(model);
@@ -167,10 +192,10 @@ addCheck("work order packets are scoped only", model.workOrderPackets?.every((pa
 addCheck("budget and policy are zero-authority", model.budgetPolicyLimits?.maxUsdPerRun === 0 && model.budgetPolicyLimits?.maxTokensPerRun === 0 && model.budgetPolicyLimits?.spendAllowed === false && model.policyLimits?.dispatchAllowed === false && model.policyLimits?.executionAllowed === false);
 addCheck("model hides raw private ids and dumps", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedModel) && !/Bearer\s+|sk-[A-Za-z0-9]|DATABASE_URL|postgres(?:ql)?:\/\/|raw JSON|raw logs|raw policy dump/i.test(serializedModel));
 addCheck("model avoids fake runnable actions", !/dispatch agent now|run agent now|execute work order now|execute tool now|call provider now|call model now|write db now|mutate project now|deploy now|export now|package now|spend now/i.test(serializedModel));
-addCheck("contract advances P137.2", contract.phaseId === "P137" && contract.status === "in_progress" && contract.currentSubphase === "P137.2" && contract.previousSubphase === "P137.1" && contract.nextSubphase === "P137.3" && p1372.status === "complete" && p1373.status === "planned");
+addCheck("contract advances P137.2", contract.phaseId === "P137" && contract.status === "in_progress" && p1372.status === "complete" && ((contract.currentSubphase === "P137.2" && contract.previousSubphase === "P137.1" && contract.nextSubphase === "P137.3" && p1373.status === "planned") || (contract.currentSubphase === "P137.3" && contract.previousSubphase === "P137.2" && contract.nextSubphase === "P137.4" && p1373.status === "complete")));
 addCheck("contract records expected base commit", p1372.expectedBaseCommit === "fad26b65");
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((name) => p1372.expectedExports?.includes(name)) && !p1372.expectedExports?.includes("buildAgentWorkOrderDispatchDryRun"));
-addCheck("future dispatch exports remain future only", p1373.expectedExports?.includes("buildAgentWorkOrderDispatchDryRun") && !modelSource.includes("function buildAgentWorkOrderDispatchDryRun"));
+addCheck("future dispatch exports remain future only or safely implemented by P137.3", p1373.expectedExports?.includes("buildAgentWorkOrderDispatchDryRun") && (!modelSource.includes("function buildAgentWorkOrderDispatchDryRun") || p1373CurrentState));
 addCheck("P137.1 report passes", reportPassed("reports/p1371-agent-work-order-runtime-report.md"));
 addCheck("P136.7 report passes", reportPassed("reports/p1367-secrets-providers-tool-governance-final-validation-report.md"));
 addCheck("P137.1 checker accepts P137.2", p1371Checker.includes("p1372CurrentState") && p1371Checker.includes('status.currentPhase === "P137.2"'));
@@ -180,10 +205,10 @@ addCheck("OS checker recognizes P137.3 handoff", ["P137.1", "P137.2", "P137.3"].
 addCheck("P137 plan records P137.2", /### P137\.2 Work Order Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P137.2", /P137\.2 agent work order runtime model/i.test(readme));
 addCheck("platform roadmap records P137.2", /P137\.2 agent work order runtime model is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P137.2", /P137\.2 is now complete/i.test(enterpriseRoadmap) && /P137\.3 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status starts P137.2", p1372CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P137.2", /P137\.2 is now complete/i.test(enterpriseRoadmap) && (/P137\.3 is the next executable subphase/i.test(enterpriseRoadmap) || /P137\.3 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status starts P137.2 or safely hands off to P137.3", p1372CurrentState || p1373CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P137.2 entries have required fields", [statusById.get("P137"), statusById.get("P137.2"), roadmapById.get("P137.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P137.3 remains planned-only", statusById.get("P137.3")?.status === "planned" && roadmapById.get("P137.3")?.status === "planned" && !(statusById.get("P137.3")?.checksRun || []).length);
+addCheck("P137.3 remains planned-only or safely complete", (statusById.get("P137.3")?.status === "planned" && roadmapById.get("P137.3")?.status === "planned" && !(statusById.get("P137.3")?.checksRun || []).length) || p1373CurrentState);
 addCheck(
   "changed files stay in P137.2 allowed scope",
   !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)),
@@ -225,7 +250,9 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P137.2 is read-only model work. It does not create dispatch dry-run rows, update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.3 remains planned-only.",
+      body: p1373CurrentState
+        ? "- P137.2 is read-only model work. P137.3 may now be complete as a local non-runnable dispatch dry run. Agent Flow UX, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, DB/runtime writes, deploy, release, export, package, network calls, and spend remain blocked."
+        : "- P137.2 is read-only model work. It does not create dispatch dry-run rows, update Agent Flow UX, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, write DB/runtime state, deploy, release, export, package, use network calls, or spend. P137.3 remains planned-only.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

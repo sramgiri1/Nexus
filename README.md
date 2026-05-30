@@ -2008,7 +2008,7 @@ The Command Center and local operator surface have:
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
   implementation is closed through P136.7. P137 Agent Work Order Runtime is
-  in progress through P137.2 with P137.3 planned-only next.
+  in progress through P137.3 with P137.4 planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2236,7 +2236,15 @@ The Command Center and local operator surface have:
   flags. Dispatch dry-run rows, Agent Flow UX wiring, provider/model calls,
   tool execution, MCP startup, agent dispatch, DB/runtime writes, project
   mutation, deploy, release, export, package, network calls, and spend remain
-  unavailable. P137.3 Dispatch Dry Run is next.
+  unavailable. P137.3 Dispatch Dry Run is complete, and P137.4 Agent Flow
+  Command Center UX is next.
+- P137.3 agent work order dispatch dry run: Added a local non-runnable dry run
+  from the scoped P137.2 model. It creates display-safe dispatch rows, gate
+  rows, blocked authority rows, evidence/activity references, owner capability,
+  next action, disabled reason, and zero-cost posture without provider/model
+  calls, tool execution, MCP startup, agent dispatch, DB/runtime writes, project
+  mutation, deploy, release, export, package, network calls, or spend. P137.4
+  Agent Flow Command Center UX is next.
 
 ## CareLoop Project Progress
 
