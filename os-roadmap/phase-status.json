@@ -35341,7 +35341,7 @@
           "title": "Final Validation",
           "status": "complete",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "78ad473d",
           "completedAt": "2026-05-31T10:45:00.000Z",
           "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
           "checksRun": [
@@ -35465,7 +35465,7 @@
             "title": "Final Validation",
             "status": "complete",
             "branch": "codex/nexus-e2e-phase-validation",
-            "commit": "pending-final-commit",
+            "commit": "78ad473d",
             "completedAt": "2026-05-31T10:45:00.000Z",
             "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
             "checksRun": [
@@ -35508,7 +35508,7 @@
           "gitCommands": [
             "git add <allowed P141.7 files only>",
             "git commit -m \"chore(nexus): implement p1417 compliance final validation\"",
-            "stamp pending-final-commit with implementation commit hash",
+            "stamp 78ad473d with implementation commit hash",
             "git add <stamp files and refreshed reports>",
             "git commit -m \"chore(nexus): stamp p1417 compliance final validation\"",
             "git push origin codex/nexus-e2e-phase-validation"
@@ -35573,7 +35573,7 @@
         "title": "Tests / Checkers",
         "status": "planned"
       },
-      "commit": "pending-final-commit",
+      "commit": "78ad473d",
       "completedAt": "2026-05-31T10:45:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
@@ -36816,7 +36816,7 @@
       "title": "Final Validation",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "78ad473d",
       "completedAt": "2026-05-31T10:45:00.000Z",
       "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
       "checksRun": [
@@ -36940,7 +36940,7 @@
         "title": "Final Validation",
         "status": "complete",
         "branch": "codex/nexus-e2e-phase-validation",
-        "commit": "pending-final-commit",
+        "commit": "78ad473d",
         "completedAt": "2026-05-31T10:45:00.000Z",
         "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
         "checksRun": [
@@ -36983,7 +36983,7 @@
       "gitCommands": [
         "git add <allowed P141.7 files only>",
         "git commit -m \"chore(nexus): implement p1417 compliance final validation\"",
-        "stamp pending-final-commit with implementation commit hash",
+        "stamp 78ad473d with implementation commit hash",
         "git add <stamp files and refreshed reports>",
         "git commit -m \"chore(nexus): stamp p1417 compliance final validation\"",
         "git push origin codex/nexus-e2e-phase-validation"
@@ -37805,7 +37805,7 @@
     "title": "Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "78ad473d",
     "completedAt": "2026-05-31T10:45:00.000Z",
     "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
     "checksRun": [
@@ -37842,7 +37842,7 @@
   "nextSubphase": "P141.7",
   "currentSubphase": "P141.6",
   "previousSubphase": "P141.5",
-  "commit": "pending-final-commit",
+  "commit": "78ad473d",
   "completedAt": "2026-05-31T10:45:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "label": "Security, Privacy, and Compliance Controls"
