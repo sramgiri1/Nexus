@@ -10722,7 +10722,7 @@ function EnterprisePreviewPage() {
       <div className="ccv2-page" data-route-id={readiness.routeId}>
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
-          <div className="ccv2-page-head__sub">Display-only founder-to-business readiness with runtime actions disabled.</div>
+          <div className="ccv2-page-head__sub">Founder workflow, enterprise readiness blockers, owners, evidence, and cost posture.</div>
         </div>
 
         <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.enterprisePreview} />
@@ -10755,6 +10755,48 @@ function EnterprisePreviewPage() {
               <ul className="ccv2-list" style={{ marginTop: 12 }}>
                 {readiness.journeyRows.map((row) => <li key={row.label}>{row.label}: {row.executionState}</li>)}
               </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="ga-readiness" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="Enterprise GA readiness summary">
+              <div className="ccv2-section-heading">Enterprise GA Readiness</div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Readiness lanes</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.rowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked lanes</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.blockedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed certification</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.certificationAllowedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed execution</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.executionAllowedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed mutation</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.mutationAllowedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed spend</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.spendAllowedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.nextAction}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.gaReadinessSummary.costImpact}</span></div>
+              </div>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--2" style={{ marginTop: 16 }}>
+              {readiness.gaReadinessRows.map((row) => (
+                <article className="ccv2-card" key={row.readinessId} aria-label={`${row.displayName} readiness lane`}>
+                  <div className="ccv2-section-heading">{row.displayName}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill ccv2-pill--teal">{row.lane}</span>
+                    <span className="ccv2-pill ccv2-pill--amber">{row.currentState}</span>
+                    <span className="ccv2-pill ccv2-pill--green">{row.costImpact}</span>
+                  </div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{row.owner}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{row.nextAction}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{row.disabledReason}</span></div>
+                  </div>
+                  <div className="ccv2-section-heading" style={{ marginTop: 12 }}>Evidence</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.evidence.map((item, index) => <li key={`${row.readinessId}-evidence-${index}`}>{item}</li>)}
+                  </ul>
+                  <div className="ccv2-section-heading" style={{ marginTop: 12 }}>Blockers</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.blockers.map((blocker, index) => <li key={`${row.readinessId}-blocker-${index}`}>{blocker}</li>)}
+                  </ul>
+                </article>
+              ))}
             </div>
           </CommandTabPanel>
 

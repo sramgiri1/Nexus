@@ -49,20 +49,54 @@ function buildEnterpriseRehearsalDisplayModel() {
   };
 }
 
+function buildEnterpriseGaReadinessDisplayModel() {
+  const rows = (p145EnterpriseCertificationContract.commandCenterReadinessRows || []).map((row) => ({
+    readinessId: row.readinessId,
+    displayName: displayText(row.displayName),
+    lane: displayText(row.lane),
+    currentState: displayText(row.currentState),
+    owner: displayText(row.ownerCapability),
+    evidence: (row.evidenceRefs || []).map(displayText),
+    blockers: (row.blockers || []).map(displayText),
+    nextAction: displayText(row.nextAction),
+    disabledReason: displayText(row.disabledReason),
+    costImpact: displayText(row.costImpact || "No spend"),
+    certificationAllowed: row.certificationAllowed === true,
+    executionAllowed: row.executionAllowed === true,
+    mutationAllowed: row.mutationAllowed === true,
+    spendAllowed: row.spendAllowed === true,
+  }));
+
+  return {
+    rows,
+    summary: {
+      rowCount: rows.length,
+      blockedCount: rows.filter((row) => row.blockers.length > 0 || /disabled|blocked|not enabled/i.test(row.disabledReason)).length,
+      certificationAllowedCount: rows.filter((row) => row.certificationAllowed).length,
+      executionAllowedCount: rows.filter((row) => row.executionAllowed).length,
+      mutationAllowedCount: rows.filter((row) => row.mutationAllowed).length,
+      spendAllowedCount: rows.filter((row) => row.spendAllowed).length,
+      nextAction: "Review readiness blockers before aggregate validation.",
+      costImpact: "No spend",
+    },
+  };
+}
+
 export function buildEnterprisePreviewReadinessViewModel() {
   const rehearsal = buildEnterpriseRehearsalDisplayModel();
+  const gaReadiness = buildEnterpriseGaReadinessDisplayModel();
 
   return {
     routeId: "enterprise-preview-readiness",
     pageTitle: "Enterprise Preview",
-    whatChanged: "Founder idea intake, feasibility Q&A, PRD preview, agent workplan, business build lanes, self-healing readiness, and end-to-end rehearsal evidence are visible in Command Center.",
-    currentState: "Display-only founder-to-business preview and rehearsal evidence; Q&A automation, PRD generation, agent dispatch, business build execution, self-healing apply, project mutation, DB writes, runtime execution, and provider spend remain disabled.",
-    nextAction: agentWorkplan.nextAction,
+    whatChanged: "Founder workflow, enterprise readiness, blockers, owners, evidence, and cost posture are visible in Command Center.",
+    currentState: "Display-only founder-to-business preview, rehearsal evidence, and GA readiness review; Q&A automation, PRD generation, agent dispatch, business build execution, self-healing apply, project mutation, DB writes, runtime execution, and provider spend remain disabled.",
+    nextAction: gaReadiness.summary.nextAction,
     ownerAgent: "ORCHESTRATOR",
     ownerCapability: "NEXUS Enterprise Preview",
-    evidenceLocation: "reports/command-center-enterprise-preview-ux-report.md",
-    activityLocation: "os-roadmap/phase-status.json enterprise preview entry",
-    costImpact: agentWorkplan.costImpact,
+    evidenceLocation: "Enterprise Preview UX report",
+    activityLocation: "OS phase status report",
+    costImpact: gaReadiness.summary.costImpact,
     disabledReason: "Enterprise Preview is display-only; founder Q&A automation, PRD generation, agent dispatch, business build execution, self-healing apply, project mutation, DB writes, provider calls, tool execution, worker execution, network calls, deploy, release, export, package creation, and provider spend remain disabled.",
     readinessCards: [
       { label: "Startup idea", value: "Ready for intake", tone: "teal", detail: "Founder can bring an idea for structured feasibility discovery." },
@@ -72,6 +106,7 @@ export function buildEnterprisePreviewReadinessViewModel() {
       { label: "Agent workplan", value: "Not dispatched", tone: "amber", detail: agentWorkplan.agentWorkplanState },
       { label: "Business build", value: "Execution disabled", tone: "red", detail: "Agents are not yet allowed to build, launch, or operate the business." },
       { label: "E2E rehearsal", value: "Evidence modeled", tone: "teal", detail: "Founder-to-business stages have read-only rehearsal evidence rows." },
+      { label: "GA readiness", value: "Review only", tone: "teal", detail: "Readiness lanes summarize launch blockers, owners, evidence, and cost." },
       { label: "Self-healing", value: "Apply disabled", tone: "red", detail: agentWorkplan.selfHealingState },
       { label: "Cost", value: "No spend", tone: "green", detail: "No provider, model, tool, worker, DB, network, or project write cost is incurred." },
     ],
@@ -107,6 +142,8 @@ export function buildEnterprisePreviewReadinessViewModel() {
     })),
     rehearsalRows: rehearsal.rows,
     rehearsalSummary: rehearsal.summary,
+    gaReadinessRows: gaReadiness.rows,
+    gaReadinessSummary: gaReadiness.summary,
     healingRows: agentWorkplan.healingLoops.map((loop) => ({
       label: loop.loop,
       currentState: loop.applyState,

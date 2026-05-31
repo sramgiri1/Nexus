@@ -2,14 +2,14 @@
   "phaseId": "P145",
   "title": "Enterprise Certification and GA Readiness",
   "status": "in_progress",
-  "currentSubphase": "P145.3",
-  "previousSubphase": "P145.2",
-  "nextSubphase": "P145.4",
+  "currentSubphase": "P145.4",
+  "previousSubphase": "P145.3",
+  "nextSubphase": "P145.5",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "540e2284",
-  "summary": "P145.3 adds read-only end-to-end founder workflow rehearsal evidence while all certification, execution, mutation, network, and spend authority remains blocked.",
-  "detail": "P145.3 turns the certification matrix into reviewable founder journey rehearsal evidence and keeps P145.4-P145.7 planned-only.",
+  "expectedBaseCommit": "d045fea1",
+  "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked.",
+  "detail": "P145.4 exposes display-safe enterprise readiness lanes in Command Center and keeps P145.5-P145.7 planned-only.",
   "allowedFiles": [
     "package.json",
     "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
@@ -34,7 +34,9 @@
     "reports/p1452-enterprise-certification-matrix-report.md",
     "scripts/check-p1453-enterprise-e2e-rehearsal.js",
     "dashboard/src/data/enterprisePreviewReadiness.js",
-    "reports/p1453-enterprise-e2e-rehearsal-report.md"
+    "reports/p1453-enterprise-e2e-rehearsal-report.md",
+    "scripts/check-p1454-enterprise-command-center-ux.js",
+    "reports/p1454-enterprise-command-center-ux-report.md"
   ],
   "forbiddenFiles": [
     "projects/**",
@@ -704,9 +706,10 @@
     {
       "phaseId": "P145.4",
       "title": "Readiness Command Center UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "expectedBaseCommit": "after-P145.3",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "d045fea1",
       "narrowGoal": "Expose enterprise GA readiness in Command Center without raw data, fake actions, certification issuance, runtime writes, provider calls, or spend.",
       "requiredPlanFields": [
         "narrow scope",
@@ -726,8 +729,159 @@
         "git add/commit/push commands",
         "final response checklist"
       ],
-      "commit": "",
-      "checksRun": [],
+      "allowedFiles": [
+        "package.json",
+        "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
+        "scripts/check-p1454-enterprise-command-center-ux.js",
+        "scripts/check-p1453-enterprise-e2e-rehearsal.js",
+        "scripts/check-p1452-enterprise-certification-matrix.js",
+        "scripts/check-p1451-enterprise-certification-ga-readiness.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "dashboard/src/data/enterprisePreviewReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1454-enterprise-command-center-ux-report.md",
+        "reports/p1453-enterprise-e2e-rehearsal-report.md",
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "private project roots",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "certification issuers, attestation signers, scanners, load runners, recovery executors, release/deploy/export/package executors, provider/model callers, agent dispatchers, project mutation paths, or spend paths"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
+        "scripts/check-p1454-enterprise-command-center-ux.js",
+        "scripts/check-p1453-enterprise-e2e-rehearsal.js",
+        "scripts/check-p1452-enterprise-certification-matrix.js",
+        "scripts/check-p1451-enterprise-certification-ga-readiness.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "dashboard/src/data/enterprisePreviewReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "expectedExports": [
+        "buildEnterprisePreviewReadinessViewModel includes gaReadinessRows and gaReadinessSummary"
+      ],
+      "schemas": [
+        "commandCenterReadinessShape with readinessId, displayName, lane, currentState, authority flags, owner, evidence, blockers, nextAction, disabledReason, and costImpact.",
+        "No runtime schema, DB schema, migration, executable payload, provider payload, certification payload, scan payload, release payload, or spend payload."
+      ],
+      "dataShape": "Display-safe Command Center GA readiness rows only. All authority booleans remain false and all rows carry blockers, owner capability, evidence references, next action, disabled reason, and No spend cost impact.",
+      "commandCenterUxRequirements": [
+        "Enterprise Preview shows GA readiness lanes, blockers, owners, evidence, next action, disabled reason, and cost impact.",
+        "Primary UX avoids raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, DemoApp outside demo mode, raw private project IDs, executable payloads, and fake runnable enterprise GA actions.",
+        "No buttons or controls claim to certify, attest, scan, dispatch, generate, build, deploy, export, package, write DB state, call providers, or spend."
+      ],
+      "themeRequirements": [
+        "Reuse existing Command Center card, pill, grid, tab, and summary classes.",
+        "Preserve System, Dark, and Light themes without route-specific hardcoded theme colors."
+      ],
+      "playwrightTests": [
+        "dashboard/tests/routes.spec.js P145.4 enterprise readiness UX keeps Enterprise Preview useful and display-only",
+        "route-wide Command Center UX safety coverage remains required"
+      ],
+      "checkerUpdates": [
+        "Add check:p1454-enterprise-command-center-ux.",
+        "Update P145.1/P145.2/P145.3 and enterprise roadmap checkers to accept P145.4 handoff.",
+        "Reuse shared reportWriter and checkResultFormatter helpers."
+      ],
+      "docsRoadmapUpdates": [
+        "README.md",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "phaseStatusUpdate": "Mark P145.4 complete/current with pending-final-commit until stamp, previous P145.3, next P145.5, branch, completedAt, summary, checksRun, knownLimitations, and commandCenterVisible true.",
+      "validationCommands": [
+        "npm run check:p1454-enterprise-command-center-ux",
+        "npm run check:p1453-enterprise-e2e-rehearsal",
+        "npm run check:p1452-enterprise-certification-matrix",
+        "npm run check:p1451-enterprise-certification-ga-readiness",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P145.4\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No forbidden paths changed.",
+        "No DemoApp leakage.",
+        "No raw JSON/log/policy dumps.",
+        "No project/private raw IDs in primary UX.",
+        "All authority flags remain false.",
+        "No fake working actions added.",
+        "No stale phase status after stamp."
+      ],
+      "gitCommands": [
+        "git add <allowed P145.4 files>",
+        "git commit -m \"feat(nexus): add p1454 enterprise readiness ux\"",
+        "git commit -m \"chore(nexus): stamp p1454 enterprise readiness ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "branch name",
+        "commit hash",
+        "files changed",
+        "what was implemented",
+        "Command Center UX changes",
+        "tests added/updated/removed",
+        "checker results",
+        "dashboard build/unit/page results",
+        "docs/README/roadmap updates",
+        "OS phase status update",
+        "evidence/report records",
+        "safety confirmations",
+        "forbidden paths confirmation",
+        "known limitations",
+        "next phase/subphase"
+      ],
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p1454-enterprise-command-center-ux"
+      ],
+      "completedAt": "2026-05-31T17:12:07.000Z",
+      "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked.",
+      "knownLimitations": [
+        "P145.4 is Command Center readiness UX only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend.",
+        "P145.5-P145.7 remain planned-only."
+      ],
       "commandCenterVisible": true
     },
     {
@@ -818,16 +972,17 @@
       "commandCenterVisible": true
     }
   ],
-  "commit": "bd7d6c57",
-  "completedAt": "2026-05-31T17:06:00.000Z",
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T17:12:07.000Z",
   "checksRun": [
     "npm run check:p1451-enterprise-certification-ga-readiness",
     "npm run check:p1452-enterprise-certification-matrix",
-    "npm run check:p1453-enterprise-e2e-rehearsal"
+    "npm run check:p1453-enterprise-e2e-rehearsal",
+    "npm run check:p1454-enterprise-command-center-ux"
   ],
   "knownLimitations": [
-    "P145.3 is read-only rehearsal evidence work only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute load/recovery paths, issue certification, sign attestations, or spend.",
-    "P145.4-P145.7 remain planned-only."
+    "P145.4 is Command Center readiness UX only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend.",
+    "P145.5-P145.7 remain planned-only."
   ],
   "osPhaseStatusUpdate": "P145 in progress; P145.1 and P145.2 complete; previous P145.1; current P145.2; next P145.3 planned-only.",
   "certificationMatrixShape": [
@@ -1116,5 +1271,149 @@
       "costImpact": "No spend"
     }
   ],
-  "nextPhase": "P145.4"
+  "nextPhase": "P145.4",
+  "commandCenterReadinessShape": [
+    "readinessId",
+    "displayName",
+    "lane",
+    "currentState",
+    "certificationAllowed",
+    "executionAllowed",
+    "mutationAllowed",
+    "spendAllowed",
+    "ownerCapability",
+    "evidenceRefs",
+    "blockers",
+    "nextAction",
+    "disabledReason",
+    "costImpact"
+  ],
+  "commandCenterReadinessRows": [
+    {
+      "readinessId": "founder_readiness_review",
+      "displayName": "Founder readiness review",
+      "lane": "Founder workflow",
+      "currentState": "Review-only",
+      "certificationAllowed": false,
+      "executionAllowed": false,
+      "mutationAllowed": false,
+      "spendAllowed": false,
+      "ownerCapability": "NEXUS Enterprise Preview",
+      "evidenceRefs": [
+        "reports/p1453-enterprise-e2e-rehearsal-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md"
+      ],
+      "blockers": [
+        "Founder Q&A automation and PRD generation remain disabled."
+      ],
+      "nextAction": "Review founder intake, feasibility questions, PRD preview, and agent lanes before any future live activation request.",
+      "disabledReason": "Founder automation is not enabled by this readiness UX.",
+      "costImpact": "No spend"
+    },
+    {
+      "readinessId": "certification_review",
+      "displayName": "Certification review",
+      "lane": "Compliance controls",
+      "currentState": "Blocked for issuance",
+      "certificationAllowed": false,
+      "executionAllowed": false,
+      "mutationAllowed": false,
+      "spendAllowed": false,
+      "ownerCapability": "COMPLIANCE",
+      "evidenceRefs": [
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md"
+      ],
+      "blockers": [
+        "Certification issuance and attestation signing remain disabled."
+      ],
+      "nextAction": "Review certification matrix blockers and evidence before final validation.",
+      "disabledReason": "Certification issuance is not enabled by this readiness UX.",
+      "costImpact": "No spend"
+    },
+    {
+      "readinessId": "runtime_authority_review",
+      "displayName": "Runtime authority review",
+      "lane": "Execution boundary",
+      "currentState": "Execution blocked",
+      "certificationAllowed": false,
+      "executionAllowed": false,
+      "mutationAllowed": false,
+      "spendAllowed": false,
+      "ownerCapability": "SENTINEL",
+      "evidenceRefs": [
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md"
+      ],
+      "blockers": [
+        "Provider calls, tools, workers, agent dispatch, project mutation, DB writes, network calls, deploy, release, export, package creation, and spend remain disabled."
+      ],
+      "nextAction": "Keep runtime boundaries blocked until a later explicit activation contract grants scoped authority.",
+      "disabledReason": "Runtime execution and mutation authority are not enabled by this readiness UX.",
+      "costImpact": "No spend"
+    },
+    {
+      "readinessId": "reliability_review",
+      "displayName": "Reliability review",
+      "lane": "Load and recovery",
+      "currentState": "Evidence review only",
+      "certificationAllowed": false,
+      "executionAllowed": false,
+      "mutationAllowed": false,
+      "spendAllowed": false,
+      "ownerCapability": "WARDEN",
+      "evidenceRefs": [
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md"
+      ],
+      "blockers": [
+        "Load checks, restore execution, failover, and recovery execution remain disabled."
+      ],
+      "nextAction": "Review reliability evidence and blockers without running load, restore, failover, or recovery jobs.",
+      "disabledReason": "Reliability execution is not enabled by this readiness UX.",
+      "costImpact": "No spend"
+    },
+    {
+      "readinessId": "cost_governance_review",
+      "displayName": "Cost governance review",
+      "lane": "Cost and billing",
+      "currentState": "Zero-spend posture",
+      "certificationAllowed": false,
+      "executionAllowed": false,
+      "mutationAllowed": false,
+      "spendAllowed": false,
+      "ownerCapability": "COST_GOVERNOR",
+      "evidenceRefs": [
+        "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md"
+      ],
+      "blockers": [
+        "Provider spend, billable provider calls, and paid runtime actions remain disabled."
+      ],
+      "nextAction": "Review budget and cost evidence before any future provider setup or spend approval.",
+      "disabledReason": "Spend authority is not enabled by this readiness UX.",
+      "costImpact": "No spend"
+    },
+    {
+      "readinessId": "ga_decision_review",
+      "displayName": "GA decision review",
+      "lane": "Final readiness",
+      "currentState": "Not certified",
+      "certificationAllowed": false,
+      "executionAllowed": false,
+      "mutationAllowed": false,
+      "spendAllowed": false,
+      "ownerCapability": "ORCHESTRATOR",
+      "evidenceRefs": [
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md"
+      ],
+      "blockers": [
+        "Aggregate validation, docs/status closure, and final validation are not complete yet."
+      ],
+      "nextAction": "Complete aggregate validation, docs/status closure, and final validation before any enterprise GA claim.",
+      "disabledReason": "GA certification and release signoff are not enabled by this readiness UX.",
+      "costImpact": "No spend"
+    }
+  ]
 }

@@ -39314,24 +39314,25 @@
       "order": 181,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bd7d6c57",
-      "completedAt": "2026-05-31T17:06:00.000Z",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T17:12:07.000Z",
       "commandCenterVisible": true,
-      "detail": "P145.3 defines read-only rehearsal evidence for idea intake, feasibility Q&A, PRD assembly, agent workplan, business build handoff, and GA evidence review without enabling live execution.",
-      "summary": "Added display-safe end-to-end founder workflow rehearsal evidence for Enterprise Preview while all execution, mutation, network, and spend authority remains blocked.",
+      "detail": "P145.4 exposes display-safe enterprise readiness lanes in Command Center and keeps P145.5-P145.7 planned-only.",
+      "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked.",
       "previousPhase": "P144",
       "nextPhase": "",
-      "currentSubphase": "P145.3",
-      "previousSubphase": "P145.2",
-      "nextSubphase": "P145.4",
+      "currentSubphase": "P145.4",
+      "previousSubphase": "P145.3",
+      "nextSubphase": "P145.5",
       "checksRun": [
         "npm run check:p1451-enterprise-certification-ga-readiness",
         "npm run check:p1452-enterprise-certification-matrix",
-        "npm run check:p1453-enterprise-e2e-rehearsal"
+        "npm run check:p1453-enterprise-e2e-rehearsal",
+        "npm run check:p1454-enterprise-command-center-ux"
       ],
       "knownLimitations": [
-        "P145.3 is read-only rehearsal evidence work only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute load/recovery paths, issue certification, sign attestations, or spend.",
-        "P145.4-P145.7 remain planned-only."
+        "P145.4 is Command Center readiness UX only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend.",
+        "P145.5-P145.7 remain planned-only."
       ],
       "subphases": [
         {
@@ -39351,14 +39352,14 @@
         {
           "phaseId": "P145.3",
           "title": "End-to-End Rehearsal",
-          "status": "planned",
+          "status": "complete",
           "narrowGoal": "Define safe end-to-end founder workflow rehearsal evidence without live provider calls, agent dispatch, project mutation, DB writes, network calls, or spend.",
           "commandCenterVisible": true
         },
         {
           "phaseId": "P145.4",
           "title": "Readiness Command Center UX",
-          "status": "planned",
+          "status": "complete",
           "narrowGoal": "Expose enterprise GA readiness in Command Center without raw data, fake actions, certification issuance, runtime writes, provider calls, or spend.",
           "commandCenterVisible": true
         },
@@ -39522,22 +39523,25 @@
       "title": "Readiness Command Center UX",
       "label": "Readiness UX",
       "order": 181.4,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T17:12:07.000Z",
       "commandCenterVisible": true,
-      "detail": "P145.4 remains planned-only for readiness command center ux work.",
-      "summary": "Planned-only P145.4 Readiness Command Center UX for enterprise certification and GA readiness.",
+      "detail": "P145.4 exposes display-safe enterprise readiness lanes in Command Center and keeps P145.5-P145.7 planned-only.",
+      "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked.",
       "previousPhase": "P145.3",
       "nextPhase": "P145.5",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1454-enterprise-command-center-ux"
+      ],
       "knownLimitations": [
-        "P145.4 is planned-only and must not enable certification issuance, attestation signing, scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend."
+        "P145.4 is Command Center readiness UX only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend.",
+        "P145.5-P145.7 remain planned-only."
       ],
       "narrowGoal": "Expose enterprise GA readiness in Command Center without raw data, fake actions, certification issuance, runtime writes, provider calls, or spend.",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "expectedBaseCommit": "after-P145.3",
+      "expectedBaseCommit": "d045fea1",
       "requiredPlanFields": [
         "narrow scope",
         "starting branch and expected base commit",
@@ -39681,13 +39685,57 @@
       ]
     }
   ],
-  "updatedAt": "2026-05-31T17:06:00.000Z",
-  "currentPhase": "P145.3",
-  "previousPhase": "P145.2",
-  "nextPhase": "P145.4",
+  "updatedAt": "2026-05-31T17:12:07.000Z",
+  "currentPhase": "P145.4",
+  "previousPhase": "P145.3",
+  "nextPhase": "P145.5",
   "currentPhaseStatus": "complete",
   "generatedAt": "2026-05-31T21:10:00.000Z",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P145.4",
+    "title": "Readiness Command Center UX",
+    "label": "Readiness UX",
+    "order": 181.4,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-31T17:12:07.000Z",
+    "commandCenterVisible": true,
+    "detail": "P145.4 exposes display-safe enterprise readiness lanes in Command Center and keeps P145.5-P145.7 planned-only.",
+    "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked.",
+    "previousPhase": "P145.3",
+    "nextPhase": "P145.5",
+    "checksRun": [
+      "npm run check:p1454-enterprise-command-center-ux"
+    ],
+    "knownLimitations": [
+      "P145.4 is Command Center readiness UX only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend.",
+      "P145.5-P145.7 remain planned-only."
+    ],
+    "narrowGoal": "Expose enterprise GA readiness in Command Center without raw data, fake actions, certification issuance, runtime writes, provider calls, or spend.",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "expectedBaseCommit": "d045fea1",
+    "requiredPlanFields": [
+      "narrow scope",
+      "starting branch and expected base commit",
+      "allowed files",
+      "forbidden files",
+      "exact files/modules",
+      "expected exports/schemas/data shapes",
+      "Command Center UX requirements",
+      "dark/light/system theme requirements",
+      "Playwright tests",
+      "checker updates",
+      "docs/README/roadmap updates",
+      "OS phase status update",
+      "validation commands",
+      "final safety checks",
+      "git add/commit/push commands",
+      "final response checklist"
+    ]
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P145.3",
     "title": "End-to-End Rehearsal",
@@ -39731,72 +39779,28 @@
       "final response checklist"
     ]
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P145.2",
-    "title": "Certification Matrix",
-    "label": "Certification Matrix",
-    "order": 181.2,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "7794d314",
-    "completedAt": "2026-05-31T16:17:37.000Z",
-    "commandCenterVisible": true,
-    "detail": "P145.2 exposes the enterprise certification readiness matrix as display-only Compliance UX backed by P145 contract rows.",
-    "summary": "Added a read-only enterprise certification matrix for Compliance Command Center and OS roadmap P145.2 while all certification and execution authority remains blocked.",
-    "previousPhase": "P145.1",
-    "nextPhase": "P145.3",
-    "checksRun": [
-      "npm run check:p1452-enterprise-certification-matrix"
-    ],
-    "knownLimitations": [
-      "P145.2 is read-only certification matrix work only. It does not issue certification, sign attestations, run security scans, mutate findings, execute load or recovery actions, restore, fail over, write DB/runtime state, call providers/models, run tools, dispatch agents, mutate projects, deploy/release/export/package, use network calls, or spend.",
-      "P145.3-P145.7 remain planned-only."
-    ],
-    "narrowGoal": "Build the read-only enterprise certification matrix for P145 without issuing certification, running scans, mutating findings, calling providers, or spending.",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "expectedBaseCommit": "fab35401",
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ]
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P145.4",
-    "title": "Readiness Command Center UX",
-    "label": "Readiness UX",
-    "order": 181.4,
+    "phaseId": "P145.5",
+    "title": "Tests / Checkers",
+    "label": "Tests / Checkers",
+    "order": 181.5,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "completedAt": "",
     "commandCenterVisible": true,
-    "detail": "P145.4 remains planned-only for readiness command center ux work.",
-    "summary": "Planned-only P145.4 Readiness Command Center UX for enterprise certification and GA readiness.",
-    "previousPhase": "P145.3",
-    "nextPhase": "P145.5",
+    "detail": "P145.5 remains planned-only for tests / checkers work.",
+    "summary": "Planned-only P145.5 Tests / Checkers for enterprise certification and GA readiness.",
+    "previousPhase": "P145.4",
+    "nextPhase": "P145.6",
     "checksRun": [],
     "knownLimitations": [
-      "P145.4 is planned-only and must not enable certification issuance, attestation signing, scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend."
+      "P145.5 is planned-only and must not enable certification issuance, attestation signing, scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend."
     ],
-    "narrowGoal": "Expose enterprise GA readiness in Command Center without raw data, fake actions, certification issuance, runtime writes, provider calls, or spend.",
+    "narrowGoal": "Add aggregate enterprise GA readiness tests and checkers without enabling certification, execution, mutation, network, or spend.",
     "scopeClassification": "NEXUS_OS_CHANGE",
-    "expectedBaseCommit": "after-P145.3",
+    "expectedBaseCommit": "after-P145.4",
     "requiredPlanFields": [
       "narrow scope",
       "starting branch and expected base commit",
@@ -39817,18 +39821,19 @@
     ]
   },
   "currentPhaseSummary": "Added display-safe end-to-end founder workflow rehearsal evidence for Enterprise Preview while all execution, mutation, network, and spend authority remains blocked.",
-  "nextSubphase": "P145.4",
-  "currentSubphase": "P145.3",
-  "previousSubphase": "P145.2",
-  "commit": "bd7d6c57",
-  "completedAt": "2026-05-31T17:06:00.000Z",
+  "nextSubphase": "P145.5",
+  "currentSubphase": "P145.4",
+  "previousSubphase": "P145.3",
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T17:12:07.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "label": "End-to-End Rehearsal",
+  "label": "Readiness UX",
   "checksRun": [
     "npm run check:p1453-enterprise-e2e-rehearsal"
   ],
   "knownLimitations": [
     "P145.3 is read-only rehearsal evidence work only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute load/recovery paths, issue certification, sign attestations, or spend.",
     "P145.4-P145.7 remain planned-only."
-  ]
+  ],
+  "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked."
 }

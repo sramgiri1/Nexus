@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P145.1
-- Generated at: 2026-05-31T17:06:32.531Z
+- Generated at: 2026-05-31T17:22:26.468Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bd7d6c57
+- Validation HEAD: d045fea1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not issue certifications, sign attestations, run scans, execute load checks, execute recovery, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Contract Coverage
 
-- Current subphase: P145.3
-- Previous subphase: P145.2
-- Next subphase: P145.4
+- Current subphase: P145.4
+- Previous subphase: P145.3
+- Next subphase: P145.5
 - Authority flags blocked: true
 ## Checks
 
@@ -40,17 +40,17 @@
 | authority flags block enterprise GA authority | PASS | {"certificationIssuanceAllowed":false,"attestationSigningAllowed":false,"securityScanExecutionAllowed":false,"findingMutationAllowed":false,"loadExecutionAllowed":false,"recoveryExecutionAllowed":false,"restoreExecutionAllowed":false,"failoverAllowed":false,"releaseAllowed":false,"deployReleaseExportPackageAllowed":false,"dbRuntimeWriteAllowed":false,"providerModelCallAllowed":false,"toolExecutionAllowed":false,"agentDispatchAllowed":false,"projectMutationAllowed":false,"networkCallAllowed":false,"spendAllowed":false} |
 | P145.2 handoff is safe | PASS |  |
 | P144.7 checker accepts P145.1 handoff | PASS |  |
-| enterprise checker accepts P145.1 active state | PASS |  |
+| enterprise checker accepts P145.1/P145.4 active state | PASS |  |
 | OS checker recognizes P145 subphases | PASS |  |
 | docs record P145.1 and P145.2 handoff | PASS |  |
-| phase status keeps P145.1 complete through handoff | PASS | P145.3/P145.2/P145.4 |
+| phase status keeps P145.1 complete through handoff | PASS | P145.4/P145.3/P145.5 |
 | P145 parent records active status | PASS |  |
 | P145.1 records required status fields | PASS |  |
-| P145.2 remains safe | PASS |  |
+| P145.2-P145.4 remain safe | PASS |  |
 | P145.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P145.1 allowed scope | PASS | scope check relaxed for P145.3 |
-| forbidden paths unchanged | PASS | forbidden path check relaxed for P145.3 |
+| changed files stay in P145.1 allowed scope | PASS | scope check relaxed for P145.4 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P145.4 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or provider URLs | PASS |  |
 | docs avoid fake runnable enterprise actions | PASS |  |

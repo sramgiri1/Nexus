@@ -95,6 +95,7 @@ const p145 = statusById.get("P145") || {};
 const p145Roadmap = roadmapById.get("P145") || {};
 const p1452 = subphaseById.get("P145.2") || {};
 const p1453 = subphaseById.get("P145.3") || {};
+const p1454 = subphaseById.get("P145.4") || {};
 const checkerSource = readText("scripts/check-p1452-enterprise-certification-matrix.js");
 const priorChecker = readText("scripts/check-p1451-enterprise-certification-ga-readiness.js");
 const enterpriseChecker = readText("scripts/check-enterprise-readiness-roadmap.js");
@@ -182,7 +183,32 @@ const p1453CurrentState =
   && roadmapById.get("P145.3")?.status === "complete"
   && statusById.get("P145.4")?.status === "planned"
   && roadmapById.get("P145.4")?.status === "planned";
-const p1452OrLaterState = p1452CurrentState || p1453CurrentState;
+const p1454CurrentState =
+  status.currentPhase === "P145.4"
+  && status.previousPhase === "P145.3"
+  && status.nextPhase === "P145.5"
+  && roadmap.currentPhase === "P145.4"
+  && roadmap.previousPhase === "P145.3"
+  && roadmap.nextPhase === "P145.5"
+  && status.current?.phaseId === "P145.4"
+  && status.previous?.phaseId === "P145.3"
+  && status.next?.phaseId === "P145.5"
+  && roadmap.current?.phaseId === "P145.4"
+  && roadmap.previous?.phaseId === "P145.3"
+  && roadmap.next?.phaseId === "P145.5"
+  && statusById.get("P145")?.status === "in_progress"
+  && roadmapById.get("P145")?.status === "in_progress"
+  && statusById.get("P145.1")?.status === "complete"
+  && roadmapById.get("P145.1")?.status === "complete"
+  && statusById.get("P145.2")?.status === "complete"
+  && roadmapById.get("P145.2")?.status === "complete"
+  && statusById.get("P145.3")?.status === "complete"
+  && roadmapById.get("P145.3")?.status === "complete"
+  && statusById.get("P145.4")?.status === "complete"
+  && roadmapById.get("P145.4")?.status === "complete"
+  && statusById.get("P145.5")?.status === "planned"
+  && roadmapById.get("P145.5")?.status === "planned";
+const p1452OrLaterState = p1452CurrentState || p1453CurrentState || p1454CurrentState;
 
 const matrixRows = contract.certificationMatrixRows || [];
 const matrixRowsSafe = matrixRows.length >= 5
@@ -201,23 +227,23 @@ const matrixRowsSafe = matrixRows.length >= 5
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1452-enterprise-certification-matrix.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
 addCheck("prior P145.1 report still passes", reportPassed("reports/p1451-enterprise-certification-ga-readiness-report.md"));
-addCheck("contract keeps P145.2 complete through handoff", contract.phaseId === "P145" && contract.status === "in_progress" && p1452.status === "complete" && (p1452CurrentState || (contract.currentSubphase === "P145.3" && contract.previousSubphase === "P145.2" && contract.nextSubphase === "P145.4" && p1453.status === "complete")));
+addCheck("contract keeps P145.2 complete through handoff", contract.phaseId === "P145" && contract.status === "in_progress" && p1452.status === "complete" && (p1452CurrentState || (contract.currentSubphase === "P145.3" && contract.previousSubphase === "P145.2" && contract.nextSubphase === "P145.4" && p1453.status === "complete") || (contract.currentSubphase === "P145.4" && contract.previousSubphase === "P145.3" && contract.nextSubphase === "P145.5" && p1453.status === "complete" && p1454.status === "complete")));
 addCheck("contract records expected base commit", p1452.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("P145.2 records allowed and forbidden files", p1452.allowedFiles?.includes("dashboard/src/data/complianceReadiness.js") && p1452.allowedFiles?.includes("scripts/check-p1452-enterprise-certification-matrix.js") && p1452.forbiddenFiles?.includes("projects/**") && p1452.forbiddenFiles?.includes("db/**") && p1452.forbiddenFiles?.includes("providers/**") && p1452.forbiddenFiles?.includes("tools/**"));
 addCheck("P145.2 records validation commands", VALIDATION_COMMANDS.every((command) => p1452.validationCommands?.includes(command)));
 addCheck("certification matrix shape present", hasFields(contract.certificationMatrixShape, REQUIRED_MATRIX_FIELDS));
 addCheck("certification matrix rows are safe", matrixRowsSafe, `${matrixRows.length} rows`);
 addCheck("authority flags remain blocked", allBooleanValuesFalse(contract.authorityFlags), JSON.stringify(contract.authorityFlags || {}));
-addCheck("P145.3 handoff is safe", (p1452CurrentState && p1453.status === "planned" && p1453.expectedBaseCommit === "after-P145.2" && p1453.commit === "" && Array.isArray(p1453.checksRun) && p1453.checksRun.length === 0) || (p1453CurrentState && p1453.status === "complete" && p1453.expectedBaseCommit === "b8bbbb1a"));
+addCheck("P145.3 handoff is safe", (p1452CurrentState && p1453.status === "planned" && p1453.expectedBaseCommit === "after-P145.2" && p1453.commit === "" && Array.isArray(p1453.checksRun) && p1453.checksRun.length === 0) || ((p1453CurrentState || p1454CurrentState) && p1453.status === "complete" && p1453.expectedBaseCommit === "b8bbbb1a"));
 addCheck("P145.1 checker accepts P145.2 handoff", priorChecker.includes("p1452CurrentState") && priorChecker.includes('status.currentPhase === "P145.2"'));
-addCheck("enterprise checker accepts P145.2 active state", enterpriseChecker.includes("p1452CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
+addCheck("enterprise checker accepts P145.2/P145.4 active state", enterpriseChecker.includes("p1452CurrentState") && enterpriseChecker.includes("p1454CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("Compliance view model exposes matrix rows", complianceData.includes("certificationMatrixRows") && complianceData.includes("certificationMatrixSummary") && complianceData.includes(CONTRACT_PATH.split("/").pop()));
 addCheck("Compliance tabs include Certification Matrix", tabsData.includes('id: "certification"') && tabsData.includes("Certification Matrix"));
 addCheck("Command Center renders matrix without action buttons", commandCenter.includes('tabId="certification"') && commandCenter.includes("Enterprise Certification Matrix") && !/certify now|issue certification now|attest now|run scan now/i.test(commandCenter));
 addCheck("phase status keeps P145.2 complete through handoff", p1452OrLaterState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("P145 parent records active status", [p145, p145Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && entry.commandCenterVisible === true));
 addCheck("P145.2 records required status fields", [statusById.get("P145.2"), roadmapById.get("P145.2")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P145.3 remains safe", (p1452CurrentState && [statusById.get("P145.3"), roadmapById.get("P145.3")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1453CurrentState && [statusById.get("P145.3"), roadmapById.get("P145.3")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1453-enterprise-e2e-rehearsal")) && [statusById.get("P145.4"), roadmapById.get("P145.4")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)));
+addCheck("P145.3/P145.4 remain safe", (p1452CurrentState && [statusById.get("P145.3"), roadmapById.get("P145.3")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1453CurrentState && [statusById.get("P145.3"), roadmapById.get("P145.3")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1453-enterprise-e2e-rehearsal")) && [statusById.get("P145.4"), roadmapById.get("P145.4")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1454CurrentState && [statusById.get("P145.3"), roadmapById.get("P145.3")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1453-enterprise-e2e-rehearsal")) && [statusById.get("P145.4"), roadmapById.get("P145.4")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1454-enterprise-command-center-ux")) && [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)));
 addCheck("P145.2 Playwright coverage exists", routeTests.includes("P145.2 enterprise certification matrix keeps Compliance useful") && routeTests.includes("Certification Matrix") && routeTests.includes("P145.3"));
 addCheck("route-wide safety coverage retained", routeTests.includes("Command Center route-wide UX") && routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher exists globally"));
 addCheck("docs record P145.2 and P145.3 handoff", /## P145\.2 Certification Matrix[\s\S]*Status:\s+complete/.test(plan) && /P145\.2 Certification Matrix is complete/i.test(readme) && /P145\.2 certification matrix is complete/i.test(platformRoadmap) && /P145\.2 is now complete as a read-only certification matrix/i.test(enterpriseRoadmap));
@@ -236,7 +262,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Adds the read-only enterprise certification matrix for Compliance Command Center.",
-        "- Confirms P145.1 remains complete and P145.3-P145.7 remain planned-only.",
+        "- Confirms P145.2 remains complete through later P145 handoffs.",
         "- Keeps certification issuance, attestation signing, scanner execution, finding mutation, load/recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, and spend blocked.",
       ].join("\n"),
     },

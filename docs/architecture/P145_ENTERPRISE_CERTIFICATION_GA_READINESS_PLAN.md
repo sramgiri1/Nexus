@@ -436,8 +436,136 @@ Git add / commit / push:
 
 Known limitations:
 - P145.3 is read-only rehearsal evidence work only.
-- P145.4-P145.7 remain planned-only.
+- P145.4-P145.7 were planned-only at P145.3 handoff.
 - It does not run founder Q&A automation, generate PRDs, dispatch agents,
   execute tools or workers, write DB/runtime state, mutate projects, call
   providers/models, use network calls, deploy/release/export/package, execute
   load/recovery paths, issue certification, sign attestations, or spend.
+
+## P145.4 Readiness Command Center UX
+
+Status: complete
+Scope classification: NEXUS_OS_CHANGE
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `d045fea1`
+
+Narrow goal: Expose enterprise GA readiness in Command Center without raw data,
+fake actions, certification issuance, runtime writes, provider calls, or spend.
+
+Allowed files:
+- `package.json`
+- `contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json`
+- `scripts/check-p1454-enterprise-command-center-ux.js`
+- `scripts/check-p1453-enterprise-e2e-rehearsal.js`
+- `scripts/check-p1452-enterprise-certification-matrix.js`
+- `scripts/check-p1451-enterprise-certification-ga-readiness.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `dashboard/src/data/enterprisePreviewReadiness.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1454-enterprise-command-center-ux-report.md`
+- P145 and status reports under `reports/`
+
+Forbidden files:
+- `projects/**`, `careloop/**`, `generated-projects/**`, private project roots
+- `db/**`, `local-state/runtime/**`
+- `providers/**`, `tools/**`, `worker-runtime/**`
+- `deploy/**`, `release/**`, `exports/**`, `packages/**`, `.env*`
+- certification issuers, attestation signers, scanners, load runners, recovery
+  executors, provider/model callers, agent dispatchers, project mutation paths,
+  network callers, or spend paths
+
+Expected exports, schemas, and data shapes:
+- Contract-only `commandCenterReadinessShape` includes `readinessId`,
+  `displayName`, `lane`, `currentState`, blocked authority flags, owner,
+  evidence, blockers, next action, disabled reason, and cost impact.
+- `commandCenterReadinessRows[]` covers founder workflow, certification review,
+  runtime boundary, reliability, cost governance, and final readiness lanes.
+- `buildEnterprisePreviewReadinessViewModel()` exposes `gaReadinessRows` and
+  `gaReadinessSummary`.
+- No runtime schema, DB schema, migration, executable payload, provider payload,
+  certification payload, scan payload, release payload, or spend payload.
+
+Command Center UX requirements:
+- Enterprise Preview shows a `GA Readiness` tab with lanes, blockers, owners,
+  evidence, next action, disabled reason, and cost impact.
+- Primary UX avoids raw JSON, raw logs, raw policy dumps, internal phase labels,
+  raw private project IDs, executable payloads, and fake runnable actions.
+- DemoApp remains absent from full Command Center.
+
+Dark/light/system theme requirements:
+- Reuse existing Command Center cards, tabs, lists, pills, and summary rows.
+- Preserve System, Dark, and Light themes without route-specific hardcoded
+  theme colors.
+
+Playwright tests:
+- Add P145.4 Enterprise Preview GA Readiness coverage.
+- Preserve route-wide Command Center safety coverage.
+
+Checker updates:
+- Add `scripts/check-p1454-enterprise-command-center-ux.js`.
+- Update P145.1, P145.2, P145.3, and enterprise roadmap checkers for P145.4
+  handoff compatibility.
+- Reuse shared report writer and checker formatter helpers.
+
+Docs / README / roadmap updates:
+- This plan file.
+- README.
+- NEXUS platform roadmap.
+- Enterprise readiness roadmap.
+- OS roadmap JSON.
+- OS phase status JSON.
+
+OS phase status update:
+- P145 is in progress.
+- P145.1, P145.2, P145.3, and P145.4 are complete.
+- P145.5 remains planned-only.
+- Current: P145.4; previous: P145.3; next: P145.5.
+
+Validation commands:
+- `npm run check:p1454-enterprise-command-center-ux`
+- `npm run check:p1453-enterprise-e2e-rehearsal`
+- `npm run check:p1452-enterprise-certification-matrix`
+- `npm run check:p1451-enterprise-certification-ga-readiness`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P145.4"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No forbidden project, DB/runtime, provider, tool, worker, deploy, release,
+  export, package, or env paths changed.
+- No certification issuance, attestation signing, scan execution, load
+  execution, recovery execution, DB/runtime write, provider/model call, tool
+  execution, worker execution, agent dispatch, project mutation, network call,
+  deploy/release/export/package action, or spend enabled.
+- No raw private IDs, raw JSON, raw logs, raw policy dumps, raw URLs, token-like
+  strings, raw payloads, internal phase labels, or fake runnable actions in
+  primary UX.
+- No stale phase status or `pending-final-commit` markers after final stamp.
+
+Git add / commit / push:
+- `git add <allowed P145.4 files>`
+- `git commit -m "feat(nexus): add p1454 enterprise readiness ux"`
+- Stamp commit hash after implementation.
+- `git commit -m "chore(nexus): stamp p1454 enterprise readiness ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known limitations:
+- P145.4 is Command Center readiness UX only.
+- P145.5-P145.7 remain planned-only.
+- It does not run founder Q&A automation, generate PRDs, dispatch agents,
+  execute tools or workers, write DB/runtime state, mutate projects, call
+  providers/models, use network calls, deploy/release/export/package, execute
+  scans/load/recovery paths, issue certification, sign attestations, or spend.
