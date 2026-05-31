@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P142.6
-- Generated at: 2026-05-31T09:39:58.468Z
+- Generated at: 2026-05-31T09:40:37.052Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 70bb59ba
+- Validation HEAD: 1ba01e1a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -39,8 +39,8 @@
 | P142.7 handoff remains valid | PASS |  |
 | P142.6 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P142.6 allowed scope | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P142.6 allowed scope | PASS |  |
+| forbidden paths unchanged | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable admin actions | PASS |  |
