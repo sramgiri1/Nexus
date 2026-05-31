@@ -40218,7 +40218,7 @@
       "order": 180,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ffc3f038",
       "commandCenterVisible": true,
       "detail": "P144.5 validates the P144 contract, read-only model, non-runnable preview, Cost Center Customer Ops UX, docs/status, route safety, and blocked authority claims without enabling runtime execution.",
       "summary": "P144 billing, metering, and customer operations now includes P144.5 aggregate tests/checkers while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
@@ -43260,7 +43260,7 @@
       "label": "Tests / Checkers",
       "order": 180.5,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ffc3f038",
       "previousPhase": "P144.4",
       "nextPhase": "P144.6",
       "checksRun": [
@@ -43553,7 +43553,7 @@
     "label": "Tests / Checkers",
     "order": 180.5,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ffc3f038",
     "previousPhase": "P144.4",
     "nextPhase": "P144.6",
     "checksRun": [
@@ -43962,7 +43962,7 @@
   "nextSubphase": "P144.6",
   "currentSubphase": "P144.5",
   "previousSubphase": "P144.4",
-  "commit": "pending-final-commit",
+  "commit": "ffc3f038",
   "completedAt": "2026-05-31T15:05:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "label": "Tests / Checkers"
