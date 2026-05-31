@@ -2606,6 +2606,30 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P140.5 Backup DR aggregate coverage remains display-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/backup-dr");
+    await expect(commandTab(page, "Restore Preview")).toBeVisible();
+    await expect(commandTab(page, "Disabled Actions")).toBeVisible();
+
+    await commandTab(page, "Restore Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Restore Preview Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Approval required");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked operations");
+    await expect(activeCommandTabPanel(page)).toContainText("Runnable actions");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
+
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Prune retention disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/restore-preview-row|restore-preview-plan|backup-record-\d+/i);
+    expect(body).not.toMatch(/backup now|create backup|restore now|execute restore|failover now|overwrite now|delete now|prune now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(errors).toEqual([]);
+  });
+
   test("Isolation route renders readiness without runnable access actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 

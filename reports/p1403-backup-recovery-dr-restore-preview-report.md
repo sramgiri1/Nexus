@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P140.3
-- Generated at: 2026-05-31T02:55:49.251Z
+- Generated at: 2026-05-31T03:12:31.869Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1344458a
+- Validation HEAD: 2f3847d9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -23,9 +23,9 @@
 - Cost impact: $0
 ## Phase Status
 
-- Current subphase: P140.4
-- Previous subphase: P140.3
-- Next subphase: P140.5
+- Current subphase: P140.5
+- Previous subphase: P140.4
+- Next subphase: P140.6
 - The next incomplete P140 subphase remains planned-only.
 ## Checks
 
@@ -58,11 +58,11 @@
 | README records P140.3 | PASS |  |
 | platform roadmap records P140.3 | PASS |  |
 | enterprise roadmap records P140.3 | PASS |  |
-| phase status keeps P140.3 complete | PASS | P140.4/P140.3/P140.5 |
+| phase status keeps P140.3 complete | PASS | P140.5/P140.4/P140.6 |
 | completed P140.3 entries have required fields | PASS |  |
 | P140.4 handoff remains valid | PASS |  |
-| changed files stay in P140.3 allowed scope | PASS | scope check relaxed for P140.4 |
-| forbidden paths unchanged | PASS | P140.3 forbidden path check relaxed for P140.4 |
+| changed files stay in P140.3 allowed scope | PASS | scope check relaxed for P140.5 |
+| forbidden paths unchanged | PASS | P140.3 forbidden path check relaxed for P140.5 |
 | route-wide safety coverage retained | PASS |  |
 | restore preview avoids raw private IDs | PASS |  |
 | restore preview avoids raw storage URLs | PASS |  |

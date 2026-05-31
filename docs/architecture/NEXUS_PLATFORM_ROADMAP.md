@@ -3207,7 +3207,8 @@ DR, and retention contract is complete as contract/policy/safety-boundary
 only. P140.2 backup and retention model is complete as a read-only model.
 P140.3 restore preview is complete as display-safe restore preview model work.
 P140.4 Backup / DR Command Center UX is complete as display-safe UX work.
-P140.5 and P141-P145 remain planned-only. They cover founder
+P140.5 tests/checkers is complete as validation-only hardening.
+P140.6 and P141-P145 remain planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3216,7 +3217,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, P138.4, P138.5, P138.6, P138.7, P139.1, P139.2, P139.3, P139.4, P139.5, P139.6, P139.7, P140.1, P140.2, P140.3, and P140.4. P136.2
+Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, P138.4, P138.5, P138.6, P138.7, P139.1, P139.2, P139.3, P139.4, P139.5, P139.6, P139.7, P140.1, P140.2, P140.3, P140.4, and P140.5. P136.2
 secret/provider model is complete, P136.3 provider dry run is complete, and
 P136.4 provider governance Command Center UX is complete. P136.5
 secrets/providers/tool governance tests/checkers is complete. P136.6
@@ -3632,7 +3633,10 @@ evidence/activity refs, redaction state, authority flags, and zero-spend cost
 impact for future Backup / DR UX work. P140.4 Backup / DR Command Center UX is complete:
 NEXUS now shows a display-safe Restore Preview tab with approval gates,
 blocked operations, next action, evidence/activity labels, and zero runnable
-actions. P140.5 tests/checkers is planned-only next.
+actions. P140.5 tests/checkers is complete: NEXUS now has aggregate validation
+for P140 Backup / DR contracts, read-only models, restore preview, scoped
+Command Center UX, route-wide safety, checker handoffs, docs/status, and
+forbidden paths. P140.6 docs/status closure is planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

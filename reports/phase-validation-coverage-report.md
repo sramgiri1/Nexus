@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-31T02:55:58.941Z
+- Generated at: 2026-05-31T03:21:11.643Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1344458a
+- Validation HEAD: 2f3847d9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -212,7 +212,7 @@
 | P88.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P88.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P88.4 validation coverage | PASS | 5 checkers, 1 reports |
-| P88.5 validation coverage | PASS | 27 checkers, 22 reports |
+| P88.5 validation coverage | PASS | 28 checkers, 23 reports |
 | P88.6 validation coverage | PASS | 25 checkers, 20 reports |
 | P88.7 validation coverage | PASS | 50 checkers, 44 reports |
 | P89 validation coverage | PASS | 16 checkers, 7 reports |
@@ -220,7 +220,7 @@
 | P89.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P89.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P89.4 validation coverage | PASS | 9 checkers, 6 reports |
-| P89.5 validation coverage | PASS | 27 checkers, 22 reports |
+| P89.5 validation coverage | PASS | 28 checkers, 23 reports |
 | P89.6 validation coverage | PASS | 24 checkers, 20 reports |
 | P89.7 validation coverage | PASS | 49 checkers, 44 reports |
 | P90 validation coverage | PASS | 13 checkers, 7 reports |
@@ -228,7 +228,7 @@
 | P90.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P90.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P90.4 validation coverage | PASS | 5 checkers, 1 reports |
-| P90.5 validation coverage | PASS | 27 checkers, 23 reports |
+| P90.5 validation coverage | PASS | 28 checkers, 24 reports |
 | P90.6 validation coverage | PASS | 25 checkers, 20 reports |
 | P90.7 validation coverage | PASS | 50 checkers, 45 reports |
 | P91 validation coverage | PASS | 13 checkers, 7 reports |
@@ -236,7 +236,7 @@
 | P91.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P91.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P91.4 validation coverage | PASS | 7 checkers, 1 reports |
-| P91.5 validation coverage | PASS | 29 checkers, 22 reports |
+| P91.5 validation coverage | PASS | 30 checkers, 23 reports |
 | P91.6 validation coverage | PASS | 25 checkers, 20 reports |
 | P91.7 validation coverage | PASS | 50 checkers, 44 reports |
 | P92 validation coverage | PASS | 16 checkers, 7 reports |
@@ -268,7 +268,7 @@
 | P95.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P95.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P95.4 validation coverage | PASS | 4 checkers, 2 reports |
-| P95.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P95.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P95.6 validation coverage | PASS | 24 checkers, 20 reports |
 | P95.7 validation coverage | PASS | 53 checkers, 44 reports |
 | P96 validation coverage | PASS | 17 checkers, 8 reports |
@@ -284,7 +284,7 @@
 | P97.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P97.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P97.4 validation coverage | PASS | 11 checkers, 6 reports |
-| P97.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P97.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P97.6 validation coverage | PASS | 24 checkers, 20 reports |
 | P97.7 validation coverage | PASS | 48 checkers, 44 reports |
 | P98 validation coverage | PASS | 23 checkers, 14 reports |
@@ -292,7 +292,7 @@
 | P98.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P98.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P98.4 validation coverage | PASS | 8 checkers, 6 reports |
-| P98.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P98.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P98.6 validation coverage | PASS | 24 checkers, 20 reports |
 | P98.7 validation coverage | PASS | 53 checkers, 44 reports |
 | P99 validation coverage | PASS | 18 checkers, 14 reports |
@@ -316,7 +316,7 @@
 | P101.2 validation coverage | PASS | 11 checkers, 7 reports |
 | P101.3 validation coverage | PASS | 12 checkers, 7 reports |
 | P101.4 validation coverage | PASS | 13 checkers, 8 reports |
-| P101.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P101.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P101.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P101.7 validation coverage | PASS | 49 checkers, 45 reports |
 | P102 validation coverage | PASS | 12 checkers, 7 reports |
@@ -348,7 +348,7 @@
 | P105.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P105.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P105.4 validation coverage | PASS | 10 checkers, 4 reports |
-| P105.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P105.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P105.6 validation coverage | PASS | 24 checkers, 21 reports |
 | P105.7 validation coverage | PASS | 53 checkers, 45 reports |
 | P106 validation coverage | PASS | 28 checkers, 19 reports |
@@ -356,7 +356,7 @@
 | P106.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P106.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P106.4 validation coverage | PASS | 10 checkers, 4 reports |
-| P106.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P106.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P106.6 validation coverage | PASS | 28 checkers, 21 reports |
 | P106.7 validation coverage | PASS | 53 checkers, 45 reports |
 | P107 validation coverage | PASS | 28 checkers, 19 reports |
@@ -364,7 +364,7 @@
 | P107.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P107.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P107.4 validation coverage | PASS | 6 checkers, 1 reports |
-| P107.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P107.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P107.6 validation coverage | PASS | 28 checkers, 21 reports |
 | P107.7 validation coverage | PASS | 53 checkers, 45 reports |
 | P108 validation coverage | PASS | 25 checkers, 19 reports |
@@ -372,7 +372,7 @@
 | P108.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P108.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P108.4 validation coverage | PASS | 7 checkers, 1 reports |
-| P108.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P108.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P108.6 validation coverage | PASS | 24 checkers, 21 reports |
 | P108.7 validation coverage | PASS | 50 checkers, 45 reports |
 | P109 validation coverage | PASS | 19 checkers, 13 reports |
@@ -380,7 +380,7 @@
 | P109.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P109.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P109.4 validation coverage | PASS | 6 checkers, 2 reports |
-| P109.5 validation coverage | PASS | 29 checkers, 23 reports |
+| P109.5 validation coverage | PASS | 30 checkers, 24 reports |
 | P109.6 validation coverage | PASS | 25 checkers, 21 reports |
 | P109.7 validation coverage | PASS | 50 checkers, 45 reports |
 | P110 validation coverage | PASS | 18 checkers, 13 reports |
@@ -388,7 +388,7 @@
 | P110.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P110.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P110.4 validation coverage | PASS | 7 checkers, 1 reports |
-| P110.5 validation coverage | PASS | 30 checkers, 23 reports |
+| P110.5 validation coverage | PASS | 31 checkers, 24 reports |
 | P110.6 validation coverage | PASS | 24 checkers, 21 reports |
 | P110.7 validation coverage | PASS | 49 checkers, 45 reports |
 | P111 validation coverage | PASS | 30 checkers, 26 reports |
@@ -572,7 +572,7 @@
 | P133.2 validation coverage | PASS | 6 checkers, 1 reports |
 | P133.3 validation coverage | PASS | 7 checkers, 1 reports |
 | P133.4 validation coverage | PASS | 8 checkers, 1 reports |
-| P133.5 validation coverage | PASS | 31 checkers, 22 reports |
+| P133.5 validation coverage | PASS | 32 checkers, 23 reports |
 | P133.6 validation coverage | PASS | 10 checkers, 1 reports |
 | P133.7 validation coverage | PASS | 55 checkers, 44 reports |
 | P134 validation coverage | PASS | 17 checkers, 7 reports |
@@ -586,7 +586,7 @@
 | P135.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P135.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P135.4 validation coverage | PASS | 6 checkers, 1 reports |
-| P135.5 validation coverage | PASS | 27 checkers, 22 reports |
+| P135.5 validation coverage | PASS | 28 checkers, 23 reports |
 | P135.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P135.7 validation coverage | PASS | 54 checkers, 44 reports |
 | P136 validation coverage | PASS | 17 checkers, 7 reports |
@@ -594,7 +594,7 @@
 | P136.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P136.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P136.4 validation coverage | PASS | 6 checkers, 1 reports |
-| P136.5 validation coverage | PASS | 27 checkers, 22 reports |
+| P136.5 validation coverage | PASS | 28 checkers, 23 reports |
 | P136.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P136.7 validation coverage | PASS | 54 checkers, 44 reports |
 | P137 validation coverage | PASS | 17 checkers, 13 reports |
@@ -602,7 +602,7 @@
 | P137.2 validation coverage | PASS | 6 checkers, 1 reports |
 | P137.3 validation coverage | PASS | 8 checkers, 2 reports |
 | P137.4 validation coverage | PASS | 8 checkers, 1 reports |
-| P137.5 validation coverage | PASS | 27 checkers, 23 reports |
+| P137.5 validation coverage | PASS | 28 checkers, 24 reports |
 | P137.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P137.7 validation coverage | PASS | 48 checkers, 45 reports |
 | P138 validation coverage | PASS | 17 checkers, 7 reports |
@@ -613,7 +613,7 @@
 | P139.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P139.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P139.7 validation coverage | PASS | 54 checkers, 45 reports |
-| P140 validation coverage | PASS | 11 checkers, 4 reports |
+| P140 validation coverage | PASS | 13 checkers, 5 reports |
 | P140.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P140.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P140.3 validation coverage | PASS | 7 checkers, 1 reports |
@@ -624,7 +624,7 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P140.4; next=P140.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P140.5; next=P140.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

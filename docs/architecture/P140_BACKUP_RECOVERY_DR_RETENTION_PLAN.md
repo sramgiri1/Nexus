@@ -330,8 +330,8 @@ OS phase status update:
 - Current phase/subphase is P140.2.
 - Previous phase/subphase is P140.1.
 - Next phase/subphase is P140.3.
-- P140.3 and P140.4 have since been completed; P140.5-P140.7 remain
-  planned-only.
+- P140.3, P140.4, and P140.5 have since been completed; P140.6 remains
+  planned-only next.
 
 Validation commands:
 
@@ -356,8 +356,8 @@ Final safety checks:
   or spend.
 - No raw/private IDs, raw JSON/log/policy/storage dumps, DemoApp leakage, stale
   labels, fake runnable actions, or unsafe positive claims.
-- P140.3 and P140.4 have since been completed; P140.5 remains planned-only
-  next.
+- P140.3, P140.4, and P140.5 have since been completed; P140.6 remains
+  planned-only next.
 
 Git commands:
 
@@ -504,7 +504,8 @@ OS phase status update:
 - Current phase/subphase is P140.3.
 - Previous phase/subphase is P140.2.
 - Next phase/subphase is P140.4.
-- P140.4 has since been completed; P140.5-P140.7 remain planned-only.
+- P140.4 and P140.5 have since been completed; P140.6 remains planned-only
+  next.
 
 Validation commands:
 
@@ -530,7 +531,8 @@ Final safety checks:
   or spend.
 - No raw/private IDs, raw JSON/log/policy/storage dumps, DemoApp leakage, stale
   labels, fake runnable actions, or unsafe positive claims.
-- P140.4 has since been completed; P140.5 remains planned-only next.
+- P140.4 and P140.5 have since been completed; P140.6 remains planned-only
+  next.
 
 Git commands:
 
@@ -680,7 +682,8 @@ Tests/checkers:
 Docs/roadmap:
 
 - README, P140 plan, platform roadmap, enterprise roadmap, OS phase status, and
-  OS phase index now record P140.4 complete and P140.5 planned-only next.
+  OS phase index now record P140.4 complete. P140.5 has since been completed,
+  and P140.6 remains planned-only next.
 
 OS phase status update:
 
@@ -688,7 +691,7 @@ OS phase status update:
 - Current phase/subphase is P140.4.
 - Previous phase/subphase is P140.3.
 - Next phase/subphase is P140.5.
-- P140.5-P140.7 remain planned-only.
+- P140.5 has since been completed; P140.6 remains planned-only next.
 
 Validation:
 
@@ -742,15 +745,185 @@ Final response checklist:
 
 ## P140.5 Tests / Checkers
 
-Status: planned
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and base: `codex/nexus-e2e-phase-validation` at `2f3847d9`.
 
 Narrow goal: Add aggregate P140 checker and route coverage for backup, recovery,
-DR, retention, disabled actions, docs/status, and forbidden-path safety.
+DR, retention, disabled actions, docs/status, prior-checker compatibility, and
+forbidden-path safety without changing Backup / DR runtime authority.
 
-Validation: P140.5 checker, P140.1-P140.4 checker compatibility, dashboard
-build/unit, Backup / DR Playwright, route-wide Command Center Playwright,
-enterprise roadmap checker, OS status checker, phase coverage, and
-`git diff --check`.
+Allowed files:
+
+- `package.json`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json`
+- `scripts/check-p1401-backup-recovery-dr-retention.js`
+- `scripts/check-p1402-backup-recovery-dr-retention.js`
+- `scripts/check-p1403-backup-recovery-dr-restore-preview.js`
+- `scripts/check-p1404-backup-recovery-dr-command-center-ux.js`
+- `scripts/check-p1405-backup-recovery-dr-tests-checkers.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `README.md`
+- `docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- P140.1-P140.5, enterprise readiness, OS status, and phase validation reports.
+
+Forbidden files:
+
+- `projects/**`
+- `generated-projects/**`
+- private project roots
+- `dashboard/src/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules created or updated:
+
+- `scripts/check-p1405-backup-recovery-dr-tests-checkers.js` adds aggregate
+  P140 validation and writes
+  `reports/p1405-backup-recovery-dr-tests-checkers-report.md`.
+- `dashboard/tests/routes.spec.js` adds P140.5 Backup / DR aggregate route
+  coverage.
+- P140.1-P140.4 checkers accept P140.5 as the current safe handoff.
+- Enterprise and OS status checkers accept P140.5/P140.6.
+- README, platform roadmap, enterprise roadmap, contract, phase index, and
+  phase status record P140.5 complete and P140.6 planned-only next.
+
+Expected exports, schemas, and data shapes:
+
+- No runtime exports added.
+- No schema migration added.
+- P140.5 validates existing P140.2 backup/retention model, P140.3 restore
+  preview model, and P140.4 Backup / DR view projection.
+- The generated report records aggregate counts for backup records, restore
+  preview rows, Command Center UX rows, runnable action count, and disabled
+  actions.
+
+Command Center UX requirements:
+
+- Preserve the existing Backup / DR page.
+- Add Playwright coverage for Restore Preview Summary, approval gate, blocked
+  operations, disabled prune action, zero runnable actions, and absence of raw
+  restore/model IDs.
+- Preserve route-wide navigation, no DemoApp leakage, no raw JSON/log/policy
+  dumps, OS Roadmap boundaries, and Projects milestone separation.
+
+Dark/light/system theme requirements:
+
+- Preserve existing theme behavior through route-wide tests.
+- Do not add CSS or one-off colors.
+
+Safety rules:
+
+- No backup creation, restore execution, failover, overwrite, delete, prune,
+  DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP
+  startup, agent dispatch, project mutation, deploy, release, export, package,
+  network calls, or spend.
+- No raw private IDs, raw storage URLs, raw JSON, raw logs, raw policy dumps,
+  or fake runnable actions in primary UX or docs.
+
+Reuse check:
+
+- Reuses `shared/reportWriter.js`.
+- Reuses `shared/checkResultFormatter.js`.
+- Reuses `shared/backupRecoveryDrRetentionModel.js`.
+- Reuses `shared/backupRecoveryDrRestorePreview.js`.
+- Reuses existing Backup / DR Command Center data and route-wide Playwright
+  coverage.
+- No duplicate report writer, checker formatter, result envelope, mode guard,
+  redaction helper, route matrix, or UI component was added.
+
+Tests/checkers:
+
+- Added `npm run check:p1405-backup-recovery-dr-tests-checkers`.
+- Added `dashboard/tests/routes.spec.js` coverage for P140.5 Backup / DR
+  aggregate display-only behavior.
+- Updated P140.1-P140.4 compatibility checkers.
+- Updated enterprise readiness and OS phase status checkers.
+
+Docs/README/roadmap:
+
+- `README.md` records P140.5 tests/checkers complete.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md` records P140.5 complete and
+  P140.6 planned-only next.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md` records P140.5
+  complete and P140.6 planned-only next.
+
+OS phase status update:
+
+- P140.5 complete.
+- Current phase/subphase is P140.5.
+- Previous phase/subphase is P140.4.
+- Next phase/subphase is P140.6.
+- P140.6 remains planned-only.
+
+Validation commands:
+
+- `npm run check:p1405-backup-recovery-dr-tests-checkers`
+- `npm run check:p1404-backup-recovery-dr-command-center-ux`
+- `npm run check:p1403-backup-recovery-dr-restore-preview`
+- `npm run check:p1402-backup-recovery-dr-retention`
+- `npm run check:p1401-backup-recovery-dr-retention`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P140.5"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Backup DR"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+
+- Confirm no project/private files changed.
+- Confirm no dashboard source files changed.
+- Confirm no runtime authority, DB/runtime writes, provider/model calls, tool
+  execution, agent dispatch, project mutation, deploy, release, export,
+  package, network calls, or spend were enabled.
+- Confirm no raw IDs, raw dumps, raw storage URLs, DemoApp leakage, or fake
+  runnable actions were introduced.
+
+Git commands:
+
+- `git add <P140.5 allowed files>`
+- `git commit -m "chore(nexus): implement p1405 backup recovery tests checkers"`
+- `git add <P140.5 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1405 backup recovery tests checkers"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests added/updated/removed
+- Checker results
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ## P140.6 Docs / Roadmap / Status
 
