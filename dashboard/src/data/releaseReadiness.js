@@ -1,4 +1,5 @@
 import { createDeployReadinessGate } from "../../../release-governance/p69-4-placeholder.js";
+import { buildReleaseControlShippingPreviewUx } from "./releaseDeployExportPackageUx.js";
 
 export const RELEASE_ROUTE_ID = "release";
 
@@ -11,12 +12,13 @@ export function buildReleaseReadinessViewModel() {
     evidenceRefs: ["reports/command-center-release-ux-report.md"],
     activityRefs: ["reports/os-phase-status-report.md"],
   });
+  const shippingPreview = buildReleaseControlShippingPreviewUx();
 
   return {
     routeId: RELEASE_ROUTE_ID,
     pageTitle: "Release Control",
     currentState: "Deploy readiness is ready for operator review, with release and deploy execution still blocked.",
-    whatChanged: "Command Center now shows release candidate readiness, deploy gate posture, approval, rollback, blockers, evidence, activity, and cost impact without enabling execution.",
+    whatChanged: "Command Center now shows release candidate readiness, deploy gate posture, approval, rollback, blockers, evidence, activity, cost impact, and blocked shipping preview rows without enabling execution.",
     nextAction: "Review the readiness evidence, resolve blockers, and keep release and deploy actions disabled until a future approved phase explicitly unlocks governed execution.",
     disabledReason: "Release and deploy execution are display-only here; no package creation, release, deploy, provider dispatch, worker execution, DB write, project mutation, network call, or provider spend can run from this route.",
     ownerAgent: "NEXUS operator governance",
@@ -25,6 +27,9 @@ export function buildReleaseReadinessViewModel() {
     activityLocation: "reports/os-phase-status-report.md",
     costImpact: "No provider calls, packaging execution, network execution, deploy execution, or provider spend.",
     commandCenterVisible: true,
+    shippingPreviewLabel: shippingPreview.label,
+    shippingPreviewRows: shippingPreview.rows,
+    shippingPreviewSummary: shippingPreview.summary,
     readinessCards: [
       {
         label: "Approval",

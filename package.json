@@ -808,7 +808,8 @@
     "check:p1427-admin-operations-runtime-settings-final-validation": "node scripts/check-p1427-admin-operations-runtime-settings-final-validation.js",
     "check:p1431-release-deploy-export-package-pipeline": "node scripts/check-p1431-release-deploy-export-package-pipeline.js",
     "check:p1432-release-deploy-export-package-pipeline": "node scripts/check-p1432-release-deploy-export-package-pipeline.js",
-    "check:p1433-release-deploy-export-package-pipeline": "node scripts/check-p1433-release-deploy-export-package-pipeline.js"
+    "check:p1433-release-deploy-export-package-pipeline": "node scripts/check-p1433-release-deploy-export-package-pipeline.js",
+    "check:p1434-release-deploy-export-package-pipeline": "node scripts/check-p1434-release-deploy-export-package-pipeline.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

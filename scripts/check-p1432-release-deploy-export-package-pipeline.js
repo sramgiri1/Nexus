@@ -28,6 +28,7 @@ const CONTRACT_PATH = "contracts/os-roadmap/p143-release-deploy-export-package-p
 const PLAN_PATH = "docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1432-release-deploy-export-package-pipeline";
 const NEXT_SCRIPT = "check:p1433-release-deploy-export-package-pipeline";
+const P1434_SCRIPT = "check:p1434-release-deploy-export-package-pipeline";
 const EXPECTED_BASE_COMMIT = "61f9016e";
 const EXPECTED_EXPORTS = [
   "RELEASE_DEPLOY_EXPORT_PACKAGE_MODEL_PHASE",
@@ -186,6 +187,22 @@ const p1433CurrentState =
   && statusById.get("P143.4")?.status === "planned"
   && roadmapById.get("P143.4")?.status === "planned"
   && packageJson.scripts?.[NEXT_SCRIPT] === "node scripts/check-p1433-release-deploy-export-package-pipeline.js";
+const p1434CurrentState =
+  status.currentPhase === "P143.4"
+  && status.previousPhase === "P143.3"
+  && status.nextPhase === "P143.5"
+  && roadmap.currentPhase === "P143.4"
+  && roadmap.previousPhase === "P143.3"
+  && roadmap.nextPhase === "P143.5"
+  && statusById.get("P143.2")?.status === "complete"
+  && roadmapById.get("P143.2")?.status === "complete"
+  && statusById.get("P143.3")?.status === "complete"
+  && roadmapById.get("P143.3")?.status === "complete"
+  && statusById.get("P143.4")?.status === "complete"
+  && roadmapById.get("P143.4")?.status === "complete"
+  && statusById.get("P143.5")?.status === "planned"
+  && roadmapById.get("P143.5")?.status === "planned"
+  && packageJson.scripts?.[P1434_SCRIPT] === "node scripts/check-p1434-release-deploy-export-package-pipeline.js";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1432-release-deploy-export-package-pipeline.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -209,6 +226,7 @@ addCheck("P143.1 report passes", reportPassed("reports/p1431-release-deploy-expo
 addCheck("contract advances to P143.2 safely", contract.phaseId === "P143" && contract.status === "in_progress" && p1431.status === "complete" && p1432.status === "complete" && (
   (contract.currentSubphase === "P143.2" && contract.previousSubphase === "P143.1" && contract.nextSubphase === "P143.3" && p1433.status === "planned")
   || (contract.currentSubphase === "P143.3" && contract.previousSubphase === "P143.2" && contract.nextSubphase === "P143.4" && p1433.status === "complete")
+  || (contract.currentSubphase === "P143.4" && contract.previousSubphase === "P143.3" && contract.nextSubphase === "P143.5" && p1433.status === "complete")
 ));
 addCheck("contract records expected base commit", p1432.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1432.expectedExports?.includes(entry)));
@@ -218,9 +236,11 @@ addCheck("P143.1 checker accepts P143.2 handoff", p1431Checker.includes("p1432Cu
 addCheck("enterprise checker accepts P143.2 active state", enterpriseChecker.includes("p1432CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P143.3 handoff", osStatusChecker.includes('"P143.3"') && osStatusChecker.includes('"P143.7"'));
 addCheck("docs record P143.2 and P143.3 handoff", /## P143\.2 Release Model[\s\S]*Status:\s+complete/.test(plan) && /P143\.2\s+Release\s+Model\s+is\s+complete/i.test(readme) && /P143\.2\s+release\s+model\s+is\s+complete/i.test(platformRoadmap) && /P143\.2 is now complete as a read-only model/i.test(enterpriseRoadmap) && (/P143\.3 is planned-only next/i.test(enterpriseRoadmap) || /P143\.3 is now complete/i.test(enterpriseRoadmap)));
-addCheck("phase status advances to P143.2", p1432CurrentState || p1433CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status advances to P143.2", p1432CurrentState || p1433CurrentState || p1434CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P143.2 entries have required fields", [statusById.get("P143"), statusById.get("P143.2"), roadmapById.get("P143"), roadmapById.get("P143.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("next P143.3/P144 handoff remains planned-only", p1433CurrentState
+addCheck("next P143.3/P144 handoff remains planned-only", p1434CurrentState
+  ? [statusById.get("P143.5"), roadmapById.get("P143.5"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : p1433CurrentState
   ? [statusById.get("P143.4"), roadmapById.get("P143.4"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
   : [statusById.get("P143.3"), roadmapById.get("P143.3"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("P143.2 Playwright coverage exists", routeTests.includes("P143.2 release model keeps shipping routes non-runnable") && routeTests.includes("Release Control") && routeTests.includes("Deploy Monitoring") && routeTests.includes("Project Shipping") && routeTests.includes("P143.2") && routeTests.includes("P143.3"));

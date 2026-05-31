@@ -1,4 +1,5 @@
 import { createMitigationReadinessGate } from "../../../deploy-monitoring/p70-4-placeholder.js";
+import { buildDeployMonitoringShippingPreviewUx } from "./releaseDeployExportPackageUx.js";
 
 export const DEPLOY_MONITORING_ROUTE_ID = "deployMonitoring";
 
@@ -11,12 +12,13 @@ export function buildDeployMonitoringReadinessViewModel() {
     evidenceRefs: ["reports/command-center-monitoring-ux-report.md"],
     activityRefs: ["reports/os-phase-status-report.md"],
   });
+  const shippingPreview = buildDeployMonitoringShippingPreviewUx();
 
   return {
     routeId: DEPLOY_MONITORING_ROUTE_ID,
     pageTitle: "Deploy Monitoring",
     currentState: "Mitigation readiness is ready for operator review, with monitoring, alerts, rollback, deploy, incident, and mitigation execution still blocked.",
-    whatChanged: "Command Center now shows monitor state, incident state, mitigation gate posture, approval, rollback, blockers, evidence, activity, and cost impact without enabling execution.",
+    whatChanged: "Command Center now shows monitor state, incident state, mitigation gate posture, approval, rollback, blockers, evidence, activity, cost impact, and blocked shipping preview rows without enabling execution.",
     nextAction: "Review monitoring evidence, resolve blockers, and keep alert, rollback, deploy, incident, and mitigation actions disabled until a future approved phase explicitly unlocks governed execution.",
     disabledReason: "Deploy monitoring is display-only here; no monitor execution, alert dispatch, rollback, deploy, incident, mitigation, provider dispatch, worker execution, DB write, project mutation, network call, or provider spend can run from this route.",
     ownerAgent: "NEXUS operator governance",
@@ -25,6 +27,9 @@ export function buildDeployMonitoringReadinessViewModel() {
     activityLocation: "reports/os-phase-status-report.md",
     costImpact: "No provider calls, alert dispatch, network execution, deploy execution, incident execution, mitigation execution, rollback execution, or provider spend.",
     commandCenterVisible: true,
+    shippingPreviewLabel: shippingPreview.label,
+    shippingPreviewRows: shippingPreview.rows,
+    shippingPreviewSummary: shippingPreview.summary,
     readinessCards: [
       {
         label: "Monitor",

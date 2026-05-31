@@ -1,4 +1,5 @@
 import { createShippingReadinessGate } from "../../../project-shipping/p71-4-placeholder.js";
+import { buildProjectShippingPreviewUx } from "./releaseDeployExportPackageUx.js";
 
 export const PROJECT_SHIPPING_ROUTE_ID = "projectShipping";
 
@@ -11,12 +12,13 @@ export function buildProjectShippingReadinessViewModel() {
     evidenceRefs: ["reports/command-center-shipping-ux-report.md"],
     activityRefs: ["reports/os-phase-status-report.md"],
   });
+  const shippingPreview = buildProjectShippingPreviewUx();
 
   return {
     routeId: PROJECT_SHIPPING_ROUTE_ID,
     pageTitle: "Project Shipping",
     currentState: "Shipping readiness is ready for operator review, with package creation, export execution, project mutation, artifact creation, deploy, and release execution still blocked.",
-    whatChanged: "Command Center now shows shipping state, export readiness, redaction posture, approval, blockers, evidence, activity, and cost impact without enabling export.",
+    whatChanged: "Command Center now shows shipping state, export readiness, redaction posture, approval, blockers, evidence, activity, cost impact, and blocked shipping preview rows without enabling export.",
     nextAction: "Review redaction and evidence, resolve blockers, and keep package and export actions disabled until a future approved phase explicitly unlocks governed execution.",
     disabledReason: "Project shipping is display-only here; no package creation, export execution, artifact creation, project mutation, provider dispatch, worker execution, DB write, deploy, release, network call, or provider spend can run from this route.",
     ownerAgent: "NEXUS operator governance",
@@ -25,6 +27,9 @@ export function buildProjectShippingReadinessViewModel() {
     activityLocation: "reports/os-phase-status-report.md",
     costImpact: "No provider calls, package artifact creation, export execution, network calls, deploy/release execution, project mutation, or provider spend.",
     commandCenterVisible: true,
+    shippingPreviewLabel: shippingPreview.label,
+    shippingPreviewRows: shippingPreview.rows,
+    shippingPreviewSummary: shippingPreview.summary,
     readinessCards: [
       {
         label: "Manifest",

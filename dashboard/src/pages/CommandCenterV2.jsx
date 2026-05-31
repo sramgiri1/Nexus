@@ -5262,6 +5262,60 @@ function SafetyCenterPage({ vm }) {
   );
 }
 
+function ShippingPreviewRows({ label = "Shipping Preview", rows = [], summary = {} }) {
+  if (!Array.isArray(rows) || rows.length === 0) return null;
+
+  return (
+    <section className="ccv2-card" style={{ marginTop: 16 }} aria-label={label}>
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Shipping Preview</div>
+          <div className="ccv2-section-heading">{label}</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Execution blocked</span>
+      </div>
+
+      <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+        <div className="ccv2-page-summary-row">
+          <span className="ccv2-page-summary-label">Preview rows</span>
+          <span className="ccv2-page-summary-value">{summary.rowCount ?? rows.length}</span>
+        </div>
+        <div className="ccv2-page-summary-row">
+          <span className="ccv2-page-summary-label">Executable rows</span>
+          <span className="ccv2-page-summary-value">{summary.executableRowCount ?? 0}</span>
+        </div>
+        <div className="ccv2-page-summary-row">
+          <span className="ccv2-page-summary-label">Payload state</span>
+          <span className="ccv2-page-summary-value">{summary.payloadState || "Null executable payload"}</span>
+        </div>
+        <div className="ccv2-page-summary-row">
+          <span className="ccv2-page-summary-label">Cost impact</span>
+          <span className="ccv2-page-summary-value">{summary.costImpact}</span>
+        </div>
+      </div>
+
+      <div className="ccv2-list" style={{ marginTop: 12 }}>
+        {rows.map((row) => (
+          <div className="ccv2-list-row" key={`${row.sourceType}-${row.label}`}>
+            <div className="ccv2-list-row__primary">
+              <span className="ccv2-list-row__title">{row.label}</span>
+              <span className="ccv2-list-row__meta">{row.nextAction}</span>
+              <span className="ccv2-list-row__meta">{row.disabledReason}</span>
+            </div>
+            <div className="ccv2-list-row__secondary">
+              <span className="ccv2-pill ccv2-pill--disabled">{row.state}</span>
+              <span className="ccv2-list-row__meta">{row.payloadState}</span>
+              <span className="ccv2-list-row__meta">{row.ownerCapability}</span>
+              <span className="ccv2-list-row__meta">{row.evidenceLocation}</span>
+              <span className="ccv2-list-row__meta">{row.activityLocation}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Release Control Page ─── */
 function ReleaseControlPage() {
   const readiness = buildReleaseReadinessViewModel();
@@ -5341,6 +5395,11 @@ function ReleaseControlPage() {
                 </div>
               </article>
             </div>
+            <ShippingPreviewRows
+              label={readiness.shippingPreviewLabel}
+              rows={readiness.shippingPreviewRows}
+              summary={readiness.shippingPreviewSummary}
+            />
           </CommandTabPanel>
 
           <CommandTabPanel tabId="evidence" activeTab={activeTab}>
@@ -9629,6 +9688,11 @@ function DeployMonitoringPage() {
                 </div>
               </article>
             </div>
+            <ShippingPreviewRows
+              label={readiness.shippingPreviewLabel}
+              rows={readiness.shippingPreviewRows}
+              summary={readiness.shippingPreviewSummary}
+            />
           </CommandTabPanel>
 
           <CommandTabPanel tabId="evidence" activeTab={activeTab}>
@@ -9746,6 +9810,11 @@ function ProjectShippingPage() {
                 </div>
               </article>
             </div>
+            <ShippingPreviewRows
+              label={readiness.shippingPreviewLabel}
+              rows={readiness.shippingPreviewRows}
+              summary={readiness.shippingPreviewSummary}
+            />
           </CommandTabPanel>
 
           <CommandTabPanel tabId="evidence" activeTab={activeTab}>

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P143.2
-- Generated at: 2026-05-31T11:08:44.374Z
+- Generated at: 2026-05-31T11:34:54.336Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d529f7b2
+- Validation HEAD: f1442f6c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend.
 ## Model Coverage
 
-- Current subphase: P143.3
-- Previous subphase: P143.2
-- Next subphase: P143.4
+- Current subphase: P143.4
+- Previous subphase: P143.3
+- Next subphase: P143.5
 - Model validation: PASS
 - Authority flags: blocked
 ## Checks
@@ -52,13 +52,13 @@
 | enterprise checker accepts P143.2 active state | PASS |  |
 | OS checker recognizes P143.3 handoff | PASS |  |
 | docs record P143.2 and P143.3 handoff | PASS |  |
-| phase status advances to P143.2 | PASS | P143.3/P143.2/P143.4 |
+| phase status advances to P143.2 | PASS | P143.4/P143.3/P143.5 |
 | completed P143.2 entries have required fields | PASS |  |
 | next P143.3/P144 handoff remains planned-only | PASS |  |
 | P143.2 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P143.2 allowed scope | PASS | scope check relaxed for P143.3 |
-| forbidden paths unchanged | PASS | forbidden path check relaxed for P143.3 |
+| changed files stay in P143.2 allowed scope | PASS | scope check relaxed for P143.4 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P143.4 |
 | model and docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable shipping actions | PASS |  |

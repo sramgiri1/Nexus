@@ -19,6 +19,7 @@ const REPORT_PATH = "reports/p1433-release-deploy-export-package-pipeline-report
 const CONTRACT_PATH = "contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json";
 const PLAN_PATH = "docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1433-release-deploy-export-package-pipeline";
+const NEXT_SCRIPT = "check:p1434-release-deploy-export-package-pipeline";
 const EXPECTED_BASE_COMMIT = "8154a4b5";
 const EXPECTED_EXPORTS = [
   "RELEASE_DEPLOY_EXPORT_PACKAGE_PREVIEW_PHASE",
@@ -188,6 +189,7 @@ addCheck("contract records validation commands", VALIDATION_COMMANDS.every((comm
 addCheck("contract scope stays preview-only", /non-runnable preview/i.test(p1433.dataShape || "") && p1433.forbiddenFiles?.includes("dashboard/src/**") && p1433.forbiddenFiles?.includes("projects/**") && p1433.forbiddenFiles?.includes("deploy/**") && p1433.forbiddenFiles?.includes("release/**"));
 addCheck("P143.2 checker accepts P143.3 handoff", p1432Checker.includes("p1433CurrentState") && p1432Checker.includes('status.currentPhase === "P143.3"') && p1432Checker.includes(REQUIRED_SCRIPT));
 addCheck("enterprise checker accepts P143.3 active state", enterpriseChecker.includes("p1433CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
+addCheck("P143.3 checker records P143.4 handoff", checkerSource.includes("p1434CurrentState") && checkerSource.includes(NEXT_SCRIPT));
 addCheck("OS checker recognizes P143.4 handoff", osStatusChecker.includes('"P143.4"') && osStatusChecker.includes('"P143.7"'));
 addCheck("docs record P143.3 and P143.4 handoff", /## P143\.3 Deploy \/ Export \/ Package Preview[\s\S]*Status:\s+complete/.test(plan) && /P143\.3\s+Deploy \/ Export \/ Package Preview\s+is\s+complete/i.test(readme) && /P143\.3\s+shipping preview\s+is\s+complete/i.test(platformRoadmap) && /P143\.3 is now complete as a non-runnable shipping preview/i.test(enterpriseRoadmap) && (/P143\.4 is planned-only next/i.test(enterpriseRoadmap) || /P143\.4 is now complete/i.test(enterpriseRoadmap)));
 addCheck("phase status advances to P143.3", p1433CurrentState || p1434CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);

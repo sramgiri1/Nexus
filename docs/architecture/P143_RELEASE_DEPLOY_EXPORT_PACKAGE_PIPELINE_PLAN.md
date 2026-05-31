@@ -301,7 +301,8 @@ page results, docs/README/roadmap updates, OS phase status update, evidence
 records, safety confirmations, forbidden paths confirmation, known limitations,
 and next phase/subphase.
 
-Result: complete as non-runnable preview work only. P143.4 is planned-only next.
+Result: complete as non-runnable preview work only. P143.4 is now complete as
+display-only shipping Command Center UX.
 No release package creation, deploy start, rollback execution, export execution,
 package build, patch application, build/test execution, DB/runtime write,
 provider/model call, tool execution, MCP startup, agent dispatch, project
@@ -309,12 +310,114 @@ mutation, network call, or spend authority is enabled.
 
 ## P143.4 Shipping Command Center UX
 
-Status: planned
+Status: complete
 
 Narrow goal: update Release Control, Deploy Monitoring, and Project Shipping UX
 to show current state, next action, blockers, disabled reasons, owner
 capability, evidence/activity location, and cost impact without runnable
 actions.
+
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+from `f1442f6c`.
+
+Allowed files: package script, display-safe P143.4 UX projection helper, Release
+Control/Deploy Monitoring/Project Shipping view models, Command Center route
+renderer, focused route tests, P143.4 checker, P143.3 handoff checker,
+enterprise checker, P143 contract, docs/README/roadmap/status, and generated
+reports.
+
+Forbidden files: `projects/**`, `generated-projects/**`, private project roots,
+`db/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+`.env*`, provider/tool registries, runtime writers, deployers, releasers,
+exporters, package builders, rollback executors, build/test executors, and
+action buttons that can execute shipping work.
+
+Exact files/modules: `dashboard/src/data/releaseDeployExportPackageUx.js`,
+`dashboard/src/data/releaseReadiness.js`,
+`dashboard/src/data/deployMonitoringReadiness.js`,
+`dashboard/src/data/projectShippingReadiness.js`,
+`dashboard/src/pages/CommandCenterV2.jsx`,
+`dashboard/tests/routes.spec.js`,
+`scripts/check-p1434-release-deploy-export-package-pipeline.js`, P143 handoff
+checkers, P143 contract, OS phase status, README, platform/enterprise roadmap,
+and reports.
+
+Expected exports, schemas, and data shapes:
+`buildShippingPreviewUxRows`, `buildReleaseControlShippingPreviewUx`,
+`buildDeployMonitoringShippingPreviewUx`, and `buildProjectShippingPreviewUx`.
+Rows expose label, source type, state, next action, disabled reason, owner
+capability, evidence/activity location, cost impact, payload state, raw-payload
+visibility, and execution authority. Summaries expose row count, blocked row
+count, executable row count, payload state, visibility, and cost impact.
+
+Command Center UX requirements: Release Control shows release/package preview
+rows; Deploy Monitoring shows deploy/rollback preview rows; Project Shipping
+shows export/package/provenance preview rows. Each row is display-safe, disabled,
+zero-spend, and has concrete owner/evidence/activity/next-action context. Primary
+UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels
+outside OS Roadmap, DemoApp outside demo mode, private IDs, executable payloads,
+or fake runnable release/deploy/export/package actions.
+
+Dark/light/system theme requirements: preserve all three themes and route-wide
+navigation; validate with focused Playwright coverage across the three routes
+and existing route-wide safety tests.
+
+Playwright tests: add P143.4 coverage for the three shipping routes and OS
+Roadmap, preserving no-DemoApp, no raw dumps, no private IDs, disabled action,
+theme switcher, and sidebar safety assertions.
+
+Checker updates: add P143.4 checker; update P143.3 handoff checker and
+enterprise checker for P143.4 active state.
+
+Docs/README/roadmap updates: record P143.4 as complete, P143.5 as planned-only
+next, and P144/P145 as planned-only.
+
+Reports to regenerate: P143.4 report, P143.3 report, enterprise readiness
+report, OS phase status report, and phase validation coverage report.
+
+OS phase status update: P143 in progress; P143.1-P143.4 complete; previous
+P143.3; next P143.5 planned-only; P144 and P145 remain planned-only.
+
+Known risks: route copy could accidentally imply runnable release/deploy/export
+authority; checker and Playwright assertions guard against this.
+
+Rollback plan: revert the P143.4 commit and restore P143.3 status handoff,
+removing the P143.4 UX helper and route assertions.
+
+Validation commands:
+
+- `npm run check:p1434-release-deploy-export-package-pipeline`
+- `npm run check:p1433-release-deploy-export-package-pipeline`
+- `npm run check:p1432-release-deploy-export-package-pipeline`
+- `npm run check:p1431-release-deploy-export-package-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P143.4|Release Control|Deploy Monitoring|Project Shipping|Command Center route-wide UX"`
+- `git diff --check`
+
+Git add/commit/push commands:
+
+- `git add <P143.4 allowed files>`
+- `git commit -m "feat(nexus): wire p1434 shipping ux"`
+- `git add <P143.4 stamp files and refreshed reports>`
+- `git commit -m "chore(nexus): stamp p1434 shipping ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist: branch name, commit hash, files changed, what was
+implemented, Command Center UX changes, tests added/updated/removed, checker
+results, dashboard build/unit/page results, docs/README/roadmap updates, OS
+phase status update, evidence/activity/cost records, safety confirmations,
+forbidden paths confirmation, known limitations, and next phase/subphase.
+
+Result: complete as display-only Command Center UX. P143.5 is planned-only next.
+No release package creation, deploy start, rollback execution, export execution,
+package build, patch application, build/test execution, DB/runtime write,
+provider/model call, tool execution, MCP startup, agent dispatch, project
+mutation, network call, or spend authority is enabled.
 
 ## P143.5 Tests / Checkers
 
