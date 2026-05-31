@@ -3226,7 +3226,8 @@ complete. P142.7 final validation is complete. P142 is complete. P143.1
 release pipeline contract is complete. P143.2 release model is complete.
 P143.3 shipping preview is complete. P143.4 shipping Command Center UX is complete.
 P143.5 Tests / Checkers is complete as aggregate shipping coverage hardening.
-P143.6 docs/status closure is complete. P143.7-P145 remain planned-only.
+P143.6 docs/status closure is complete. P143.7 final validation is complete.
+P143 is complete. P144-P145 remain planned-only.
 They cover
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3687,8 +3688,8 @@ is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure
 is complete. P142.7 final validation is complete. P143.1 release pipeline
 contract is complete. P143.2 release model is complete; P143.3 shipping preview
 is complete. P143.4 shipping Command Center UX is complete. P143.5 Tests /
-Checkers is complete. P143.6 docs/status closure is complete. P143.7 is
-planned-only next.
+Checkers is complete. P143.6 docs/status closure is complete. P143.7 final
+validation is complete. P144 is planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

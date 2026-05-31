@@ -1,15 +1,15 @@
 {
   "phaseId": "P143",
   "title": "Release, Deploy, Export, and Package Pipeline",
-  "status": "in_progress",
-  "currentSubphase": "P143.6",
-  "previousSubphase": "P143.5",
-  "nextSubphase": "P143.7",
+  "status": "complete",
+  "currentSubphase": "P143.7",
+  "previousSubphase": "P143.6",
+  "nextSubphase": "P144",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "56dc6cbd",
-  "summary": "P143 release, deploy, export, and package pipeline is in progress with P143.1-P143.6 complete and P143.7 planned-only next.",
-  "detail": "P143.6 closes P143 docs, roadmap, OS phase status, checker handoff, report freshness, and final validation handoff while all shipping authority remains blocked.",
+  "summary": "P143 release, deploy, export, and package pipeline is complete with P143.1-P143.7 complete and P144 planned-only next.",
+  "detail": "P143.7 closes P143 final validation, prior evidence verification, Command Center route safety, and safe P144 handoff while all shipping authority remains blocked.",
   "allowedFiles": [
     "package.json",
     "scripts/check-p1436-release-deploy-export-package-pipeline-docs-roadmap.js",
@@ -1382,10 +1382,10 @@
     {
       "phaseId": "P143.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "startingBranch": "",
-      "expectedBaseCommit": "after-P143.6",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "a9d13072",
       "narrowGoal": "Close P143 with final validation evidence, prior report verification, P143 complete status, and safe planned-only P144 handoff.",
       "requiredPlanFields": [
         "narrow scope",
@@ -1408,17 +1408,161 @@
       "track": "NEXUS_OS",
       "label": "Final Validation",
       "order": 179.7,
-      "branch": "",
-      "commit": "",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "a9d13072",
       "previousPhase": "P143.6",
       "nextPhase": "P144",
-      "detail": "P143.7 is planned-only until its own implementation-grade plan is written.",
-      "summary": "Planned final validation for P143.",
-      "checksRun": [],
-      "knownLimitations": [
-        "P143.7 remains planned-only until its own implementation-grade plan is written. It must not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, use network calls, or spend."
+      "detail": "P143.7 is final validation only. It closes P143 release/deploy/export/package governance while all shipping execution authority remains blocked.",
+      "summary": "Closed P143 final validation with prior report verification, route-wide Command Center safety coverage, P143 complete status, and P144 planned-only handoff.",
+      "checksRun": [
+        "npm run check:p1437-release-deploy-export-package-pipeline-final-validation",
+        "npm run check:p1436-release-deploy-export-package-pipeline-docs-roadmap",
+        "npm run check:p1435-release-deploy-export-package-pipeline",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P143.7|Command Center route-wide UX\"",
+        "git diff --check"
       ],
-      "commandCenterVisible": true
+      "knownLimitations": [
+        "P143.7 is final validation only. It does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend.",
+        "P144 remains planned-only until its own implementation-grade plan is written."
+      ],
+      "commandCenterVisible": true,
+      "completedAt": "2026-05-31T12:30:00.000Z",
+      "allowedFiles": [
+        "package.json",
+        "scripts/check-p1435-release-deploy-export-package-pipeline.js",
+        "scripts/check-p1437-release-deploy-export-package-pipeline-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json",
+        "docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p1435-release-deploy-export-package-pipeline-report.md",
+        "reports/p1436-release-deploy-export-package-pipeline-docs-roadmap-report.md",
+        "reports/p1437-release-deploy-export-package-pipeline-final-validation-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "dashboard/src/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "scripts/check-p1435-release-deploy-export-package-pipeline.js",
+        "scripts/check-p1437-release-deploy-export-package-pipeline-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json",
+        "docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p1435-release-deploy-export-package-pipeline-report.md",
+        "reports/p1436-release-deploy-export-package-pipeline-docs-roadmap-report.md",
+        "reports/p1437-release-deploy-export-package-pipeline-final-validation-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "P143.7 adds final-validation status and report metadata over P143.1-P143.6 evidence, prior report pass status, roadmap/status closure, route assertions, and safety wording. It has no runtime export, DB schema, mutation payload, executable payload, provider call, network call, or spend data shape.",
+      "commandCenterUxRequirements": [
+        "OS Roadmap shows P143.7 final validation complete and P144 planned-only next.",
+        "Release Control, Deploy Monitoring, and Project Shipping stay display-only with current state, next action, blockers, disabled reason, owner, evidence/activity location, and zero-spend cost impact.",
+        "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, DemoApp, or raw private project IDs."
+      ],
+      "themeRequirements": [
+        "Preserve dark theme readability.",
+        "Preserve light theme readability.",
+        "Preserve system theme behavior.",
+        "Do not add theme-specific layout shifts or stale labels."
+      ],
+      "playWrightTests": [
+        "Add P143.7 final validation display-only coverage to dashboard/tests/routes.spec.js.",
+        "Run focused P143.7 and route-wide Command Center coverage."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1437-release-deploy-export-package-pipeline-final-validation.js using shared report helpers.",
+        "Register npm run check:p1437-release-deploy-export-package-pipeline-final-validation.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P143.7 final-state compatibility.",
+        "Update scripts/check-os-phase-status.js to recognize the P144 handoff.",
+        "Update the P143.5 checker to accept the P143.7/P144 final-validation roadmap handoff."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P143 plan with P143.7 complete and P144 planned-only next.",
+        "Update README, platform roadmap, enterprise roadmap, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, os phase status report, phase validation coverage report, P143.6 report, and P143.7 report.",
+        "Regenerate the P143.5 report as part of final validation handoff checks."
+      ],
+      "osPhaseStatusUpdate": "P143 complete; P143.1-P143.7 complete; previous P143.6; next P144 planned-only.",
+      "validationCommands": [
+        "npm run check:p1437-release-deploy-export-package-pipeline-final-validation",
+        "npm run check:p1436-release-deploy-export-package-pipeline-docs-roadmap",
+        "npm run check:p1435-release-deploy-export-package-pipeline",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P143.7|Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No release package creation, deploy start, rollback execution, export execution, package build, patch application, build/test execution, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, network calls, or spend.",
+        "No DemoApp leakage in full Command Center.",
+        "No raw JSON/log/policy dumps or raw private IDs in primary UX.",
+        "No stale phase status or pending-final-commit markers.",
+        "No forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <P143.7 allowed files>",
+        "git commit -m \"feat(nexus): close p143 release pipeline validation\"",
+        "git add <P143.7 stamp files and refreshed reports>",
+        "git commit -m \"chore(nexus): stamp p1437 release pipeline validation\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "branch name",
+        "commit hash",
+        "files changed",
+        "what was implemented",
+        "Command Center UX changes",
+        "tests added/updated/removed",
+        "checker results",
+        "dashboard build/unit/page results",
+        "docs/README/roadmap updates",
+        "OS phase status update",
+        "evidence/audit/activity/cost records if applicable",
+        "safety confirmations",
+        "forbidden paths confirmation",
+        "known limitations",
+        "next phase/subphase"
+      ]
     }
   ],
   "current": {
@@ -1433,8 +1577,8 @@
     "phaseId": "P143.5",
     "title": "Tests / Checkers"
   },
-  "commit": "c5b4d467",
-  "completedAt": "2026-05-31T12:10:30.000Z",
+  "commit": "a9d13072",
+  "completedAt": "2026-05-31T12:30:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
     "npm run check:p1433-release-deploy-export-package-pipeline",

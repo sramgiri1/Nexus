@@ -2032,7 +2032,8 @@ The Command Center and local operator surface have:
   Package Pipeline Contract is complete. P143.2 Release Model is complete and
   P143.3 Deploy / Export / Package Preview is complete. P143.4 Shipping Command
   Center UX is complete. P143.5 Tests / Checkers is complete. P143.6 Docs /
-  Roadmap / Status is complete. P143.7 is planned-only next.
+  Roadmap / Status is complete. P143.7 Final Validation is complete; P143 is
+  complete. P144 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2548,7 +2549,8 @@ The Command Center and local operator surface have:
   provider/model calls, tool execution, network calls, and spend remain
   unavailable. P143.4 is complete as display-only shipping Command Center UX;
   P143.5 is complete as aggregate tests/checkers only. P143.6 is complete as
-  docs/status closure. P143.7 is planned-only next.
+  docs/status closure. P143.7 is complete as final validation only. P144 is
+  planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2567,6 +2569,13 @@ The Command Center and local operator surface have:
   planned-only final validation handoff without enabling release, deploy,
   rollback, export, package, build/test, DB/runtime write, provider/tool/agent,
   project mutation, network, or spend authority.
+- P143.7 Final Validation is complete: Closed P143 with prior report
+  verification, route-wide Command Center safety coverage, P143 complete status,
+  and P144 planned-only handoff. Release package creation, deploy start,
+  rollback execution, export execution, package build, patch application,
+  build/test execution, DB/runtime writes, provider/model calls, tool execution,
+  MCP startup, agent dispatch, project mutation, network calls, and spend remain
+  blocked.
 
 ## CareLoop Project Progress
 

@@ -527,7 +527,70 @@ mutation, network call, or spend authority is enabled.
 
 ## P143.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: close P143 with final validation evidence, prior report
 verification, P143 complete status, and safe planned-only P144 handoff.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Allowed files: package script, P143.5 compatibility checker, P143.7 final validation checker, enterprise
+roadmap checker, OS phase status checker, Command Center route tests, P143 contract, this plan,
+enterprise roadmap, platform roadmap, README, OS phase status, phase index, and
+generated P143.5/P143.6/P143.7/enterprise/OS/phase-validation reports.
+
+Forbidden files: project source files, CareLoop files, generated project files,
+dashboard runtime source, DB/runtime state, providers, tools, worker runtime,
+deploy/release/export/package directories, and environment files.
+
+Reuse check: reused shared report writer/check formatter, existing route-wide
+safety tests, existing OS phase status shape, and existing P143.6/P142.7 final
+validation patterns. No duplicate report writer, mode guard, redaction helper,
+result envelope, route matrix, status updater, or UI component was added.
+
+Expected exports/schemas/data shapes: final-validation metadata and markdown
+report only. There is no runtime export, DB schema, executable payload,
+provider call payload, network payload, or spend payload.
+
+Command Center UX: OS Roadmap shows P143.7 final validation complete and P144
+planned-only next. Release Control, Deploy Monitoring, and Project Shipping
+remain display-only with current state, next action, blockers, disabled reason,
+owner, evidence/activity location, and zero-spend cost impact.
+
+Dark/light/system theme requirements: route-wide coverage continues to verify
+global theme behavior. P143.7 does not add visual components or theme-specific
+styles.
+
+Playwright tests: added focused route-wide coverage that verifies P143.7 closes
+P143, keeps shipping pages display-only, keeps disabled shipping actions
+disabled, avoids internal phase labels outside OS Roadmap, and shows P144 as the
+planned-only handoff.
+
+Checker updates: added
+`check:p1437-release-deploy-export-package-pipeline-final-validation` and
+updated enterprise roadmap validation to accept P143.7 final state.
+
+Docs/README/roadmap updates: updated this plan, README, platform roadmap,
+enterprise roadmap, OS phase status, phase index, and regenerated reports.
+
+Validation:
+
+- `npm run check:p1437-release-deploy-export-package-pipeline-final-validation`
+- `npm run check:p1436-release-deploy-export-package-pipeline-docs-roadmap`
+- `npm run check:p1435-release-deploy-export-package-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P143.7|Command Center route-wide UX"`
+- `git diff --check`
+
+OS phase status: P143 complete; P143.1-P143.7 complete; previous P143.6; next
+P144 planned-only.
+
+Result: complete as final validation only. P144 is planned-only next. No
+release package creation, deploy start, rollback execution, export execution,
+package build, patch application, build/test execution, DB/runtime write,
+provider/model call, tool execution, MCP startup, agent dispatch, project
+mutation, network call, or spend authority is enabled.

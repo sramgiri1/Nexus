@@ -82,8 +82,9 @@ P143.3 is now complete as a non-runnable shipping preview.
 P143.4 is now complete as display-only shipping Command Center UX.
 P143.5 is now complete as aggregate tests/checkers only.
 P143.6 is now complete as docs/status closure only.
-P143.7 is planned-only next.
-P143.7-P145 remain planned-only. They do not enable secret
+P143.7 is now complete as final validation only. P143 is complete.
+P144 is planned-only next.
+P144-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -213,8 +214,9 @@ P143.3 is now complete as a non-runnable shipping preview.
 P143.4 is now complete as display-only shipping Command Center UX.
 P143.5 is now complete as aggregate tests/checkers only.
 P143.6 is now complete as docs/status closure only.
-P143.7 is planned-only next.
-P143.7-P145 are planned-only backlog phases and must not be
+P143.7 is now complete as final validation only. P143 is complete.
+P144 is planned-only next.
+P144-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
@@ -231,6 +233,7 @@ Required validation for this roadmap update:
 - `npm run check:p1431-release-deploy-export-package-pipeline`
 - `npm run check:p1435-release-deploy-export-package-pipeline`
 - `npm run check:p1436-release-deploy-export-package-pipeline-docs-roadmap`
+- `npm run check:p1437-release-deploy-export-package-pipeline-final-validation`
 - `npm run check:p1417-security-privacy-compliance-controls-final-validation`
 - `npm run check:enterprise-readiness-roadmap`
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`

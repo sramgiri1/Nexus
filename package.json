@@ -811,7 +811,8 @@
     "check:p1433-release-deploy-export-package-pipeline": "node scripts/check-p1433-release-deploy-export-package-pipeline.js",
     "check:p1434-release-deploy-export-package-pipeline": "node scripts/check-p1434-release-deploy-export-package-pipeline.js",
     "check:p1435-release-deploy-export-package-pipeline": "node scripts/check-p1435-release-deploy-export-package-pipeline.js",
-    "check:p1436-release-deploy-export-package-pipeline-docs-roadmap": "node scripts/check-p1436-release-deploy-export-package-pipeline-docs-roadmap.js"
+    "check:p1436-release-deploy-export-package-pipeline-docs-roadmap": "node scripts/check-p1436-release-deploy-export-package-pipeline-docs-roadmap.js",
+    "check:p1437-release-deploy-export-package-pipeline-final-validation": "node scripts/check-p1437-release-deploy-export-package-pipeline-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
