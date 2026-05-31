@@ -53,8 +53,9 @@ P139.4 is now complete as read-only Observability Command Center UX only.
 P139.5 is now complete as aggregate tests/checkers only.
 P139.6 is now complete as docs/roadmap/status closure only.
 P139.7 is now complete as final validation only. P139 is complete.
-P140.1 is now complete as contract/policy/safety-boundary only. P140.2 is the next executable subphase.
-P140.2 and P141-P145 remain planned-only. They
+P140.1 is now complete as contract/policy/safety-boundary only.
+P140.2 is now complete as read-only backup and retention model only. P140.3 is the next executable subphase.
+P140.3 and P141-P145 remain planned-only. They
 do not enable secret values, backup creation, restore execution, failover,
 DB writes, provider/model calls, tool execution, agent dispatch, project
 mutation, patch application, build/test execution, rollback execution, deploy,
@@ -153,8 +154,9 @@ P139.4 is now complete as read-only Observability Command Center UX only.
 P139.5 is now complete as aggregate tests/checkers only.
 P139.6 is now complete as docs/roadmap/status closure only.
 P139.7 is now complete as final validation only. P139 is complete.
-P140.1 is now complete as contract/policy/safety-boundary only. P140.2 is the next executable subphase.
-P140.2 and P141-P145 are
+P140.1 is now complete as contract/policy/safety-boundary only.
+P140.2 is now complete as read-only backup and retention model only. P140.3 is the next executable subphase.
+P140.3 and P141-P145 are
 planned-only backlog phases and must not be treated as complete
 or live.
 

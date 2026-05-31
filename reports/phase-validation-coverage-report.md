@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-31T01:10:32.328Z
+- Generated at: 2026-05-31T01:27:26.178Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2b630411
+- Validation HEAD: 81a5dce4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -613,9 +613,10 @@
 | P139.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P139.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P139.7 validation coverage | PASS | 54 checkers, 45 reports |
-| P140 validation coverage | PASS | 5 checkers, 1 reports |
+| P140 validation coverage | PASS | 7 checkers, 2 reports |
 | P140.1 validation coverage | PASS | 4 checkers, 1 reports |
-| P140.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P140.2 validation coverage | PASS | 5 checkers, 1 reports |
+| P140.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P141 validation coverage | PASS | dedicated_checker, validation_report |
 | P142 validation coverage | PASS | dedicated_checker, validation_report |
 | P143 validation coverage | PASS | dedicated_checker, validation_report |
@@ -623,14 +624,14 @@
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P140.1; next=P140.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P140.2; next=P140.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P140.2 Backup and Retention Model
+- P140.3 Restore Preview
   - status: planned
   - checkers: 0
   - reports: 0
@@ -662,4 +663,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (608/608)
+PASS (609/609)

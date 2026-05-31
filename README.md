@@ -2015,7 +2015,8 @@ The Command Center and local operator surface have:
   complete. P139.4 Observability Command Center UX is complete. P139.5
   tests/checkers is complete. P139.6 docs/roadmap/status closure is complete.
   P139.7 final validation is complete. P140.1 backup, recovery, DR, and
-  retention contract is complete; P140.2 is planned-only next.
+  retention contract is complete. P140.2 backup and retention model is
+  complete; P140.3 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2389,6 +2390,16 @@ The Command Center and local operator surface have:
   tool execution, MCP startup, agent dispatch, project mutation, deploy,
   release, export, package, network calls, and spend remain unavailable until a
   later subphase explicitly allows them.
+- P140.2 backup and retention model: Added the read-only Backup / DR model
+  with display-safe backup records, retention policies, restore drill
+  summaries, recovery runbook summaries, safety flags, evidence/activity refs,
+  and zero-spend cost impact. It reuses the existing Backup / DR preview
+  contracts, retention policy helper, mode guard, redaction helper, result
+  envelope, and checker/report helpers. P140.3 is planned-only next; backup
+  creation, restore execution, failover, overwrite, delete, prune, DB/runtime
+  writes, provider/model calls, tool execution, MCP startup, agent dispatch,
+  project mutation, deploy, release, export, package, network calls, and spend
+  remain unavailable until a later subphase explicitly allows them.
 
 ## CareLoop Project Progress
 

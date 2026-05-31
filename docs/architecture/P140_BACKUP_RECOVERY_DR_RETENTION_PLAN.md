@@ -210,23 +210,177 @@ Final response checklist:
 
 ## P140.2 Backup and Retention Model
 
-Status: planned
+Status: complete
 
 Narrow goal: Add a read-only backup and retention model for display-safe
 enterprise reliability planning without enabling backup creation, restore
 execution, prune/delete, DB/runtime writes, provider/model calls, agent
 dispatch, project mutation, deploy, network, or spend.
 
-Allowed files: P140 contract, shared read-only model, P140.2 checker, package
-script, docs, roadmap/status files, and generated reports.
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit: `81a5dce4`
+
+Allowed files:
+
+- `package.json`
+- `shared/backupRecoveryDrRetentionModel.js`
+- `contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json`
+- `scripts/check-p1401-backup-recovery-dr-retention.js`
+- `scripts/check-p1402-backup-recovery-dr-retention.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1401-backup-recovery-dr-retention-report.md`
+- `reports/p1402-backup-recovery-dr-retention-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
 
 Forbidden files: `projects/**`, `generated-projects/**`, private project roots,
 dashboard source/tests unless P140.2 explicitly scopes them, DB/runtime write
 paths, provider/tool/worker/deploy/release/export/package/env paths.
 
-Validation: P140.2 checker, P140.1 checker compatibility, enterprise roadmap
-checker, OS status checker, phase coverage, dashboard build/unit, route-wide
-Command Center Playwright, and `git diff --check`.
+Expected exports, schemas, and data shapes:
+
+- `BACKUP_RECOVERY_DR_RETENTION_PHASE`
+- `BACKUP_RECOVERY_DR_RETENTION_VERSION`
+- `BACKUP_RECOVERY_DR_RETENTION_SAFETY_FLAG_NAMES`
+- `buildBackupRecoveryDrRetentionBackupRecord`
+- `validateBackupRecoveryDrRetentionBackupRecord`
+- `buildBackupRecoveryDrRetentionPolicy`
+- `validateBackupRecoveryDrRetentionPolicy`
+- `buildBackupRecoveryDrRetentionModel`
+- `validateBackupRecoveryDrRetentionModel`
+- `buildBackupRecoveryDrRetentionEnvelope`
+- Data shape: read-only `backupRecords`, `retentionPolicies`,
+  `restoreDrills`, `recoveryRunbooks`, `readinessSummary`, `safetyFlags`,
+  `disabledReason`, `nextAction`, `evidenceRefs`, `activityRefs`, and
+  zero-spend `costImpact`.
+
+Command Center UX requirements:
+
+- No Command Center source changes in P140.2.
+- Preserve existing Backup / DR display-only route.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw storage locations,
+  raw private project IDs, DemoApp, or fake runnable backup, restore, failover,
+  overwrite, delete, or prune actions.
+- P140.4 will consume the model for UX improvements.
+
+Dark/light/system theme requirements:
+
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate through existing Backup / DR and route-wide Command Center
+  Playwright coverage.
+
+Safety rules:
+
+- Do not create backups in P140.2.
+- Do not execute restores, failovers, overwrites, deletes, or prune actions in
+  P140.2.
+- Do not write DB/runtime state in P140.2.
+- Do not call providers or models in P140.2.
+- Do not execute tools, start MCP servers, dispatch agents, mutate project
+  files, apply patches, run project builds/tests, execute rollbacks, deploy,
+  release, export, package, use network calls, or spend in P140.2.
+
+Reuse check:
+
+- Reuse `shared/resultEnvelope.js`.
+- Reuse `shared/modeGuard.js`.
+- Reuse `shared/redaction.js`.
+- Reuse `shared/reportWriter.js`.
+- Reuse `shared/checkResultFormatter.js`.
+- Reuse `backup-dr/p75-2-placeholder.js`, `backup-dr/p75-3-placeholder.js`,
+  and `backup-dr/p75-4-placeholder.js` as display-only prior art.
+- Reuse `ai-recovery/retentionPolicy.js` for retention policy normalization.
+
+Tests/checkers:
+
+- Add `scripts/check-p1402-backup-recovery-dr-retention.js`.
+- Update `scripts/check-p1401-backup-recovery-dr-retention.js` to accept the
+  P140.2 current state.
+- Update enterprise roadmap checker to accept the P140.2 handoff.
+- Update OS phase status checker to accept P140.3 as next.
+
+Docs/roadmap:
+
+- Update this P140 plan.
+- Update README.
+- Update platform roadmap.
+- Update enterprise readiness roadmap.
+- Update OS phase status and phase index.
+- Regenerate P140.1, P140.2, enterprise readiness, OS status, and phase
+  validation reports.
+
+OS phase status update:
+
+- P140 remains in progress.
+- P140.1 remains complete.
+- P140.2 is complete.
+- Current phase/subphase is P140.2.
+- Previous phase/subphase is P140.1.
+- Next phase/subphase is P140.3.
+- P140.3-P140.7 remain planned-only.
+
+Validation commands:
+
+- `npm run check:p1402-backup-recovery-dr-retention`
+- `npm run check:p1401-backup-recovery-dr-retention`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Backup DR"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+
+- No project/private files changed.
+- No dashboard source/test changes in P140.2.
+- No backup creation, restore execution, failover, overwrite, delete, prune,
+  DB/runtime writes, provider/model calls, tool execution, MCP startup, agent
+  dispatch, project mutation, deploy, release, export, package, network calls,
+  or spend.
+- No raw/private IDs, raw JSON/log/policy/storage dumps, DemoApp leakage, stale
+  labels, fake runnable actions, or unsafe positive claims.
+- P140.3 remains planned-only.
+
+Git commands:
+
+- `git add <P140.2 allowed files>`
+- `git commit -m "chore(nexus): implement p1402 backup recovery dr retention"`
+- `git add <P140.2 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1402 backup recovery dr retention"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX preservation
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ## P140.3 Restore Preview
 
