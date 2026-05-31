@@ -10279,6 +10279,49 @@ function CompliancePage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="preview" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="Compliance security preview summary">
+              <div className="ccv2-section-heading">Security Preview Summary</div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview rows</span><span className="ccv2-page-summary-value">{readiness.compliancePreviewSummary.previewRowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{readiness.compliancePreviewSummary.blockedRowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runnable actions</span><span className="ccv2-page-summary-value">{readiness.compliancePreviewSummary.runnableActionCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed authority</span><span className="ccv2-page-summary-value">{readiness.authoritySummary.allowedAuthorityCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.compliancePreviewSummary.nextAction}</span></div>
+              </div>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--2" style={{ marginTop: 16 }}>
+              {readiness.compliancePreviewSections.map((section) => (
+                <article className="ccv2-card" key={section.label}>
+                  <div className="ccv2-section-heading">{section.label}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{section.rowCount} rows · {section.blockedCount} blocked</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{section.nextAction}</span></div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--2" style={{ marginTop: 16 }}>
+              {readiness.compliancePreviewRows.map((row) => (
+                <article className="ccv2-card" key={`${row.type}-${row.label}`}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--amber">{row.blockedState}</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Type</span><span className="ccv2-page-summary-value">{row.type}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">State</span><span className="ccv2-page-summary-value">{row.currentState}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{row.owner}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{row.nextAction}</span></div>
+                  </div>
+                  <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                    {row.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="posture" activeTab={activeTab}>
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Compliance Posture</div>

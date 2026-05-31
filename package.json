@@ -794,7 +794,8 @@
     "check:p1407-backup-recovery-dr-final-validation": "node scripts/check-p1407-backup-recovery-dr-final-validation.js",
     "check:p1411-security-privacy-compliance-controls": "node scripts/check-p1411-security-privacy-compliance-controls.js",
     "check:p1412-security-privacy-compliance-controls": "node scripts/check-p1412-security-privacy-compliance-controls.js",
-    "check:p1413-security-privacy-compliance-controls": "node scripts/check-p1413-security-privacy-compliance-controls.js"
+    "check:p1413-security-privacy-compliance-controls": "node scripts/check-p1413-security-privacy-compliance-controls.js",
+    "check:p1414-security-privacy-compliance-controls": "node scripts/check-p1414-security-privacy-compliance-controls.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

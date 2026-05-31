@@ -676,12 +676,227 @@ Final response checklist:
 
 ## P141.4 Compliance Command Center UX
 
-Status: planned
+Status: complete
 
-P141.4 owns any future Command Center UX changes for P141-specific control
-readiness. It must preserve dark/light/system themes, route-wide navigation,
-no demo surface leakage, no raw dump exposure, and no runnable
-compliance/security controls.
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and base: `codex/nexus-e2e-phase-validation` at `941cc5d6`.
+
+Narrow goal: Surface the P141.3 security/privacy/compliance preview in the
+Compliance Command Center page without runnable compliance/security actions.
+
+Allowed files:
+
+- `package.json`
+- `dashboard/src/data/complianceReadiness.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json`
+- `scripts/check-p1414-security-privacy-compliance-controls.js`
+- `scripts/check-p1413-security-privacy-compliance-controls.js`
+- `scripts/check-p1412-security-privacy-compliance-controls.js`
+- `scripts/check-p1411-security-privacy-compliance-controls.js`
+- `scripts/check-p1407-backup-recovery-dr-final-validation.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- P141.4, P141.3, P141.2, P141.1, P140.7, enterprise readiness, OS status,
+  and phase validation reports.
+
+Forbidden files:
+
+- `projects/**`
+- `generated-projects/**`
+- private project roots
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- non-Compliance dashboard pages
+
+Exact files/modules created or updated:
+
+- `dashboard/src/data/complianceReadiness.js` consumes the P141.3 preview and
+  exposes sanitized `compliancePreviewRows`, `compliancePreviewSections`,
+  `compliancePreviewSummary`, and `authoritySummary`.
+- `dashboard/src/data/commandCenterTabs.js` adds the Compliance Security
+  Preview tab.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the Security Preview tab.
+- `dashboard/tests/routes.spec.js` validates the Compliance preview UX and
+  safety boundaries.
+- `scripts/check-p1414-security-privacy-compliance-controls.js` validates data,
+  UI wiring, Playwright coverage, docs/status handoff, and forbidden-path
+  scope.
+
+Expected exports, schemas, and data shapes:
+
+- `buildComplianceReadinessViewModel()` now returns:
+  `compliancePreviewRows`, `compliancePreviewSections`,
+  `compliancePreviewSummary`, `authoritySummary`, and expanded
+  `disabledActions`.
+- No DB schema or migration added.
+- No runtime authority exports added.
+
+Command Center UX requirements:
+
+- Compliance page includes a read-only Security Preview tab.
+- The tab shows preview summary, blocked row count, runnable action count,
+  allowed authority count, preview sections, row labels, current states,
+  blockers, owner, and next action.
+- Primary UX must not show raw JSON, raw logs, raw policy dumps, raw private
+  IDs, credential values, internal phase labels, or demo surfaces.
+- Disabled Actions includes policy enforcement and credential handling reasons.
+
+Dark/light/system theme requirements:
+
+- Preserve System theme.
+- Preserve Dark theme.
+- Preserve Light theme.
+- Validate the Compliance route across dark, light, and system theme.
+
+Safety rules:
+
+- Do not certify compliance, sign legal attestations, export audits, export
+  raw logs, create compliance packages, enforce policy at runtime, handle
+  credentials, expose raw data, write DB/runtime state, run live CRUD, call
+  providers/models, execute tools, start MCP servers, dispatch agents, mutate
+  projects, deploy, release, export, package, use network calls, or spend.
+- Do not expose raw preview refs, raw model IDs, raw payloads, credential
+  values, storage/export URLs, or internal phase labels in primary UX.
+
+Reuse check:
+
+- Reuse `shared/securityPrivacyCompliancePreview.js`.
+- Reuse existing Compliance data model and Command Center tab shell.
+- Reuse existing Command Center card/list/summary components.
+- Reuse `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+- Do not duplicate report writers, checker formatters, redaction helpers, mode
+  guards, result envelopes, route matrices, UI cards/tabs/status components, or
+  activity/evidence/audit appenders.
+
+Playwright tests:
+
+- Update the existing Compliance route test to cover Security Preview Summary.
+- Verify representative security, privacy, evidence, policy, and data rows.
+- Verify expanded disabled actions.
+- Verify no raw dumps, private IDs, phase labels, or fake runnable actions.
+- Preserve route-wide Command Center safety coverage.
+
+Checker updates:
+
+- Add `scripts/check-p1414-security-privacy-compliance-controls.js`.
+- Update P141.3, P141.2, P141.1, and P140.7 compatibility checkers for P141.4
+  current-state handoff.
+- Update enterprise readiness checker for P141.4 current state.
+- Update `scripts/check-os-phase-status.js` so P141.5 is a valid next phase.
+
+Docs/README/roadmap updates:
+
+- `README.md` records P141.4 complete.
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md` records P141.4 complete and
+  P141.5 planned-only next.
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md` records P141.4
+  complete and P141.5 as the next executable subphase.
+- `os-roadmap/nexus-phases.json` and `os-roadmap/phase-status.json` record
+  P141 in progress, P141.4 complete, previous P141.3, and next P141.5.
+
+Reports to regenerate:
+
+- `reports/p1414-security-privacy-compliance-controls-report.md`
+- `reports/p1413-security-privacy-compliance-controls-report.md`
+- `reports/p1412-security-privacy-compliance-controls-report.md`
+- `reports/p1411-security-privacy-compliance-controls-report.md`
+- `reports/p1407-backup-recovery-dr-final-validation-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update:
+
+- P141 remains in progress.
+- P141.4 complete.
+- Current phase/subphase is P141.4.
+- Previous phase/subphase is P141.3.
+- Next phase/subphase is P141.5 planned-only.
+
+Known risks:
+
+- P141.4 is UI-only and must not be mistaken for live compliance,
+  certification, attestation, export, package generation, or policy
+  enforcement.
+- The Compliance page must remain clean and focused on compliance-specific
+  information.
+
+Rollback plan:
+
+- Revert the P141.4 implementation commit and stamp commit.
+- Remove the P141.4 package script and report.
+- Restore P141.4 to planned and P141.3 as current.
+- Rerun P141.3 validation commands.
+
+Validation commands:
+
+- `npm run check:p1414-security-privacy-compliance-controls`
+- `npm run check:p1413-security-privacy-compliance-controls`
+- `npm run check:p1412-security-privacy-compliance-controls`
+- `npm run check:p1411-security-privacy-compliance-controls`
+- `npm run check:p1407-backup-recovery-dr-final-validation`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Compliance|Auth Governance|safety center|Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+
+- No project or private project root files changed.
+- Only Compliance dashboard files changed.
+- No demo surface leakage.
+- No raw/private IDs, raw dumps, storage/export URLs, or internal phase labels
+  in primary UX.
+- No certification, attestation, export, policy enforcement, DB/runtime write,
+  provider/model/tool/agent/project/deploy/release/package/network/spend
+  authority enabled.
+- No stale `pending-final-commit` marker remains after stamp commit.
+
+Git add/commit/push commands:
+
+- `git add <P141.4 allowed files>`
+- `git commit -m "chore(nexus): implement p1414 compliance command center ux"`
+- `git add <P141.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1414 compliance command center ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ## P141.5 Tests / Checkers
 

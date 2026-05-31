@@ -2689,18 +2689,30 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await expect(page.locator("body")).toContainText("Compliance readiness is display-only");
+    await commandTab(page, "Security Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Security Preview Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Preview rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Runnable actions");
+    await expect(activeCommandTabPanel(page)).toContainText("Security control: identity");
+    await expect(activeCommandTabPanel(page)).toContainText("Privacy boundary: founder input");
+    await expect(activeCommandTabPanel(page)).toContainText("Evidence posture: internal control");
+    await expect(activeCommandTabPanel(page)).toContainText("Policy enforcement gate");
+    await expect(activeCommandTabPanel(page)).toContainText("Data handling: business plan");
     await commandTab(page, "Disabled Actions").click();
     await expect(activeCommandTabPanel(page)).toContainText("Certification disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Legal attestation disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Audit export disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Package creation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Policy enforcement disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Credential handling disabled");
 
     const body = await page.locator("body").innerText();
     expect(body).not.toMatch(/certify now|sign attestation|legal sign|export audit|download package|create package|execute now/i);
     expect(body).not.toContain("DemoApp");
     expect(body).not.toContain("raw JSON");
     expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
-    expect(body).not.toMatch(/P77\./);
+    expect(body).not.toMatch(/P77\.|P141\./);
 
     expect(errors).toEqual([]);
   });

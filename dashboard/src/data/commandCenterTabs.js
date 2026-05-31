@@ -138,6 +138,7 @@ export const ISOLATION_TABS = [
 
 export const COMPLIANCE_TABS = [
   { id: "overview", label: "Overview", description: "Compliance, audit, control posture, and next action", badge: "Preview" },
+  { id: "preview", label: "Security Preview", description: "Security, privacy, evidence, policy, and data review rows", badge: "Read-only" },
   { id: "posture", label: "Posture", description: "Disabled certification, attestation, export, and package posture", badge: "Blocked" },
   { id: "evidence", label: "Control Mapping", description: "Control rows, evidence, activity, cost, and blockers", badge: "Read-only" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable compliance actions and reasons", badge: "Disabled" },
