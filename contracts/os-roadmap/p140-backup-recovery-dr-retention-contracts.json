@@ -280,7 +280,7 @@
       "commandCenterVisible": true,
       "completedAt": "2026-05-31T01:08:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2b630411",
       "summary": "Defined the P140 enterprise backup, recovery, DR, and retention contract and safety boundary while all live backup, restore, failover, prune/delete, write, execution, project mutation, deploy, network, and spend authority remains blocked.",
       "detail": "P140.1 adds contract-only future shapes, subphase split, safety rules, reuse requirements, checker coverage, docs/status handoff, and P140.2 planned-only next state.",
       "checksRun": [
@@ -371,7 +371,7 @@
   ],
   "completedAt": "",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "2b630411",
   "checksRun": [
     "npm run check:p1401-backup-recovery-dr-retention",
     "npm run check:enterprise-readiness-roadmap",

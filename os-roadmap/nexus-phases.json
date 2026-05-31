@@ -26930,7 +26930,7 @@
       "order": 176,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2b630411",
       "commandCenterVisible": true,
       "detail": "P140 is in progress through contract-only P140.1. Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "summary": "P140.1 backup, recovery, DR, and retention contract is complete while P140.2 remains planned-only next.",
@@ -26979,7 +26979,7 @@
           ],
           "completedAt": "2026-05-31T01:08:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "2b630411",
           "checksRun": [
             "npm run check:p1401-backup-recovery-dr-retention",
             "npm run check:enterprise-readiness-roadmap",
@@ -27171,7 +27171,7 @@
       "label": "P140.1 Contract / Policy / Safety Boundary",
       "completedAt": "2026-05-31T01:08:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2b630411",
       "summary": "Defined the P140 enterprise backup, recovery, DR, and retention contract and safety boundary while all live backup, restore, failover, prune/delete, write, execution, project mutation, deploy, network, and spend authority remains blocked.",
       "detail": "P140.1 adds contract-only future shapes, subphase split, safety rules, reuse requirements, checker coverage, docs/status handoff, and P140.2 planned-only next state.",
       "checksRun": [
@@ -28348,7 +28348,7 @@
     "label": "P140.1 Contract / Policy / Safety Boundary",
     "completedAt": "2026-05-31T01:08:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "2b630411",
     "summary": "Defined the P140 enterprise backup, recovery, DR, and retention contract and safety boundary while all live backup, restore, failover, prune/delete, write, execution, project mutation, deploy, network, and spend authority remains blocked.",
     "detail": "P140.1 adds contract-only future shapes, subphase split, safety rules, reuse requirements, checker coverage, docs/status handoff, and P140.2 planned-only next state.",
     "checksRun": [
