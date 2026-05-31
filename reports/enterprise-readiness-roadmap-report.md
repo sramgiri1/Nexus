@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-31T01:45:38.532Z
+- Generated at: 2026-05-31T01:46:47.936Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ae5402e3
+- Validation HEAD: dfc0842e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -52,8 +52,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1401-backup-recovery-dr-retention.js, scripts/check-p1402-backup-recovery-dr-retention.js, reports/p1403-backup-recovery-dr-restore-preview-report.md, scripts/check-p1403-backup-recovery-dr-restore-preview.js, shared/backupRecoveryDrRestorePreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1401-backup-recovery-dr-retention.js, scripts/check-p1402-backup-recovery-dr-retention.js, reports/p1403-backup-recovery-dr-restore-preview-report.md, scripts/check-p1403-backup-recovery-dr-restore-preview.js, shared/backupRecoveryDrRestorePreview.js |
+| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/p1403-backup-recovery-dr-restore-preview-report.md |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/p1403-backup-recovery-dr-restore-preview-report.md |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

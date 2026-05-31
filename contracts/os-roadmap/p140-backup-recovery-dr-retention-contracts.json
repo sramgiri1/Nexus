@@ -489,7 +489,7 @@
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "ae5402e3",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "dfc0842e",
       "completedAt": "2026-05-31T02:04:00.000Z",
       "checksRun": [
         "npm run check:p1403-backup-recovery-dr-restore-preview",
@@ -735,7 +735,7 @@
   ],
   "completedAt": "2026-05-31T02:04:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "dfc0842e",
   "checksRun": [
     "npm run check:p1403-backup-recovery-dr-restore-preview",
     "npm run check:p1402-backup-recovery-dr-retention",

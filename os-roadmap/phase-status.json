@@ -31642,7 +31642,7 @@
       "order": 176,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "dfc0842e",
       "commandCenterVisible": true,
       "detail": "P140 is in progress through display-safe P140.3 restore preview work. Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "summary": "P140.3 restore preview is complete while P140.4 remains planned-only next.",
@@ -31781,7 +31781,7 @@
             "final response checklist"
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "dfc0842e",
           "completedAt": "2026-05-31T02:04:00.000Z",
           "checksRun": [
             "npm run check:p1403-backup-recovery-dr-restore-preview",
@@ -32466,7 +32466,7 @@
       "label": "P140.3 Restore Preview",
       "completedAt": "2026-05-31T02:04:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "dfc0842e",
       "summary": "Added the display-safe P140.3 restore preview model with restore review rows, blocked authority flags, approval gates, evidence refs, activity refs, and zero-spend cost impact.",
       "detail": "P140.3 creates a reusable restore preview projection from the P140.2 backup/retention model and P75 restore preview contract while every runtime authority remains blocked.",
       "checksRun": [
@@ -33675,7 +33675,7 @@
     "label": "P140.3 Restore Preview",
     "completedAt": "2026-05-31T02:04:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "dfc0842e",
     "summary": "Added the display-safe P140.3 restore preview model with restore review rows, blocked authority flags, approval gates, evidence refs, activity refs, and zero-spend cost impact.",
     "detail": "P140.3 creates a reusable restore preview projection from the P140.2 backup/retention model and P75 restore preview contract while every runtime authority remains blocked.",
     "checksRun": [
