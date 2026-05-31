@@ -117,19 +117,105 @@ call, or spend authority is enabled.
 
 ## P144.2 Billing and Meter Model
 
-Status: planned
+Status: complete
 
 Narrow goal: add a read-only billing and usage meter model with display-safe
 account, usage, invoice preview, entitlement, support handoff, and customer
 operation rows while every mutation and spend authority remains blocked.
 
-Scope: NEXUS OS model-only work. It must not add DB schemas, payment provider
-calls, customer mutation, support ticket creation, or Command Center action
-execution.
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `8d4cfdac`.
 
-Validation: dedicated P144.2 checker, prior P144.1 checker, enterprise
-roadmap checker, OS phase status checker, phase validation coverage, dashboard
-build/unit checks, focused route coverage, and `git diff --check`.
+Allowed files: package script, read-only billing/customer-ops model, P144
+contract, P144.2 checker, P144.1 checker handoff, enterprise checker, route
+tests, P144 plan, README, platform roadmap, enterprise roadmap, OS phase
+status, phase index, and generated reports.
+
+Forbidden files: project files, generated project files, private project
+roots, dashboard source, DB/runtime implementation, providers, tools, worker
+runtime, deploy/release/export/package folders, env files, payment provider
+adapters, and billing/customer/support mutation paths.
+
+Expected exports and schemas:
+`BILLING_METERING_CUSTOMER_OPERATIONS_MODEL_PHASE`,
+`BILLING_METERING_CUSTOMER_OPERATIONS_MODEL_VERSION`,
+`BILLING_METERING_CUSTOMER_OPERATIONS_SAFETY_FLAG_NAMES`,
+row builders and validators for billing accounts, usage meters, invoice
+previews, entitlements, support handoffs, and customer operations, plus
+aggregate model and result-envelope builders. No DB schema or migration.
+
+Expected data shape: read-only billing model with `billingAccounts`,
+`usageMeters`, `invoicePreviews`, `entitlements`, `supportHandoffs`,
+`customerOperations`, `readinessSummary`, authority/safety flags, zero-spend
+`costImpact`, `redactionState`, evidence/activity refs, mode guard,
+disabled reason, next action, blockers, and result-envelope data. No mutation
+payload, executable payload, provider call, payment call, network call, or
+spend data shape.
+
+Command Center UX requirements: OS Roadmap must show P144.2 complete and
+P144.3 planned-only next. P144.2 adds no new Command Center billing/customer
+page and does not expose the model directly. Primary UX must not show fake
+runnable billing/customer actions, raw dumps, private IDs, or internal phase
+labels outside OS Roadmap.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light themes;
+validate route-wide Command Center coverage through Playwright.
+
+Playwright tests: add P144.2 OS Roadmap coverage, update current-roadmap
+assertions from P144.1 to P144.2, and retain route-wide safety coverage.
+
+Checker updates: add P144.2 checker, update P144.1 checker for P144.2 handoff
+compatibility, and update enterprise checker for P144.2 active state.
+
+Docs/README/roadmap updates: README, P144 plan, platform roadmap, enterprise
+readiness roadmap, OS phase status, and phase index.
+
+Reports to regenerate: P144.2 report, P144.1 report, enterprise readiness
+report, OS phase status report, and phase validation coverage report.
+
+OS phase status update: P144 in progress; P144.1 complete; P144.2 complete;
+previous P144.1; current P144.2; next P144.3 planned-only; P145 remains
+planned-only.
+
+Validation commands:
+
+- `npm run check:p1442-billing-metering-customer-operations`
+- `npm run check:p1441-billing-metering-customer-operations`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P144.2|Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks: no project files, no dashboard source, no DB/runtime
+implementation, no provider/tool/worker-runtime changes, no deploy/release/
+export/package folders, no env files, no billing/customer mutation authority,
+no payment provider calls, no raw payload exposure, no fake working actions,
+and no stale placeholder commit marker after the stamp commit.
+
+Git add, commit, and push commands:
+
+- `git add <P144.2 allowed files>`
+- `git commit -m "feat(nexus): add p1442 billing operations model"`
+- `git add <P144.2 stamp files and refreshed reports>`
+- `git commit -m "chore(nexus): stamp p1442 billing operations model"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist: branch, commit hash, files changed, implementation,
+Command Center UX preservation, tests, checker results, dashboard build/unit/
+page results, docs/README/roadmap updates, OS phase status update, evidence
+records, safety confirmations, forbidden paths confirmation, known limitations,
+and next phase/subphase.
+
+Result: complete as read-only model work only. P144.3 is planned-only next.
+No billing account mutation, usage write, invoice creation, payment
+collection, subscription mutation, entitlement grant/revoke, support ticket
+creation, customer contact, customer operation execution, DB/runtime write,
+provider/model call, payment provider call, tool execution, MCP startup,
+agent dispatch, project mutation, deploy, release, export, package, network
+call, or spend authority is enabled.
 
 ## P144.3 Billing Preview
 

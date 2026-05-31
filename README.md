@@ -2034,7 +2034,7 @@ The Command Center and local operator surface have:
   Center UX is complete. P143.5 Tests / Checkers is complete. P143.6 Docs /
   Roadmap / Status is complete. P143.7 Final Validation is complete; P143 is
   complete. P144.1 Billing Metering Customer Operations Contract is complete.
-  P144.2 is planned-only next.
+  P144.2 Billing and Meter Model is complete. P144.3 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2551,7 +2551,8 @@ The Command Center and local operator surface have:
   unavailable. P143.4 is complete as display-only shipping Command Center UX;
   P143.5 is complete as aggregate tests/checkers only. P143.6 is complete as
   docs/status closure. P143.7 is complete as final validation only. P144.1 is
-  complete as billing/customer-ops contract work. P144.2 is planned-only next.
+  complete as billing/customer-ops contract work. P144.2 is complete as
+  read-only billing/meter model work. P144.3 is planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2580,12 +2581,20 @@ The Command Center and local operator surface have:
 - P144.1 Billing Metering Customer Operations Contract is complete: Started
   billing, metering, customer operations, support handoff, entitlement,
   invoice-preview, and payment-safety contracts while all runtime authority
-  remains blocked. P144.2 is planned-only next. Billing account mutation, usage
+  remains blocked. P144.2 has followed as read-only model work. Billing account mutation, usage
   writes, invoice creation, payment collection, subscription mutation,
   entitlement grant/revoke, support ticket creation, customer contact, customer
   operation execution, DB/runtime writes, provider/model calls, payment provider
   calls, tool execution, MCP startup, agent dispatch, project mutation, deploy,
   release, export, package, network calls, and spend remain blocked.
+- P144.2 Billing and Meter Model is complete: Added a local read-only model for
+  billing accounts, usage meters, invoice previews, entitlements, support
+  handoffs, and customer operations with display-safe refs, redaction state,
+  zero-spend cost impact, evidence/activity refs, result-envelope validation,
+  and blocked authority flags. P144.3 is planned-only next. Billing/customer
+  mutation, DB/runtime writes, provider/model calls, payment provider calls,
+  tool execution, agent dispatch, project mutation, deploy, release, export,
+  package, network calls, and spend remain blocked.
 
 ## CareLoop Project Progress
 

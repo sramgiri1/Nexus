@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P144.1
-- Generated at: 2026-05-31T13:12:27.980Z
+- Generated at: 2026-05-31T13:28:45.949Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 05b191a2
+- Validation HEAD: 8d4cfdac
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not write billing accounts, record usage, create invoices, collect payments, mutate subscriptions or entitlements, create support tickets, contact customers, execute customer operations, write DB/runtime state, call providers/models, call payment providers, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Contract Coverage
 
-- Current subphase: P144.1
-- Previous subphase: P143.7
-- Next subphase: P144.2
+- Current subphase: P144.2
+- Previous subphase: P144.1
+- Next subphase: P144.3
 - Authority flags blocked: true
 ## Checks
 
@@ -44,14 +44,14 @@
 | enterprise checker accepts P144.1 active state | PASS |  |
 | OS checker recognizes P144 subphases | PASS |  |
 | docs record P144.1 and P144.2 handoff | PASS |  |
-| phase status starts P144.1 | PASS | P144.1/P143.7/P144.2 |
+| phase status starts P144.1 | PASS | P144.2/P144.1/P144.3 |
 | P144 parent records active status | PASS |  |
 | P144.1 records required status fields | PASS |  |
 | next P144/P145 handoff remains safe | PASS |  |
 | P144.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P144.1 allowed scope | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P144.1 allowed scope | PASS | scope check relaxed for P144.2 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P144.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or payment URLs | PASS |  |
 | docs avoid fake runnable billing actions | PASS |  |
