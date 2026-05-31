@@ -29975,7 +29975,7 @@
           "order": 177.2,
           "completedAt": "2026-05-31T07:10:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "ee3f2f61",
           "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
           "detail": "P141.2 is model-only. P141.3 remains planned-only for display-safe compliance preview work.",
           "knownLimitations": [
@@ -30103,7 +30103,7 @@
         "title": "Control Model",
         "status": "complete",
         "branch": "codex/nexus-e2e-phase-validation",
-        "commit": "pending-final-commit",
+        "commit": "ee3f2f61",
         "completedAt": "2026-05-31T07:10:00.000Z",
         "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
         "checksRun": [
@@ -30134,7 +30134,7 @@
         "title": "Compliance Preview",
         "status": "planned"
       },
-      "commit": "pending-final-commit",
+      "commit": "ee3f2f61",
       "completedAt": "2026-05-31T07:10:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
@@ -30544,7 +30544,7 @@
       "order": 177.2,
       "completedAt": "2026-05-31T07:10:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ee3f2f61",
       "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
       "detail": "P141.2 is model-only. P141.3 remains planned-only for display-safe compliance preview work.",
       "knownLimitations": [
@@ -31462,7 +31462,7 @@
     "title": "Control Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ee3f2f61",
     "completedAt": "2026-05-31T07:10:00.000Z",
     "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
     "checksRun": [
@@ -31497,6 +31497,6 @@
   "nextSubphase": "P141.3",
   "currentSubphase": "P141.2",
   "previousSubphase": "P141.1",
-  "commit": "pending-final-commit",
+  "commit": "ee3f2f61",
   "completedAt": "2026-05-31T07:10:00.000Z"
 }
