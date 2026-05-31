@@ -2014,7 +2014,8 @@ The Command Center and local operator surface have:
   observability, and cost ledger model is complete. P139.3 evidence preview is
   complete. P139.4 Observability Command Center UX is complete. P139.5
   tests/checkers is complete. P139.6 docs/roadmap/status closure is complete.
-  P139.7 final validation is complete; P140 is planned-only next.
+  P139.7 final validation is complete. P140.1 backup, recovery, DR, and
+  retention contract is complete; P140.2 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2375,10 +2376,19 @@ The Command Center and local operator surface have:
   them.
 - P139.7 final validation: Closed P139 with prior report verification, checker
   compatibility, docs/status closure, route-wide Command Center safety, and
-  planned-only P140 handoff. P140 is planned-only next. Ledger writes,
+  planned-only P140 handoff. P140.1 is implemented separately as the backup,
+  recovery, DR, and retention contract. Ledger writes,
   DB/runtime writes, provider/model calls, tool execution, MCP startup, agent
   dispatch, project mutation, deploy, release, export, package, network calls,
   and spend remain unavailable until a later subphase explicitly allows them.
+- P140.1 backup, recovery, DR, and retention contract: Started P140 with an
+  implementation-grade contract, future display-safe backup/retention/restore
+  runbook shapes, safety boundary, reuse requirements, checker, docs/status
+  handoff, and planned-only P140.2 handoff. Backup creation, restore execution,
+  failover, overwrite, delete, prune, DB/runtime writes, provider/model calls,
+  tool execution, MCP startup, agent dispatch, project mutation, deploy,
+  release, export, package, network calls, and spend remain unavailable until a
+  later subphase explicitly allows them.
 
 ## CareLoop Project Progress
 

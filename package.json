@@ -784,7 +784,8 @@
     "check:p1394-evidence-audit-observability-cost-ledger": "node scripts/check-p1394-evidence-audit-observability-cost-ledger.js",
     "check:p1395-evidence-audit-observability-cost-ledger": "node scripts/check-p1395-evidence-audit-observability-cost-ledger.js",
     "check:p1396-evidence-audit-observability-cost-ledger": "node scripts/check-p1396-evidence-audit-observability-cost-ledger.js",
-    "check:p1397-evidence-audit-observability-cost-ledger": "node scripts/check-p1397-evidence-audit-observability-cost-ledger.js"
+    "check:p1397-evidence-audit-observability-cost-ledger": "node scripts/check-p1397-evidence-audit-observability-cost-ledger.js",
+    "check:p1401-backup-recovery-dr-retention": "node scripts/check-p1401-backup-recovery-dr-retention.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
