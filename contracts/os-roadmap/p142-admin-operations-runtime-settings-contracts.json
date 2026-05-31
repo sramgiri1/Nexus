@@ -740,7 +740,7 @@
       "order": 178.3,
       "completedAt": "2026-05-31T13:10:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2be3c654",
       "summary": "Added a local non-runnable admin operations dry run from the P142.2 settings model with blocked dry-run rows, zero candidate counts, null executable payloads, evidence/activity labels, zero-cost posture, and blocked authority flags.",
       "detail": "P142.3 is dry-run only. P142.4 Settings Command Center UX is planned-only next.",
       "checksRun": [
@@ -1068,7 +1068,7 @@
     "order": 178.3,
     "completedAt": "2026-05-31T13:10:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "2be3c654",
     "summary": "Added a local non-runnable admin operations dry run from the P142.2 settings model with blocked dry-run rows, zero candidate counts, null executable payloads, evidence/activity labels, zero-cost posture, and blocked authority flags.",
     "detail": "P142.3 is dry-run only. P142.4 Settings Command Center UX is planned-only next.",
     "checksRun": [
@@ -1326,7 +1326,7 @@
       "final response checklist"
     ]
   },
-  "commit": "pending-final-commit",
+  "commit": "2be3c654",
   "completedAt": "2026-05-31T13:10:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [

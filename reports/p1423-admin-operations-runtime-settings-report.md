@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P142.3
-- Generated at: 2026-05-31T08:20:30.228Z
+- Generated at: 2026-05-31T08:22:45.115Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 11bd52f5
+- Validation HEAD: 2be3c654
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -69,8 +69,8 @@
 | phase status advances to P142.3 | PASS | P142.3/P142.2/P142.4 |
 | completed P142.3 entries have required fields | PASS |  |
 | P142.4 and P143 remain planned-only | PASS |  |
-| changed files stay in P142.3 allowed scope | PASS | README.md, contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1422-admin-operations-runtime-settings-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1422-admin-operations-runtime-settings.js, reports/p1423-admin-operations-runtime-settings-report.md, scripts/check-p1423-admin-operations-runtime-settings.js, shared/adminOperationsRuntimeSettingsDryRun.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1422-admin-operations-runtime-settings-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1422-admin-operations-runtime-settings.js, reports/p1423-admin-operations-runtime-settings-report.md, scripts/check-p1423-admin-operations-runtime-settings.js, shared/adminOperationsRuntimeSettingsDryRun.js |
+| changed files stay in P142.3 allowed scope | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | route-wide safety coverage retained | PASS |  |
 | dry run and docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
