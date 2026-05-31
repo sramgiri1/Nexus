@@ -74,6 +74,7 @@ const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.ph
 const p1413 = subphaseById.get("P141.3") || {};
 const p1414 = subphaseById.get("P141.4") || {};
 const p1415 = subphaseById.get("P141.5") || {};
+const p1416 = subphaseById.get("P141.6") || {};
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
@@ -143,6 +144,24 @@ const p1414CurrentState =
   && ["P141.1", "P141.2", "P141.3", "P141.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P141.5")?.status === "planned"
   && roadmapById.get("P141.5")?.status === "planned";
+const p1415CurrentState =
+  status.currentPhase === "P141.5"
+  && status.previousPhase === "P141.4"
+  && status.nextPhase === "P141.6"
+  && roadmap.currentPhase === "P141.5"
+  && roadmap.previousPhase === "P141.4"
+  && roadmap.nextPhase === "P141.6"
+  && status.current?.phaseId === "P141.5"
+  && status.previous?.phaseId === "P141.4"
+  && status.next?.phaseId === "P141.6"
+  && roadmap.current?.phaseId === "P141.5"
+  && roadmap.previous?.phaseId === "P141.4"
+  && roadmap.next?.phaseId === "P141.6"
+  && statusById.get("P141")?.status === "in_progress"
+  && roadmapById.get("P141")?.status === "in_progress"
+  && ["P141.1", "P141.2", "P141.3", "P141.4", "P141.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P141.6")?.status === "planned"
+  && roadmapById.get("P141.6")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1414-security-privacy-compliance-controls.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -158,21 +177,21 @@ addCheck("display bundle avoids raw private IDs", !/(?:project|private|token|ten
 addCheck("display bundle avoids phase labels and raw dumps", !/P\d+(?:\.\d+)?|raw JSON|raw logs?|raw policy dump|raw compliance payload|raw audit payload|raw evidence payload/i.test(displayBundle));
 addCheck("display bundle avoids fake runnable actions", !/certify now|attest now|export audit now|export logs now|create package now|enforce policy now|handle credentials now|read secret now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|deploy now|release now|export now|package now|spend now|execute now/i.test(displayBundle));
 addCheck("P141.3 report passes", reportPassed("reports/p1413-security-privacy-compliance-controls-report.md"));
-addCheck("contract advances to P141.4 safely", contract.phaseId === "P141" && contract.status === "in_progress" && contract.currentSubphase === "P141.4" && contract.previousSubphase === "P141.3" && contract.nextSubphase === "P141.5");
+addCheck("contract advances to P141.4 safely", contract.phaseId === "P141" && contract.status === "in_progress" && ((contract.currentSubphase === "P141.4" && contract.previousSubphase === "P141.3" && contract.nextSubphase === "P141.5") || (contract.currentSubphase === "P141.5" && contract.previousSubphase === "P141.4" && contract.nextSubphase === "P141.6")));
 addCheck("contract records expected base commit", p1414.expectedBaseCommit === EXPECTED_BASE_COMMIT);
-addCheck("P141.3 complete, P141.4 complete, P141.5 planned", p1413.status === "complete" && p1414.status === "complete" && p1415.status === "planned");
+addCheck("P141.3 complete, P141.4 complete, next P141 state valid", p1413.status === "complete" && p1414.status === "complete" && (p1415.status === "planned" || (p1415.status === "complete" && p1416.status === "planned")));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1414.validationCommands?.includes(command)));
 addCheck("contract scope stays Compliance UX only", p1414.allowedFiles?.includes("dashboard/src/data/complianceReadiness.js") && p1414.allowedFiles?.includes("dashboard/tests/routes.spec.js") && p1414.forbiddenFiles?.includes("projects/**") && p1414.forbiddenFiles?.includes("db/**"));
 addCheck("P141.3 checker accepts P141.4", p1413Checker.includes("p1414CurrentState") && p1413Checker.includes('status.currentPhase === "P141.4"'));
 addCheck("enterprise checker accepts P141.4", enterpriseChecker.includes("p1414CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("OS checker recognizes P141.5 handoff", ["P141.3", "P141.4", "P141.5"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
+addCheck("OS checker recognizes P141.6 handoff", ["P141.3", "P141.4", "P141.5", "P141.6"].every((phaseId) => osStatusChecker.includes(`"${phaseId}"`)));
 addCheck("P141 plan records P141.4", /## P141\.4 Compliance Command Center UX[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P141.4", /P141\.4 Compliance Command Center UX/i.test(readme));
 addCheck("platform roadmap records P141.4", /P141\.4 Compliance Command Center UX is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P141.4", /P141\.4 is now complete/i.test(enterpriseRoadmap) && /P141\.5 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status advances to P141.4", p1414CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P141.4", /P141\.4 is now complete/i.test(enterpriseRoadmap) && (/P141\.5 is the next executable subphase/i.test(enterpriseRoadmap) || /P141\.6 is the next executable subphase/i.test(enterpriseRoadmap)));
+addCheck("phase status advances to P141.4", p1414CurrentState || p1415CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P141.4 entries have required fields", [statusById.get("P141"), statusById.get("P141.4"), roadmapById.get("P141"), roadmapById.get("P141.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P141.5 remains planned-only", statusById.get("P141.5")?.status === "planned" && roadmapById.get("P141.5")?.status === "planned" && !(statusById.get("P141.5")?.checksRun || []).length && !(roadmapById.get("P141.5")?.checksRun || []).length);
+addCheck("next P141 subphase remains planned-only", (statusById.get("P141.5")?.status === "planned" && roadmapById.get("P141.5")?.status === "planned" && !(statusById.get("P141.5")?.checksRun || []).length && !(roadmapById.get("P141.5")?.checksRun || []).length) || (p1415CurrentState && statusById.get("P141.6")?.status === "planned" && roadmapById.get("P141.6")?.status === "planned" && !(statusById.get("P141.6")?.checksRun || []).length && !(roadmapById.get("P141.6")?.checksRun || []).length));
 addCheck("changed files stay in P141.4 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", changed.every((file) => allowedDashboardFiles.has(file) || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), changed.join(", "));
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy|backup|restore|runbook|storage|control|evidence|compliance)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
@@ -208,7 +227,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P141.4 is display-safe Command Center UX work only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.5 remains planned-only.",
+      body: "- P141.4 is display-safe Command Center UX work only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.5 may be complete when this compatibility checker runs; P141.6 remains planned-only until implemented.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

@@ -243,6 +243,27 @@ const p1414CurrentState =
   && roadmapById.get("P141.4")?.status === "complete"
   && statusById.get("P141.5")?.status === "planned"
   && roadmapById.get("P141.5")?.status === "planned";
+const p1415CurrentState =
+  status.currentPhase === "P141.5"
+  && status.previousPhase === "P141.4"
+  && status.nextPhase === "P141.6"
+  && roadmap.currentPhase === "P141.5"
+  && roadmap.previousPhase === "P141.4"
+  && roadmap.nextPhase === "P141.6"
+  && status.current?.phaseId === "P141.5"
+  && status.previous?.phaseId === "P141.4"
+  && status.next?.phaseId === "P141.6"
+  && roadmap.current?.phaseId === "P141.5"
+  && roadmap.previous?.phaseId === "P141.4"
+  && roadmap.next?.phaseId === "P141.6"
+  && statusById.get("P140")?.status === "complete"
+  && roadmapById.get("P140")?.status === "complete"
+  && ["P140.1", "P140.2", "P140.3", "P140.4", "P140.5", "P140.6", "P140.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P141")?.status === "in_progress"
+  && roadmapById.get("P141")?.status === "in_progress"
+  && ["P141.1", "P141.2", "P141.3", "P141.4", "P141.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P141.6")?.status === "planned"
+  && roadmapById.get("P141.6")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1407-backup-recovery-dr-final-validation.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -259,9 +280,9 @@ addCheck("P140 plan records P140.7", /## P140\.7 Final Validation[\s\S]*Status:\
 addCheck("README records P140.7", /P140\.7 final validation/i.test(readme) && /P141 is planned-only next/i.test(readme));
 addCheck("platform roadmap records P140.7", /P140\.7 final validation is complete/i.test(platformRoadmap));
 addCheck("enterprise roadmap records P140.7", /P140\.7 is now complete/i.test(enterpriseRoadmap) && (/P141 is the next executable phase/i.test(enterpriseRoadmap) || /P141\.1 is now complete/i.test(enterpriseRoadmap)));
-addCheck("phase status closes P140.7", p1407FinalState || p1411StartedState || p1412CurrentState || p1413CurrentState || p1414CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status closes P140.7", p1407FinalState || p1411StartedState || p1412CurrentState || p1413CurrentState || p1414CurrentState || p1415CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P140.7 entries have required fields", [statusById.get("P140"), statusById.get("P140.7"), roadmapById.get("P140"), roadmapById.get("P140.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P141 handoff remains valid", (statusById.get("P141")?.status === "planned" && roadmapById.get("P141")?.status === "planned" && !(statusById.get("P141")?.checksRun || []).length && !(roadmapById.get("P141")?.checksRun || []).length) || p1411StartedState || p1412CurrentState || p1413CurrentState || p1414CurrentState);
+addCheck("P141 handoff remains valid", (statusById.get("P141")?.status === "planned" && roadmapById.get("P141")?.status === "planned" && !(statusById.get("P141")?.checksRun || []).length && !(roadmapById.get("P141")?.checksRun || []).length) || p1411StartedState || p1412CurrentState || p1413CurrentState || p1414CurrentState || p1415CurrentState);
 addCheck("changed files stay in P140.7 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || forbiddenPathUnchanged, enforceCurrentDiffScope ? changed.join(", ") : `P140.7 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("Backup DR Playwright coverage retained", routeTests.includes("Backup DR route renders readiness without runnable recovery actions") && routeTests.includes("P140.5 Backup DR aggregate coverage remains display-only") && routeTests.includes("P140.6 Backup DR docs status closure stays display-only"));

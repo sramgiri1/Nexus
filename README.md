@@ -2022,7 +2022,8 @@ The Command Center and local operator surface have:
   security/privacy/compliance contract is complete. P141.2
   security/privacy/compliance control model is complete. P141.3
   security/privacy/compliance preview is complete. P141.4 Compliance Command
-  Center UX is complete; P141.5 is planned-only next.
+  Center UX is complete. P141.5 Tests / Checkers is complete; P141.6 is
+  planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2467,7 +2468,12 @@ The Command Center and local operator surface have:
   certification, legal attestation, audit export, raw log export, compliance
   package creation, DB/runtime writes, provider/model calls, tool execution,
   agent dispatch, project mutation, deploy, release, export, package, network
-  calls, or spend. P141.5 is planned-only next.
+  calls, or spend.
+- P141.5 Tests / Checkers: Added aggregate P141 checker coverage and
+  Playwright coverage for the Compliance route's Security Preview and Disabled
+  Actions tabs. It verifies prior P141 reports, model/preview validity,
+  display-safe UX, no raw IDs/dumps/internal phase labels, no demo leakage, and
+  no runnable compliance actions. P141.6 is planned-only next.
 
 ## CareLoop Project Progress
 

@@ -2717,6 +2717,34 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P141.5 security privacy compliance aggregate coverage keeps Compliance review-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/compliance");
+    await commandTab(page, "Security Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Security Preview Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Preview rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Runnable actions");
+    await expect(activeCommandTabPanel(page)).toContainText("Security control: identity");
+    await expect(activeCommandTabPanel(page)).toContainText("Policy enforcement gate");
+
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Certification disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Policy enforcement disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Credential handling disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).toContain("Compliance readiness is display-only");
+    expect(body).toContain("No spend");
+    expect(body).not.toMatch(/certify now|attest now|export audit now|create package now|enforce policy now|handle credentials now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|deploy now|release now|package now|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P141\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("Enterprise Preview route renders readiness without runnable founder actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 

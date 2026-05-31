@@ -900,10 +900,36 @@ Final response checklist:
 
 ## P141.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
-P141.5 must harden P141 checker coverage, Playwright coverage, route-wide
-safety, and stale assertion cleanup without enabling runtime authority.
+P141.5 hardens P141 checker coverage, Playwright coverage, route-wide safety,
+and stale assertion cleanup without enabling runtime authority.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Completed files:
+
+- `scripts/check-p1415-security-privacy-compliance-controls.js`
+- `dashboard/tests/routes.spec.js`
+- P141/P140/enterprise/OS compatibility checkers
+- P141 contract, roadmap, status, README, and reports
+
+Implemented coverage:
+
+- P141.1-P141.4 report pass verification.
+- P141 control model and preview validation.
+- Compliance Command Center display bundle safety checks.
+- Aggregate Playwright coverage for Security Preview and Disabled Actions tabs.
+- Route-wide DemoApp/raw dump/theme/OS roadmap safety preservation.
+- P141.6 planned-only handoff validation.
+
+Safety result:
+
+- No credential handling, raw data exposure, runtime policy enforcement,
+  certification, legal attestation, audit export, log export, package creation,
+  DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup,
+  agent dispatch, project mutation, deploy, release, export, package, network
+  call, or spend authority was enabled.
 
 ## P141.6 Docs / Roadmap / Status
 
