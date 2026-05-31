@@ -796,7 +796,8 @@
     "check:p1412-security-privacy-compliance-controls": "node scripts/check-p1412-security-privacy-compliance-controls.js",
     "check:p1413-security-privacy-compliance-controls": "node scripts/check-p1413-security-privacy-compliance-controls.js",
     "check:p1414-security-privacy-compliance-controls": "node scripts/check-p1414-security-privacy-compliance-controls.js",
-    "check:p1415-security-privacy-compliance-controls": "node scripts/check-p1415-security-privacy-compliance-controls.js"
+    "check:p1415-security-privacy-compliance-controls": "node scripts/check-p1415-security-privacy-compliance-controls.js",
+    "check:p1416-security-privacy-compliance-controls-docs-roadmap": "node scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

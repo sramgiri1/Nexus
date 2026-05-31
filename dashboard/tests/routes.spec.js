@@ -2745,6 +2745,30 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P141.6 docs status closure keeps roadmap and Compliance display-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/compliance");
+    const complianceBody = await page.locator("body").innerText();
+    expect(complianceBody).toContain("Compliance readiness is display-only");
+    expect(complianceBody).toContain("No spend");
+    expect(complianceBody).not.toMatch(/P141\.6|pending-final-commit|certify now|attest now|export audit now|create package now|enforce policy now|execute now/i);
+    expect(complianceBody).not.toContain("DemoApp");
+    expect(complianceBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+    await page.goto("/command-center/roadmap");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("Security, Privacy, and Compliance Controls");
+    await expect(page.locator("body")).toContainText("P141.6 closes security, privacy, and compliance controls docs");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+
+    expect(errors).toEqual([]);
+  });
+
   test("Enterprise Preview route renders readiness without runnable founder actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 

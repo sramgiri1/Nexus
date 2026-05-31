@@ -933,10 +933,38 @@ Safety result:
 
 ## P141.6 Docs / Roadmap / Status
 
-Status: planned
+Status: complete
 
-P141.6 must close docs, roadmap, phase status, and report freshness for P141
-without enabling runtime authority.
+P141.6 closes P141 docs, roadmap, phase status, checker handoff, and report
+freshness without enabling runtime authority.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Completed files:
+
+- `scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js`
+- `scripts/check-p1415-security-privacy-compliance-controls.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `dashboard/tests/routes.spec.js`
+- P141 contract, roadmap, status, README, and reports
+
+Implemented coverage:
+
+- P141.1-P141.5 report pass verification.
+- P141.5 checker handoff acceptance for P141.6 current state.
+- Enterprise readiness checker handoff acceptance for P141.6 current state.
+- OS phase status checker recognition of P141.7 as the next handoff.
+- Command Center Playwright coverage for P141.6 docs/status closure while the
+  Compliance page remains display-only.
+
+Safety result:
+
+- No credential handling, raw data exposure, runtime policy enforcement,
+  certification, legal attestation, audit export, log export, package creation,
+  DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup,
+  agent dispatch, project mutation, deploy, release, export, package, network
+  call, or spend authority was enabled.
 
 ## P141.7 Final Validation
 
