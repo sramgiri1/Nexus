@@ -2041,7 +2041,8 @@ The Command Center and local operator surface have:
   P145.1 Enterprise Certification GA Readiness Contract is complete. P145.2
   Certification Matrix is complete. P145.3 End-to-End Rehearsal is complete.
   P145.4 Readiness Command Center UX is complete. P145.5 Tests / Checkers is
-  complete. P145.6 is planned-only next.
+  complete. P145.6 Docs / Roadmap / Status is complete. P145.7 is
+  planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2566,8 +2567,8 @@ The Command Center and local operator surface have:
   validation only. P145.1 is complete as enterprise GA readiness contract work.
   P145.2 is complete as a read-only enterprise certification matrix. P145.3 is
   complete as read-only end-to-end rehearsal evidence. P145.4 Readiness Command
-  Center UX is complete. P145.5 Tests / Checkers is complete. P145.6 is
-  planned-only next.
+  Center UX is complete. P145.5 Tests / Checkers is complete. P145.6 Docs /
+  Roadmap / Status is complete. P145.7 is planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2638,8 +2639,8 @@ The Command Center and local operator surface have:
   and P144.7 Final Validation is complete. P145.1 Enterprise Certification GA
   Readiness Contract is complete, P145.2 Certification Matrix is complete, and
   P145.3 End-to-End Rehearsal is complete. P145.4 Readiness Command Center UX
-  is complete. P145.5 Tests / Checkers is complete. P145.6 is planned-only
-  next. Billing account
+  is complete. P145.5 Tests / Checkers is complete. P145.6 Docs / Roadmap /
+  Status is complete. P145.7 is planned-only next. Billing account
   mutation, usage writes, invoice creation, payment collection, subscription
   mutation, entitlement changes, support ticket creation, customer contact,
   customer operation execution, DB/runtime writes, provider/model calls,

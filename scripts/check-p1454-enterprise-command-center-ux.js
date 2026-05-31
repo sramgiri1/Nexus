@@ -110,6 +110,7 @@ const p145 = statusById.get("P145") || {};
 const p145Roadmap = roadmapById.get("P145") || {};
 const p1454 = subphaseById.get("P145.4") || {};
 const p1455 = subphaseById.get("P145.5") || {};
+const p1456 = subphaseById.get("P145.6") || {};
 const checkerSource = readText("scripts/check-p1454-enterprise-command-center-ux.js");
 const priorChecker = readText("scripts/check-p1453-enterprise-e2e-rehearsal.js");
 const p1452Checker = readText("scripts/check-p1452-enterprise-certification-matrix.js");
@@ -187,6 +188,24 @@ const p1455CurrentState =
   && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P145.6")?.status === "planned"
   && roadmapById.get("P145.6")?.status === "planned";
+const p1456CurrentState =
+  status.currentPhase === "P145.6"
+  && status.previousPhase === "P145.5"
+  && status.nextPhase === "P145.7"
+  && roadmap.currentPhase === "P145.6"
+  && roadmap.previousPhase === "P145.5"
+  && roadmap.nextPhase === "P145.7"
+  && status.current?.phaseId === "P145.6"
+  && status.previous?.phaseId === "P145.5"
+  && status.next?.phaseId === "P145.7"
+  && roadmap.current?.phaseId === "P145.6"
+  && roadmap.previous?.phaseId === "P145.5"
+  && roadmap.next?.phaseId === "P145.7"
+  && statusById.get("P145")?.status === "in_progress"
+  && roadmapById.get("P145")?.status === "in_progress"
+  && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5", "P145.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P145.7")?.status === "planned"
+  && roadmapById.get("P145.7")?.status === "planned";
 
 const readinessRows = contract.commandCenterReadinessRows || [];
 const displayRows = readinessRows.map((row) => ({
@@ -219,14 +238,14 @@ const rowsSafe = readinessRows.length >= 6
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1454-enterprise-command-center-ux.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
 addCheck("prior P145.3 report still passes", reportPassed("reports/p1453-enterprise-e2e-rehearsal-report.md"));
-addCheck("contract keeps P145.4 complete through handoff", contract.phaseId === "P145" && contract.status === "in_progress" && p1454.status === "complete" && (p1454CurrentState || (contract.currentSubphase === "P145.5" && contract.previousSubphase === "P145.4" && contract.nextSubphase === "P145.6" && p1455.status === "complete")));
+addCheck("contract keeps P145.4 complete through handoff", contract.phaseId === "P145" && contract.status === "in_progress" && p1454.status === "complete" && (p1454CurrentState || (contract.currentSubphase === "P145.5" && contract.previousSubphase === "P145.4" && contract.nextSubphase === "P145.6" && p1455.status === "complete") || (contract.currentSubphase === "P145.6" && contract.previousSubphase === "P145.5" && contract.nextSubphase === "P145.7" && p1455.status === "complete" && p1456.status === "complete")));
 addCheck("contract records expected base commit", p1454.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("P145.4 records allowed and forbidden files", p1454.allowedFiles?.includes("dashboard/src/data/enterprisePreviewReadiness.js") && p1454.allowedFiles?.includes("scripts/check-p1454-enterprise-command-center-ux.js") && p1454.forbiddenFiles?.includes("projects/**") && p1454.forbiddenFiles?.includes("db/**") && p1454.forbiddenFiles?.includes("providers/**") && p1454.forbiddenFiles?.includes("tools/**"));
 addCheck("P145.4 records validation commands", VALIDATION_COMMANDS.every((command) => p1454.validationCommands?.includes(command)));
 addCheck("Command Center readiness shape present", hasFields(contract.commandCenterReadinessShape, REQUIRED_READINESS_FIELDS));
 addCheck("Command Center readiness rows are safe", rowsSafe, `${readinessRows.length} rows`);
 addCheck("authority flags remain blocked", allBooleanValuesFalse(contract.authorityFlags), JSON.stringify(contract.authorityFlags || {}));
-addCheck("P145.5 handoff is safe", (p1454CurrentState && p1455.status === "planned" && p1455.expectedBaseCommit === "after-P145.4" && p1455.commit === "" && Array.isArray(p1455.checksRun) && p1455.checksRun.length === 0) || (p1455CurrentState && p1455.status === "complete" && p1455.expectedBaseCommit === "4412d7fd" && Array.isArray(p1455.checksRun) && p1455.checksRun.includes(`npm run ${NEXT_SCRIPT}`)));
+addCheck("P145.5 handoff is safe", (p1454CurrentState && p1455.status === "planned" && p1455.expectedBaseCommit === "after-P145.4" && p1455.commit === "" && Array.isArray(p1455.checksRun) && p1455.checksRun.length === 0) || ((p1455CurrentState || p1456CurrentState) && p1455.status === "complete" && p1455.expectedBaseCommit === "4412d7fd" && Array.isArray(p1455.checksRun) && p1455.checksRun.includes(`npm run ${NEXT_SCRIPT}`)));
 addCheck("P145.3 checker accepts P145.4 handoff", priorChecker.includes("p1454CurrentState") && priorChecker.includes('status.currentPhase === "P145.4"'));
 addCheck("P145.2 checker accepts P145.4 handoff", p1452Checker.includes("p1454CurrentState") && p1452Checker.includes('status.currentPhase === "P145.4"'));
 addCheck("P145.1 checker accepts P145.4 handoff", p1451Checker.includes("p1454CurrentState") && p1451Checker.includes('status.currentPhase === "P145.4"'));
@@ -234,10 +253,10 @@ addCheck("enterprise checker accepts P145.4 active state", enterpriseChecker.inc
 addCheck("Enterprise Preview view model exposes GA readiness rows", enterprisePreviewData.includes("gaReadinessRows") && enterprisePreviewData.includes("gaReadinessSummary") && enterprisePreviewData.includes("commandCenterReadinessRows"));
 addCheck("Enterprise Preview tabs include GA Readiness", tabsData.includes('id: "ga-readiness"') && tabsData.includes("GA Readiness"));
 addCheck("Command Center renders GA readiness without action buttons", commandCenter.includes('tabId="ga-readiness"') && commandCenter.includes("Enterprise GA Readiness") && !/certify now|issue certification now|attest now|sign attestation now|run security scan now|dispatch agents now|generate prd now|start build now|build project now|deploy now|export now|package now|spend now/i.test(commandCenter));
-addCheck("phase status keeps P145.4 complete through handoff", p1454CurrentState || p1455CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status keeps P145.4 complete through handoff", p1454CurrentState || p1455CurrentState || p1456CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("P145 parent records active status", [p145, p145Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && entry.commandCenterVisible === true));
 addCheck("P145.4 records required status fields", [statusById.get("P145.4"), roadmapById.get("P145.4")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P145.5 remains safe", (p1454CurrentState && [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1455CurrentState && [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${NEXT_SCRIPT}`)) && [statusById.get("P145.6"), roadmapById.get("P145.6")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)));
+addCheck("P145.5 remains safe", (p1454CurrentState && [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1455CurrentState && [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${NEXT_SCRIPT}`)) && [statusById.get("P145.6"), roadmapById.get("P145.6")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1456CurrentState && [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${NEXT_SCRIPT}`)) && [statusById.get("P145.6"), roadmapById.get("P145.6")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1456-enterprise-ga-readiness-docs-roadmap"))));
 addCheck("P145.4 Playwright coverage exists", routeTests.includes("P145.4 enterprise readiness UX keeps Enterprise Preview useful") && routeTests.includes("GA Readiness") && routeTests.includes("Enterprise GA Readiness"));
 addCheck("route-wide safety coverage retained", routeTests.includes("Command Center route-wide UX") && routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher exists globally"));
 addCheck("docs record P145.4 and P145.5 handoff", /## P145\.4 Readiness Command Center UX[\s\S]*Status:\s+complete/.test(plan) && /P145\.4 Readiness Command Center UX is complete/i.test(readme) && /P145\.4 readiness Command Center UX is complete/i.test(platformRoadmap) && /P145\.4 is now complete as focused Enterprise Preview GA readiness UX/i.test(enterpriseRoadmap));

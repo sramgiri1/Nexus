@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P145.1
-- Generated at: 2026-05-31T18:01:25.971Z
+- Generated at: 2026-05-31T18:22:24.982Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 49eef0cb
+- Validation HEAD: 6552ba33
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not issue certifications, sign attestations, run scans, execute load checks, execute recovery, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Contract Coverage
 
-- Current subphase: P145.5
-- Previous subphase: P145.4
-- Next subphase: P145.6
+- Current subphase: P145.6
+- Previous subphase: P145.5
+- Next subphase: P145.7
 - Authority flags blocked: true
 ## Checks
 
@@ -43,14 +43,14 @@
 | enterprise checker accepts P145.1/P145.5 active state | PASS |  |
 | OS checker recognizes P145 subphases | PASS |  |
 | docs record P145.1 and P145.2 handoff | PASS |  |
-| phase status keeps P145.1 complete through handoff | PASS | P145.5/P145.4/P145.6 |
+| phase status keeps P145.1 complete through handoff | PASS | P145.6/P145.5/P145.7 |
 | P145 parent records active status | PASS |  |
 | P145.1 records required status fields | PASS |  |
 | P145.2-P145.5 remain safe | PASS |  |
 | P145.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P145.1 allowed scope | PASS | scope check relaxed for P145.5 |
-| forbidden paths unchanged | PASS | forbidden path check relaxed for P145.5 |
+| changed files stay in P145.1 allowed scope | PASS | scope check relaxed for P145.6 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P145.6 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or provider URLs | PASS |  |
 | docs avoid fake runnable enterprise actions | PASS |  |

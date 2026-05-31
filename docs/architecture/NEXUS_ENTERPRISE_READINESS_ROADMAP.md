@@ -91,7 +91,7 @@ P144.5 is now complete as aggregate tests/checkers only.
 P144.6 is now complete as docs/status closure only.
 P144.7 is now complete as final validation only.
 P145.1 is now complete as contract/policy/safety-boundary only.
-P145.2 is now complete as a read-only certification matrix. P145.3 is now complete as read-only end-to-end rehearsal evidence. P145.4 is now complete as focused Enterprise Preview GA readiness UX. P145.5 is now complete as aggregate tests/checkers only. P145.6 is
+P145.2 is now complete as a read-only certification matrix. P145.3 is now complete as read-only end-to-end rehearsal evidence. P145.4 is now complete as focused Enterprise Preview GA readiness UX. P145.5 is now complete as aggregate tests/checkers only. P145.6 is now complete as docs/status closure only. P145.7 is
 planned-only next. It does not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
@@ -234,7 +234,7 @@ P144.5 is now complete as aggregate tests/checkers only.
 P144.6 is now complete as docs/status closure only.
 P144.7 is now complete as final validation only.
 P145.1 is complete as contract/policy/safety-boundary work only. P145.2 is
-complete as a read-only certification matrix. P145.3 is complete as read-only end-to-end rehearsal evidence. P145.4 is complete as focused Enterprise Preview GA readiness UX. P145.5 is complete as aggregate tests/checkers only. P145.6-P145.7 remain planned-only
+complete as a read-only certification matrix. P145.3 is complete as read-only end-to-end rehearsal evidence. P145.4 is complete as focused Enterprise Preview GA readiness UX. P145.5 is complete as aggregate tests/checkers only. P145.6 is complete as docs/status closure only. P145.7 remains planned-only
 backlog subphases and must not be treated as complete or live.
 
 ## Validation

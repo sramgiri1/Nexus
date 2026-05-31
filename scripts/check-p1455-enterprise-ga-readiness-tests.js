@@ -90,6 +90,7 @@ const p145 = statusById.get("P145") || {};
 const p145Roadmap = roadmapById.get("P145") || {};
 const p1455 = subphaseById.get("P145.5") || {};
 const p1456 = subphaseById.get("P145.6") || {};
+const p1457 = subphaseById.get("P145.7") || {};
 const checkerSource = readText("scripts/check-p1455-enterprise-ga-readiness-tests.js");
 const p1454Checker = readText("scripts/check-p1454-enterprise-command-center-ux.js");
 const enterpriseChecker = readText("scripts/check-enterprise-readiness-roadmap.js");
@@ -144,6 +145,38 @@ const p1455CurrentState =
   && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P145.6")?.status === "planned"
   && roadmapById.get("P145.6")?.status === "planned";
+const p1456CurrentState =
+  status.currentPhase === "P145.6"
+  && status.previousPhase === "P145.5"
+  && status.nextPhase === "P145.7"
+  && roadmap.currentPhase === "P145.6"
+  && roadmap.previousPhase === "P145.5"
+  && roadmap.nextPhase === "P145.7"
+  && status.current?.phaseId === "P145.6"
+  && status.previous?.phaseId === "P145.5"
+  && status.next?.phaseId === "P145.7"
+  && roadmap.current?.phaseId === "P145.6"
+  && roadmap.previous?.phaseId === "P145.5"
+  && roadmap.next?.phaseId === "P145.7"
+  && statusById.get("P145")?.status === "in_progress"
+  && roadmapById.get("P145")?.status === "in_progress"
+  && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5", "P145.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P145.7")?.status === "planned"
+  && roadmapById.get("P145.7")?.status === "planned";
+const p1457FinalState =
+  status.currentPhase === "P145.7"
+  && status.previousPhase === "P145.6"
+  && status.nextPhase === ""
+  && roadmap.currentPhase === "P145.7"
+  && roadmap.previousPhase === "P145.6"
+  && roadmap.nextPhase === ""
+  && status.current?.phaseId === "P145.7"
+  && status.previous?.phaseId === "P145.6"
+  && roadmap.current?.phaseId === "P145.7"
+  && roadmap.previous?.phaseId === "P145.6"
+  && statusById.get("P145")?.status === "complete"
+  && roadmapById.get("P145")?.status === "complete"
+  && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5", "P145.6", "P145.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete");
 const contractRowsSafe = matrixRows.length >= 5
   && rehearsalRows.length >= 6
   && readinessRows.length >= 6
@@ -180,7 +213,7 @@ const docsBundle = [
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1455-enterprise-ga-readiness-tests.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
 addCheck("P145.1-P145.4 reports pass", PRIOR_REPORTS.every(reportPassed), `${PRIOR_REPORTS.filter(reportPassed).length}/${PRIOR_REPORTS.length}`);
-addCheck("contract advances to P145.5", contract.phaseId === "P145" && contract.status === "in_progress" && contract.currentSubphase === "P145.5" && contract.previousSubphase === "P145.4" && contract.nextSubphase === "P145.6" && p1455.status === "complete" && p1456.status === "planned");
+addCheck("contract keeps P145.5 complete through handoff", contract.phaseId === "P145" && p1455.status === "complete" && ((contract.status === "in_progress" && contract.currentSubphase === "P145.5" && contract.previousSubphase === "P145.4" && contract.nextSubphase === "P145.6" && p1456.status === "planned") || (contract.status === "in_progress" && contract.currentSubphase === "P145.6" && contract.previousSubphase === "P145.5" && contract.nextSubphase === "P145.7" && p1456.status === "complete" && p1457.status === "planned") || p1457FinalState));
 addCheck("contract records expected base commit", p1455.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1455.validationCommands?.includes(command)));
 addCheck("contract rows remain safe", contractRowsSafe, `matrix=${matrixRows.length}; rehearsal=${rehearsalRows.length}; readiness=${readinessRows.length}`);
@@ -190,13 +223,13 @@ addCheck("Enterprise Preview projections remain display-only", enterprisePreview
 addCheck("P145.4 checker accepts P145.5 handoff", p1454Checker.includes("p1455CurrentState") && p1454Checker.includes('status.currentPhase === "P145.5"') && p1454Checker.includes(REQUIRED_SCRIPT));
 addCheck("enterprise checker accepts P145.5 active state", enterpriseChecker.includes("p1455CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("Command Center keeps enterprise readiness non-runnable", !/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now|generate prd now|start build now|build project now/i.test(commandCenter));
-addCheck("phase status advances to P145.5", p1455CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("phase status advances to P145.5 or safely hands off", p1455CurrentState || p1456CurrentState || p1457FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("P145 parent records active status", [p145, p145Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && entry.commandCenterVisible === true));
 addCheck("P145.5 records required status fields", [statusById.get("P145.5"), roadmapById.get("P145.5")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P145.6 handoff remains planned-only", [statusById.get("P145.6"), roadmapById.get("P145.6")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("P145.6 handoff remains valid", (p1455CurrentState && [statusById.get("P145.6"), roadmapById.get("P145.6")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || ((p1456CurrentState || p1457FinalState) && [statusById.get("P145.6"), roadmapById.get("P145.6")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${NEXT_SCRIPT}`))));
 addCheck("P145.5 Playwright coverage exists", routeTests.includes("P145.5 aggregate tests keep enterprise GA readiness safe") && routeTests.includes("Enterprise GA Readiness") && routeTests.includes("Certification Matrix") && routeTests.includes("P145.6"));
 addCheck("route-wide safety coverage retained", routeTests.includes("Command Center route-wide UX") && routeTests.includes("full Command Center routes do not show DemoApp") && routeTests.includes("theme switcher exists globally"));
-addCheck("docs record P145.5 and P145.6 handoff", /## P145\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan) && /P145\.5 Tests \/ Checkers is complete/i.test(readme) && /P145\.5 aggregate tests\/checkers is complete/i.test(platformRoadmap) && /P145\.5 is now complete as aggregate tests\/checkers only/i.test(enterpriseRoadmap) && /P145\.6 is\s+planned-only next/i.test(enterpriseRoadmap));
+addCheck("docs record P145.5 and P145.6 handoff", /## P145\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan) && /P145\.5 Tests \/ Checkers is complete/i.test(readme) && /P145\.5 aggregate tests\/checkers is complete/i.test(platformRoadmap) && /P145\.5 is now complete as aggregate tests\/checkers only/i.test(enterpriseRoadmap) && (/P145\.6 is\s+planned-only next/i.test(enterpriseRoadmap) || /P145\.6 is now complete/i.test(enterpriseRoadmap)));
 addCheck("changed files stay in P145.5 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file === prefix.replace(/\/$/, "") || file.startsWith(prefix))), changed.join(", "));
 addCheck("display avoids raw private IDs", !/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_|Bearer\s+|jwt|id_token|access_token|postgres(?:ql)?:\/\//i.test(displayBundle));
@@ -213,7 +246,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Adds aggregate P145.5 validation over the enterprise certification contract, certification matrix, end-to-end rehearsal evidence, GA readiness UX, docs/status, and route safety.",
-        "- Confirms P145.1-P145.5 are complete and P145.6 remains planned-only.",
+        "- Confirms P145.1-P145.5 are complete and the P145.6 handoff remains valid.",
         "- Keeps certification issuance, attestation signing, scan/load/recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, network calls, deploy/release/export/package actions, and spend blocked.",
       ].join("\n"),
     },
@@ -232,7 +265,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P145.5 is tests/checkers hardening only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend. P145.6-P145.7 remain planned-only.",
+      body: "- P145.5 is tests/checkers hardening only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend. P145.6 may now be complete as docs/status closure while P145.7 remains planned-only.",
     },
     { title: "Result", body: failed.length ? `FAIL (${failed.length}/${checks.length})` : `PASS (${checks.length}/${checks.length})` },
   ],
