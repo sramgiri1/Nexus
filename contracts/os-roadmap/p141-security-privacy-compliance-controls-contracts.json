@@ -1164,7 +1164,7 @@
       "title": "Docs / Roadmap / Status",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5aa4523c",
       "completedAt": "2026-05-31T10:20:00.000Z",
       "summary": "P141.6 closes security, privacy, and compliance controls docs, roadmap, status, and checker handoff while runtime authority remains blocked.",
       "checksRun": [
@@ -1283,7 +1283,7 @@
         "title": "Docs / Roadmap / Status",
         "status": "complete",
         "branch": "codex/nexus-e2e-phase-validation",
-        "commit": "pending-final-commit",
+        "commit": "5aa4523c",
         "completedAt": "2026-05-31T10:20:00.000Z",
         "summary": "P141.6 closes security, privacy, and compliance controls docs, roadmap, status, and checker handoff while runtime authority remains blocked.",
         "checksRun": [
@@ -1324,7 +1324,7 @@
       "gitCommands": [
         "git add <allowed P141.6 files only>",
         "git commit -m \"chore(nexus): implement p1416 compliance docs roadmap\"",
-        "stamp pending-final-commit with implementation commit hash",
+        "stamp 5aa4523c with implementation commit hash",
         "git add <stamp files and refreshed reports>",
         "git commit -m \"chore(nexus): stamp p1416 compliance docs roadmap\"",
         "git push origin codex/nexus-e2e-phase-validation"
@@ -1370,7 +1370,7 @@
     "title": "Docs / Roadmap / Status",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "5aa4523c",
     "completedAt": "2026-05-31T10:20:00.000Z",
     "summary": "P141.6 closes security, privacy, and compliance controls docs, roadmap, status, and checker handoff while runtime authority remains blocked.",
     "checksRun": [
@@ -1609,7 +1609,7 @@
     "nextPhase": "P142",
     "commandCenterVisible": true
   },
-  "commit": "pending-final-commit",
+  "commit": "5aa4523c",
   "completedAt": "2026-05-31T10:20:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
