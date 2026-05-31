@@ -75,8 +75,9 @@ P142.3 is now complete as non-runnable admin operations dry run only.
 P142.4 is now complete as display-only Settings Command Center UX only.
 P142.5 is now complete as aggregate tests/checkers only.
 P142.6 is now complete as docs/status closure only.
-P142.7 is planned-only next.
-P142.7-P145 remain planned-only. They do not enable secret
+P142.7 is now complete as final validation only. P142 is complete.
+P143 is planned-only next.
+P143-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -199,8 +200,9 @@ P142.3 is now complete as non-runnable admin operations dry run only.
 P142.4 is now complete as display-only Settings Command Center UX only.
 P142.5 is now complete as aggregate tests/checkers only.
 P142.6 is now complete as docs/status closure only.
-P142.7 is planned-only next.
-P142.7-P145 are planned-only backlog phases and must not be
+P142.7 is now complete as final validation only. P142 is complete.
+P143 is planned-only next.
+P143-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
@@ -209,6 +211,11 @@ Required validation for this roadmap update:
 
 - `npm run check:p1421-admin-operations-runtime-settings`
 - `npm run check:p1422-admin-operations-runtime-settings`
+- `npm run check:p1423-admin-operations-runtime-settings`
+- `npm run check:p1424-admin-operations-runtime-settings`
+- `npm run check:p1425-admin-operations-runtime-settings`
+- `npm run check:p1426-admin-operations-runtime-settings-docs-roadmap`
+- `npm run check:p1427-admin-operations-runtime-settings-final-validation`
 - `npm run check:p1417-security-privacy-compliance-controls-final-validation`
 - `npm run check:enterprise-readiness-roadmap`
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`

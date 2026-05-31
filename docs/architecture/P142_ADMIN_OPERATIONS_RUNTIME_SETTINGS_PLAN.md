@@ -325,9 +325,9 @@ route-wide Playwright, and `git diff --check`.
 Result: complete as display-only Settings Command Center UX. The page now shows
 admin settings, feature gates, maintenance controls, runtime state, audit
 surfaces, dry-run summary, evidence/activity locations, disabled reasons,
-owners, next action, and zero-spend cost posture. P142.5 Tests / Checkers and
-P142.6 Docs / Roadmap / Status are complete; P142.7 Final Validation is
-planned-only next. No admin setting
+owners, next action, and zero-spend cost posture. P142.5 Tests / Checkers,
+P142.6 Docs / Roadmap / Status, and P142.7 Final Validation are complete.
+No admin setting
 mutation, feature toggle, feature rollout, maintenance execution, maintenance
 scheduling, runtime state mutation, DB/runtime write, audit export, raw log
 exposure, raw state exposure, credential handling, secret read, provider/model
@@ -406,7 +406,7 @@ route-wide Playwright, and `git diff --check`.
 Result: complete as docs/status/checker closure. P142.6 updates the P142 docs,
 README, platform roadmap, enterprise roadmap, OS phase status, phase index,
 checker handoffs, and report freshness while preserving the display-only
-Settings UX. P142.7 Final Validation is planned-only next. No admin setting
+Settings UX. P142.7 Final Validation is now complete; P143 is planned-only next. No admin setting
 mutation, feature toggle, feature rollout, maintenance execution, maintenance
 scheduling, runtime state mutation, DB/runtime write, audit export, raw log
 exposure, raw state exposure, credential handling, secret read, provider/model
@@ -415,7 +415,7 @@ release, export, package, network call, or spend authority is enabled.
 
 ## P142.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: Close P142 with final validation evidence, prior report
 verification, P142 complete status, and safe planned-only P143 handoff.
@@ -442,3 +442,14 @@ update enterprise checker, and run full route-wide safety coverage.
 Validation: P142.7 checker, P142.6 checker, P142.5 checker, enterprise
 roadmap, OS phase status, phase validation coverage, dashboard build/unit,
 route-wide Playwright, and `git diff --check`.
+
+Result: complete as final validation only. P142 is complete; P142.1-P142.6
+reports were verified, P142.6 handoff compatibility was preserved, enterprise
+readiness accepts the P142.7 final state, OS Roadmap points to P143 as the next
+planned enterprise phase, and Settings remains display-only. P143 remains
+planned-only. No admin setting mutation, feature toggle, feature rollout,
+maintenance execution, maintenance scheduling, runtime state mutation,
+DB/runtime write, audit export, raw log exposure, raw state exposure,
+credential handling, secret value read, provider/model call, tool execution,
+MCP startup, agent dispatch, project mutation, deploy, release, export,
+package, network call, or spend authority is enabled.

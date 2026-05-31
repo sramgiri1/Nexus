@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P142.5
-- Generated at: 2026-05-31T09:39:58.482Z
+- Generated at: 2026-05-31T09:58:41.420Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 70bb59ba
+- Validation HEAD: abce8b53
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -50,13 +50,13 @@
 | README records P142.5 | PASS |  |
 | platform roadmap records P142.5 | PASS |  |
 | enterprise roadmap records P142.5 | PASS |  |
-| phase status advances through P142.5 | PASS | P142.6/P142.5/P142.7 |
+| phase status advances through P142.5 | PASS | P142.7/P142.6/P143 |
 | completed P142.5 entries have required fields | PASS |  |
 | P142.6 handoff remains valid | PASS |  |
-| P142.7 handoff remains planned-only after P142.6 | PASS |  |
+| P142.7 handoff remains valid after P142.6 | PASS |  |
 | P143 remains planned-only | PASS |  |
-| changed files stay in P142.5 allowed scope | PASS | scope check relaxed for P142.6 |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P142.5 allowed scope | PASS | scope check relaxed for P142.7 |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1425-admin-operations-runtime-settings-report.md, reports/p1426-admin-operations-runtime-settings-docs-roadmap-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1425-admin-operations-runtime-settings.js, scripts/check-p1426-admin-operations-runtime-settings-docs-roadmap.js, reports/p1427-admin-operations-runtime-settings-final-validation-report.md, scripts/check-p1427-admin-operations-runtime-settings-final-validation.js |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable admin actions | PASS |  |

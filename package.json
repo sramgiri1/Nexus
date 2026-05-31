@@ -804,7 +804,8 @@
     "check:p1423-admin-operations-runtime-settings": "node scripts/check-p1423-admin-operations-runtime-settings.js",
     "check:p1424-admin-operations-runtime-settings": "node scripts/check-p1424-admin-operations-runtime-settings.js",
     "check:p1425-admin-operations-runtime-settings": "node scripts/check-p1425-admin-operations-runtime-settings.js",
-    "check:p1426-admin-operations-runtime-settings-docs-roadmap": "node scripts/check-p1426-admin-operations-runtime-settings-docs-roadmap.js"
+    "check:p1426-admin-operations-runtime-settings-docs-roadmap": "node scripts/check-p1426-admin-operations-runtime-settings-docs-roadmap.js",
+    "check:p1427-admin-operations-runtime-settings-final-validation": "node scripts/check-p1427-admin-operations-runtime-settings-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
