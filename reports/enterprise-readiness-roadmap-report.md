@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-31T16:14:22.358Z
+- Generated at: 2026-05-31T16:38:51.321Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a080b871
+- Validation HEAD: fab35401
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -44,7 +44,7 @@
 | P143 checker registered when active | PASS |  |
 | P144 checker registered when active | PASS |  |
 | P145 checker registered when active | PASS |  |
-| current enterprise handoff | PASS | P145.1/P144.7/P145.2 |
+| current enterprise handoff | PASS | P145.2/P145.1/P145.3 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -57,8 +57,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1447-billing-metering-customer-operations-final-validation-report.md, reports/p1451-enterprise-certification-ga-readiness-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1447-billing-metering-customer-operations-final-validation-report.md, reports/p1451-enterprise-certification-ga-readiness-report.md |
+| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, dashboard/src/data/commandCenterTabs.js, dashboard/src/data/complianceReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1451-enterprise-certification-ga-readiness-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1451-enterprise-certification-ga-readiness.js, reports/p1452-enterprise-certification-matrix-report.md, scripts/check-p1452-enterprise-certification-matrix.js |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, dashboard/src/data/commandCenterTabs.js, dashboard/src/data/complianceReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1451-enterprise-certification-ga-readiness-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1451-enterprise-certification-ga-readiness.js, reports/p1452-enterprise-certification-matrix-report.md, scripts/check-p1452-enterprise-certification-matrix.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

@@ -10478,6 +10478,45 @@ function CompliancePage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="certification" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="Enterprise certification matrix summary">
+              <div className="ccv2-section-heading">Enterprise Certification Matrix</div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Matrix rows</span><span className="ccv2-page-summary-value">{readiness.certificationMatrixSummary.rowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{readiness.certificationMatrixSummary.blockedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed certification actions</span><span className="ccv2-page-summary-value">{readiness.certificationMatrixSummary.allowedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.certificationMatrixSummary.nextAction}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.certificationMatrixSummary.costImpact}</span></div>
+              </div>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--2" style={{ marginTop: 16 }}>
+              {readiness.certificationMatrixRows.map((row) => (
+                <article className="ccv2-card" key={`${row.category}-${row.displayName}`}>
+                  <div className="ccv2-section-heading">{row.displayName}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill ccv2-pill--teal">{row.category}</span>
+                    <span className="ccv2-pill ccv2-pill--amber">{row.readinessState}</span>
+                    <span className="ccv2-pill ccv2-pill--green">{row.costImpact}</span>
+                  </div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{row.owner}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{row.nextAction}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{row.disabledReason}</span></div>
+                  </div>
+                  <div className="ccv2-section-heading" style={{ marginTop: 12 }}>Evidence</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.evidence.map((item, index) => <li key={`${row.displayName}-evidence-${index}`}>{item}</li>)}
+                  </ul>
+                  <div className="ccv2-section-heading" style={{ marginTop: 12 }}>Blockers</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="posture" activeTab={activeTab}>
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Compliance Posture</div>

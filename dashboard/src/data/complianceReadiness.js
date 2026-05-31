@@ -1,4 +1,5 @@
 import { createControlMappingPreview } from "../../../compliance/p77-4-placeholder.js";
+import p145EnterpriseCertificationContract from "../../../contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json" with { type: "json" };
 import { buildSecurityPrivacyCompliancePreview } from "../../../shared/securityPrivacyCompliancePreview.js";
 
 const controlMapping = createControlMappingPreview({
@@ -74,12 +75,40 @@ function buildPreviewDisplayModel() {
   };
 }
 
+function buildCertificationMatrixDisplayModel() {
+  const rows = (p145EnterpriseCertificationContract.certificationMatrixRows || []).map((row) => ({
+    displayName: displayLabel(row.displayName),
+    category: displayLabel(row.category),
+    readinessState: displayState(row.readinessState),
+    certificationAllowed: row.certificationAllowed === true,
+    disabledReason: displayText(row.disabledReason),
+    owner: displayText(row.ownerCapability),
+    evidence: (row.evidenceRefs || []).map(displayText),
+    blockers: (row.blockers || []).map(displayText),
+    nextAction: displayText(row.nextAction),
+    costImpact: displayText(row.costImpact || "No spend"),
+  }));
+  const blockedCount = rows.filter((row) => row.certificationAllowed === false).length;
+
+  return {
+    rows,
+    summary: {
+      rowCount: rows.length,
+      blockedCount,
+      allowedCount: rows.length - blockedCount,
+      nextAction: "Review certification matrix evidence before P145.3 end-to-end rehearsal planning.",
+      costImpact: "No spend",
+    },
+  };
+}
+
 export function buildComplianceReadinessViewModel() {
   const compliancePreview = buildPreviewDisplayModel();
+  const certificationMatrix = buildCertificationMatrixDisplayModel();
   return {
     routeId: "compliance-readiness",
     pageTitle: "Compliance",
-    whatChanged: "Compliance evidence, audit preview, control mapping, and the security/privacy preview are visible in Command Center.",
+    whatChanged: "Compliance evidence, audit preview, control mapping, security/privacy preview, and the enterprise certification matrix are visible in Command Center.",
     currentState: "Display-only compliance readiness; certification, attestation, audit export, package creation, policy enforcement, DB writes, and runtime mutation remain disabled.",
     nextAction: compliancePreview.summary.nextAction,
     ownerAgent: "WARDEN",
@@ -93,6 +122,7 @@ export function buildComplianceReadinessViewModel() {
       { label: "Audit posture", value: "Preview only", tone: "amber", detail: "Audit trail export remains disabled and internal logs are not exposed." },
       { label: "Control mapping", value: "Safety gated", tone: "amber", detail: "Control mapping is visible without legal attestation or signing." },
       { label: "Security preview", value: `${compliancePreview.summary.previewRowCount} rows`, tone: "teal", detail: "Security, privacy, evidence, policy, and data rows are ready for review." },
+      { label: "Certification matrix", value: `${certificationMatrix.summary.rowCount} rows`, tone: "teal", detail: "Enterprise readiness rows are review-only and cannot issue certification." },
       { label: "Cost", value: "No spend", tone: "green", detail: "No certification, export, package, DB, network, or provider calls are made." },
     ],
     postureRows: [
@@ -114,6 +144,8 @@ export function buildComplianceReadinessViewModel() {
     compliancePreviewRows: compliancePreview.rows,
     compliancePreviewSections: compliancePreview.sections,
     compliancePreviewSummary: compliancePreview.summary,
+    certificationMatrixRows: certificationMatrix.rows,
+    certificationMatrixSummary: certificationMatrix.summary,
     authoritySummary: compliancePreview.authoritySummary,
     disabledActions: [
       { label: "Certification", reason: "Compliance certification is not enabled." },

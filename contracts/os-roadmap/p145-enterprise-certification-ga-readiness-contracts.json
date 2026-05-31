@@ -2,14 +2,14 @@
   "phaseId": "P145",
   "title": "Enterprise Certification and GA Readiness",
   "status": "in_progress",
-  "currentSubphase": "P145.1",
-  "previousSubphase": "P144.7",
-  "nextSubphase": "P145.2",
+  "currentSubphase": "P145.2",
+  "previousSubphase": "P145.1",
+  "nextSubphase": "P145.3",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "540e2284",
-  "summary": "P145 enterprise certification and GA readiness has started through P145.1 contract, policy, and safety-boundary work while all certification, attestation, scan, load, recovery, release, provider, DB, network, project mutation, and spend authority remains blocked.",
-  "detail": "P145.1 establishes the enterprise GA gate contract and keeps P145.2-P145.7 planned-only.",
+  "summary": "P145.2 adds a read-only enterprise certification matrix for founder workflow, controls, reliability, commercial governance, and release signoff readiness while all certification and execution authority remains blocked.",
+  "detail": "P145.2 turns the P145.1 safety contract into display-safe certification readiness rows and keeps P145.3-P145.7 planned-only.",
   "allowedFiles": [
     "package.json",
     "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
@@ -26,7 +26,12 @@
     "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
     "reports/enterprise-readiness-roadmap-report.md",
     "reports/os-phase-status-report.md",
-    "reports/phase-validation-coverage-report.md"
+    "reports/phase-validation-coverage-report.md",
+    "scripts/check-p1452-enterprise-certification-matrix.js",
+    "dashboard/src/data/complianceReadiness.js",
+    "dashboard/src/data/commandCenterTabs.js",
+    "dashboard/src/pages/CommandCenterV2.jsx",
+    "reports/p1452-enterprise-certification-matrix-report.md"
   ],
   "forbiddenFiles": [
     "projects/**",
@@ -309,9 +314,9 @@
     {
       "phaseId": "P145.2",
       "title": "Certification Matrix",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "expectedBaseCommit": "after-P145.1",
+      "expectedBaseCommit": "fab35401",
       "narrowGoal": "Build the read-only enterprise certification matrix for P145 without issuing certification, running scans, mutating findings, calling providers, or spending.",
       "requiredPlanFields": [
         "narrow scope",
@@ -331,9 +336,183 @@
         "git add/commit/push commands",
         "final response checklist"
       ],
-      "commit": "",
-      "checksRun": [],
-      "commandCenterVisible": true
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p1452-enterprise-certification-matrix"
+      ],
+      "commandCenterVisible": true,
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "allowedFiles": [
+        "package.json",
+        "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
+        "scripts/check-p1452-enterprise-certification-matrix.js",
+        "scripts/check-p1451-enterprise-certification-ga-readiness.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "dashboard/src/data/complianceReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "private project roots",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "certification issuers, attestation signers, scanners, load runners, recovery executors, release/deploy/export/package executors, provider/model callers, agent dispatchers, project mutation paths, network callers, or spend paths"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
+        "scripts/check-p1452-enterprise-certification-matrix.js",
+        "scripts/check-p1451-enterprise-certification-ga-readiness.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "dashboard/src/data/complianceReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "dashboard Compliance view model exposes certificationMatrixRows and certificationMatrixSummary.",
+        "No runtime, provider, DB, tool, worker, deploy, release, export, package, or project exports."
+      ],
+      "schemas": [
+        "certificationMatrixShape"
+      ],
+      "dataShape": "Read-only certification matrix row objects with matrixId, displayName, category, readinessState, certificationAllowed false, disabledReason, ownerCapability, evidenceRefs, blockers, nextAction, and costImpact.",
+      "commandCenterUxRequirements": [
+        "Compliance page shows a Certification Matrix tab with display-safe readiness rows.",
+        "Rows show current state, next action, blockers, disabled reason, owner, evidence, and cost impact.",
+        "Primary UX does not show raw JSON, raw logs, raw policy dumps, raw private project IDs, raw URLs, secret/token-like strings, executable payloads, or fake runnable certification actions.",
+        "DemoApp remains absent from full Command Center."
+      ],
+      "themeRequirements": [
+        "Preserve System, Dark, and Light themes.",
+        "Certification Matrix must remain readable across all theme modes."
+      ],
+      "safetyRules": [
+        "Certification issuance remains disabled.",
+        "Attestation signing remains disabled.",
+        "Security scan execution and finding mutation remain disabled.",
+        "Load and recovery execution remain disabled.",
+        "DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, network calls, deploy/release/export/package actions, and spend remain disabled."
+      ],
+      "reuseCheck": [
+        "Reuse existing Compliance page card/tab components.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js.",
+        "Reuse os-roadmap/updatePhaseStatus.js semantics through existing JSON status structure; do not add a duplicate phase updater.",
+        "Reuse existing route-wide safety tests and current roadmap helper."
+      ],
+      "testsToAddUpdateRemove": [
+        "Add P145.2 Playwright coverage for Compliance Certification Matrix and OS Roadmap handoff.",
+        "Preserve route-wide safety coverage.",
+        "No test removals."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1452-enterprise-certification-matrix.js.",
+        "Update scripts/check-p1451-enterprise-certification-ga-readiness.js for P145.2 handoff compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P145.2 active state compatibility."
+      ],
+      "docsToUpdate": [
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P145 in progress; P145.1 and P145.2 complete; previous P145.1; current P145.2; next P145.3 planned-only.",
+      "validationCommands": [
+        "npm run check:p1452-enterprise-certification-matrix",
+        "npm run check:p1451-enterprise-certification-ga-readiness",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P145.2\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No project, CareLoop, generated project, DB/runtime, provider, tool, worker, deploy, release, export, package, or env files changed.",
+        "No certification issuance, attestation signing, security scan execution, finding mutation, load execution, recovery execution, restore, failover, DB/runtime write, provider/model call, tool execution, agent dispatch, project mutation, network call, deploy/release/export/package action, or spend enabled.",
+        "No raw private IDs, raw JSON, raw logs, raw policy dumps, raw URLs, secret/token-like strings, raw certification payloads, raw attestation payloads, raw scan payloads, raw load payloads, raw recovery payloads, or fake runnable GA actions in primary UX.",
+        "No stale phase status or pending-final-commit markers after final stamp."
+      ],
+      "gitCommands": [
+        "git add <allowed P145.2 files>",
+        "git commit -m \"feat(nexus): add p1452 enterprise certification matrix\"",
+        "stamp commit hash after implementation",
+        "git commit -m \"chore(nexus): stamp p1452 enterprise certification matrix\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "completedAt": "2026-05-31T16:17:37.000Z",
+      "summary": "Added a read-only enterprise certification matrix for Compliance Command Center and OS roadmap P145.2 while all certification and execution authority remains blocked.",
+      "knownLimitations": [
+        "P145.2 is read-only certification matrix work only. It does not issue certification, sign attestations, run security scans, mutate findings, execute load or recovery actions, restore, fail over, write DB/runtime state, call providers/models, run tools, dispatch agents, mutate projects, deploy/release/export/package, use network calls, or spend.",
+        "P145.3-P145.7 remain planned-only."
+      ],
+      "nextPhase": "P145.3",
+      "track": "NEXUS_OS",
+      "label": "Certification Matrix",
+      "order": 181.2,
+      "detail": "P145.2 exposes the enterprise certification readiness matrix as display-only Compliance UX backed by P145 contract rows."
     },
     {
       "phaseId": "P145.3",
@@ -481,13 +660,130 @@
       "commandCenterVisible": true
     }
   ],
-  "commit": "a080b871",
-  "completedAt": "2026-05-31T15:44:07.000Z",
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T16:17:37.000Z",
   "checksRun": [
-    "npm run check:p1451-enterprise-certification-ga-readiness"
+    "npm run check:p1451-enterprise-certification-ga-readiness",
+    "npm run check:p1452-enterprise-certification-matrix"
   ],
   "knownLimitations": [
-    "P145.1 is contract/policy/safety-boundary work only. It does not enable certification issuance, attestation signing, security scan execution, load execution, recovery execution, restore, failover, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend. P145.2-P145.7 remain planned-only."
+    "P145.2 is a read-only certification matrix. It does not issue certification, sign attestations, run security scans, mutate findings, execute load or recovery actions, restore, fail over, write DB/runtime state, call providers/models, run tools, dispatch agents, mutate projects, deploy/release/export/package, use network calls, or spend.",
+    "P145.3-P145.7 remain planned-only."
   ],
-  "osPhaseStatusUpdate": "P145 in progress; P145.1 complete; previous P144.7; current P145.1; next P145.2 planned-only."
+  "osPhaseStatusUpdate": "P145 in progress; P145.1 and P145.2 complete; previous P145.1; current P145.2; next P145.3 planned-only.",
+  "certificationMatrixShape": [
+    "matrixId",
+    "displayName",
+    "category",
+    "readinessState",
+    "certificationAllowed",
+    "disabledReason",
+    "ownerCapability",
+    "evidenceRefs",
+    "blockers",
+    "nextAction",
+    "costImpact"
+  ],
+  "certificationMatrixRows": [
+    {
+      "matrixId": "founder-workflow-readiness",
+      "displayName": "Founder workflow readiness",
+      "category": "Founder intake to PRD",
+      "readinessState": "review-ready",
+      "certificationAllowed": false,
+      "disabledReason": "Certification issuance is disabled until later P145 signoff phases complete.",
+      "ownerCapability": "NEXUS Founder Runtime Envelope",
+      "evidenceRefs": [
+        "P145.2 report",
+        "Founder intake readiness report",
+        "Business build readiness report"
+      ],
+      "blockers": [
+        "Live certification issue path is not enabled",
+        "Agent dispatch remains governed and blocked"
+      ],
+      "nextAction": "Review founder workflow evidence before P145.3 end-to-end rehearsal planning.",
+      "costImpact": "No spend"
+    },
+    {
+      "matrixId": "security-privacy-controls",
+      "displayName": "Security and privacy controls",
+      "category": "Governance controls",
+      "readinessState": "review-ready",
+      "certificationAllowed": false,
+      "disabledReason": "Security scan execution and finding mutation remain disabled.",
+      "ownerCapability": "NEXUS Compliance Readiness",
+      "evidenceRefs": [
+        "P141 controls report",
+        "Compliance readiness report",
+        "P145.2 report"
+      ],
+      "blockers": [
+        "No scan execution authority",
+        "No finding mutation authority"
+      ],
+      "nextAction": "Map evidence gaps to P145.3 rehearsal criteria without running scanners.",
+      "costImpact": "No spend"
+    },
+    {
+      "matrixId": "operational-reliability",
+      "displayName": "Operational reliability evidence",
+      "category": "Runtime reliability",
+      "readinessState": "blocked-for-execution",
+      "certificationAllowed": false,
+      "disabledReason": "Load and recovery execution are disabled in P145.2.",
+      "ownerCapability": "NEXUS Backup and Service Health",
+      "evidenceRefs": [
+        "Backup DR report",
+        "Service health readiness report",
+        "P145.2 report"
+      ],
+      "blockers": [
+        "Load rehearsal execution not enabled",
+        "Restore and failover remain disabled"
+      ],
+      "nextAction": "Prepare P145.3 rehearsal evidence requirements without executing load or recovery actions.",
+      "costImpact": "No spend"
+    },
+    {
+      "matrixId": "cost-billing-governance",
+      "displayName": "Cost and billing governance",
+      "category": "Commercial controls",
+      "readinessState": "review-ready",
+      "certificationAllowed": false,
+      "disabledReason": "Billing and customer operations remain display-only for certification purposes.",
+      "ownerCapability": "NEXUS Billing and Cost Governance",
+      "evidenceRefs": [
+        "P144.7 report",
+        "Cost Center readiness report",
+        "P145.2 report"
+      ],
+      "blockers": [
+        "No payment provider calls",
+        "No usage writes or entitlement mutation"
+      ],
+      "nextAction": "Review commercial controls before any GA release signoff phase.",
+      "costImpact": "No spend"
+    },
+    {
+      "matrixId": "release-signoff-boundary",
+      "displayName": "Release signoff boundary",
+      "category": "Release governance",
+      "readinessState": "blocked-for-release",
+      "certificationAllowed": false,
+      "disabledReason": "Release, deploy, export, and package actions remain disabled.",
+      "ownerCapability": "NEXUS Release Control",
+      "evidenceRefs": [
+        "P143.7 report",
+        "Release control readiness report",
+        "P145.2 report"
+      ],
+      "blockers": [
+        "No deploy/release/export/package authority",
+        "No attestation signing authority"
+      ],
+      "nextAction": "Carry release gate evidence into later P145 release signoff planning.",
+      "costImpact": "No spend"
+    }
+  ]
 }

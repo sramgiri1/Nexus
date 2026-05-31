@@ -101,6 +101,7 @@ const p145 = statusById.get("P145") || {};
 const p145Roadmap = roadmapById.get("P145") || {};
 const p1451 = subphaseById.get("P145.1") || {};
 const p1452 = subphaseById.get("P145.2") || {};
+const p1453 = subphaseById.get("P145.3") || {};
 const checkerSource = readText("scripts/check-p1451-enterprise-certification-ga-readiness.js");
 const p1447Checker = readText("scripts/check-p1447-billing-metering-customer-operations-final-validation.js");
 const enterpriseChecker = readText("scripts/check-enterprise-readiness-roadmap.js");
@@ -154,13 +155,35 @@ const p1451StartedState =
   && roadmapById.get("P145.1")?.status === "complete"
   && statusById.get("P145.2")?.status === "planned"
   && roadmapById.get("P145.2")?.status === "planned";
+const p1452CurrentState =
+  status.currentPhase === "P145.2"
+  && status.previousPhase === "P145.1"
+  && status.nextPhase === "P145.3"
+  && roadmap.currentPhase === "P145.2"
+  && roadmap.previousPhase === "P145.1"
+  && roadmap.nextPhase === "P145.3"
+  && status.current?.phaseId === "P145.2"
+  && status.previous?.phaseId === "P145.1"
+  && status.next?.phaseId === "P145.3"
+  && roadmap.current?.phaseId === "P145.2"
+  && roadmap.previous?.phaseId === "P145.1"
+  && roadmap.next?.phaseId === "P145.3"
+  && statusById.get("P145")?.status === "in_progress"
+  && roadmapById.get("P145")?.status === "in_progress"
+  && statusById.get("P145.1")?.status === "complete"
+  && roadmapById.get("P145.1")?.status === "complete"
+  && statusById.get("P145.2")?.status === "complete"
+  && roadmapById.get("P145.2")?.status === "complete"
+  && statusById.get("P145.3")?.status === "planned"
+  && roadmapById.get("P145.3")?.status === "planned";
+const p1451OrLaterState = p1451StartedState || p1452CurrentState;
 
 const allAuthorityFlagsFalse = Object.values(contract.authorityFlags || {}).every((value) => value === false);
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1451-enterprise-certification-ga-readiness.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
 addCheck("prior P144.7 report still passes", reportPassed("reports/p1447-billing-metering-customer-operations-final-validation-report.md"));
-addCheck("contract starts P145.1", contract.phaseId === "P145" && contract.status === "in_progress" && contract.currentSubphase === "P145.1" && contract.previousSubphase === "P144.7" && contract.nextSubphase === "P145.2" && p1451.status === "complete" && p1452.status === "planned");
+addCheck("contract keeps P145.1 complete through handoff", contract.phaseId === "P145" && contract.status === "in_progress" && p1451.status === "complete" && (p1451StartedState || (contract.currentSubphase === "P145.2" && contract.previousSubphase === "P145.1" && contract.nextSubphase === "P145.3" && p1452.status === "complete" && p1453.status === "planned")));
 addCheck("contract records expected base commit", p1451.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records seven subphases", EXPECTED_SUBPHASES.every((phaseId) => subphaseById.has(phaseId)));
 addCheck("subphases include implementation plan fields", EXPECTED_SUBPHASES.every((phaseId) => {
@@ -176,15 +199,15 @@ addCheck("load readiness shape present", hasFields(contract.loadReadinessShape, 
 addCheck("recovery readiness shape present", hasFields(contract.recoveryReadinessShape, REQUIRED_RECOVERY_READINESS_FIELDS));
 addCheck("release signoff shape present", hasFields(contract.releaseSignoffShape, REQUIRED_RELEASE_SIGNOFF_FIELDS));
 addCheck("authority flags block enterprise GA authority", allAuthorityFlagsFalse, JSON.stringify(contract.authorityFlags || {}));
-addCheck("P145.2 handoff is safe", p1452.status === "planned" && p1452.expectedBaseCommit === "after-P145.1" && p1452.commit === "" && Array.isArray(p1452.checksRun) && p1452.checksRun.length === 0);
+addCheck("P145.2 handoff is safe", (p1451StartedState && p1452.status === "planned" && p1452.expectedBaseCommit === "after-P145.1" && p1452.commit === "" && Array.isArray(p1452.checksRun) && p1452.checksRun.length === 0) || (p1452CurrentState && p1452.status === "complete" && p1452.expectedBaseCommit === "fab35401" && p1453.status === "planned" && p1453.commit === "" && Array.isArray(p1453.checksRun) && p1453.checksRun.length === 0));
 addCheck("P144.7 checker accepts P145.1 handoff", p1447Checker.includes("p1451StartedState") && p1447Checker.includes('status.currentPhase === "P145.1"'));
 addCheck("enterprise checker accepts P145.1 active state", enterpriseChecker.includes("p1451StartedState") && enterpriseChecker.includes("p145ActiveState") && enterpriseChecker.includes("currentP145CheckCommand") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P145 subphases", osStatusChecker.includes('"P145.1"') && osStatusChecker.includes('"P145.2"') && osStatusChecker.includes('"P145.7"'));
-addCheck("docs record P145.1 and P145.2 handoff", /## P145\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan) && /P145\.1\s+Enterprise\s+Certification\s+GA\s+Readiness\s+Contract\s+is\s+complete/i.test(readme) && /P145\.1\s+enterprise\s+GA\s+readiness\s+contract\s+is\s+complete/i.test(platformRoadmap) && /P145\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && /P145\.2 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status starts P145.1", p1451StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("docs record P145.1 and P145.2 handoff", /## P145\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan) && /P145\.1\s+Enterprise\s+Certification\s+GA\s+Readiness\s+Contract\s+is\s+complete/i.test(readme) && /P145\.1\s+enterprise\s+GA\s+readiness\s+contract\s+is\s+complete/i.test(platformRoadmap) && /P145\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && (/P145\.2 is planned-only next/i.test(enterpriseRoadmap) || /P145\.2 is now complete as a read-only certification matrix/i.test(enterpriseRoadmap)));
+addCheck("phase status keeps P145.1 complete through handoff", p1451OrLaterState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("P145 parent records active status", [p145, p145Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${REQUIRED_SCRIPT}`) && entry.commandCenterVisible === true));
 addCheck("P145.1 records required status fields", [statusById.get("P145.1"), roadmapById.get("P145.1")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P145.2 remains planned-only", [statusById.get("P145.2"), roadmapById.get("P145.2")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("P145.2 remains safe", (p1451StartedState && [statusById.get("P145.2"), roadmapById.get("P145.2")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1452CurrentState && [statusById.get("P145.2"), roadmapById.get("P145.2")].every((entry) => entry?.status === "complete" && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1452-enterprise-certification-matrix")) && [statusById.get("P145.3"), roadmapById.get("P145.3")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)));
 addCheck("P145.1 Playwright coverage exists", routeTests.includes("P145.1 enterprise GA readiness contract keeps roadmap current") && routeTests.includes("P145.1") && routeTests.includes("P145.2") && routeTests.includes("Enterprise Certification and GA Readiness"));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
 addCheck("changed files stay in P145.1 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);

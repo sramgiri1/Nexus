@@ -6159,27 +6159,60 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P145.1");
-    await expect(page.locator("body")).toContainText("Contract / Policy / Safety Boundary");
-    await expect(page.locator("body")).toContainText("P145.2");
-    await expect(page.locator("body")).toContainText("Certification Matrix");
-    await expect(page.locator("body")).toContainText("Enterprise Certification and GA Readiness");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
+    expect(roadmapBody).toContain("Enterprise Certification and GA Readiness");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     await pickTheme(page, "dark");
-    await expect(page.locator("body")).toContainText("P145.1");
+    await expect(page.locator("body")).toContainText(NEXUS_CURRENT_OS_PHASE.phase);
     await pickTheme(page, "light");
-    await expect(page.locator("body")).toContainText("P145.1");
+    await expect(page.locator("body")).toContainText(NEXUS_CURRENT_OS_PHASE.phase);
     await pickTheme(page, "system");
-    await expect(page.locator("body")).toContainText("P145.1");
+    await expect(page.locator("body")).toContainText(NEXUS_CURRENT_OS_PHASE.phase);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P145.2 enterprise certification matrix keeps Compliance useful", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/compliance");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Compliance");
+    await commandTab(page, "Certification Matrix").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Certification Matrix");
+    await expect(activeCommandTabPanel(page)).toContainText("Matrix rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Allowed certification actions");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder workflow readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("Security and privacy controls");
+    await expect(activeCommandTabPanel(page)).toContainText("Operational reliability evidence");
+    await expect(activeCommandTabPanel(page)).toContainText("Cost and billing governance");
+    await expect(activeCommandTabPanel(page)).toContainText("Release signoff boundary");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled reason");
+    await expect(activeCommandTabPanel(page)).toContainText("No spend");
+
+    const complianceBody = await page.locator("body").innerText();
+    expect(complianceBody).not.toContain("DemoApp");
+    expect(complianceBody).not.toContain("{\"");
+    expect(complianceBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(complianceBody).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+    expect(complianceBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    await pickTheme(page, "dark");
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Certification Matrix");
+    await pickTheme(page, "light");
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Certification Matrix");
+    await pickTheme(page, "system");
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Certification Matrix");
+
+    await page.goto("/command-center/roadmap");
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
+    expect(roadmapBody).toContain("P145.2");
+    expect(roadmapBody).toContain("Certification Matrix");
+    expect(roadmapBody).toContain("P145.3");
+    expect(roadmapBody).toContain("End-to-End Rehearsal");
+    expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     expect(errors).toEqual([]);
   });

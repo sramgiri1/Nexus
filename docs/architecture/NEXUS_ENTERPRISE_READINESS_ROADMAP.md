@@ -91,7 +91,8 @@ P144.5 is now complete as aggregate tests/checkers only.
 P144.6 is now complete as docs/status closure only.
 P144.7 is now complete as final validation only.
 P145.1 is now complete as contract/policy/safety-boundary only.
-P145.2 is planned-only next. It does not enable secret
+P145.2 is now complete as a read-only certification matrix. P145.3 is
+planned-only next. It does not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -232,9 +233,9 @@ P144.4 is now complete as a Cost Center Customer Ops UX.
 P144.5 is now complete as aggregate tests/checkers only.
 P144.6 is now complete as docs/status closure only.
 P144.7 is now complete as final validation only.
-P145.1 is complete as contract/policy/safety-boundary work only. P145.2-P145.7
-remain planned-only backlog subphases and must not be treated as complete or
-live.
+P145.1 is complete as contract/policy/safety-boundary work only. P145.2 is
+complete as a read-only certification matrix. P145.3-P145.7 remain planned-only
+backlog subphases and must not be treated as complete or live.
 
 ## Validation
 

@@ -141,3 +141,153 @@ Known limitations:
   execution, load execution, recovery execution, restore, failover, DB/runtime
   writes, provider/model calls, tool execution, agent dispatch, project
   mutation, deploy/release/export/package actions, network calls, or spend.
+
+## P145.2 Certification Matrix
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit: `fab35401`
+
+Narrow goal: Build the read-only enterprise certification matrix for P145
+without issuing certification, running scans, mutating findings, calling
+providers, or spending.
+
+Allowed files:
+- `package.json`
+- `contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json`
+- `scripts/check-p1452-enterprise-certification-matrix.js`
+- `scripts/check-p1451-enterprise-certification-ga-readiness.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `dashboard/src/data/complianceReadiness.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1452-enterprise-certification-matrix-report.md`
+- `reports/p1451-enterprise-certification-ga-readiness-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- private project roots
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- certification issuers, attestation signers, scanners, load runners, recovery
+  executors, release/deploy/export/package executors, provider/model callers,
+  agent dispatchers, project mutation paths, network callers, or spend paths
+
+Expected exports, schemas, and data shapes:
+- No DB schema or migration.
+- No provider, tool, worker, deploy, release, export, package, or project
+  exports.
+- Existing Compliance view model exposes display-safe
+  `certificationMatrixRows` and `certificationMatrixSummary`.
+- Contract-only `certificationMatrixShape` includes `matrixId`, `displayName`,
+  `category`, `readinessState`, `certificationAllowed`, `disabledReason`,
+  `ownerCapability`, `evidenceRefs`, `blockers`, `nextAction`, and
+  `costImpact`.
+- `certificationMatrixRows[]` carries founder workflow, security/privacy,
+  reliability, billing/cost, and release signoff rows with all certification
+  authority disabled.
+
+Command Center UX requirements:
+- Compliance page shows a `Certification Matrix` tab.
+- Matrix rows show current state, next action, blockers, disabled reason,
+  owner, evidence, and cost impact.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private
+  project IDs, raw URLs, secret/token-like strings, executable payloads, or
+  fake runnable certification actions.
+- DemoApp remains absent from full Command Center.
+
+Dark/light/system theme requirements:
+- Preserve System, Dark, and Light themes.
+- Certification Matrix remains readable across all theme modes.
+
+Playwright tests:
+- Add P145.2 Compliance Certification Matrix and OS Roadmap coverage.
+- Preserve route-wide Command Center safety coverage.
+
+Checker updates:
+- Add `scripts/check-p1452-enterprise-certification-matrix.js`.
+- Update `scripts/check-p1451-enterprise-certification-ga-readiness.js` for
+  P145.2 handoff compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P145.2 active
+  state compatibility.
+
+Docs / README / roadmap updates:
+- This plan file.
+- README.
+- NEXUS platform roadmap.
+- Enterprise readiness roadmap.
+- OS roadmap JSON.
+- OS phase status JSON.
+
+OS phase status update:
+- P145 is in progress.
+- P145.1 remains complete.
+- P145.2 is complete.
+- P145.3 remains planned-only.
+- Current: P145.2; previous: P145.1; next: P145.3.
+
+Validation commands:
+- `npm run check:p1452-enterprise-certification-matrix`
+- `npm run check:p1451-enterprise-certification-ga-readiness`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P145.2"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No project, CareLoop, generated project, DB/runtime, provider, tool, worker,
+  deploy, release, export, package, or env files changed.
+- No certification issuance, attestation signing, security scan execution,
+  finding mutation, load execution, recovery execution, restore, failover,
+  DB/runtime write, provider/model call, tool execution, agent dispatch,
+  project mutation, network call, deploy/release/export/package action, or
+  spend enabled.
+- No raw private IDs, raw JSON, raw logs, raw policy dumps, raw URLs, secret or
+  token-like strings, raw certification payloads, raw attestation payloads, raw
+  scan payloads, raw load payloads, raw recovery payloads, or fake runnable GA
+  actions in primary UX.
+- No stale phase status or `pending-final-commit` markers after final stamp.
+
+Git add / commit / push:
+- `git add <allowed P145.2 files>`
+- `git commit -m "feat(nexus): add p1452 enterprise certification matrix"`
+- Stamp commit hash after implementation.
+- `git commit -m "chore(nexus): stamp p1452 enterprise certification matrix"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known limitations:
+- P145.2 is read-only certification matrix work only.
+- P145.3-P145.7 remain planned-only.
+- It does not enable certification issuance, attestation signing, security scan
+  execution, finding mutation, load execution, recovery execution, restore,
+  failover, DB/runtime writes, provider/model calls, tool execution, agent
+  dispatch, project mutation, deploy/release/export/package actions, network
+  calls, or spend.

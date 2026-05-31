@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P145.1
-- Generated at: 2026-05-31T16:14:14.229Z
+- Generated at: 2026-05-31T16:38:51.330Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a080b871
+- Validation HEAD: fab35401
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not issue certifications, sign attestations, run scans, execute load checks, execute recovery, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Contract Coverage
 
-- Current subphase: P145.1
-- Previous subphase: P144.7
-- Next subphase: P145.2
+- Current subphase: P145.2
+- Previous subphase: P145.1
+- Next subphase: P145.3
 - Authority flags blocked: true
 ## Checks
 
@@ -26,7 +26,7 @@
 | package script registered | PASS |  |
 | checker reuses shared report helpers | PASS |  |
 | prior P144.7 report still passes | PASS |  |
-| contract starts P145.1 | PASS |  |
+| contract keeps P145.1 complete through handoff | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract records seven subphases | PASS |  |
 | subphases include implementation plan fields | PASS |  |
@@ -43,14 +43,14 @@
 | enterprise checker accepts P145.1 active state | PASS |  |
 | OS checker recognizes P145 subphases | PASS |  |
 | docs record P145.1 and P145.2 handoff | PASS |  |
-| phase status starts P145.1 | PASS | P145.1/P144.7/P145.2 |
+| phase status keeps P145.1 complete through handoff | PASS | P145.2/P145.1/P145.3 |
 | P145 parent records active status | PASS |  |
 | P145.1 records required status fields | PASS |  |
-| P145.2 remains planned-only | PASS |  |
+| P145.2 remains safe | PASS |  |
 | P145.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P145.1 allowed scope | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P145.1 allowed scope | PASS | scope check relaxed for P145.2 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P145.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or provider URLs | PASS |  |
 | docs avoid fake runnable enterprise actions | PASS |  |
