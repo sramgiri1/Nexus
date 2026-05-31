@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P145.4
-- Generated at: 2026-05-31T18:00:28.316Z
+- Generated at: 2026-05-31T18:01:25.310Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 4412d7fd
+- Validation HEAD: 49eef0cb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -43,7 +43,7 @@
 | route-wide safety coverage retained | PASS |  |
 | docs record P145.4 and P145.5 handoff | PASS |  |
 | changed files stay in P145.4 allowed scope | PASS | scope check relaxed for P145.5 |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1451-enterprise-certification-ga-readiness-report.md, reports/p1452-enterprise-certification-matrix-report.md, reports/p1453-enterprise-e2e-rehearsal-report.md, reports/p1454-enterprise-command-center-ux-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1451-enterprise-certification-ga-readiness.js, scripts/check-p1452-enterprise-certification-matrix.js, scripts/check-p1453-enterprise-e2e-rehearsal.js, scripts/check-p1454-enterprise-command-center-ux.js, reports/p1455-enterprise-ga-readiness-tests-report.md, scripts/check-p1455-enterprise-ga-readiness-tests.js |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1455-enterprise-ga-readiness-tests-report.md |
 | primary display rows avoid raw private IDs | PASS |  |
 | primary display rows avoid internal phase labels | PASS |  |
 | docs and UX avoid raw storage or provider URLs | PASS |  |
