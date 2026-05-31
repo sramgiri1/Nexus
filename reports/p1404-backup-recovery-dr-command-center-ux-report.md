@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P140.4
-- Generated at: 2026-05-31T02:52:54.434Z
+- Generated at: 2026-05-31T02:55:48.478Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: acc5fda1
+- Validation HEAD: 1344458a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -57,8 +57,8 @@
 | phase status keeps P140.4 complete | PASS | P140.4/P140.3/P140.5 |
 | completed P140.4 entries have required fields | PASS |  |
 | P140.5 handoff remains planned-only | PASS |  |
-| changed files stay in P140.4 allowed scope | PASS | README.md, contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, dashboard/src/data/backupDrReadiness.js, dashboard/src/data/commandCenterTabs.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/p1403-backup-recovery-dr-restore-preview-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1401-backup-recovery-dr-retention.js, scripts/check-p1402-backup-recovery-dr-retention.js, scripts/check-p1403-backup-recovery-dr-restore-preview.js, reports/p1404-backup-recovery-dr-command-center-ux-report.md, scripts/check-p1404-backup-recovery-dr-command-center-ux.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, dashboard/src/data/backupDrReadiness.js, dashboard/src/data/commandCenterTabs.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/p1403-backup-recovery-dr-restore-preview-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1401-backup-recovery-dr-retention.js, scripts/check-p1402-backup-recovery-dr-retention.js, scripts/check-p1403-backup-recovery-dr-restore-preview.js, reports/p1404-backup-recovery-dr-command-center-ux-report.md, scripts/check-p1404-backup-recovery-dr-command-center-ux.js |
+| changed files stay in P140.4 allowed scope | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage URLs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
