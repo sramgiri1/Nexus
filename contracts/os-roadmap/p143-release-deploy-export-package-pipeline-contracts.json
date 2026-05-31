@@ -365,7 +365,7 @@
       "label": "Release Model",
       "order": 179.2,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec7f7958",
       "previousPhase": "P143.1",
       "nextPhase": "P143.3",
       "detail": "P143.2 is model-only. P143.3 deploy/export/package preview is planned-only next.",
@@ -1034,7 +1034,7 @@
     ],
     "commandCenterVisible": true
   },
-  "commit": "pending-final-commit",
+  "commit": "ec7f7958",
   "completedAt": "2026-05-31T16:10:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
