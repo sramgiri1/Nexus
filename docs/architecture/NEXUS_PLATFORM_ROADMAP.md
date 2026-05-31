@@ -3216,8 +3216,9 @@ P141.3 security/privacy/compliance preview is complete as display-safe preview
 work. P141.4 Compliance Command Center UX is complete as display-safe UX work.
 P141.5 Tests / Checkers is complete as aggregate coverage hardening.
 P141.6 docs/status closure is complete as docs/status/report-only handoff work.
-P141.7 final validation is complete. P141 is complete. P142-P145 remain
-planned-only. They cover
+P141.7 final validation is complete. P141 is complete. P142.1 admin operations
+contract is complete as contract/policy/safety-boundary only. P142.2-P145
+remain planned-only. They cover
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3239,11 +3240,11 @@ complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
 agent work order runtime docs/status is complete. P137.7 agent work order
 runtime final validation is complete. P138.1 project workspace mutation build
 pipeline contract is complete. P138.2 project workspace mutation model is
-complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 final validation is complete. P140.1-P140.7 and P141.1-P141.7 are complete; remaining P142-P145 work does not enable secret values,
-DB/runtime writes, live CRUD,
-provider/model calls, tool execution, agent dispatch, project mutation, patch
-application, build/test execution, rollback execution, deploy, release, export,
-package, network calls, or spend.
+complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 final validation is complete. P140.1-P140.7 and P141.1-P141.7 are complete. P142.1 admin operations contract is complete; remaining P142.2-P145 work does not enable secret values,
+admin setting mutation, feature toggles, maintenance execution, DB/runtime
+writes, live CRUD, provider/model calls, tool execution, agent dispatch,
+project mutation, patch application, build/test execution, rollback execution,
+deploy, release, export, package, network calls, or spend.
 
 P133.1 is complete. NEXUS started Founder Idea-to-PRD Productization with an
 implementation-grade contract, seven-subphase split, safety boundary, checker,
@@ -3670,7 +3671,8 @@ Command Center UX is complete: the Compliance route now shows sanitized
 Security Preview rows and sections without raw IDs, raw dumps, internal phase
 labels, or runnable compliance actions. P141.5 Tests / Checkers is complete as
 aggregate coverage hardening. P141.6 docs/status closure is complete. P141.7
-final validation is complete. P141 is complete; P142 is planned-only next.
+final validation is complete. P141 is complete. P142.1 admin operations
+contract is complete; P142.2 is planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

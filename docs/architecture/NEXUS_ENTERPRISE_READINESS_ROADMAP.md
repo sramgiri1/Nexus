@@ -69,15 +69,17 @@ P141.4 is now complete as display-safe Compliance Command Center UX only.
 P141.5 is now complete as aggregate tests/checkers only.
 P141.6 is now complete as docs/status closure only.
 P141.7 is now complete as final validation only. P141 is complete.
-P142 is the next executable phase.
-P142-P145 remain planned-only. They do not enable secret
+P142.1 is now complete as contract/policy/safety-boundary only.
+P142.2 is planned-only next.
+P142.2-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
-attestation, audit export, raw log export, compliance package creation, backup
-creation, restore execution, failover, DB writes, provider/model calls, tool
-execution, agent dispatch, project mutation, patch application, build/test
-execution, rollback execution, deploy, release, export, package, network calls,
-or spend until each phase/subphase has its own implementation-grade plan,
-checker coverage, Command Center UX when applicable, and final validation.
+attestation, audit export, raw log export, compliance package creation, admin
+setting mutation, feature toggles, maintenance execution, backup creation,
+restore execution, failover, DB writes, provider/model calls, tool execution,
+agent dispatch, project mutation, patch application, build/test execution,
+rollback execution, deploy, release, export, package, network calls, or spend
+until each phase/subphase has its own implementation-grade plan, checker
+coverage, Command Center UX when applicable, and final validation.
 
 ## Global Subphase Contract
 
@@ -186,14 +188,17 @@ P141.4 is now complete as display-safe Compliance Command Center UX only.
 P141.5 is now complete as aggregate tests/checkers only.
 P141.6 is now complete as docs/status closure only.
 P141.7 is now complete as final validation only. P141 is complete.
-P142 is the next executable phase.
-P142-P145 are planned-only backlog phases and must not be
+P142.1 is now complete as contract/policy/safety-boundary only.
+P142.2 is planned-only next.
+P142.2-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
 
 Required validation for this roadmap update:
 
+- `npm run check:p1421-admin-operations-runtime-settings`
+- `npm run check:p1417-security-privacy-compliance-controls-final-validation`
 - `npm run check:enterprise-readiness-roadmap`
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`
 - `npm run check:p1383-project-workspace-mutation-build-pipeline`
