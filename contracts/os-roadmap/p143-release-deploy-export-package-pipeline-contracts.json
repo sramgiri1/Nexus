@@ -828,7 +828,7 @@
       "label": "Command Center UX",
       "order": 179.4,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9bb032a3",
       "completedAt": "2026-05-31T00:00:00.000Z",
       "previousPhase": "P143.3",
       "nextPhase": "P143.5",

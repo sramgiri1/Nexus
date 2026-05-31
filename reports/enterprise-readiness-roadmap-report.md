@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-31T11:34:55.237Z
+- Generated at: 2026-05-31T11:35:46.946Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f1442f6c
+- Validation HEAD: 9bb032a3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -55,8 +55,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, dashboard/src/data/deployMonitoringReadiness.js, dashboard/src/data/projectShippingReadiness.js, dashboard/src/data/releaseReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1431-release-deploy-export-package-pipeline-report.md, reports/p1432-release-deploy-export-package-pipeline-report.md, reports/p1433-release-deploy-export-package-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1431-release-deploy-export-package-pipeline.js, scripts/check-p1432-release-deploy-export-package-pipeline.js, scripts/check-p1433-release-deploy-export-package-pipeline.js, dashboard/src/data/releaseDeployExportPackageUx.js, reports/p1434-release-deploy-export-package-pipeline-report.md, scripts/check-p1434-release-deploy-export-package-pipeline.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, dashboard/src/data/deployMonitoringReadiness.js, dashboard/src/data/projectShippingReadiness.js, dashboard/src/data/releaseReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1431-release-deploy-export-package-pipeline-report.md, reports/p1432-release-deploy-export-package-pipeline-report.md, reports/p1433-release-deploy-export-package-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1431-release-deploy-export-package-pipeline.js, scripts/check-p1432-release-deploy-export-package-pipeline.js, scripts/check-p1433-release-deploy-export-package-pipeline.js, dashboard/src/data/releaseDeployExportPackageUx.js, reports/p1434-release-deploy-export-package-pipeline-report.md, scripts/check-p1434-release-deploy-export-package-pipeline.js |
+| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1434-release-deploy-export-package-pipeline-report.md |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1434-release-deploy-export-package-pipeline-report.md |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
