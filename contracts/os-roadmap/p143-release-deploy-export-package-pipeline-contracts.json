@@ -598,7 +598,7 @@
       "label": "Deploy / Export / Package Preview",
       "order": 179.3,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d529f7b2",
       "previousPhase": "P143.2",
       "nextPhase": "P143.4",
       "detail": "P143.3 maps the P143.2 release model into display-safe preview rows with all executable payloads null and shipping authority blocked. P143.4 Command Center UX remains planned-only next.",
@@ -990,7 +990,7 @@
     "label": "Deploy / Export / Package Preview",
     "order": 179.3,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "d529f7b2",
     "previousPhase": "P143.2",
     "nextPhase": "P143.4",
     "detail": "P143.3 maps the P143.2 release model into display-safe preview rows with all executable payloads null and shipping authority blocked. P143.4 Command Center UX remains planned-only next.",
@@ -1457,7 +1457,7 @@
     ],
     "commandCenterVisible": true
   },
-  "commit": "pending-final-commit",
+  "commit": "d529f7b2",
   "completedAt": "2026-05-31T19:15:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
