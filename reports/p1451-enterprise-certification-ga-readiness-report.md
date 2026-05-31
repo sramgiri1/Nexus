@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P145.1
-- Generated at: 2026-05-31T16:12:05.238Z
+- Generated at: 2026-05-31T16:14:14.229Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 540e2284
+- Validation HEAD: a080b871
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -49,8 +49,8 @@
 | P145.2 remains planned-only | PASS |  |
 | P145.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P145.1 allowed scope | PASS | README.md, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1447-billing-metering-customer-operations-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md, reports/p1451-enterprise-certification-ga-readiness-report.md, scripts/check-p1451-enterprise-certification-ga-readiness.js |
-| forbidden paths unchanged | PASS | README.md, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1447-billing-metering-customer-operations-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md, reports/p1451-enterprise-certification-ga-readiness-report.md, scripts/check-p1451-enterprise-certification-ga-readiness.js |
+| changed files stay in P145.1 allowed scope | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or provider URLs | PASS |  |
 | docs avoid fake runnable enterprise actions | PASS |  |

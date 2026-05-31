@@ -290,7 +290,7 @@
         "Known limitations",
         "Next phase/subphase"
       ],
-      "commit": "pending-final-commit",
+      "commit": "a080b871",
       "completedAt": "2026-05-31T15:44:07.000Z",
       "summary": "Started P145.1 enterprise GA readiness contract, policy, and safety-boundary work while certification, attestation, scan, load, recovery, release, provider, DB, network, project mutation, and spend authority remains blocked.",
       "checksRun": [
@@ -481,7 +481,7 @@
       "commandCenterVisible": true
     }
   ],
-  "commit": "pending-final-commit",
+  "commit": "a080b871",
   "completedAt": "2026-05-31T15:44:07.000Z",
   "checksRun": [
     "npm run check:p1451-enterprise-certification-ga-readiness"
