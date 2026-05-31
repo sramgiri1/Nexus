@@ -38,6 +38,7 @@ import {
   SAFETY_CENTER_TABS,
   SECRETS_BOUNDARY_TABS,
   SELF_UPDATE_TABS,
+  SETTINGS_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
   TEST_CENTER_TABS,
@@ -93,6 +94,7 @@ import { buildEvidenceAuditObservabilityCostLedgerUxViewModel } from "../data/ev
 import { buildBackupDrReadinessViewModel } from "../data/backupDrReadiness.js";
 import { buildIsolationReadinessViewModel } from "../data/isolationReadiness.js";
 import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.js";
+import { buildAdminOperationsRuntimeSettingsReadinessViewModel } from "../data/adminOperationsRuntimeSettingsReadiness.js";
 import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePreviewReadiness.js";
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
@@ -10370,6 +10372,152 @@ function CompliancePage() {
   );
 }
 
+function SettingsReadinessRows({ rows = [], ariaLabel }) {
+  return (
+    <div className="ccv2-grid ccv2-grid--2" aria-label={ariaLabel}>
+      {rows.map((row) => (
+        <article className="ccv2-card" key={`${row.category}-${row.label}`}>
+          <div className="ccv2-section-heading">{row.label}</div>
+          <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+            <span className="ccv2-pill ccv2-pill--amber">{row.currentState}</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Disabled</span>
+            <span className="ccv2-pill ccv2-pill--green">{row.cost}</span>
+          </div>
+          <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Category</span><span className="ccv2-page-summary-value">{row.category}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{row.owner}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{row.nextAction}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{row.evidence}</span></div>
+          </div>
+          <ul className="ccv2-list" style={{ marginTop: 12 }}>
+            {row.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function SettingsPage() {
+  const readiness = buildAdminOperationsRuntimeSettingsReadinessViewModel();
+  const route = COMMAND_CENTER_ROUTE_BY_KEY.settings || {};
+  const tabs = route.tabs || SETTINGS_TABS;
+  const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page" data-route-id={readiness.routeId}>
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
+          <div className="ccv2-page-head__sub">Display-only admin settings, runtime controls, dry-run posture, blockers, and evidence.</div>
+        </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.settings} />
+
+        <div className="ccv2-page-summary">
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.nextAction}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{readiness.ownerAgent} · {readiness.ownerCapability}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{readiness.evidenceLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{readiness.activityLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
+        </div>
+
+        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{readiness.disabledReason}</div>
+
+        <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Settings sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.readinessCards.map((card) => (
+                <article className="ccv2-card" key={card.label}>
+                  <div className="ccv2-section-heading">{card.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${card.tone}`}>{card.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{card.detail}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="settings" activeTab={activeTab}>
+            <div className="ccv2-section-heading" style={{ marginBottom: 12 }}>Admin Settings</div>
+            <SettingsReadinessRows rows={readiness.settingsRows} ariaLabel="Admin settings rows" />
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="features" activeTab={activeTab}>
+            <SettingsReadinessRows rows={readiness.featureGateRows} ariaLabel="Feature gate rows" />
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="maintenance" activeTab={activeTab}>
+            <SettingsReadinessRows rows={readiness.maintenanceRows} ariaLabel="Maintenance rows" />
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="runtime" activeTab={activeTab}>
+            <SettingsReadinessRows rows={readiness.runtimeStateRows} ariaLabel="Runtime state rows" />
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="audit" activeTab={activeTab}>
+            <SettingsReadinessRows rows={readiness.auditSurfaceRows} ariaLabel="Audit surface rows" />
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="dry-run" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="Admin dry-run summary">
+              <div className="ccv2-section-heading">Admin Dry Run Summary</div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dry-run rows</span><span className="ccv2-page-summary-value">{readiness.dryRunSummary.rowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{readiness.dryRunSummary.blockedRowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable rows</span><span className="ccv2-page-summary-value">{readiness.dryRunSummary.executableRowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.dryRunSummary.nextAction}</span></div>
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+              {[
+                ["Settings", readiness.dryRunSummary.settingRows],
+                ["Feature gates", readiness.dryRunSummary.featureRows],
+                ["Maintenance", readiness.dryRunSummary.maintenanceRows],
+                ["Runtime state", readiness.dryRunSummary.runtimeRows],
+                ["Audit surfaces", readiness.dryRunSummary.auditRows],
+              ].map(([label, value]) => (
+                <article className="ccv2-card" key={label}>
+                  <div className="ccv2-section-heading">{label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{value} blocked</div>
+                </article>
+              ))}
+            </div>
+            <div style={{ marginTop: 16 }}>
+              <SettingsReadinessRows rows={readiness.dryRunRows.slice(0, 8)} ariaLabel="Admin dry-run rows" />
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="evidence" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {readiness.evidenceRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--teal">{row.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.detail}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="disabled" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {readiness.disabledActions.map((action) => (
+                <article className="ccv2-card" key={action.label}>
+                  <div className="ccv2-section-heading">{action.label}</div>
+                  <button className="ccv2-btn ccv2-btn--disabled" type="button" disabled title={action.reason}>Disabled action: {action.label}</button>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{action.reason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function EnterprisePreviewPage() {
   const readiness = buildEnterprisePreviewReadinessViewModel();
   const route = COMMAND_CENTER_ROUTE_BY_KEY.enterprisePreview || {};
@@ -15279,9 +15427,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}
-          {currentPage === "settings" && (
-            <PlannedRoutePage routeKey={currentPage} />
-          )}
+          {currentPage === "settings" && <SettingsPage />}
         </div>
       </div>
       <CommandPalette

@@ -144,6 +144,18 @@ export const COMPLIANCE_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable compliance actions and reasons", badge: "Disabled" },
 ];
 
+export const SETTINGS_TABS = [
+  { id: "overview", label: "Overview", description: "Admin settings posture, owner, blockers, and next action", badge: "Ready" },
+  { id: "settings", label: "Admin Settings", description: "Read-only settings rows and disabled reasons", badge: "Read-only" },
+  { id: "features", label: "Feature Gates", description: "Feature toggle and rollout posture", badge: "Blocked" },
+  { id: "maintenance", label: "Maintenance", description: "Maintenance scheduling and execution posture", badge: "Blocked" },
+  { id: "runtime", label: "Runtime State", description: "Runtime state and DB write posture", badge: "Blocked" },
+  { id: "audit", label: "Audit Surfaces", description: "Audit and internal log export posture", badge: "Blocked" },
+  { id: "dry-run", label: "Dry Run", description: "Non-runnable admin dry-run rows", badge: "Read-only" },
+  { id: "evidence", label: "Evidence", description: "Evidence, activity, audit, and cost locations", badge: "Read-only" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable admin operations and reasons", badge: "Disabled" },
+];
+
 export const ENTERPRISE_PREVIEW_TABS = [
   { id: "overview", label: "Overview", description: "Founder workflow state, owner, blockers, and next action", badge: "Preview" },
   { id: "prd", label: "PRD Preview", description: "Problem, audience, value, scope, and acceptance preview", badge: "Read-only" },

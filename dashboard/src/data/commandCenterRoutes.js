@@ -31,6 +31,7 @@ import {
   SAFETY_CENTER_TABS,
   SECRETS_BOUNDARY_TABS,
   SELF_UPDATE_TABS,
+  SETTINGS_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
   TEST_CENTER_TABS,
@@ -733,8 +734,11 @@ export const COMMAND_CENTER_ROUTES = [
     section: "OS",
     allowPhaseLabels: false,
     expectedHeading: "Settings",
-    status: "planned",
+    status: "implemented",
+    badge: "Ready",
     scope: "platform",
+    tabs: SETTINGS_TABS,
+    defaultTab: "overview",
     helpDoc: "docs/usage/TROUBLESHOOTING.md",
   },
   {
@@ -960,8 +964,8 @@ const FOUNDER_ROUTE_CONTEXT_BY_KEY = {
     nextAction: "Open the guide for the page you are using.",
   },
   settings: {
-    purpose: "Review local settings posture before configuration mutation exists.",
-    nextAction: "Use docs until settings mutation is explicitly scoped.",
+    purpose: "Review admin settings, gates, maintenance, runtime state, audit surfaces, and dry-run blockers.",
+    nextAction: "Review disabled reasons and evidence before any future authority phase is considered.",
   },
 };
 

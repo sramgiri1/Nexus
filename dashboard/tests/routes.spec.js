@@ -1834,6 +1834,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
       ["/command-center/projects", ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]],
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
+      ["/command-center/settings", ["Overview", "Admin Settings", "Feature Gates", "Maintenance", "Runtime State", "Audit Surfaces", "Dry Run", "Evidence", "Disabled Actions"]],
       ["/command-center/cost", ["Overview", "Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]],
       ["/command-center/policies", ["Overview", "Registry", "Versions", "Diff Preview", "Simulation", "Exceptions", "Break-Glass", "Developer Details"]],
       ["/command-center/secrets", ["Overview", "Provider Credentials", "Project Credentials", "DB / Deploy", "Integrations", "Developer Details"]],
@@ -2745,7 +2746,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("P142.3 admin dry run handoff keeps roadmap and Compliance display-only", async ({ page }) => {
+  test("P142.4 admin settings handoff keeps roadmap and Compliance display-only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/compliance");
@@ -2760,11 +2761,11 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
 
     const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P142.3");
-    expect(roadmapBody).toContain("Admin Dry Run");
-    expect(roadmapBody).toContain("Admin Operations and Runtime Settings");
     expect(roadmapBody).toContain("P142.4");
     expect(roadmapBody).toContain("Settings Command Center UX");
+    expect(roadmapBody).toContain("Admin Operations and Runtime Settings");
+    expect(roadmapBody).toContain("P142.5");
+    expect(roadmapBody).toContain("Tests / Checkers");
     expect(roadmapBody).not.toContain("pending-final-commit");
     expect(roadmapBody).not.toContain("DemoApp");
     expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
@@ -2772,7 +2773,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("P142.3 admin operations dry run advances P142 and keeps Compliance display-only", async ({ page }) => {
+  test("P142.4 admin operations settings UX advances P142 and keeps Compliance display-only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/compliance");
@@ -2785,16 +2786,59 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P142.3");
-    await expect(page.locator("body")).toContainText("Admin Dry Run");
-    await expect(page.locator("body")).toContainText("Admin Operations and Runtime Settings");
     await expect(page.locator("body")).toContainText("P142.4");
     await expect(page.locator("body")).toContainText("Settings Command Center UX");
+    await expect(page.locator("body")).toContainText("Admin Operations and Runtime Settings");
+    await expect(page.locator("body")).toContainText("P142.5");
+    await expect(page.locator("body")).toContainText("Tests / Checkers");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
     expect(roadmapBody).not.toContain("DemoApp");
     expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P142.4 settings command center UX renders admin posture without runnable actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/settings");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Settings");
+      await expect(page.locator("body")).toContainText("Admin operations settings are review-ready and display-only");
+      await expect(page.locator("body")).toContainText("No provider spend");
+      await expect(commandTab(page, "Admin Settings")).toBeVisible();
+      await expect(commandTab(page, "Feature Gates")).toBeVisible();
+      await expect(commandTab(page, "Maintenance")).toBeVisible();
+      await expect(commandTab(page, "Runtime State")).toBeVisible();
+      await expect(commandTab(page, "Audit Surfaces")).toBeVisible();
+      await expect(commandTab(page, "Dry Run")).toBeVisible();
+      await expect(commandTab(page, "Disabled Actions")).toBeVisible();
+    }
+
+    await commandTab(page, "Dry Run").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Admin Dry Run Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Executable rows");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
+    await expect(activeCommandTabPanel(page)).toContainText("blocked");
+
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Save settings");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Apply settings");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Toggle features");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Run maintenance");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Dispatch agents");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("Coming Soon");
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("pending-final-commit");
+    expect(body).not.toMatch(/save settings now|apply settings now|toggle feature now|roll out now|run maintenance now|schedule maintenance now|export audit now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|deploy now|release now|package now|execute now/i);
+    expect(body).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
 
     expect(errors).toEqual([]);
   });
@@ -3001,15 +3045,14 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("planned routes show a safe coming-soon state instead of crashing", async ({ page }) => {
+  test("Settings route is implemented instead of a planned placeholder", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    for (const path of ["/command-center/settings"]) {
-      await page.goto(path);
-      await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
-      await expect(page.locator("body")).toContainText(/Coming Soon|Planned/);
-      await expect(page.locator("body")).toContainText("Read-only");
-    }
+    await page.goto("/command-center/settings");
+    await expect(page.locator(".ccv2-page-head__title").first()).toContainText("Settings");
+    await expect(page.locator("body")).toContainText("Admin operations settings are review-ready");
+    await expect(page.locator("body")).not.toContainText(/Coming Soon|Planned Route/);
+    await expect(commandTab(page, "Admin Settings")).toBeVisible();
 
     expect(errors).toEqual([]);
   });

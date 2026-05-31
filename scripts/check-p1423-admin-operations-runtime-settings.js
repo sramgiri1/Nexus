@@ -155,6 +155,27 @@ const p1423CurrentState =
   && roadmapById.get("P142.4")?.status === "planned"
   && statusById.get("P143")?.status === "planned"
   && roadmapById.get("P143")?.status === "planned";
+const p1424CurrentState =
+  status.currentPhase === "P142.4"
+  && status.previousPhase === "P142.3"
+  && status.nextPhase === "P142.5"
+  && roadmap.currentPhase === "P142.4"
+  && roadmap.previousPhase === "P142.3"
+  && roadmap.nextPhase === "P142.5"
+  && status.current?.phaseId === "P142.4"
+  && status.previous?.phaseId === "P142.3"
+  && status.next?.phaseId === "P142.5"
+  && roadmap.current?.phaseId === "P142.4"
+  && roadmap.previous?.phaseId === "P142.3"
+  && roadmap.next?.phaseId === "P142.5"
+  && statusById.get("P142")?.status === "in_progress"
+  && roadmapById.get("P142")?.status === "in_progress"
+  && ["P142.1", "P142.2", "P142.3", "P142.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P142.5")?.status === "planned"
+  && roadmapById.get("P142.5")?.status === "planned"
+  && statusById.get("P143")?.status === "planned"
+  && roadmapById.get("P143")?.status === "planned";
+const p1423OrLaterState = p1423CurrentState || p1424CurrentState;
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1423-admin-operations-runtime-settings.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -172,7 +193,7 @@ addCheck("payloads and executable command remain null", ["settingMutationPayload
 addCheck("all dry-run authority flags remain blocked", ADMIN_OPERATIONS_RUNTIME_SETTINGS_DRY_RUN_SAFETY_FLAG_NAMES.every((flag) => dryRun[flag] === false && dryRun.safetyFlags?.[flag] === false));
 addCheck("cost impact remains zero-spend", dryRun.costImpact.estimatedUsd === 0 && dryRun.costImpact.actualUsd === 0 && dryRun.costImpact.providerSpendAllowed === false && dryRun.costImpact.networkCallsAllowed === false);
 addCheck("P142.2 report passes", reportPassed("reports/p1422-admin-operations-runtime-settings-report.md"));
-addCheck("contract advances to P142.3 safely", contract.phaseId === "P142" && contract.status === "in_progress" && contract.currentSubphase === "P142.3" && contract.previousSubphase === "P142.2" && contract.nextSubphase === "P142.4" && p1421.status === "complete" && p1422.status === "complete" && p1423.status === "complete" && p1424.status === "planned");
+addCheck("contract advances through P142.3 safely", contract.phaseId === "P142" && contract.status === "in_progress" && p1421.status === "complete" && p1422.status === "complete" && p1423.status === "complete" && ((contract.currentSubphase === "P142.3" && contract.previousSubphase === "P142.2" && contract.nextSubphase === "P142.4" && p1424.status === "planned") || (contract.currentSubphase === "P142.4" && contract.previousSubphase === "P142.3" && contract.nextSubphase === "P142.5" && p1424.status === "complete")));
 addCheck("contract records expected base commit", p1423.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1423.expectedExports?.includes(entry)));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1423.validationCommands?.includes(command)));
@@ -180,10 +201,12 @@ addCheck("contract scope stays dry-run only", /non-runnable admin operations dry
 addCheck("P142.2 checker accepts P142.3 handoff", p1422Checker.includes("p1423CurrentState") && p1422Checker.includes('status.currentPhase === "P142.3"'));
 addCheck("enterprise checker accepts P142.3 active state", enterpriseChecker.includes("p1423CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P142.4 handoff", osStatusChecker.includes('"P142.4"') && osStatusChecker.includes('"P142.7"'));
-addCheck("docs record P142.3 and P142.4 handoff", /## P142\.3 Admin Dry Run[\s\S]*Status:\s+complete/.test(plan) && /P142\.3 admin operations dry run/i.test(readme) && /P142\.3 admin operations dry run is complete/i.test(platformRoadmap) && /P142\.3 is now complete/i.test(enterpriseRoadmap) && /P142\.4 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status advances to P142.3", p1423CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("docs record P142.3 and later handoff", /## P142\.3 Admin Dry Run[\s\S]*Status:\s+complete/.test(plan) && /P142\.3 admin operations dry run/i.test(readme) && /P142\.3 admin operations dry run is complete/i.test(platformRoadmap) && /P142\.3 is now complete/i.test(enterpriseRoadmap) && (/P142\.4 is planned-only next/i.test(enterpriseRoadmap) || /P142\.4 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status advances through P142.3", p1423OrLaterState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P142.3 entries have required fields", [statusById.get("P142"), statusById.get("P142.3"), roadmapById.get("P142"), roadmapById.get("P142.3")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P142.4 and P143 remain planned-only", [statusById.get("P142.4"), roadmapById.get("P142.4"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("next P142/P143 handoff remains planned-only", p1423CurrentState
+  ? [statusById.get("P142.4"), roadmapById.get("P142.4"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : [statusById.get("P142.5"), roadmapById.get("P142.5"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("changed files stay in P142.3 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => file === "dashboard/tests/routes.spec.js" || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
@@ -224,14 +247,16 @@ writeMarkdownReport(
         `- Current subphase: ${status.currentPhase}`,
         `- Previous subphase: ${status.previousPhase}`,
         `- Next subphase: ${status.nextPhase}`,
-        "- P142.4 remains planned-only.",
+        p1424CurrentState ? "- P142.5 remains planned-only." : "- P142.4 remains planned-only.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P142.3 is non-runnable dry-run work only. It does not render new Command Center UI, mutate settings, toggle or roll out features, execute or schedule maintenance, mutate runtime state, write DB/runtime records, export audits, expose raw logs or raw state, handle credentials, read secrets, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4 remains planned-only.",
+      body: p1424CurrentState
+        ? "- P142.3 is non-runnable dry-run work only. It does not mutate settings, toggle or roll out features, execute or schedule maintenance, mutate runtime state, write DB/runtime records, export audits, expose raw logs or raw state, handle credentials, read secrets, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4 has advanced through display-only Settings UX; P142.5 remains planned-only."
+        : "- P142.3 is non-runnable dry-run work only. It does not render new Command Center UI, mutate settings, toggle or roll out features, execute or schedule maintenance, mutate runtime state, write DB/runtime records, export audits, expose raw logs or raw state, handle credentials, read secrets, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4 remains planned-only.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

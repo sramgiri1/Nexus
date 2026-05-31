@@ -72,8 +72,9 @@ P141.7 is now complete as final validation only. P141 is complete.
 P142.1 is now complete as contract/policy/safety-boundary only.
 P142.2 is now complete as read-only admin operations settings model only.
 P142.3 is now complete as non-runnable admin operations dry run only.
-P142.4 is planned-only next.
-P142.4-P145 remain planned-only. They do not enable secret
+P142.4 is now complete as display-only Settings Command Center UX only.
+P142.5 is planned-only next.
+P142.5-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -193,8 +194,9 @@ P141.7 is now complete as final validation only. P141 is complete.
 P142.1 is now complete as contract/policy/safety-boundary only.
 P142.2 is now complete as read-only admin operations settings model only.
 P142.3 is now complete as non-runnable admin operations dry run only.
-P142.4 is planned-only next.
-P142.4-P145 are planned-only backlog phases and must not be
+P142.4 is now complete as display-only Settings Command Center UX only.
+P142.5 is planned-only next.
+P142.5-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation

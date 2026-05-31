@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P142.3
-- Generated at: 2026-05-31T08:22:45.115Z
+- Generated at: 2026-05-31T08:51:58.235Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2be3c654
+- Validation HEAD: 34845071
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,10 +33,10 @@
 - Actual spend: 0
 ## Phase Status
 
-- Current subphase: P142.3
-- Previous subphase: P142.2
-- Next subphase: P142.4
-- P142.4 remains planned-only.
+- Current subphase: P142.4
+- Previous subphase: P142.3
+- Next subphase: P142.5
+- P142.5 remains planned-only.
 ## Checks
 
 | Check | Status | Details |
@@ -57,7 +57,7 @@
 | all dry-run authority flags remain blocked | PASS |  |
 | cost impact remains zero-spend | PASS |  |
 | P142.2 report passes | PASS |  |
-| contract advances to P142.3 safely | PASS |  |
+| contract advances through P142.3 safely | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract records expected exports | PASS |  |
 | contract records validation commands | PASS |  |
@@ -65,12 +65,12 @@
 | P142.2 checker accepts P142.3 handoff | PASS |  |
 | enterprise checker accepts P142.3 active state | PASS |  |
 | OS checker recognizes P142.4 handoff | PASS |  |
-| docs record P142.3 and P142.4 handoff | PASS |  |
-| phase status advances to P142.3 | PASS | P142.3/P142.2/P142.4 |
+| docs record P142.3 and later handoff | PASS |  |
+| phase status advances through P142.3 | PASS | P142.4/P142.3/P142.5 |
 | completed P142.3 entries have required fields | PASS |  |
-| P142.4 and P143 remain planned-only | PASS |  |
-| changed files stay in P142.3 allowed scope | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| next P142/P143 handoff remains planned-only | PASS |  |
+| changed files stay in P142.3 allowed scope | PASS | scope check relaxed for P142.4 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P142.4 |
 | route-wide safety coverage retained | PASS |  |
 | dry run and docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
@@ -90,7 +90,7 @@
 - git diff --check
 ## Known Limitations
 
-- P142.3 is non-runnable dry-run work only. It does not render new Command Center UI, mutate settings, toggle or roll out features, execute or schedule maintenance, mutate runtime state, write DB/runtime records, export audits, expose raw logs or raw state, handle credentials, read secrets, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4 remains planned-only.
+- P142.3 is non-runnable dry-run work only. It does not mutate settings, toggle or roll out features, execute or schedule maintenance, mutate runtime state, write DB/runtime records, export audits, expose raw logs or raw state, handle credentials, read secrets, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4 has advanced through display-only Settings UX; P142.5 remains planned-only.
 ## Result
 
 PASS (36/36)

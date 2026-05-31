@@ -292,7 +292,7 @@ network call, or spend authority is enabled.
 
 ## P142.4 Settings Command Center UX
 
-Status: planned
+Status: complete
 
 Narrow goal: Surface display-safe admin operations and runtime settings state in
 Command Center with current state, blockers, disabled reason, owner capability,
@@ -321,6 +321,17 @@ settings UX plus route-wide safety tests.
 Validation: P142.4 checker, P142.3 checker, enterprise roadmap, OS phase
 status, phase validation coverage, dashboard build/unit, scoped Playwright,
 route-wide Playwright, and `git diff --check`.
+
+Result: complete as display-only Settings Command Center UX. The page now shows
+admin settings, feature gates, maintenance controls, runtime state, audit
+surfaces, dry-run summary, evidence/activity locations, disabled reasons,
+owners, next action, and zero-spend cost posture. P142.5 Tests / Checkers is
+planned-only next. No admin setting mutation, feature toggle, feature rollout,
+maintenance execution, maintenance scheduling, runtime state mutation,
+DB/runtime write, audit export, raw log exposure, raw state exposure,
+credential handling, secret read, provider/model call, tool execution, MCP
+startup, agent dispatch, project mutation, deploy, release, export, package,
+network call, or spend authority is enabled.
 
 ## P142.5 Tests / Checkers
 
