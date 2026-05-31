@@ -2630,6 +2630,22 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("P140.6 Backup DR docs status closure stays display-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/backup-dr");
+    await commandTab(page, "Restore Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Restore Preview Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Runnable actions");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/P140\.6|P140\.7|pending-final-commit/i);
+    expect(body).not.toMatch(/backup now|restore now|failover now|delete now|prune now|deploy now|export now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(errors).toEqual([]);
+  });
+
   test("Isolation route renders readiness without runnable access actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 

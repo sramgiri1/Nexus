@@ -192,6 +192,7 @@ addCheck("Backup DR view model keeps all safety flags false", Object.values(read
 addCheck("P140.5 Playwright coverage exists", routeTests.includes("P140.5 Backup DR aggregate coverage remains display-only") && routeTests.includes("Restore Preview Summary") && routeTests.includes("Prune retention disabled") && routeTests.includes("restore-preview-row"));
 addCheck("route-wide safety coverage retained", ["Command Center route-wide UX", "DemoApp", "raw JSON", "Use system theme", "Use dark theme", "Use light theme", "sidebar"].every((text) => routeTests.includes(text)));
 addCheck("P140.4 checker accepts P140.5 handoff", p1404Checker.includes("p1405CurrentState") && p1404Checker.includes(REQUIRED_SCRIPT));
+addCheck("P140.5 checker accepts P140.6 docs checker", checkerSource.includes("p1406CurrentState") && checkerSource.includes("check:p1406-backup-recovery-dr-docs-roadmap"));
 addCheck("enterprise checker accepts P140.5", enterpriseChecker.includes("p1405CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P140.6 handoff", osStatusChecker.includes('"P140.6"'));
 addCheck("contract marks P140.5 complete", contract.phaseId === "P140" && p1405.status === "complete" && ((contract.status === "in_progress" && contract.currentSubphase === "P140.5" && contract.previousSubphase === "P140.4" && contract.nextSubphase === "P140.6" && p1406.status === "planned") || (contract.status === "in_progress" && p1406CurrentState && contract.currentSubphase === "P140.6" && p1406.status === "complete")));
@@ -201,7 +202,7 @@ addCheck("contract scope stays validation-only", /validation|tests|checkers/i.te
 addCheck("docs record P140.5", /## P140\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan) && /P140\.5 tests\/checkers/i.test(readme) && /P140\.5 tests\/checkers is complete/i.test(platformRoadmap) && /P140\.5 is now complete/i.test(enterpriseRoadmap));
 addCheck("phase status starts or safely hands off P140.5", p1405CurrentState || p1406CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P140.5 entries have required fields", [statusById.get("P140"), statusById.get("P140.5"), roadmapById.get("P140"), roadmapById.get("P140.5")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P140.6 handoff remains planned-only", (p1405CurrentState && statusById.get("P140.6")?.status === "planned" && roadmapById.get("P140.6")?.status === "planned" && !(statusById.get("P140.6")?.checksRun || []).length && !(roadmapById.get("P140.6")?.checksRun || []).length) || p1406CurrentState);
+addCheck("P140.6 handoff remains valid", (p1405CurrentState && statusById.get("P140.6")?.status === "planned" && roadmapById.get("P140.6")?.status === "planned" && !(statusById.get("P140.6")?.checksRun || []).length && !(roadmapById.get("P140.6")?.checksRun || []).length) || p1406CurrentState);
 addCheck("changed files stay in P140.5 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P140.5 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("aggregate display avoids raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy|backup|restore|runbook|storage)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(aggregateDisplay));
@@ -241,7 +242,7 @@ writeMarkdownReport(
         `- Current subphase: ${status.currentPhase}`,
         `- Previous subphase: ${status.previousPhase}`,
         `- Next subphase: ${status.nextPhase}`,
-        "- P140.6 remains planned-only.",
+        p1406CurrentState ? "- P140.6 is complete; P140.7 remains planned-only." : "- P140.6 remains planned-only.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
