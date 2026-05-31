@@ -160,7 +160,7 @@
       "label": "Contract / Policy / Safety Boundary",
       "order": 179.1,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9e1a1521",
       "previousPhase": "P142.7",
       "nextPhase": "P143.2",
       "detail": "P143.1 defines release/deploy/export/package safety contracts, approval gates, evidence requirements, and blocked authority flags without enabling execution.",
@@ -612,7 +612,7 @@
     "label": "Contract / Policy / Safety Boundary",
     "order": 179.1,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "9e1a1521",
     "previousPhase": "P142.7",
     "nextPhase": "P143.2",
     "detail": "P143.1 defines release/deploy/export/package safety contracts, approval gates, evidence requirements, and blocked authority flags without enabling execution.",
@@ -846,7 +846,7 @@
     ],
     "commandCenterVisible": true
   },
-  "commit": "pending-final-commit",
+  "commit": "9e1a1521",
   "completedAt": "2026-05-31T16:10:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P143.1
-- Generated at: 2026-05-31T10:24:39.847Z
+- Generated at: 2026-05-31T10:25:36.132Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ab8ae03a
+- Validation HEAD: 9e1a1521
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -49,8 +49,8 @@
 | next P143.2/P144 handoff remains planned-only | PASS |  |
 | P143.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P143.1 allowed scope | PASS | README.md, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1427-admin-operations-runtime-settings-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1427-admin-operations-runtime-settings-final-validation.js, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, reports/p1431-release-deploy-export-package-pipeline-report.md, scripts/check-p1431-release-deploy-export-package-pipeline.js |
-| forbidden paths unchanged | PASS | README.md, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1427-admin-operations-runtime-settings-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1427-admin-operations-runtime-settings-final-validation.js, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, reports/p1431-release-deploy-export-package-pipeline-report.md, scripts/check-p1431-release-deploy-export-package-pipeline.js |
+| changed files stay in P143.1 allowed scope | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable shipping actions | PASS |  |
