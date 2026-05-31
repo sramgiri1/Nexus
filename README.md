@@ -2029,7 +2029,8 @@ The Command Center and local operator surface have:
   complete. P142.4 Settings Command Center UX is complete. P142.5 Tests /
   Checkers is complete. P142.6 Docs / Roadmap / Status is complete. P142.7
   final validation is complete; P142 is complete. P143.1 Release Deploy Export
-  Package Pipeline Contract is complete and P143.2 is planned-only next.
+  Package Pipeline Contract is complete. P143.2 Release Model is complete and
+  P143.3 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2527,11 +2528,16 @@ The Command Center and local operator surface have:
 - P143.1 Release Deploy Export Package Pipeline Contract: Started P143 with
   contract-only release, deploy, export, package, provenance, and rollback
   safety boundaries, approval gates, blocked authority flags, route assertions,
-  docs/status handoff, and P143.2 planned-only next. Release package creation,
+  docs/status handoff, and P143.2 handoff. Release package creation,
   deploy start, rollback execution, export execution, package build, patch
   application, build/test execution, DB/runtime writes, provider/model calls,
   tool execution, agent dispatch, project mutation, network calls, and spend
   remain unavailable.
+- P143.2 Release Model: Added a read-only release/deploy/export/package model
+  for release gates, deploy targets, export/package artifacts, provenance
+  records, rollback plans, blockers, evidence/activity refs, redaction state,
+  and zero-spend cost impact. P143.3 is planned-only next, and shipping
+  authority remains unavailable.
 
 ## CareLoop Project Progress
 

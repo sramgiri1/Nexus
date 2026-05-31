@@ -77,8 +77,9 @@ P142.5 is now complete as aggregate tests/checkers only.
 P142.6 is now complete as docs/status closure only.
 P142.7 is now complete as final validation only. P142 is complete.
 P143.1 is now complete as contract/policy/safety-boundary only.
-P143.2 is planned-only next.
-P143.2-P145 remain planned-only. They do not enable secret
+P143.2 is now complete as a read-only model.
+P143.3 is planned-only next.
+P143.3-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -203,8 +204,9 @@ P142.5 is now complete as aggregate tests/checkers only.
 P142.6 is now complete as docs/status closure only.
 P142.7 is now complete as final validation only. P142 is complete.
 P143.1 is now complete as contract/policy/safety-boundary only.
-P143.2 is planned-only next.
-P143.2-P145 are planned-only backlog phases and must not be
+P143.2 is now complete as a read-only model.
+P143.3 is planned-only next.
+P143.3-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
