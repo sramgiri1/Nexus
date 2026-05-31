@@ -177,7 +177,7 @@ Final safety checks:
   provider/model call, tool execution, MCP startup, agent dispatch, project
   mutation, deploy, release, export, package, network call, or spend path.
 - P142.2 remains planned-only.
-- No stale `pending-final-commit` marker remains after the stamp commit.
+- No stale placeholder commit marker remains after the stamp commit.
 
 Git add/commit/push commands:
 

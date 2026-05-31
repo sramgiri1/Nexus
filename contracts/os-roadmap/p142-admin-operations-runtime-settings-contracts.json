@@ -281,7 +281,7 @@
         "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env files changed.",
         "No setting mutation, feature toggle, feature rollout, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime write, credential handling, secret read, audit export, raw log exposure, raw state exposure, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
         "P142.2 remains planned-only.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P142.1 allowed files>",
@@ -311,7 +311,7 @@
       "order": 178.1,
       "completedAt": "2026-05-31T11:30:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "78a5cc29",
       "summary": "Started P142 with an admin operations and runtime settings contract, safety boundary, checker, docs/status handoff, and planned-only P142.2 handoff while all write and execution authority remains blocked.",
       "detail": "P142.1 is contract-only. P142.2 Settings Model is planned-only next.",
       "checksRun": [
@@ -510,7 +510,7 @@
     "title": "Settings Model",
     "status": "planned"
   },
-  "commit": "pending-final-commit",
+  "commit": "78a5cc29",
   "completedAt": "2026-05-31T11:30:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
