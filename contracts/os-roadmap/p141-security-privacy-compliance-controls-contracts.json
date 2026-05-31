@@ -302,7 +302,7 @@
         "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
         "No credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
         "P141.2 remains planned-only.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.1 allowed files>",
@@ -506,7 +506,7 @@
         "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
         "No credential handling, raw data exposure, runtime policy enforcement, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
         "P141.3 remains planned-only.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.2 allowed files>",
@@ -702,7 +702,7 @@
         "No demo surfaces leakage.",
         "No raw/private IDs or raw dump exposure.",
         "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.3 allowed files>",
@@ -763,7 +763,7 @@
         "P141.4 is display-safe Compliance Command Center UX only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.5-P141.7 remain planned-only."
       ],
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b9636f8d",
       "completedAt": "2026-05-31T08:20:00.000Z",
       "checksRun": [
         "npm run check:p1414-security-privacy-compliance-controls",
@@ -925,7 +925,7 @@
         "No demo surface leakage.",
         "No raw/private IDs, raw dumps, or internal phase labels in primary UX.",
         "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.4 allowed files>",
@@ -1008,7 +1008,7 @@
     "title": "Compliance Command Center UX",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "b9636f8d",
     "completedAt": "2026-05-31T08:20:00.000Z",
     "summary": "Surfaced the display-safe security/privacy/compliance preview in Compliance Command Center UX while all runtime authority remains blocked.",
     "checksRun": [
@@ -1041,7 +1041,7 @@
     "title": "Tests / Checkers",
     "status": "planned"
   },
-  "commit": "pending-final-commit",
+  "commit": "b9636f8d",
   "completedAt": "2026-05-31T08:20:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [

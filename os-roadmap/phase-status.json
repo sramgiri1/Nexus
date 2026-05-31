@@ -34219,7 +34219,7 @@
         "No dashboard test files changed unless existing Playwright coverage is insufficient.",
         "No runtime authority, DB/runtime writes, backup creation, restore execution, failover, overwrite, delete, prune, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend enabled.",
         "No raw IDs, raw dumps, raw storage URLs, demo surface leakage, or fake runnable actions introduced.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add package.json contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json scripts/check-p1401-backup-recovery-dr-retention.js scripts/check-p1402-backup-recovery-dr-retention.js scripts/check-p1403-backup-recovery-dr-restore-preview.js scripts/check-p1404-backup-recovery-dr-command-center-ux.js scripts/check-p1405-backup-recovery-dr-tests-checkers.js scripts/check-p1406-backup-recovery-dr-docs-roadmap.js scripts/check-p1407-backup-recovery-dr-final-validation.js scripts/check-enterprise-readiness-roadmap.js scripts/check-os-phase-status.js docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json reports/p1401-backup-recovery-dr-retention-report.md reports/p1402-backup-recovery-dr-retention-report.md reports/p1403-backup-recovery-dr-restore-preview-report.md reports/p1404-backup-recovery-dr-command-center-ux-report.md reports/p1405-backup-recovery-dr-tests-checkers-report.md reports/p1406-backup-recovery-dr-docs-roadmap-report.md reports/p1407-backup-recovery-dr-final-validation-report.md reports/enterprise-readiness-roadmap-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
@@ -34446,7 +34446,7 @@
             "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
             "No credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
             "P141.2 remains planned-only.",
-            "No stale pending-final-commit marker remains after stamp commit."
+            "No stale placeholder commit marker remains after stamp commit."
           ],
           "gitCommands": [
             "git add <P141.1 allowed files>",
@@ -34663,7 +34663,7 @@
             "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
             "No credential handling, raw data exposure, runtime policy enforcement, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
             "P141.3 remains planned-only.",
-            "No stale pending-final-commit marker remains after stamp commit."
+            "No stale placeholder commit marker remains after stamp commit."
           ],
           "gitCommands": [
             "git add <P141.2 allowed files>",
@@ -34891,7 +34891,7 @@
             "No demo surfaces leakage.",
             "No raw/private IDs or raw dump exposure.",
             "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-            "No stale pending-final-commit marker remains after stamp commit."
+            "No stale placeholder commit marker remains after stamp commit."
           ],
           "gitCommands": [
             "git add <P141.3 allowed files>",
@@ -34936,7 +34936,7 @@
           "track": "NEXUS_OS",
           "label": "Compliance Command Center UX",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "b9636f8d",
           "completedAt": "2026-05-31T08:20:00.000Z",
           "checksRun": [
             "npm run check:p1414-security-privacy-compliance-controls",
@@ -35098,7 +35098,7 @@
             "No demo surface leakage.",
             "No raw/private IDs, raw dumps, or internal phase labels in primary UX.",
             "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-            "No stale pending-final-commit marker remains after stamp commit."
+            "No stale placeholder commit marker remains after stamp commit."
           ],
           "gitCommands": [
             "git add <P141.4 allowed files>",
@@ -35193,7 +35193,7 @@
         "title": "Compliance Command Center UX",
         "status": "complete",
         "branch": "codex/nexus-e2e-phase-validation",
-        "commit": "pending-final-commit",
+        "commit": "b9636f8d",
         "completedAt": "2026-05-31T08:20:00.000Z",
         "summary": "Surfaced the display-safe security/privacy/compliance preview in Compliance Command Center UX while all runtime authority remains blocked.",
         "checksRun": [
@@ -35226,7 +35226,7 @@
         "title": "Tests / Checkers",
         "status": "planned"
       },
-      "commit": "pending-final-commit",
+      "commit": "b9636f8d",
       "completedAt": "2026-05-31T08:20:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
@@ -35391,7 +35391,7 @@
         "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
         "No credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
         "P141.2 remains planned-only.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.1 allowed files>",
@@ -35608,7 +35608,7 @@
         "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
         "No credential handling, raw data exposure, runtime policy enforcement, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
         "P141.3 remains planned-only.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.2 allowed files>",
@@ -35836,7 +35836,7 @@
         "No demo surfaces leakage.",
         "No raw/private IDs or raw dump exposure.",
         "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.3 allowed files>",
@@ -35881,7 +35881,7 @@
       "track": "NEXUS_OS",
       "label": "Compliance Command Center UX",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b9636f8d",
       "completedAt": "2026-05-31T08:20:00.000Z",
       "checksRun": [
         "npm run check:p1414-security-privacy-compliance-controls",
@@ -36043,7 +36043,7 @@
         "No demo surface leakage.",
         "No raw/private IDs, raw dumps, or internal phase labels in primary UX.",
         "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-        "No stale pending-final-commit marker remains after stamp commit."
+        "No stale placeholder commit marker remains after stamp commit."
       ],
       "gitCommands": [
         "git add <P141.4 allowed files>",
@@ -36928,7 +36928,7 @@
     "title": "Compliance Command Center UX",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "b9636f8d",
     "completedAt": "2026-05-31T08:20:00.000Z",
     "summary": "Surfaced the display-safe security/privacy/compliance preview in Compliance Command Center UX while all runtime authority remains blocked.",
     "checksRun": [
@@ -36965,6 +36965,6 @@
   "nextSubphase": "P141.5",
   "currentSubphase": "P141.4",
   "previousSubphase": "P141.3",
-  "commit": "pending-final-commit",
+  "commit": "b9636f8d",
   "completedAt": "2026-05-31T08:20:00.000Z"
 }

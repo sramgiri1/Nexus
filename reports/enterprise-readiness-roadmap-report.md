@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-31T05:37:03.989Z
+- Generated at: 2026-05-31T05:44:42.910Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 941cc5d6
+- Validation HEAD: b9636f8d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -53,8 +53,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, dashboard/src/data/commandCenterTabs.js, dashboard/src/data/complianceReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, scripts/check-p1411-security-privacy-compliance-controls.js, scripts/check-p1412-security-privacy-compliance-controls.js, scripts/check-p1413-security-privacy-compliance-controls.js, reports/p1414-security-privacy-compliance-controls-report.md, scripts/check-p1414-security-privacy-compliance-controls.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, dashboard/src/data/commandCenterTabs.js, dashboard/src/data/complianceReadiness.js, dashboard/src/pages/CommandCenterV2.jsx, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/os-phase-status-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, scripts/check-p1411-security-privacy-compliance-controls.js, scripts/check-p1412-security-privacy-compliance-controls.js, scripts/check-p1413-security-privacy-compliance-controls.js, reports/p1414-security-privacy-compliance-controls-report.md, scripts/check-p1414-security-privacy-compliance-controls.js |
+| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
