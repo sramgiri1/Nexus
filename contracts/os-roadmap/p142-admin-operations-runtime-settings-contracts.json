@@ -1171,7 +1171,7 @@
       "label": "Docs / Roadmap / Status",
       "order": 178.6,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "70bb59ba",
       "previousPhase": "P142.5",
       "nextPhase": "P142.7",
       "detail": "P142.6 closes docs, roadmap, status, reports, and checker handoffs for admin operations runtime settings. P142.7 Final Validation is planned-only next.",
@@ -1419,7 +1419,7 @@
     "label": "Docs / Roadmap / Status",
     "order": 178.6,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "70bb59ba",
     "previousPhase": "P142.5",
     "nextPhase": "P142.7",
     "detail": "P142.6 closes docs, roadmap, status, reports, and checker handoffs for admin operations runtime settings. P142.7 Final Validation is planned-only next.",
@@ -1843,7 +1843,7 @@
     ],
     "commandCenterVisible": true
   },
-  "commit": "pending-final-commit",
+  "commit": "70bb59ba",
   "completedAt": "2026-05-31T15:00:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
