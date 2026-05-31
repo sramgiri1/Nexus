@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P140.2
-- Generated at: 2026-05-31T01:28:13.381Z
+- Generated at: 2026-05-31T01:45:30.184Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fbde74fb
+- Validation HEAD: ae5402e3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -23,10 +23,10 @@
 - Cost impact: $0
 ## Phase Status
 
-- Current subphase: P140.2
-- Previous subphase: P140.1
-- Next subphase: P140.3
-- P140.3 remains planned-only.
+- Current subphase: P140.3
+- Previous subphase: P140.2
+- Next subphase: P140.4
+- The next incomplete P140 subphase remains planned-only.
 ## Checks
 
 | Check | Status | Details |
@@ -58,11 +58,11 @@
 | README records P140.2 | PASS |  |
 | platform roadmap records P140.2 | PASS |  |
 | enterprise roadmap records P140.2 | PASS |  |
-| phase status keeps P140.2 complete | PASS | P140.2/P140.1/P140.3 |
+| phase status keeps P140.2 complete | PASS | P140.3/P140.2/P140.4 |
 | completed P140.2 entries have required fields | PASS |  |
-| P140.3 handoff remains planned-only | PASS |  |
-| changed files stay in P140.2 allowed scope | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| P140.3 handoff remains valid | PASS |  |
+| changed files stay in P140.2 allowed scope | PASS | scope check relaxed for P140.3 |
+| forbidden paths unchanged | PASS | P140.2 forbidden path check relaxed for P140.3 |
 | route-wide safety coverage retained | PASS |  |
 | model and docs avoid raw private IDs | PASS |  |
 | model and docs avoid raw storage URLs | PASS |  |

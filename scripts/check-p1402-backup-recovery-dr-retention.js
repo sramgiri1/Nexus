@@ -94,6 +94,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const subphaseById = new Map((contract.subphases || []).map((entry) => [entry.phaseId, entry]));
 const p1402 = subphaseById.get("P140.2") || {};
 const p1403 = subphaseById.get("P140.3") || {};
+const p1404 = subphaseById.get("P140.4") || {};
 const plan = readText(PLAN_PATH);
 const readme = readText("README.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
@@ -161,6 +162,29 @@ const p1402CurrentState =
   && roadmapById.get("P140.2")?.status === "complete"
   && statusById.get("P140.3")?.status === "planned"
   && roadmapById.get("P140.3")?.status === "planned";
+const p1403CurrentState =
+  status.currentPhase === "P140.3"
+  && status.previousPhase === "P140.2"
+  && status.nextPhase === "P140.4"
+  && roadmap.currentPhase === "P140.3"
+  && roadmap.previousPhase === "P140.2"
+  && roadmap.nextPhase === "P140.4"
+  && status.current?.phaseId === "P140.3"
+  && status.previous?.phaseId === "P140.2"
+  && status.next?.phaseId === "P140.4"
+  && roadmap.current?.phaseId === "P140.3"
+  && roadmap.previous?.phaseId === "P140.2"
+  && roadmap.next?.phaseId === "P140.4"
+  && statusById.get("P140")?.status === "in_progress"
+  && roadmapById.get("P140")?.status === "in_progress"
+  && statusById.get("P140.1")?.status === "complete"
+  && roadmapById.get("P140.1")?.status === "complete"
+  && statusById.get("P140.2")?.status === "complete"
+  && roadmapById.get("P140.2")?.status === "complete"
+  && statusById.get("P140.3")?.status === "complete"
+  && roadmapById.get("P140.3")?.status === "complete"
+  && statusById.get("P140.4")?.status === "planned"
+  && roadmapById.get("P140.4")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1402-backup-recovery-dr-retention.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -184,22 +208,22 @@ addCheck("model has useful reliability records", model.backupRecords.length >= 2
 addCheck("all authority flags remain blocked", BACKUP_RECOVERY_DR_RETENTION_SAFETY_FLAG_NAMES.every((flag) => model[flag] === false && model.safetyFlags?.[flag] === false));
 addCheck("restore and runbook outputs remain non-runnable", model.restoreDrills.every((drill) => drill.restoreExecutionAllowed === false && drill.failoverAllowed === false && drill.overwriteAllowed === false && drill.deleteAllowed === false) && model.recoveryRunbooks.every((runbook) => runbook.failoverAllowed === false && runbook.restoreExecutionAllowed === false && runbook.approvalRequired === true));
 addCheck("cost model remains zero-spend", model.costImpact.estimatedUsd === 0 && model.costImpact.actualUsd === 0 && model.costImpact.providerSpendAllowed === false);
-addCheck("contract advances P140.2 safely", contract.phaseId === "P140" && contract.status === "in_progress" && contract.currentSubphase === "P140.2" && contract.previousSubphase === "P140.1" && contract.nextSubphase === "P140.3");
+addCheck("contract advances P140.2 safely", contract.phaseId === "P140" && contract.status === "in_progress" && ((contract.currentSubphase === "P140.2" && contract.previousSubphase === "P140.1" && contract.nextSubphase === "P140.3") || (contract.currentSubphase === "P140.3" && contract.previousSubphase === "P140.2" && contract.nextSubphase === "P140.4")));
 addCheck("contract records expected base commit", contract.expectedBaseCommit === "43c5dbc2" && p1402.expectedBaseCommit === EXPECTED_BASE_COMMIT);
-addCheck("P140.2 complete and P140.3 handoff known", p1402.status === "complete" && p1403.status === "planned" && p1402.nextPhase === "P140.3");
+addCheck("P140.2 complete and P140.3 handoff known", p1402.status === "complete" && ["planned", "complete"].includes(p1403.status) && p1402.nextPhase === "P140.3");
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1402.expectedExports?.includes(entry)));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1402.validationCommands?.includes(command)));
 addCheck("contract scope stays model-only", /read-only backup and retention model/i.test(p1402.dataShape || "") && p1402.forbiddenFiles?.includes("dashboard/src/**") && p1402.forbiddenFiles?.includes("db/**") && p1402.forbiddenFiles?.includes("projects/**"));
 addCheck("P140.1 report passes", reportPassed("reports/p1401-backup-recovery-dr-retention-report.md"));
 addCheck("enterprise checker accepts P140.2", enterpriseChecker.includes("p1402CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("OS checker recognizes P140.3 handoff", osStatusChecker.includes('"P140.3"'));
+addCheck("OS checker recognizes P140.3 handoff", osStatusChecker.includes('"P140.3"') && osStatusChecker.includes('"P140.4"'));
 addCheck("P140 plan records P140.2", /## P140\.2 Backup and Retention Model[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P140.2", /P140\.2 backup and retention model/i.test(readme));
 addCheck("platform roadmap records P140.2", /P140\.2 backup and retention model is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P140.2", /P140\.2 is now complete/i.test(enterpriseRoadmap) && /P140\.3 is the next executable subphase/i.test(enterpriseRoadmap));
-addCheck("phase status keeps P140.2 complete", p1402CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P140.2", /P140\.2 is now complete/i.test(enterpriseRoadmap) && (/P140\.3 is the next executable subphase/i.test(enterpriseRoadmap) || /P140\.3 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status keeps P140.2 complete", p1402CurrentState || p1403CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P140.2 entries have required fields", [statusById.get("P140"), statusById.get("P140.2"), roadmapById.get("P140"), roadmapById.get("P140.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P140.3 handoff remains planned-only", statusById.get("P140.3")?.status === "planned" && roadmapById.get("P140.3")?.status === "planned" && !(statusById.get("P140.3")?.checksRun || []).length && !(roadmapById.get("P140.3")?.checksRun || []).length);
+addCheck("P140.3 handoff remains valid", (p1402CurrentState && statusById.get("P140.3")?.status === "planned" && roadmapById.get("P140.3")?.status === "planned" && !(statusById.get("P140.3")?.checksRun || []).length && !(roadmapById.get("P140.3")?.checksRun || []).length) || (p1403CurrentState && p1403.status === "complete" && p1404.status === "planned"));
 addCheck("changed files stay in P140.2 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P140.2 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("route-wide safety coverage retained", ["Command Center route-wide UX", "DemoApp", "raw JSON", "private-project", "dispatch agent now", "Use system theme", "Use dark theme", "Use light theme", "Backup DR route renders readiness without runnable recovery actions"].every((text) => routeTests.includes(text)));
@@ -239,7 +263,7 @@ writeMarkdownReport(
         `- Current subphase: ${status.currentPhase}`,
         `- Previous subphase: ${status.previousPhase}`,
         `- Next subphase: ${status.nextPhase}`,
-        "- P140.3 remains planned-only.",
+        "- The next incomplete P140 subphase remains planned-only.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },

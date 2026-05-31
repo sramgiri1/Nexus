@@ -2,14 +2,14 @@
   "phaseId": "P140",
   "title": "Backup, Recovery, DR, and Retention",
   "status": "in_progress",
-  "currentSubphase": "P140.2",
-  "previousSubphase": "P140.1",
-  "nextSubphase": "P140.3",
+  "currentSubphase": "P140.3",
+  "previousSubphase": "P140.2",
+  "nextSubphase": "P140.4",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "43c5dbc2",
-  "summary": "P140.2 read-only backup and retention model is complete while all live backup, restore, failover, prune/delete, write, execution, project mutation, deploy, network, and spend authority remains blocked.",
-  "detail": "P140 now has a contract-only safety boundary and a reusable read-only backup/retention model for future restore preview and Command Center UX work. Runtime authority remains blocked.",
+  "summary": "P140.3 display-safe restore preview is complete while all live backup, restore, failover, prune/delete, write, execution, project mutation, deploy, network, and spend authority remains blocked.",
+  "detail": "P140 now has a contract-only safety boundary, a reusable read-only backup/retention model, and a reusable display-safe restore preview for future Command Center UX work. Runtime authority remains blocked.",
   "allowedFiles": [
     "package.json",
     "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
@@ -479,7 +479,7 @@
     {
       "phaseId": "P140.3",
       "title": "Restore Preview",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Add a display-safe restore drill preview without executing restore, failover, overwrite, delete, DB/runtime writes, network calls, or spend.",
       "previousPhase": "P140.2",
@@ -487,11 +487,194 @@
       "order": 176.3,
       "commandCenterVisible": true,
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "pending-p1402-stamp",
+      "expectedBaseCommit": "ae5402e3",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
-      "checksRun": []
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T02:04:00.000Z",
+      "checksRun": [
+        "npm run check:p1403-backup-recovery-dr-restore-preview",
+        "npm run check:p1402-backup-recovery-dr-retention",
+        "npm run check:p1401-backup-recovery-dr-retention",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "track": "NEXUS_OS",
+      "label": "P140.3 Restore Preview",
+      "summary": "Added the display-safe P140.3 restore preview model with restore review rows, blocked authority flags, approval gates, evidence refs, activity refs, and zero-spend cost impact.",
+      "detail": "P140.3 creates a reusable restore preview projection from the P140.2 backup/retention model and P75 restore preview contract while every runtime authority remains blocked.",
+      "knownLimitations": [
+        "P140.3 is display-safe restore preview work only and does not add Command Center source changes.",
+        "P140.4 remains planned-only next.",
+        "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
+      ],
+      "goal": "Add restore preview primitives for P140.4 Backup / DR UX without runtime authority.",
+      "whyThisIsNeeded": "P140.2 created backup/retention records. P140.3 prevents later UX work from duplicating restore preview logic and keeps restore review display-safe.",
+      "userOperatorImpact": "Operators can inspect restore source labels, approval gates, blocked operations, blockers, evidence, next action, and zero-cost state before any runtime authority is considered.",
+      "commandCenterImpact": "No Command Center source changes. Existing Backup / DR route remains display-only; P140.4 will consume the restore preview for UX improvements.",
+      "safetyImpact": "Display-safe preview only. No restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      "costImpact": "Zero provider spend; local checks only.",
+      "projectOsScope": "NEXUS OS restore preview model work only.",
+      "allowedFiles": [
+        "package.json",
+        "shared/backupRecoveryDrRestorePreview.js",
+        "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
+        "scripts/check-p1401-backup-recovery-dr-retention.js",
+        "scripts/check-p1402-backup-recovery-dr-retention.js",
+        "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1401-backup-recovery-dr-retention-report.md",
+        "reports/p1402-backup-recovery-dr-retention-report.md",
+        "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "private project roots",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "shared/backupRecoveryDrRestorePreview.js",
+        "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
+        "scripts/check-p1401-backup-recovery-dr-retention.js",
+        "scripts/check-p1402-backup-recovery-dr-retention.js",
+        "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1401-backup-recovery-dr-retention-report.md",
+        "reports/p1402-backup-recovery-dr-retention-report.md",
+        "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "BACKUP_RECOVERY_DR_RESTORE_PREVIEW_PHASE",
+        "BACKUP_RECOVERY_DR_RESTORE_PREVIEW_VERSION",
+        "BACKUP_RECOVERY_DR_RESTORE_PREVIEW_AUTHORITY_FLAGS",
+        "buildBackupRecoveryDrRestorePreviewRow",
+        "validateBackupRecoveryDrRestorePreviewRow",
+        "buildBackupRecoveryDrRestorePreview",
+        "validateBackupRecoveryDrRestorePreview",
+        "buildBackupRecoveryDrRestorePreviewEnvelope"
+      ],
+      "schemas": [
+        "restorePreviewRow: display-safe rowRef, restorePlanRef, sourceBackupLabel, restoreScope, approvalRequired, approvalState, executionState, previewState, blockedOperations, blockers, forbiddenFiles, evidenceRefs, activityRefs, ownerCapability, disabledReason, nextAction, redactionState, costImpact, safetyFlags",
+        "restorePreview: phase, schemaVersion, mode, sourceModelPhase, sourceModelValid, ownerCapability, modeGuard, restorePreviewRows, previewSections, readinessSummary, disabledReason, nextAction, evidenceRefs, activityRefs, costImpact, safetyFlags",
+        "restorePreviewEnvelope: result envelope with preview payload, evidence refs, validation warnings, and no runtime execution authority"
+      ],
+      "dataShape": "Display-safe restore preview with restorePreviewRows, previewSections, readinessSummary, safetyFlags, disabledReason, nextAction, evidenceRefs, activityRefs, redaction state, and zero-spend costImpact. No runtime export writes, DB schema, live persistence, project mutation, provider/model calls, restore execution, failover, overwrite, delete, prune, or spend.",
+      "commandCenterUx": [
+        "No Command Center source changes.",
+        "Preserve existing Backup / DR display-only route.",
+        "Do not add P140.3 metadata to Chat with NEXUS or Lite.",
+        "Do not expose raw JSON, raw logs, raw policy dumps, raw storage locations, or raw private project IDs.",
+        "Do not add fake runnable backup, restore, failover, overwrite, delete, or prune actions."
+      ],
+      "themeRequirements": [
+        "No theme source changes.",
+        "Dark, light, and system mode route-wide tests must continue to pass."
+      ],
+      "playwrightTests": [
+        "Reuse Backup / DR route Playwright coverage for disabled recovery actions.",
+        "Run full Command Center route-wide UX suite for demo app leakage, raw dump safety, navigation, and theme regression coverage."
+      ],
+      "checkerUpdates": [
+        "Add check:p1403-backup-recovery-dr-restore-preview.",
+        "Update P140.1 and P140.2 checkers to accept P140.3 current state.",
+        "Update enterprise readiness checker to accept P140.3 handoff.",
+        "Update OS phase status checker to accept P140.4."
+      ],
+      "docsRoadmap": [
+        "Update P140 phase plan with P140.3 complete and P140.4 planned-only next.",
+        "Update README, platform roadmap, and enterprise roadmap with P140.3 restore preview state.",
+        "Regenerate P140.1, P140.2, P140.3, enterprise readiness, OS status, and phase validation reports."
+      ],
+      "reportsToRegenerate": [
+        "reports/p1401-backup-recovery-dr-retention-report.md",
+        "reports/p1402-backup-recovery-dr-retention-report.md",
+        "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "phaseStatusUpdate": "P140.3 complete; P140 in progress; previous P140.2; next P140.4 planned-only.",
+      "validationCommands": [
+        "npm run check:p1403-backup-recovery-dr-restore-preview",
+        "npm run check:p1402-backup-recovery-dr-retention",
+        "npm run check:p1401-backup-recovery-dr-retention",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No project/private files changed.",
+        "No dashboard source/test changes in P140.3.",
+        "No demo app leakage, raw JSON/log/policy/storage dump exposure, raw private project IDs, fake runnable actions, or stale P140.3 pending marker after stamp.",
+        "No provider/tool/project mutation/DB/deploy/spend authority enabled."
+      ],
+      "gitCommands": [
+        "git add <P140.3 allowed files>",
+        "git commit -m \"chore(nexus): implement p1403 backup recovery restore preview\"",
+        "git add <P140.3 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1403 backup recovery restore preview\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers added or updated",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "phaseId": "P140.4",
@@ -502,7 +685,19 @@
       "previousPhase": "P140.3",
       "nextPhase": "P140.5",
       "order": 176.4,
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "track": "NEXUS_OS",
+      "label": "P140.4 Recovery Command Center UX",
+      "completedAt": "",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "expectedBaseCommit": "pending-p1403-stamp",
+      "summary": "Planned-only next P140 subphase for Backup / DR Command Center UX.",
+      "detail": "P140.4 remains planned-only until its own implementation-grade plan, checker, docs/status update, validation, commit, and push are complete.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P140.4 is planned-only. It must not enable restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until implemented and validated."
+      ]
     },
     {
       "phaseId": "P140.5",
@@ -538,10 +733,11 @@
       "commandCenterVisible": true
     }
   ],
-  "completedAt": "",
+  "completedAt": "2026-05-31T02:04:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "fbde74fb",
+  "commit": "pending-final-commit",
   "checksRun": [
+    "npm run check:p1403-backup-recovery-dr-restore-preview",
     "npm run check:p1402-backup-recovery-dr-retention",
     "npm run check:p1401-backup-recovery-dr-retention",
     "npm run check:enterprise-readiness-roadmap",
@@ -554,8 +750,8 @@
     "git diff --check"
   ],
   "knownLimitations": [
-    "P140.2 is read-only model work and does not add Command Center source changes.",
-    "P140.3 remains planned-only next.",
+    "P140.3 is display-safe restore preview work only and does not add Command Center source changes.",
+    "P140.4 remains planned-only next.",
     "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
   ],
   "previousPhase": "P139",

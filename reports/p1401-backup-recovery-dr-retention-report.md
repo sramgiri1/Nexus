@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P140.1
-- Generated at: 2026-05-31T01:28:16.241Z
+- Generated at: 2026-05-31T01:45:34.642Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fbde74fb
+- Validation HEAD: ae5402e3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,10 +21,10 @@
 - recoveryRunbookShape: runbookRef, recoveryMode, recoveryObjective, safetyGateState, approvalRequired, ownerCapability, blockers, evidenceRefs, nextAction
 ## Phase Status
 
-- Current subphase: P140.2
-- Previous subphase: P140.1
-- Next subphase: P140.3
-- P140.2 remains planned-only.
+- Current subphase: P140.3
+- Previous subphase: P140.2
+- Next subphase: P140.4
+- The next incomplete P140 subphase remains planned-only.
 ## Checks
 
 | Check | Status | Details |
@@ -50,11 +50,11 @@
 | README records P140.1 | PASS |  |
 | platform roadmap records P140.1 | PASS |  |
 | enterprise roadmap records P140.1 | PASS |  |
-| phase status keeps P140.1 complete | PASS | P140.2/P140.1/P140.3 |
+| phase status keeps P140.1 complete | PASS | P140.3/P140.2/P140.4 |
 | completed P140.1 entries have required fields | PASS |  |
 | P140.2 handoff remains valid | PASS |  |
-| changed files stay in P140.1 allowed scope | PASS | scope check relaxed for P140.2 |
-| forbidden paths unchanged | PASS | P140.1 forbidden path check relaxed for P140.2 |
+| changed files stay in P140.1 allowed scope | PASS | scope check relaxed for P140.3 |
+| forbidden paths unchanged | PASS | P140.1 forbidden path check relaxed for P140.3 |
 | existing Backup DR UX remains display-only | PASS |  |
 | route-wide safety coverage retained | PASS |  |
 | docs avoid raw private IDs | PASS |  |

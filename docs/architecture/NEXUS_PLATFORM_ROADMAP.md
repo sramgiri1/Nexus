@@ -3205,7 +3205,8 @@ P139.6 docs/roadmap/status closure is complete as docs/status/report-only
 handoff work. P139.7 final validation is complete. P140.1 backup, recovery,
 DR, and retention contract is complete as contract/policy/safety-boundary
 only. P140.2 backup and retention model is complete as a read-only model.
-P140.3 and P141-P145 remain planned-only. They cover founder
+P140.3 restore preview is complete as display-safe restore preview model work.
+P140.4 and P141-P145 remain planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3214,7 +3215,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, P138.4, P138.5, P138.6, P138.7, P139.1, P139.2, P139.3, P139.4, P139.5, P139.6, P139.7, P140.1, and P140.2. P136.2
+Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, P138.4, P138.5, P138.6, P138.7, P139.1, P139.2, P139.3, P139.4, P139.5, P139.6, P139.7, P140.1, P140.2, and P140.3. P136.2
 secret/provider model is complete, P136.3 provider dry run is complete, and
 P136.4 provider governance Command Center UX is complete. P136.5
 secrets/providers/tool governance tests/checkers is complete. P136.6
@@ -3623,8 +3624,12 @@ remain blocked until a later subphase explicitly allows them.
 P140.2 backup and retention model is complete: NEXUS now has read-only,
 display-safe backup records, retention policies, restore drill summaries,
 recovery runbook summaries, safety flags, evidence/activity refs, and
-zero-spend cost impact for future P140 preview and UX work. P140.3 restore
-preview is planned-only next.
+zero-spend cost impact for future P140 preview and UX work.
+P140.3 restore preview is complete: NEXUS now has display-safe restore review
+rows, preview sections, approval gates, blocked operations, blockers,
+evidence/activity refs, redaction state, authority flags, and zero-spend cost
+impact for future Backup / DR UX work. P140.4 Recovery Command Center UX is
+planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
