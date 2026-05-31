@@ -727,7 +727,7 @@
       ],
       "completedAt": "2026-05-31T07:30:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec2a98fe",
       "summary": "Added a display-safe security/privacy/compliance preview while all runtime authority remains blocked.",
       "detail": "P141.3 converts the P141.2 control model into display-safe preview rows and sections for future P141.4 Command Center UX without enabling certification, attestation, export, enforcement, DB writes, provider calls, tool execution, agent dispatch, project mutation, network calls, or spend.",
       "track": "NEXUS_OS",
@@ -812,7 +812,7 @@
     "title": "Compliance Preview",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ec2a98fe",
     "completedAt": "2026-05-31T07:30:00.000Z",
     "summary": "Added a display-safe security/privacy/compliance preview while all runtime authority remains blocked.",
     "checksRun": [
@@ -844,7 +844,7 @@
     "title": "Compliance Command Center UX",
     "status": "planned"
   },
-  "commit": "pending-final-commit",
+  "commit": "ec2a98fe",
   "completedAt": "2026-05-31T07:30:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P141.3
-- Generated at: 2026-05-31T05:14:14.433Z
+- Generated at: 2026-05-31T05:19:04.673Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 41573ae5
+- Validation HEAD: ec2a98fe
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -64,8 +64,8 @@
 | phase status advances to P141.3 | PASS | P141.3/P141.2/P141.4 |
 | completed P141.3 entries have required fields | PASS |  |
 | P141.4 remains planned-only | PASS |  |
-| changed files stay in P141.3 allowed scope | PASS | README.md, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1407-backup-recovery-dr-final-validation-report.md, reports/p1411-security-privacy-compliance-controls-report.md, reports/p1412-security-privacy-compliance-controls-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, scripts/check-p1411-security-privacy-compliance-controls.js, scripts/check-p1412-security-privacy-compliance-controls.js, reports/p1413-security-privacy-compliance-controls-report.md, scripts/check-p1413-security-privacy-compliance-controls.js, shared/securityPrivacyCompliancePreview.js |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1407-backup-recovery-dr-final-validation-report.md, reports/p1411-security-privacy-compliance-controls-report.md, reports/p1412-security-privacy-compliance-controls-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, scripts/check-p1411-security-privacy-compliance-controls.js, scripts/check-p1412-security-privacy-compliance-controls.js, reports/p1413-security-privacy-compliance-controls-report.md, scripts/check-p1413-security-privacy-compliance-controls.js, shared/securityPrivacyCompliancePreview.js |
+| changed files stay in P141.3 allowed scope | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | route-wide security/compliance coverage retained | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |

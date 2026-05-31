@@ -30016,7 +30016,7 @@
           "track": "NEXUS_OS",
           "label": "Compliance Preview",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "ec2a98fe",
           "completedAt": "2026-05-31T07:30:00.000Z",
           "checksRun": [
             "npm run check:p1413-security-privacy-compliance-controls",
@@ -30291,7 +30291,7 @@
         "title": "Compliance Preview",
         "status": "complete",
         "branch": "codex/nexus-e2e-phase-validation",
-        "commit": "pending-final-commit",
+        "commit": "ec2a98fe",
         "completedAt": "2026-05-31T07:30:00.000Z",
         "summary": "Added a display-safe security/privacy/compliance preview while all runtime authority remains blocked.",
         "checksRun": [
@@ -30323,7 +30323,7 @@
         "title": "Compliance Command Center UX",
         "status": "planned"
       },
-      "commit": "pending-final-commit",
+      "commit": "ec2a98fe",
       "completedAt": "2026-05-31T07:30:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
@@ -30772,7 +30772,7 @@
       "track": "NEXUS_OS",
       "label": "Compliance Preview",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec2a98fe",
       "completedAt": "2026-05-31T07:30:00.000Z",
       "checksRun": [
         "npm run check:p1413-security-privacy-compliance-controls",
@@ -31837,7 +31837,7 @@
     "title": "Compliance Preview",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "ec2a98fe",
     "completedAt": "2026-05-31T07:30:00.000Z",
     "summary": "Added a display-safe security/privacy/compliance preview while all runtime authority remains blocked.",
     "checksRun": [
@@ -31873,6 +31873,6 @@
   "nextSubphase": "P141.4",
   "currentSubphase": "P141.3",
   "previousSubphase": "P141.2",
-  "commit": "pending-final-commit",
+  "commit": "ec2a98fe",
   "completedAt": "2026-05-31T07:30:00.000Z"
 }
