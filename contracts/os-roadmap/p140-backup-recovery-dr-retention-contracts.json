@@ -455,7 +455,7 @@
       ],
       "completedAt": "2026-05-31T01:32:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fbde74fb",
       "summary": "Added the read-only P140.2 backup and retention model with display-safe records, policies, restore drill summaries, recovery runbooks, safety flags, evidence refs, activity refs, and zero-spend cost impact.",
       "detail": "P140.2 creates reusable model primitives for future restore preview and Command Center UX while every runtime authority remains blocked.",
       "checksRun": [
@@ -540,7 +540,7 @@
   ],
   "completedAt": "",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "fbde74fb",
   "checksRun": [
     "npm run check:p1402-backup-recovery-dr-retention",
     "npm run check:p1401-backup-recovery-dr-retention",

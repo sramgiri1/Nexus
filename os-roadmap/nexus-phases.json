@@ -26930,7 +26930,7 @@
       "order": 176,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fbde74fb",
       "commandCenterVisible": true,
       "detail": "P140 is in progress through read-only P140.2 model work. Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked.",
       "summary": "P140.2 backup and retention model is complete while P140.3 remains planned-only next.",
@@ -27023,7 +27023,7 @@
             "final response checklist"
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "fbde74fb",
           "completedAt": "2026-05-31T01:32:00.000Z",
           "checksRun": [
             "npm run check:p1402-backup-recovery-dr-retention",
@@ -27360,7 +27360,7 @@
       "label": "P140.2 Backup and Retention Model",
       "completedAt": "2026-05-31T01:32:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fbde74fb",
       "summary": "Added the read-only P140.2 backup and retention model with display-safe records, policies, restore drill summaries, recovery runbooks, safety flags, evidence refs, activity refs, and zero-spend cost impact.",
       "detail": "P140.2 creates reusable model primitives for future restore preview and Command Center UX while every runtime authority remains blocked.",
       "checksRun": [
@@ -28558,7 +28558,7 @@
     "label": "P140.2 Backup and Retention Model",
     "completedAt": "2026-05-31T01:32:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "fbde74fb",
     "summary": "Added the read-only P140.2 backup and retention model with display-safe records, policies, restore drill summaries, recovery runbooks, safety flags, evidence refs, activity refs, and zero-spend cost impact.",
     "detail": "P140.2 creates reusable model primitives for future restore preview and Command Center UX while every runtime authority remains blocked.",
     "checksRun": [
