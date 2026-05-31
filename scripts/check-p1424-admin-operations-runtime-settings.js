@@ -77,6 +77,7 @@ const p1422 = subphaseById.get("P142.2") || {};
 const p1423 = subphaseById.get("P142.3") || {};
 const p1424 = subphaseById.get("P142.4") || {};
 const p1425 = subphaseById.get("P142.5") || {};
+const p1426 = subphaseById.get("P142.6") || {};
 const checkerSource = readText("scripts/check-p1424-admin-operations-runtime-settings.js");
 const p1423Checker = readText("scripts/check-p1423-admin-operations-runtime-settings.js");
 const enterpriseChecker = readText("scripts/check-enterprise-readiness-roadmap.js");
@@ -117,6 +118,26 @@ const p1424CurrentState =
   && roadmapById.get("P142.5")?.status === "planned"
   && statusById.get("P143")?.status === "planned"
   && roadmapById.get("P143")?.status === "planned";
+const p1425CurrentState =
+  status.currentPhase === "P142.5"
+  && status.previousPhase === "P142.4"
+  && status.nextPhase === "P142.6"
+  && roadmap.currentPhase === "P142.5"
+  && roadmap.previousPhase === "P142.4"
+  && roadmap.nextPhase === "P142.6"
+  && status.current?.phaseId === "P142.5"
+  && status.previous?.phaseId === "P142.4"
+  && status.next?.phaseId === "P142.6"
+  && roadmap.current?.phaseId === "P142.5"
+  && roadmap.previous?.phaseId === "P142.4"
+  && roadmap.next?.phaseId === "P142.6"
+  && statusById.get("P142")?.status === "in_progress"
+  && roadmapById.get("P142")?.status === "in_progress"
+  && ["P142.1", "P142.2", "P142.3", "P142.4", "P142.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P142.6")?.status === "planned"
+  && roadmapById.get("P142.6")?.status === "planned"
+  && statusById.get("P143")?.status === "planned"
+  && roadmapById.get("P143")?.status === "planned";
 const enforceCurrentDiffScope = status.currentPhase === "P142.4";
 const allowedFiles = new Set(p1424.allowedFiles || []);
 const forbiddenPrefixes = [
@@ -149,17 +170,19 @@ addCheck("view model disabled actions are explicit and non-runnable", readiness.
 addCheck("all settings authority flags remain blocked", Object.values(readiness.safety || {}).every((value) => value === false));
 addCheck("cost impact remains zero-spend", readiness.costImpact === "No provider spend" && readiness.readinessCards.some((card) => card.label === "Cost" && card.value === "No spend"));
 addCheck("P142.3 report passes", reportPassed("reports/p1423-admin-operations-runtime-settings-report.md"));
-addCheck("contract advances to P142.4 safely", contract.phaseId === "P142" && contract.status === "in_progress" && contract.currentSubphase === "P142.4" && contract.previousSubphase === "P142.3" && contract.nextSubphase === "P142.5" && p1421.status === "complete" && p1422.status === "complete" && p1423.status === "complete" && p1424.status === "complete" && p1425.status === "planned");
+addCheck("contract advances through P142.4 safely", contract.phaseId === "P142" && contract.status === "in_progress" && p1421.status === "complete" && p1422.status === "complete" && p1423.status === "complete" && p1424.status === "complete" && ((contract.currentSubphase === "P142.4" && contract.previousSubphase === "P142.3" && contract.nextSubphase === "P142.5" && p1425.status === "planned") || (contract.currentSubphase === "P142.5" && contract.previousSubphase === "P142.4" && contract.nextSubphase === "P142.6" && p1425.status === "complete" && p1426.status === "planned")));
 addCheck("contract records expected base commit", p1424.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1424.expectedExports?.includes(entry)));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1424.validationCommands?.includes(command)));
 addCheck("contract scope stays UX-only", /Command Center UX/i.test(p1424.dataShape || "") && p1424.forbiddenFiles?.includes("projects/**") && p1424.forbiddenFiles?.includes("db/**") && p1424.forbiddenFiles?.includes("providers/**"));
 addCheck("P142.3 checker accepts P142.4 handoff", p1423Checker.includes("p1424CurrentState") && p1423Checker.includes('status.currentPhase === "P142.4"'));
 addCheck("enterprise checker accepts P142.4 active state", enterpriseChecker.includes("p1424CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
-addCheck("docs record P142.4 and P142.5 handoff", /## P142\.4 Settings Command Center UX[\s\S]*Status:\s+complete/.test(plan) && /P142\.4 Settings Command Center UX/i.test(readme) && /P142\.4 Settings Command Center UX is complete/i.test(platformRoadmap) && /P142\.4 is now complete/i.test(enterpriseRoadmap) && /P142\.5 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status advances to P142.4", p1424CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("docs record P142.4 and later handoff", /## P142\.4 Settings Command Center UX[\s\S]*Status:\s+complete/.test(plan) && /P142\.4 Settings Command Center UX/i.test(readme) && /P142\.4 Settings Command Center UX is complete/i.test(platformRoadmap) && /P142\.4 is now complete/i.test(enterpriseRoadmap) && (/P142\.5 is planned-only next/i.test(enterpriseRoadmap) || /P142\.5 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status advances through P142.4", p1424CurrentState || p1425CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P142.4 entries have required fields", [statusById.get("P142"), statusById.get("P142.4"), roadmapById.get("P142"), roadmapById.get("P142.4")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P142.5 and P143 remain planned-only", [statusById.get("P142.5"), roadmapById.get("P142.5"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("next P142/P143 handoff remains planned-only", p1424CurrentState
+  ? [statusById.get("P142.5"), roadmapById.get("P142.5"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : [statusById.get("P142.6"), roadmapById.get("P142.6"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("changed files stay in P142.4 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
@@ -204,13 +227,15 @@ writeMarkdownReport(
         `- Current subphase: ${status.currentPhase}`,
         `- Previous subphase: ${status.previousPhase}`,
         `- Next subphase: ${status.nextPhase}`,
-        "- P142.5 remains planned-only.",
+        p1425CurrentState ? "- P142.6 remains planned-only." : "- P142.5 remains planned-only.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
     {
       title: "Known Limitations",
-      body: "- P142.4 is display-only Command Center UX. It does not enable settings mutation, feature toggles, maintenance execution, runtime writes, audit export, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.5 remains planned-only.",
+      body: p1425CurrentState
+        ? "- P142.4 is display-only Command Center UX. It does not enable settings mutation, feature toggles, maintenance execution, runtime writes, audit export, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.5 has advanced through aggregate tests/checkers; P142.6 remains planned-only."
+        : "- P142.4 is display-only Command Center UX. It does not enable settings mutation, feature toggles, maintenance execution, runtime writes, audit export, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.5 remains planned-only.",
     },
     { title: "Result", body: failed.length === 0 ? "PASS" : `FAIL (${failed.length} checks failed)` },
   ],

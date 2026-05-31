@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-31T08:54:40.438Z
+- Generated at: 2026-05-31T09:14:15.586Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 545aad49
+- Validation HEAD: 4f7f6ac3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -624,24 +624,31 @@
 | P141.4 validation coverage | PASS | 8 checkers, 1 reports |
 | P141.5 validation coverage | PASS | 32 checkers, 24 reports |
 | P141.7 validation coverage | PASS | 52 checkers, 46 reports |
-| P142 validation coverage | PASS | 9 checkers, 4 reports |
+| P142 validation coverage | PASS | 10 checkers, 5 reports |
 | P142.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P142.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P142.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P142.4 validation coverage | PASS | 5 checkers, 1 reports |
-| P142.5 validation coverage | PASS | 23 checkers, 23 reports |
+| P142.5 validation coverage | PASS | 28 checkers, 24 reports |
+| P142.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P142.7 validation coverage | PASS | 46 checkers, 46 reports |
 | P143 validation coverage | PASS | dedicated_checker, validation_report |
 | P144 validation coverage | PASS | dedicated_checker, validation_report |
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P142.4; next=P142.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P142.5; next=P142.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
+- P142.6 Docs / Roadmap / Status
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 - P143 Release, Deploy, Export, and Package Pipeline
   - status: planned
   - checkers: 0
@@ -659,4 +666,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (620/620)
+PASS (622/622)

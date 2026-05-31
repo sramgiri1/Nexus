@@ -326,16 +326,16 @@ Result: complete as display-only Settings Command Center UX. The page now shows
 admin settings, feature gates, maintenance controls, runtime state, audit
 surfaces, dry-run summary, evidence/activity locations, disabled reasons,
 owners, next action, and zero-spend cost posture. P142.5 Tests / Checkers is
-planned-only next. No admin setting mutation, feature toggle, feature rollout,
-maintenance execution, maintenance scheduling, runtime state mutation,
-DB/runtime write, audit export, raw log exposure, raw state exposure,
-credential handling, secret read, provider/model call, tool execution, MCP
-startup, agent dispatch, project mutation, deploy, release, export, package,
-network call, or spend authority is enabled.
+complete; P142.6 Docs / Roadmap / Status is planned-only next. No admin setting
+mutation, feature toggle, feature rollout, maintenance execution, maintenance
+scheduling, runtime state mutation, DB/runtime write, audit export, raw log
+exposure, raw state exposure, credential handling, secret read, provider/model
+call, tool execution, MCP startup, agent dispatch, project mutation, deploy,
+release, export, package, network call, or spend authority is enabled.
 
 ## P142.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: Harden P142 checker and Playwright coverage across contract, model,
 dry run, Command Center UX, docs, status, and forbidden authority claims.
@@ -349,17 +349,27 @@ implementation, providers, tools, worker-runtime, deploy/release/export/package
 folders, and env files.
 
 Expected data shape: aggregate validation report over P142.1-P142.4 evidence,
-route assertions, docs/status, and safety wording.
+Settings UX data, route assertions, docs/status, and safety wording.
 
 Command Center UX: preserve P142.4 UX and route-wide navigation/theme behavior.
 
-Tests/checkers: add P142.5 aggregate checker, update P142.4 handoff, update
-enterprise checker, and update/remove obsolete route assertions if labels or
-states changed.
+Tests/checkers: added P142.5 aggregate checker, updated P142.4 handoff,
+updated enterprise checker, and added route assertions for Settings aggregate
+coverage.
 
 Validation: P142.5 checker, P142.4 checker, enterprise roadmap, OS phase
-status, phase validation coverage, dashboard build/unit, route-wide Playwright,
-and `git diff --check`.
+status, phase validation coverage, dashboard build/unit, focused P142.5
+Playwright, route-wide Playwright, and `git diff --check`.
+
+Result: complete as tests/checkers hardening. The aggregate checker validates
+P142.1-P142.4 reports, the P142.2 read-only settings model, the P142.3
+non-runnable dry run, the P142.4 Settings UX view model, route-wide safety, and
+P142.6 planned-only handoff. No admin setting mutation, feature toggle,
+feature rollout, maintenance execution, maintenance scheduling, runtime state
+mutation, DB/runtime write, audit export, raw log exposure, raw state exposure,
+credential handling, secret read, provider/model call, tool execution, MCP
+startup, agent dispatch, project mutation, deploy, release, export, package,
+network call, or spend authority is enabled.
 
 ## P142.6 Docs / Roadmap / Status
 

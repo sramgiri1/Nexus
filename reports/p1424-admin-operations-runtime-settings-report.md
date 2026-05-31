@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-31T08:54:32.024Z
+- Generated at: 2026-05-31T09:14:07.142Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 545aad49
+- Validation HEAD: 4f7f6ac3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,10 +29,10 @@
 - Cost impact: No provider spend
 ## Phase Status
 
-- Current subphase: P142.4
-- Previous subphase: P142.3
-- Next subphase: P142.5
-- P142.5 remains planned-only.
+- Current subphase: P142.5
+- Previous subphase: P142.4
+- Next subphase: P142.6
+- P142.6 remains planned-only.
 ## Checks
 
 | Check | Status | Details |
@@ -51,19 +51,19 @@
 | all settings authority flags remain blocked | PASS |  |
 | cost impact remains zero-spend | PASS |  |
 | P142.3 report passes | PASS |  |
-| contract advances to P142.4 safely | PASS |  |
+| contract advances through P142.4 safely | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract records expected exports | PASS |  |
 | contract records validation commands | PASS |  |
 | contract scope stays UX-only | PASS |  |
 | P142.3 checker accepts P142.4 handoff | PASS |  |
 | enterprise checker accepts P142.4 active state | PASS |  |
-| docs record P142.4 and P142.5 handoff | PASS |  |
-| phase status advances to P142.4 | PASS | P142.4/P142.3/P142.5 |
+| docs record P142.4 and later handoff | PASS |  |
+| phase status advances through P142.4 | PASS | P142.5/P142.4/P142.6 |
 | completed P142.4 entries have required fields | PASS |  |
-| P142.5 and P143 remain planned-only | PASS |  |
-| changed files stay in P142.4 allowed scope | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1423-admin-operations-runtime-settings-report.md, reports/p1424-admin-operations-runtime-settings-report.md, reports/phase-validation-coverage-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1423-admin-operations-runtime-settings-report.md, reports/p1424-admin-operations-runtime-settings-report.md, reports/phase-validation-coverage-report.md |
+| next P142/P143 handoff remains planned-only | PASS |  |
+| changed files stay in P142.4 allowed scope | PASS | scope check relaxed for P142.5 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P142.5 |
 | route-wide safety coverage retained | PASS |  |
 | P142.4 Playwright coverage exists | PASS |  |
 | settings UX avoids raw private IDs | PASS |  |
@@ -73,7 +73,7 @@
 | settings UX and docs avoid raw dumps | PASS |  |
 ## Known Limitations
 
-- P142.4 is display-only Command Center UX. It does not enable settings mutation, feature toggles, maintenance execution, runtime writes, audit export, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.5 remains planned-only.
+- P142.4 is display-only Command Center UX. It does not enable settings mutation, feature toggles, maintenance execution, runtime writes, audit export, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.5 has advanced through aggregate tests/checkers; P142.6 remains planned-only.
 ## Result
 
 PASS

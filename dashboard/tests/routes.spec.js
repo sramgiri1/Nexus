@@ -2746,7 +2746,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("P142.4 admin settings handoff keeps roadmap and Compliance display-only", async ({ page }) => {
+  test("P142.5 admin settings handoff keeps roadmap and Compliance display-only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/compliance");
@@ -2761,11 +2761,12 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
 
     const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P142.4");
-    expect(roadmapBody).toContain("Settings Command Center UX");
     expect(roadmapBody).toContain("Admin Operations and Runtime Settings");
     expect(roadmapBody).toContain("P142.5");
     expect(roadmapBody).toContain("Tests / Checkers");
+    expect(roadmapBody).toContain("P142.6");
+    expect(roadmapBody).toContain("Docs / Roadmap / Status");
+    expect(roadmapBody).toContain("Settings Command Center UX");
     expect(roadmapBody).not.toContain("pending-final-commit");
     expect(roadmapBody).not.toContain("DemoApp");
     expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
@@ -2773,7 +2774,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("P142.4 admin operations settings UX advances P142 and keeps Compliance display-only", async ({ page }) => {
+  test("P142.5 admin operations settings UX advances P142 and keeps Compliance display-only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/compliance");
@@ -2786,11 +2787,12 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P142.4");
-    await expect(page.locator("body")).toContainText("Settings Command Center UX");
     await expect(page.locator("body")).toContainText("Admin Operations and Runtime Settings");
     await expect(page.locator("body")).toContainText("P142.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P142.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("Settings Command Center UX");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -2839,6 +2841,54 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toMatch(/save settings now|apply settings now|toggle feature now|roll out now|run maintenance now|schedule maintenance now|export audit now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|deploy now|release now|package now|execute now/i);
     expect(body).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
     expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P142.5 admin settings aggregate coverage keeps Settings display-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/settings");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Settings");
+      await expect(page.locator("body")).toContainText("Admin operations settings are review-ready and display-only");
+      await expect(page.locator("body")).toContainText("No provider spend");
+    }
+
+    for (const tab of ["Admin Settings", "Feature Gates", "Maintenance", "Runtime State", "Audit Surfaces", "Dry Run", "Evidence", "Disabled Actions"]) {
+      await commandTab(page, tab).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Dry Run").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Admin Dry Run Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Executable rows");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
+
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Save settings");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Toggle features");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled action: Dispatch agents");
+
+    const settingsBody = await page.locator("body").innerText();
+    expect(settingsBody).not.toMatch(/P142\.5|P142\.6|pending-final-commit/i);
+    expect(settingsBody).not.toContain("DemoApp");
+    expect(settingsBody).not.toMatch(/save settings now|apply settings now|toggle feature now|roll out now|run maintenance now|schedule maintenance now|export audit now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|deploy now|release now|package now|execute now|spend now/i);
+    expect(settingsBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(settingsBody).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+
+    await page.goto("/command-center/roadmap");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P142.5");
+    await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P142.6");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
 
     expect(errors).toEqual([]);
   });

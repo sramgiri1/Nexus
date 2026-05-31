@@ -2,14 +2,14 @@
   "phaseId": "P142",
   "title": "Admin Operations and Runtime Settings",
   "status": "in_progress",
-  "currentSubphase": "P142.4",
-  "previousSubphase": "P142.3",
-  "nextSubphase": "P142.5",
+  "currentSubphase": "P142.5",
+  "previousSubphase": "P142.4",
+  "nextSubphase": "P142.6",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "18087b39",
-  "summary": "P142 starts with a contract-only admin operations and runtime settings boundary. P142.1 defines display-safe admin policy, feature gate, maintenance control, runtime state, audit surface, and authority flag shapes while all write and execution authority remains blocked.",
-  "detail": "P142.1 is contract/policy/safety-boundary work only. P142.2 remains planned-only for the future read-only settings model.",
+  "summary": "Added aggregate P142 validation coverage across prior reports, settings model, admin dry run, Settings Command Center UX, route-wide safety, docs/status, and P142.6 planned-only handoff.",
+  "detail": "P142.5 hardens tests and checkers for P142 admin operations runtime settings. P142.6 Docs / Roadmap / Status is planned-only next.",
   "allowedFiles": [
     "package.json",
     "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
@@ -937,10 +937,10 @@
     {
       "phaseId": "P142.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P142.4",
+      "expectedBaseCommit": "4f7f6ac3",
       "narrowGoal": "Harden P142 checker and Playwright coverage across contract, model, dry run, Command Center UX, docs, status, and forbidden authority claims.",
       "requiredPlanFields": [
         "narrow scope",
@@ -962,12 +962,184 @@
       ],
       "previousPhase": "P142.4",
       "nextPhase": "P142.6",
-      "commit": "",
-      "checksRun": [],
-      "knownLimitations": [
-        "P142.5 remains planned-only until its own implementation-grade plan is written."
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p1425-admin-operations-runtime-settings",
+        "npm run check:p1424-admin-operations-runtime-settings",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P142.5\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
       ],
-      "commandCenterVisible": true
+      "knownLimitations": [
+        "P142.5 is tests/checkers hardening only. It does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.6 remains planned-only."
+      ],
+      "commandCenterVisible": true,
+      "track": "NEXUS_OS",
+      "label": "Tests / Checkers",
+      "order": 178.5,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "detail": "P142.5 hardens tests and checkers for P142 admin operations runtime settings. P142.6 Docs / Roadmap / Status is planned-only next.",
+      "summary": "Added aggregate P142 validation coverage across prior reports, settings model, admin dry run, Settings Command Center UX, route-wide safety, docs/status, and P142.6 planned-only handoff.",
+      "completedAt": "2026-05-31T13:45:00.000Z",
+      "allowedFiles": [
+        "package.json",
+        "scripts/check-p1425-admin-operations-runtime-settings.js",
+        "scripts/check-p1424-admin-operations-runtime-settings.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
+        "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1425-admin-operations-runtime-settings-report.md",
+        "reports/p1424-admin-operations-runtime-settings-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "careloop/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "provider/tool registries",
+        "auth/session enforcement code",
+        "runtime writers or deploy/package/release executors"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "scripts/check-p1425-admin-operations-runtime-settings.js",
+        "scripts/check-p1424-admin-operations-runtime-settings.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
+        "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "expectedExports": [],
+      "schemas": [
+        "Aggregate checker and Playwright coverage only.",
+        "No DB schema or migration.",
+        "No settings store, feature flag engine, maintenance executor, runtime state writer, audit exporter, provider adapter, executable command, or payload writer."
+      ],
+      "dataShape": "P142.5 adds an aggregate validation report over P142.1-P142.4 evidence, route assertions, docs/status, display-safe Settings UX data, and safety wording. It has no runtime export, DB schema, mutation payload, executable payload, provider call, or spend data shape.",
+      "commandCenterUxRequirements": [
+        "Preserve the P142.4 Settings Command Center UX.",
+        "Settings must show current state, next action, blockers, disabled reasons, owner, evidence/activity location, and zero-spend posture.",
+        "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces outside demo mode, raw private project IDs, mutation buttons, executable payloads, or fake runnable admin actions."
+      ],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate Settings and route-wide Command Center coverage through Playwright."
+      ],
+      "safetyRules": [
+        "Do not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, or secret value reads in P142.5.",
+        "Do not call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+        "Do not add settings write APIs, feature flag engines, maintenance executors, runtime state writers, audit exporters, credential readers, provider adapters, executable commands, or payload writers.",
+        "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw state, raw setting payloads, raw feature payloads, or runnable admin operations in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse P142.2 admin operations settings model builders and validators.",
+        "Reuse P142.3 admin operations dry-run builders and validators.",
+        "Reuse P142.4 Settings readiness view model and existing Command Center route matrix/tabs.",
+        "Do not duplicate report writers, checker formatters, phase status updaters, result envelopes, redaction helpers, route matrices, UI components, or activity/evidence/audit appenders."
+      ],
+      "playWrightTests": [
+        "Add P142.5 aggregate Settings display-only coverage to dashboard/tests/routes.spec.js.",
+        "Run focused P142.5 route coverage.",
+        "Run existing route-wide Command Center safety coverage.",
+        "Preserve no demo leakage, no raw dumps, theme switching, sidebar navigation, OS Roadmap scope, and project milestone separation tests."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1425-admin-operations-runtime-settings.js.",
+        "Update scripts/check-p1424-admin-operations-runtime-settings.js for P142.5 handoff compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P142.5 active-state compatibility."
+      ],
+      "docsRoadmapUpdates": [
+        "README.md",
+        "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1425-admin-operations-runtime-settings-report.md",
+        "reports/p1424-admin-operations-runtime-settings-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P142 in progress; P142.1-P142.5 complete; previous P142.4; next P142.6 planned-only.",
+      "validationCommands": [
+        "npm run check:p1425-admin-operations-runtime-settings",
+        "npm run check:p1424-admin-operations-runtime-settings",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P142.5\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No project files changed.",
+        "No dashboard source changed, and only route-wide Playwright assertions changed in dashboard/tests/routes.spec.js.",
+        "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env files changed.",
+        "No setting mutation, feature toggle, feature rollout, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime write, credential handling, secret read, audit export, raw log exposure, raw state exposure, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
+        "P142.6 remains planned-only.",
+        "No stale placeholder commit marker remains after stamp commit."
+      ],
+      "gitCommands": [
+        "git add <P142.5 allowed files>",
+        "git commit -m \"test(nexus): harden p1425 admin settings coverage\"",
+        "git add <P142.5 stamp files and refreshed reports>",
+        "git commit -m \"chore(nexus): stamp p1425 admin settings coverage\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "phaseId": "P142.6",
@@ -994,7 +1166,21 @@
         "final safety checks",
         "git add/commit/push commands",
         "final response checklist"
-      ]
+      ],
+      "track": "NEXUS_OS",
+      "label": "Docs / Roadmap / Status",
+      "order": 178.6,
+      "branch": "",
+      "commit": "",
+      "previousPhase": "P142.5",
+      "nextPhase": "P142.7",
+      "detail": "P142.6 is planned-only. It will close P142 docs, README, roadmap, OS phase status, checker handoff, and report freshness while keeping P142.7 final validation planned-only.",
+      "summary": "Planned docs, roadmap, status, and report freshness closure for P142.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P142.6 remains planned-only until its own implementation-grade plan is written. It must not enable admin setting mutation, feature toggles, maintenance execution, runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "commandCenterVisible": true
     },
     {
       "phaseId": "P142.7",
@@ -1021,17 +1207,31 @@
         "final safety checks",
         "git add/commit/push commands",
         "final response checklist"
-      ]
+      ],
+      "track": "NEXUS_OS",
+      "label": "Final Validation",
+      "order": 178.7,
+      "branch": "",
+      "commit": "",
+      "previousPhase": "P142.6",
+      "nextPhase": "P143",
+      "detail": "P142.7 is planned-only. It will close P142 with final validation evidence and safe planned-only P143 handoff.",
+      "summary": "Planned final validation closure for P142.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P142.7 remains planned-only until its own implementation-grade plan is written. It must not enable admin setting mutation, feature toggles, maintenance execution, runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+      ],
+      "commandCenterVisible": true
     }
   ],
   "current": {
-    "phaseId": "P142.3",
-    "title": "Admin Dry Run",
+    "phaseId": "P142.5",
+    "title": "Tests / Checkers",
     "status": "complete",
     "scopeClassification": "NEXUS_OS_CHANGE",
     "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "11bd52f5",
-    "narrowGoal": "Create a non-runnable admin operations dry run from the P142.2 settings model with every mutation, execution, write, provider, tool, agent, project, deploy, export, package, network, and spend path blocked.",
+    "expectedBaseCommit": "4f7f6ac3",
+    "narrowGoal": "Harden P142 checker and Playwright coverage across contract, model, dry run, Command Center UX, docs, status, and forbidden authority claims.",
     "requiredPlanFields": [
       "narrow scope",
       "starting branch and expected base commit",
@@ -1050,11 +1250,36 @@
       "git add/commit/push commands",
       "final response checklist"
     ],
+    "previousPhase": "P142.4",
+    "nextPhase": "P142.6",
+    "commit": "pending-final-commit",
+    "checksRun": [
+      "npm run check:p1425-admin-operations-runtime-settings",
+      "npm run check:p1424-admin-operations-runtime-settings",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P142.5\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P142.5 is tests/checkers hardening only. It does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.6 remains planned-only."
+    ],
+    "commandCenterVisible": true,
+    "track": "NEXUS_OS",
+    "label": "Tests / Checkers",
+    "order": 178.5,
+    "branch": "codex/nexus-e2e-phase-validation",
+    "detail": "P142.5 hardens tests and checkers for P142 admin operations runtime settings. P142.6 Docs / Roadmap / Status is planned-only next.",
+    "summary": "Added aggregate P142 validation coverage across prior reports, settings model, admin dry run, Settings Command Center UX, route-wide safety, docs/status, and P142.6 planned-only handoff.",
+    "completedAt": "2026-05-31T13:45:00.000Z",
     "allowedFiles": [
       "package.json",
-      "shared/adminOperationsRuntimeSettingsDryRun.js",
-      "scripts/check-p1423-admin-operations-runtime-settings.js",
-      "scripts/check-p1422-admin-operations-runtime-settings.js",
+      "scripts/check-p1425-admin-operations-runtime-settings.js",
+      "scripts/check-p1424-admin-operations-runtime-settings.js",
       "scripts/check-enterprise-readiness-roadmap.js",
       "dashboard/tests/routes.spec.js",
       "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
@@ -1064,8 +1289,8 @@
       "README.md",
       "os-roadmap/nexus-phases.json",
       "os-roadmap/phase-status.json",
-      "reports/p1423-admin-operations-runtime-settings-report.md",
-      "reports/p1422-admin-operations-runtime-settings-report.md",
+      "reports/p1425-admin-operations-runtime-settings-report.md",
+      "reports/p1424-admin-operations-runtime-settings-report.md",
       "reports/enterprise-readiness-roadmap-report.md",
       "reports/os-phase-status-report.md",
       "reports/phase-validation-coverage-report.md"
@@ -1073,9 +1298,7 @@
     "forbiddenFiles": [
       "projects/**",
       "generated-projects/**",
-      "private project roots",
-      "dashboard/src/**",
-      "dashboard/tests/** except dashboard/tests/routes.spec.js",
+      "careloop/**",
       "db/**",
       "local-state/runtime/**",
       "providers/**",
@@ -1085,13 +1308,15 @@
       "release/**",
       "exports/**",
       "packages/**",
-      ".env*"
+      ".env*",
+      "provider/tool registries",
+      "auth/session enforcement code",
+      "runtime writers or deploy/package/release executors"
     ],
     "exactFilesToCreateOrUpdate": [
       "package.json",
-      "shared/adminOperationsRuntimeSettingsDryRun.js",
-      "scripts/check-p1423-admin-operations-runtime-settings.js",
-      "scripts/check-p1422-admin-operations-runtime-settings.js",
+      "scripts/check-p1425-admin-operations-runtime-settings.js",
+      "scripts/check-p1424-admin-operations-runtime-settings.js",
       "scripts/check-enterprise-readiness-roadmap.js",
       "dashboard/tests/routes.spec.js",
       "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
@@ -1100,64 +1325,50 @@
       "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
       "README.md",
       "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1423-admin-operations-runtime-settings-report.md",
-      "reports/p1422-admin-operations-runtime-settings-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
+      "os-roadmap/phase-status.json"
     ],
-    "expectedExports": [
-      "ADMIN_OPERATIONS_RUNTIME_SETTINGS_DRY_RUN_PHASE",
-      "ADMIN_OPERATIONS_RUNTIME_SETTINGS_DRY_RUN_VERSION",
-      "ADMIN_OPERATIONS_RUNTIME_SETTINGS_DRY_RUN_SAFETY_FLAG_NAMES",
-      "buildAdminOperationDryRunRow",
-      "validateAdminOperationDryRunRow",
-      "buildAdminOperationsRuntimeSettingsDryRun",
-      "validateAdminOperationsRuntimeSettingsDryRun",
-      "buildAdminOperationsRuntimeSettingsDryRunEnvelope"
-    ],
+    "expectedExports": [],
     "schemas": [
-      "Local JavaScript dry-run model only.",
+      "Aggregate checker and Playwright coverage only.",
       "No DB schema or migration.",
       "No settings store, feature flag engine, maintenance executor, runtime state writer, audit exporter, provider adapter, executable command, or payload writer."
     ],
-    "dataShape": "P142.3 adds a non-runnable admin operations dry run with safe dry-run rows, blocked actions, disabled reasons, owner capability, evidence/activity labels, audit labels, cost impact, redaction summary, zero write/execution/spend candidate counts, null executable payloads, and all safety flags false.",
+    "dataShape": "P142.5 adds an aggregate validation report over P142.1-P142.4 evidence, route assertions, docs/status, display-safe Settings UX data, and safety wording. It has no runtime export, DB schema, mutation payload, executable payload, provider call, or spend data shape.",
     "commandCenterUxRequirements": [
-      "No Command Center source change in P142.3.",
-      "P142.3 dry run is not rendered directly in primary Command Center UX.",
-      "P142.4 owns scoped Settings/Admin Operations UX changes.",
+      "Preserve the P142.4 Settings Command Center UX.",
+      "Settings must show current state, next action, blockers, disabled reasons, owner, evidence/activity location, and zero-spend posture.",
       "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces outside demo mode, raw private project IDs, mutation buttons, executable payloads, or fake runnable admin actions."
     ],
     "themeRequirements": [
       "Preserve System theme.",
       "Preserve Dark theme.",
       "Preserve Light theme.",
-      "Validate through existing route-wide Command Center coverage."
+      "Validate Settings and route-wide Command Center coverage through Playwright."
     ],
     "safetyRules": [
-      "Do not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, or secret value reads in P142.3.",
+      "Do not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, or secret value reads in P142.5.",
       "Do not call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
-      "Do not create settings write APIs, feature flag engines, maintenance executors, runtime state writers, audit exporters, credential readers, provider adapters, executable commands, or payload writers.",
+      "Do not add settings write APIs, feature flag engines, maintenance executors, runtime state writers, audit exporters, credential readers, provider adapters, executable commands, or payload writers.",
       "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw state, raw setting payloads, raw feature payloads, or runnable admin operations in primary UX."
     ],
     "reuseCheck": [
       "Reuse shared/reportWriter.js.",
       "Reuse shared/checkResultFormatter.js.",
-      "Reuse shared/resultEnvelope.js.",
-      "Reuse shared/redaction.js.",
       "Reuse P142.2 admin operations settings model builders and validators.",
+      "Reuse P142.3 admin operations dry-run builders and validators.",
+      "Reuse P142.4 Settings readiness view model and existing Command Center route matrix/tabs.",
       "Do not duplicate report writers, checker formatters, phase status updaters, result envelopes, redaction helpers, route matrices, UI components, or activity/evidence/audit appenders."
     ],
     "playWrightTests": [
-      "Only dashboard/tests/routes.spec.js may change for stale OS Roadmap assertions in P142.3.",
+      "Add P142.5 aggregate Settings display-only coverage to dashboard/tests/routes.spec.js.",
+      "Run focused P142.5 route coverage.",
       "Run existing route-wide Command Center safety coverage.",
       "Preserve no demo leakage, no raw dumps, theme switching, sidebar navigation, OS Roadmap scope, and project milestone separation tests."
     ],
     "checkerUpdates": [
-      "Add scripts/check-p1423-admin-operations-runtime-settings.js.",
-      "Update scripts/check-p1422-admin-operations-runtime-settings.js for P142.3 handoff compatibility.",
-      "Update scripts/check-enterprise-readiness-roadmap.js for P142.3 active-state compatibility."
+      "Add scripts/check-p1425-admin-operations-runtime-settings.js.",
+      "Update scripts/check-p1424-admin-operations-runtime-settings.js for P142.5 handoff compatibility.",
+      "Update scripts/check-enterprise-readiness-roadmap.js for P142.5 active-state compatibility."
     ],
     "docsRoadmapUpdates": [
       "README.md",
@@ -1168,21 +1379,22 @@
       "os-roadmap/phase-status.json"
     ],
     "reportsToRegenerate": [
-      "reports/p1423-admin-operations-runtime-settings-report.md",
-      "reports/p1422-admin-operations-runtime-settings-report.md",
+      "reports/p1425-admin-operations-runtime-settings-report.md",
+      "reports/p1424-admin-operations-runtime-settings-report.md",
       "reports/enterprise-readiness-roadmap-report.md",
       "reports/os-phase-status-report.md",
       "reports/phase-validation-coverage-report.md"
     ],
-    "osPhaseStatusUpdate": "P142 in progress; P142.1 complete; P142.2 complete; P142.3 complete; previous P142.2; next P142.4 planned-only.",
+    "osPhaseStatusUpdate": "P142 in progress; P142.1-P142.5 complete; previous P142.4; next P142.6 planned-only.",
     "validationCommands": [
-      "npm run check:p1423-admin-operations-runtime-settings",
-      "npm run check:p1422-admin-operations-runtime-settings",
+      "npm run check:p1425-admin-operations-runtime-settings",
+      "npm run check:p1424-admin-operations-runtime-settings",
       "npm run check:enterprise-readiness-roadmap",
       "npm run check:os-phase-status",
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P142.5\"",
       "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
       "git diff --check"
     ],
@@ -1191,14 +1403,14 @@
       "No dashboard source changed, and only route-wide Playwright assertions changed in dashboard/tests/routes.spec.js.",
       "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env files changed.",
       "No setting mutation, feature toggle, feature rollout, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime write, credential handling, secret read, audit export, raw log exposure, raw state exposure, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
-      "P142.4 remains planned-only.",
+      "P142.6 remains planned-only.",
       "No stale placeholder commit marker remains after stamp commit."
     ],
     "gitCommands": [
-      "git add <P142.3 allowed files>",
-      "git commit -m \"feat(nexus): add p1423 admin dry run\"",
-      "git add <P142.3 stamp files and refreshed reports>",
-      "git commit -m \"chore(nexus): stamp p1423 admin dry run\"",
+      "git add <P142.5 allowed files>",
+      "git commit -m \"test(nexus): harden p1425 admin settings coverage\"",
+      "git add <P142.5 stamp files and refreshed reports>",
+      "git commit -m \"chore(nexus): stamp p1425 admin settings coverage\"",
       "git push origin codex/nexus-e2e-phase-validation"
     ],
     "finalResponseChecklist": [
@@ -1207,7 +1419,8 @@
       "Files changed",
       "What was implemented",
       "Command Center UX preservation",
-      "Tests/checkers run",
+      "Tests added/updated/removed",
+      "Checker results",
       "Dashboard build/unit/page results",
       "Docs/README/roadmap updates",
       "OS phase status update",
@@ -1216,250 +1429,15 @@
       "Forbidden paths confirmation",
       "Known limitations",
       "Next phase/subphase"
-    ],
-    "previousPhase": "P142.2",
-    "nextPhase": "P142.4",
-    "order": 178.3,
-    "completedAt": "2026-05-31T13:10:00.000Z",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "2be3c654",
-    "summary": "Added a local non-runnable admin operations dry run from the P142.2 settings model with blocked dry-run rows, zero candidate counts, null executable payloads, evidence/activity labels, zero-cost posture, and blocked authority flags.",
-    "detail": "P142.3 is dry-run only. P142.4 Settings Command Center UX is planned-only next.",
-    "checksRun": [
-      "npm run check:p1423-admin-operations-runtime-settings",
-      "npm run check:p1422-admin-operations-runtime-settings",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P142.3 is non-runnable dry-run work only. It does not render new Command Center UI, mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4-P142.7 remain planned-only."
-    ],
-    "commandCenterVisible": true,
-    "label": "Admin Dry Run",
-    "track": "NEXUS_OS"
+    ]
   },
   "previous": {
-    "phaseId": "P142.2",
-    "title": "Settings Model",
+    "phaseId": "P142.4",
+    "title": "Settings Command Center UX",
     "status": "complete",
     "scopeClassification": "NEXUS_OS_CHANGE",
     "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "c471aacb",
-    "narrowGoal": "Create a read-only admin operations settings model from the P142.1 shapes without enabling settings mutation, feature toggles, maintenance execution, DB/runtime writes, or provider/tool/project authority.",
-    "allowedFiles": [
-      "package.json",
-      "shared/adminOperationsRuntimeSettingsModel.js",
-      "scripts/check-p1422-admin-operations-runtime-settings.js",
-      "scripts/check-p1421-admin-operations-runtime-settings.js",
-      "dashboard/tests/routes.spec.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
-      "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1422-admin-operations-runtime-settings-report.md",
-      "reports/p1421-admin-operations-runtime-settings-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "forbiddenFiles": [
-      "projects/**",
-      "generated-projects/**",
-      "private project roots",
-      "dashboard/src/**",
-      "dashboard/tests/** except dashboard/tests/routes.spec.js",
-      "db/**",
-      "local-state/runtime/**",
-      "providers/**",
-      "tools/**",
-      "worker-runtime/**",
-      "deploy/**",
-      "release/**",
-      "exports/**",
-      "packages/**",
-      ".env*"
-    ],
-    "exactFilesToCreateOrUpdate": [
-      "package.json",
-      "shared/adminOperationsRuntimeSettingsModel.js",
-      "scripts/check-p1422-admin-operations-runtime-settings.js",
-      "scripts/check-p1421-admin-operations-runtime-settings.js",
-      "dashboard/tests/routes.spec.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
-      "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1422-admin-operations-runtime-settings-report.md",
-      "reports/p1421-admin-operations-runtime-settings-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "expectedExports": [
-      "ADMIN_OPERATIONS_RUNTIME_SETTINGS_PHASE",
-      "ADMIN_OPERATIONS_RUNTIME_SETTINGS_VERSION",
-      "ADMIN_OPERATIONS_RUNTIME_SETTINGS_SAFETY_FLAG_NAMES",
-      "buildAdminSettingsPolicy",
-      "validateAdminSettingsPolicy",
-      "buildAdminFeatureGate",
-      "validateAdminFeatureGate",
-      "buildAdminMaintenanceControl",
-      "validateAdminMaintenanceControl",
-      "buildRuntimeOperationalState",
-      "validateRuntimeOperationalState",
-      "buildAdminAuditSurface",
-      "validateAdminAuditSurface",
-      "buildAdminOperationsRuntimeSettingsModel",
-      "validateAdminOperationsRuntimeSettingsModel",
-      "buildAdminOperationsRuntimeSettingsEnvelope"
-    ],
-    "schemas": [
-      "Read-only JavaScript model export only.",
-      "No DB schema or migration.",
-      "No settings store, feature flag engine, maintenance executor, runtime state writer, audit exporter, or provider adapter."
-    ],
-    "dataShape": "P142.2 adds a read-only admin operations settings model with settings, feature gates, maintenance controls, runtime operational state, admin audit surfaces, readiness summary, blockers, evidence/activity refs, disabled reason, owner capability, cost impact, redaction summary, and all authority flags false.",
-    "commandCenterUxRequirements": [
-      "No Command Center source change in P142.2.",
-      "P142.2 model is not rendered directly in primary Command Center UX.",
-      "P142.4 owns scoped Settings/Admin Operations UX changes.",
-      "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces outside demo mode, raw private project IDs, mutation buttons, or fake runnable admin actions."
-    ],
-    "themeRequirements": [
-      "Preserve System theme.",
-      "Preserve Dark theme.",
-      "Preserve Light theme.",
-      "Validate through existing route-wide Command Center coverage."
-    ],
-    "safetyRules": [
-      "Do not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, or secret value reads in P142.2.",
-      "Do not call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
-      "Do not add settings write APIs, feature flag engines, maintenance executors, runtime state writers, audit exporters, credential readers, or provider control paths.",
-      "Do not expose raw private IDs, dump-style internal payloads, raw logs, raw policy dumps, or runnable admin operations in primary UX."
-    ],
-    "reuseCheck": [
-      "Reuse shared/reportWriter.js.",
-      "Reuse shared/checkResultFormatter.js.",
-      "Reuse shared/resultEnvelope.js.",
-      "Reuse shared/modeGuard.js.",
-      "Reuse shared/redaction.js.",
-      "Reuse P142.1 contract shapes.",
-      "Do not duplicate report writers, checker formatters, phase status updaters, result envelopes, mode guards, redaction helpers, route matrices, UI components, or activity/evidence/audit appenders."
-    ],
-    "playWrightTests": [
-      "Only dashboard/tests/routes.spec.js may change for stale OS Roadmap assertions in P142.2.",
-      "Run existing route-wide Command Center safety coverage.",
-      "Preserve no demo leakage, no raw dumps, theme switching, sidebar navigation, OS Roadmap scope, and project milestone separation tests."
-    ],
-    "checkerUpdates": [
-      "Add scripts/check-p1422-admin-operations-runtime-settings.js.",
-      "Update scripts/check-p1421-admin-operations-runtime-settings.js for P142.2 handoff compatibility.",
-      "Update scripts/check-enterprise-readiness-roadmap.js for P142.2 active-state compatibility."
-    ],
-    "docsRoadmapUpdates": [
-      "README.md",
-      "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json"
-    ],
-    "reportsToRegenerate": [
-      "reports/p1422-admin-operations-runtime-settings-report.md",
-      "reports/p1421-admin-operations-runtime-settings-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "osPhaseStatusUpdate": "P142 in progress; P142.1 complete; P142.2 complete; previous P142.1; next P142.3 planned-only.",
-    "validationCommands": [
-      "npm run check:p1422-admin-operations-runtime-settings",
-      "npm run check:p1421-admin-operations-runtime-settings",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "finalSafetyChecks": [
-      "No project files changed.",
-      "No dashboard source changed, and only route-wide Playwright assertions changed in dashboard/tests/routes.spec.js.",
-      "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env files changed.",
-      "No setting mutation, feature toggle, feature rollout, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime write, credential handling, secret read, audit export, raw log exposure, raw state exposure, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
-      "P142.3 remains planned-only.",
-      "No stale placeholder commit marker remains after stamp commit."
-    ],
-    "gitCommands": [
-      "git add <P142.2 allowed files>",
-      "git commit -m \"feat(nexus): add p1422 admin settings model\"",
-      "git add <P142.2 stamp files and refreshed reports>",
-      "git commit -m \"chore(nexus): stamp p1422 admin settings model\"",
-      "git push origin codex/nexus-e2e-phase-validation"
-    ],
-    "finalResponseChecklist": [
-      "Branch name",
-      "Commit hash",
-      "Files changed",
-      "What was implemented",
-      "Command Center UX preservation",
-      "Tests/checkers run",
-      "Dashboard build/unit/page results",
-      "Docs/README/roadmap updates",
-      "OS phase status update",
-      "Evidence/report records",
-      "Safety confirmations",
-      "Forbidden paths confirmation",
-      "Known limitations",
-      "Next phase/subphase"
-    ],
-    "previousPhase": "P142.1",
-    "nextPhase": "P142.3",
-    "order": 178.2,
-    "completedAt": "2026-05-31T12:10:00.000Z",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "ca6fdfce",
-    "summary": "Added a read-only admin operations settings model with settings, feature gates, maintenance controls, runtime state, audit surfaces, blockers, evidence/activity refs, zero-cost posture, and blocked authority flags.",
-    "detail": "P142.2 is model-only. P142.3 Admin Dry Run is planned-only next.",
-    "checksRun": [
-      "npm run check:p1422-admin-operations-runtime-settings",
-      "npm run check:p1421-admin-operations-runtime-settings",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P142.2 is read-only model work only. It does not render new Command Center UI, mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.3-P142.7 remain planned-only."
-    ],
-    "commandCenterVisible": true,
-    "label": "Settings Model",
-    "track": "NEXUS_OS"
-  },
-  "next": {
-    "phaseId": "P142.4",
-    "title": "Settings Command Center UX",
-    "status": "planned",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "after-P142.3",
+    "expectedBaseCommit": "34845071",
     "narrowGoal": "Surface display-safe admin operations and runtime settings state in Command Center with current state, blockers, disabled reason, owner capability, next action, evidence/activity location, and cost impact.",
     "requiredPlanFields": [
       "narrow scope",
@@ -1478,30 +1456,218 @@
       "final safety checks",
       "git add/commit/push commands",
       "final response checklist"
-    ]
+    ],
+    "allowedFiles": [
+      "package.json",
+      "dashboard/src/data/adminOperationsRuntimeSettingsReadiness.js",
+      "dashboard/src/data/commandCenterTabs.js",
+      "dashboard/src/data/commandCenterRoutes.js",
+      "dashboard/src/pages/CommandCenterV2.jsx",
+      "dashboard/tests/routes.spec.js",
+      "scripts/check-p1424-admin-operations-runtime-settings.js",
+      "scripts/check-p1423-admin-operations-runtime-settings.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json",
+      "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "reports/p1424-admin-operations-runtime-settings-report.md",
+      "reports/p1423-admin-operations-runtime-settings-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "forbiddenFiles": [
+      "projects/**",
+      "generated-projects/**",
+      "careloop/**",
+      "db/**",
+      "local-state/runtime/**",
+      "providers/**",
+      "tools/**",
+      "worker-runtime/**",
+      "deploy/**",
+      "release/**",
+      "exports/**",
+      "packages/**",
+      ".env*",
+      "provider/tool registries",
+      "auth/session enforcement code",
+      "runtime writers or deploy/package/release executors"
+    ],
+    "exactFilesToUpdate": [
+      "dashboard/src/data/adminOperationsRuntimeSettingsReadiness.js",
+      "dashboard/src/data/commandCenterTabs.js",
+      "dashboard/src/data/commandCenterRoutes.js",
+      "dashboard/src/pages/CommandCenterV2.jsx",
+      "dashboard/tests/routes.spec.js",
+      "scripts/check-p1424-admin-operations-runtime-settings.js"
+    ],
+    "expectedExports": [
+      "buildAdminOperationsRuntimeSettingsReadinessViewModel",
+      "adminOperationsRuntimeSettingsReadinessViewModel"
+    ],
+    "dataShape": "P142.4 adds display-safe Settings Command Center UX and a view model with readiness cards, admin settings rows, feature gate rows, maintenance rows, runtime state rows, audit surface rows, dry-run summary, dry-run rows, evidence rows, disabled actions, safety flags, owner capability, next action, disabled reason, activity label, evidence label, and zero-spend cost posture.",
+    "commandCenterUxRequirements": [
+      "Render /command-center/settings as an implemented display-only Settings page.",
+      "Show what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact.",
+      "Use tabs for Overview, Admin Settings, Feature Gates, Maintenance, Runtime State, Audit Surfaces, Dry Run, Evidence, and Disabled Actions.",
+      "Do not expose raw JSON, raw logs, raw policy dumps, raw private IDs, DemoApp, mutation buttons, or fake runnable admin actions.",
+      "Preserve route-wide navigation and dark/light/system themes."
+    ],
+    "safetyRules": [
+      "Display-only UX only.",
+      "Do not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      "No project files may be created, edited, or deleted."
+    ],
+    "reuseCheck": [
+      "Reuse the P142.2 settings model and P142.3 dry-run helper.",
+      "Reuse existing CommandTabs, route matrix, page summary rows, cards, badges, and route-wide tests.",
+      "Reuse shared report writer and check result formatter."
+    ],
+    "testsCheckers": [
+      "Add scripts/check-p1424-admin-operations-runtime-settings.js.",
+      "Add Playwright coverage for Settings tabs, dry-run summary, disabled admin actions, no DemoApp, no raw dumps, no fake runnable actions, and theme coverage.",
+      "Update P142.3 and enterprise roadmap checkers for the P142.4 handoff."
+    ],
+    "docsRoadmap": [
+      "Update README, P142 plan, enterprise roadmap, platform roadmap, OS phase status, phase index, and reports.",
+      "Mark P142.4 complete and P142.5 planned-only next."
+    ],
+    "validationCommands": [
+      "npm run check:p1424-admin-operations-runtime-settings",
+      "npm run check:p1423-admin-operations-runtime-settings",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "finalSafetyChecks": [
+      "No project files changed.",
+      "No provider/model calls enabled.",
+      "No tool execution or agent dispatch enabled.",
+      "No DB/runtime writes enabled.",
+      "No deploy/release/export/package/network/spend enabled.",
+      "No raw private IDs or raw dumps in primary UX.",
+      "No DemoApp in full Command Center."
+    ],
+    "gitCommands": [
+      "git add <P142.4 allowed files>",
+      "git commit -m \"feat(nexus): add p1424 settings command center ux\"",
+      "git add <P142.4 stamp files and refreshed reports>",
+      "git commit -m \"chore(nexus): stamp p1424 settings command center ux\"",
+      "git push origin codex/nexus-e2e-phase-validation"
+    ],
+    "finalResponseChecklist": [
+      "Branch name",
+      "Commit hash",
+      "Files changed",
+      "What was implemented",
+      "Command Center UX changes",
+      "Tests added/updated/removed",
+      "Checker results",
+      "Dashboard build/unit/page results",
+      "Docs/README/roadmap updates",
+      "OS phase status update",
+      "Evidence/audit/activity/cost records if applicable",
+      "Safety confirmations",
+      "Forbidden paths confirmation",
+      "Known limitations",
+      "Next phase/subphase"
+    ],
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "545aad49",
+    "completedAt": "2026-05-31T14:20:00.000Z",
+    "checksRun": [
+      "npm run check:p1424-admin-operations-runtime-settings",
+      "npm run check:p1423-admin-operations-runtime-settings",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P142.4 is display-only Settings Command Center UX. It does not enable admin setting mutation, feature toggles, feature rollout, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.5-P142.7 remain planned-only."
+    ],
+    "commandCenterVisible": true,
+    "previousPhase": "P142.3",
+    "nextPhase": "P142.5",
+    "detail": "P142.4 surfaces admin operations and runtime settings in display-only Command Center UX. P142.5 Tests / Checkers is planned-only next.",
+    "summary": "Added the display-only Settings page for admin settings, feature gates, maintenance controls, runtime state, audit surfaces, dry-run summary, evidence/activity locations, disabled reasons, owners, next action, and zero-spend posture."
   },
-  "commit": "545aad49",
-  "completedAt": "2026-05-31T13:10:00.000Z",
+  "next": {
+    "phaseId": "P142.6",
+    "title": "Docs / Roadmap / Status",
+    "status": "planned",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "startingBranch": "codex/nexus-e2e-phase-validation",
+    "expectedBaseCommit": "after-P142.5",
+    "narrowGoal": "Close P142 docs, README, roadmap, OS phase status, checker handoff, and report freshness while keeping P142.7 final validation planned-only.",
+    "requiredPlanFields": [
+      "narrow scope",
+      "starting branch and expected base commit",
+      "allowed files",
+      "forbidden files",
+      "exact files/modules",
+      "expected exports/schemas/data shapes",
+      "Command Center UX requirements",
+      "dark/light/system theme requirements",
+      "Playwright tests",
+      "checker updates",
+      "docs/README/roadmap updates",
+      "OS phase status update",
+      "validation commands",
+      "final safety checks",
+      "git add/commit/push commands",
+      "final response checklist"
+    ],
+    "track": "NEXUS_OS",
+    "label": "Docs / Roadmap / Status",
+    "order": 178.6,
+    "branch": "",
+    "commit": "",
+    "previousPhase": "P142.5",
+    "nextPhase": "P142.7",
+    "detail": "P142.6 is planned-only. It will close P142 docs, README, roadmap, OS phase status, checker handoff, and report freshness while keeping P142.7 final validation planned-only.",
+    "summary": "Planned docs, roadmap, status, and report freshness closure for P142.",
+    "checksRun": [],
+    "knownLimitations": [
+      "P142.6 remains planned-only until its own implementation-grade plan is written. It must not enable admin setting mutation, feature toggles, maintenance execution, runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend."
+    ],
+    "commandCenterVisible": true
+  },
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T13:45:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
-    "npm run check:p1423-admin-operations-runtime-settings",
-    "npm run check:p1422-admin-operations-runtime-settings",
+    "npm run check:p1425-admin-operations-runtime-settings",
+    "npm run check:p1424-admin-operations-runtime-settings",
     "npm run check:enterprise-readiness-roadmap",
     "npm run check:os-phase-status",
     "npm run check:phase-validation-coverage",
     "cd dashboard && npm run build",
     "cd dashboard && npm run test:unit",
+    "cd dashboard && npx playwright test tests/routes.spec.js -g \"P142.5\"",
     "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
     "git diff --check"
   ],
   "knownLimitations": [
-    "P142.3 is non-runnable dry-run work only. It does not render new Command Center UI, mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.4-P142.7 remain planned-only."
+    "P142.5 is tests/checkers hardening only. It does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.6 remains planned-only."
   ],
-  "currentPhase": "P142.4",
-  "previousPhase": "P142.3",
-  "nextPhase": "P142.5",
+  "currentPhase": "P142.5",
+  "previousPhase": "P142.4",
+  "nextPhase": "P142.6",
   "commandCenterVisible": true,
   "track": "NEXUS_OS",
   "label": "Admin Operations",
-  "currentPhaseSummary": "P142.4 Settings Command Center UX is complete while all admin mutation and execution authority remains blocked."
+  "currentPhaseSummary": "P142.5 Tests / Checkers is complete while all admin mutation and execution authority remains blocked."
 }
