@@ -2016,7 +2016,8 @@ The Command Center and local operator surface have:
   tests/checkers is complete. P139.6 docs/roadmap/status closure is complete.
   P139.7 final validation is complete. P140.1 backup, recovery, DR, and
   retention contract is complete. P140.2 backup and retention model is
-  complete. P140.3 restore preview is complete; P140.4 is planned-only next.
+  complete. P140.3 restore preview is complete. P140.4 Backup / DR Command
+  Center UX is complete; P140.5 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2405,11 +2406,16 @@ The Command Center and local operator surface have:
   blockers, evidence/activity refs, redaction state, authority flags, and
   zero-spend cost impact. It reuses the P140.2 backup/retention model, P75
   restore preview contract, mode guard, redaction helper, result envelope, and
-  checker/report helpers. P140.4 is planned-only next; backup
+  checker/report helpers. P140.4 has since been completed; backup
   creation, restore execution, failover, overwrite, delete, prune, DB/runtime
   writes, provider/model calls, tool execution, MCP startup, agent dispatch,
   project mutation, deploy, release, export, package, network calls, and spend
   remain unavailable until a later subphase explicitly allows them.
+- P140.4 Backup / DR Command Center UX: Added a display-safe Restore Preview
+  tab and Backup / DR UX projection that shows backup posture, restore posture,
+  DR posture, current state, next action, blockers, disabled prune action,
+  approval gates, evidence/activity labels, and zero runnable actions without
+  exposing raw IDs or enabling runtime authority. P140.5 is planned-only next.
 
 ## CareLoop Project Progress
 

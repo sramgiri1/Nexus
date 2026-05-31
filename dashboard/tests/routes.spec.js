@@ -2582,16 +2582,25 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await expect(page.locator("body")).toContainText("Backup/DR readiness is display-only");
+    await commandTab(page, "Restore Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Restore Preview Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Restore preview 1");
+    await expect(activeCommandTabPanel(page)).toContainText("Approval required");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked operations");
+    await expect(activeCommandTabPanel(page)).toContainText("Runnable actions");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
     await commandTab(page, "Disabled Actions").click();
     await expect(activeCommandTabPanel(page)).toContainText("Backup creation disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Restore execution disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Failover execution disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Overwrite or delete disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Prune retention disabled");
 
     const body = await page.locator("body").innerText();
     expect(body).not.toMatch(/backup now|create backup|restore now|execute restore|failover now|overwrite now|delete now|execute now/i);
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|s3:\/\/|gs:\/\/|https:\/\/[^\s]*(backup|restore|storage|failover)/i);
+    expect(body).not.toMatch(/restore-preview-row|restore-preview-plan|backup-record-\d+/i);
     expect(body).not.toMatch(/P75\./);
 
     expect(errors).toEqual([]);

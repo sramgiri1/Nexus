@@ -124,6 +124,7 @@ export const OBSERVABILITY_TABS = [
 export const BACKUP_DR_TABS = [
   { id: "overview", label: "Overview", description: "Backup, restore, DR posture, and next action", badge: "Preview" },
   { id: "posture", label: "Posture", description: "Disabled backup, restore, and failover posture", badge: "Blocked" },
+  { id: "restore", label: "Restore Preview", description: "Restore review rows, approval gates, blockers, and next action", badge: "Read-only" },
   { id: "evidence", label: "Evidence", description: "Evidence, activity, cost, and blockers", badge: "Read-only" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable Backup/DR actions and reasons", badge: "Disabled" },
 ];

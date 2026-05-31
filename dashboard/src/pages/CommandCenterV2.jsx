@@ -10079,6 +10079,42 @@ function BackupDrPage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="restore" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {readiness.restorePreviewRows.map((row) => (
+                <article className="ccv2-card" key={row.key} aria-label={`Restore preview ${row.label}`}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Source</span><span className="ccv2-page-summary-value">{row.source}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Scope</span><span className="ccv2-page-summary-value">{row.scope}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval gate</span><span className="ccv2-page-summary-value">{row.approval}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Execution state</span><span className="ccv2-page-summary-value">{row.state}</span></div>
+                  </div>
+                  <div className="ccv2-section-heading" style={{ marginTop: 14 }}>Blocked operations</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.blockedOperations.map((operation) => <li key={operation}>{operation}</li>)}
+                  </ul>
+                  <div className="ccv2-muted" style={{ marginTop: 12 }}>{row.nextAction}</div>
+                </article>
+              ))}
+              <article className="ccv2-card" aria-label="Restore preview summary">
+                <div className="ccv2-section-heading">Restore Preview Summary</div>
+                <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Rows</span><span className="ccv2-page-summary-value">{readiness.restorePreviewSummary.rowCount}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{readiness.restorePreviewSummary.blockedRowCount}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runnable actions</span><span className="ccv2-page-summary-value">{readiness.restorePreviewSummary.runnableActionCount}</span></div>
+                </div>
+                <div className="ccv2-section-heading" style={{ marginTop: 14 }}>Sections</div>
+                <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                  {readiness.restorePreviewSections.map((section) => (
+                    <li key={section.label}>{section.label}: {section.blockedCount} blocked</li>
+                  ))}
+                </ul>
+                <div className="ccv2-muted" style={{ marginTop: 12 }}>{readiness.restorePreviewSummary.nextAction}</div>
+              </article>
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="evidence" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--2">
               <article className="ccv2-card">

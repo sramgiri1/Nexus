@@ -1172,10 +1172,37 @@ const p1403CurrentState =
   && indexById.get("P140.3")?.status === "complete"
   && statusById.get("P140.4")?.status === "planned"
   && indexById.get("P140.4")?.status === "planned";
+const p1404CurrentState =
+  phaseStatus.currentPhase === "P140.4"
+  && phaseStatus.previousPhase === "P140.3"
+  && phaseStatus.nextPhase === "P140.5"
+  && phaseIndex.currentPhase === "P140.4"
+  && phaseIndex.previousPhase === "P140.3"
+  && phaseIndex.nextPhase === "P140.5"
+  && phaseStatus.current?.phaseId === "P140.4"
+  && phaseStatus.previous?.phaseId === "P140.3"
+  && phaseStatus.next?.phaseId === "P140.5"
+  && phaseIndex.current?.phaseId === "P140.4"
+  && phaseIndex.previous?.phaseId === "P140.3"
+  && phaseIndex.next?.phaseId === "P140.5"
+  && statusById.get("P139")?.status === "complete"
+  && indexById.get("P139")?.status === "complete"
+  && statusById.get("P140")?.status === "in_progress"
+  && indexById.get("P140")?.status === "in_progress"
+  && statusById.get("P140.1")?.status === "complete"
+  && indexById.get("P140.1")?.status === "complete"
+  && statusById.get("P140.2")?.status === "complete"
+  && indexById.get("P140.2")?.status === "complete"
+  && statusById.get("P140.3")?.status === "complete"
+  && indexById.get("P140.3")?.status === "complete"
+  && statusById.get("P140.4")?.status === "complete"
+  && indexById.get("P140.4")?.status === "complete"
+  && statusById.get("P140.5")?.status === "planned"
+  && indexById.get("P140.5")?.status === "planned";
 
 const p138ActiveState = p1381StartedState || p1382CurrentState || p1383CurrentState || p1384CurrentState || p1385CurrentState || p1386CurrentState || p1387FinalState;
 const p139ActiveState = p1391StartedState || p1392CurrentState || p1393CurrentState || p1394CurrentState || p1395CurrentState || p1396CurrentState || p1397FinalState;
-const p140ActiveState = p1401StartedState || p1402CurrentState || p1403CurrentState;
+const p140ActiveState = p1401StartedState || p1402CurrentState || p1403CurrentState || p1404CurrentState;
 const enterpriseActiveState = p133ActiveState || p134ActiveState || p135ActiveState || p136ActiveState || p137ActiveState || p138ActiveState || p139ActiveState || p140ActiveState;
 const currentP133CheckCommand = p1337FinalState
   ? "npm run check:p1337-founder-idea-to-prd-final-validation"
@@ -1287,6 +1314,8 @@ const currentP140CheckCommand = p1401StartedState
   ? "npm run check:p1402-backup-recovery-dr-retention"
   : p1403CurrentState
   ? "npm run check:p1403-backup-recovery-dr-restore-preview"
+  : p1404CurrentState
+  ? "npm run check:p1404-backup-recovery-dr-command-center-ux"
   : "";
 
 const enterprisePhases = [
@@ -1389,6 +1418,7 @@ const allowedFiles = new Set([
   "scripts/check-p1401-backup-recovery-dr-retention.js",
   "scripts/check-p1402-backup-recovery-dr-retention.js",
   "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+  "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
   "shared/projectPatchBuildPreview.js",
 		  "scripts/check-enterprise-readiness-roadmap.js",
   "scripts/check-os-phase-status.js",
@@ -1407,6 +1437,8 @@ const allowedFiles = new Set([
   "shared/evidenceAuditObservabilityCostLedgerUxProjection.js",
   "shared/backupRecoveryDrRetentionModel.js",
   "shared/backupRecoveryDrRestorePreview.js",
+  "dashboard/src/data/backupDrReadiness.js",
+  "dashboard/src/data/commandCenterTabs.js",
   "dashboard/src/data/evidenceAuditObservabilityCostLedgerUx.js",
   "dashboard/src/data/dbRuntimeReadiness.js",
   "dashboard/src/data/businessBuild.js",
@@ -1465,6 +1497,7 @@ const allowedFiles = new Set([
   "reports/p1401-backup-recovery-dr-retention-report.md",
   "reports/p1402-backup-recovery-dr-retention-report.md",
   "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+  "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
   "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -1502,7 +1535,7 @@ addCheck("P136 checker registered when active", !p136ActiveState || (Boolean(pac
 addCheck("P137 checker registered when active", !p137ActiveState || (p1371StartedState && Boolean(packageJson.scripts?.["check:p1371-agent-work-order-runtime"])) || (p1372CurrentState && Boolean(packageJson.scripts?.["check:p1372-agent-work-order-runtime"])) || (p1373CurrentState && Boolean(packageJson.scripts?.["check:p1373-agent-work-order-runtime"])) || (p1374CurrentState && Boolean(packageJson.scripts?.["check:p1374-agent-work-order-runtime"])) || (p1375CurrentState && Boolean(packageJson.scripts?.["check:p1375-agent-work-order-runtime"])) || (p1376CurrentState && Boolean(packageJson.scripts?.["check:p1376-agent-work-order-runtime"])) || (p1377FinalState && Boolean(packageJson.scripts?.["check:p1377-agent-work-order-runtime"])));
 addCheck("P138 checker registered when active", !p138ActiveState || (p1381StartedState && Boolean(packageJson.scripts?.["check:p1381-project-workspace-mutation-build-pipeline"])) || (p1382CurrentState && Boolean(packageJson.scripts?.["check:p1382-project-workspace-mutation-build-pipeline"])) || (p1383CurrentState && Boolean(packageJson.scripts?.["check:p1383-project-workspace-mutation-build-pipeline"])) || (p1384CurrentState && Boolean(packageJson.scripts?.["check:p1384-project-workspace-mutation-build-pipeline"])) || (p1385CurrentState && Boolean(packageJson.scripts?.["check:p1385-project-workspace-mutation-build-pipeline"])) || (p1386CurrentState && Boolean(packageJson.scripts?.["check:p1386-project-workspace-mutation-build-pipeline"])) || (p1387FinalState && Boolean(packageJson.scripts?.["check:p1387-project-workspace-mutation-build-pipeline"])));
 addCheck("P139 checker registered when active", !p139ActiveState || (p1391StartedState && Boolean(packageJson.scripts?.["check:p1391-evidence-audit-observability-cost-ledger"])) || (p1392CurrentState && Boolean(packageJson.scripts?.["check:p1392-evidence-audit-observability-cost-ledger"])) || (p1393CurrentState && Boolean(packageJson.scripts?.["check:p1393-evidence-audit-observability-cost-ledger"])) || (p1394CurrentState && Boolean(packageJson.scripts?.["check:p1394-evidence-audit-observability-cost-ledger"])) || (p1395CurrentState && Boolean(packageJson.scripts?.["check:p1395-evidence-audit-observability-cost-ledger"])) || (p1396CurrentState && Boolean(packageJson.scripts?.["check:p1396-evidence-audit-observability-cost-ledger"])) || (p1397FinalState && Boolean(packageJson.scripts?.["check:p1397-evidence-audit-observability-cost-ledger"])));
-addCheck("P140 checker registered when active", !p140ActiveState || (p1401StartedState && Boolean(packageJson.scripts?.["check:p1401-backup-recovery-dr-retention"])) || (p1402CurrentState && Boolean(packageJson.scripts?.["check:p1402-backup-recovery-dr-retention"])) || (p1403CurrentState && Boolean(packageJson.scripts?.["check:p1403-backup-recovery-dr-restore-preview"])));
+addCheck("P140 checker registered when active", !p140ActiveState || (p1401StartedState && Boolean(packageJson.scripts?.["check:p1401-backup-recovery-dr-retention"])) || (p1402CurrentState && Boolean(packageJson.scripts?.["check:p1402-backup-recovery-dr-retention"])) || (p1403CurrentState && Boolean(packageJson.scripts?.["check:p1403-backup-recovery-dr-restore-preview"])) || (p1404CurrentState && Boolean(packageJson.scripts?.["check:p1404-backup-recovery-dr-command-center-ux"])));
 addCheck("current enterprise handoff", enterpriseActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
@@ -1813,6 +1846,7 @@ const p140ActiveSubphaseRecordsPresent = !p140ActiveState || (
     (p1401StartedState && statusById.get("P140.2")?.status === "planned" && indexById.get("P140.2")?.status === "planned")
     || (p1402CurrentState && statusById.get("P140.2")?.status === "complete" && indexById.get("P140.2")?.status === "complete" && statusById.get("P140.3")?.status === "planned" && indexById.get("P140.3")?.status === "planned")
     || (p1403CurrentState && statusById.get("P140.2")?.status === "complete" && indexById.get("P140.2")?.status === "complete" && statusById.get("P140.3")?.status === "complete" && indexById.get("P140.3")?.status === "complete" && statusById.get("P140.4")?.status === "planned" && indexById.get("P140.4")?.status === "planned")
+    || (p1404CurrentState && ["P140.2", "P140.3", "P140.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P140.5")?.status === "planned" && indexById.get("P140.5")?.status === "planned")
   )
 );
 addCheck("P133/P134/P135/P136/P137/P138/P139/P140 active subphase records are present", p133ActiveSubphaseRecordsPresent && p134ActiveSubphaseRecordsPresent && p135ActiveSubphaseRecordsPresent && p136ActiveSubphaseRecordsPresent && p137ActiveSubphaseRecordsPresent && p138ActiveSubphaseRecordsPresent && p139ActiveSubphaseRecordsPresent && p140ActiveSubphaseRecordsPresent);
@@ -1849,7 +1883,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Tracks P133-P145 enterprise-readiness roadmap phases after P132.",
-        "- Allows P133-P139 to close through P139.7 final validation and P140 to advance through P140.3 while P140.4 and P141-P145 remain planned-only.",
+        "- Allows P133-P139 to close through P139.7 final validation and P140 to advance through P140.4 while P140.5 and P141-P145 remain planned-only.",
         "- Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -1866,7 +1900,7 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1, P140.2, and P140.3 may be complete. P140.4 and P141-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.",
+      body: "- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1, P140.2, P140.3, and P140.4 may be complete. P140.5 and P141-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

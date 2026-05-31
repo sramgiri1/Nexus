@@ -330,7 +330,8 @@ OS phase status update:
 - Current phase/subphase is P140.2.
 - Previous phase/subphase is P140.1.
 - Next phase/subphase is P140.3.
-- P140.3 has since been completed; P140.4-P140.7 remain planned-only.
+- P140.3 and P140.4 have since been completed; P140.5-P140.7 remain
+  planned-only.
 
 Validation commands:
 
@@ -355,7 +356,8 @@ Final safety checks:
   or spend.
 - No raw/private IDs, raw JSON/log/policy/storage dumps, DemoApp leakage, stale
   labels, fake runnable actions, or unsafe positive claims.
-- P140.3 has since been completed; P140.4 remains planned-only next.
+- P140.3 and P140.4 have since been completed; P140.5 remains planned-only
+  next.
 
 Git commands:
 
@@ -502,7 +504,7 @@ OS phase status update:
 - Current phase/subphase is P140.3.
 - Previous phase/subphase is P140.2.
 - Next phase/subphase is P140.4.
-- P140.4-P140.7 remain planned-only.
+- P140.4 has since been completed; P140.5-P140.7 remain planned-only.
 
 Validation commands:
 
@@ -528,7 +530,7 @@ Final safety checks:
   or spend.
 - No raw/private IDs, raw JSON/log/policy/storage dumps, DemoApp leakage, stale
   labels, fake runnable actions, or unsafe positive claims.
-- P140.4 remains planned-only.
+- P140.4 has since been completed; P140.5 remains planned-only next.
 
 Git commands:
 
@@ -558,14 +560,185 @@ Final response checklist:
 
 ## P140.4 Recovery Command Center UX
 
-Status: planned
+Status: complete
 
 Narrow goal: Improve Command Center Backup / DR UX using display-safe model and
 restore preview data while keeping actions disabled.
 
-Validation: P140.4 checker, Playwright coverage for Backup / DR route,
-route-wide Command Center safety, dashboard build/unit, enterprise roadmap
-checker, OS status checker, phase coverage, and `git diff --check`.
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `acc5fda1`.
+
+Allowed files:
+
+- `package.json`
+- `dashboard/src/data/backupDrReadiness.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json`
+- `scripts/check-p1401-backup-recovery-dr-retention.js`
+- `scripts/check-p1402-backup-recovery-dr-retention.js`
+- `scripts/check-p1403-backup-recovery-dr-restore-preview.js`
+- `scripts/check-p1404-backup-recovery-dr-command-center-ux.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- P140.1-P140.4, enterprise readiness, OS status, and phase validation reports.
+
+Forbidden files:
+
+- `projects/**`
+- `generated-projects/**`
+- `careloop/**`
+- private project roots
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Exact files/modules updated:
+
+- `dashboard/src/data/backupDrReadiness.js` now consumes the P140.3 restore
+  preview model and exposes display-safe restore preview rows, sections, and
+  summary counts.
+- `dashboard/src/data/commandCenterTabs.js` adds the Backup / DR Restore
+  Preview tab metadata.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the Restore Preview tab
+  with source, scope, approval gate, execution state, blockers, next action,
+  and summary metrics.
+- `dashboard/tests/routes.spec.js` covers the Backup / DR Restore Preview tab,
+  disabled prune action, zero runnable actions, and no raw restore IDs.
+- `scripts/check-p1404-backup-recovery-dr-command-center-ux.js` validates the
+  P140.4 UX contract, display safety, docs/status, checker handoffs, and
+  forbidden-path scope.
+
+Expected exports, schemas, and data shapes:
+
+- `buildBackupDrReadinessViewModel()` returns `restorePreviewRows`,
+  `restorePreviewSections`, `restorePreviewSummary`, `disabledActions`, and
+  safety flags with display-safe labels only.
+- `restorePreviewRows[]` shape: `label`, `source`, `scope`, `approval`,
+  `state`, `blockedOperations[]`, and `nextAction`.
+- `restorePreviewSummary` shape: `rowCount`, `blockedRowCount`, and
+  `runnableActionCount`.
+
+Command Center UX requirements:
+
+- Show what changed, current state, next action, blockers, disabled reason,
+  owner capability, evidence/activity label, and cost impact.
+- Show restore preview rows with approval gate, execution state, blocked
+  operations, and next action.
+- Show runnable action count as zero.
+- Do not show raw JSON, raw logs, raw policy dumps, raw private project IDs,
+  raw backup IDs, raw restore IDs, raw storage locations, DemoApp, or fake
+  runnable backup/restore/failover/prune actions in primary UX.
+
+Dark/light/system theme requirements:
+
+- Reuse existing Command Center components and CSS variables.
+- Preserve route-wide navigation and theme switcher behavior.
+- Do not add one-off color palettes or nested card patterns.
+
+Safety rules:
+
+- No backup creation.
+- No restore execution.
+- No failover.
+- No overwrite, delete, or prune operation.
+- No DB/runtime writes, provider/model calls, tool execution, MCP startup,
+  agent dispatch, project mutation, deploy, release, export, package, network
+  calls, or spend.
+
+Reuse check:
+
+- Reuses P140.2 backup/retention model output.
+- Reuses P140.3 restore preview primitives.
+- Reuses existing Command Center tabs/cards/badges and route-wide Playwright
+  safety tests.
+- Reuses shared report/checker helpers instead of duplicating report writers or
+  checker formatters.
+
+Tests/checkers:
+
+- Added `npm run check:p1404-backup-recovery-dr-command-center-ux`.
+- Updated P140.1-P140.3 compatibility checkers to accept P140.4 current state
+  and P140.5 handoff.
+- Updated enterprise readiness and OS status checkers for P140.4/P140.5.
+- Updated Backup / DR Playwright route coverage.
+
+Docs/roadmap:
+
+- README, P140 plan, platform roadmap, enterprise roadmap, OS phase status, and
+  OS phase index now record P140.4 complete and P140.5 planned-only next.
+
+OS phase status update:
+
+- P140.4 complete.
+- Current phase/subphase is P140.4.
+- Previous phase/subphase is P140.3.
+- Next phase/subphase is P140.5.
+- P140.5-P140.7 remain planned-only.
+
+Validation:
+
+- `npm run check:p1404-backup-recovery-dr-command-center-ux`
+- `npm run check:p1403-backup-recovery-dr-restore-preview`
+- `npm run check:p1402-backup-recovery-dr-retention`
+- `npm run check:p1401-backup-recovery-dr-retention`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Backup DR"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+
+- No project/private files changed.
+- No runtime authority, DB writes, provider/model calls, agent dispatch, project
+  mutation, deploy/release/export/package action, network call, or spend is
+  enabled.
+- No raw IDs, raw dumps, raw storage locations, DemoApp leakage, or fake
+  runnable actions are exposed in primary UX.
+
+Git commands:
+
+- `git add <P140.4 allowed files>`
+- `git commit -m "chore(nexus): implement p1404 backup recovery command center ux"`
+- `git add <P140.4 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1404 backup recovery command center ux"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests added/updated/removed
+- Checker results
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/audit/activity/cost records if applicable
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
 
 ## P140.5 Tests / Checkers
 
