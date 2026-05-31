@@ -325,8 +325,9 @@ route-wide Playwright, and `git diff --check`.
 Result: complete as display-only Settings Command Center UX. The page now shows
 admin settings, feature gates, maintenance controls, runtime state, audit
 surfaces, dry-run summary, evidence/activity locations, disabled reasons,
-owners, next action, and zero-spend cost posture. P142.5 Tests / Checkers is
-complete; P142.6 Docs / Roadmap / Status is planned-only next. No admin setting
+owners, next action, and zero-spend cost posture. P142.5 Tests / Checkers and
+P142.6 Docs / Roadmap / Status are complete; P142.7 Final Validation is
+planned-only next. No admin setting
 mutation, feature toggle, feature rollout, maintenance execution, maintenance
 scheduling, runtime state mutation, DB/runtime write, audit export, raw log
 exposure, raw state exposure, credential handling, secret read, provider/model
@@ -364,7 +365,7 @@ Playwright, route-wide Playwright, and `git diff --check`.
 Result: complete as tests/checkers hardening. The aggregate checker validates
 P142.1-P142.4 reports, the P142.2 read-only settings model, the P142.3
 non-runnable dry run, the P142.4 Settings UX view model, route-wide safety, and
-P142.6 planned-only handoff. No admin setting mutation, feature toggle,
+P142.6 handoff compatibility. No admin setting mutation, feature toggle,
 feature rollout, maintenance execution, maintenance scheduling, runtime state
 mutation, DB/runtime write, audit export, raw log exposure, raw state exposure,
 credential handling, secret read, provider/model call, tool execution, MCP
@@ -373,7 +374,7 @@ network call, or spend authority is enabled.
 
 ## P142.6 Docs / Roadmap / Status
 
-Status: planned
+Status: complete
 
 Narrow goal: Close P142 docs, README, roadmap, OS phase status, checker
 handoff, and report freshness while keeping P142.7 final validation
@@ -381,23 +382,36 @@ planned-only.
 
 Allowed files: contract, P142 docs, README, platform roadmap, enterprise
 roadmap, OS phase status, phase index, P142.6 checker, P142.5 checker handoff,
-enterprise checker, generated reports, and package script.
+enterprise checker, route tests for stale OS Roadmap assertions, generated
+reports, and package script.
 
-Forbidden files: project files, dashboard source/tests, DB/runtime
-implementation, providers, tools, worker-runtime, deploy/release/export/package
-folders, and env files.
+Forbidden files: project files, dashboard source, unrelated dashboard tests,
+DB/runtime implementation, providers, tools, worker-runtime,
+deploy/release/export/package folders, and env files.
 
 Expected data shape: docs/status/checker-only updates. No runtime export, DB
-schema, dashboard source, Playwright source, or live execution.
+schema, dashboard source, executable payload, mutation payload, or live
+execution.
 
 Command Center UX: preserve current Command Center UX and no stale labels.
 
-Tests/checkers: add P142.6 docs/status checker, update P142.5 handoff, update
-enterprise checker, and rerun route-wide coverage.
+Tests/checkers: added P142.6 docs/status checker, updated P142.5 handoff,
+updated enterprise checker, and added route assertion coverage for the P142.6
+roadmap/status handoff.
 
 Validation: P142.6 checker, P142.5 checker, enterprise roadmap, OS phase
-status, phase validation coverage, dashboard build/unit, route-wide Playwright,
-and `git diff --check`.
+status, phase validation coverage, dashboard build/unit, focused P142.6 and
+route-wide Playwright, and `git diff --check`.
+
+Result: complete as docs/status/checker closure. P142.6 updates the P142 docs,
+README, platform roadmap, enterprise roadmap, OS phase status, phase index,
+checker handoffs, and report freshness while preserving the display-only
+Settings UX. P142.7 Final Validation is planned-only next. No admin setting
+mutation, feature toggle, feature rollout, maintenance execution, maintenance
+scheduling, runtime state mutation, DB/runtime write, audit export, raw log
+exposure, raw state exposure, credential handling, secret read, provider/model
+call, tool execution, MCP startup, agent dispatch, project mutation, deploy,
+release, export, package, network call, or spend authority is enabled.
 
 ## P142.7 Final Validation
 

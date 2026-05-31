@@ -2027,7 +2027,8 @@ The Command Center and local operator surface have:
   admin operations runtime settings contract is complete. P142.2 admin
   operations settings model is complete. P142.3 admin operations dry run is
   complete. P142.4 Settings Command Center UX is complete. P142.5 Tests /
-  Checkers is complete; P142.6 is planned-only next.
+  Checkers is complete. P142.6 Docs / Roadmap / Status is complete; P142.7
+  Final Validation is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2507,11 +2508,18 @@ The Command Center and local operator surface have:
 - P142.5 Tests / Checkers: Added aggregate validation over P142.1-P142.4
   reports, the read-only settings model, non-runnable admin dry run, Settings
   Command Center UX, route-wide safety assertions, docs/status, and P142.6
-  handoff. P142.6 Docs / Roadmap / Status is planned-only next; admin setting
+  handoff compatibility. Admin setting
   mutation, feature toggles, maintenance
   execution, DB/runtime writes, credential handling, provider/model calls, tool
   execution, agent dispatch, project mutation, deploy, release, export,
   package, network calls, and spend remain unavailable.
+- P142.6 Docs / Roadmap / Status: Closed P142 docs, README, platform roadmap,
+  enterprise roadmap, OS phase status, phase index, checker handoffs, and
+  report freshness. P142.7 Final Validation is planned-only next; admin setting
+  mutation, feature toggles, maintenance execution, DB/runtime writes,
+  credential handling, provider/model calls, tool execution, agent dispatch,
+  project mutation, deploy, release, export, package, network calls, and spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

@@ -18,6 +18,7 @@ const REPORT_PATH = "reports/p1425-admin-operations-runtime-settings-report.md";
 const CONTRACT_PATH = "contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json";
 const PLAN_PATH = "docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1425-admin-operations-runtime-settings";
+const NEXT_SCRIPT = "check:p1426-admin-operations-runtime-settings-docs-roadmap";
 const EXPECTED_BASE_COMMIT = "4f7f6ac3";
 const PRIOR_REPORTS = [
   "reports/p1421-admin-operations-runtime-settings-report.md",
@@ -89,6 +90,7 @@ const p1423 = subphaseById.get("P142.3") || {};
 const p1424 = subphaseById.get("P142.4") || {};
 const p1425 = subphaseById.get("P142.5") || {};
 const p1426 = subphaseById.get("P142.6") || {};
+const p1427 = subphaseById.get("P142.7") || {};
 const checkerSource = readText("scripts/check-p1425-admin-operations-runtime-settings.js");
 const p1424Checker = readText("scripts/check-p1424-admin-operations-runtime-settings.js");
 const enterpriseChecker = readText("scripts/check-enterprise-readiness-roadmap.js");
@@ -157,6 +159,26 @@ const p1425CurrentState =
   && roadmapById.get("P142.6")?.status === "planned"
   && statusById.get("P143")?.status === "planned"
   && roadmapById.get("P143")?.status === "planned";
+const p1426CurrentState =
+  status.currentPhase === "P142.6"
+  && status.previousPhase === "P142.5"
+  && status.nextPhase === "P142.7"
+  && roadmap.currentPhase === "P142.6"
+  && roadmap.previousPhase === "P142.5"
+  && roadmap.nextPhase === "P142.7"
+  && status.current?.phaseId === "P142.6"
+  && status.previous?.phaseId === "P142.5"
+  && status.next?.phaseId === "P142.7"
+  && roadmap.current?.phaseId === "P142.6"
+  && roadmap.previous?.phaseId === "P142.5"
+  && roadmap.next?.phaseId === "P142.7"
+  && statusById.get("P142")?.status === "in_progress"
+  && roadmapById.get("P142")?.status === "in_progress"
+  && ["P142.1", "P142.2", "P142.3", "P142.4", "P142.5", "P142.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P142.7")?.status === "planned"
+  && roadmapById.get("P142.7")?.status === "planned"
+  && statusById.get("P143")?.status === "planned"
+  && roadmapById.get("P143")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1425-admin-operations-runtime-settings.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -170,7 +192,7 @@ addCheck("all readiness safety flags remain blocked", Object.values(readiness.sa
 addCheck("cost impact remains zero-spend", readiness.costImpact === "No provider spend" && model.costImpact.providerSpendAllowed === false && dryRun.costImpact.providerSpendAllowed === false);
 addCheck("Playwright aggregate coverage added", routeTests.includes("P142.5 admin settings aggregate coverage keeps Settings display-only") && routeTests.includes("Admin Dry Run Summary") && routeTests.includes("Disabled action: Save settings") && routeTests.includes("P142.6"));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
-addCheck("contract advances to P142.5 safely", contract.phaseId === "P142" && contract.status === "in_progress" && contract.currentSubphase === "P142.5" && contract.previousSubphase === "P142.4" && contract.nextSubphase === "P142.6" && p1421.status === "complete" && p1422.status === "complete" && p1423.status === "complete" && p1424.status === "complete" && p1425.status === "complete" && p1426.status === "planned");
+addCheck("contract advances through P142.5 safely", contract.phaseId === "P142" && contract.status === "in_progress" && p1421.status === "complete" && p1422.status === "complete" && p1423.status === "complete" && p1424.status === "complete" && p1425.status === "complete" && ((contract.currentSubphase === "P142.5" && contract.previousSubphase === "P142.4" && contract.nextSubphase === "P142.6" && p1426.status === "planned") || (contract.currentSubphase === "P142.6" && contract.previousSubphase === "P142.5" && contract.nextSubphase === "P142.7" && p1426.status === "complete" && p1427.status === "planned")));
 addCheck("contract records expected base commit", p1425.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1425.validationCommands?.includes(command)));
 addCheck("contract scope stays aggregate-checker only", /aggregate/i.test(p1425.dataShape || "") && p1425.forbiddenFiles?.includes("projects/**") && p1425.forbiddenFiles?.includes("db/**") && p1425.forbiddenFiles?.includes("providers/**"));
@@ -179,10 +201,11 @@ addCheck("enterprise checker accepts P142.5", enterpriseChecker.includes("p1425C
 addCheck("P142 plan records P142.5", /## P142\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P142.5", /P142\.5 Tests \/ Checkers/i.test(readme));
 addCheck("platform roadmap records P142.5", /P142\.5 Tests \/ Checkers is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P142.5", /P142\.5 is now complete/i.test(enterpriseRoadmap) && /P142\.6 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status advances to P142.5", p1425CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P142.5", /P142\.5 is now complete/i.test(enterpriseRoadmap) && (/P142\.6 is planned-only next/i.test(enterpriseRoadmap) || /P142\.6 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status advances through P142.5", p1425CurrentState || p1426CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P142.5 entries have required fields", [statusById.get("P142"), statusById.get("P142.5"), roadmapById.get("P142"), roadmapById.get("P142.5")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P142.6 handoff remains planned-only", [statusById.get("P142.6"), roadmapById.get("P142.6")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("P142.6 handoff remains valid", (p1425CurrentState && [statusById.get("P142.6"), roadmapById.get("P142.6")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)) || (p1426CurrentState && [statusById.get("P142.6"), roadmapById.get("P142.6")].every((entry) => entry?.status === "complete" && Boolean(entry.branch) && Boolean(entry.commit) && Array.isArray(entry.checksRun) && entry.checksRun.includes(`npm run ${NEXT_SCRIPT}`))));
+addCheck("P142.7 handoff remains planned-only after P142.6", !p1426CurrentState || [statusById.get("P142.7"), roadmapById.get("P142.7")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("P143 remains planned-only", [statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("changed files stay in P142.5 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix)) || file === "dashboard/tests/routes.spec.js"), changed.join(", "));
@@ -201,7 +224,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Adds aggregate P142.5 checker and Playwright coverage for admin operations runtime settings.",
-        "- Verifies P142.1-P142.4 reports, P142.2 settings model, P142.3 dry run, P142.4 Settings UX data, route-wide safety coverage, and P142.6 planned-only handoff.",
+        "- Verifies P142.1-P142.4 reports, P142.2 settings model, P142.3 dry run, P142.4 Settings UX data, route-wide safety coverage, and P142.6 handoff compatibility.",
         "- Does not mutate settings, toggle or roll out features, execute or schedule maintenance, write DB/runtime state, expose raw logs or raw state, handle credentials, read secrets, export audits, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
     },
@@ -223,7 +246,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P142.5 is tests/checkers hardening only. It does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.6 remains planned-only.",
+      body: "- P142.5 is tests/checkers hardening only. It does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P142.6 may be complete as docs/status/checker closure; P142.7 remains planned-only until its own implementation-grade plan.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
