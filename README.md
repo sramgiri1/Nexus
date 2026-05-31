@@ -2036,7 +2036,8 @@ The Command Center and local operator surface have:
   complete. P144.1 Billing Metering Customer Operations Contract is complete.
   P144.2 Billing and Meter Model is complete. P144.3 Billing Preview is
   complete. P144.4 Customer Operations Command Center UX is complete.
-  P144.5 Tests / Checkers is complete. P144.6 is planned-only next.
+  P144.5 Tests / Checkers is complete. P144.6 Docs / Roadmap / Status is
+  complete. P144.7 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2557,7 +2558,7 @@ The Command Center and local operator surface have:
   read-only billing/meter model work. P144.3 is complete as non-runnable
   billing preview work. P144.4 is complete as display-only Cost Center
   Customer Ops UX. P144.5 is complete as aggregate tests/checkers only.
-  P144.6 is planned-only next.
+  P144.6 is complete as docs/status closure. P144.7 is planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2624,7 +2625,8 @@ The Command Center and local operator surface have:
   reports, the P144.2 read-only billing/meter model, P144.3 non-runnable
   preview, P144.4 Cost Center Customer Ops UX, focused Playwright coverage,
   route-wide Command Center safety coverage, docs/status, and blocked billing
-  and customer authority claims. P144.6 is planned-only next; billing account
+  and customer authority claims. P144.6 Docs / Roadmap / Status is complete;
+  P144.7 is planned-only next. Billing account
   mutation, usage writes, invoice creation, payment collection, subscription
   mutation, entitlement changes, support ticket creation, customer contact,
   customer operation execution, DB/runtime writes, provider/model calls,

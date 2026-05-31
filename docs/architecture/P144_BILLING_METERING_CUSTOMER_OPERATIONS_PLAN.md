@@ -454,7 +454,7 @@ spend authority is enabled.
 
 ## P144.6 Docs / Roadmap / Status
 
-Status: planned
+Status: complete
 
 Narrow goal: close P144 docs, README, roadmap, OS phase status, checker
 handoff, report freshness, and P144.7 planned-only final validation handoff.
@@ -463,9 +463,30 @@ Scope: docs/status/checker closure only. It must not add runtime
 billing/customer authority, DB writes, provider calls, network calls, or
 spend.
 
+Allowed files: package script, P144.6 docs-roadmap checker, P144.5 checker
+handoff, enterprise checker, route tests, P144 contract/status/index docs, and
+generated reports.
+
+Forbidden files: `projects/**`, `generated-projects/**`, private project
+roots, `dashboard/src/**`, `db/**`, `local-state/runtime/**`, `providers/**`,
+`tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+`packages/**`, `.env*`, and billing/customer mutation paths.
+
+Command Center UX requirements: OS Roadmap shows P144.6 complete and P144.7
+planned-only next. Cost Center Customer Ops remains display-only and continues
+to show current state, next action, blockers, disabled reason, owner,
+evidence/activity location, and zero-spend cost impact without raw IDs or fake
+actions.
+
 Validation: dedicated P144.6 checker, prior P144.5 checker, enterprise
 roadmap checker, OS phase status checker, phase validation coverage, dashboard
 build/unit checks, focused route coverage, and `git diff --check`.
+
+OS phase status update: P144 in progress; P144.1-P144.6 complete; previous
+P144.5; current P144.6; next P144.7 planned-only; P145 remains planned-only.
+
+Result: complete as docs/status/checker closure only. P144.7 is planned-only
+next.
 
 ## P144.7 Final Validation
 

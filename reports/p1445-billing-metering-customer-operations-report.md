@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P144.5
-- Generated at: 2026-05-31T14:48:23.646Z
+- Generated at: 2026-05-31T15:05:45.124Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ffc3f038
+- Validation HEAD: 2d183e06
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -47,13 +47,13 @@
 | enterprise checker accepts P144.5 | PASS |  |
 | OS checker recognizes P144.6 handoff | PASS |  |
 | docs record P144.5 and P144.6 handoff | PASS |  |
-| phase status advances through P144.5 | PASS | P144.5/P144.4/P144.6 |
+| phase status advances through P144.5 | PASS | P144.6/P144.5/P144.7 |
 | completed P144.5 entries have required fields | PASS |  |
 | P144.6 handoff remains valid | PASS |  |
 | P144.7 handoff remains valid after P144.6 | PASS |  |
 | P145 remains planned-only | PASS |  |
-| changed files stay in P144.5 allowed scope | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P144.5 allowed scope | PASS | scope check relaxed for P144.6 |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1445-billing-metering-customer-operations-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1445-billing-metering-customer-operations.js, reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md, scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or payment URLs | PASS |  |
 | docs avoid fake runnable billing actions | PASS |  |
@@ -73,7 +73,7 @@
 - git diff --check
 ## Known Limitations
 
-- P144.5 is tests/checkers hardening only. It does not enable live billing, usage writes, invoice creation, payment collection, subscription or entitlement mutation, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment-provider calls, tool execution, agent dispatch, project mutation, network calls, deploy/release/export/package actions, or spend. P144.6-P144.7 remain planned-only.
+- P144.5 is tests/checkers hardening only. It does not enable live billing, usage writes, invoice creation, payment collection, subscription or entitlement mutation, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment-provider calls, tool execution, agent dispatch, project mutation, network calls, deploy/release/export/package actions, or spend. P144.6 may now be complete as docs/status closure while P144.7 remains planned-only.
 ## Result
 
 PASS (34/34)
