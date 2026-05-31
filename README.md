@@ -2007,13 +2007,14 @@ The Command Center and local operator surface have:
   security/privacy/compliance, admin operations, release/deploy/export/package,
   billing/customer operations, and final GA certification. These phases are
   roadmap/status entries only until their own subphase contracts start; current
-  implementation is closed through P139.5. P137 Agent Work Order Runtime is
+  implementation is closed through P139.6. P137 Agent Work Order Runtime is
   complete through final validation. P138 Project Workspace Mutation and Build
   Pipeline is complete through final validation. P139.1 evidence, audit,
   observability, and cost ledger contract is complete. P139.2 evidence, audit,
   observability, and cost ledger model is complete. P139.3 evidence preview is
   complete. P139.4 Observability Command Center UX is complete. P139.5
-  tests/checkers is complete; P139.6 is planned-only next.
+  tests/checkers is complete. P139.6 docs/roadmap/status closure is complete;
+  P139.7 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2360,11 +2361,18 @@ The Command Center and local operator surface have:
 - P139.5 tests/checkers: Added aggregate validation for the P139.1-P139.4
   ledger chain, including prior reports, model validation, preview validation,
   Command Center UX projection checks, route-wide safety coverage, redaction,
-  zero-spend posture, docs/status, and forbidden-path safety. P139.6 is
-  planned-only next. Ledger writes, DB/runtime writes, provider/model calls,
-  tool execution, MCP startup, agent dispatch, project mutation, deploy,
-  release, export, package, network calls, and spend remain unavailable until a
-  later subphase explicitly allows them.
+  zero-spend posture, docs/status, and forbidden-path safety. P139.6
+  docs/roadmap/status closure is complete in a separate subphase. Ledger writes,
+  DB/runtime writes, provider/model calls, tool execution, MCP startup, agent
+  dispatch, project mutation, deploy, release, export, package, network calls,
+  and spend remain unavailable until a later subphase explicitly allows them.
+- P139.6 docs/roadmap/status closure: Closed P139 docs, README, platform
+  roadmap, enterprise roadmap, OS phase status, phase index, checker handoffs,
+  and generated reports through P139.6. P139.7 is planned-only next. Ledger
+  writes, DB/runtime writes, provider/model calls, tool execution, MCP startup,
+  agent dispatch, project mutation, deploy, release, export, package, network
+  calls, and spend remain unavailable until a later subphase explicitly allows
+  them.
 
 ## CareLoop Project Progress
 

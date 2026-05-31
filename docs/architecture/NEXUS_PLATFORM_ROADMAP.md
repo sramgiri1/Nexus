@@ -3201,7 +3201,8 @@ observability, and cost ledger model is complete as read-only model metadata.
 P139.3 evidence preview is complete as a read-only display-safe preview.
 P139.4 Observability Command Center UX is complete as read-only scoped UX.
 P139.5 tests/checkers is complete as validation-only hardening.
-P139.6-P139.7 and P140-P145 remain planned-only. They cover founder
+P139.6 docs/roadmap/status closure is complete as docs/status/report-only
+handoff work. P139.7 and P140-P145 remain planned-only. They cover founder
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3223,7 +3224,7 @@ complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
 agent work order runtime docs/status is complete. P137.7 agent work order
 runtime final validation is complete. P138.1 project workspace mutation build
 pipeline contract is complete. P138.2 project workspace mutation model is
-complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6-P139.7 and P140-P145 do not enable secret values,
+complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 and P140-P145 do not enable secret values,
 DB/runtime writes, live CRUD,
 provider/model calls, tool execution, agent dispatch, project mutation, patch
 application, build/test execution, rollback execution, deploy, release, export,
@@ -3599,11 +3600,14 @@ P139.5 tests/checkers is complete. NEXUS now validates the P139.1-P139.4
 ledger chain through an aggregate checker covering prior reports, the ledger
 model, evidence preview, Command Center UX projection, route-wide safety
 coverage, redaction, zero-spend posture, docs/status, and forbidden-path
-safety. This remains validation-only: live ledger persistence, DB/runtime
-writes, provider/model calls, tool execution, MCP startup, agent dispatch,
-project mutation, deploy, release, export, package, network calls, and spend
-remain blocked until a later subphase explicitly allows them. P139.6
-docs/roadmap/status closure is planned-only next.
+safety. P139.6 docs/roadmap/status closure is complete: README, platform
+roadmap, enterprise roadmap, OS phase status, phase index, checker handoffs,
+and generated reports now reflect the P139.6 handoff. This remains
+docs/status/report-only: live ledger persistence, DB/runtime writes,
+provider/model calls, tool execution, MCP startup, agent dispatch, project
+mutation, deploy, release, export, package, network calls, and spend remain
+blocked until a later subphase explicitly allows them. P139.7 final validation
+is planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

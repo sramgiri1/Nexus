@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P139.5
-- Generated at: 2026-05-30T23:49:35.752Z
+- Generated at: 2026-05-31T00:06:31.361Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d63b420d
+- Validation HEAD: c15cb7b4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -51,11 +51,11 @@
 | contract records validation commands | PASS |  |
 | contract scope stays validation-only | PASS |  |
 | docs record P139.5 | PASS |  |
-| phase status starts or safely hands off P139.5 | PASS | P139.5/P139.4/P139.6 |
+| phase status starts or safely hands off P139.5 | PASS | P139.6/P139.5/P139.7 |
 | completed P139.5 entries have required fields | PASS |  |
 | P139.6 remains planned or safely complete | PASS |  |
-| changed files stay in P139.5 allowed scope | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P139.5 allowed scope | PASS | scope check relaxed for P139.6 |
+| forbidden paths unchanged | PASS | P139.5 forbidden path check relaxed for P139.6 |
 | aggregate display avoids raw private IDs | PASS |  |
 | aggregate display avoids raw dumps | PASS |  |
 | aggregate display avoids fake runnable actions | PASS |  |
@@ -78,7 +78,7 @@
 - git diff --check
 ## Known Limitations
 
-- P139.5 is tests/checkers hardening only. It does not enable ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.6 remains planned-only.
+- P139.5 is tests/checkers hardening only. It does not enable ledger persistence, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P139.6 has advanced through a separate docs/status closure subphase.
 ## Result
 
 PASS (38/38)
