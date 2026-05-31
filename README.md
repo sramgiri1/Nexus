@@ -2024,8 +2024,8 @@ The Command Center and local operator surface have:
   security/privacy/compliance preview is complete. P141.4 Compliance Command
   Center UX is complete. P141.5 Tests / Checkers is complete. P141.6 Docs /
   Roadmap / Status is complete. P141.7 final validation is complete. P142.1
-  admin operations runtime settings contract is complete; P142.2 is
-  planned-only next.
+  admin operations runtime settings contract is complete. P142.2 admin
+  operations settings model is complete; P142.3 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2490,11 +2490,15 @@ The Command Center and local operator surface have:
 - P142.1 Admin Operations Runtime Settings Contract: Started P142 with a
   contract-only admin operations and runtime settings boundary covering
   display-safe settings, feature gates, maintenance controls, runtime state,
-  admin audit surface, and blocked authority flags. P142.2 Settings Model is
-  planned-only next; admin setting mutation, feature toggles, maintenance
-  execution, DB/runtime writes, credential handling, provider/model calls, tool
-  execution, agent dispatch, project mutation, deploy, release, export, package,
-  network calls, and spend remain unavailable.
+  admin audit surface, and blocked authority flags.
+- P142.2 Admin Operations Settings Model: Added a read-only local model for
+  settings, feature gates, maintenance controls, runtime state, audit posture,
+  blockers, owner capability, evidence/activity refs, disabled reasons, and
+  zero-cost posture. P142.3 Admin Dry Run is planned-only next; admin setting
+  mutation, feature toggles, maintenance execution, DB/runtime writes,
+  credential handling, provider/model calls, tool execution, agent dispatch,
+  project mutation, deploy, release, export, package, network calls, and spend
+  remain unavailable.
 
 ## CareLoop Project Progress
 

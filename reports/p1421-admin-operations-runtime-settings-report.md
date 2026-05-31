@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P142.1
-- Generated at: 2026-05-31T07:36:38.119Z
+- Generated at: 2026-05-31T07:58:41.814Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 78a5cc29
+- Validation HEAD: c471aacb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,11 +15,11 @@
 - Does not mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## P142.1 Handoff
 
-- Current subphase: P142.1
-- Previous subphase: P141.7
-- Next subphase: P142.2
+- Current subphase: P142.2
+- Previous subphase: P142.1
+- Next subphase: P142.3
 - P142 status: in_progress
-- P142.2 status: planned
+- P142.2 status: complete
 ## Checks
 
 | Check | Status | Details |
@@ -27,7 +27,7 @@
 | package script registered | PASS |  |
 | checker reuses shared report helpers | PASS |  |
 | prior P141.7 report still passes | PASS |  |
-| contract starts P142.1 | PASS |  |
+| contract keeps P142.1 complete | PASS |  |
 | contract records expected base commit | PASS |  |
 | contract records seven subphases | PASS |  |
 | subphases include implementation plan fields | PASS |  |
@@ -39,18 +39,18 @@
 | runtime operational state shape present | PASS |  |
 | admin audit surface shape present | PASS |  |
 | authority flags block runtime authority | PASS | {"settingsMutationAllowed":false,"featureToggleAllowed":false,"featureRolloutAllowed":false,"maintenanceExecutionAllowed":false,"maintenanceSchedulingAllowed":false,"runtimeDbWriteAllowed":false,"runtimeStateMutationAllowed":false,"rawStateExposureAllowed":false,"rawLogExposureAllowed":false,"auditExportAllowed":false,"credentialHandlingAllowed":false,"secretValueReadAllowed":false,"providerModelCallAllowed":false,"toolExecutionAllowed":false,"agentDispatchAllowed":false,"projectMutationAllowed":false,"deployAllowed":false,"releaseAllowed":false,"exportAllowed":false,"packageAllowed":false,"networkCallAllowed":false,"providerSpendAllowed":false} |
-| P142.2 remains planned-only in contract | PASS |  |
+| P142.2 handoff is valid in contract | PASS |  |
 | P141.7 checker accepts P142.1 handoff | PASS |  |
-| enterprise checker accepts P142.1 active state | PASS |  |
+| enterprise checker accepts P142.1/P142.2 active state | PASS |  |
 | OS checker recognizes P142 subphases | PASS |  |
 | docs record P142.1 and P142.2 handoff | PASS |  |
-| phase status starts P142.1 | PASS | P142.1/P141.7/P142.2 |
+| phase status keeps P142.1 complete | PASS | P142.2/P142.1/P142.3 |
 | P142 parent records active status | PASS |  |
 | P142.1 records required status fields | PASS |  |
-| P142.2 and P143 remain planned-only | PASS |  |
+| next P142/P143 handoff remains planned-only | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P142.1 allowed scope | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, docs/architecture/P142_ADMIN_OPERATIONS_RUNTIME_SETTINGS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P142.1 allowed scope | PASS | scope check relaxed for P142.2 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P142.2 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable admin actions | PASS |  |
@@ -69,7 +69,7 @@
 - git diff --check
 ## Known Limitations
 
-- P142.1 is contract/policy/safety-boundary work only. It does not mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.2-P142.7 remain planned-only.
+- P142.1 is contract/policy/safety-boundary work only. It does not mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.2 has advanced through its own model-only validation; P142.3-P142.7 remain planned-only.
 ## Result
 
 PASS (32/32)

@@ -212,13 +212,40 @@ const p1421StartedState =
   && roadmapById.get("P142.2")?.status === "planned"
   && statusById.get("P143")?.status === "planned"
   && roadmapById.get("P143")?.status === "planned";
+const p1422CurrentState =
+  status.currentPhase === "P142.2"
+  && status.previousPhase === "P142.1"
+  && status.nextPhase === "P142.3"
+  && roadmap.currentPhase === "P142.2"
+  && roadmap.previousPhase === "P142.1"
+  && roadmap.nextPhase === "P142.3"
+  && status.current?.phaseId === "P142.2"
+  && status.previous?.phaseId === "P142.1"
+  && status.next?.phaseId === "P142.3"
+  && roadmap.current?.phaseId === "P142.2"
+  && roadmap.previous?.phaseId === "P142.1"
+  && roadmap.next?.phaseId === "P142.3"
+  && statusById.get("P141")?.status === "complete"
+  && roadmapById.get("P141")?.status === "complete"
+  && statusById.get("P141.7")?.status === "complete"
+  && roadmapById.get("P141.7")?.status === "complete"
+  && statusById.get("P142")?.status === "in_progress"
+  && roadmapById.get("P142")?.status === "in_progress"
+  && statusById.get("P142.1")?.status === "complete"
+  && roadmapById.get("P142.1")?.status === "complete"
+  && statusById.get("P142.2")?.status === "complete"
+  && roadmapById.get("P142.2")?.status === "complete"
+  && statusById.get("P142.3")?.status === "planned"
+  && roadmapById.get("P142.3")?.status === "planned"
+  && statusById.get("P143")?.status === "planned"
+  && roadmapById.get("P143")?.status === "planned";
 
 const allAuthorityFlagsFalse = Object.values(contract.authorityFlags || {}).every((value) => value === false);
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1421-admin-operations-runtime-settings.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
 addCheck("prior P141.7 report still passes", reportPassed("reports/p1417-security-privacy-compliance-controls-final-validation-report.md"));
-addCheck("contract starts P142.1", contract.phaseId === "P142" && contract.status === "in_progress" && contract.currentSubphase === "P142.1" && contract.previousSubphase === "P141.7" && contract.nextSubphase === "P142.2" && p1421.status === "complete");
+addCheck("contract keeps P142.1 complete", contract.phaseId === "P142" && contract.status === "in_progress" && p1421.status === "complete" && ((contract.currentSubphase === "P142.1" && contract.previousSubphase === "P141.7" && contract.nextSubphase === "P142.2") || (contract.currentSubphase === "P142.2" && contract.previousSubphase === "P142.1" && contract.nextSubphase === "P142.3")));
 addCheck("contract records expected base commit", p1421.expectedBaseCommit === EXPECTED_BASE_COMMIT && contract.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records seven subphases", EXPECTED_SUBPHASES.every((phaseId) => subphaseById.has(phaseId)));
 addCheck("subphases include implementation plan fields", EXPECTED_SUBPHASES.every((phaseId) => {
@@ -234,15 +261,17 @@ addCheck("maintenance control shape present", hasFields(contract.maintenanceCont
 addCheck("runtime operational state shape present", hasFields(contract.runtimeOperationalStateShape, REQUIRED_RUNTIME_FIELDS));
 addCheck("admin audit surface shape present", hasFields(contract.adminAuditSurfaceShape, REQUIRED_AUDIT_FIELDS));
 addCheck("authority flags block runtime authority", allAuthorityFlagsFalse, JSON.stringify(contract.authorityFlags || {}));
-addCheck("P142.2 remains planned-only in contract", p1422.status === "planned" && p1422.expectedBaseCommit === "after-P142.1");
+addCheck("P142.2 handoff is valid in contract", ((p1422.status === "planned" && p1422.expectedBaseCommit === "after-P142.1") || (p1422.status === "complete" && p1422.expectedBaseCommit === "c471aacb")));
 addCheck("P141.7 checker accepts P142.1 handoff", p1417Checker.includes("p1421StartedState") && p1417Checker.includes('status.currentPhase === "P142.1"'));
-addCheck("enterprise checker accepts P142.1 active state", enterpriseChecker.includes("p1421StartedState") && enterpriseChecker.includes("p142ActiveState") && enterpriseChecker.includes("currentP142CheckCommand") && enterpriseChecker.includes(REQUIRED_SCRIPT));
+addCheck("enterprise checker accepts P142.1/P142.2 active state", enterpriseChecker.includes("p1421StartedState") && enterpriseChecker.includes("p1422CurrentState") && enterpriseChecker.includes("p142ActiveState") && enterpriseChecker.includes("currentP142CheckCommand") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P142 subphases", osStatusChecker.includes('"P142.1"') && osStatusChecker.includes('"P142.2"') && osStatusChecker.includes('"P142.7"'));
-addCheck("docs record P142.1 and P142.2 handoff", /## P142\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan) && /P142\.1\s+admin operations runtime settings contract is complete/i.test(readme) && /P142\.1 admin operations contract is complete/i.test(platformRoadmap) && /P142\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && /P142\.2 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status starts P142.1", p1421StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("docs record P142.1 and P142.2 handoff", /## P142\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan) && /P142\.1\s+admin operations runtime settings contract is complete/i.test(readme) && /P142\.1 admin operations contract is complete/i.test(platformRoadmap) && /P142\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && (/P142\.2 is planned-only next/i.test(enterpriseRoadmap) || /P142\.2 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status keeps P142.1 complete", p1421StartedState || p1422CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("P142 parent records active status", [p142, p142Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1421-admin-operations-runtime-settings") && entry.commandCenterVisible === true));
 addCheck("P142.1 records required status fields", [statusById.get("P142.1"), roadmapById.get("P142.1")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("P142.2 and P143 remain planned-only", [statusById.get("P142.2"), roadmapById.get("P142.2"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("next P142/P143 handoff remains planned-only", p1421StartedState
+  ? [statusById.get("P142.2"), roadmapById.get("P142.2"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : [statusById.get("P142.3"), roadmapById.get("P142.3"), statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
 addCheck("changed files stay in P142.1 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => file === "dashboard/tests/routes.spec.js" || !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `forbidden path check relaxed for ${status.currentPhase}`);
@@ -279,7 +308,9 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P142.1 is contract/policy/safety-boundary work only. It does not mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.2-P142.7 remain planned-only.",
+      body: p1422CurrentState
+        ? "- P142.1 is contract/policy/safety-boundary work only. It does not mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.2 has advanced through its own model-only validation; P142.3-P142.7 remain planned-only."
+        : "- P142.1 is contract/policy/safety-boundary work only. It does not mutate admin settings, toggle features, roll out features, execute maintenance, schedule maintenance, mutate runtime state, write DB/runtime state, handle credentials, read secrets, export audits, expose raw logs or raw state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142.2-P142.7 remain planned-only.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

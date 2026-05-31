@@ -70,8 +70,9 @@ P141.5 is now complete as aggregate tests/checkers only.
 P141.6 is now complete as docs/status closure only.
 P141.7 is now complete as final validation only. P141 is complete.
 P142.1 is now complete as contract/policy/safety-boundary only.
-P142.2 is planned-only next.
-P142.2-P145 remain planned-only. They do not enable secret
+P142.2 is now complete as read-only admin operations settings model only.
+P142.3 is planned-only next.
+P142.3-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -189,8 +190,9 @@ P141.5 is now complete as aggregate tests/checkers only.
 P141.6 is now complete as docs/status closure only.
 P141.7 is now complete as final validation only. P141 is complete.
 P142.1 is now complete as contract/policy/safety-boundary only.
-P142.2 is planned-only next.
-P142.2-P145 are planned-only backlog phases and must not be
+P142.2 is now complete as read-only admin operations settings model only.
+P142.3 is planned-only next.
+P142.3-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
@@ -198,6 +200,7 @@ treated as complete or live.
 Required validation for this roadmap update:
 
 - `npm run check:p1421-admin-operations-runtime-settings`
+- `npm run check:p1422-admin-operations-runtime-settings`
 - `npm run check:p1417-security-privacy-compliance-controls-final-validation`
 - `npm run check:enterprise-readiness-roadmap`
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`

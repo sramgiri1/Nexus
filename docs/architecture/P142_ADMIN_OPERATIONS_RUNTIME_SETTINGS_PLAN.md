@@ -150,8 +150,10 @@ OS phase status update:
 - P141 and P141.7 stay complete.
 - P142 is `in_progress`.
 - P142.1 is `complete`.
-- P142.2 is `planned`.
-- Current phase is P142.1, previous is P141.7, next is P142.2.
+- P142.2 was `planned` at P142.1 completion and has since advanced through
+  model-only validation.
+- Current phase at P142.1 completion was P142.1, previous was P141.7, next was
+  P142.2.
 
 Validation commands:
 
@@ -176,7 +178,8 @@ Final safety checks:
   handling, secret read, audit export, raw log exposure, raw state exposure,
   provider/model call, tool execution, MCP startup, agent dispatch, project
   mutation, deploy, release, export, package, network call, or spend path.
-- P142.2 remains planned-only.
+- P142.2 was planned-only at P142.1 completion and now has its own completed
+  model-only record.
 - No stale placeholder commit marker remains after the stamp commit.
 
 Git add/commit/push commands:
@@ -207,27 +210,33 @@ Final response checklist:
 
 ## P142.2 Settings Model
 
-Status: planned
+Status: complete
 
 Narrow goal: Create a read-only admin operations settings model from the P142.1
 shapes without enabling settings mutation, feature toggles, maintenance
 execution, DB/runtime writes, or provider/tool/project authority.
 
-Allowed files: contract, new shared model if justified, P142.2 checker, P142
+Allowed files: `shared/adminOperationsRuntimeSettingsModel.js`, P142 contract,
+P142.2 checker, P142.1 checker handoff, enterprise roadmap checker,
+`dashboard/tests/routes.spec.js` for stale OS Roadmap assertions only, P142
 plan, README, platform roadmap, enterprise roadmap, OS phase status, phase
 index, generated reports, and package script.
 
 Forbidden files: `projects/**`, `generated-projects/**`, private project roots,
-dashboard source/tests unless specifically needed for model evidence, `db/**`,
-`local-state/runtime/**`, `providers/**`, `tools/**`, `worker-runtime/**`,
-`deploy/**`, `release/**`, `exports/**`, `packages/**`, and `.env*`.
+`dashboard/src/**`, `dashboard/tests/**` except `dashboard/tests/routes.spec.js`,
+`db/**`, `local-state/runtime/**`, `providers/**`, `tools/**`,
+`worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`, `packages/**`,
+and `.env*`.
 
 Expected data shape: read-only settings model rows with display name, current
 state, disabled reason, owner capability, next action, blockers, evidence refs,
-cost impact, and all authority flags false.
+cost impact, and all authority flags false. P142.2 exports builders and
+validators for admin settings policy rows, feature gate rows, maintenance
+control rows, runtime operational state rows, admin audit surface rows, the
+aggregate model, and result envelope.
 
-Command Center UX: no primary UX source change unless the model is already
-consumed by a safe existing data projection. P142.4 owns UX.
+Command Center UX: no primary UX source change. P142.2 model is not rendered
+directly in primary Command Center UX. P142.4 owns UX.
 
 Tests/checkers: add P142.2 checker, update P142.1 checker handoff, update
 enterprise checker, and run existing route-wide coverage.
@@ -235,6 +244,12 @@ enterprise checker, and run existing route-wide coverage.
 Validation: P142.2 checker, P142.1 checker, enterprise roadmap, OS phase
 status, phase validation coverage, dashboard build/unit, route-wide Playwright,
 and `git diff --check`.
+
+Result: complete as read-only model work. P142.3 Admin Dry Run is planned-only
+next. No settings mutation, feature toggle, maintenance execution, runtime
+write, audit export, provider/model call, tool execution, agent dispatch,
+project mutation, deploy, release, export, package, network call, or spend
+authority is enabled.
 
 ## P142.3 Admin Dry Run
 

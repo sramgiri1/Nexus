@@ -2745,7 +2745,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("P142.1 contract handoff keeps roadmap and Compliance display-only", async ({ page }) => {
+  test("P142.2 settings model handoff keeps roadmap and Compliance display-only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/compliance");
@@ -2760,11 +2760,11 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
 
     const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P142.1");
-    expect(roadmapBody).toContain("Contract / Policy / Safety Boundary");
-    expect(roadmapBody).toContain("Admin Operations and Runtime Settings");
     expect(roadmapBody).toContain("P142.2");
     expect(roadmapBody).toContain("Settings Model");
+    expect(roadmapBody).toContain("Admin Operations and Runtime Settings");
+    expect(roadmapBody).toContain("P142.3");
+    expect(roadmapBody).toContain("Admin Dry Run");
     expect(roadmapBody).not.toContain("pending-final-commit");
     expect(roadmapBody).not.toContain("DemoApp");
     expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
@@ -2772,7 +2772,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("P142.1 admin operations contract starts P142 and keeps Compliance display-only", async ({ page }) => {
+  test("P142.2 admin operations settings model advances P142 and keeps Compliance display-only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/compliance");
@@ -2785,11 +2785,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P142.1");
-    await expect(page.locator("body")).toContainText("Contract / Policy / Safety Boundary");
-    await expect(page.locator("body")).toContainText("Admin Operations and Runtime Settings");
     await expect(page.locator("body")).toContainText("P142.2");
     await expect(page.locator("body")).toContainText("Settings Model");
+    await expect(page.locator("body")).toContainText("Admin Operations and Runtime Settings");
+    await expect(page.locator("body")).toContainText("P142.3");
+    await expect(page.locator("body")).toContainText("Admin Dry Run");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
