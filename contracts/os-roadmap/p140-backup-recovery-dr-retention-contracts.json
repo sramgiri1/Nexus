@@ -1158,7 +1158,7 @@
       "label": "P140.6 Docs / Roadmap / Status",
       "completedAt": "2026-05-31T04:15:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9fb6b019",
       "expectedBaseCommit": "a9e65a07",
       "summary": "Closed P140.6 docs, roadmap, OS status, checker handoffs, reports, and route coverage for Backup / DR without enabling runtime authority.",
       "detail": "P140.6 records P140.1-P140.6 as complete, verifies P140.7 remains planned-only next, and regenerates P140 reports while preserving all Backup / DR runtime blocks.",
@@ -1425,7 +1425,7 @@
   ],
   "completedAt": "2026-05-31T04:15:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "9fb6b019",
   "checksRun": [
     "npm run check:p1406-backup-recovery-dr-docs-roadmap",
     "npm run check:p1405-backup-recovery-dr-tests-checkers",
