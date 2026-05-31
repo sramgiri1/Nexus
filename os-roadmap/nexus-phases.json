@@ -35506,7 +35506,7 @@
       "order": 180,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fd53aa24",
       "commandCenterVisible": true,
       "detail": "P144.6 closes docs, README, roadmap, OS phase status, checker handoff, and report freshness for P144 without enabling runtime execution.",
       "summary": "P144 billing, metering, and customer operations now includes P144.6 docs/status closure while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
@@ -36273,7 +36273,7 @@
             "final response checklist"
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "fd53aa24",
           "previousPhase": "P144.5",
           "nextPhase": "P144.7",
           "checksRun": [
@@ -38943,7 +38943,7 @@
       "label": "Docs / Roadmap / Status",
       "order": 180.6,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fd53aa24",
       "previousPhase": "P144.5",
       "nextPhase": "P144.7",
       "checksRun": [
@@ -39193,7 +39193,7 @@
     "label": "Docs / Roadmap / Status",
     "order": 180.6,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "fd53aa24",
     "previousPhase": "P144.5",
     "nextPhase": "P144.7",
     "checksRun": [
