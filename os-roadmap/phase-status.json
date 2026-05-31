@@ -34254,17 +34254,19 @@
       "phaseId": "P141",
       "title": "Security, Privacy, and Compliance Controls",
       "status": "in_progress",
-      "currentSubphase": "P141.1",
-      "previousSubphase": "P140.7",
-      "nextSubphase": "P141.2",
+      "currentSubphase": "P141.2",
+      "previousSubphase": "P141.1",
+      "nextSubphase": "P141.3",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "28c34a71",
       "summary": "P141 starts with a security, privacy, compliance, policy, evidence, and data-handling contract while all runtime authority remains blocked.",
-      "detail": "P141.1 defines the enterprise control boundary and staged subphases before any future control model, compliance preview, UX, or final validation work.",
+      "detail": "P141.2 adds the read-only enterprise control model before any future compliance preview, UX, or final validation work.",
       "allowedFiles": [
         "package.json",
+        "shared/securityPrivacyComplianceControlModel.js",
         "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+        "scripts/check-p1412-security-privacy-compliance-controls.js",
         "scripts/check-p1411-security-privacy-compliance-controls.js",
         "scripts/check-p1407-backup-recovery-dr-final-validation.js",
         "scripts/check-enterprise-readiness-roadmap.js",
@@ -34275,6 +34277,7 @@
         "README.md",
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
+        "reports/p1412-security-privacy-compliance-controls-report.md",
         "reports/p1411-security-privacy-compliance-controls-report.md",
         "reports/p1407-backup-recovery-dr-final-validation-report.md",
         "reports/enterprise-readiness-roadmap-report.md",
@@ -34491,22 +34494,220 @@
         {
           "phaseId": "P141.2",
           "title": "Control Model",
-          "status": "planned",
+          "status": "complete",
           "scopeClassification": "NEXUS_OS_CHANGE",
-          "narrowGoal": "Create the read-only security/privacy/compliance control model.",
+          "startingBranch": "codex/nexus-e2e-phase-validation",
+          "expectedBaseCommit": "43cfaaf8",
+          "narrowGoal": "Create the read-only security/privacy/compliance control model while all runtime authority remains blocked.",
+          "allowedFiles": [
+            "package.json",
+            "shared/securityPrivacyComplianceControlModel.js",
+            "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+            "scripts/check-p1412-security-privacy-compliance-controls.js",
+            "scripts/check-p1411-security-privacy-compliance-controls.js",
+            "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+            "scripts/check-enterprise-readiness-roadmap.js",
+            "scripts/check-os-phase-status.js",
+            "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "README.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/p1412-security-privacy-compliance-controls-report.md",
+            "reports/p1411-security-privacy-compliance-controls-report.md",
+            "reports/p1407-backup-recovery-dr-final-validation-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "forbiddenFiles": [
+            "projects/**",
+            "generated-projects/**",
+            "private project roots",
+            "dashboard/src/**",
+            "dashboard/tests/**",
+            "db/**",
+            "local-state/runtime/**",
+            "providers/**",
+            "tools/**",
+            "worker-runtime/**",
+            "deploy/**",
+            "release/**",
+            "exports/**",
+            "packages/**",
+            ".env*"
+          ],
+          "exactFilesToCreateOrUpdate": [
+            "package.json",
+            "shared/securityPrivacyComplianceControlModel.js",
+            "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+            "scripts/check-p1412-security-privacy-compliance-controls.js",
+            "scripts/check-p1411-security-privacy-compliance-controls.js",
+            "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+            "scripts/check-enterprise-readiness-roadmap.js",
+            "scripts/check-os-phase-status.js",
+            "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "README.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/p1412-security-privacy-compliance-controls-report.md",
+            "reports/p1411-security-privacy-compliance-controls-report.md",
+            "reports/p1407-backup-recovery-dr-final-validation-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "expectedExports": [
+            "SECURITY_PRIVACY_COMPLIANCE_CONTROL_PHASE",
+            "SECURITY_PRIVACY_COMPLIANCE_CONTROL_VERSION",
+            "SECURITY_PRIVACY_COMPLIANCE_CONTROL_SAFETY_FLAG_NAMES",
+            "buildSecurityPrivacyComplianceSecurityControl",
+            "validateSecurityPrivacyComplianceSecurityControl",
+            "buildSecurityPrivacyCompliancePrivacyBoundary",
+            "validateSecurityPrivacyCompliancePrivacyBoundary",
+            "buildSecurityPrivacyComplianceEvidence",
+            "validateSecurityPrivacyComplianceEvidence",
+            "buildSecurityPrivacyCompliancePolicyEnforcement",
+            "validateSecurityPrivacyCompliancePolicyEnforcement",
+            "buildSecurityPrivacyComplianceDataHandlingControl",
+            "validateSecurityPrivacyComplianceDataHandlingControl",
+            "buildSecurityPrivacyComplianceControlModel",
+            "validateSecurityPrivacyComplianceControlModel",
+            "buildSecurityPrivacyComplianceControlEnvelope"
+          ],
+          "schemas": [
+            "No runtime schema export changes.",
+            "No DB schema or migration.",
+            "Read-only local control model shape with controls, privacyBoundaries, complianceEvidence, policyEnforcement, dataHandlingControls, readinessSummary, safetyFlags, evidenceRefs, activityRefs, and zero-spend costImpact."
+          ],
+          "dataShape": "Read-only local security/privacy/compliance control model with display-safe controls, privacy boundaries, compliance evidence rows, deny-by-default policy enforcement rows, data handling controls, readiness summary, evidence/activity references, zero-spend cost impact, and all authority flags false.",
+          "commandCenterUxRequirements": [
+            "No dashboard source changes in P141.2.",
+            "P141.2 model must not render directly in Command Center; P141.4 owns P141-specific UX.",
+            "Preserve existing Compliance, Auth Governance, Safety Center, Evidence, and route-wide Command Center UX.",
+            "Primary UX must not show dump-style internal payloads, internal phase labels outside OS Roadmap, raw private IDs, or runnable compliance/security actions."
+          ],
+          "themeRequirements": [
+            "Preserve System theme.",
+            "Preserve Dark theme.",
+            "Preserve Light theme.",
+            "Validate through existing route-wide Command Center coverage."
+          ],
+          "safetyRules": [
+            "Do not handle credentials, read secret values, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+            "Do not add enforcement runtime, override runtime, approval writers, data exporters, compliance package builders, credential readers, or policy mutation paths.",
+            "Do not expose raw private IDs, dump-style internal payloads, credential references as primary identifiers, or runnable compliance/security actions in primary UX."
+          ],
+          "reuseCheck": [
+            "Reuse shared/resultEnvelope.js.",
+            "Reuse shared/modeGuard.js.",
+            "Reuse shared/redaction.js.",
+            "Reuse shared/reportWriter.js.",
+            "Reuse shared/checkResultFormatter.js.",
+            "Reuse compliance/p77-4-placeholder.js control mapping preview as prior compliance evidence.",
+            "Reuse existing Compliance, Auth Governance, Safety Center, Evidence, and route-wide tests."
+          ],
+          "playWrightTests": [
+            "Reuse existing Compliance route coverage.",
+            "Reuse existing Auth Governance route coverage.",
+            "Reuse existing Safety Center and route-wide Command Center coverage.",
+            "No Playwright source changes in P141.2."
+          ],
+          "checkerUpdates": [
+            "Add scripts/check-p1412-security-privacy-compliance-controls.js.",
+            "Update scripts/check-p1411-security-privacy-compliance-controls.js for P141.2 handoff compatibility.",
+            "Update scripts/check-enterprise-readiness-roadmap.js for P141.2 handoff compatibility.",
+            "Update scripts/check-os-phase-status.js so P141.3 is a valid OS phase handoff ID."
+          ],
+          "docsRoadmapUpdates": [
+            "README.md",
+            "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ],
+          "reportsToRegenerate": [
+            "reports/p1412-security-privacy-compliance-controls-report.md",
+            "reports/p1411-security-privacy-compliance-controls-report.md",
+            "reports/p1407-backup-recovery-dr-final-validation-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "osPhaseStatusUpdate": "P141 in progress; P141.2 complete; previous P141.1; next P141.3 planned-only.",
+          "validationCommands": [
+            "npm run check:p1412-security-privacy-compliance-controls",
+            "npm run check:p1411-security-privacy-compliance-controls",
+            "npm run check:p1407-backup-recovery-dr-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Compliance|Auth Governance|safety center|Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "finalSafetyChecks": [
+            "No projects/**, generated-projects/**, or private project root changes.",
+            "No dashboard source or Playwright source changes.",
+            "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
+            "No credential handling, raw data exposure, runtime policy enforcement, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
+            "P141.3 remains planned-only.",
+            "No stale pending-final-commit marker remains after stamp commit."
+          ],
+          "gitCommands": [
+            "git add <P141.2 allowed files>",
+            "git commit -m \"chore(nexus): implement p1412 security compliance model\"",
+            "git add <P141.2 status stamp files>",
+            "git commit -m \"chore(nexus): stamp p1412 security compliance model\"",
+            "git push origin codex/nexus-e2e-phase-validation"
+          ],
+          "finalResponseChecklist": [
+            "Branch name",
+            "Commit hash",
+            "Files changed",
+            "What was implemented",
+            "Command Center UX preservation",
+            "Tests/checkers run",
+            "Dashboard build/unit/page results",
+            "Docs/README/roadmap updates",
+            "OS phase status update",
+            "Evidence/report records",
+            "Safety confirmations",
+            "Forbidden paths confirmation",
+            "Known limitations",
+            "Next phase/subphase"
+          ],
           "previousPhase": "P141.1",
           "nextPhase": "P141.3",
           "order": 177.2,
-          "commandCenterVisible": true,
+          "completedAt": "2026-05-31T07:10:00.000Z",
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
+          "detail": "P141.2 is model-only. P141.3 remains planned-only for display-safe compliance preview work.",
           "knownLimitations": [
-            "Planned-only until implemented under its own contract."
+            "P141.2 is a read-only local control model only. It does not render new Command Center UI, handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.3-P141.7 remain planned-only."
           ],
+          "commandCenterVisible": true,
           "track": "NEXUS_OS",
           "label": "Control Model",
-          "branch": "",
-          "commit": "",
-          "completedAt": "",
-          "checksRun": []
+          "checksRun": [
+            "npm run check:p1412-security-privacy-compliance-controls",
+            "npm run check:p1411-security-privacy-compliance-controls",
+            "npm run check:p1407-backup-recovery-dr-final-validation",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Compliance|Auth Governance|safety center|Command Center route-wide UX\"",
+            "git diff --check"
+          ]
         },
         {
           "phaseId": "P141.3",
@@ -34610,14 +34811,15 @@
         }
       ],
       "current": {
-        "phaseId": "P141.1",
-        "title": "Contract / Policy / Safety Boundary",
+        "phaseId": "P141.2",
+        "title": "Control Model",
         "status": "complete",
         "branch": "codex/nexus-e2e-phase-validation",
-        "commit": "3da28828",
-        "completedAt": "2026-05-31T06:15:00.000Z",
-        "summary": "Started P141 with a security, privacy, compliance, policy, evidence, and data-handling contract while all runtime authority remains blocked.",
+        "commit": "pending-final-commit",
+        "completedAt": "2026-05-31T07:10:00.000Z",
+        "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
         "checksRun": [
+          "npm run check:p1412-security-privacy-compliance-controls",
           "npm run check:p1411-security-privacy-compliance-controls",
           "npm run check:p1407-backup-recovery-dr-final-validation",
           "npm run check:enterprise-readiness-roadmap",
@@ -34629,23 +34831,23 @@
           "git diff --check"
         ],
         "knownLimitations": [
-          "P141.1 is contract/policy/safety-boundary work only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.2-P141.7 remain planned-only."
+          "P141.2 is a read-only local control model only. It does not render new Command Center UI, handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.3-P141.7 remain planned-only."
         ],
-        "nextPhase": "P141.2",
+        "nextPhase": "P141.3",
         "commandCenterVisible": true
       },
       "previous": {
-        "phaseId": "P140.7",
-        "title": "Final Validation",
+        "phaseId": "P141.1",
+        "title": "Contract / Policy / Safety Boundary",
         "status": "complete"
       },
       "next": {
-        "phaseId": "P141.2",
-        "title": "Control Model",
+        "phaseId": "P141.3",
+        "title": "Compliance Preview",
         "status": "planned"
       },
-      "commit": "3da28828",
-      "completedAt": "2026-05-31T06:15:00.000Z",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T07:10:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
       "order": 177,
@@ -34653,6 +34855,7 @@
       "nextPhase": "P142",
       "branch": "codex/nexus-e2e-phase-validation",
       "checksRun": [
+        "npm run check:p1412-security-privacy-compliance-controls",
         "npm run check:p1411-security-privacy-compliance-controls",
         "npm run check:p1407-backup-recovery-dr-final-validation",
         "npm run check:enterprise-readiness-roadmap",
@@ -34664,7 +34867,7 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P141.1 is contract/policy/safety-boundary work only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.2-P141.7 remain planned-only."
+        "P141.2 is a read-only local control model only. It does not render new Command Center UI, handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.3-P141.7 remain planned-only."
       ],
       "commandCenterVisible": true
     },
@@ -34860,22 +35063,220 @@
     {
       "phaseId": "P141.2",
       "title": "Control Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "narrowGoal": "Create the read-only security/privacy/compliance control model.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "43cfaaf8",
+      "narrowGoal": "Create the read-only security/privacy/compliance control model while all runtime authority remains blocked.",
+      "allowedFiles": [
+        "package.json",
+        "shared/securityPrivacyComplianceControlModel.js",
+        "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+        "scripts/check-p1412-security-privacy-compliance-controls.js",
+        "scripts/check-p1411-security-privacy-compliance-controls.js",
+        "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1412-security-privacy-compliance-controls-report.md",
+        "reports/p1411-security-privacy-compliance-controls-report.md",
+        "reports/p1407-backup-recovery-dr-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "private project roots",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "shared/securityPrivacyComplianceControlModel.js",
+        "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+        "scripts/check-p1412-security-privacy-compliance-controls.js",
+        "scripts/check-p1411-security-privacy-compliance-controls.js",
+        "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1412-security-privacy-compliance-controls-report.md",
+        "reports/p1411-security-privacy-compliance-controls-report.md",
+        "reports/p1407-backup-recovery-dr-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "SECURITY_PRIVACY_COMPLIANCE_CONTROL_PHASE",
+        "SECURITY_PRIVACY_COMPLIANCE_CONTROL_VERSION",
+        "SECURITY_PRIVACY_COMPLIANCE_CONTROL_SAFETY_FLAG_NAMES",
+        "buildSecurityPrivacyComplianceSecurityControl",
+        "validateSecurityPrivacyComplianceSecurityControl",
+        "buildSecurityPrivacyCompliancePrivacyBoundary",
+        "validateSecurityPrivacyCompliancePrivacyBoundary",
+        "buildSecurityPrivacyComplianceEvidence",
+        "validateSecurityPrivacyComplianceEvidence",
+        "buildSecurityPrivacyCompliancePolicyEnforcement",
+        "validateSecurityPrivacyCompliancePolicyEnforcement",
+        "buildSecurityPrivacyComplianceDataHandlingControl",
+        "validateSecurityPrivacyComplianceDataHandlingControl",
+        "buildSecurityPrivacyComplianceControlModel",
+        "validateSecurityPrivacyComplianceControlModel",
+        "buildSecurityPrivacyComplianceControlEnvelope"
+      ],
+      "schemas": [
+        "No runtime schema export changes.",
+        "No DB schema or migration.",
+        "Read-only local control model shape with controls, privacyBoundaries, complianceEvidence, policyEnforcement, dataHandlingControls, readinessSummary, safetyFlags, evidenceRefs, activityRefs, and zero-spend costImpact."
+      ],
+      "dataShape": "Read-only local security/privacy/compliance control model with display-safe controls, privacy boundaries, compliance evidence rows, deny-by-default policy enforcement rows, data handling controls, readiness summary, evidence/activity references, zero-spend cost impact, and all authority flags false.",
+      "commandCenterUxRequirements": [
+        "No dashboard source changes in P141.2.",
+        "P141.2 model must not render directly in Command Center; P141.4 owns P141-specific UX.",
+        "Preserve existing Compliance, Auth Governance, Safety Center, Evidence, and route-wide Command Center UX.",
+        "Primary UX must not show dump-style internal payloads, internal phase labels outside OS Roadmap, raw private IDs, or runnable compliance/security actions."
+      ],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate through existing route-wide Command Center coverage."
+      ],
+      "safetyRules": [
+        "Do not handle credentials, read secret values, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+        "Do not add enforcement runtime, override runtime, approval writers, data exporters, compliance package builders, credential readers, or policy mutation paths.",
+        "Do not expose raw private IDs, dump-style internal payloads, credential references as primary identifiers, or runnable compliance/security actions in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/resultEnvelope.js.",
+        "Reuse shared/modeGuard.js.",
+        "Reuse shared/redaction.js.",
+        "Reuse shared/reportWriter.js.",
+        "Reuse shared/checkResultFormatter.js.",
+        "Reuse compliance/p77-4-placeholder.js control mapping preview as prior compliance evidence.",
+        "Reuse existing Compliance, Auth Governance, Safety Center, Evidence, and route-wide tests."
+      ],
+      "playWrightTests": [
+        "Reuse existing Compliance route coverage.",
+        "Reuse existing Auth Governance route coverage.",
+        "Reuse existing Safety Center and route-wide Command Center coverage.",
+        "No Playwright source changes in P141.2."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1412-security-privacy-compliance-controls.js.",
+        "Update scripts/check-p1411-security-privacy-compliance-controls.js for P141.2 handoff compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P141.2 handoff compatibility.",
+        "Update scripts/check-os-phase-status.js so P141.3 is a valid OS phase handoff ID."
+      ],
+      "docsRoadmapUpdates": [
+        "README.md",
+        "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1412-security-privacy-compliance-controls-report.md",
+        "reports/p1411-security-privacy-compliance-controls-report.md",
+        "reports/p1407-backup-recovery-dr-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P141 in progress; P141.2 complete; previous P141.1; next P141.3 planned-only.",
+      "validationCommands": [
+        "npm run check:p1412-security-privacy-compliance-controls",
+        "npm run check:p1411-security-privacy-compliance-controls",
+        "npm run check:p1407-backup-recovery-dr-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Compliance|Auth Governance|safety center|Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No projects/**, generated-projects/**, or private project root changes.",
+        "No dashboard source or Playwright source changes.",
+        "No db/**, local-state/runtime/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or env changes.",
+        "No credential handling, raw data exposure, runtime policy enforcement, compliance certification, legal attestation, audit export, raw log export, compliance package creation, DB/runtime write, live CRUD, provider/model call, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network call, or spend path.",
+        "P141.3 remains planned-only.",
+        "No stale pending-final-commit marker remains after stamp commit."
+      ],
+      "gitCommands": [
+        "git add <P141.2 allowed files>",
+        "git commit -m \"chore(nexus): implement p1412 security compliance model\"",
+        "git add <P141.2 status stamp files>",
+        "git commit -m \"chore(nexus): stamp p1412 security compliance model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests/checkers run",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
       "previousPhase": "P141.1",
       "nextPhase": "P141.3",
       "order": 177.2,
-      "commandCenterVisible": true,
+      "completedAt": "2026-05-31T07:10:00.000Z",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
+      "detail": "P141.2 is model-only. P141.3 remains planned-only for display-safe compliance preview work.",
       "knownLimitations": [
-        "Planned-only until implemented under its own contract."
+        "P141.2 is a read-only local control model only. It does not render new Command Center UI, handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.3-P141.7 remain planned-only."
       ],
+      "commandCenterVisible": true,
       "track": "NEXUS_OS",
       "label": "Control Model",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "checksRun": []
+      "checksRun": [
+        "npm run check:p1412-security-privacy-compliance-controls",
+        "npm run check:p1411-security-privacy-compliance-controls",
+        "npm run check:p1407-backup-recovery-dr-final-validation",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Compliance|Auth Governance|safety center|Command Center route-wide UX\"",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P141.3",
@@ -35763,20 +36164,21 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-31T06:15:00.000Z",
-  "currentPhase": "P141.1",
-  "previousPhase": "P140.7",
-  "nextPhase": "P141.2",
+  "updatedAt": "2026-05-31T07:10:00.000Z",
+  "currentPhase": "P141.2",
+  "previousPhase": "P141.1",
+  "nextPhase": "P141.3",
   "currentPhaseStatus": "complete",
   "current": {
-    "phaseId": "P141.1",
-    "title": "Contract / Policy / Safety Boundary",
+    "phaseId": "P141.2",
+    "title": "Control Model",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "3da28828",
-    "completedAt": "2026-05-31T06:15:00.000Z",
-    "summary": "Started P141 with a security, privacy, compliance, policy, evidence, and data-handling contract while all runtime authority remains blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-31T07:10:00.000Z",
+    "summary": "Added a read-only security/privacy/compliance control model while all runtime authority remains blocked.",
     "checksRun": [
+      "npm run check:p1412-security-privacy-compliance-controls",
       "npm run check:p1411-security-privacy-compliance-controls",
       "npm run check:p1407-backup-recovery-dr-final-validation",
       "npm run check:enterprise-readiness-roadmap",
@@ -35788,25 +36190,25 @@
       "git diff --check"
     ],
     "knownLimitations": [
-      "P141.1 is contract/policy/safety-boundary work only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.2-P141.7 remain planned-only."
+      "P141.2 is a read-only local control model only. It does not render new Command Center UI, handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.3-P141.7 remain planned-only."
     ],
-    "nextPhase": "P141.2",
+    "nextPhase": "P141.3",
     "commandCenterVisible": true
   },
   "previous": {
-    "phaseId": "P140.7",
-    "title": "Final Validation",
+    "phaseId": "P141.1",
+    "title": "Contract / Policy / Safety Boundary",
     "status": "complete"
   },
   "next": {
-    "phaseId": "P141.2",
-    "title": "Control Model",
+    "phaseId": "P141.3",
+    "title": "Compliance Preview",
     "status": "planned"
   },
   "currentPhaseSummary": "Started P141 with a security, privacy, compliance, policy, evidence, and data-handling contract while all runtime authority remains blocked.",
-  "nextSubphase": "P141.2",
-  "currentSubphase": "P141.1",
-  "previousSubphase": "P140.7",
-  "commit": "3da28828",
-  "completedAt": "2026-05-31T06:15:00.000Z"
+  "nextSubphase": "P141.3",
+  "currentSubphase": "P141.2",
+  "previousSubphase": "P141.1",
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T07:10:00.000Z"
 }

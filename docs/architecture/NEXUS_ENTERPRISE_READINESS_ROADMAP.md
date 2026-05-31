@@ -61,8 +61,10 @@ P140.5 is now complete as aggregate tests/checkers only.
 P140.6 is now complete as docs/status closure only.
 P140.7 is now complete as final validation only. P140 is complete.
 P141.1 is now complete as a security/privacy/compliance contract only.
-P141.2 is the next executable subphase.
-P141.2-P141.7 and P142-P145 remain planned-only. They do not enable secret
+P141.2 is now complete as a read-only security/privacy/compliance control model
+only.
+P141.3 is the next executable subphase.
+P141.3-P141.7 and P142-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, backup
 creation, restore execution, failover, DB writes, provider/model calls, tool
@@ -170,8 +172,10 @@ P140.5 is now complete as aggregate tests/checkers only.
 P140.6 is now complete as docs/status closure only.
 P140.7 is now complete as final validation only. P140 is complete.
 P141.1 is now complete as a security/privacy/compliance contract only.
-P141.2 is the next executable subphase.
-P141.2-P141.7 and P142-P145 are planned-only backlog phases and must not be
+P141.2 is now complete as a read-only security/privacy/compliance control model
+only.
+P141.3 is the next executable subphase.
+P141.3-P141.7 and P142-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
