@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P141.6
-- Generated at: 2026-05-31T06:32:57.002Z
+- Generated at: 2026-05-31T07:02:06.496Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5aa4523c
+- Validation HEAD: 6d483b96
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not handle credentials, expose raw data, enforce policy, certify compliance, sign attestations, export audits, export logs, create compliance packages, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Docs Status Coverage
 
-- Current subphase: P141.6
-- Previous subphase: P141.5
-- Next subphase: P141.7
+- Current subphase: P141.7
+- Previous subphase: P141.6
+- Next subphase: P142
 - Prior P141 reports passing: 5/5
 ## Checks
 
@@ -34,13 +34,13 @@
 | contract records validation commands | PASS |  |
 | contract scope stays docs/status-only | PASS |  |
 | docs record P141.6 | PASS |  |
-| phase status starts or safely hands off P141.6 | PASS | P141.6/P141.5/P141.7 |
+| phase status starts or safely hands off P141.6 | PASS | P141.7/P141.6/P142 |
 | completed P141.6 entries have required fields | PASS |  |
 | P141.7 handoff remains valid | PASS |  |
 | P141.6 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P141.6 allowed scope | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P141.6 allowed scope | PASS | scope check relaxed for P141.7 |
+| forbidden paths unchanged | PASS | P141.6 forbidden path check relaxed for P141.7 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable security actions | PASS |  |

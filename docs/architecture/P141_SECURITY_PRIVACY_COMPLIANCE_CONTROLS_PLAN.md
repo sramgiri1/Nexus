@@ -968,6 +968,138 @@ Safety result:
 
 ## P141.7 Final Validation
 
-Status: planned
+Status: complete
 
-P141.7 must close P141 with final validation and P142 planned-only handoff.
+P141.7 final validation closes P141 and keeps P142 planned-only. The work is
+validation-only: it proves prior P141 reports still pass, P141 status is
+complete, Command Center Compliance remains display-only, and no runtime
+authority was enabled.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Starting branch and base: `codex/nexus-e2e-phase-validation` at `6d483b96`.
+
+Narrow goal: Close P141 with final validation evidence and P142 planned-only
+handoff.
+
+Allowed files:
+
+- `package.json`
+- `contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `scripts/check-p1417-security-privacy-compliance-controls-final-validation.js`
+- `scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js`
+- `scripts/check-p1415-security-privacy-compliance-controls.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `dashboard/tests/routes.spec.js`
+- `docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- P141.7, P141.6 compatibility, enterprise readiness, OS status, and phase
+  validation reports
+
+Forbidden files:
+
+- `projects/**`
+- `generated-projects/**`
+- private project roots
+- `dashboard/src/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+
+- No runtime exports.
+- No DB schema, migration, persistence writer, or provider adapter.
+- P141.7 writes only validation report, status, docs, checker, and route-test
+  coverage data.
+
+Command Center UX requirements:
+
+- Preserve Compliance page as review-only with no runnable compliance actions.
+- OS Roadmap may show P141.7 final validation and P142 next-phase context.
+- Non-roadmap primary UX must not show P141.7 labels, raw JSON, raw logs, raw
+  policy dumps, credential values, private project IDs, or fake working actions.
+
+Dark/light/system theme requirements:
+
+- Preserve system, dark, and light theme route-wide tests.
+- Do not add theme-specific styling or dashboard source changes.
+
+Playwright tests:
+
+- Add P141.7 route coverage for Compliance and OS Roadmap.
+- Preserve route-wide safety coverage for theme switcher, raw dump prevention,
+  roadmap separation, and DemoApp isolation.
+
+Checker updates:
+
+- Add `scripts/check-p1417-security-privacy-compliance-controls-final-validation.js`.
+- Update enterprise readiness checker to accept P141.7 final state.
+- Confirm P141.6 checker accepts P141.7 final state.
+- Keep OS phase status checker recognizing P142 handoff.
+
+Docs / README / roadmap updates:
+
+- Mark P141.7 final validation complete.
+- Mark parent P141 complete.
+- Keep P142-P145 planned-only.
+
+Reports to regenerate:
+
+- `reports/p1417-security-privacy-compliance-controls-final-validation-report.md`
+- `reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+OS phase status update:
+
+- P141 complete.
+- P141.7 complete.
+- Current phase/subphase is P141.7.
+- Previous phase/subphase is P141.6.
+- Next phase is P142 planned-only.
+
+Known risks:
+
+- P141.7 must not be mistaken for live compliance certification, credential
+  handling, runtime policy enforcement, audit export, or compliance package
+  creation.
+
+Rollback plan:
+
+- Revert the P141.7 implementation commit and stamp commit.
+- Restore P141.6 as current phase and rerun the P141.6 validation stack.
+
+Validation commands:
+
+- `npm run check:p1417-security-privacy-compliance-controls-final-validation`
+- `npm run check:p1416-security-privacy-compliance-controls-docs-roadmap`
+- `npm run check:p1415-security-privacy-compliance-controls`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P141.7|Compliance|Command Center route-wide UX"`
+- `git diff --check`
+
+Safety result:
+
+- No credential handling, raw data exposure, runtime policy enforcement,
+  certification, legal attestation, audit export, raw log export, compliance
+  package creation, DB/runtime write, live CRUD, provider/model call, tool
+  execution, MCP startup, agent dispatch, project mutation, deploy, release,
+  export, package, network call, or spend authority was enabled.

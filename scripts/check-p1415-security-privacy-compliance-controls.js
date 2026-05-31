@@ -170,6 +170,24 @@ const p1416CurrentState =
   && ["P141.1", "P141.2", "P141.3", "P141.4", "P141.5", "P141.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P141.7")?.status === "planned"
   && roadmapById.get("P141.7")?.status === "planned";
+const p1417FinalState =
+  status.currentPhase === "P141.7"
+  && status.previousPhase === "P141.6"
+  && status.nextPhase === "P142"
+  && roadmap.currentPhase === "P141.7"
+  && roadmap.previousPhase === "P141.6"
+  && roadmap.nextPhase === "P142"
+  && status.current?.phaseId === "P141.7"
+  && status.previous?.phaseId === "P141.6"
+  && status.next?.phaseId === "P142"
+  && roadmap.current?.phaseId === "P141.7"
+  && roadmap.previous?.phaseId === "P141.6"
+  && roadmap.next?.phaseId === "P142"
+  && statusById.get("P141")?.status === "complete"
+  && roadmapById.get("P141")?.status === "complete"
+  && ["P141.1", "P141.2", "P141.3", "P141.4", "P141.5", "P141.6", "P141.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P142")?.status === "planned"
+  && roadmapById.get("P142")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1415-security-privacy-compliance-controls.js");
 addCheck("P141.6 checker registered", packageJson.scripts?.[NEXT_SCRIPT] === "node scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js");
@@ -182,9 +200,9 @@ addCheck("Compliance display remains public-safe", !/(?:project|private|token|te
 addCheck("Compliance display has no fake runnable actions", !/certify now|attest now|export audit now|create package now|enforce policy now|handle credentials now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|deploy now|release now|package now|execute now|spend now/i.test(displayBundle));
 addCheck("Playwright aggregate coverage added", routeTests.includes("P141.5 security privacy compliance aggregate coverage keeps Compliance review-only") && routeTests.includes("Security Preview Summary") && routeTests.includes("Policy enforcement disabled") && routeTests.includes("Credential handling disabled") && routeTests.includes("P141\\."));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
-addCheck("contract advances to P141.5 safely", contract.phaseId === "P141" && contract.status === "in_progress" && ((contract.currentSubphase === "P141.5" && contract.previousSubphase === "P141.4" && contract.nextSubphase === "P141.6") || (contract.currentSubphase === "P141.6" && contract.previousSubphase === "P141.5" && contract.nextSubphase === "P141.7")));
+addCheck("contract advances to P141.5 safely", contract.phaseId === "P141" && ((contract.status === "in_progress" && ((contract.currentSubphase === "P141.5" && contract.previousSubphase === "P141.4" && contract.nextSubphase === "P141.6") || (contract.currentSubphase === "P141.6" && contract.previousSubphase === "P141.5" && contract.nextSubphase === "P141.7"))) || (contract.status === "complete" && contract.currentSubphase === "P141.7" && contract.previousSubphase === "P141.6" && contract.nextSubphase === "P142")));
 addCheck("contract records expected base commit", p1415.expectedBaseCommit === EXPECTED_BASE_COMMIT);
-addCheck("P141.4 complete, P141.5 complete, next P141 state valid", p1414.status === "complete" && p1415.status === "complete" && (p1416.status === "planned" || (p1416.status === "complete" && p1417.status === "planned")));
+addCheck("P141.4 complete, P141.5 complete, next P141 state valid", p1414.status === "complete" && p1415.status === "complete" && (p1416.status === "planned" || (p1416.status === "complete" && (p1417.status === "planned" || p1417.status === "complete"))));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1415.validationCommands?.includes(command)));
 addCheck("P141.4 checker accepts P141.5", p1414Checker.includes("p1415CurrentState") && p1414Checker.includes('status.currentPhase === "P141.5"'));
 addCheck("P141.3 checker accepts P141.5", p1413Checker.includes("p1415CurrentState") && p1413Checker.includes('status.currentPhase === "P141.5"'));
@@ -196,10 +214,10 @@ addCheck("OS checker recognizes P141.6 handoff", ["P141.4", "P141.5", "P141.6", 
 addCheck("P141 plan records P141.5", /## P141\.5 Tests \/ Checkers[\s\S]*Status:\s+complete/.test(plan));
 addCheck("README records P141.5", /P141\.5 Tests \/ Checkers/i.test(readme));
 addCheck("platform roadmap records P141.5", /P141\.5 Tests \/ Checkers is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P141.5", /P141\.5 is now complete/i.test(enterpriseRoadmap) && (/P141\.6 is the next executable subphase/i.test(enterpriseRoadmap) || /P141\.7 is the next executable subphase/i.test(enterpriseRoadmap)));
-addCheck("phase status advances to P141.5", p1415CurrentState || p1416CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P141.5", /P141\.5 is now complete/i.test(enterpriseRoadmap) && (/P141\.6 is the next executable subphase/i.test(enterpriseRoadmap) || /P141\.7 is the next executable subphase/i.test(enterpriseRoadmap) || /P142 is the next executable phase/i.test(enterpriseRoadmap)));
+addCheck("phase status advances to P141.5", p1415CurrentState || p1416CurrentState || p1417FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P141.5 entries have required fields", [statusById.get("P141"), statusById.get("P141.5"), roadmapById.get("P141"), roadmapById.get("P141.5")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P141.6 handoff remains valid", (p1415CurrentState && statusById.get("P141.6")?.status === "planned" && roadmapById.get("P141.6")?.status === "planned" && !(statusById.get("P141.6")?.checksRun || []).length && !(roadmapById.get("P141.6")?.checksRun || []).length) || (p1416CurrentState && statusById.get("P141.7")?.status === "planned" && roadmapById.get("P141.7")?.status === "planned" && !(statusById.get("P141.7")?.checksRun || []).length && !(roadmapById.get("P141.7")?.checksRun || []).length));
+addCheck("P141.6 handoff remains valid", (p1415CurrentState && statusById.get("P141.6")?.status === "planned" && roadmapById.get("P141.6")?.status === "planned" && !(statusById.get("P141.6")?.checksRun || []).length && !(roadmapById.get("P141.6")?.checksRun || []).length) || (p1416CurrentState && statusById.get("P141.7")?.status === "planned" && roadmapById.get("P141.7")?.status === "planned" && !(statusById.get("P141.7")?.checksRun || []).length && !(roadmapById.get("P141.7")?.checksRun || []).length) || p1417FinalState);
 addCheck("changed files stay in P141.5 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix)) || file === "dashboard/tests/routes.spec.js"), changed.join(", "));
 addCheck("docs avoid raw private IDs", !/(?:project|private|token|tenant|workspace|founder|session|user|role|permission|access|secret|provider|tool|agent|memory|policy|backup|restore|runbook|storage|control|evidence|compliance)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(docsBundle));
@@ -235,7 +253,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P141.5 is tests/checkers hardening only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.6 may be complete when this compatibility checker runs; P141.7 remains planned-only until implemented.",
+      body: "- P141.5 is tests/checkers hardening only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.6 and P141.7 may be complete when this compatibility checker runs; P142 remains planned-only until implemented.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

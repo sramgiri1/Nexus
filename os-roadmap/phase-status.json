@@ -34253,15 +34253,15 @@
     {
       "phaseId": "P141",
       "title": "Security, Privacy, and Compliance Controls",
-      "status": "in_progress",
-      "currentSubphase": "P141.6",
-      "previousSubphase": "P141.5",
-      "nextSubphase": "P141.7",
+      "status": "complete",
+      "currentSubphase": "P141.7",
+      "previousSubphase": "P141.6",
+      "nextSubphase": "P142",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "28c34a71",
-      "summary": "P141.6 closes security, privacy, and compliance controls docs, roadmap, status, and checker handoff while runtime authority remains blocked.",
-      "detail": "P141.6 updates P141 docs, roadmap, OS status, checker handoff, and Playwright docs/status coverage without enabling credential handling, raw data exposure, policy enforcement, certification, attestation, audit export, log export, compliance package creation, DB writes, provider/model calls, tool execution, agent dispatch, project mutation, network calls, or spend.",
+      "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
+      "detail": "P141.7 verifies prior P141 reports, P141/P141.7 complete status, P142 planned-only handoff, Compliance display-only UX, route-wide safety coverage, and no runtime authority changes.",
       "allowedFiles": [
         "package.json",
         "dashboard/src/data/complianceReadiness.js",
@@ -35339,18 +35339,200 @@
         {
           "phaseId": "P141.7",
           "title": "Final Validation",
-          "status": "planned",
-          "branch": "",
-          "commit": "",
-          "completedAt": "",
-          "summary": "Planned-only until implemented under its own contract.",
-          "checksRun": [],
+          "status": "complete",
+          "branch": "codex/nexus-e2e-phase-validation",
+          "commit": "pending-final-commit",
+          "completedAt": "2026-05-31T10:45:00.000Z",
+          "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
+          "checksRun": [
+            "npm run check:p1417-security-privacy-compliance-controls-final-validation",
+            "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
+            "npm run check:p1415-security-privacy-compliance-controls",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
+            "git diff --check"
+          ],
           "knownLimitations": [
-            "Planned-only until implemented under its own contract."
+            "P141.7 is final validation only. It closes P141 but does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142 remains planned-only."
           ],
           "previousPhase": "P141.6",
           "nextPhase": "P142",
-          "commandCenterVisible": true
+          "commandCenterVisible": true,
+          "scopeClassification": "NEXUS_OS_CHANGE",
+          "narrowGoal": "Close P141 with final validation evidence and P142 planned-only handoff.",
+          "order": 177.7,
+          "expectedBaseCommit": "6d483b96",
+          "allowedFiles": [
+            "package.json",
+            "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "scripts/check-p1417-security-privacy-compliance-controls-final-validation.js",
+            "scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js",
+            "scripts/check-p1415-security-privacy-compliance-controls.js",
+            "scripts/check-enterprise-readiness-roadmap.js",
+            "scripts/check-os-phase-status.js",
+            "dashboard/tests/routes.spec.js",
+            "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "README.md",
+            "reports/p1417-security-privacy-compliance-controls-final-validation-report.md",
+            "reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md",
+            "reports/p1415-security-privacy-compliance-controls-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "forbiddenFiles": [
+            "projects/**",
+            "generated-projects/**",
+            "private project roots",
+            "dashboard/src/**",
+            "db/**",
+            "local-state/runtime/**",
+            "providers/**",
+            "tools/**",
+            "worker-runtime/**",
+            "deploy/**",
+            "release/**",
+            "exports/**",
+            "packages/**",
+            ".env*"
+          ],
+          "exactFilesToCreateOrUpdate": [
+            "package.json",
+            "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "scripts/check-p1417-security-privacy-compliance-controls-final-validation.js",
+            "scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js",
+            "scripts/check-p1415-security-privacy-compliance-controls.js",
+            "scripts/check-enterprise-readiness-roadmap.js",
+            "scripts/check-os-phase-status.js",
+            "dashboard/tests/routes.spec.js",
+            "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "README.md",
+            "reports/p1417-security-privacy-compliance-controls-final-validation-report.md",
+            "reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md",
+            "reports/p1415-security-privacy-compliance-controls-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "expectedExports": [],
+          "dataShape": "Final validation, status, report, checker, docs, and route-test coverage only. No runtime exports or authority changes.",
+          "commandCenterUxRequirements": [
+            "Preserve Compliance page as review-only with no runnable compliance actions.",
+            "OS Roadmap may show P141.7 final validation and P142 next-phase context.",
+            "Primary UX must not show raw JSON, raw logs, raw policy dumps, credential values, private project IDs, or fake working actions.",
+            "P142 remains planned-only until its own implementation-grade subphase."
+          ],
+          "themeRequirements": [
+            "Preserve system, dark, and light theme route-wide tests.",
+            "Do not add theme-specific styling or dashboard source changes."
+          ],
+          "playwrightTests": [
+            "Add route test for P141.7 final validation on Compliance and OS Roadmap.",
+            "Preserve route-wide safety coverage for theme switcher, raw dump prevention, roadmap separation, and demo-surface isolation."
+          ],
+          "checkerUpdates": [
+            "Add P141.7 final validation checker.",
+            "Update enterprise readiness checker to accept P141.7 final state.",
+            "Confirm P141.6 checker accepts P141.7 final state.",
+            "Keep OS phase status checker recognizing P142 handoff."
+          ],
+          "docsUpdates": [
+            "Mark P141.7 complete in P141 plan.",
+            "Mark P141 complete in enterprise roadmap, platform roadmap, and README.",
+            "Keep P142-P145 planned-only."
+          ],
+          "reportsToRegenerate": [
+            "reports/p1417-security-privacy-compliance-controls-final-validation-report.md",
+            "reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "osPhaseStatusUpdate": {
+            "phaseId": "P141.7",
+            "title": "Final Validation",
+            "status": "complete",
+            "branch": "codex/nexus-e2e-phase-validation",
+            "commit": "pending-final-commit",
+            "completedAt": "2026-05-31T10:45:00.000Z",
+            "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
+            "checksRun": [
+              "npm run check:p1417-security-privacy-compliance-controls-final-validation",
+              "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
+              "npm run check:p1415-security-privacy-compliance-controls",
+              "npm run check:enterprise-readiness-roadmap",
+              "npm run check:os-phase-status",
+              "npm run check:phase-validation-coverage",
+              "cd dashboard && npm run build",
+              "cd dashboard && npm run test:unit",
+              "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
+              "git diff --check"
+            ],
+            "knownLimitations": [
+              "P141.7 is final validation only. It closes P141 but does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142 remains planned-only."
+            ],
+            "nextPhase": "P142",
+            "commandCenterVisible": true
+          },
+          "validationCommands": [
+            "npm run check:p1417-security-privacy-compliance-controls-final-validation",
+            "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
+            "npm run check:p1415-security-privacy-compliance-controls",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "finalSafetyChecks": [
+            "No project files changed.",
+            "No dashboard source files changed.",
+            "No provider/model/tool/agent/project mutation, DB write, deploy, release, export, package, network, or spend authority added.",
+            "No raw/private IDs, raw dumps, stale phase status, or fake runnable compliance actions added.",
+            "P142 remains planned-only with empty checks until its own subphase."
+          ],
+          "gitCommands": [
+            "git add <allowed P141.7 files only>",
+            "git commit -m \"chore(nexus): implement p1417 compliance final validation\"",
+            "stamp pending-final-commit with implementation commit hash",
+            "git add <stamp files and refreshed reports>",
+            "git commit -m \"chore(nexus): stamp p1417 compliance final validation\"",
+            "git push origin codex/nexus-e2e-phase-validation"
+          ],
+          "finalResponseChecklist": [
+            "Branch name",
+            "Commit hash",
+            "Files changed",
+            "What was implemented",
+            "Command Center UX changes",
+            "Tests added/updated/removed",
+            "Checker results",
+            "Dashboard build/unit/page results",
+            "Docs/README/roadmap updates",
+            "OS phase status update",
+            "Evidence/audit/activity/cost records if applicable",
+            "Safety confirmations",
+            "Forbidden paths confirmation",
+            "Known limitations",
+            "Next phase/subphase"
+          ],
+          "detail": "P141.7 verifies prior P141 reports, P141/P141.7 complete status, P142 planned-only handoff, Compliance display-only UX, route-wide safety coverage, and no runtime authority changes.",
+          "track": "NEXUS_OS",
+          "label": "Final Validation"
         }
       ],
       "current": {
@@ -35391,8 +35573,8 @@
         "title": "Tests / Checkers",
         "status": "planned"
       },
-      "commit": "5aa4523c",
-      "completedAt": "2026-05-31T10:20:00.000Z",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T10:45:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
       "order": 177,
@@ -35400,6 +35582,7 @@
       "nextPhase": "P142",
       "branch": "codex/nexus-e2e-phase-validation",
       "checksRun": [
+        "npm run check:p1417-security-privacy-compliance-controls-final-validation",
         "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
         "npm run check:p1415-security-privacy-compliance-controls",
         "npm run check:enterprise-readiness-roadmap",
@@ -35407,11 +35590,11 @@
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
-        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.6|Compliance|Command Center route-wide UX\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P141.6 is docs/status/checker closure only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.7 remains planned-only."
+        "P141.7 is final validation only. It closes P141 but does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142 remains planned-only."
       ],
       "commandCenterVisible": true
     },
@@ -36631,18 +36814,200 @@
     {
       "phaseId": "P141.7",
       "title": "Final Validation",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned-only until implemented under its own contract.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T10:45:00.000Z",
+      "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
+      "checksRun": [
+        "npm run check:p1417-security-privacy-compliance-controls-final-validation",
+        "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
+        "npm run check:p1415-security-privacy-compliance-controls",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned-only until implemented under its own contract."
+        "P141.7 is final validation only. It closes P141 but does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142 remains planned-only."
       ],
       "previousPhase": "P141.6",
       "nextPhase": "P142",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Close P141 with final validation evidence and P142 planned-only handoff.",
+      "order": 177.7,
+      "expectedBaseCommit": "6d483b96",
+      "allowedFiles": [
+        "package.json",
+        "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "scripts/check-p1417-security-privacy-compliance-controls-final-validation.js",
+        "scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js",
+        "scripts/check-p1415-security-privacy-compliance-controls.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "reports/p1417-security-privacy-compliance-controls-final-validation-report.md",
+        "reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md",
+        "reports/p1415-security-privacy-compliance-controls-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "private project roots",
+        "dashboard/src/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "scripts/check-p1417-security-privacy-compliance-controls-final-validation.js",
+        "scripts/check-p1416-security-privacy-compliance-controls-docs-roadmap.js",
+        "scripts/check-p1415-security-privacy-compliance-controls.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "reports/p1417-security-privacy-compliance-controls-final-validation-report.md",
+        "reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md",
+        "reports/p1415-security-privacy-compliance-controls-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "dataShape": "Final validation, status, report, checker, docs, and route-test coverage only. No runtime exports or authority changes.",
+      "commandCenterUxRequirements": [
+        "Preserve Compliance page as review-only with no runnable compliance actions.",
+        "OS Roadmap may show P141.7 final validation and P142 next-phase context.",
+        "Primary UX must not show raw JSON, raw logs, raw policy dumps, credential values, private project IDs, or fake working actions.",
+        "P142 remains planned-only until its own implementation-grade subphase."
+      ],
+      "themeRequirements": [
+        "Preserve system, dark, and light theme route-wide tests.",
+        "Do not add theme-specific styling or dashboard source changes."
+      ],
+      "playwrightTests": [
+        "Add route test for P141.7 final validation on Compliance and OS Roadmap.",
+        "Preserve route-wide safety coverage for theme switcher, raw dump prevention, roadmap separation, and demo-surface isolation."
+      ],
+      "checkerUpdates": [
+        "Add P141.7 final validation checker.",
+        "Update enterprise readiness checker to accept P141.7 final state.",
+        "Confirm P141.6 checker accepts P141.7 final state.",
+        "Keep OS phase status checker recognizing P142 handoff."
+      ],
+      "docsUpdates": [
+        "Mark P141.7 complete in P141 plan.",
+        "Mark P141 complete in enterprise roadmap, platform roadmap, and README.",
+        "Keep P142-P145 planned-only."
+      ],
+      "reportsToRegenerate": [
+        "reports/p1417-security-privacy-compliance-controls-final-validation-report.md",
+        "reports/p1416-security-privacy-compliance-controls-docs-roadmap-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": {
+        "phaseId": "P141.7",
+        "title": "Final Validation",
+        "status": "complete",
+        "branch": "codex/nexus-e2e-phase-validation",
+        "commit": "pending-final-commit",
+        "completedAt": "2026-05-31T10:45:00.000Z",
+        "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
+        "checksRun": [
+          "npm run check:p1417-security-privacy-compliance-controls-final-validation",
+          "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
+          "npm run check:p1415-security-privacy-compliance-controls",
+          "npm run check:enterprise-readiness-roadmap",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npm run test:unit",
+          "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
+          "git diff --check"
+        ],
+        "knownLimitations": [
+          "P141.7 is final validation only. It closes P141 but does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142 remains planned-only."
+        ],
+        "nextPhase": "P142",
+        "commandCenterVisible": true
+      },
+      "validationCommands": [
+        "npm run check:p1417-security-privacy-compliance-controls-final-validation",
+        "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
+        "npm run check:p1415-security-privacy-compliance-controls",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No project files changed.",
+        "No dashboard source files changed.",
+        "No provider/model/tool/agent/project mutation, DB write, deploy, release, export, package, network, or spend authority added.",
+        "No raw/private IDs, raw dumps, stale phase status, or fake runnable compliance actions added.",
+        "P142 remains planned-only with empty checks until its own subphase."
+      ],
+      "gitCommands": [
+        "git add <allowed P141.7 files only>",
+        "git commit -m \"chore(nexus): implement p1417 compliance final validation\"",
+        "stamp pending-final-commit with implementation commit hash",
+        "git add <stamp files and refreshed reports>",
+        "git commit -m \"chore(nexus): stamp p1417 compliance final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "detail": "P141.7 verifies prior P141 reports, P141/P141.7 complete status, P142 planned-only handoff, Compliance display-only UX, route-wide safety coverage, and no runtime authority changes.",
+      "track": "NEXUS_OS",
+      "label": "Final Validation"
     },
     {
       "track": "NEXUS_OS",
@@ -37430,20 +37795,21 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-31T08:20:00.000Z",
-  "currentPhase": "P141.6",
-  "previousPhase": "P141.5",
-  "nextPhase": "P141.7",
+  "updatedAt": "2026-05-31T10:45:00.000Z",
+  "currentPhase": "P141.7",
+  "previousPhase": "P141.6",
+  "nextPhase": "P142",
   "currentPhaseStatus": "complete",
   "current": {
-    "phaseId": "P141.6",
-    "title": "Docs / Roadmap / Status",
+    "phaseId": "P141.7",
+    "title": "Final Validation",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "5aa4523c",
-    "completedAt": "2026-05-31T10:20:00.000Z",
-    "summary": "P141.6 closes security, privacy, and compliance controls docs, roadmap, status, and checker handoff while runtime authority remains blocked.",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-31T10:45:00.000Z",
+    "summary": "P141.7 final validation closes security, privacy, and compliance controls and hands off to P142 planned-only.",
     "checksRun": [
+      "npm run check:p1417-security-privacy-compliance-controls-final-validation",
       "npm run check:p1416-security-privacy-compliance-controls-docs-roadmap",
       "npm run check:p1415-security-privacy-compliance-controls",
       "npm run check:enterprise-readiness-roadmap",
@@ -37451,240 +37817,33 @@
       "npm run check:phase-validation-coverage",
       "cd dashboard && npm run build",
       "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.6|Compliance|Command Center route-wide UX\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P141.7|Compliance|Command Center route-wide UX\"",
       "git diff --check"
     ],
     "knownLimitations": [
-      "P141.6 is docs/status/checker closure only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.7 remains planned-only."
+      "P141.7 is final validation only. It closes P141 but does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export raw logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P142 remains planned-only."
     ],
-    "nextPhase": "P141.7",
-    "commandCenterVisible": true
+    "nextPhase": "P142",
+    "commandCenterVisible": true,
+    "track": "NEXUS_OS",
+    "label": "Final Validation"
   },
   "previous": {
-    "phaseId": "P141.5",
-    "title": "Tests / Checkers",
-    "status": "complete",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "narrowGoal": "Harden P141 checker, route, docs, and safety coverage.",
-    "previousPhase": "P141.4",
-    "nextPhase": "P141.6",
-    "order": 177.5,
-    "commandCenterVisible": true,
-    "knownLimitations": [
-      "P141.5 is tests/checkers hardening only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.6-P141.7 remain planned-only."
-    ],
-    "track": "NEXUS_OS",
-    "label": "Tests / Checkers",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "68bf503c",
-    "completedAt": "2026-05-31T09:10:00.000Z",
-    "checksRun": [
-      "npm run check:p1415-security-privacy-compliance-controls",
-      "npm run check:p1414-security-privacy-compliance-controls",
-      "npm run check:p1413-security-privacy-compliance-controls",
-      "npm run check:p1412-security-privacy-compliance-controls",
-      "npm run check:p1411-security-privacy-compliance-controls",
-      "npm run check:p1407-backup-recovery-dr-final-validation",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Compliance|Auth Governance|safety center|Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "expectedBaseCommit": "9baa0e1d",
-    "allowedFiles": [
-      "package.json",
-      "dashboard/tests/routes.spec.js",
-      "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
-      "scripts/check-p1415-security-privacy-compliance-controls.js",
-      "scripts/check-p1414-security-privacy-compliance-controls.js",
-      "scripts/check-p1413-security-privacy-compliance-controls.js",
-      "scripts/check-p1412-security-privacy-compliance-controls.js",
-      "scripts/check-p1411-security-privacy-compliance-controls.js",
-      "scripts/check-p1407-backup-recovery-dr-final-validation.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "scripts/check-os-phase-status.js",
-      "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1415-security-privacy-compliance-controls-report.md",
-      "reports/p1414-security-privacy-compliance-controls-report.md",
-      "reports/p1413-security-privacy-compliance-controls-report.md",
-      "reports/p1412-security-privacy-compliance-controls-report.md",
-      "reports/p1411-security-privacy-compliance-controls-report.md",
-      "reports/p1407-backup-recovery-dr-final-validation-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "forbiddenFiles": [
-      "projects/**",
-      "generated-projects/**",
-      "private project roots",
-      "dashboard/src/**",
-      "db/**",
-      "local-state/runtime/**",
-      "providers/**",
-      "tools/**",
-      "worker-runtime/**",
-      "deploy/**",
-      "release/**",
-      "exports/**",
-      "packages/**",
-      ".env*"
-    ],
-    "exactFilesToCreateOrUpdate": [
-      "package.json",
-      "dashboard/tests/routes.spec.js",
-      "contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json",
-      "scripts/check-p1415-security-privacy-compliance-controls.js",
-      "scripts/check-p1414-security-privacy-compliance-controls.js",
-      "scripts/check-p1413-security-privacy-compliance-controls.js",
-      "scripts/check-p1412-security-privacy-compliance-controls.js",
-      "scripts/check-p1411-security-privacy-compliance-controls.js",
-      "scripts/check-p1407-backup-recovery-dr-final-validation.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "scripts/check-os-phase-status.js",
-      "docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1415-security-privacy-compliance-controls-report.md",
-      "reports/p1414-security-privacy-compliance-controls-report.md",
-      "reports/p1413-security-privacy-compliance-controls-report.md",
-      "reports/p1412-security-privacy-compliance-controls-report.md",
-      "reports/p1411-security-privacy-compliance-controls-report.md",
-      "reports/p1407-backup-recovery-dr-final-validation-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "expectedExports": [],
-    "dataShape": "Aggregate checker and Playwright coverage only. Validates P141 reports, control model, preview model, Compliance UX display bundle, route-wide safety assertions, and P141.6 planned-only handoff without adding runtime exports.",
-    "commandCenterUxRequirements": [
-      "Compliance page remains display-safe and review-only.",
-      "Playwright coverage verifies Security Preview and Disabled Actions tabs.",
-      "Primary UX must not show raw JSON, raw logs, raw policy dumps, credential values, raw private IDs, internal phase labels, or demo surfaces.",
-      "No certification, attestation, audit export, package creation, policy enforcement, credential handling, DB/runtime, provider, tool, agent, project, deploy, release, export, package, network, or spend actions are enabled."
-    ],
-    "themeRequirements": [
-      "Preserve dark theme.",
-      "Preserve light theme.",
-      "Preserve system theme.",
-      "Validate route-wide theme switcher coverage remains passing."
-    ],
-    "playwrightTests": [
-      "Add P141.5 aggregate Compliance route coverage.",
-      "Verify Security Preview summary, preview rows, blocked rows, runnable action count, disabled certification/policy/credential actions, no raw IDs/dumps, no internal phase labels, and no runnable actions.",
-      "Preserve route-wide demo-surface, raw JSON, theme, navigation, OS Roadmap, and project milestone safety tests."
-    ],
-    "checkerUpdates": [
-      "Add scripts/check-p1415-security-privacy-compliance-controls.js.",
-      "Update P141.4, P141.3, P141.2, P141.1, and P140.7 compatibility checkers for P141.5 current state.",
-      "Update enterprise roadmap checker for P141.5 current state.",
-      "Update OS phase status checker for P141.6 handoff."
-    ],
-    "docsUpdates": [
-      "Update P141 security/privacy/compliance plan.",
-      "Update enterprise readiness roadmap.",
-      "Update platform roadmap.",
-      "Update README."
-    ],
-    "reportsToRegenerate": [
-      "reports/p1415-security-privacy-compliance-controls-report.md",
-      "reports/p1414-security-privacy-compliance-controls-report.md",
-      "reports/p1413-security-privacy-compliance-controls-report.md",
-      "reports/p1412-security-privacy-compliance-controls-report.md",
-      "reports/p1411-security-privacy-compliance-controls-report.md",
-      "reports/p1407-backup-recovery-dr-final-validation-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "osPhaseStatusUpdate": {
-      "parentPhase": "P141",
-      "parentStatus": "in_progress",
-      "currentPhase": "P141.5",
-      "previousPhase": "P141.4",
-      "nextPhase": "P141.6"
-    },
-    "validationCommands": [
-      "npm run check:p1415-security-privacy-compliance-controls",
-      "npm run check:p1414-security-privacy-compliance-controls",
-      "npm run check:p1413-security-privacy-compliance-controls",
-      "npm run check:p1412-security-privacy-compliance-controls",
-      "npm run check:p1411-security-privacy-compliance-controls",
-      "npm run check:p1407-backup-recovery-dr-final-validation",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Compliance|Auth Governance|safety center|Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "finalSafetyChecks": [
-      "No project or private project root files changed.",
-      "No dashboard source files changed; only route tests changed.",
-      "No demo surface leakage.",
-      "No raw/private IDs, raw dumps, or internal phase labels in primary UX.",
-      "No certification, attestation, export, policy enforcement, DB/runtime write, provider/model/tool/agent/project/deploy/release/package/network/spend authority enabled.",
-      "No stale placeholder commit marker remains after stamp commit."
-    ],
-    "gitCommands": [
-      "git add <P141.5 allowed files>",
-      "git commit -m \"chore(nexus): implement p1415 compliance tests checkers\"",
-      "git add <P141.5 status stamp files>",
-      "git commit -m \"chore(nexus): stamp p1415 compliance tests checkers\"",
-      "git push origin codex/nexus-e2e-phase-validation"
-    ],
-    "finalResponseChecklist": [
-      "Branch name",
-      "Commit hash",
-      "Files changed",
-      "What was implemented",
-      "Command Center UX changes",
-      "Tests added/updated/removed",
-      "Checker results",
-      "Dashboard build/unit/page results",
-      "Docs/README/roadmap updates",
-      "OS phase status update",
-      "Evidence/report records",
-      "Safety confirmations",
-      "Forbidden paths confirmation",
-      "Known limitations",
-      "Next phase/subphase"
-    ],
-    "summary": "Added aggregate tests/checkers for P141 security/privacy/compliance coverage while all runtime authority remains blocked.",
-    "detail": "P141.5 adds aggregate checker and Playwright coverage for prior P141 reports, models, Compliance UX safety, route-wide safety assertions, and P141.6 planned-only handoff without enabling certification, attestation, export, enforcement, DB writes, provider calls, tool execution, agent dispatch, project mutation, network calls, or spend."
+    "phaseId": "P141.6",
+    "title": "Docs / Roadmap / Status",
+    "status": "complete"
   },
   "next": {
-    "phaseId": "P141.7",
-    "title": "Final Validation",
-    "status": "planned",
-    "branch": "",
-    "commit": "",
-    "completedAt": "",
-    "summary": "Planned-only until implemented under its own contract.",
-    "checksRun": [],
-    "knownLimitations": [
-      "Planned-only until implemented under its own contract."
-    ],
-    "previousPhase": "P141.6",
-    "nextPhase": "P142",
-    "commandCenterVisible": true
+    "phaseId": "P142",
+    "title": "Admin Operations and Runtime Settings",
+    "status": "planned"
   },
   "currentPhaseSummary": "Surfaced the display-safe security/privacy/compliance preview in Compliance Command Center UX while all runtime authority remains blocked.",
   "nextSubphase": "P141.7",
   "currentSubphase": "P141.6",
   "previousSubphase": "P141.5",
-  "commit": "b9636f8d",
-  "completedAt": "2026-05-31T08:20:00.000Z"
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T10:45:00.000Z",
+  "branch": "codex/nexus-e2e-phase-validation",
+  "label": "Security, Privacy, and Compliance Controls"
 }

@@ -68,8 +68,9 @@ only.
 P141.4 is now complete as display-safe Compliance Command Center UX only.
 P141.5 is now complete as aggregate tests/checkers only.
 P141.6 is now complete as docs/status closure only.
-P141.7 is the next executable subphase.
-P141.7 and P142-P145 remain planned-only. They do not enable secret
+P141.7 is now complete as final validation only. P141 is complete.
+P142 is the next executable phase.
+P142-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, backup
 creation, restore execution, failover, DB writes, provider/model calls, tool
@@ -184,8 +185,9 @@ only.
 P141.4 is now complete as display-safe Compliance Command Center UX only.
 P141.5 is now complete as aggregate tests/checkers only.
 P141.6 is now complete as docs/status closure only.
-P141.7 is the next executable subphase.
-P141.7 and P142-P145 are planned-only backlog phases and must not be
+P141.7 is now complete as final validation only. P141 is complete.
+P142 is the next executable phase.
+P142-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
