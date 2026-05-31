@@ -872,7 +872,7 @@
         "known limitations",
         "next phase/subphase"
       ],
-      "commit": "pending-final-commit",
+      "commit": "77b6efa2",
       "checksRun": [
         "npm run check:p1454-enterprise-command-center-ux"
       ],
@@ -972,7 +972,7 @@
       "commandCenterVisible": true
     }
   ],
-  "commit": "pending-final-commit",
+  "commit": "77b6efa2",
   "completedAt": "2026-05-31T17:12:07.000Z",
   "checksRun": [
     "npm run check:p1451-enterprise-certification-ga-readiness",
