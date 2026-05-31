@@ -323,7 +323,7 @@
       "order": 177.1,
       "completedAt": "2026-05-31T06:15:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3da28828",
       "summary": "Started P141 with a security, privacy, compliance, policy, evidence, and data-handling contract while all runtime authority remains blocked.",
       "detail": "P141.1 is contract-only. P141.2 remains planned-only for the future control model.",
       "knownLimitations": [
@@ -421,7 +421,7 @@
     "title": "Contract / Policy / Safety Boundary",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "3da28828",
     "completedAt": "2026-05-31T06:15:00.000Z",
     "summary": "Started P141 with a security, privacy, compliance, policy, evidence, and data-handling contract while all runtime authority remains blocked.",
     "checksRun": [
@@ -451,6 +451,6 @@
     "title": "Control Model",
     "status": "planned"
   },
-  "commit": "pending-final-commit",
+  "commit": "3da28828",
   "completedAt": "2026-05-31T06:15:00.000Z"
 }

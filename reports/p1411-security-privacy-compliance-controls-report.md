@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P141.1
-- Generated at: 2026-05-31T04:32:58.043Z
+- Generated at: 2026-05-31T04:38:16.058Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 28c34a71
+- Validation HEAD: 3da28828
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -42,8 +42,8 @@
 | phase status starts P141.1 | PASS | P141.1/P140.7/P141.2 |
 | completed P141.1 entries have required fields | PASS |  |
 | P141.2 remains planned-only | PASS |  |
-| changed files stay in P141.1 allowed scope | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1407-backup-recovery-dr-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, reports/p1411-security-privacy-compliance-controls-report.md, scripts/check-p1411-security-privacy-compliance-controls.js |
-| forbidden paths unchanged | PASS | README.md, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1407-backup-recovery-dr-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, reports/p1411-security-privacy-compliance-controls-report.md, scripts/check-p1411-security-privacy-compliance-controls.js |
+| changed files stay in P141.1 allowed scope | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | existing Command Center compliance UX remains display-only | PASS |  |
 | security boundary evidence remains deny-by-default | PASS |  |
 | route-wide security/compliance coverage retained | PASS |  |
