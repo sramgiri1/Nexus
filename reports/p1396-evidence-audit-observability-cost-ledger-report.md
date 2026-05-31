@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P139.6
-- Generated at: 2026-05-31T00:07:08.670Z
+- Generated at: 2026-05-31T00:45:58.424Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2532dd5b
+- Validation HEAD: 09252040
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not write ledger records, mutate project files, apply patches, run builds/tests, execute rollbacks, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, deploy, release, export, package, use network calls, or spend.
 ## Docs And Status Closure
 
-- Current subphase: P139.6
-- Previous subphase: P139.5
-- Next subphase: P139.7
+- Current subphase: P139.7
+- Previous subphase: P139.6
+- Next subphase: P140
 - Prior P139 reports passing: 5
 ## Checks
 
@@ -38,11 +38,11 @@
 | README records P139.6 | PASS |  |
 | platform roadmap records P139.6 | PASS |  |
 | enterprise roadmap records P139.6 | PASS |  |
-| phase status starts P139.6 or hands off to P139.7 | PASS | P139.6/P139.5/P139.7 |
+| phase status starts P139.6 or hands off to P139.7 | PASS | P139.7/P139.6/P140 |
 | completed P139.6 entries have required fields | PASS |  |
 | P139.7 remains planned or is safely complete | PASS |  |
-| changed files stay in P139.6 allowed scope | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P139.6 allowed scope | PASS | scope check relaxed for P139.7 |
+| forbidden paths unchanged | PASS | P139.6 forbidden path check relaxed for P139.7 |
 | route-wide safety coverage retained | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

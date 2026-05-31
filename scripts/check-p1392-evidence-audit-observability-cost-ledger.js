@@ -187,7 +187,28 @@ const p1396CurrentState =
   && ["P139.1", "P139.2", "P139.3", "P139.4", "P139.5", "P139.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P139.7")?.status === "planned"
   && roadmapById.get("P139.7")?.status === "planned";
-const p1392OrLaterState = p1392CurrentState || p1393CurrentState || p1396CurrentState;
+const p1397FinalState =
+  status.currentPhase === "P139.7"
+  && status.previousPhase === "P139.6"
+  && status.nextPhase === "P140"
+  && roadmap.currentPhase === "P139.7"
+  && roadmap.previousPhase === "P139.6"
+  && roadmap.nextPhase === "P140"
+  && status.current?.phaseId === "P139.7"
+  && status.previous?.phaseId === "P139.6"
+  && status.next?.phaseId === "P140"
+  && roadmap.current?.phaseId === "P139.7"
+  && roadmap.previous?.phaseId === "P139.6"
+  && roadmap.next?.phaseId === "P140"
+  && statusById.get("P138")?.status === "complete"
+  && roadmapById.get("P138")?.status === "complete"
+  && statusById.get("P139")?.status === "complete"
+  && roadmapById.get("P139")?.status === "complete"
+  && ["P139.1", "P139.2", "P139.3", "P139.4", "P139.5", "P139.6", "P139.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P140")?.status === "planned"
+  && roadmapById.get("P140")?.status === "planned";
+
+const p1392OrLaterState = p1392CurrentState || p1393CurrentState || p1396CurrentState || p1397FinalState;
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1392-evidence-audit-observability-cost-ledger.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -208,7 +229,7 @@ addCheck("result envelope passes", envelope.ok === true && envelope.status === "
 addCheck("ledger model has useful trace records", model.ledgerRecords.length >= 3 && model.ledgerSummary.recordCount === model.ledgerRecords.length && model.evidenceRefs.length > 0 && model.auditRefs.length > 0 && model.activityRefs.length > 0 && model.observabilityRefs.length > 0);
 addCheck("all authority flags remain blocked", EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_SAFETY_FLAG_NAMES.every((flag) => model[flag] === false && model.safetyFlags?.[flag] === false));
 addCheck("cost model remains zero-spend", model.costSummary.estimatedUsd === 0 && model.costSummary.actualUsd === 0 && model.providerSpendAllowed === false);
-addCheck("contract advances P139.2 safely", contract.phaseId === "P139" && contract.status === "in_progress" && ["P139.2", "P139.3", "P139.6"].includes(contract.currentSubphase) && ["P139.1", "P139.2", "P139.5"].includes(contract.previousSubphase) && ["P139.3", "P139.4", "P139.7"].includes(contract.nextSubphase));
+addCheck("contract advances P139.2 safely", contract.phaseId === "P139" && ((contract.status === "in_progress" && ["P139.2", "P139.3", "P139.6"].includes(contract.currentSubphase) && ["P139.1", "P139.2", "P139.5"].includes(contract.previousSubphase) && ["P139.3", "P139.4", "P139.7"].includes(contract.nextSubphase)) || (contract.status === "complete" && contract.currentSubphase === "P139.7" && contract.previousSubphase === "P139.6" && contract.nextSubphase === "P140")));
 addCheck("contract records expected base commit", contract.expectedBaseCommit === "afe98694" && p1392.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("P139.2 complete and P139.3 handoff known", p1392.status === "complete" && ["planned", "complete"].includes(p1393.status) && p1392.nextPhase === "P139.3");
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1392.expectedExports?.includes(entry)));
@@ -222,7 +243,7 @@ addCheck("platform roadmap records P139.2", /P139\.2 evidence, audit, observabil
 addCheck("enterprise roadmap records P139.2", /P139\.2 is now complete/i.test(enterpriseRoadmap) && (/P139\.3 is the next executable subphase/i.test(enterpriseRoadmap) || /P139\.3 is now complete/i.test(enterpriseRoadmap)));
 addCheck("phase status keeps P139.2 complete", p1392OrLaterState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P139.2 entries have required fields", [statusById.get("P139"), statusById.get("P139.2"), roadmapById.get("P139"), roadmapById.get("P139.2")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P139.3 handoff remains valid", (p1392CurrentState && statusById.get("P139.3")?.status === "planned" && roadmapById.get("P139.3")?.status === "planned" && !(statusById.get("P139.3")?.checksRun || []).length) || p1393CurrentState || p1396CurrentState);
+addCheck("P139.3 handoff remains valid", (p1392CurrentState && statusById.get("P139.3")?.status === "planned" && roadmapById.get("P139.3")?.status === "planned" && !(statusById.get("P139.3")?.checksRun || []).length) || p1393CurrentState || p1396CurrentState || p1397FinalState);
 addCheck("changed files stay in P139.2 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || changed.every((file) => !forbiddenPrefixes.some((prefix) => file.startsWith(prefix))), enforceCurrentDiffScope ? changed.join(", ") : `P139.2 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("route-wide safety coverage retained", ["Command Center route-wide UX", "DemoApp", "raw JSON", "private-project", "dispatch agent now", "Use system theme", "Use dark theme", "Use light theme"].every((text) => routeTests.includes(text)));

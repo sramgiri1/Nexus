@@ -1140,8 +1140,152 @@ Final response checklist:
 
 ## P139.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: Final P139 validation across reports, checker compatibility,
 docs/status closure, route-wide Command Center safety, and planned-only P140
 handoff.
+
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch and expected base commit:
+- Branch: `codex/nexus-e2e-phase-validation`
+- Expected base commit: `09252040`
+
+Allowed files:
+- `package.json`
+- `scripts/check-p1391-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1392-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1393-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1394-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1395-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1396-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-p1397-evidence-audit-observability-cost-ledger.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `contracts/os-roadmap/p139-evidence-audit-observability-cost-ledger-contracts.json`
+- `docs/architecture/P139_EVIDENCE_AUDIT_OBSERVABILITY_COST_LEDGER_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1391-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1392-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1393-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1394-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1395-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1396-evidence-audit-observability-cost-ledger-report.md`
+- `reports/p1397-evidence-audit-observability-cost-ledger-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `generated-projects/**`
+- Private project roots
+- `dashboard/src/**`
+- `dashboard/tests/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- No new runtime exports.
+- No new dashboard data shape.
+- No DB schema.
+- Final validation only: checker, report, docs, and status updates.
+
+Command Center UX requirements:
+- No Command Center source changes.
+- Preserve the existing read-only ledger UX and Observability ledger tab.
+- Keep Chat with NEXUS and Lite clean.
+- Do not expose raw JSON, raw logs, raw policy dumps, raw ledger payloads, raw
+  private project IDs, or demo app content in full Command Center.
+- Do not add fake runnable actions.
+
+Dark/light/system theme requirements:
+- No theme source changes.
+- Route-wide system, dark, and light theme tests must continue to pass.
+
+Tests/checkers:
+- Added `check:p1397-evidence-audit-observability-cost-ledger`.
+- Updated P139.1-P139.6 checkers to accept the P139.7 final state.
+- Updated enterprise readiness checker to accept the P139.7 final state and
+  P140 planned-only handoff.
+- Reused `shared/reportWriter.js` and `shared/checkResultFormatter.js`.
+
+Docs/roadmap:
+- Updated this P139 plan.
+- Updated README.
+- Updated platform roadmap.
+- Updated enterprise readiness roadmap.
+- Updated OS phase status and phase index.
+- Regenerated P139.1-P139.7, enterprise readiness, OS status, and phase
+  validation reports.
+
+OS phase status update:
+- P139 parent is complete.
+- P139.1-P139.7 are complete.
+- Current phase/subphase is P139.7.
+- Previous phase/subphase is P139.6.
+- Next phase is P140.
+- P140 remains planned-only next.
+
+Validation commands:
+- `npm run check:p1397-evidence-audit-observability-cost-ledger`
+- `npm run check:p1396-evidence-audit-observability-cost-ledger`
+- `npm run check:p1395-evidence-audit-observability-cost-ledger`
+- `npm run check:p1394-evidence-audit-observability-cost-ledger`
+- `npm run check:p1393-evidence-audit-observability-cost-ledger`
+- `npm run check:p1392-evidence-audit-observability-cost-ledger`
+- `npm run check:p1391-evidence-audit-observability-cost-ledger`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P139.4"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No project, generated project, private project root, dashboard source/test,
+  DB/runtime state, provider, tool, worker runtime, deploy, release, export,
+  package, or env changes.
+- No ledger writes, DB/runtime writes, live CRUD, provider/model calls, tool
+  execution, MCP startup, agent dispatch, project mutation, patch application,
+  build/test execution, rollback execution, deploy, release, export, package,
+  network calls, or spend.
+- No stale P139.7 pending marker remains after the stamp commit.
+
+Git add/commit/push commands:
+- `git add <P139.7 allowed files>`
+- `git commit -m "chore(nexus): implement p1397 evidence audit observability cost ledger"`
+- `git add <P139.7 status stamp files>`
+- `git commit -m "chore(nexus): stamp p1397 evidence audit observability cost ledger"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist:
+- Branch name
+- Commit hash
+- Files changed
+- What was implemented
+- Command Center UX changes
+- Tests/checkers run
+- Dashboard build/unit/page results
+- Docs/README/roadmap updates
+- OS phase status update
+- Evidence/report records
+- Safety confirmations
+- Forbidden paths confirmation
+- Known limitations
+- Next phase/subphase
