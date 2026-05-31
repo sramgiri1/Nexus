@@ -757,6 +757,7 @@ export const OS_ROADMAP_TABS = [
 
 export const COST_CENTER_TABS = [
   { id: "overview", label: "Overview", description: "Cost readiness, budget posture, and disabled spend", badge: "Preview" },
+  { id: "customer-ops", label: "Customer Ops", description: "Display-only billing and customer operation readiness", badge: "Read-only" },
   { id: "budgets", label: "Budgets", description: "Budget scopes and approval thresholds", badge: "Ready" },
   { id: "estimates", label: "Estimates", description: "Estimate-before-run preview records", badge: "Preview" },
   { id: "ledger", label: "Ledger", description: "Redacted cost ledger preview", badge: "Read-only" },

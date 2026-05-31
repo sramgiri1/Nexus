@@ -815,7 +815,8 @@
     "check:p1437-release-deploy-export-package-pipeline-final-validation": "node scripts/check-p1437-release-deploy-export-package-pipeline-final-validation.js",
     "check:p1441-billing-metering-customer-operations": "node scripts/check-p1441-billing-metering-customer-operations.js",
     "check:p1442-billing-metering-customer-operations": "node scripts/check-p1442-billing-metering-customer-operations.js",
-    "check:p1443-billing-metering-customer-operations": "node scripts/check-p1443-billing-metering-customer-operations.js"
+    "check:p1443-billing-metering-customer-operations": "node scripts/check-p1443-billing-metering-customer-operations.js",
+    "check:p1444-billing-metering-customer-operations": "node scripts/check-p1444-billing-metering-customer-operations.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -2,39 +2,40 @@
   "phaseId": "P144",
   "title": "Billing, Metering, and Customer Operations",
   "status": "in_progress",
-  "currentSubphase": "P144.3",
-  "previousSubphase": "P144.2",
-  "nextSubphase": "P144.4",
+  "currentSubphase": "P144.4",
+  "previousSubphase": "P144.3",
+  "nextSubphase": "P144.5",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
   "expectedBaseCommit": "5034d56a",
-  "summary": "P144 billing, metering, and customer operations now includes P144.1 Contract / Policy / Safety Boundary, P144.2 Billing and Meter Model, and P144.3 Billing Preview completion while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
-  "detail": "P144.3 maps P144.2 model rows into display-safe preview rows with null executable payloads, blocked authority flags, docs/status handoff, and P144.4 planned-only next.",
+  "summary": "P144 billing, metering, and customer operations now includes P144.4 Cost Center Customer Ops UX while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
+  "detail": "P144.4 renders P144.3 preview rows in the Cost Center Customer Ops tab with display-safe current state, next action, blockers, disabled reason, owner, evidence/activity, and zero-spend cost impact.",
   "allowedFiles": [
     "package.json",
-    "shared/billingMeteringCustomerOperationsPreview.js",
-    "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
-    "scripts/check-p1443-billing-metering-customer-operations.js",
-    "scripts/check-p1442-billing-metering-customer-operations.js",
-    "scripts/check-enterprise-readiness-roadmap.js",
+    "dashboard/src/data/billingCustomerOperationsReadiness.js",
+    "dashboard/src/data/commandCenterTabs.js",
+    "dashboard/src/pages/CommandCenterV2.jsx",
     "dashboard/tests/routes.spec.js",
+    "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+    "scripts/check-p1444-billing-metering-customer-operations.js",
+    "scripts/check-p1443-billing-metering-customer-operations.js",
+    "scripts/check-enterprise-readiness-roadmap.js",
     "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
     "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
     "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
     "README.md",
     "os-roadmap/nexus-phases.json",
     "os-roadmap/phase-status.json",
+    "reports/p1444-billing-metering-customer-operations-report.md",
     "reports/p1443-billing-metering-customer-operations-report.md",
-    "reports/p1442-billing-metering-customer-operations-report.md",
     "reports/enterprise-readiness-roadmap-report.md",
     "reports/os-phase-status-report.md",
     "reports/phase-validation-coverage-report.md"
   ],
   "forbiddenFiles": [
     "projects/**",
-    "generated-projects/**",
+        "generated-projects/**",
     "private project roots",
-    "dashboard/src/**",
     "db/**",
     "local-state/runtime/**",
     "providers/**",
@@ -46,7 +47,8 @@
     "packages/**",
     ".env*",
     "payment provider adapters",
-    "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths"
+    "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths",
+    "dashboard/src/** outside Cost Center P144.4 files"
   ],
   "billingAccountShape": [
     "accountRef",
@@ -144,10 +146,10 @@
     "spendAllowed": false
   },
   "reuseCheck": [
-    "shared/billingMeteringCustomerOperationsModel.js",
-    "shared/modeGuard.js",
-    "shared/redaction.js",
-    "shared/resultEnvelope.js",
+    "shared/billingMeteringCustomerOperationsPreview.js",
+    "existing Cost Center route",
+    "existing CommandTabs/CommandTabPanel",
+    "existing ccv2-card, ccv2-page-summary-row, ccv2-stat-chip, and ccv2-safety-row patterns",
     "shared/reportWriter.js",
     "shared/checkResultFormatter.js",
     "existing enterprise checker active-state pattern",
@@ -800,10 +802,10 @@
     {
       "phaseId": "P144.4",
       "title": "Customer Operations Command Center UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P144.3",
+      "expectedBaseCommit": "8ac59cde",
       "narrowGoal": "Surface display-only billing/customer-ops state in Command Center with current state, next action, blockers, disabled reason, owner, evidence/activity location, and cost impact.",
       "requiredPlanFields": [
         "narrow scope",
@@ -824,17 +826,166 @@
         "final response checklist"
       ],
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "previousPhase": "P144.3",
       "nextPhase": "P144.5",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1444-billing-metering-customer-operations",
+        "npm run check:p1443-billing-metering-customer-operations",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.4\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P144.4 is planned-only. It must not add runnable billing/customer actions, raw dumps, raw private IDs, payment collection, DB writes, provider calls, network calls, or spend."
+        "P144.4 renders Cost Center Customer Ops UX only. It does not write billing accounts, record usage, create invoices, collect payments, mutate subscriptions or entitlements, create support tickets, contact customers, execute customer operations, write DB/runtime state, call providers/models, call payment providers, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
+        "P144.5-P144.7 remain planned-only and must preserve the blocked runtime authority boundary."
       ],
       "commandCenterVisible": true,
       "track": "NEXUS_OS",
       "label": "Customer Operations UX",
-      "order": 180.4
+      "order": 180.4,
+      "completedAt": "2026-05-31T14:35:00.000Z",
+      "detail": "P144.4 renders the P144.3 billing/customer preview in Cost Center as display-only Customer Ops UX while all billing, payment, customer, DB/runtime, provider, network, and spend authority remains blocked.",
+      "summary": "Added Cost Center Customer Ops UX for billing accounts, usage meters, invoice previews, entitlements, support handoffs, and customer operations with current state, next action, blockers, disabled reason, owner, evidence/activity location, and zero-spend cost impact.",
+      "allowedFiles": [
+        "package.json",
+        "dashboard/src/data/billingCustomerOperationsReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+        "scripts/check-p1444-billing-metering-customer-operations.js",
+        "scripts/check-p1443-billing-metering-customer-operations.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1444-billing-metering-customer-operations-report.md",
+        "reports/p1443-billing-metering-customer-operations-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+                "generated-projects/**",
+        "private project roots",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "payment provider adapters",
+        "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths",
+        "dashboard/src/** outside Cost Center P144.4 files"
+      ],
+      "expectedExports": [
+        "BILLING_CUSTOMER_OPERATIONS_READINESS_PHASE",
+        "BILLING_CUSTOMER_OPERATIONS_READINESS_VERSION",
+        "buildBillingCustomerOperationsReadinessViewModel",
+        "billingCustomerOperationsReadinessViewModel"
+      ],
+      "dataShape": "Display-only Command Center view model with summary, statusCards, sectionRows, previewRows, safetyRows, blockedActions, evidenceLocation, activityLocation, costImpact, rawPayloadVisible false, rawPrivateIdsVisible false, rawInternalPayloadsVisible false, and commandCenterVisible true. It has no DB schema, migration, mutation payload, executable payload, provider call, payment call, network call, or spend data shape.",
+      "commandCenterUxRequirements": [
+        "Cost Center must show a Customer Ops tab with what changed, current state, next action, blocker, disabled reason, owner, evidence, activity, and cost impact.",
+        "Cost Center overview may show a small customer operations signal but must keep detailed content inside the Customer Ops tab.",
+        "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces, private IDs, raw billing/payment/customer payloads, or fake runnable billing/customer actions."
+      ],
+      "safetyRules": [
+        "Do not enable billing account mutation, usage meter writes, usage rollups, invoice creation, payment collection, subscription mutation, entitlement grant/revoke, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend in P144.4.",
+        "P144.4 may only render display-safe data derived from the P144.3 preview helper."
+      ],
+      "reuseCheck": [
+        "shared/billingMeteringCustomerOperationsPreview.js",
+        "existing Cost Center route",
+        "existing CommandTabs/CommandTabPanel",
+        "existing ccv2-card, ccv2-page-summary-row, ccv2-stat-chip, and ccv2-safety-row patterns",
+        "shared/reportWriter.js",
+        "shared/checkResultFormatter.js",
+        "existing enterprise checker active-state pattern",
+        "existing OS Roadmap route tests"
+      ],
+      "playwrightTests": [
+        "Add P144.4 Cost Center Customer Ops route coverage.",
+        "Update Cost Center tab coverage for the Customer Ops tab.",
+        "Add P144.4 OS Roadmap route coverage.",
+        "Run route-wide Command Center safety coverage."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1444-billing-metering-customer-operations.js.",
+        "Update scripts/check-p1443-billing-metering-customer-operations.js for P144.4 handoff compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P144.4 active-state compatibility."
+      ],
+      "docsToUpdate": [
+        "README.md",
+        "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1444-billing-metering-customer-operations-report.md",
+        "reports/p1443-billing-metering-customer-operations-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P144 in progress; P144.1-P144.4 complete; previous P144.3; current P144.4; next P144.5 planned-only; P145 remains planned-only.",
+      "validationCommands": [
+        "npm run check:p1444-billing-metering-customer-operations",
+        "npm run check:p1443-billing-metering-customer-operations",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.4\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No forbidden project files changed.",
+        "No demo app leakage in full Command Center.",
+        "No raw JSON/log/policy dumps or raw private IDs in primary UX.",
+        "No billing/customer mutation, payment provider call, network call, DB write, project mutation, provider spend, or fake runnable action enabled.",
+        "No stale phase status or pending-final-commit markers after final stamp."
+      ],
+      "gitCommands": [
+        "git add <P144.4 allowed files>",
+        "git commit -m \"feat(nexus): add p1444 customer operations ux\"",
+        "git add <P144.4 stamp files and refreshed reports>",
+        "git commit -m \"chore(nexus): stamp p1444 customer operations ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "phaseId": "P144.5",
@@ -870,7 +1021,10 @@
       "knownLimitations": [
         "P144.5 is planned-only. It is tests/checkers hardening only and must not enable runtime billing, customer operations, DB writes, provider calls, network calls, or spend."
       ],
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "track": "NEXUS_OS",
+      "label": "Tests / Checkers",
+      "order": 180.5
     },
     {
       "phaseId": "P144.6",
@@ -945,5 +1099,23 @@
       "commandCenterVisible": true
     }
   ],
-  "commit": "05b191a2"
+  "commit": "05b191a2",
+  "expectedExports": [
+    "BILLING_CUSTOMER_OPERATIONS_READINESS_PHASE",
+    "BILLING_CUSTOMER_OPERATIONS_READINESS_VERSION",
+    "buildBillingCustomerOperationsReadinessViewModel",
+    "billingCustomerOperationsReadinessViewModel"
+  ],
+  "validationCommands": [
+    "npm run check:p1444-billing-metering-customer-operations",
+    "npm run check:p1443-billing-metering-customer-operations",
+    "npm run check:enterprise-readiness-roadmap",
+    "npm run check:os-phase-status",
+    "npm run check:phase-validation-coverage",
+    "cd dashboard && npm run build",
+    "cd dashboard && npm run test:unit",
+    "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.4\"",
+    "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+    "git diff --check"
+  ]
 }

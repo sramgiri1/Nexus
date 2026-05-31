@@ -91,6 +91,7 @@ import { dbRuntimeReadinessViewModel } from "../data/dbRuntimeReadiness.js";
 import { buildAuthGovernanceReadinessViewModel } from "../data/authGovernanceReadiness.js";
 import { buildObservabilityReadinessViewModel } from "../data/observabilityReadiness.js";
 import { buildEvidenceAuditObservabilityCostLedgerUxViewModel } from "../data/evidenceAuditObservabilityCostLedgerUx.js";
+import { buildBillingCustomerOperationsReadinessViewModel } from "../data/billingCustomerOperationsReadiness.js";
 import { buildBackupDrReadinessViewModel } from "../data/backupDrReadiness.js";
 import { buildIsolationReadinessViewModel } from "../data/isolationReadiness.js";
 import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.js";
@@ -6039,10 +6040,89 @@ function BatchQueuePage({ vm }) {
   );
 }
 
+function BillingCustomerOperationsReadinessPanel({ readiness }) {
+  const statusCards = Array.isArray(readiness.statusCards) ? readiness.statusCards : [];
+  const sectionRows = Array.isArray(readiness.sectionRows) ? readiness.sectionRows : [];
+  const previewRows = Array.isArray(readiness.previewRows) ? readiness.previewRows : [];
+  const safetyRows = Array.isArray(readiness.safetyRows) ? readiness.safetyRows : [];
+  const blockedActions = Array.isArray(readiness.blockedActions) ? readiness.blockedActions : [];
+
+  return (
+    <>
+      <div className="ccv2-card" aria-label="Customer operations readiness summary">
+        <div className="ccv2-section-heading">Customer Operations Readiness</div>
+        <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.nextAction}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocker</span><span className="ccv2-page-summary-value">{readiness.blocker}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{readiness.disabledReason}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{readiness.ownerCapability}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{readiness.evidenceLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{readiness.activityLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
+        </div>
+        <div className="ccv2-grid-3" style={{ marginTop: 12 }}>
+          {statusCards.map((card) => (
+            <div className={`ccv2-stat-chip ccv2-stat-chip--${card.tone || "teal"}`} key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+              <small>{card.detail}</small>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="ccv2-card" aria-label="Customer operations preview sections">
+        <div className="ccv2-section-heading">Review Sections</div>
+        <div className="ccv2-grid-3" style={{ marginTop: 10 }}>
+          {sectionRows.map((section) => (
+            <div className="ccv2-stat-chip" key={section.label}>
+              <span>{section.label}</span>
+              <strong>{section.blockedCount}/{section.rowCount} blocked</strong>
+              <small>{section.nextAction}</small>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="ccv2-card" aria-label="Customer operations display-only rows">
+        <div className="ccv2-section-heading">Display-Only Rows</div>
+        <div className="ccv2-stack-list" style={{ marginTop: 10 }}>
+          {previewRows.map((row) => (
+            <div className="ccv2-safety-row" key={row.rowKey}>
+              <span className="ccv2-safety-row__label">{row.type} · {row.label}</span>
+              <span className="ccv2-safety-row__value--disabled">{row.currentState}</span>
+              <small>{row.nextAction}</small>
+              <small>{row.blocker}</small>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="ccv2-card" aria-label="Customer operations safety posture">
+        <div className="ccv2-section-heading">Safety Posture</div>
+        <div className="ccv2-safety-grid" style={{ marginTop: 10 }}>
+          {safetyRows.map((row) => (
+            <div className="ccv2-safety-row" key={row.label}>
+              <span className="ccv2-safety-row__label">{row.label}</span>
+              <span className={row.value === "Blocked" ? "ccv2-safety-row__value--disabled" : "ccv2-safety-row__value--ready"}>{row.value}</span>
+            </div>
+          ))}
+        </div>
+        <div className="ccv2-muted" style={{ marginTop: 12 }}>
+          Blocked actions: {blockedActions.join(", ")}.
+        </div>
+      </div>
+    </>
+  );
+}
+
 /* ─── Cost Center Page ─── */
 function CostCenterPage({ vm, studio }) {
   const [activeTab, setActiveTab] = useState("overview");
   const ledgerPreview = buildEvidenceAuditObservabilityCostLedgerUxViewModel();
+  const customerOpsReadiness = buildBillingCustomerOperationsReadinessViewModel();
   const budgetScopes = ["Global", "Project", "Mission", "Task", "Agent", "Skill", "Hook", "Tool", "Trigger", "Provider", "API Batch", "Worker", "OS Phase"];
   const estimates = [
     { label: "Task estimate preview", amount: "$0.0125", confidence: "Medium", assumption: "Static token estimate; no provider call." },
@@ -6077,6 +6157,7 @@ function CostCenterPage({ vm, studio }) {
             { label: "Budget scopes", value: budgetScopes.length },
             { label: "Estimates", value: estimates.length },
             { label: "Decisions", value: decisions.length },
+            { label: "Customer ops rows", value: customerOpsReadiness.rowCount },
             { label: "Spend", value: "Disabled" },
           ]}
         />
@@ -6091,10 +6172,14 @@ function CostCenterPage({ vm, studio }) {
                 <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Provider dispatch</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
                 <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">DB writes</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
                 <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Worker runtime</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Customer operations</span><span className="ccv2-safety-row__value--disabled">Display-only</span></div>
                 <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Budget enforcement</span><span className="ccv2-safety-row__value--ready">Preview only</span></div>
               </div>
               <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Cost Center estimates, ledger entries, and budget decisions are governance previews. They do not represent real billing data.</p>
             </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="customer-ops" activeTab={activeTab}>
+            <BillingCustomerOperationsReadinessPanel readiness={customerOpsReadiness} />
           </CommandTabPanel>
           <CommandTabPanel tabId="budgets" activeTab={activeTab}>
             <div className="ccv2-card">

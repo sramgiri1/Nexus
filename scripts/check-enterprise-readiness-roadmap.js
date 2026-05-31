@@ -1813,6 +1813,28 @@ const p1443CurrentState =
   && indexById.get("P144.4")?.status === "planned"
   && statusById.get("P145")?.status === "planned"
   && indexById.get("P145")?.status === "planned";
+const p1444CurrentState =
+  phaseStatus.currentPhase === "P144.4"
+  && phaseStatus.previousPhase === "P144.3"
+  && phaseStatus.nextPhase === "P144.5"
+  && phaseIndex.currentPhase === "P144.4"
+  && phaseIndex.previousPhase === "P144.3"
+  && phaseIndex.nextPhase === "P144.5"
+  && phaseStatus.current?.phaseId === "P144.4"
+  && phaseStatus.previous?.phaseId === "P144.3"
+  && phaseStatus.next?.phaseId === "P144.5"
+  && phaseIndex.current?.phaseId === "P144.4"
+  && phaseIndex.previous?.phaseId === "P144.3"
+  && phaseIndex.next?.phaseId === "P144.5"
+  && statusById.get("P143")?.status === "complete"
+  && indexById.get("P143")?.status === "complete"
+  && statusById.get("P144")?.status === "in_progress"
+  && indexById.get("P144")?.status === "in_progress"
+  && ["P144.1", "P144.2", "P144.3", "P144.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete")
+  && statusById.get("P144.5")?.status === "planned"
+  && indexById.get("P144.5")?.status === "planned"
+  && statusById.get("P145")?.status === "planned"
+  && indexById.get("P145")?.status === "planned";
 
 const p138ActiveState = p1381StartedState || p1382CurrentState || p1383CurrentState || p1384CurrentState || p1385CurrentState || p1386CurrentState || p1387FinalState;
 const p139ActiveState = p1391StartedState || p1392CurrentState || p1393CurrentState || p1394CurrentState || p1395CurrentState || p1396CurrentState || p1397FinalState;
@@ -1820,7 +1842,7 @@ const p140ActiveState = p1401StartedState || p1402CurrentState || p1403CurrentSt
 const p141ActiveState = p1411StartedState || p1412CurrentState || p1413CurrentState || p1414CurrentState || p1415CurrentState || p1416CurrentState || p1417FinalState;
 const p142ActiveState = p1421StartedState || p1422CurrentState || p1423CurrentState || p1424CurrentState || p1425CurrentState || p1426CurrentState || p1427FinalState;
 const p143ActiveState = p1431StartedState || p1432CurrentState || p1433CurrentState || p1434CurrentState || p1435CurrentState || p1436CurrentState || p1437FinalState;
-const p144ActiveState = p1441StartedState || p1442CurrentState || p1443CurrentState;
+const p144ActiveState = p1441StartedState || p1442CurrentState || p1443CurrentState || p1444CurrentState;
 const enterpriseActiveState = p133ActiveState || p134ActiveState || p135ActiveState || p136ActiveState || p137ActiveState || p138ActiveState || p139ActiveState || p140ActiveState || p141ActiveState || p142ActiveState || p143ActiveState || p144ActiveState;
 const currentP133CheckCommand = p1337FinalState
   ? "npm run check:p1337-founder-idea-to-prd-final-validation"
@@ -1988,6 +2010,8 @@ const currentP143CheckCommand = p1437FinalState
   : "";
 const currentP144CheckCommand = p1443CurrentState
   ? "npm run check:p1443-billing-metering-customer-operations"
+  : p1444CurrentState
+  ? "npm run check:p1444-billing-metering-customer-operations"
   : p1442CurrentState
   ? "npm run check:p1442-billing-metering-customer-operations"
   : p1441StartedState
@@ -2024,6 +2048,7 @@ const allowedFiles = new Set([
   "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
   "shared/billingMeteringCustomerOperationsModel.js",
   "shared/billingMeteringCustomerOperationsPreview.js",
+  "dashboard/src/data/billingCustomerOperationsReadiness.js",
   "shared/releaseDeployExportPackageModel.js",
   "shared/releaseDeployExportPackagePreview.js",
   "dashboard/src/data/releaseDeployExportPackageUx.js",
@@ -2141,6 +2166,7 @@ const allowedFiles = new Set([
   "scripts/check-p1441-billing-metering-customer-operations.js",
   "scripts/check-p1442-billing-metering-customer-operations.js",
   "scripts/check-p1443-billing-metering-customer-operations.js",
+  "scripts/check-p1444-billing-metering-customer-operations.js",
   "shared/adminOperationsRuntimeSettingsDryRun.js",
   "shared/projectPatchBuildPreview.js",
 		  "scripts/check-enterprise-readiness-roadmap.js",
@@ -2250,6 +2276,7 @@ const allowedFiles = new Set([
   "reports/p1441-billing-metering-customer-operations-report.md",
   "reports/p1442-billing-metering-customer-operations-report.md",
   "reports/p1443-billing-metering-customer-operations-report.md",
+  "reports/p1444-billing-metering-customer-operations-report.md",
   "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -2279,6 +2306,7 @@ const allowedDashboardFiles = new Set([
   "dashboard/src/data/complianceReadiness.js",
   "dashboard/src/data/commandCenterTabs.js",
   "dashboard/src/data/commandCenterRoutes.js",
+  "dashboard/src/data/billingCustomerOperationsReadiness.js",
   "dashboard/tests/routes.spec.js",
 ]);
 
@@ -2302,7 +2330,8 @@ addCheck("P143 checker registered when active", !p143ActiveState
 addCheck("P144 checker registered when active", !p144ActiveState
   || (p1441StartedState && Boolean(packageJson.scripts?.["check:p1441-billing-metering-customer-operations"]))
   || (p1442CurrentState && Boolean(packageJson.scripts?.["check:p1442-billing-metering-customer-operations"]))
-  || (p1443CurrentState && Boolean(packageJson.scripts?.["check:p1443-billing-metering-customer-operations"])));
+  || (p1443CurrentState && Boolean(packageJson.scripts?.["check:p1443-billing-metering-customer-operations"]))
+  || (p1444CurrentState && Boolean(packageJson.scripts?.["check:p1444-billing-metering-customer-operations"])));
 addCheck("current enterprise handoff", enterpriseActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
@@ -2797,6 +2826,7 @@ const p144ActiveSubphaseRecordsPresent = !p144ActiveState || (
     (p1441StartedState && statusById.get("P144.2")?.status === "planned" && indexById.get("P144.2")?.status === "planned")
     || (p1442CurrentState && statusById.get("P144.2")?.status === "complete" && indexById.get("P144.2")?.status === "complete" && statusById.get("P144.3")?.status === "planned" && indexById.get("P144.3")?.status === "planned")
     || (p1443CurrentState && ["P144.2", "P144.3"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P144.4")?.status === "planned" && indexById.get("P144.4")?.status === "planned")
+    || (p1444CurrentState && ["P144.2", "P144.3", "P144.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P144.5")?.status === "planned" && indexById.get("P144.5")?.status === "planned")
   )
   && statusById.get("P145")?.status === "planned"
   && indexById.get("P145")?.status === "planned"

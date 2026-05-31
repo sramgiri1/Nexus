@@ -2035,7 +2035,8 @@ The Command Center and local operator surface have:
   Roadmap / Status is complete. P143.7 Final Validation is complete; P143 is
   complete. P144.1 Billing Metering Customer Operations Contract is complete.
   P144.2 Billing and Meter Model is complete. P144.3 Billing Preview is
-  complete. P144.4 is planned-only next.
+  complete. P144.4 Customer Operations Command Center UX is complete.
+  P144.5 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2554,7 +2555,8 @@ The Command Center and local operator surface have:
   docs/status closure. P143.7 is complete as final validation only. P144.1 is
   complete as billing/customer-ops contract work. P144.2 is complete as
   read-only billing/meter model work. P144.3 is complete as non-runnable
-  billing preview work. P144.4 is planned-only next.
+  billing preview work. P144.4 is complete as display-only Cost Center
+  Customer Ops UX. P144.5 is planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2604,10 +2606,19 @@ The Command Center and local operator surface have:
   entitlements, support handoffs, and customer operations. Preview rows carry
   disabled reasons, blockers, owner capability, evidence/activity refs,
   redaction state, zero-spend cost impact, blocked authority flags, and null
-  executable payloads. P144.4 is planned-only next; billing/customer mutation,
+  executable payloads. P144.4 has followed as display-only Cost Center
+  Customer Ops UX; billing/customer mutation,
   DB/runtime writes, provider/model calls, payment provider calls, tool
   execution, agent dispatch, project mutation, network calls, and spend remain
   blocked.
+- P144.4 Customer Operations Command Center UX is complete: Added a Cost
+  Center Customer Ops tab that shows billing accounts, usage meters, invoice
+  previews, entitlements, support handoffs, and customer operations as
+  display-only rows. The tab shows current state, next action, blocker,
+  disabled reason, owner capability, evidence/activity location, and zero-spend
+  cost impact without raw dumps, private IDs, payment collection,
+  billing/customer mutation, DB/runtime writes, provider/model calls, network
+  calls, or spend. P144.5 is planned-only next.
 
 ## CareLoop Project Progress
 

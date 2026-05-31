@@ -3742,10 +3742,22 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Real provider spend");
     await expect(page.locator("body")).toContainText("Disabled");
 
-    for (const label of ["Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]) {
+    for (const label of ["Customer Ops", "Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]) {
       await commandTab(page, label).click();
       await expect(activeCommandTabPanel(page)).toBeVisible();
     }
+
+    await commandTab(page, "Customer Ops").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Customer Operations Readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("Display-only customer operations review is ready.");
+    await expect(activeCommandTabPanel(page)).toContainText("Billing Account");
+    await expect(activeCommandTabPanel(page)).toContainText("Usage Meter");
+    await expect(activeCommandTabPanel(page)).toContainText("Invoice Preview");
+    await expect(activeCommandTabPanel(page)).toContainText("Support Handoff");
+    await expect(activeCommandTabPanel(page)).toContainText("Customer Operation");
+    await expect(activeCommandTabPanel(page)).toContainText("$0.00 estimated and actual; no provider or payment-provider spend.");
+    await expect(activeCommandTabPanel(page)).toContainText("Customer operation execution");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked");
 
     await commandTab(page, "Budgets").click();
     await expect(activeCommandTabPanel(page)).toContainText("Project");
@@ -3767,7 +3779,9 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("DemoApp");
     expect(body).not.toContain("\"records\"");
     expect(body).not.toContain("{\"");
+    expect(body).not.toMatch(/P144\.\d/);
     expect(body).not.toContain("real spend captured");
+    expect(body).not.toMatch(/create invoice now|collect payment now|charge now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     await pickTheme(page, "dark");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
@@ -6091,6 +6105,74 @@ test.describe("Command Center route-wide UX", () => {
     expect(roadmapBody).not.toContain("DemoApp");
     expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P144.4 customer operations UX keeps roadmap current", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P144.4");
+    await expect(page.locator("body")).toContainText("Customer Operations Command Center UX");
+    await expect(page.locator("body")).toContainText("P144.5");
+    await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P144.4 customer operations UX keeps Cost Center useful and non-runnable", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/cost");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
+    await expect(page.locator("body")).toContainText("Customer ops rows");
+    await expect(page.locator("body")).toContainText("Customer operations");
+    await expect(page.locator("body")).toContainText("Display-only");
+
+    await commandTab(page, "Customer Ops").click();
+    const panel = activeCommandTabPanel(page);
+    await expect(panel).toContainText("Customer Operations Readiness");
+    await expect(panel).toContainText("What changed");
+    await expect(panel).toContainText("Current state");
+    await expect(panel).toContainText("Next action");
+    await expect(panel).toContainText("Blocker");
+    await expect(panel).toContainText("Disabled reason");
+    await expect(panel).toContainText("Owner");
+    await expect(panel).toContainText("Evidence");
+    await expect(panel).toContainText("Activity");
+    await expect(panel).toContainText("Cost impact");
+    await expect(panel).toContainText("Billing customer operations report");
+    await expect(panel).toContainText("OS phase status report");
+    await expect(panel).toContainText("Review Sections");
+    await expect(panel).toContainText("Display-Only Rows");
+    await expect(panel).toContainText("Safety Posture");
+    await expect(panel).toContainText("Billing account mutation");
+    await expect(panel).toContainText("Usage writes and rollups");
+    await expect(panel).toContainText("Payment collection");
+    await expect(panel).toContainText("Provider, network, and spend");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("\"records\"");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toMatch(/P144\.\d/);
+    expect(body).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    await pickTheme(page, "dark");
+    await expect(panel).toContainText("Customer Operations Readiness");
+    await pickTheme(page, "light");
+    await expect(panel).toContainText("Customer Operations Readiness");
 
     expect(errors).toEqual([]);
   });

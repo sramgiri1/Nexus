@@ -20,6 +20,7 @@ const CONTRACT_PATH = "contracts/os-roadmap/p144-billing-metering-customer-opera
 const PLAN_PATH = "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1443-billing-metering-customer-operations";
 const PRIOR_SCRIPT = "check:p1442-billing-metering-customer-operations";
+const NEXT_SCRIPT = "check:p1444-billing-metering-customer-operations";
 const EXPECTED_BASE_COMMIT = "1fb7bb64";
 const EXPECTED_EXPORTS = [
   "BILLING_METERING_CUSTOMER_OPERATIONS_PREVIEW_PHASE",
@@ -153,6 +154,28 @@ const p1443CurrentState =
   && roadmapById.get("P144.4")?.status === "planned"
   && statusById.get("P145")?.status === "planned"
   && roadmapById.get("P145")?.status === "planned";
+const p1444CurrentState =
+  status.currentPhase === "P144.4"
+  && status.previousPhase === "P144.3"
+  && status.nextPhase === "P144.5"
+  && roadmap.currentPhase === "P144.4"
+  && roadmap.previousPhase === "P144.3"
+  && roadmap.nextPhase === "P144.5"
+  && status.current?.phaseId === "P144.4"
+  && status.previous?.phaseId === "P144.3"
+  && status.next?.phaseId === "P144.5"
+  && roadmap.current?.phaseId === "P144.4"
+  && roadmap.previous?.phaseId === "P144.3"
+  && roadmap.next?.phaseId === "P144.5"
+  && statusById.get("P143")?.status === "complete"
+  && roadmapById.get("P143")?.status === "complete"
+  && statusById.get("P144")?.status === "in_progress"
+  && roadmapById.get("P144")?.status === "in_progress"
+  && ["P144.1", "P144.2", "P144.3", "P144.4"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P144.5")?.status === "planned"
+  && roadmapById.get("P144.5")?.status === "planned"
+  && statusById.get("P145")?.status === "planned"
+  && roadmapById.get("P145")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1443-billing-metering-customer-operations.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -170,19 +193,25 @@ addCheck("readiness summary blocks runtime candidates", preview.readinessSummary
 addCheck("all authority flags remain blocked", BILLING_METERING_CUSTOMER_OPERATIONS_PREVIEW_SAFETY_FLAG_NAMES.every((flag) => preview[flag] === false && preview.safetyFlags?.[flag] === false && preview.rows.every((row) => row[flag] === false && row.safetyFlags?.[flag] === false && row.authorityFlags?.[flag] === false)));
 addCheck("cost impact remains zero-spend", preview.costImpact.estimatedUsd === 0 && preview.costImpact.actualUsd === 0 && preview.costImpact.providerSpendAllowed === false && preview.costImpact.paymentProviderSpendAllowed === false && preview.costImpact.networkCallsAllowed === false && preview.rows.every((row) => row.costImpact.estimatedUsd === 0 && row.costImpact.actualUsd === 0 && row.costImpact.providerSpendAllowed === false && row.costImpact.paymentProviderSpendAllowed === false));
 addCheck("P144.2 report passes", reportPassed("reports/p1442-billing-metering-customer-operations-report.md"));
-addCheck("contract advances to P144.3 safely", contract.phaseId === "P144" && contract.status === "in_progress" && p1441.status === "complete" && p1442.status === "complete" && p1443.status === "complete" && contract.currentSubphase === "P144.3" && contract.previousSubphase === "P144.2" && contract.nextSubphase === "P144.4" && p1444.status === "planned");
+addCheck("contract advances to P144.3 safely", contract.phaseId === "P144" && contract.status === "in_progress" && p1441.status === "complete" && p1442.status === "complete" && p1443.status === "complete" && (
+  (contract.currentSubphase === "P144.3" && contract.previousSubphase === "P144.2" && contract.nextSubphase === "P144.4" && p1444.status === "planned")
+  || (contract.currentSubphase === "P144.4" && contract.previousSubphase === "P144.3" && contract.nextSubphase === "P144.5" && p1444.status === "complete")
+));
 addCheck("contract records expected base commit", p1443.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records expected exports", EXPECTED_EXPORTS.every((entry) => p1443.expectedExports?.includes(entry)));
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1443.validationCommands?.includes(command)));
 addCheck("contract scope stays preview-only", /non-runnable billing/i.test(p1443.dataShape || "") && p1443.forbiddenFiles?.includes("dashboard/src/**") && p1443.forbiddenFiles?.includes("projects/**") && p1443.forbiddenFiles?.includes("db/**") && p1443.forbiddenFiles?.includes("providers/**"));
 addCheck("P144.2 checker accepts P144.3 handoff", p1442Checker.includes("p1443CurrentState") && p1442Checker.includes('status.currentPhase === "P144.3"') && p1442Checker.includes(REQUIRED_SCRIPT));
+addCheck("P144.4 checker registered when handed off", !p1444CurrentState || packageJson.scripts?.[NEXT_SCRIPT] === "node scripts/check-p1444-billing-metering-customer-operations.js");
 addCheck("enterprise checker accepts P144.3 active state", enterpriseChecker.includes("p1443CurrentState") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P144.4 handoff", osStatusChecker.includes('"P144.3"') && osStatusChecker.includes('"P144.4"') && osStatusChecker.includes('"P144.7"'));
-addCheck("docs record P144.3 and P144.4 handoff", /## P144\.3 Billing Preview[\s\S]*Status:\s+complete/.test(plan) && /P144\.3\s+Billing\s+Preview\s+is\s+complete/i.test(readme) && /P144\.3\s+billing preview\s+is\s+complete/i.test(platformRoadmap) && /P144\.3 is now complete as a non-runnable billing preview/i.test(enterpriseRoadmap) && /P144\.4 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status advances to P144.3", p1443CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("docs record P144.3 and P144.4 handoff", /## P144\.3 Billing Preview[\s\S]*Status:\s+complete/.test(plan) && /P144\.3\s+Billing\s+Preview\s+is\s+complete/i.test(readme) && /P144\.3\s+billing preview\s+is\s+complete/i.test(platformRoadmap) && /P144\.3 is now complete as a non-runnable billing preview/i.test(enterpriseRoadmap) && (/P144\.4 is planned-only next/i.test(enterpriseRoadmap) || /P144\.4 is now complete as a Cost Center Customer Ops UX/i.test(enterpriseRoadmap)));
+addCheck("phase status advances to P144.3", p1443CurrentState || p1444CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("P144 parent records active status", [p144, p144Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && entry.checksRun.includes("npm run check:p1443-billing-metering-customer-operations") && entry.commandCenterVisible === true));
 addCheck("completed P144.3 entries have required fields", [statusById.get("P144.3"), roadmapById.get("P144.3")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("next P144.4/P145 handoff remains planned-only", [statusById.get("P144.4"), roadmapById.get("P144.4"), statusById.get("P145"), roadmapById.get("P145")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("next P144.4/P145 handoff remains planned-only", p1444CurrentState
+  ? [statusById.get("P144.5"), roadmapById.get("P144.5"), statusById.get("P145"), roadmapById.get("P145")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : [statusById.get("P144.4"), roadmapById.get("P144.4"), statusById.get("P145"), roadmapById.get("P145")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("P144.3 Playwright coverage exists", routeTests.includes("P144.3 billing preview keeps roadmap current") && routeTests.includes("P144.3") && routeTests.includes("Billing Preview") && routeTests.includes("P144.4") && routeTests.includes("Customer Operations Command Center UX"));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
 addCheck("changed files stay in P144.3 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);

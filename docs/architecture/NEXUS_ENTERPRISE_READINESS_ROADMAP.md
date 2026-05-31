@@ -86,8 +86,9 @@ P143.7 is now complete as final validation only. P143 is complete.
 P144.1 is now complete as contract/policy/safety-boundary only.
 P144.2 is now complete as a read-only model.
 P144.3 is now complete as a non-runnable billing preview.
-P144.4 is planned-only next.
-P144.4-P145 remain planned-only. They do not enable secret
+P144.4 is now complete as a Cost Center Customer Ops UX.
+P144.5 is planned-only next.
+P144.5-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
@@ -222,8 +223,9 @@ P143.7 is now complete as final validation only. P143 is complete.
 P144.1 is now complete as contract/policy/safety-boundary only.
 P144.2 is now complete as a read-only model.
 P144.3 is now complete as a non-runnable billing preview.
-P144.4 is planned-only next.
-P144.4-P145 are planned-only backlog phases and must not be
+P144.4 is now complete as a Cost Center Customer Ops UX.
+P144.5 is planned-only next.
+P144.5-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation

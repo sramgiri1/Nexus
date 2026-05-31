@@ -320,20 +320,29 @@ network call, or spend authority is enabled.
 
 ## P144.4 Customer Operations Command Center UX
 
-Status: planned
+Status: complete
 
 Narrow goal: surface display-only billing/customer-ops state in Command Center
 with current state, next action, blockers, disabled reason, owner,
 evidence/activity location, and cost impact.
 
-Scope: Command Center UX only. It must preserve dark/light/system themes, avoid
-raw dumps and private IDs, and keep all billing/customer operations disabled
-unless explicitly allowed by a later implementation-grade plan.
+Scope: Command Center UX only. It preserves dark/light/system themes, avoids
+raw dumps and private IDs, keeps internal phase labels out of the Cost Center
+primary UX, and keeps all billing/customer operations disabled unless
+explicitly allowed by a later implementation-grade plan.
 
 Validation: dedicated P144.4 checker, prior P144.3 checker, route-wide
 Playwright safety tests, dashboard build/unit checks, enterprise roadmap
 checker, OS phase status checker, phase validation coverage, and
 `git diff --check`.
+
+Result: complete as display-only Cost Center Customer Ops UX. It adds a
+Customer Ops tab with readable billing accounts, usage meters, invoice
+previews, entitlements, support handoffs, and customer operations. Each row
+shows current state, next action, blocker, disabled reason, owner, evidence,
+activity, and zero-spend cost impact without billing/customer mutation,
+payment collection, DB/runtime writes, provider/model calls, network calls, or
+spend. P144.5 is planned-only next.
 
 ## P144.5 Tests / Checkers
 
