@@ -490,7 +490,7 @@ next.
 
 ## P144.7 Final Validation
 
-Status: planned
+Status: complete
 
 Narrow goal: close P144 with final validation evidence, prior report
 verification, P144 complete status, and safe planned-only P145 handoff.
@@ -499,7 +499,25 @@ Scope: final validation only. It must not enable billing/customer runtime
 authority, payment collection, DB writes, provider calls, network calls, or
 spend.
 
+Allowed files: package script, P144.7 final checker, P144.6 checker handoff,
+enterprise checker, route tests, P144 contract/status/index docs, and generated
+reports.
+
+Forbidden files: `projects/**`, `generated-projects/**`, private project
+roots, `dashboard/src/**`, `db/**`, `local-state/runtime/**`, `providers/**`,
+`tools/**`, `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+`packages/**`, `.env*`, and billing/customer mutation paths.
+
+Command Center UX requirements: OS Roadmap shows P144.7 complete, P144
+complete, and P145 planned-only next. Cost Center Customer Ops remains
+display-only with no raw IDs, raw dumps, or runnable billing/customer actions.
+
 Validation: dedicated P144.7 checker, prior P144.6/P144.5 reports,
 enterprise roadmap checker, OS phase status checker, phase validation
 coverage, dashboard build/unit checks, route-wide Playwright tests, and
 `git diff --check`.
+
+OS phase status update: P144 complete; P144.1-P144.7 complete; previous
+P144.6; current P144.7; next P145 planned-only.
+
+Result: complete as final validation only. P145 is planned-only next.

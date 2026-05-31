@@ -2761,10 +2761,11 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
 
     const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P144.6");
-    expect(roadmapBody).toContain("Docs / Roadmap / Status");
+    expect(roadmapBody).toContain("P144.7");
+    expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).toContain("P144");
-    expect(roadmapBody).toContain("Billing, Metering, and Customer Operations");
+    expect(roadmapBody).toMatch(/Latest completed phase/i);
+    expect(roadmapBody).toMatch(/Next planned phase/i);
     expect(roadmapBody).not.toContain("pending-final-commit");
     expect(roadmapBody).not.toContain("DemoApp");
     expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
@@ -2785,10 +2786,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -2877,10 +2879,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -2915,10 +2918,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -2954,10 +2958,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5790,10 +5795,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5826,10 +5832,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5862,10 +5869,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5908,10 +5916,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5957,10 +5966,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5995,10 +6005,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6033,10 +6044,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
     await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6052,11 +6064,12 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P144.7");
     await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6073,11 +6086,12 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6094,11 +6108,12 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P144.7");
     await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6115,11 +6130,12 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P144.7");
     await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6182,11 +6198,12 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P144.7");
     await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -6226,11 +6243,57 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.6");
-    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P144.7");
     await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    await page.goto("/command-center/cost");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
+    await commandTab(page, "Customer Ops").click();
+    const panel = activeCommandTabPanel(page);
+    await expect(panel).toContainText("Customer Operations Readiness");
+    await expect(panel).toContainText("Display-Only Rows");
+    await expect(panel).toContainText("Safety Posture");
+    await expect(panel).toContainText("$0.00");
+    await expect(panel).toContainText("Billing customer operations report");
+    await expect(panel).toContainText("OS phase status report");
+
+    const costBody = await page.locator("body").innerText();
+    expect(costBody).not.toContain("DemoApp");
+    expect(costBody).not.toMatch(/P144\.\d/);
+    expect(costBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(costBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    await pickTheme(page, "dark");
+    await expect(panel).toContainText("Customer Operations Readiness");
+    await pickTheme(page, "light");
+    await expect(panel).toContainText("Customer Operations Readiness");
+    await pickTheme(page, "system");
+    await expect(panel).toContainText("Customer Operations Readiness");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P144.7 billing customer operations final validation closes P144", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P144.7");
+    await expect(page.locator("body")).toContainText("Final Validation");
+    await expect(page.locator("body")).toContainText("P145");
+    await expect(page.locator("body")).toContainText("Enterprise Certification and GA Readiness");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");

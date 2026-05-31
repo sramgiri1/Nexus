@@ -213,7 +213,10 @@ addCheck("model, preview, and display remain public-safe", !/(?:project|private|
 addCheck("model, preview, and display have no fake runnable actions", !/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i.test(displayBundle));
 addCheck("cost impact remains zero-spend", model.costImpact.providerSpendAllowed === false && preview.costImpact.providerSpendAllowed === false && readiness.costImpact.includes("$0.00") && /no provider/i.test(readiness.costImpact));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
-addCheck("P144.5 Playwright aggregate coverage exists", routeTests.includes("P144.5 aggregate coverage keeps billing customer operations display-only") && routeTests.includes("P144.6") && routeTests.includes("Docs / Roadmap / Status"));
+addCheck("P144.5 Playwright aggregate coverage exists", routeTests.includes("P144.5 aggregate coverage keeps billing customer operations display-only") && (
+  (routeTests.includes("P144.6") && routeTests.includes("Docs / Roadmap / Status"))
+  || (routeTests.includes("P144.7") && routeTests.includes("Final Validation"))
+));
 addCheck("contract advances through P144.5 safely", contract.phaseId === "P144" && ["P144.1", "P144.2", "P144.3", "P144.4", "P144.5"].every((phaseId) => subphaseById.get(phaseId)?.status === "complete") && (
   (contract.status === "in_progress" && contract.currentSubphase === "P144.5" && contract.previousSubphase === "P144.4" && contract.nextSubphase === "P144.6" && p1446.status === "planned")
   || (contract.status === "in_progress" && contract.currentSubphase === "P144.6" && contract.previousSubphase === "P144.5" && contract.nextSubphase === "P144.7" && p1446.status === "complete" && p1447.status === "planned")

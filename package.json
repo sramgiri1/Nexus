@@ -818,7 +818,8 @@
     "check:p1443-billing-metering-customer-operations": "node scripts/check-p1443-billing-metering-customer-operations.js",
     "check:p1444-billing-metering-customer-operations": "node scripts/check-p1444-billing-metering-customer-operations.js",
     "check:p1445-billing-metering-customer-operations": "node scripts/check-p1445-billing-metering-customer-operations.js",
-    "check:p1446-billing-metering-customer-operations-docs-roadmap": "node scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js"
+    "check:p1446-billing-metering-customer-operations-docs-roadmap": "node scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+    "check:p1447-billing-metering-customer-operations-final-validation": "node scripts/check-p1447-billing-metering-customer-operations-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

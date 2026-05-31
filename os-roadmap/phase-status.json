@@ -40216,15 +40216,16 @@
       "title": "Billing, Metering, and Customer Operations",
       "label": "Billing / Customer Ops",
       "order": 180,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fd53aa24",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P144.6 closes docs, README, roadmap, OS phase status, checker handoff, and report freshness for P144 without enabling runtime execution.",
-      "summary": "P144 billing, metering, and customer operations now includes P144.6 docs/status closure while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
+      "detail": "P144.7 closes P144 final validation, verifies prior evidence and Command Center safety, and leaves P145 planned-only.",
+      "summary": "P144 billing, metering, and customer operations is complete through P144.7 final validation while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
       "previousPhase": "P143",
       "nextPhase": "P145",
       "checksRun": [
+        "npm run check:p1447-billing-metering-customer-operations-final-validation",
         "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
         "npm run check:p1445-billing-metering-customer-operations",
         "npm run check:enterprise-readiness-roadmap",
@@ -40232,12 +40233,12 @@
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
-        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.6\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
         "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P144 remains in progress. P144.6 is docs/status/checker closure only and does not enable billing/customer runtime authority, DB writes, provider calls, payment provider calls, network calls, project mutation, deploy/release/export/package actions, or spend. P144.7 remains planned-only."
+        "P144 is complete. P144.7 is final validation only and does not enable billing/customer runtime authority, DB writes, provider calls, payment provider calls, network calls, project mutation, deploy/release/export/package actions, or spend. P145 remains planned-only."
       ],
       "subphases": [
         {
@@ -41165,10 +41166,10 @@
         {
           "phaseId": "P144.7",
           "title": "Final Validation",
-          "status": "planned",
+          "status": "complete",
           "scopeClassification": "NEXUS_OS_CHANGE",
           "startingBranch": "codex/nexus-e2e-phase-validation",
-          "expectedBaseCommit": "after-P144.6",
+          "expectedBaseCommit": "4c13376b",
           "narrowGoal": "Close P144 with final validation evidence, prior report verification, P144 complete status, and safe planned-only P145 handoff.",
           "requiredPlanFields": [
             "narrow scope",
@@ -41189,25 +41190,199 @@
             "final response checklist"
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "",
+          "commit": "pending-final-commit",
           "previousPhase": "P144.6",
           "nextPhase": "P145",
-          "checksRun": [],
-          "knownLimitations": [
-            "P144.7 is planned-only final validation and must not enable billing/customer runtime authority, DB writes, provider calls, network calls, or spend."
+          "checksRun": [
+            "npm run check:p1447-billing-metering-customer-operations-final-validation",
+            "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
+            "npm run check:p1445-billing-metering-customer-operations",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
           ],
-          "commandCenterVisible": true
+          "knownLimitations": [
+            "P144 is complete. P144.7 is final validation only and does not enable billing/customer runtime authority, DB writes, provider calls, payment provider calls, network calls, project mutation, deploy/release/export/package actions, or spend. P145 remains planned-only."
+          ],
+          "commandCenterVisible": true,
+          "track": "NEXUS_OS",
+          "label": "Final Validation",
+          "order": 180.7,
+          "detail": "P144.7 verifies P144.1-P144.6 evidence, Command Center roadmap and Cost Center display-only safety, docs/status freshness, route coverage, and safe planned-only P145 handoff.",
+          "summary": "Closed P144 final validation for billing, metering, and customer operations while all billing/customer runtime, DB, provider, network, project mutation, deploy/release/export/package, and spend authority remains blocked.",
+          "completedAt": "2026-05-31T16:30:00.000Z",
+          "allowedFiles": [
+            "package.json",
+            "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
+            "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+            "scripts/check-enterprise-readiness-roadmap.js",
+            "scripts/check-os-phase-status.js",
+            "dashboard/tests/routes.spec.js",
+            "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+            "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "README.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+            "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "forbiddenFiles": [
+            "projects/**",
+            "generated-projects/**",
+            "private project roots",
+            "dashboard/src/**",
+            "db/**",
+            "local-state/runtime/**",
+            "providers/**",
+            "tools/**",
+            "worker-runtime/**",
+            "deploy/**",
+            "release/**",
+            "exports/**",
+            "packages/**",
+            ".env*",
+            "payment provider adapters",
+            "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths"
+          ],
+          "exactFilesToCreateOrUpdate": [
+            "package.json",
+            "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
+            "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+            "scripts/check-enterprise-readiness-roadmap.js",
+            "scripts/check-os-phase-status.js",
+            "dashboard/tests/routes.spec.js",
+            "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+            "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "README.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ],
+          "expectedExports": [],
+          "schemas": [
+            "No runtime schema, migration, payment-provider adapter, billing writer, usage writer, support-ticket writer, customer-contact sender, provider call, network call, or executable payload.",
+            "Final validation records phaseId, title, status, branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase, and commandCenterVisible."
+          ],
+          "dataShape": "Final validation, docs, roadmap, OS phase status, checker handoff, route-test assertion, and generated markdown report records only. No runtime export, DB schema, mutation payload, executable payload, provider call, network call, payment call, or spend data shape.",
+          "commandCenterUxRequirements": [
+            "OS Roadmap must show P144.7 complete, P144 complete, and P145 planned-only next.",
+            "Cost Center Customer Ops must remain display-only and continue to show current state, next action, blockers, disabled reason, owner, evidence/activity location, and zero-spend cost impact.",
+            "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces outside demo mode, raw private project IDs, executable payloads, or fake runnable billing/customer operations."
+          ],
+          "themeRequirements": [
+            "Preserve System theme.",
+            "Preserve Dark theme.",
+            "Preserve Light theme.",
+            "Validate route-wide Command Center coverage through Playwright."
+          ],
+          "safetyRules": [
+            "Do not enable billing account mutation, usage meter writes, invoice creation, payment collection, subscription mutation, entitlement grant/revoke, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend in P144.7.",
+            "Do not add payment provider adapters, invoice creators, subscription mutators, entitlement writers, usage writers, support ticket writers, customer contact senders, executable commands, or payload writers.",
+            "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw billing payloads, raw payment payloads, raw customer payloads, or runnable billing/customer operations in primary UX."
+          ],
+          "reuseCheck": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js pattern via existing JSON status shape",
+            "existing enterprise checker active-state pattern",
+            "existing OS Roadmap route tests"
+          ],
+          "testsToAddUpdateRemove": [
+            "Add P144.7 OS Roadmap and Cost Center final validation coverage.",
+            "Update stale current-roadmap assertions from P144.6/P144.7 to P144.7/P145.",
+            "Preserve route-wide safety tests for demo app leakage, raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
+          ],
+          "checkerUpdates": [
+            "Add scripts/check-p1447-billing-metering-customer-operations-final-validation.js.",
+            "Update scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js for P144.7 final-state compatibility.",
+            "Update scripts/check-enterprise-readiness-roadmap.js for P144.7 final-state compatibility.",
+            "Update scripts/check-os-phase-status.js for P145 handoff recognition."
+          ],
+          "docsToUpdate": [
+            "README.md",
+            "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ],
+          "reportsToRegenerate": [
+            "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+            "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
+            "reports/enterprise-readiness-roadmap-report.md",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ],
+          "osPhaseStatusUpdate": "P144 complete; P144.1-P144.7 complete; previous P144.6; current P144.7; next P145 planned-only.",
+          "validationCommands": [
+            "npm run check:p1447-billing-metering-customer-operations-final-validation",
+            "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
+            "npm run check:p1445-billing-metering-customer-operations",
+            "npm run check:enterprise-readiness-roadmap",
+            "npm run check:os-phase-status",
+            "npm run check:phase-validation-coverage",
+            "cd dashboard && npm run build",
+            "cd dashboard && npm run test:unit",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
+            "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+            "git diff --check"
+          ],
+          "finalSafetyChecks": [
+            "No project files changed.",
+            "No dashboard source changed.",
+            "No DB/runtime implementation changed.",
+            "No providers, tools, worker-runtime, deploy, release, export, package, or env files changed.",
+            "No billing/customer mutation, payment provider call, network call, or spend authority enabled.",
+            "No raw payload exposure or fake working actions added.",
+            "No stale placeholder commit marker after stamp commit."
+          ],
+          "gitCommands": [
+            "git add <P144.7 allowed files>",
+            "git commit -m \"feat(nexus): add p1447 billing operations final validation\"",
+            "git add <P144.7 stamp files and refreshed reports>",
+            "git commit -m \"chore(nexus): stamp p1447 billing operations final validation\"",
+            "git push origin codex/nexus-e2e-phase-validation"
+          ],
+          "finalResponseChecklist": [
+            "Branch name",
+            "Commit hash",
+            "Files changed",
+            "What was implemented",
+            "Command Center UX changes",
+            "Tests added/updated/removed",
+            "Checker results",
+            "Dashboard build/unit/page results",
+            "Docs/README/roadmap updates",
+            "OS phase status update",
+            "Evidence/report records",
+            "Safety confirmations",
+            "Forbidden paths confirmation",
+            "Known limitations",
+            "Next phase/subphase"
+          ]
         }
       ],
-      "completedAt": "2026-05-31T15:45:00.000Z",
-      "currentSubphase": "P144.6",
-      "previousSubphase": "P144.5",
-      "nextSubphase": "P144.7",
+      "completedAt": "2026-05-31T16:30:00.000Z",
+      "currentSubphase": "P144.7",
+      "previousSubphase": "P144.6",
+      "nextSubphase": "P145",
       "allowedFiles": [
         "package.json",
+        "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
         "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
-        "scripts/check-p1445-billing-metering-customer-operations.js",
         "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
         "dashboard/tests/routes.spec.js",
         "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
         "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
@@ -41216,8 +41391,8 @@
         "README.md",
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
+        "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
         "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
-        "reports/p1445-billing-metering-customer-operations-report.md",
         "reports/enterprise-readiness-roadmap-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
@@ -41240,8 +41415,9 @@
         "payment provider adapters",
         "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths"
       ],
-      "osPhaseStatusUpdate": "P144 in progress; P144.1-P144.6 complete; previous P144.5; current P144.6; next P144.7 planned-only; P145 remains planned-only.",
+      "osPhaseStatusUpdate": "P144 complete; P144.1-P144.7 complete; previous P144.6; current P144.7; next P145 planned-only.",
       "validationCommands": [
+        "npm run check:p1447-billing-metering-customer-operations-final-validation",
         "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
         "npm run check:p1445-billing-metering-customer-operations",
         "npm run check:enterprise-readiness-roadmap",
@@ -41249,11 +41425,11 @@
         "npm run check:phase-validation-coverage",
         "cd dashboard && npm run build",
         "cd dashboard && npm run test:unit",
-        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.6\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
         "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
         "git diff --check"
       ],
-      "currentPhaseSummary": "Closed P144 docs, README, roadmap, OS status, report freshness, checker handoff, and route coverage while billing/customer runtime authority remains blocked."
+      "currentPhaseSummary": "Closed P144 final validation for billing, metering, and customer operations while all billing/customer runtime, DB, provider, network, project mutation, deploy/release/export/package, and spend authority remains blocked."
     },
     {
       "track": "NEXUS_OS",
@@ -43832,10 +44008,10 @@
     {
       "phaseId": "P144.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "startingBranch": "codex/nexus-e2e-phase-validation",
-      "expectedBaseCommit": "after-P144.6",
+      "expectedBaseCommit": "4c13376b",
       "narrowGoal": "Close P144 with final validation evidence, prior report verification, P144 complete status, and safe planned-only P145 handoff.",
       "requiredPlanFields": [
         "narrow scope",
@@ -43859,23 +44035,399 @@
       "label": "Final Validation",
       "order": 180.7,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "previousPhase": "P144.6",
       "nextPhase": "P145",
-      "checksRun": [],
-      "knownLimitations": [
-        "P144.7 is planned-only final validation and must not enable billing/customer runtime authority, DB writes, provider calls, network calls, or spend."
+      "checksRun": [
+        "npm run check:p1447-billing-metering-customer-operations-final-validation",
+        "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
+        "npm run check:p1445-billing-metering-customer-operations",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
       ],
-      "commandCenterVisible": true
+      "knownLimitations": [
+        "P144 is complete. P144.7 is final validation only and does not enable billing/customer runtime authority, DB writes, provider calls, payment provider calls, network calls, project mutation, deploy/release/export/package actions, or spend. P145 remains planned-only."
+      ],
+      "commandCenterVisible": true,
+      "detail": "P144.7 verifies P144.1-P144.6 evidence, Command Center roadmap and Cost Center display-only safety, docs/status freshness, route coverage, and safe planned-only P145 handoff.",
+      "summary": "Closed P144 final validation for billing, metering, and customer operations while all billing/customer runtime, DB, provider, network, project mutation, deploy/release/export/package, and spend authority remains blocked.",
+      "completedAt": "2026-05-31T16:30:00.000Z",
+      "allowedFiles": [
+        "package.json",
+        "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
+        "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+        "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+        "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "private project roots",
+        "dashboard/src/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "payment provider adapters",
+        "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
+        "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+        "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "expectedExports": [],
+      "schemas": [
+        "No runtime schema, migration, payment-provider adapter, billing writer, usage writer, support-ticket writer, customer-contact sender, provider call, network call, or executable payload.",
+        "Final validation records phaseId, title, status, branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase, and commandCenterVisible."
+      ],
+      "dataShape": "Final validation, docs, roadmap, OS phase status, checker handoff, route-test assertion, and generated markdown report records only. No runtime export, DB schema, mutation payload, executable payload, provider call, network call, payment call, or spend data shape.",
+      "commandCenterUxRequirements": [
+        "OS Roadmap must show P144.7 complete, P144 complete, and P145 planned-only next.",
+        "Cost Center Customer Ops must remain display-only and continue to show current state, next action, blockers, disabled reason, owner, evidence/activity location, and zero-spend cost impact.",
+        "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces outside demo mode, raw private project IDs, executable payloads, or fake runnable billing/customer operations."
+      ],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate route-wide Command Center coverage through Playwright."
+      ],
+      "safetyRules": [
+        "Do not enable billing account mutation, usage meter writes, invoice creation, payment collection, subscription mutation, entitlement grant/revoke, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend in P144.7.",
+        "Do not add payment provider adapters, invoice creators, subscription mutators, entitlement writers, usage writers, support ticket writers, customer contact senders, executable commands, or payload writers.",
+        "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw billing payloads, raw payment payloads, raw customer payloads, or runnable billing/customer operations in primary UX."
+      ],
+      "reuseCheck": [
+        "shared/reportWriter.js",
+        "shared/checkResultFormatter.js",
+        "os-roadmap/updatePhaseStatus.js pattern via existing JSON status shape",
+        "existing enterprise checker active-state pattern",
+        "existing OS Roadmap route tests"
+      ],
+      "testsToAddUpdateRemove": [
+        "Add P144.7 OS Roadmap and Cost Center final validation coverage.",
+        "Update stale current-roadmap assertions from P144.6/P144.7 to P144.7/P145.",
+        "Preserve route-wide safety tests for demo app leakage, raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1447-billing-metering-customer-operations-final-validation.js.",
+        "Update scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js for P144.7 final-state compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P144.7 final-state compatibility.",
+        "Update scripts/check-os-phase-status.js for P145 handoff recognition."
+      ],
+      "docsToUpdate": [
+        "README.md",
+        "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+        "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P144 complete; P144.1-P144.7 complete; previous P144.6; current P144.7; next P145 planned-only.",
+      "validationCommands": [
+        "npm run check:p1447-billing-metering-customer-operations-final-validation",
+        "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
+        "npm run check:p1445-billing-metering-customer-operations",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No project files changed.",
+        "No dashboard source changed.",
+        "No DB/runtime implementation changed.",
+        "No providers, tools, worker-runtime, deploy, release, export, package, or env files changed.",
+        "No billing/customer mutation, payment provider call, network call, or spend authority enabled.",
+        "No raw payload exposure or fake working actions added.",
+        "No stale placeholder commit marker after stamp commit."
+      ],
+      "gitCommands": [
+        "git add <P144.7 allowed files>",
+        "git commit -m \"feat(nexus): add p1447 billing operations final validation\"",
+        "git add <P144.7 stamp files and refreshed reports>",
+        "git commit -m \"chore(nexus): stamp p1447 billing operations final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/report records",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-31T14:15:00.000Z",
-  "currentPhase": "P144.6",
-  "previousPhase": "P144.5",
-  "nextPhase": "P144.7",
+  "currentPhase": "P144.7",
+  "previousPhase": "P144.6",
+  "nextPhase": "P145",
   "currentPhaseStatus": "complete",
   "current": {
+    "phaseId": "P144.7",
+    "title": "Final Validation",
+    "status": "complete",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "startingBranch": "codex/nexus-e2e-phase-validation",
+    "expectedBaseCommit": "4c13376b",
+    "narrowGoal": "Close P144 with final validation evidence, prior report verification, P144 complete status, and safe planned-only P145 handoff.",
+    "requiredPlanFields": [
+      "narrow scope",
+      "starting branch and expected base commit",
+      "allowed files",
+      "forbidden files",
+      "exact files/modules",
+      "expected exports/schemas/data shapes",
+      "Command Center UX requirements",
+      "dark/light/system theme requirements",
+      "Playwright tests",
+      "checker updates",
+      "docs/README/roadmap updates",
+      "OS phase status update",
+      "validation commands",
+      "final safety checks",
+      "git add/commit/push commands",
+      "final response checklist"
+    ],
+    "track": "NEXUS_OS",
+    "label": "Final Validation",
+    "order": 180.7,
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "previousPhase": "P144.6",
+    "nextPhase": "P145",
+    "checksRun": [
+      "npm run check:p1447-billing-metering-customer-operations-final-validation",
+      "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
+      "npm run check:p1445-billing-metering-customer-operations",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P144 is complete. P144.7 is final validation only and does not enable billing/customer runtime authority, DB writes, provider calls, payment provider calls, network calls, project mutation, deploy/release/export/package actions, or spend. P145 remains planned-only."
+    ],
+    "commandCenterVisible": true,
+    "detail": "P144.7 verifies P144.1-P144.6 evidence, Command Center roadmap and Cost Center display-only safety, docs/status freshness, route coverage, and safe planned-only P145 handoff.",
+    "summary": "Closed P144 final validation for billing, metering, and customer operations while all billing/customer runtime, DB, provider, network, project mutation, deploy/release/export/package, and spend authority remains blocked.",
+    "completedAt": "2026-05-31T16:30:00.000Z",
+    "allowedFiles": [
+      "package.json",
+      "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
+      "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "dashboard/tests/routes.spec.js",
+      "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+      "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+      "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "forbiddenFiles": [
+      "projects/**",
+      "generated-projects/**",
+      "private project roots",
+      "dashboard/src/**",
+      "db/**",
+      "local-state/runtime/**",
+      "providers/**",
+      "tools/**",
+      "worker-runtime/**",
+      "deploy/**",
+      "release/**",
+      "exports/**",
+      "packages/**",
+      ".env*",
+      "payment provider adapters",
+      "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths"
+    ],
+    "exactFilesToCreateOrUpdate": [
+      "package.json",
+      "scripts/check-p1447-billing-metering-customer-operations-final-validation.js",
+      "scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "dashboard/tests/routes.spec.js",
+      "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
+      "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json"
+    ],
+    "expectedExports": [],
+    "schemas": [
+      "No runtime schema, migration, payment-provider adapter, billing writer, usage writer, support-ticket writer, customer-contact sender, provider call, network call, or executable payload.",
+      "Final validation records phaseId, title, status, branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase, and commandCenterVisible."
+    ],
+    "dataShape": "Final validation, docs, roadmap, OS phase status, checker handoff, route-test assertion, and generated markdown report records only. No runtime export, DB schema, mutation payload, executable payload, provider call, network call, payment call, or spend data shape.",
+    "commandCenterUxRequirements": [
+      "OS Roadmap must show P144.7 complete, P144 complete, and P145 planned-only next.",
+      "Cost Center Customer Ops must remain display-only and continue to show current state, next action, blockers, disabled reason, owner, evidence/activity location, and zero-spend cost impact.",
+      "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces outside demo mode, raw private project IDs, executable payloads, or fake runnable billing/customer operations."
+    ],
+    "themeRequirements": [
+      "Preserve System theme.",
+      "Preserve Dark theme.",
+      "Preserve Light theme.",
+      "Validate route-wide Command Center coverage through Playwright."
+    ],
+    "safetyRules": [
+      "Do not enable billing account mutation, usage meter writes, invoice creation, payment collection, subscription mutation, entitlement grant/revoke, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend in P144.7.",
+      "Do not add payment provider adapters, invoice creators, subscription mutators, entitlement writers, usage writers, support ticket writers, customer contact senders, executable commands, or payload writers.",
+      "Do not expose raw private IDs, raw JSON, raw logs, raw policy dumps, raw billing payloads, raw payment payloads, raw customer payloads, or runnable billing/customer operations in primary UX."
+    ],
+    "reuseCheck": [
+      "shared/reportWriter.js",
+      "shared/checkResultFormatter.js",
+      "os-roadmap/updatePhaseStatus.js pattern via existing JSON status shape",
+      "existing enterprise checker active-state pattern",
+      "existing OS Roadmap route tests"
+    ],
+    "testsToAddUpdateRemove": [
+      "Add P144.7 OS Roadmap and Cost Center final validation coverage.",
+      "Update stale current-roadmap assertions from P144.6/P144.7 to P144.7/P145.",
+      "Preserve route-wide safety tests for demo app leakage, raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
+    ],
+    "checkerUpdates": [
+      "Add scripts/check-p1447-billing-metering-customer-operations-final-validation.js.",
+      "Update scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js for P144.7 final-state compatibility.",
+      "Update scripts/check-enterprise-readiness-roadmap.js for P144.7 final-state compatibility."
+    ],
+    "docsToUpdate": [
+      "README.md",
+      "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json"
+    ],
+    "reportsToRegenerate": [
+      "reports/p1447-billing-metering-customer-operations-final-validation-report.md",
+      "reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "osPhaseStatusUpdate": "P144 complete; P144.1-P144.7 complete; previous P144.6; current P144.7; next P145 planned-only.",
+    "validationCommands": [
+      "npm run check:p1447-billing-metering-customer-operations-final-validation",
+      "npm run check:p1446-billing-metering-customer-operations-docs-roadmap",
+      "npm run check:p1445-billing-metering-customer-operations",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.7\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "finalSafetyChecks": [
+      "No project files changed.",
+      "No dashboard source changed.",
+      "No DB/runtime implementation changed.",
+      "No providers, tools, worker-runtime, deploy, release, export, package, or env files changed.",
+      "No billing/customer mutation, payment provider call, network call, or spend authority enabled.",
+      "No raw payload exposure or fake working actions added.",
+      "No stale placeholder commit marker after stamp commit."
+    ],
+    "gitCommands": [
+      "git add <P144.7 allowed files>",
+      "git commit -m \"feat(nexus): add p1447 billing operations final validation\"",
+      "git add <P144.7 stamp files and refreshed reports>",
+      "git commit -m \"chore(nexus): stamp p1447 billing operations final validation\"",
+      "git push origin codex/nexus-e2e-phase-validation"
+    ],
+    "finalResponseChecklist": [
+      "Branch name",
+      "Commit hash",
+      "Files changed",
+      "What was implemented",
+      "Command Center UX changes",
+      "Tests added/updated/removed",
+      "Checker results",
+      "Dashboard build/unit/page results",
+      "Docs/README/roadmap updates",
+      "OS phase status update",
+      "Evidence/report records",
+      "Safety confirmations",
+      "Forbidden paths confirmation",
+      "Known limitations",
+      "Next phase/subphase"
+    ]
+  },
+  "previous": {
     "phaseId": "P144.6",
     "title": "Docs / Roadmap / Status",
     "status": "complete",
@@ -44079,257 +44631,206 @@
       "Next phase/subphase"
     ]
   },
-  "previous": {
-    "phaseId": "P144.5",
-    "title": "Tests / Checkers",
-    "status": "complete",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "97dd7d58",
-    "narrowGoal": "Harden P144 aggregate checker, route-wide Command Center safety coverage, and billing/customer-ops contract/model/preview assertions.",
-    "track": "NEXUS_OS",
-    "label": "Tests / Checkers",
-    "order": 180.5,
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "ffc3f038",
-    "previousPhase": "P144.4",
-    "nextPhase": "P144.6",
-    "checksRun": [
-      "npm run check:p1445-billing-metering-customer-operations",
-      "npm run check:p1444-billing-metering-customer-operations",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.5\"",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P144.5 is tests/checkers hardening only. It does not write billing accounts, record usage, create invoices, collect payments, mutate subscriptions or entitlements, create support tickets, contact customers, execute customer operations, write DB/runtime state, call providers/models, call payment providers, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P144.6-P144.7 remain planned-only."
-    ],
-    "commandCenterVisible": true,
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ],
-    "detail": "P144.5 hardens aggregate validation over the P144 billing/customer-ops contract, read-only model, non-runnable preview, Cost Center UX, docs/status, route safety, and forbidden authority claims.",
-    "summary": "Added aggregate validation over P144.1-P144.4 billing/customer operations reports, model, preview, Command Center UX, docs/status, route safety, and blocked billing/customer authority claims.",
-    "completedAt": "2026-05-31T15:05:00.000Z",
-    "allowedFiles": [
-      "package.json",
-      "scripts/check-p1445-billing-metering-customer-operations.js",
-      "scripts/check-p1444-billing-metering-customer-operations.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "dashboard/tests/routes.spec.js",
-      "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
-      "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1445-billing-metering-customer-operations-report.md",
-      "reports/p1444-billing-metering-customer-operations-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "forbiddenFiles": [
-      "projects/**",
-      "generated-projects/**",
-      "private project roots",
-      "dashboard/src/** outside tests",
-      "db/**",
-      "local-state/runtime/**",
-      "providers/**",
-      "tools/**",
-      "worker-runtime/**",
-      "deploy/**",
-      "release/**",
-      "exports/**",
-      "packages/**",
-      ".env*",
-      "payment provider adapters",
-      "billing, invoice, subscription, customer, entitlement, usage, or support-ticket mutation paths"
-    ],
-    "exactFilesToCreateOrUpdate": [
-      "package.json",
-      "scripts/check-p1445-billing-metering-customer-operations.js",
-      "scripts/check-p1444-billing-metering-customer-operations.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "dashboard/tests/routes.spec.js",
-      "contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json",
-      "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1445-billing-metering-customer-operations-report.md",
-      "reports/p1444-billing-metering-customer-operations-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "expectedExports": [],
-    "schemas": [
-      "No runtime export.",
-      "No DB schema or migration.",
-      "No payment provider adapter, invoice creator, subscription mutator, entitlement writer, usage writer, support ticket writer, customer contact sender, executable command, or payload writer."
-    ],
-    "dataShape": "Aggregate checker/report metadata only: prior report pass status, P144.2 model validation, P144.3 preview validation, P144.4 Cost Center projection coverage, route safety assertions, docs/status handoff, and blocked-authority checks. It has no runtime export, DB schema, migration, mutation payload, executable payload, provider call, payment call, network call, or spend data shape.",
-    "commandCenterUxRequirements": [
-      "OS Roadmap must show P144.5 complete and P144.6 planned-only next.",
-      "Cost Center Customer Ops must remain display-only with current state, next action, blocker, disabled reason, owner, evidence/activity location, and zero-spend cost impact.",
-      "Primary UX must not show raw JSON, raw logs, raw policy dumps, internal phase labels outside OS Roadmap, demo surfaces, private IDs, raw billing/payment/customer payloads, or fake runnable billing/customer actions."
-    ],
-    "themeRequirements": [
-      "Preserve System theme.",
-      "Preserve Dark theme.",
-      "Preserve Light theme.",
-      "Validate focused P144.5 and route-wide Command Center coverage through Playwright."
-    ],
-    "safetyRules": [
-      "Do not enable billing account mutation, usage meter writes, usage rollups, invoice creation, payment collection, subscription mutation, entitlement grant/revoke, support ticket creation, customer contact, customer operation execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend in P144.5.",
-      "P144.5 may only add validation/checker/report/test coverage over existing display-safe P144 artifacts."
-    ],
-    "reuseCheck": [
-      "shared/billingMeteringCustomerOperationsModel.js",
-      "shared/billingMeteringCustomerOperationsPreview.js",
-      "dashboard/src/data/billingCustomerOperationsReadiness.js",
-      "shared/reportWriter.js",
-      "shared/checkResultFormatter.js",
-      "existing enterprise checker active-state pattern",
-      "existing OS Roadmap and Cost Center route tests"
-    ],
-    "playwrightTests": [
-      "Add P144.5 OS Roadmap and Cost Center aggregate coverage.",
-      "Preserve route-wide Command Center safety coverage.",
-      "Validate dark, light, and system theme behavior on Customer Ops."
-    ],
-    "checkerUpdates": [
-      "Add scripts/check-p1445-billing-metering-customer-operations.js.",
-      "Update scripts/check-p1444-billing-metering-customer-operations.js for P144.5 handoff compatibility.",
-      "Update scripts/check-enterprise-readiness-roadmap.js for P144.5 active-state compatibility."
-    ],
-    "docsToUpdate": [
-      "README.md",
-      "docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md"
-    ],
-    "reportsToRegenerate": [
-      "reports/p1445-billing-metering-customer-operations-report.md",
-      "reports/p1444-billing-metering-customer-operations-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "osPhaseStatusUpdate": "P144 in progress; P144.1-P144.5 complete; previous P144.4; current P144.5; next P144.6 planned-only; P145 remains planned-only.",
-    "validationCommands": [
-      "npm run check:p1445-billing-metering-customer-operations",
-      "npm run check:p1444-billing-metering-customer-operations",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P144.5\"",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "finalSafetyChecks": [
-      "No forbidden project files changed.",
-      "No dashboard source changed outside tests.",
-      "No DB/runtime implementation changed.",
-      "No providers, tools, worker-runtime, deploy, release, export, package, or env files changed.",
-      "No billing/customer mutation, payment provider call, network call, DB write, project mutation, provider spend, or fake runnable action enabled.",
-      "No stale phase status or pending-final-commit markers after final stamp."
-    ],
-    "gitCommands": [
-      "git add <P144.5 allowed files>",
-      "git commit -m \"feat(nexus): add p1445 billing operations aggregate checks\"",
-      "git add <P144.5 stamp files and refreshed reports>",
-      "git commit -m \"chore(nexus): stamp p1445 billing operations aggregate checks\"",
-      "git push origin codex/nexus-e2e-phase-validation"
-    ],
-    "finalResponseChecklist": [
-      "Branch name",
-      "Commit hash",
-      "Files changed",
-      "What was implemented",
-      "Command Center UX changes",
-      "Tests added/updated/removed",
-      "Checker results",
-      "Dashboard build/unit/page results",
-      "Docs/README/roadmap updates",
-      "OS phase status update",
-      "Evidence/report records",
-      "Safety confirmations",
-      "Forbidden paths confirmation",
-      "Known limitations",
-      "Next phase/subphase"
-    ]
-  },
   "next": {
-    "phaseId": "P144.7",
-    "title": "Final Validation",
-    "status": "planned",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "startingBranch": "codex/nexus-e2e-phase-validation",
-    "expectedBaseCommit": "after-P144.6",
-    "narrowGoal": "Close P144 with final validation evidence, prior report verification, P144 complete status, and safe planned-only P145 handoff.",
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ],
     "track": "NEXUS_OS",
-    "label": "Final Validation",
-    "order": 180.7,
+    "phaseId": "P145",
+    "title": "Enterprise Certification and GA Readiness",
+    "label": "Enterprise GA Gate",
+    "order": 181,
+    "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
-    "previousPhase": "P144.6",
-    "nextPhase": "P145",
+    "commandCenterVisible": true,
+    "detail": "P145 is planned-only enterprise readiness work. NEXUS reaches a final enterprise readiness gate with end-to-end founder workflow validation, security review, load checks, recovery checks, and release signoff.",
+    "summary": "Planned-only enterprise readiness phase: NEXUS reaches a final enterprise readiness gate with end-to-end founder workflow validation, security review, load checks, recovery checks, and release signoff.",
+    "previousPhase": "P144",
+    "nextPhase": "",
     "checksRun": [],
     "knownLimitations": [
-      "P144.7 is planned-only final validation and must not enable billing/customer runtime authority, DB writes, provider calls, network calls, or spend."
+      "P145 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
     ],
-    "commandCenterVisible": true
+    "subphases": [
+      {
+        "phaseId": "P145.1",
+        "title": "Contract / Policy / Safety Boundary",
+        "status": "planned",
+        "narrowGoal": "Contract / Policy / Safety Boundary for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P145.2",
+        "title": "Certification Matrix",
+        "status": "planned",
+        "narrowGoal": "Certification Matrix for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P145.3",
+        "title": "End-to-End Rehearsal",
+        "status": "planned",
+        "narrowGoal": "End-to-End Rehearsal for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P145.4",
+        "title": "Readiness Command Center UX",
+        "status": "planned",
+        "narrowGoal": "Readiness Command Center UX for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P145.5",
+        "title": "Tests / Checkers",
+        "status": "planned",
+        "narrowGoal": "Tests / Checkers for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P145.6",
+        "title": "Docs / Roadmap / Status",
+        "status": "planned",
+        "narrowGoal": "Docs / Roadmap / Status for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P145.7",
+        "title": "Final Validation",
+        "status": "planned",
+        "narrowGoal": "Final Validation for Enterprise Certification and GA Readiness.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      }
+    ]
   },
-  "currentPhaseSummary": "Closed P144 docs, README, roadmap, OS status, report freshness, checker handoff, and route coverage while billing/customer runtime authority remains blocked.",
-  "nextSubphase": "P144.7",
-  "currentSubphase": "P144.6",
-  "previousSubphase": "P144.5",
+  "currentPhaseSummary": "Closed P144 final validation for billing, metering, and customer operations while all billing/customer runtime, DB, provider, network, project mutation, deploy/release/export/package, and spend authority remains blocked.",
+  "nextSubphase": "P145",
+  "currentSubphase": "P144.7",
+  "previousSubphase": "P144.6",
   "commit": "ffc3f038",
   "completedAt": "2026-05-31T15:05:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
