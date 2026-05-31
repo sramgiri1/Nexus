@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P144.1
-- Generated at: 2026-05-31T13:10:54.220Z
+- Generated at: 2026-05-31T13:12:27.980Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5034d56a
+- Validation HEAD: 05b191a2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -50,8 +50,8 @@
 | next P144/P145 handoff remains safe | PASS |  |
 | P144.1 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P144.1 allowed scope | PASS | README.md, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1437-release-deploy-export-package-pipeline-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md, reports/p1441-billing-metering-customer-operations-report.md, scripts/check-p1441-billing-metering-customer-operations.js |
-| forbidden paths unchanged | PASS | README.md, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1437-release-deploy-export-package-pipeline-final-validation-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md, reports/p1441-billing-metering-customer-operations-report.md, scripts/check-p1441-billing-metering-customer-operations.js |
+| changed files stay in P144.1 allowed scope | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or payment URLs | PASS |  |
 | docs avoid fake runnable billing actions | PASS |  |

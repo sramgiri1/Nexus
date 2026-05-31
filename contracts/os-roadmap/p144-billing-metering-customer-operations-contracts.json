@@ -180,7 +180,7 @@
       "label": "Contract / Policy / Safety Boundary",
       "order": 180.1,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "05b191a2",
       "previousPhase": "P143.7",
       "nextPhase": "P144.2",
       "detail": "P144.1 defines billing/customer-ops safety contracts, display-safe data shapes, blocked authority flags, docs/status handoff, and P144.2 planned-only next.",
@@ -567,5 +567,6 @@
       ],
       "commandCenterVisible": true
     }
-  ]
+  ],
+  "commit": "05b191a2"
 }
