@@ -1322,22 +1322,22 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/mission");
     const scopeSelector = page.getByRole("group", { name: /Scope selector/i });
 
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("No project selected");
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Create or import a project");
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("System Status");
+    await expect(activeCommandTabPanel(page)).toContainText("No project selected");
+    await expect(activeCommandTabPanel(page)).toContainText("Create or import a project");
+    await expect(activeCommandTabPanel(page)).toContainText("System Status");
 
     await scopeSelector.getByRole("button", { name: "Portfolio", exact: true }).click();
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Portfolio Project Cards");
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Project Registry will enable cross-project task aggregation");
+    await expect(activeCommandTabPanel(page)).toContainText("Portfolio Project Cards");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Registry will enable cross-project task aggregation");
     await page.getByRole("tab", { name: /Tasks/i }).click();
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Project Registry will enable cross-project task aggregation");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Registry will enable cross-project task aggregation");
 
     await scopeSelector.getByRole("button", { name: "NEXUS OS", exact: true }).click();
     await page.getByRole("tab", { name: /Overview/i }).click();
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Current OS Phase");
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("NEXUS OS Readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("Current OS Phase");
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS OS Readiness");
     await page.getByRole("tab", { name: /Tasks/i }).click();
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("NEXUS OS Tasks");
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS OS Tasks");
 
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
@@ -3148,7 +3148,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks completed P43 foundation and current P44 multi-repo work", async ({ page }) => {
+  test("OS Roadmap tracks completed OS foundations and current enterprise handoff", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
@@ -3166,8 +3166,15 @@ test.describe("Command Center route-wide UX", () => {
     expect(completedBody).toContain("Repo Registry");
     expect(completedBody).toContain("P44.2");
     expect(completedBody).toContain("Repo Ownership + Dependency Map");
-    expect(body).toContain(NEXUS_CURRENT_OS_PHASE.phase);
-    expect(body).toContain(NEXUS_CURRENT_OS_PHASE.label);
+    if (NEXUS_CURRENT_OS_PHASE) {
+      expect(body).toContain(NEXUS_CURRENT_OS_PHASE.phase);
+      expect(body).toContain(NEXUS_CURRENT_OS_PHASE.label);
+    } else {
+      expect(body).toContain("No phase marked in progress");
+    }
+    expect(NEXUS_NEXT_OS_PHASE).toBeTruthy();
+    expect(body).toContain(NEXUS_NEXT_OS_PHASE.phase);
+    expect(body).toContain(NEXUS_NEXT_OS_PHASE.label);
     expect(body).toContain(NEXUS_PREVIOUS_COMPLETED_PHASE.phase);
     expect(body).toContain(NEXUS_PREVIOUS_COMPLETED_PHASE.label);
     expect(body).not.toContain("DemoApp");

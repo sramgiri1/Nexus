@@ -790,7 +790,8 @@
     "check:p1403-backup-recovery-dr-restore-preview": "node scripts/check-p1403-backup-recovery-dr-restore-preview.js",
     "check:p1404-backup-recovery-dr-command-center-ux": "node scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
     "check:p1405-backup-recovery-dr-tests-checkers": "node scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
-    "check:p1406-backup-recovery-dr-docs-roadmap": "node scripts/check-p1406-backup-recovery-dr-docs-roadmap.js"
+    "check:p1406-backup-recovery-dr-docs-roadmap": "node scripts/check-p1406-backup-recovery-dr-docs-roadmap.js",
+    "check:p1407-backup-recovery-dr-final-validation": "node scripts/check-p1407-backup-recovery-dr-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

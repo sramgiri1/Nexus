@@ -31640,15 +31640,16 @@
       "title": "Backup, Recovery, DR, and Retention",
       "label": "Backup / DR",
       "order": 176,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9fb6b019",
+      "commit": "pending-final-commit",
       "commandCenterVisible": true,
-      "detail": "P140.6 records P140.1-P140.6 as complete, verifies P140.7 remains planned-only next, and regenerates P140 reports while preserving all Backup / DR runtime blocks.",
-      "summary": "P140 Backup, Recovery, DR, and Retention is complete through P140.6 docs/status closure, with P140.7 final validation planned-only next.",
+      "detail": "P140.7 verifies P140.1-P140.6 reports, checker compatibility, route-wide safety, docs/status closure, and P141 planned-only handoff without enabling Backup / DR runtime authority.",
+      "summary": "P140 Backup, Recovery, DR, and Retention is complete through P140.7 final validation, with P141 planned-only next.",
       "previousPhase": "P139",
       "nextPhase": "P141",
       "checksRun": [
+        "npm run check:p1407-backup-recovery-dr-final-validation",
         "npm run check:p1406-backup-recovery-dr-docs-roadmap",
         "npm run check:p1405-backup-recovery-dr-tests-checkers",
         "npm run check:p1404-backup-recovery-dr-command-center-ux",
@@ -31666,8 +31667,8 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P140.6 is docs/status/checker closure only.",
-        "P140.7 remains planned-only final validation next.",
+        "P140.7 is final validation only.",
+        "P141 remains planned-only next.",
         "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
       ],
       "subphases": [
@@ -32244,7 +32245,7 @@
           ],
           "knownLimitations": [
             "P140.5 is validation-only and does not add source UX changes beyond Playwright coverage.",
-            "P140.6 has since completed docs/status closure; P140.7 remains planned-only next.",
+            "P140.6 has since completed docs/status closure; P140.7 has since completed final validation; P141 remains planned-only next.",
             "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
           ],
           "requiredPlanFields": [
@@ -32386,7 +32387,7 @@
             "reports/os-phase-status-report.md",
             "reports/phase-validation-coverage-report.md"
           ],
-          "osPhaseStatusUpdate": "P140.5 complete; P140 has since advanced through P140.6 docs/status closure with P140.7 planned-only next.",
+          "osPhaseStatusUpdate": "P140.5 complete; P140 has since advanced through P140.6 docs/status closure with P140.7 complete with P141 planned-only next.",
           "validationCommands": [
             "npm run check:p1405-backup-recovery-dr-tests-checkers",
             "npm run check:p1404-backup-recovery-dr-command-center-ux",
@@ -32473,7 +32474,7 @@
           "commit": "9fb6b019",
           "expectedBaseCommit": "a9e65a07",
           "summary": "Closed P140.6 docs, roadmap, OS status, checker handoffs, reports, and route coverage for Backup / DR without enabling runtime authority.",
-          "detail": "P140.6 records P140.1-P140.6 as complete, verifies P140.7 remains planned-only next, and regenerates P140 reports while preserving all Backup / DR runtime blocks.",
+          "detail": "P140.6 records P140.1-P140.6 as complete, then P140.7 final validation closes P140 with P141 planned-only next while preserving all Backup / DR runtime blocks.",
           "checksRun": [
             "npm run check:p1406-backup-recovery-dr-docs-roadmap",
             "npm run check:p1405-backup-recovery-dr-tests-checkers",
@@ -32493,7 +32494,7 @@
           ],
           "knownLimitations": [
             "P140.6 is docs/status/checker closure only.",
-            "P140.7 remains planned-only final validation next.",
+            "P140.7 has since completed final validation; P141 remains planned-only next.",
             "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
           ],
           "goal": "Close P140 docs/status before final validation.",
@@ -32579,7 +32580,7 @@
           "schemas": [
             "No runtime schema export changes."
           ],
-          "dataShape": "Docs/status/checker closure report with P140.1-P140.6 validation status, P140.7 planned-only handoff, report regeneration, and forbidden-path safety checks.",
+          "dataShape": "Docs/status/checker closure report with P140.1-P140.6 validation status, P140.7 final-validation handoff, report regeneration, and forbidden-path safety checks.",
           "dataShapes": [
             "P140.6 report records current/previous/next subphase and prior P140 report pass count.",
             "No provider, runtime, DB, project, deploy, release, export, package, or spend payloads are created."
@@ -32621,7 +32622,7 @@
             "reports/os-phase-status-report.md",
             "reports/phase-validation-coverage-report.md"
           ],
-          "osPhaseStatusUpdate": "P140.6 complete; P140 in progress; previous P140.5; next P140.7 planned-only.",
+          "osPhaseStatusUpdate": "P140.6 complete; P140.7 final validation has since closed P140 with P141 planned-only next.",
           "validationCommands": [
             "npm run check:p1406-backup-recovery-dr-docs-roadmap",
             "npm run check:p1405-backup-recovery-dr-tests-checkers",
@@ -32710,17 +32711,17 @@
           "commit": "",
           "expectedBaseCommit": "pending-p1406-stamp",
           "summary": "Planned-only final P140 validation subphase.",
-          "detail": "P140.7 remains planned-only until its own implementation-grade plan, checker, validation, commit, and push are complete.",
+          "detail": "P140.7 has since completed final validation. P141 remains planned-only until its own implementation-grade plan, checker, validation, commit, and push are complete.",
           "checksRun": [],
           "knownLimitations": [
-            "P140.7 is planned-only. It must not enable backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until implemented and validated."
+            "P140.7 is complete as final validation only. It does not enable backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P141 remains planned-only until implemented and validated."
           ]
         }
       ],
-      "completedAt": "2026-05-31T04:15:00.000Z",
-      "currentSubphase": "P140.6",
-      "previousSubphase": "P140.5",
-      "nextSubphase": "P140.7",
+      "completedAt": "2026-05-31T05:45:00.000Z",
+      "currentSubphase": "P140.7",
+      "previousSubphase": "P140.6",
+      "nextSubphase": "P141",
       "expectedBaseCommit": "a9e65a07",
       "allowedFiles": [
         "package.json",
@@ -32808,6 +32809,7 @@
       "expectedBaseCommit": "43c5dbc2",
       "allowedFiles": [
         "package.json",
+        "dashboard/tests/routes.spec.js",
         "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
         "scripts/check-p1401-backup-recovery-dr-retention.js",
         "scripts/check-enterprise-readiness-roadmap.js",
@@ -32828,7 +32830,6 @@
         "generated-projects/**",
         "private project roots",
         "dashboard/src/**",
-        "dashboard/tests/**",
         "db/**",
         "local-state/runtime/**",
         "providers/**",
@@ -32842,6 +32843,7 @@
       ],
       "exactFilesToCreateOrUpdate": [
         "package.json",
+        "dashboard/tests/routes.spec.js",
         "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
         "scripts/check-p1401-backup-recovery-dr-retention.js",
         "scripts/check-enterprise-readiness-roadmap.js",
@@ -33570,7 +33572,7 @@
       ],
       "knownLimitations": [
         "P140.5 is validation-only and does not add source UX changes beyond Playwright coverage.",
-        "P140.6 has since completed docs/status closure; P140.7 remains planned-only next.",
+        "P140.6 has since completed docs/status closure; P140.7 has since completed final validation; P141 remains planned-only next.",
         "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
       ],
       "requiredPlanFields": [
@@ -33712,7 +33714,7 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "osPhaseStatusUpdate": "P140.5 complete; P140 has since advanced through P140.6 docs/status closure with P140.7 planned-only next.",
+      "osPhaseStatusUpdate": "P140.5 complete; P140 has since advanced through P140.6 docs/status closure with P140.7 complete with P141 planned-only next.",
       "validationCommands": [
         "npm run check:p1405-backup-recovery-dr-tests-checkers",
         "npm run check:p1404-backup-recovery-dr-command-center-ux",
@@ -33781,7 +33783,7 @@
       "commit": "9fb6b019",
       "expectedBaseCommit": "a9e65a07",
       "summary": "Closed P140.6 docs, roadmap, OS status, checker handoffs, reports, and route coverage for Backup / DR without enabling runtime authority.",
-      "detail": "P140.6 records P140.1-P140.6 as complete, verifies P140.7 remains planned-only next, and regenerates P140 reports while preserving all Backup / DR runtime blocks.",
+      "detail": "P140.6 records P140.1-P140.6 as complete, then P140.7 final validation closes P140 with P141 planned-only next while preserving all Backup / DR runtime blocks.",
       "checksRun": [
         "npm run check:p1406-backup-recovery-dr-docs-roadmap",
         "npm run check:p1405-backup-recovery-dr-tests-checkers",
@@ -33801,7 +33803,7 @@
       ],
       "knownLimitations": [
         "P140.6 is docs/status/checker closure only.",
-        "P140.7 remains planned-only final validation next.",
+        "P140.7 has since completed final validation; P141 remains planned-only next.",
         "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
       ],
       "requiredPlanFields": [
@@ -33905,7 +33907,7 @@
       "schemas": [
         "No runtime schema export changes."
       ],
-      "dataShape": "Docs/status/checker closure report with P140.1-P140.6 validation status, P140.7 planned-only handoff, report regeneration, and forbidden-path safety checks.",
+      "dataShape": "Docs/status/checker closure report with P140.1-P140.6 validation status, P140.7 final-validation handoff, report regeneration, and forbidden-path safety checks.",
       "dataShapes": [
         "P140.6 report records current/previous/next subphase and prior P140 report pass count.",
         "No provider, runtime, DB, project, deploy, release, export, package, or spend payloads are created."
@@ -33947,7 +33949,7 @@
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
-      "osPhaseStatusUpdate": "P140.6 complete; P140 in progress; previous P140.5; next P140.7 planned-only.",
+      "osPhaseStatusUpdate": "P140.6 complete; P140.7 final validation has since closed P140 with P141 planned-only next.",
       "validationCommands": [
         "npm run check:p1406-backup-recovery-dr-docs-roadmap",
         "npm run check:p1405-backup-recovery-dr-tests-checkers",
@@ -34005,7 +34007,7 @@
     {
       "phaseId": "P140.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Final P140 validation across reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P141 handoff.",
       "previousPhase": "P140.6",
@@ -34013,15 +34015,34 @@
       "order": 176.7,
       "commandCenterVisible": true,
       "label": "P140.7 Final Validation",
-      "completedAt": "",
+      "completedAt": "2026-05-31T05:45:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "expectedBaseCommit": "pending-p1406-stamp",
-      "summary": "Planned-only final P140 validation subphase.",
-      "detail": "P140.7 remains planned-only until its own implementation-grade plan, checker, validation, commit, and push are complete.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "expectedBaseCommit": "2741f6cc",
+      "summary": "Closed P140 Backup, Recovery, DR, and Retention with final validation, report compatibility, route-wide safety, and P141 planned-only handoff.",
+      "detail": "P140.7 verifies P140.1-P140.6 reports and checkers, closes the P140 parent phase, and keeps P141 planned-only without enabling Backup / DR runtime authority.",
+      "checksRun": [
+        "npm run check:p1407-backup-recovery-dr-final-validation",
+        "npm run check:p1406-backup-recovery-dr-docs-roadmap",
+        "npm run check:p1405-backup-recovery-dr-tests-checkers",
+        "npm run check:p1404-backup-recovery-dr-command-center-ux",
+        "npm run check:p1403-backup-recovery-dr-restore-preview",
+        "npm run check:p1402-backup-recovery-dr-retention",
+        "npm run check:p1401-backup-recovery-dr-retention",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P140.6\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P140.7 is planned-only. It must not enable backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until implemented and validated."
+        "P140.7 is final validation only.",
+        "P141 remains planned-only next.",
+        "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
       ],
       "requiredPlanFields": [
         "narrow scope",
@@ -34040,6 +34061,193 @@
         "final safety checks",
         "git add/commit/push commands",
         "final response checklist"
+      ],
+      "goal": "Close P140 and hand off to P141.",
+      "whyThisIsNeeded": "P140.1-P140.6 completed the Backup / DR contract, model, restore preview, Command Center UX, aggregate validation, and docs/status closure. P140.7 proves the parent phase can close without enabling runtime authority.",
+      "userOperatorImpact": "Operators see Backup / DR as complete for display-safe readiness, with P141 as the explicit planned-only next phase.",
+      "commandCenterImpact": "No Command Center source changes. Existing Backup / DR and route-wide Playwright coverage proves the page remains useful, display-only, theme-safe, and free of internal final-validation labels in primary UX.",
+      "safetyImpact": "Final-validation-only. No backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+      "costImpact": "Zero provider spend; local checkers, dashboard build/unit tests, and Playwright only.",
+      "projectOsScope": "NEXUS OS Backup / DR final validation only.",
+      "allowedFiles": [
+        "package.json",
+        "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
+        "scripts/check-p1401-backup-recovery-dr-retention.js",
+        "scripts/check-p1402-backup-recovery-dr-retention.js",
+        "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+        "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
+        "scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
+        "scripts/check-p1406-backup-recovery-dr-docs-roadmap.js",
+        "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1401-backup-recovery-dr-retention-report.md",
+        "reports/p1402-backup-recovery-dr-retention-report.md",
+        "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+        "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
+        "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
+        "reports/p1406-backup-recovery-dr-docs-roadmap-report.md",
+        "reports/p1407-backup-recovery-dr-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "generated-projects/**",
+        "private project roots",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
+        "scripts/check-p1401-backup-recovery-dr-retention.js",
+        "scripts/check-p1402-backup-recovery-dr-retention.js",
+        "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+        "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
+        "scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
+        "scripts/check-p1406-backup-recovery-dr-docs-roadmap.js",
+        "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1401-backup-recovery-dr-retention-report.md",
+        "reports/p1402-backup-recovery-dr-retention-report.md",
+        "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+        "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
+        "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
+        "reports/p1406-backup-recovery-dr-docs-roadmap-report.md",
+        "reports/p1407-backup-recovery-dr-final-validation-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [],
+      "schemas": [
+        "No runtime schema export changes."
+      ],
+      "dataShape": "Final validation only report with P140.1-P140.6 validation status, checker compatibility, route-wide safety coverage, P140 complete status, P141 planned-only handoff, and forbidden-path safety checks.",
+      "dataShapes": [
+        "P140.7 report records current/previous/next phase and prior P140 report pass count.",
+        "No provider, runtime, DB, project, deploy, release, export, package, backup, restore, failover, prune, delete, overwrite, or spend payloads are created."
+      ],
+      "commandCenterUxRequirements": [
+        "Preserve existing Backup / DR Command Center UX.",
+        "Rerun Backup / DR and route-wide Playwright coverage proving Backup / DR remains display-only, non-runnable, and free of raw/private identifiers.",
+        "Maintain Mission Control active tab-panel coverage and OS Roadmap current/next handoff assertions discovered during P140.7 validation.",
+        "Preserve dark/light/system themes, route-wide navigation, no demo surface leakage, no raw JSON/log/policy dumps, OS Roadmap boundary, and Projects milestone separation."
+      ],
+      "themeRequirements": [
+        "Preserve existing dark, light, and system theme behavior through route-wide tests.",
+        "Do not introduce CSS or color changes."
+      ],
+      "playWrightTests": [
+        "Maintain route-wide tests for Mission Control tab panels and OS Roadmap current/next handoff semantics discovered during P140.7 validation.",
+        "Reuse existing P140.6 Backup DR docs status closure test.",
+        "Reuse existing Backup DR route tests.",
+        "Reuse existing Command Center route-wide UX suite."
+      ],
+      "checkerUpdates": [
+        "Added scripts/check-p1407-backup-recovery-dr-final-validation.js.",
+        "Updated P140.1-P140.6 compatibility checkers to accept P140.7 final state and P141 handoff.",
+        "Updated enterprise readiness and OS status checkers for P140.7/P141."
+      ],
+      "docsRoadmapUpdates": [
+        "README.md",
+        "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1407-backup-recovery-dr-final-validation-report.md",
+        "reports/p1406-backup-recovery-dr-docs-roadmap-report.md",
+        "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
+        "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
+        "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+        "reports/p1402-backup-recovery-dr-retention-report.md",
+        "reports/p1401-backup-recovery-dr-retention-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P140.7 complete; P140 complete; previous P140.6; next P141 planned-only.",
+      "validationCommands": [
+        "npm run check:p1407-backup-recovery-dr-final-validation",
+        "npm run check:p1406-backup-recovery-dr-docs-roadmap",
+        "npm run check:p1405-backup-recovery-dr-tests-checkers",
+        "npm run check:p1404-backup-recovery-dr-command-center-ux",
+        "npm run check:p1403-backup-recovery-dr-restore-preview",
+        "npm run check:p1402-backup-recovery-dr-retention",
+        "npm run check:p1401-backup-recovery-dr-retention",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P140.6\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No project/private files changed.",
+        "No dashboard source files changed.",
+        "No dashboard test files changed unless existing Playwright coverage is insufficient.",
+        "No runtime authority, DB/runtime writes, backup creation, restore execution, failover, overwrite, delete, prune, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend enabled.",
+        "No raw IDs, raw dumps, raw storage URLs, demo surface leakage, or fake runnable actions introduced.",
+        "No stale pending-final-commit marker remains after stamp commit."
+      ],
+      "gitCommands": [
+        "git add package.json contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json scripts/check-p1401-backup-recovery-dr-retention.js scripts/check-p1402-backup-recovery-dr-retention.js scripts/check-p1403-backup-recovery-dr-restore-preview.js scripts/check-p1404-backup-recovery-dr-command-center-ux.js scripts/check-p1405-backup-recovery-dr-tests-checkers.js scripts/check-p1406-backup-recovery-dr-docs-roadmap.js scripts/check-p1407-backup-recovery-dr-final-validation.js scripts/check-enterprise-readiness-roadmap.js scripts/check-os-phase-status.js docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json reports/p1401-backup-recovery-dr-retention-report.md reports/p1402-backup-recovery-dr-retention-report.md reports/p1403-backup-recovery-dr-restore-preview-report.md reports/p1404-backup-recovery-dr-command-center-ux-report.md reports/p1405-backup-recovery-dr-tests-checkers-report.md reports/p1406-backup-recovery-dr-docs-roadmap-report.md reports/p1407-backup-recovery-dr-final-validation-report.md reports/enterprise-readiness-roadmap-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
+        "git commit -m \"chore(nexus): implement p1407 backup recovery final validation\"",
+        "git commit -m \"chore(nexus): stamp p1407 backup recovery final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ],
+      "rollbackPlan": "Revert the P140.7 implementation commit and stamp commit, then rerun P140.6/P140.5/P140.4/P140.3/P140.2/P140.1 checkers, enterprise readiness, OS phase status, phase validation coverage, dashboard build/unit, P140.6 Playwright, Backup DR Playwright, route-wide Playwright, and git diff --check.",
+      "knownRisks": [
+        "P141 must remain planned-only until its own implementation-grade plan.",
+        "Future live Backup / DR work still needs explicit authority, approvals, storage design, and runtime mutation phases."
       ]
     },
     {
@@ -34236,7 +34444,8 @@
             "final response checklist"
           ]
         }
-      ]
+      ],
+      "completedAt": ""
     },
     {
       "track": "NEXUS_OS",
@@ -35025,11 +35234,255 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-31T02:34:00.000Z",
-  "currentPhase": "P140.6",
-  "previousPhase": "P140.5",
-  "nextPhase": "P140.7",
+  "currentPhase": "P140.7",
+  "previousPhase": "P140.6",
+  "nextPhase": "P141",
   "currentPhaseStatus": "complete",
   "current": {
+    "phaseId": "P140.7",
+    "title": "Final Validation",
+    "status": "complete",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "narrowGoal": "Final P140 validation across reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P141 handoff.",
+    "previousPhase": "P140.6",
+    "nextPhase": "P141",
+    "order": 176.7,
+    "commandCenterVisible": true,
+    "label": "P140.7 Final Validation",
+    "completedAt": "2026-05-31T05:45:00.000Z",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "expectedBaseCommit": "2741f6cc",
+    "summary": "Closed P140 Backup, Recovery, DR, and Retention with final validation, report compatibility, route-wide safety, and P141 planned-only handoff.",
+    "detail": "P140.7 verifies P140.1-P140.6 reports and checkers, closes the P140 parent phase, and keeps P141 planned-only without enabling Backup / DR runtime authority.",
+    "checksRun": [
+      "npm run check:p1407-backup-recovery-dr-final-validation",
+      "npm run check:p1406-backup-recovery-dr-docs-roadmap",
+      "npm run check:p1405-backup-recovery-dr-tests-checkers",
+      "npm run check:p1404-backup-recovery-dr-command-center-ux",
+      "npm run check:p1403-backup-recovery-dr-restore-preview",
+      "npm run check:p1402-backup-recovery-dr-retention",
+      "npm run check:p1401-backup-recovery-dr-retention",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P140.6\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "knownLimitations": [
+      "P140.7 is final validation only.",
+      "P141 remains planned-only next.",
+      "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
+    ],
+    "requiredPlanFields": [
+      "narrow scope",
+      "starting branch and expected base commit",
+      "allowed files",
+      "forbidden files",
+      "exact files/modules",
+      "expected exports/schemas/data shapes",
+      "Command Center UX requirements",
+      "dark/light/system theme requirements",
+      "Playwright tests",
+      "checker updates",
+      "docs/README/roadmap updates",
+      "OS phase status update",
+      "validation commands",
+      "final safety checks",
+      "git add/commit/push commands",
+      "final response checklist"
+    ],
+    "goal": "Close P140 and hand off to P141.",
+    "whyThisIsNeeded": "P140.1-P140.6 completed the Backup / DR contract, model, restore preview, Command Center UX, aggregate validation, and docs/status closure. P140.7 proves the parent phase can close without enabling runtime authority.",
+    "userOperatorImpact": "Operators see Backup / DR as complete for display-safe readiness, with P141 as the explicit planned-only next phase.",
+    "commandCenterImpact": "No Command Center source changes. Existing Backup / DR and route-wide Playwright coverage proves the page remains useful, display-only, theme-safe, and free of internal final-validation labels in primary UX.",
+    "safetyImpact": "Final-validation-only. No backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
+    "costImpact": "Zero provider spend; local checkers, dashboard build/unit tests, and Playwright only.",
+    "projectOsScope": "NEXUS OS Backup / DR final validation only.",
+    "allowedFiles": [
+      "package.json",
+      "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
+      "scripts/check-p1401-backup-recovery-dr-retention.js",
+      "scripts/check-p1402-backup-recovery-dr-retention.js",
+      "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+      "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
+      "scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
+      "scripts/check-p1406-backup-recovery-dr-docs-roadmap.js",
+      "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "scripts/check-os-phase-status.js",
+      "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "reports/p1401-backup-recovery-dr-retention-report.md",
+      "reports/p1402-backup-recovery-dr-retention-report.md",
+      "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+      "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
+      "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
+      "reports/p1406-backup-recovery-dr-docs-roadmap-report.md",
+      "reports/p1407-backup-recovery-dr-final-validation-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "forbiddenFiles": [
+      "projects/**",
+      "generated-projects/**",
+      "private project roots",
+      "dashboard/src/**",
+      "dashboard/tests/**",
+      "db/**",
+      "local-state/runtime/**",
+      "providers/**",
+      "tools/**",
+      "worker-runtime/**",
+      "deploy/**",
+      "release/**",
+      "exports/**",
+      "packages/**",
+      ".env*"
+    ],
+    "exactFilesToCreateOrUpdate": [
+      "package.json",
+      "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
+      "scripts/check-p1401-backup-recovery-dr-retention.js",
+      "scripts/check-p1402-backup-recovery-dr-retention.js",
+      "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
+      "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
+      "scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
+      "scripts/check-p1406-backup-recovery-dr-docs-roadmap.js",
+      "scripts/check-p1407-backup-recovery-dr-final-validation.js",
+      "scripts/check-enterprise-readiness-roadmap.js",
+      "scripts/check-os-phase-status.js",
+      "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "README.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json",
+      "reports/p1401-backup-recovery-dr-retention-report.md",
+      "reports/p1402-backup-recovery-dr-retention-report.md",
+      "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+      "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
+      "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
+      "reports/p1406-backup-recovery-dr-docs-roadmap-report.md",
+      "reports/p1407-backup-recovery-dr-final-validation-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "expectedExports": [],
+    "schemas": [
+      "No runtime schema export changes."
+    ],
+    "dataShape": "Final validation only report with P140.1-P140.6 validation status, checker compatibility, route-wide safety coverage, P140 complete status, P141 planned-only handoff, and forbidden-path safety checks.",
+    "dataShapes": [
+      "P140.7 report records current/previous/next phase and prior P140 report pass count.",
+      "No provider, runtime, DB, project, deploy, release, export, package, backup, restore, failover, prune, delete, overwrite, or spend payloads are created."
+    ],
+    "commandCenterUxRequirements": [
+      "Preserve existing Backup / DR Command Center UX.",
+      "Rerun Backup / DR and route-wide Playwright coverage proving Backup / DR remains display-only, non-runnable, and free of raw/private identifiers.",
+      "Preserve dark/light/system themes, route-wide navigation, no demo surface leakage, no raw JSON/log/policy dumps, OS Roadmap boundary, and Projects milestone separation."
+    ],
+    "themeRequirements": [
+      "Preserve existing dark, light, and system theme behavior through route-wide tests.",
+      "Do not introduce CSS or color changes."
+    ],
+    "playWrightTests": [
+      "Reuse existing P140.6 Backup DR docs status closure test.",
+      "Reuse existing Backup DR route tests.",
+      "Reuse existing Command Center route-wide UX suite."
+    ],
+    "checkerUpdates": [
+      "Added scripts/check-p1407-backup-recovery-dr-final-validation.js.",
+      "Updated P140.1-P140.6 compatibility checkers to accept P140.7 final state and P141 handoff.",
+      "Updated enterprise readiness and OS status checkers for P140.7/P141."
+    ],
+    "docsRoadmapUpdates": [
+      "README.md",
+      "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
+      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+      "os-roadmap/nexus-phases.json",
+      "os-roadmap/phase-status.json"
+    ],
+    "reportsToRegenerate": [
+      "reports/p1407-backup-recovery-dr-final-validation-report.md",
+      "reports/p1406-backup-recovery-dr-docs-roadmap-report.md",
+      "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
+      "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
+      "reports/p1403-backup-recovery-dr-restore-preview-report.md",
+      "reports/p1402-backup-recovery-dr-retention-report.md",
+      "reports/p1401-backup-recovery-dr-retention-report.md",
+      "reports/enterprise-readiness-roadmap-report.md",
+      "reports/os-phase-status-report.md",
+      "reports/phase-validation-coverage-report.md"
+    ],
+    "osPhaseStatusUpdate": "P140.7 complete; P140 complete; previous P140.6; next P141 planned-only.",
+    "validationCommands": [
+      "npm run check:p1407-backup-recovery-dr-final-validation",
+      "npm run check:p1406-backup-recovery-dr-docs-roadmap",
+      "npm run check:p1405-backup-recovery-dr-tests-checkers",
+      "npm run check:p1404-backup-recovery-dr-command-center-ux",
+      "npm run check:p1403-backup-recovery-dr-restore-preview",
+      "npm run check:p1402-backup-recovery-dr-retention",
+      "npm run check:p1401-backup-recovery-dr-retention",
+      "npm run check:enterprise-readiness-roadmap",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+      "cd dashboard && npm run build",
+      "cd dashboard && npm run test:unit",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P140.6\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
+      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+      "git diff --check"
+    ],
+    "finalSafetyChecks": [
+      "No project/private files changed.",
+      "No dashboard source files changed.",
+      "No dashboard test files changed unless existing Playwright coverage is insufficient.",
+      "No runtime authority, DB/runtime writes, backup creation, restore execution, failover, overwrite, delete, prune, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend enabled.",
+      "No raw IDs, raw dumps, raw storage URLs, demo surface leakage, or fake runnable actions introduced.",
+      "No stale pending-final-commit marker remains after stamp commit."
+    ],
+    "gitCommands": [
+      "git add package.json contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json scripts/check-p1401-backup-recovery-dr-retention.js scripts/check-p1402-backup-recovery-dr-retention.js scripts/check-p1403-backup-recovery-dr-restore-preview.js scripts/check-p1404-backup-recovery-dr-command-center-ux.js scripts/check-p1405-backup-recovery-dr-tests-checkers.js scripts/check-p1406-backup-recovery-dr-docs-roadmap.js scripts/check-p1407-backup-recovery-dr-final-validation.js scripts/check-enterprise-readiness-roadmap.js scripts/check-os-phase-status.js docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json reports/p1401-backup-recovery-dr-retention-report.md reports/p1402-backup-recovery-dr-retention-report.md reports/p1403-backup-recovery-dr-restore-preview-report.md reports/p1404-backup-recovery-dr-command-center-ux-report.md reports/p1405-backup-recovery-dr-tests-checkers-report.md reports/p1406-backup-recovery-dr-docs-roadmap-report.md reports/p1407-backup-recovery-dr-final-validation-report.md reports/enterprise-readiness-roadmap-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
+      "git commit -m \"chore(nexus): implement p1407 backup recovery final validation\"",
+      "git commit -m \"chore(nexus): stamp p1407 backup recovery final validation\"",
+      "git push origin codex/nexus-e2e-phase-validation"
+    ],
+    "finalResponseChecklist": [
+      "Branch name",
+      "Commit hash",
+      "Files changed",
+      "What was implemented",
+      "Command Center UX changes",
+      "Tests added/updated/removed",
+      "Checker results",
+      "Dashboard build/unit/page results",
+      "Docs/README/roadmap updates",
+      "OS phase status update",
+      "Evidence/audit/activity/cost records if applicable",
+      "Safety confirmations",
+      "Forbidden paths confirmation",
+      "Known limitations",
+      "Next phase/subphase"
+    ],
+    "rollbackPlan": "Revert the P140.7 implementation commit and stamp commit, then rerun P140.6/P140.5/P140.4/P140.3/P140.2/P140.1 checkers, enterprise readiness, OS phase status, phase validation coverage, dashboard build/unit, P140.6 Playwright, Backup DR Playwright, route-wide Playwright, and git diff --check.",
+    "knownRisks": [
+      "P141 must remain planned-only until its own implementation-grade plan.",
+      "Future live Backup / DR work still needs explicit authority, approvals, storage design, and runtime mutation phases."
+    ]
+  },
+  "previous": {
     "phaseId": "P140.6",
     "title": "Docs / Roadmap / Status",
     "status": "complete",
@@ -35045,7 +35498,7 @@
     "commit": "9fb6b019",
     "expectedBaseCommit": "a9e65a07",
     "summary": "Closed P140.6 docs, roadmap, OS status, checker handoffs, reports, and route coverage for Backup / DR without enabling runtime authority.",
-    "detail": "P140.6 records P140.1-P140.6 as complete, verifies P140.7 remains planned-only next, and regenerates P140 reports while preserving all Backup / DR runtime blocks.",
+    "detail": "P140.6 records P140.1-P140.6 as complete, then P140.7 final validation closes P140 with P141 planned-only next while preserving all Backup / DR runtime blocks.",
     "checksRun": [
       "npm run check:p1406-backup-recovery-dr-docs-roadmap",
       "npm run check:p1405-backup-recovery-dr-tests-checkers",
@@ -35065,8 +35518,26 @@
     ],
     "knownLimitations": [
       "P140.6 is docs/status/checker closure only.",
-      "P140.7 remains planned-only final validation next.",
+      "P140.7 has since completed final validation; P141 remains planned-only next.",
       "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
+    ],
+    "requiredPlanFields": [
+      "narrow scope",
+      "starting branch and expected base commit",
+      "allowed files",
+      "forbidden files",
+      "exact files/modules",
+      "expected exports/schemas/data shapes",
+      "Command Center UX requirements",
+      "dark/light/system theme requirements",
+      "Playwright tests",
+      "checker updates",
+      "docs/README/roadmap updates",
+      "OS phase status update",
+      "validation commands",
+      "final safety checks",
+      "git add/commit/push commands",
+      "final response checklist"
     ],
     "goal": "Close P140 docs/status before final validation.",
     "whyThisIsNeeded": "P140.1-P140.5 completed the Backup / DR contract, model, restore preview, Command Center UX, and aggregate validation. P140.6 prevents stale docs/status and prepares P140.7 final validation.",
@@ -35151,7 +35622,7 @@
     "schemas": [
       "No runtime schema export changes."
     ],
-    "dataShape": "Docs/status/checker closure report with P140.1-P140.6 validation status, P140.7 planned-only handoff, report regeneration, and forbidden-path safety checks.",
+    "dataShape": "Docs/status/checker closure report with P140.1-P140.6 validation status, P140.7 final-validation handoff, report regeneration, and forbidden-path safety checks.",
     "dataShapes": [
       "P140.6 report records current/previous/next subphase and prior P140 report pass count.",
       "No provider, runtime, DB, project, deploy, release, export, package, or spend payloads are created."
@@ -35193,7 +35664,7 @@
       "reports/os-phase-status-report.md",
       "reports/phase-validation-coverage-report.md"
     ],
-    "osPhaseStatusUpdate": "P140.6 complete; P140 in progress; previous P140.5; next P140.7 planned-only.",
+    "osPhaseStatusUpdate": "P140.6 complete; P140.7 final validation has since closed P140 with P141 planned-only next.",
     "validationCommands": [
       "npm run check:p1406-backup-recovery-dr-docs-roadmap",
       "npm run check:p1405-backup-recovery-dr-tests-checkers",
@@ -35246,295 +35717,204 @@
     "knownRisks": [
       "P140.7 must run final validation without enabling runtime authority.",
       "Future live Backup / DR work still needs explicit authority, approvals, storage design, and runtime mutation phases."
-    ],
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ]
-  },
-  "previous": {
-    "phaseId": "P140.5",
-    "title": "Tests / Checkers",
-    "status": "complete",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "narrowGoal": "Consolidate Backup / DR checker and Playwright coverage for completed P140 work without enabling runtime authority.",
-    "previousPhase": "P140.4",
-    "nextPhase": "P140.6",
-    "order": 176.5,
-    "commandCenterVisible": true,
-    "label": "P140.5 Tests / Checkers",
-    "completedAt": "2026-05-31T03:20:00.000Z",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "267ee6cf",
-    "expectedBaseCommit": "2f3847d9",
-    "summary": "Added aggregate P140.5 validation for Backup / DR contracts, read-only models, restore preview, Command Center route coverage, prior P140 checker compatibility, docs/status, and forbidden-path safety.",
-    "detail": "P140.5 is tests/checkers work only. It verifies completed P140.1-P140.4 behavior remains display-safe, zero-spend, non-runnable, and free of project/private source changes. P140.6 has since completed docs/status closure.",
-    "checksRun": [
-      "npm run check:p1405-backup-recovery-dr-tests-checkers",
-      "npm run check:p1404-backup-recovery-dr-command-center-ux",
-      "npm run check:p1403-backup-recovery-dr-restore-preview",
-      "npm run check:p1402-backup-recovery-dr-retention",
-      "npm run check:p1401-backup-recovery-dr-retention",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P140.5\"",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "knownLimitations": [
-      "P140.5 is validation-only and does not add source UX changes beyond Playwright coverage.",
-      "P140.6 has since completed docs/status closure; P140.7 remains planned-only next.",
-      "Backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, live CRUD, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, and spend remain blocked."
-    ],
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ],
-    "goal": "Harden P140 validation coverage before docs/status closure.",
-    "whyThisIsNeeded": "P140.1-P140.4 introduced contract, read-only model, restore preview, and display-safe UX. P140.5 prevents regressions in safety boundaries, checker handoffs, route-wide Command Center UX, docs/status, and forbidden-path scope before P140 closure.",
-    "userOperatorImpact": "Operators can trust that Backup / DR pages remain useful and non-runnable, with explicit tests for restore preview rows, disabled actions, blocked operations, zero runnable actions, and no raw IDs.",
-    "commandCenterImpact": "No new Command Center source features. Adds Playwright coverage for Backup / DR aggregate UX and preserves route-wide navigation, theme switcher, no demo surface leakage, no raw dumps, and project milestone separation.",
-    "safetyImpact": "Validation-only hardening. No backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend.",
-    "costImpact": "Zero provider spend; local checks, dashboard build/unit tests, and Playwright only.",
-    "projectOsScope": "NEXUS OS Backup / DR validation only.",
-    "allowedFiles": [
-      "package.json",
-      "dashboard/tests/routes.spec.js",
-      "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
-      "scripts/check-p1401-backup-recovery-dr-retention.js",
-      "scripts/check-p1402-backup-recovery-dr-retention.js",
-      "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
-      "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
-      "scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "scripts/check-os-phase-status.js",
-      "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1401-backup-recovery-dr-retention-report.md",
-      "reports/p1402-backup-recovery-dr-retention-report.md",
-      "reports/p1403-backup-recovery-dr-restore-preview-report.md",
-      "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
-      "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "forbiddenFiles": [
-      "projects/**",
-      "generated-projects/**",
-      "private project roots",
-      "dashboard/src/**",
-      "db/**",
-      "local-state/runtime/**",
-      "providers/**",
-      "tools/**",
-      "worker-runtime/**",
-      "deploy/**",
-      "release/**",
-      "exports/**",
-      "packages/**",
-      ".env*"
-    ],
-    "exactFilesToCreateOrUpdate": [
-      "package.json",
-      "dashboard/tests/routes.spec.js",
-      "contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json",
-      "scripts/check-p1401-backup-recovery-dr-retention.js",
-      "scripts/check-p1402-backup-recovery-dr-retention.js",
-      "scripts/check-p1403-backup-recovery-dr-restore-preview.js",
-      "scripts/check-p1404-backup-recovery-dr-command-center-ux.js",
-      "scripts/check-p1405-backup-recovery-dr-tests-checkers.js",
-      "scripts/check-enterprise-readiness-roadmap.js",
-      "scripts/check-os-phase-status.js",
-      "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "README.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json",
-      "reports/p1401-backup-recovery-dr-retention-report.md",
-      "reports/p1402-backup-recovery-dr-retention-report.md",
-      "reports/p1403-backup-recovery-dr-restore-preview-report.md",
-      "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
-      "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "expectedExports": [],
-    "schemas": [
-      "No runtime schema export changes.",
-      "Validation aggregates P140.2 backup/retention model, P140.3 restore preview model, and P140.4 Backup / DR view model shapes."
-    ],
-    "dataShape": "Validation-only aggregate report with pass/fail checks for P140 scripts, prior reports, read-only Backup / DR model, restore preview, Command Center route coverage, docs/status, forbidden paths, and safety wording.",
-    "dataShapes": [
-      "P140.5 report records aggregate coverage counts for backup records, restore preview rows, UX rows, runnable action count, and disabled actions.",
-      "No provider, runtime, DB, project, deploy, release, export, package, or spend payloads are created."
-    ],
-    "commandCenterUxRequirements": [
-      "Preserve existing Backup / DR Command Center UX.",
-      "Add Playwright coverage for restore preview summary, approval gate, blocked operations, disabled prune action, zero runnable actions, and absence of raw restore IDs.",
-      "Preserve route-wide no demo surface leakage, no raw JSON/log/policy dumps, theme switcher, sidebar navigation, OS Roadmap boundary, and Projects milestone separation."
-    ],
-    "themeRequirements": [
-      "Preserve existing dark, light, and system theme behavior through route-wide tests.",
-      "Do not introduce CSS or color changes."
-    ],
-    "playWrightTests": [
-      "dashboard/tests/routes.spec.js adds P140.5 Backup DR aggregate coverage remains display-only.",
-      "Existing Backup DR and Command Center route-wide UX suites remain required."
-    ],
-    "checkerUpdates": [
-      "Added scripts/check-p1405-backup-recovery-dr-tests-checkers.js.",
-      "Updated P140.1-P140.4 compatibility checkers to accept P140.5 current state and P140.6 handoff.",
-      "Updated enterprise readiness and OS status checkers for P140.5/P140.6."
-    ],
-    "docsRoadmapUpdates": [
-      "README.md",
-      "docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md",
-      "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
-      "os-roadmap/nexus-phases.json",
-      "os-roadmap/phase-status.json"
-    ],
-    "reportsToRegenerate": [
-      "reports/p1405-backup-recovery-dr-tests-checkers-report.md",
-      "reports/p1404-backup-recovery-dr-command-center-ux-report.md",
-      "reports/p1403-backup-recovery-dr-restore-preview-report.md",
-      "reports/p1402-backup-recovery-dr-retention-report.md",
-      "reports/p1401-backup-recovery-dr-retention-report.md",
-      "reports/enterprise-readiness-roadmap-report.md",
-      "reports/os-phase-status-report.md",
-      "reports/phase-validation-coverage-report.md"
-    ],
-    "osPhaseStatusUpdate": "P140.5 complete; P140 has since advanced through P140.6 docs/status closure with P140.7 planned-only next.",
-    "validationCommands": [
-      "npm run check:p1405-backup-recovery-dr-tests-checkers",
-      "npm run check:p1404-backup-recovery-dr-command-center-ux",
-      "npm run check:p1403-backup-recovery-dr-restore-preview",
-      "npm run check:p1402-backup-recovery-dr-retention",
-      "npm run check:p1401-backup-recovery-dr-retention",
-      "npm run check:enterprise-readiness-roadmap",
-      "npm run check:os-phase-status",
-      "npm run check:phase-validation-coverage",
-      "cd dashboard && npm run build",
-      "cd dashboard && npm run test:unit",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"P140.5\"",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Backup DR\"",
-      "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
-      "git diff --check"
-    ],
-    "finalSafetyChecks": [
-      "No project/private files changed.",
-      "No dashboard source files changed.",
-      "No backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend enabled.",
-      "No raw IDs, raw JSON, raw logs, raw policy dumps, raw storage locations, or demo surface exposed in primary UX.",
-      "No fake runnable actions introduced."
-    ],
-    "gitCommands": [
-      "git add package.json dashboard/tests/routes.spec.js contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json scripts/check-p1401-backup-recovery-dr-retention.js scripts/check-p1402-backup-recovery-dr-retention.js scripts/check-p1403-backup-recovery-dr-restore-preview.js scripts/check-p1404-backup-recovery-dr-command-center-ux.js scripts/check-p1405-backup-recovery-dr-tests-checkers.js scripts/check-enterprise-readiness-roadmap.js scripts/check-os-phase-status.js docs/architecture/P140_BACKUP_RECOVERY_DR_RETENTION_PLAN.md docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md README.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json reports/p1401-backup-recovery-dr-retention-report.md reports/p1402-backup-recovery-dr-retention-report.md reports/p1403-backup-recovery-dr-restore-preview-report.md reports/p1404-backup-recovery-dr-command-center-ux-report.md reports/p1405-backup-recovery-dr-tests-checkers-report.md reports/enterprise-readiness-roadmap-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md",
-      "git commit -m \"chore(nexus): implement p1405 backup recovery tests checkers\"",
-      "git commit -m \"chore(nexus): stamp p1405 backup recovery tests checkers\"",
-      "git push origin codex/nexus-e2e-phase-validation"
-    ],
-    "finalResponseChecklist": [
-      "Branch name",
-      "Commit hash",
-      "Files changed",
-      "What was implemented",
-      "Command Center UX changes",
-      "Tests added/updated/removed",
-      "Checker results",
-      "Dashboard build/unit/page results",
-      "Docs/README/roadmap updates",
-      "OS phase status update",
-      "Evidence/audit/activity/cost records if applicable",
-      "Safety confirmations",
-      "Forbidden paths confirmation",
-      "Known limitations",
-      "Next phase/subphase"
-    ],
-    "rollbackPlan": "Revert the P140.5 implementation commit and stamp commit, then rerun P140.4/P140.3/P140.2/P140.1 checkers, enterprise readiness, OS phase status, phase validation coverage, dashboard build/unit, P140.5 Backup DR Playwright, Backup DR Playwright, route-wide Playwright, and git diff --check.",
-    "knownRisks": [
-      "P140.6 must close docs/status without enabling runtime authority.",
-      "Future live Backup / DR work still needs explicit authority, approvals, storage design, and runtime mutation phases."
     ]
   },
   "next": {
-    "phaseId": "P140.7",
-    "title": "Final Validation",
+    "track": "NEXUS_OS",
+    "phaseId": "P141",
+    "title": "Security, Privacy, and Compliance Controls",
+    "label": "Security / Compliance",
+    "order": 177,
     "status": "planned",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "narrowGoal": "Final P140 validation across reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P141 handoff.",
-    "previousPhase": "P140.6",
-    "nextPhase": "P141",
-    "order": 176.7,
-    "commandCenterVisible": true,
-    "label": "P140.7 Final Validation",
-    "completedAt": "",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
-    "expectedBaseCommit": "pending-p1406-stamp",
-    "summary": "Planned-only final P140 validation subphase.",
-    "detail": "P140.7 remains planned-only until its own implementation-grade plan, checker, validation, commit, and push are complete.",
+    "commandCenterVisible": true,
+    "detail": "P141 is planned-only enterprise readiness work. Security posture, privacy boundaries, compliance evidence, policy enforcement, and data handling controls are explicit and testable.",
+    "summary": "Planned-only enterprise readiness phase: Security posture, privacy boundaries, compliance evidence, policy enforcement, and data handling controls are explicit and testable.",
+    "previousPhase": "P140",
+    "nextPhase": "P142",
     "checksRun": [],
     "knownLimitations": [
-      "P140.7 is planned-only. It must not enable backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until implemented and validated."
+      "P141 is planned-only. It must not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend until its own implementation-grade plan, tests, checker, UX, docs, status update, and final validation are complete."
     ],
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ]
+    "subphases": [
+      {
+        "phaseId": "P141.1",
+        "title": "Contract / Policy / Safety Boundary",
+        "status": "planned",
+        "narrowGoal": "Contract / Policy / Safety Boundary for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P141.2",
+        "title": "Control Model",
+        "status": "planned",
+        "narrowGoal": "Control Model for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P141.3",
+        "title": "Compliance Preview",
+        "status": "planned",
+        "narrowGoal": "Compliance Preview for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P141.4",
+        "title": "Compliance Command Center UX",
+        "status": "planned",
+        "narrowGoal": "Compliance Command Center UX for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P141.5",
+        "title": "Tests / Checkers",
+        "status": "planned",
+        "narrowGoal": "Tests / Checkers for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P141.6",
+        "title": "Docs / Roadmap / Status",
+        "status": "planned",
+        "narrowGoal": "Docs / Roadmap / Status for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      },
+      {
+        "phaseId": "P141.7",
+        "title": "Final Validation",
+        "status": "planned",
+        "narrowGoal": "Final Validation for Security, Privacy, and Compliance Controls.",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "requiredPlanFields": [
+          "narrow scope",
+          "starting branch and expected base commit",
+          "allowed files",
+          "forbidden files",
+          "exact files/modules",
+          "expected exports/schemas/data shapes",
+          "Command Center UX requirements",
+          "dark/light/system theme requirements",
+          "Playwright tests",
+          "checker updates",
+          "docs/README/roadmap updates",
+          "OS phase status update",
+          "validation commands",
+          "final safety checks",
+          "git add/commit/push commands",
+          "final response checklist"
+        ]
+      }
+    ],
+    "completedAt": ""
   },
   "currentPhaseSummary": "Added a display-safe Restore Preview tab and Backup / DR UX projection that shows current state, blocked actions, approval gates, next action, evidence/activity labels, and zero-spend posture without exposing raw IDs.",
   "nextSubphase": "P140.7",

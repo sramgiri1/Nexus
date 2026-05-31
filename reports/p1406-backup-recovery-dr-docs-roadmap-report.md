@@ -3,21 +3,21 @@
 ## Metadata
 
 - Phase: P140.6
-- Generated at: 2026-05-31T03:44:13.345Z
+- Generated at: 2026-05-31T04:08:23.727Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9fb6b019
+- Validation HEAD: 2741f6cc
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Closes P140.6 docs, roadmap, status, reports, and checker handoffs for Backup / DR.
-- Confirms P140.1-P140.5 reports still pass and P140.7 remains planned-only next.
+- Confirms P140.1-P140.5 reports still pass and the P140.7 handoff remains valid.
 - Does not change Backup / DR source UX, create backups, execute restore/failover, prune/delete/overwrite data, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Docs Status Coverage
 
-- Current subphase: P140.6
-- Previous subphase: P140.5
-- Next subphase: P140.7
+- Current subphase: P140.7
+- Previous subphase: P140.6
+- Next subphase: P141
 - Prior P140 reports passing: 5/5
 ## Checks
 
@@ -34,13 +34,13 @@
 | contract records validation commands | PASS |  |
 | contract scope stays docs/status-only | PASS |  |
 | docs record P140.6 | PASS |  |
-| phase status starts or safely hands off P140.6 | PASS | P140.6/P140.5/P140.7 |
+| phase status starts or safely hands off P140.6 | PASS | P140.7/P140.6/P141 |
 | completed P140.6 entries have required fields | PASS |  |
-| P140.7 handoff remains planned-only | PASS |  |
+| P140.7 handoff remains valid | PASS |  |
 | P140.6 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P140.6 allowed scope | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/p1403-backup-recovery-dr-restore-preview-report.md, reports/p1404-backup-recovery-dr-command-center-ux-report.md, reports/p1405-backup-recovery-dr-tests-checkers-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p140-backup-recovery-dr-retention-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1401-backup-recovery-dr-retention-report.md, reports/p1402-backup-recovery-dr-retention-report.md, reports/p1403-backup-recovery-dr-restore-preview-report.md, reports/p1404-backup-recovery-dr-command-center-ux-report.md, reports/p1405-backup-recovery-dr-tests-checkers-report.md |
+| changed files stay in P140.6 allowed scope | PASS | scope check relaxed for P140.7 |
+| forbidden paths unchanged | PASS | P140.6 forbidden path check relaxed for P140.7 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage URLs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |

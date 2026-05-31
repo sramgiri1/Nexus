@@ -156,7 +156,7 @@ addCheck("contract scope stays docs/status-only", /docs|roadmap|status/i.test(p1
 addCheck("docs record P140.6", /## P140\.6 Docs \/ Roadmap \/ Status[\s\S]*Status:\s+complete/.test(plan) && /P140\.6 docs\/status/i.test(readme) && /P140\.6 docs\/status closure is complete/i.test(platformRoadmap) && /P140\.6 is now complete/i.test(enterpriseRoadmap));
 addCheck("phase status starts or safely hands off P140.6", p1406CurrentState || p1407FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P140.6 entries have required fields", [statusById.get("P140"), statusById.get("P140.6"), roadmapById.get("P140"), roadmapById.get("P140.6")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P140.7 handoff remains planned-only", (p1406CurrentState && statusById.get("P140.7")?.status === "planned" && roadmapById.get("P140.7")?.status === "planned" && !(statusById.get("P140.7")?.checksRun || []).length && !(roadmapById.get("P140.7")?.checksRun || []).length) || p1407FinalState);
+addCheck("P140.7 handoff remains valid", (p1406CurrentState && statusById.get("P140.7")?.status === "planned" && roadmapById.get("P140.7")?.status === "planned" && !(statusById.get("P140.7")?.checksRun || []).length && !(roadmapById.get("P140.7")?.checksRun || []).length) || p1407FinalState);
 addCheck("P140.6 Playwright coverage exists", routeTests.includes("P140.6 Backup DR docs status closure stays display-only") && routeTests.includes("pending-final-commit") && routeTests.includes("Restore Preview Summary"));
 addCheck("route-wide safety coverage retained", ["Command Center route-wide UX", "DemoApp", "raw JSON", "Use system theme", "Use dark theme", "Use light theme", "Backup DR route renders readiness without runnable recovery actions"].every((text) => routeTests.includes(text)));
 addCheck("changed files stay in P140.6 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
@@ -176,7 +176,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Closes P140.6 docs, roadmap, status, reports, and checker handoffs for Backup / DR.",
-        "- Confirms P140.1-P140.5 reports still pass and P140.7 remains planned-only next.",
+        "- Confirms P140.1-P140.5 reports still pass and the P140.7 handoff remains valid.",
         "- Does not change Backup / DR source UX, create backups, execute restore/failover, prune/delete/overwrite data, write DB/runtime state, call providers/models, execute tools, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
     },

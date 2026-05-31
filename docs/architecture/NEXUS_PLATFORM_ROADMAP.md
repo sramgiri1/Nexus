@@ -3209,7 +3209,7 @@ P140.3 restore preview is complete as display-safe restore preview model work.
 P140.4 Backup / DR Command Center UX is complete as display-safe UX work.
 P140.5 tests/checkers is complete as validation-only hardening.
 P140.6 docs/status closure is complete as docs/status/report-only handoff work.
-P140.7 and P141-P145 remain planned-only. They cover founder
+P140.7 final validation is complete. P141-P145 remain planned-only. They cover
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
 controls, evidence/audit/observability/cost, backup/DR, security/privacy/
@@ -3218,7 +3218,7 @@ operations, and final enterprise GA certification.
 
 The detailed phase set lives in
 [`NEXUS_ENTERPRISE_READINESS_ROADMAP.md`](NEXUS_ENTERPRISE_READINESS_ROADMAP.md).
-Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, P138.4, P138.5, P138.6, P138.7, P139.1, P139.2, P139.3, P139.4, P139.5, P139.6, P139.7, P140.1, P140.2, P140.3, P140.4, P140.5, and P140.6. P136.2
+Current implementation is closed through P135.7, P136.7, P137.7, P138.1, P138.2, P138.3, P138.4, P138.5, P138.6, P138.7, P139.1, P139.2, P139.3, P139.4, P139.5, P139.6, P139.7, P140.1, P140.2, P140.3, P140.4, P140.5, P140.6, and P140.7. P136.2
 secret/provider model is complete, P136.3 provider dry run is complete, and
 P136.4 provider governance Command Center UX is complete. P136.5
 secrets/providers/tool governance tests/checkers is complete. P136.6
@@ -3639,8 +3639,10 @@ for P140 Backup / DR contracts, read-only models, restore preview, scoped
 Command Center UX, route-wide safety, checker handoffs, docs/status, and
 forbidden paths. P140.6 docs/status closure is complete: NEXUS now has current
 P140 docs, roadmap, OS status, checker handoffs, reports, and Backup / DR
-route coverage for docs/status closure. P140.7 final validation is
-planned-only next.
+route coverage for docs/status closure. P140.7 final validation is complete:
+NEXUS now verifies P140.1-P140.6 reports, checker compatibility, Backup / DR
+Playwright, route-wide Command Center safety, docs/status closure, and P141
+planned-only handoff.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

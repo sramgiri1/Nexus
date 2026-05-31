@@ -2018,7 +2018,8 @@ The Command Center and local operator surface have:
   retention contract is complete. P140.2 backup and retention model is
   complete. P140.3 restore preview is complete. P140.4 Backup / DR Command
   Center UX is complete. P140.5 tests/checkers is complete. P140.6
-  docs/status closure is complete; P140.7 is planned-only next.
+  docs/status closure is complete. P140.7 final validation is complete; P141
+  is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2416,8 +2417,8 @@ The Command Center and local operator surface have:
   tab and Backup / DR UX projection that shows backup posture, restore posture,
   DR posture, current state, next action, blockers, disabled prune action,
   approval gates, evidence/activity labels, and zero runnable actions without
-  exposing raw IDs or enabling runtime authority. P140.5 and P140.6 have since
-  been completed; P140.7 is planned-only next.
+  exposing raw IDs or enabling runtime authority. P140.5, P140.6, and P140.7
+  have since been completed; P141 is planned-only next.
 - P140.5 tests/checkers: Added aggregate validation for the P140.1-P140.4
   Backup / DR contract, read-only model, restore preview, Command Center UX,
   route-wide safety, docs/status, checker handoffs, and forbidden paths. Backup
@@ -2427,7 +2428,11 @@ The Command Center and local operator surface have:
   remain unavailable until a later subphase explicitly allows them.
 - P140.6 docs/status closure: Closed P140 docs, README, roadmap, OS status,
   checker handoffs, reports, and Backup / DR route coverage without changing
-  runtime authority. P140.7 final validation is planned-only next.
+  runtime authority.
+- P140.7 final validation: Closed P140 with prior report verification, checker
+  compatibility, Backup / DR Playwright coverage, route-wide Command Center
+  safety, docs/status closure, and P141 planned-only handoff without enabling
+  runtime authority.
 
 ## CareLoop Project Progress
 
