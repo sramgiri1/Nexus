@@ -2028,7 +2028,8 @@ The Command Center and local operator surface have:
   operations settings model is complete. P142.3 admin operations dry run is
   complete. P142.4 Settings Command Center UX is complete. P142.5 Tests /
   Checkers is complete. P142.6 Docs / Roadmap / Status is complete. P142.7
-  final validation is complete; P142 is complete and P143 is planned-only next.
+  final validation is complete; P142 is complete. P143.1 Release Deploy Export
+  Package Pipeline Contract is complete and P143.2 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2522,6 +2523,14 @@ The Command Center and local operator surface have:
   mutation, feature toggles, maintenance execution, DB/runtime writes,
   credential handling, provider/model calls, tool execution, agent dispatch,
   project mutation, deploy, release, export, package, network calls, and spend
+  remain unavailable.
+- P143.1 Release Deploy Export Package Pipeline Contract: Started P143 with
+  contract-only release, deploy, export, package, provenance, and rollback
+  safety boundaries, approval gates, blocked authority flags, route assertions,
+  docs/status handoff, and P143.2 planned-only next. Release package creation,
+  deploy start, rollback execution, export execution, package build, patch
+  application, build/test execution, DB/runtime writes, provider/model calls,
+  tool execution, agent dispatch, project mutation, network calls, and spend
   remain unavailable.
 
 ## CareLoop Project Progress

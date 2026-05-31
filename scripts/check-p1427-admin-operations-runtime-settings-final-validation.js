@@ -127,6 +127,28 @@ const p1427FinalState =
   && ["P142.1", "P142.2", "P142.3", "P142.4", "P142.5", "P142.6", "P142.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P143")?.status === "planned"
   && roadmapById.get("P143")?.status === "planned";
+const p1431StartedState =
+  status.currentPhase === "P143.1"
+  && status.previousPhase === "P142.7"
+  && status.nextPhase === "P143.2"
+  && roadmap.currentPhase === "P143.1"
+  && roadmap.previousPhase === "P142.7"
+  && roadmap.nextPhase === "P143.2"
+  && status.current?.phaseId === "P143.1"
+  && status.previous?.phaseId === "P142.7"
+  && status.next?.phaseId === "P143.2"
+  && roadmap.current?.phaseId === "P143.1"
+  && roadmap.previous?.phaseId === "P142.7"
+  && roadmap.next?.phaseId === "P143.2"
+  && p142.status === "complete"
+  && p142Roadmap.status === "complete"
+  && ["P142.1", "P142.2", "P142.3", "P142.4", "P142.5", "P142.6", "P142.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P143")?.status === "in_progress"
+  && roadmapById.get("P143")?.status === "in_progress"
+  && statusById.get("P143.1")?.status === "complete"
+  && roadmapById.get("P143.1")?.status === "complete"
+  && statusById.get("P143.2")?.status === "planned"
+  && roadmapById.get("P143.2")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1427-admin-operations-runtime-settings-final-validation.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -138,11 +160,13 @@ addCheck("contract closes P142.7", contract.phaseId === "P142" && contract.statu
 addCheck("contract records expected base commit", p1427.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records validation commands", VALIDATION_COMMANDS.every((command) => p1427.validationCommands?.includes(command)));
 addCheck("contract scope stays final-validation-only", /final validation|validation-only|status|report/i.test(p1427.dataShape || "") && p1427.expectedExports?.length === 0 && p1427.forbiddenFiles?.includes("dashboard/src/**") && p1427.forbiddenFiles?.includes("projects/**"));
-addCheck("docs record P142.7 and P143 handoff", /## P142\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan) && /P142\.7\s+final validation is complete/i.test(readme) && /P142\.7\s+final validation is complete/i.test(platformRoadmap) && /P142\.7 is now complete/i.test(enterpriseRoadmap) && /P143 is planned-only next/i.test(enterpriseRoadmap));
-addCheck("phase status closes P142.7", p1427FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("docs record P142.7 and P143 handoff", /## P142\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan) && /P142\.7\s+final validation is complete/i.test(readme) && /P142\.7\s+final validation is complete/i.test(platformRoadmap) && /P142\.7 is now complete/i.test(enterpriseRoadmap) && (/P143 is planned-only next/i.test(enterpriseRoadmap) || (p1431StartedState && /P143\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && /P143\.2 is planned-only next/i.test(enterpriseRoadmap))));
+addCheck("phase status closes P142.7", p1427FinalState || p1431StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P142/P142.7 entries have required fields", [p142, statusById.get("P142.7"), p142Roadmap, roadmapById.get("P142.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
 addCheck("P142.7 remains on OS Roadmap track", [status.current, roadmap.current, statusById.get("P142.7"), roadmapById.get("P142.7")].every((entry) => entry?.track === "NEXUS_OS"));
-addCheck("P143 handoff remains planned-only", [statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("P143 handoff remains valid", p1427FinalState
+  ? [statusById.get("P143"), roadmapById.get("P143")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : p1431StartedState);
 addCheck("P142.7 Playwright coverage exists", routeTests.includes("P142.7 admin settings final validation closes P142 and keeps Settings display-only") && routeTests.includes("P142.7") && routeTests.includes("Final Validation") && routeTests.includes("P143") && routeTests.includes("Release, Deploy, Export, and Package Pipeline"));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
 addCheck("changed files stay in P142.7 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
@@ -162,7 +186,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Closes P142.7 final validation for admin operations and runtime settings.",
-        "- Confirms P142.1-P142.6 reports still pass and P143 remains planned-only.",
+        `- Confirms P142.1-P142.6 reports still pass and ${p1431StartedState ? "P143.1 is complete with P143.2 planned-only next" : "P143 remains planned-only"}.`,
         "- Does not mutate settings, toggle or roll out features, execute or schedule maintenance, write DB/runtime state, expose raw logs or raw state, handle credentials, read secrets, export audits, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
     },
@@ -179,7 +203,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P142.7 is final validation only. It closes P142 but does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P143 remains planned-only.",
+      body: `- P142.7 is final validation only. It closes P142 but does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. ${p1431StartedState ? "P143.1 is complete as contract/policy/safety-boundary work and P143.2-P143.7 remain planned-only." : "P143 remains planned-only."}`,
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

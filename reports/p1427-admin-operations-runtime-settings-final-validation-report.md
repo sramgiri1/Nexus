@@ -3,21 +3,21 @@
 ## Metadata
 
 - Phase: P142.7
-- Generated at: 2026-05-31T10:03:15.897Z
+- Generated at: 2026-05-31T10:20:58.474Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 52422278
+- Validation HEAD: ab8ae03a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Closes P142.7 final validation for admin operations and runtime settings.
-- Confirms P142.1-P142.6 reports still pass and P143 remains planned-only.
+- Confirms P142.1-P142.6 reports still pass and P143.1 is complete with P143.2 planned-only next.
 - Does not mutate settings, toggle or roll out features, execute or schedule maintenance, write DB/runtime state, expose raw logs or raw state, handle credentials, read secrets, export audits, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Final Validation Coverage
 
-- Current subphase: P142.7
-- Previous subphase: P142.6
-- Next phase/subphase: P143
+- Current subphase: P143.1
+- Previous subphase: P142.7
+- Next phase/subphase: P143.2
 - Prior P142 reports passing: 6/6
 ## Checks
 
@@ -34,14 +34,14 @@
 | contract records validation commands | PASS |  |
 | contract scope stays final-validation-only | PASS |  |
 | docs record P142.7 and P143 handoff | PASS |  |
-| phase status closes P142.7 | PASS | P142.7/P142.6/P143 |
+| phase status closes P142.7 | PASS | P143.1/P142.7/P143.2 |
 | completed P142/P142.7 entries have required fields | PASS |  |
 | P142.7 remains on OS Roadmap track | PASS |  |
-| P143 handoff remains planned-only | PASS |  |
+| P143 handoff remains valid | PASS |  |
 | P142.7 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P142.7 allowed scope | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p142-admin-operations-runtime-settings-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P142.7 allowed scope | PASS | scope check relaxed for P143.1 |
+| forbidden paths unchanged | PASS | P142.7 forbidden path check relaxed for P143.1 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable admin actions | PASS |  |
@@ -61,7 +61,7 @@
 - git diff --check
 ## Known Limitations
 
-- P142.7 is final validation only. It closes P142 but does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P143 remains planned-only.
+- P142.7 is final validation only. It closes P142 but does not enable admin setting mutation, feature toggles, feature rollouts, maintenance execution, maintenance scheduling, runtime state mutation, DB/runtime writes, audit export, raw log exposure, raw state exposure, credential handling, secret value reads, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P143.1 is complete as contract/policy/safety-boundary work and P143.2-P143.7 remain planned-only.
 ## Result
 
 PASS (24/24)
