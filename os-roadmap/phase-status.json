@@ -29500,7 +29500,7 @@
       "order": 175,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2532dd5b",
       "commandCenterVisible": true,
       "detail": "P139 ledger chain now has contract, read-only model, evidence preview, scoped Command Center UX, aggregate tests/checkers, docs/status closure, and report evidence while all writes and execution remain blocked.",
       "summary": "P139.6 docs/status closure is complete; P139.7 final validation remains planned-only next.",
@@ -30356,7 +30356,7 @@
           "label": "P139.6 Docs / Roadmap / Status",
           "completedAt": "2026-05-30T23:59:00.000Z",
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "2532dd5b",
           "summary": "Closed P139 docs, README, platform roadmap, enterprise roadmap, OS phase status, phase index, checker handoff, and report evidence through P139.6 while all ledger writes and execution remain blocked.",
           "detail": "P139.6 is docs/status/report closure only. It records P139.1-P139.6 completion, keeps P139.7 planned-only next, and preserves the existing read-only Command Center ledger UX.",
           "checksRun": [
@@ -31267,7 +31267,7 @@
       "label": "P139.6 Docs / Roadmap / Status",
       "completedAt": "2026-05-30T23:59:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2532dd5b",
       "summary": "Closed P139 docs, README, platform roadmap, enterprise roadmap, OS phase status, phase index, checker handoff, and report evidence through P139.6 while all ledger writes and execution remain blocked.",
       "detail": "P139.6 is docs/status/report closure only. It records P139.1-P139.6 completion, keeps P139.7 planned-only next, and preserves the existing read-only Command Center ledger UX.",
       "checksRun": [
@@ -32690,7 +32690,7 @@
     "label": "P139.6 Docs / Roadmap / Status",
     "completedAt": "2026-05-30T23:59:00.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "2532dd5b",
     "summary": "Closed P139 docs, README, platform roadmap, enterprise roadmap, OS phase status, phase index, checker handoff, and report evidence through P139.6 while all ledger writes and execution remain blocked.",
     "detail": "P139.6 is docs/status/report closure only. It records P139.1-P139.6 completion, keeps P139.7 planned-only next, and preserves the existing read-only Command Center ledger UX.",
     "checksRun": [
