@@ -1395,7 +1395,7 @@
       "label": "P140.7 Final Validation",
       "completedAt": "2026-05-31T05:45:00.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "39945494",
       "expectedBaseCommit": "2741f6cc",
       "summary": "Closed P140 Backup, Recovery, DR, and Retention with final validation, report compatibility, route-wide safety, and P141 planned-only handoff.",
       "detail": "P140.7 verifies P140.1-P140.6 reports and checkers, closes the P140 parent phase, and keeps P141 planned-only without enabling Backup / DR runtime authority.",
@@ -1631,7 +1631,7 @@
   ],
   "completedAt": "2026-05-31T05:45:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "39945494",
   "checksRun": [
     "npm run check:p1407-backup-recovery-dr-final-validation",
     "npm run check:p1406-backup-recovery-dr-docs-roadmap",
