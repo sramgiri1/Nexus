@@ -40218,7 +40218,7 @@
       "order": 180,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e456b7c0",
       "commandCenterVisible": true,
       "detail": "P144.7 closes P144 final validation, verifies prior evidence and Command Center safety, and leaves P145 planned-only.",
       "summary": "P144 billing, metering, and customer operations is complete through P144.7 final validation while all billing, customer, payment, DB, runtime, network, and spend authority remains blocked.",
@@ -41190,7 +41190,7 @@
             "final response checklist"
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "e456b7c0",
           "previousPhase": "P144.6",
           "nextPhase": "P145",
           "checksRun": [
@@ -44035,7 +44035,7 @@
       "label": "Final Validation",
       "order": 180.7,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e456b7c0",
       "previousPhase": "P144.6",
       "nextPhase": "P145",
       "checksRun": [
@@ -44251,7 +44251,7 @@
     "label": "Final Validation",
     "order": 180.7,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e456b7c0",
     "previousPhase": "P144.6",
     "nextPhase": "P145",
     "checksRun": [

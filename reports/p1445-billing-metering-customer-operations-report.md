@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P144.5
-- Generated at: 2026-05-31T15:38:47.690Z
+- Generated at: 2026-05-31T15:40:20.660Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 4c13376b
+- Validation HEAD: e456b7c0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -53,7 +53,7 @@
 | P144.7 handoff remains valid after P144.6 | PASS |  |
 | P145 remains planned-only | PASS |  |
 | changed files stay in P144.5 allowed scope | PASS | scope check relaxed for P144.7 |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1445-billing-metering-customer-operations-report.md, reports/p1446-billing-metering-customer-operations-docs-roadmap-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1445-billing-metering-customer-operations.js, scripts/check-p1446-billing-metering-customer-operations-docs-roadmap.js, reports/p1447-billing-metering-customer-operations-final-validation-report.md, scripts/check-p1447-billing-metering-customer-operations-final-validation.js |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or payment URLs | PASS |  |
 | docs avoid fake runnable billing actions | PASS |  |
