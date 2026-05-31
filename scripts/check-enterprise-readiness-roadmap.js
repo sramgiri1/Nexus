@@ -2027,6 +2027,22 @@ const p1456CurrentState =
   && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5", "P145.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete")
   && statusById.get("P145.7")?.status === "planned"
   && indexById.get("P145.7")?.status === "planned";
+const p1457FinalState =
+  phaseStatus.currentPhase === "P145.7"
+  && phaseStatus.previousPhase === "P145.6"
+  && phaseStatus.nextPhase === ""
+  && phaseIndex.currentPhase === "P145.7"
+  && phaseIndex.previousPhase === "P145.6"
+  && phaseIndex.nextPhase === ""
+  && phaseStatus.current?.phaseId === "P145.7"
+  && phaseStatus.previous?.phaseId === "P145.6"
+  && !phaseStatus.next
+  && phaseIndex.current?.phaseId === "P145.7"
+  && phaseIndex.previous?.phaseId === "P145.6"
+  && !phaseIndex.next
+  && statusById.get("P145")?.status === "complete"
+  && indexById.get("P145")?.status === "complete"
+  && ["P145.1", "P145.2", "P145.3", "P145.4", "P145.5", "P145.6", "P145.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete");
 
 const p138ActiveState = p1381StartedState || p1382CurrentState || p1383CurrentState || p1384CurrentState || p1385CurrentState || p1386CurrentState || p1387FinalState;
 const p139ActiveState = p1391StartedState || p1392CurrentState || p1393CurrentState || p1394CurrentState || p1395CurrentState || p1396CurrentState || p1397FinalState;
@@ -2035,7 +2051,7 @@ const p141ActiveState = p1411StartedState || p1412CurrentState || p1413CurrentSt
 const p142ActiveState = p1421StartedState || p1422CurrentState || p1423CurrentState || p1424CurrentState || p1425CurrentState || p1426CurrentState || p1427FinalState;
 const p143ActiveState = p1431StartedState || p1432CurrentState || p1433CurrentState || p1434CurrentState || p1435CurrentState || p1436CurrentState || p1437FinalState;
 const p144ActiveState = p1441StartedState || p1442CurrentState || p1443CurrentState || p1444CurrentState || p1445CurrentState || p1446CurrentState || p1447FinalState;
-const p145ActiveState = p1451StartedState || p1452CurrentState || p1453CurrentState || p1454CurrentState || p1455CurrentState || p1456CurrentState;
+const p145ActiveState = p1451StartedState || p1452CurrentState || p1453CurrentState || p1454CurrentState || p1455CurrentState || p1456CurrentState || p1457FinalState;
 const enterpriseActiveState = p133ActiveState || p134ActiveState || p135ActiveState || p136ActiveState || p137ActiveState || p138ActiveState || p139ActiveState || p140ActiveState || p141ActiveState || p142ActiveState || p143ActiveState || p144ActiveState || p145ActiveState;
 const currentP133CheckCommand = p1337FinalState
   ? "npm run check:p1337-founder-idea-to-prd-final-validation"
@@ -2216,7 +2232,9 @@ const currentP144CheckCommand = p1447FinalState
   : p1441StartedState
   ? "npm run check:p1441-billing-metering-customer-operations"
   : "";
-const currentP145CheckCommand = p1456CurrentState
+const currentP145CheckCommand = p1457FinalState
+  ? "npm run check:p1457-enterprise-ga-readiness-final-validation"
+  : p1456CurrentState
   ? "npm run check:p1456-enterprise-ga-readiness-docs-roadmap"
   : p1455CurrentState
   ? "npm run check:p1455-enterprise-ga-readiness-tests"
@@ -2391,6 +2409,7 @@ const allowedFiles = new Set([
   "scripts/check-p1454-enterprise-command-center-ux.js",
   "scripts/check-p1455-enterprise-ga-readiness-tests.js",
   "scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js",
+  "scripts/check-p1457-enterprise-ga-readiness-final-validation.js",
   "shared/adminOperationsRuntimeSettingsDryRun.js",
   "shared/projectPatchBuildPreview.js",
 		  "scripts/check-enterprise-readiness-roadmap.js",
@@ -2510,6 +2529,7 @@ const allowedFiles = new Set([
   "reports/p1454-enterprise-command-center-ux-report.md",
   "reports/p1455-enterprise-ga-readiness-tests-report.md",
   "reports/p1456-enterprise-ga-readiness-docs-roadmap-report.md",
+  "reports/p1457-enterprise-ga-readiness-final-validation-report.md",
   "reports/p1327-founder-runtime-store-live-admission-execution-report.md",
   REPORT_PATH,
   "reports/os-phase-status-report.md",
@@ -2574,7 +2594,8 @@ addCheck("P145 checker registered when active", !p145ActiveState
   || (p1453CurrentState && Boolean(packageJson.scripts?.["check:p1453-enterprise-e2e-rehearsal"]))
   || (p1454CurrentState && Boolean(packageJson.scripts?.["check:p1454-enterprise-command-center-ux"]))
   || (p1455CurrentState && Boolean(packageJson.scripts?.["check:p1455-enterprise-ga-readiness-tests"]))
-  || (p1456CurrentState && Boolean(packageJson.scripts?.["check:p1456-enterprise-ga-readiness-docs-roadmap"])));
+  || (p1456CurrentState && Boolean(packageJson.scripts?.["check:p1456-enterprise-ga-readiness-docs-roadmap"]))
+  || (p1457FinalState && Boolean(packageJson.scripts?.["check:p1457-enterprise-ga-readiness-final-validation"])));
 addCheck("current enterprise handoff", enterpriseActiveState || (phaseStatus.currentPhase === "P132.7" && phaseStatus.previousPhase === "P132.6" && phaseStatus.nextPhase === "P133" && phaseIndex.currentPhase === "P132.7" && phaseIndex.previousPhase === "P132.6" && phaseIndex.nextPhase === "P133"), `${phaseStatus.currentPhase}/${phaseStatus.previousPhase}/${phaseStatus.nextPhase}`);
 addCheck("P132.7 hands off to P133", statusById.get("P132.7")?.nextPhase === "P133" && indexById.get("P132.7")?.nextPhase === "P133");
 addCheck("enterprise parent phases exist", enterprisePhases.every(([phaseId, title]) => statusById.get(phaseId)?.title === title && indexById.get(phaseId)?.title === title));
@@ -2822,8 +2843,8 @@ addCheck("enterprise parent phases are planned-only", enterprisePhases.every(([p
       && index.checksRun.includes("npm run check:p1447-billing-metering-customer-operations-final-validation");
   }
   if (phaseId === "P145" && p145ActiveState) {
-    return status?.status === "in_progress"
-      && index?.status === "in_progress"
+    return status?.status === (p1457FinalState ? "complete" : "in_progress")
+      && index?.status === (p1457FinalState ? "complete" : "in_progress")
       && Boolean(status.commit)
       && Boolean(index.commit)
       && Array.isArray(status.checksRun)
@@ -2852,12 +2873,16 @@ addCheck("enterprise phases are Command Center visible", enterprisePhases.every(
 addCheck("roadmap entries include details and limitations", enterprisePhases.every(([phaseId]) => {
   const status = statusById.get(phaseId);
   const index = indexById.get(phaseId);
+  const statusLimitations = (status?.knownLimitations || []).join(" ").toLowerCase();
+  const indexLimitations = (index?.knownLimitations || []).join(" ").toLowerCase();
+  const hasExpectedLimitations = phaseId === "P145" && p1457FinalState
+    ? statusLimitations.includes("final validation") && indexLimitations.includes("final validation")
+    : statusLimitations.includes("planned-only") && indexLimitations.includes("planned-only");
   return Boolean(status?.detail)
     && Boolean(status?.summary)
     && Array.isArray(status?.knownLimitations)
-    && status.knownLimitations.join(" ").toLowerCase().includes("planned-only")
     && Array.isArray(index?.knownLimitations)
-    && index.knownLimitations.join(" ").toLowerCase().includes("planned-only");
+    && hasExpectedLimitations;
 }));
 addCheck("roadmap entries include subphase details", enterprisePhases.every(([phaseId]) => {
   const statusSubphases = statusById.get(phaseId)?.subphases || [];
@@ -3093,10 +3118,10 @@ const p144ActiveSubphaseRecordsPresent = !p144ActiveState || (
     || (p1445CurrentState && ["P144.2", "P144.3", "P144.4", "P144.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P144.6")?.status === "planned" && indexById.get("P144.6")?.status === "planned")
     || (p1446CurrentState && ["P144.2", "P144.3", "P144.4", "P144.5", "P144.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P144.7")?.status === "planned" && indexById.get("P144.7")?.status === "planned")
     || (p1447FinalState && ["P144.2", "P144.3", "P144.4", "P144.5", "P144.6", "P144.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P145")?.status === "planned" && indexById.get("P145")?.status === "planned")
-    || (p145ActiveState && ["P144.2", "P144.3", "P144.4", "P144.5", "P144.6", "P144.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P145")?.status === "in_progress" && indexById.get("P145")?.status === "in_progress")
+    || (p145ActiveState && ["P144.2", "P144.3", "P144.4", "P144.5", "P144.6", "P144.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete") && statusById.get("P145")?.status === (p1457FinalState ? "complete" : "in_progress") && indexById.get("P145")?.status === (p1457FinalState ? "complete" : "in_progress"))
   )
-  && (p145ActiveState ? statusById.get("P145")?.status === "in_progress" : statusById.get("P145")?.status === "planned")
-  && (p145ActiveState ? indexById.get("P145")?.status === "in_progress" : indexById.get("P145")?.status === "planned")
+  && (p145ActiveState ? statusById.get("P145")?.status === (p1457FinalState ? "complete" : "in_progress") : statusById.get("P145")?.status === "planned")
+  && (p145ActiveState ? indexById.get("P145")?.status === (p1457FinalState ? "complete" : "in_progress") : indexById.get("P145")?.status === "planned")
 );
 const p145ActiveSubphaseRecordsPresent = !p145ActiveState || (
   statusById.get("P145.1")?.status === "complete"
@@ -3134,6 +3159,8 @@ const p145ActiveSubphaseRecordsPresent = !p145ActiveState || (
 	      && ["P145.2", "P145.3", "P145.4", "P145.5", "P145.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete")
 	      && statusById.get("P145.7")?.status === "planned"
 	      && indexById.get("P145.7")?.status === "planned")
+	    || (p1457FinalState
+	      && ["P145.2", "P145.3", "P145.4", "P145.5", "P145.6", "P145.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && indexById.get(phaseId)?.status === "complete"))
 	  )
 	);
 addCheck("P133/P134/P135/P136/P137/P138/P139/P140/P141/P142/P143/P144/P145 active subphase records are present", p133ActiveSubphaseRecordsPresent && p134ActiveSubphaseRecordsPresent && p135ActiveSubphaseRecordsPresent && p136ActiveSubphaseRecordsPresent && p137ActiveSubphaseRecordsPresent && p138ActiveSubphaseRecordsPresent && p139ActiveSubphaseRecordsPresent && p140ActiveSubphaseRecordsPresent && p141ActiveSubphaseRecordsPresent && p142ActiveSubphaseRecordsPresent && p143ActiveSubphaseRecordsPresent && p144ActiveSubphaseRecordsPresent && p145ActiveSubphaseRecordsPresent);
@@ -3170,7 +3197,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Tracks P133-P145 enterprise-readiness roadmap phases after P132.",
-        "- Allows P133-P142 to close through final validation, P143 to close through P143.7 final validation, P144 to close through P144.7 billing/customer-ops final validation, and P145 to start through P145.1 enterprise GA readiness contract work.",
+        "- Allows P133-P142 to close through final validation, P143 to close through P143.7 final validation, P144 to close through P144.7 billing/customer-ops final validation, and P145 to close through P145.7 enterprise GA readiness final validation.",
         "- Does not enable DB/runtime writes, live CRUD, provider/model calls, payment provider calls, agent dispatch, project mutation, patch application, build/test execution, billing/customer mutation, rollback execution, deploy, release, export, package, network calls, or spend.",
       ].join("\n"),
     },
@@ -3187,7 +3214,7 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1-P140.7, P141.1-P141.7, P142.1-P142.7, P143.1-P143.7, P144.1-P144.7, and P145.1 may be complete. P145.2-P145.7 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, admin setting mutation, feature toggles, maintenance execution, billing account mutation, usage writes, invoice creation, payment collection, customer operations, certification issuance, attestation signing, security scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.",
+      body: "- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1-P140.7, P141.1-P141.7, P142.1-P142.7, P143.1-P143.7, P144.1-P144.7, and P145.1-P145.7 may be complete. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, admin setting mutation, feature toggles, maintenance execution, billing account mutation, usage writes, invoice creation, payment collection, customer operations, certification issuance, attestation signing, security scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, payment provider calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

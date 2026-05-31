@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P145.6
-- Generated at: 2026-05-31T18:23:09.913Z
+- Generated at: 2026-05-31T18:51:59.707Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e9ce43a2
+- Validation HEAD: 611da15b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not issue certification, sign attestations, run scans, mutate findings, run load checks, execute recovery, restore, fail over, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Roadmap Closure
 
-- Current subphase: P145.6
-- Previous subphase: P145.5
-- Next subphase: P145.7
+- Current subphase: P145.7
+- Previous subphase: P145.6
+- Next subphase: none
 - Prior P145 reports passing: 5/5
 ## Checks
 
@@ -36,14 +36,14 @@
 | contract scope stays docs/status-only | PASS |  |
 | authority flags remain blocked | PASS | {"certificationIssuanceAllowed":false,"attestationSigningAllowed":false,"securityScanExecutionAllowed":false,"findingMutationAllowed":false,"loadExecutionAllowed":false,"recoveryExecutionAllowed":false,"restoreExecutionAllowed":false,"failoverAllowed":false,"releaseAllowed":false,"deployReleaseExportPackageAllowed":false,"dbRuntimeWriteAllowed":false,"providerModelCallAllowed":false,"toolExecutionAllowed":false,"agentDispatchAllowed":false,"projectMutationAllowed":false,"networkCallAllowed":false,"spendAllowed":false} |
 | docs record P145.6 | PASS |  |
-| phase status starts or safely hands off P145.6 | PASS | P145.6/P145.5/P145.7 |
+| phase status starts or safely hands off P145.6 | PASS | P145.7/P145.6/ |
 | completed P145.6 entries have required fields | PASS |  |
 | P145.7 handoff remains valid | PASS |  |
 | P145.6 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
 | Command Center keeps enterprise readiness non-runnable | PASS |  |
-| changed files stay in P145.6 allowed scope | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P145.6 allowed scope | PASS | scope check relaxed for P145.7 |
+| forbidden paths unchanged | PASS | scope check relaxed for P145.7 |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or provider URLs | PASS |  |
 | docs avoid fake runnable enterprise actions | PASS |  |

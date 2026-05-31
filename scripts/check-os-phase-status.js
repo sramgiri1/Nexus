@@ -901,14 +901,24 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
+const p1457TerminalState =
+  phaseStatus.currentPhase === "P145.7"
+  && phaseStatus.previousPhase === "P145.6"
+  && phaseStatus.nextPhase === ""
+  && phaseStatus.current?.phaseId === "P145.7"
+  && phaseStatus.previous?.phaseId === "P145.6"
+  && !phaseStatus.next
+  && statusById.get("P145")?.status === "complete"
+  && statusById.get("P145.7")?.status === "complete";
 
 check(CURRENT_PHASE_IDS.has(phaseStatus.currentPhase), "currentPhase", "currentPhase must be P43 or later handoff phase");
 check(CURRENT_PHASE_IDS.has(phaseStatus.previousPhase), "previousPhase", "previousPhase must be P43.6 or later handoff phase");
-check(CURRENT_PHASE_IDS.has(phaseStatus.nextPhase), "nextPhase", "nextPhase must be P44 or later handoff phase");
+check(p1457TerminalState || CURRENT_PHASE_IDS.has(phaseStatus.nextPhase), "nextPhase", "nextPhase must be P44 or later handoff phase unless P145.7 terminal");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(
-  phaseStatus.nextPhase === "P106"
+  p1457TerminalState
+    || phaseStatus.nextPhase === "P106"
     || phaseStatus.nextPhase === "P110"
     || phaseStatus.nextPhase === "P112"
     || phaseStatus.nextPhase === "P113"
@@ -921,7 +931,7 @@ check(
     || phaseStatus.nextPhase === "P128.4"
     || statusById.has(phaseStatus.nextPhase),
   "nextPhase",
-  "nextPhase entry must exist unless it is a handoff placeholder",
+  "nextPhase entry must exist unless it is a handoff placeholder or P145.7 terminal",
 );
 
 for (const entry of phaseStatus.phases || []) {
@@ -1332,7 +1342,7 @@ for (const entry of phaseStatus.phases || []) {
   check(Boolean(entry.summary), "completedPhaseCommits", `Completed phase missing summary: ${entry.phaseId}`);
   check(Array.isArray(entry.checksRun), "completedPhaseCommits", `Completed phase missing checksRun: ${entry.phaseId}`);
   check(Array.isArray(entry.knownLimitations), "completedPhaseCommits", `Completed phase missing knownLimitations: ${entry.phaseId}`);
-  check(Boolean(entry.nextPhase), "completedPhaseCommits", `Completed phase missing nextPhase: ${entry.phaseId}`);
+  check(Boolean(entry.nextPhase) || (["P145", "P145.7"].includes(entry.phaseId) && p1457TerminalState), "completedPhaseCommits", `Completed phase missing nextPhase: ${entry.phaseId}`);
   check(entry.commandCenterVisible === true, "commandCenterVisibility", `Completed phase must be Command Center visible: ${entry.phaseId}`);
   if (!CURRENT_PHASE_IDS.has(entry.phaseId)) {
     check(entry.commit !== "pending-final-commit", "completedPhaseCommits", `Completed prior phase has pending commit: ${entry.phaseId}`);

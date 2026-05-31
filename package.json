@@ -825,7 +825,8 @@
     "check:p1453-enterprise-e2e-rehearsal": "node scripts/check-p1453-enterprise-e2e-rehearsal.js",
     "check:p1454-enterprise-command-center-ux": "node scripts/check-p1454-enterprise-command-center-ux.js",
     "check:p1455-enterprise-ga-readiness-tests": "node scripts/check-p1455-enterprise-ga-readiness-tests.js",
-    "check:p1456-enterprise-ga-readiness-docs-roadmap": "node scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js"
+    "check:p1456-enterprise-ga-readiness-docs-roadmap": "node scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js",
+    "check:p1457-enterprise-ga-readiness-final-validation": "node scripts/check-p1457-enterprise-ga-readiness-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

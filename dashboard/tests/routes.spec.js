@@ -1599,7 +1599,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain(NEXUS_NEXT_OS_PHASE.label);
+    if (NEXUS_NEXT_OS_PHASE) {
+      expect(plannedBody).toContain(NEXUS_NEXT_OS_PHASE.label);
+    } else {
+      expect(plannedBody).toContain("Not available");
+    }
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -1626,7 +1630,11 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await commandTab(page, "Planned").click();
-    await expect(page.locator("body")).toContainText(NEXUS_NEXT_OS_PHASE.phase);
+    if (NEXUS_NEXT_OS_PHASE) {
+      await expect(page.locator("body")).toContainText(NEXUS_NEXT_OS_PHASE.phase);
+    } else {
+      await expect(page.locator("body")).toContainText("Not available");
+    }
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -3412,9 +3420,12 @@ test.describe("Command Center route-wide UX", () => {
     } else {
       expect(body).toContain("No phase marked in progress");
     }
-    expect(NEXUS_NEXT_OS_PHASE).toBeTruthy();
-    expect(body).toContain(NEXUS_NEXT_OS_PHASE.phase);
-    expect(body).toContain(NEXUS_NEXT_OS_PHASE.label);
+    if (NEXUS_NEXT_OS_PHASE) {
+      expect(body).toContain(NEXUS_NEXT_OS_PHASE.phase);
+      expect(body).toContain(NEXUS_NEXT_OS_PHASE.label);
+    } else {
+      expect(body).toContain("Not available");
+    }
     expect(body).toContain(NEXUS_PREVIOUS_COMPLETED_PHASE.phase);
     expect(body).toContain(NEXUS_PREVIOUS_COMPLETED_PHASE.label);
     expect(body).not.toContain("DemoApp");
@@ -6160,7 +6171,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("Enterprise Certification and GA Readiness");
+    expect(roadmapBody).toContain("P145.7");
+    expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     await pickTheme(page, "dark");
@@ -6208,9 +6220,6 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("Enterprise Certification and GA Readiness");
-    expect(roadmapBody).toContain("P145.6");
-    expect(roadmapBody).toContain("Docs / Roadmap / Status");
     expect(roadmapBody).toContain("P145.7");
     expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
@@ -6254,8 +6263,6 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("P145.6");
-    expect(roadmapBody).toContain("Docs / Roadmap / Status");
     expect(roadmapBody).toContain("P145.7");
     expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).not.toMatch(/run rehearsal now|execute rehearsal now|generate prd now|run q&a now|ask founder now|build now|certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
@@ -6302,8 +6309,6 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("P145.6");
-    expect(roadmapBody).toContain("Docs / Roadmap / Status");
     expect(roadmapBody).toContain("P145.7");
     expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now|generate prd now|start build now|build project now/i);
@@ -6352,8 +6357,6 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("P145.6");
-    expect(roadmapBody).toContain("Docs / Roadmap / Status");
     expect(roadmapBody).toContain("P145.7");
     expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now|generate prd now|start build now|build project now/i);
@@ -6374,16 +6377,43 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("Enterprise Certification and GA Readiness");
-    expect(roadmapBody).toContain("P145.6");
-    expect(roadmapBody).toContain("Docs / Roadmap / Status");
     expect(roadmapBody).toContain("P145.7");
     expect(roadmapBody).toContain("Final Validation");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now|generate prd now|start build now|build project now/i);
 
     for (const theme of ["dark", "light", "system"]) {
       await pickTheme(page, theme);
-      await expect(page.locator("body")).toContainText("Enterprise Certification and GA Readiness");
+      await expect(page.locator("body")).toContainText("P145.7");
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P145.7 enterprise GA final validation closes P145", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/enterprise-preview");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Enterprise Preview");
+    await commandTab(page, "Rehearsal Evidence").click();
+    await expect(activeCommandTabPanel(page)).toContainText("End-to-End Rehearsal Evidence");
+    await commandTab(page, "GA Readiness").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise GA Readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("No spend");
+
+    await page.goto("/command-center/compliance");
+    await commandTab(page, "Certification Matrix").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Certification Matrix");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked");
+
+    await page.goto("/command-center/roadmap");
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
+    expect(roadmapBody).toContain("P145.7");
+    expect(roadmapBody).toContain("Final Validation");
+    expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now|generate prd now|start build now|build project now/i);
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator("body")).toContainText("P145.7");
     }
 
     expect(errors).toEqual([]);

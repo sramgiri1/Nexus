@@ -1,15 +1,15 @@
 {
   "phaseId": "P145",
   "title": "Enterprise Certification and GA Readiness",
-  "status": "in_progress",
-  "currentSubphase": "P145.6",
-  "previousSubphase": "P145.5",
-  "nextSubphase": "P145.7",
+  "status": "complete",
+  "currentSubphase": "P145.7",
+  "previousSubphase": "P145.6",
+  "nextSubphase": "",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "4412d7fd",
-  "summary": "Closed P145 docs, README, roadmap, reports, checker handoffs, and OS phase status while all certification, execution, mutation, network, and spend authority remains blocked.",
-  "detail": "P145.6 closes enterprise GA readiness docs/status and keeps P145.7 planned-only final validation next.",
+  "expectedBaseCommit": "611da15b",
+  "summary": "Closed P145 enterprise certification and GA readiness final validation while all certification, attestation, scan, load, recovery, runtime, provider, tool, agent, project mutation, network, deploy, release, export, package, and spend authority remains blocked.",
+  "detail": "P145.7 closes enterprise GA readiness final validation as a terminal OS roadmap state with prior P145 evidence, checker coverage, docs/status, and Command Center route coverage complete.",
   "allowedFiles": [
     "package.json",
     "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
@@ -1301,10 +1301,10 @@
     {
       "phaseId": "P145.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "expectedBaseCommit": "after-P145.6",
-      "narrowGoal": "Finalize enterprise GA readiness evidence, safety checks, docs, status, and Command Center coverage without issuing certification, enabling execution, network calls, mutation, or spend.",
+      "expectedBaseCommit": "611da15b",
+      "narrowGoal": "Close enterprise GA readiness final validation with prior evidence, safety checkers, docs/status, route coverage, and terminal P145 status without enabling live certification, execution, mutation, network, or spend.",
       "requiredPlanFields": [
         "narrow scope",
         "starting branch and expected base commit",
@@ -1323,25 +1323,214 @@
         "git add/commit/push commands",
         "final response checklist"
       ],
-      "commit": "",
-      "checksRun": [],
-      "commandCenterVisible": true
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p1457-enterprise-ga-readiness-final-validation"
+      ],
+      "commandCenterVisible": true,
+      "completedAt": "2026-05-31T18:35:15.000Z",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "allowedFiles": [
+        "package.json",
+        "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
+        "scripts/check-p1457-enterprise-ga-readiness-final-validation.js",
+        "scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js",
+        "scripts/check-p1455-enterprise-ga-readiness-tests.js",
+        "scripts/check-p1454-enterprise-command-center-ux.js",
+        "scripts/check-p1453-enterprise-e2e-rehearsal.js",
+        "scripts/check-p1452-enterprise-certification-matrix.js",
+        "scripts/check-p1451-enterprise-certification-ga-readiness.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/p1457-enterprise-ga-readiness-final-validation-report.md",
+        "reports/p1456-enterprise-ga-readiness-docs-roadmap-report.md",
+        "reports/p1455-enterprise-ga-readiness-tests-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md",
+        "reports/p1453-enterprise-e2e-rehearsal-report.md",
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/**",
+        "private project roots",
+        "dashboard/src/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "certification issuers, attestation signers, scanners, load runners, recovery executors, release/deploy/export/package executors, provider/model callers, agent dispatchers, project mutation paths, network callers, or spend paths"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "package.json",
+        "contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json",
+        "scripts/check-p1457-enterprise-ga-readiness-final-validation.js",
+        "scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js",
+        "scripts/check-p1455-enterprise-ga-readiness-tests.js",
+        "scripts/check-p1454-enterprise-command-center-ux.js",
+        "scripts/check-p1453-enterprise-e2e-rehearsal.js",
+        "scripts/check-p1452-enterprise-certification-matrix.js",
+        "scripts/check-p1451-enterprise-certification-ga-readiness.js",
+        "scripts/check-enterprise-readiness-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "dashboard/tests/routes.spec.js",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "expectedExports": [],
+      "schemas": [
+        "No DB schema, migration, provider, tool, worker, deploy, release, export, package, certification, attestation, scan, load, recovery, spend, or project export.",
+        "P145.7 only records final validation report data and terminal OS roadmap/status fields."
+      ],
+      "dataShape": "Final validation-only status shape: markdown report output plus OS roadmap/status entries with phaseId, title, status, branch, commit, completedAt, summary, checksRun, knownLimitations, explicit empty nextPhase, no next object, and commandCenterVisible. No runtime export, DB schema, mutation payload, executable payload, provider call, network call, certification payload, attestation payload, scan payload, load payload, recovery payload, release payload, or spend data shape.",
+      "commandCenterUxRequirements": [
+        "OS Roadmap must show P145.7 complete/current, P145.6 previous, no next phase, and P145 parent complete.",
+        "Enterprise Preview Rehearsal Evidence and GA Readiness remain display-safe and non-runnable.",
+        "Compliance Certification Matrix remains display-safe and non-runnable.",
+        "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, executable payloads, or fake runnable enterprise GA actions.",
+        "DemoApp remains absent from full Command Center."
+      ],
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme.",
+        "Validate focused P145.7 and route-wide Command Center coverage through Playwright."
+      ],
+      "safetyRules": [
+        "Do not enable certification issuance, attestation signing, security scan execution, finding mutation, load execution, recovery execution, restore, failover, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend in P145.7.",
+        "P145.7 may only update docs, roadmap/status records, checkers, reports, and route assertions over existing display-safe P145 artifacts.",
+        "Do not add certification issuers, attestation signers, scanners, load runners, recovery executors, release/deploy/export/package executors, provider/model callers, agent dispatchers, project mutators, network callers, or spend paths."
+      ],
+      "reuseCheck": [
+        "shared/reportWriter.js",
+        "shared/checkResultFormatter.js",
+        "existing enterprise readiness checker active-state pattern",
+        "existing P143/P144/P145 final validation checker pattern",
+        "existing route-wide Command Center safety tests",
+        "os-roadmap/updatePhaseStatus.js status shape"
+      ],
+      "testsToAddUpdateRemove": [
+        "Add P145.7 OS Roadmap final validation Playwright coverage.",
+        "Update stale P145.1-P145.6 checker handoff assertions to terminal P145.7.",
+        "Preserve route-wide safety tests for DemoApp leakage, raw dumps, theme switcher, sidebar navigation, OS Roadmap scope, and project milestone separation."
+      ],
+      "checkerUpdates": [
+        "Add scripts/check-p1457-enterprise-ga-readiness-final-validation.js.",
+        "Update scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js for P145.7 terminal compatibility.",
+        "Update scripts/check-p1455-enterprise-ga-readiness-tests.js for P145.7 terminal compatibility.",
+        "Update scripts/check-p1454-enterprise-command-center-ux.js for P145.7 terminal compatibility.",
+        "Update scripts/check-p1453-enterprise-e2e-rehearsal.js for P145.7 terminal compatibility.",
+        "Update scripts/check-p1452-enterprise-certification-matrix.js for P145.7 terminal compatibility.",
+        "Update scripts/check-p1451-enterprise-certification-ga-readiness.js for P145.7 terminal compatibility.",
+        "Update scripts/check-enterprise-readiness-roadmap.js for P145.7 final-state compatibility.",
+        "Update scripts/check-os-phase-status.js for P145.7 terminal next-phase handling."
+      ],
+      "docsToUpdate": [
+        "README.md",
+        "docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json"
+      ],
+      "reportsToRegenerate": [
+        "reports/p1457-enterprise-ga-readiness-final-validation-report.md",
+        "reports/p1456-enterprise-ga-readiness-docs-roadmap-report.md",
+        "reports/p1455-enterprise-ga-readiness-tests-report.md",
+        "reports/p1454-enterprise-command-center-ux-report.md",
+        "reports/p1453-enterprise-e2e-rehearsal-report.md",
+        "reports/p1452-enterprise-certification-matrix-report.md",
+        "reports/p1451-enterprise-certification-ga-readiness-report.md",
+        "reports/enterprise-readiness-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "osPhaseStatusUpdate": "P145 complete; P145.1-P145.7 complete; previous P145.6; current P145.7; no next phase identified in the OS roadmap.",
+      "validationCommands": [
+        "npm run check:p1457-enterprise-ga-readiness-final-validation",
+        "npm run check:p1456-enterprise-ga-readiness-docs-roadmap",
+        "npm run check:p1455-enterprise-ga-readiness-tests",
+        "npm run check:p1454-enterprise-command-center-ux",
+        "npm run check:p1453-enterprise-e2e-rehearsal",
+        "npm run check:p1452-enterprise-certification-matrix",
+        "npm run check:p1451-enterprise-certification-ga-readiness",
+        "npm run check:enterprise-readiness-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"P145.7\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Command Center route-wide UX\"",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "No certification issuance or attestation signing enabled.",
+        "No scan, load, recovery, restore, failover, deploy, release, export, package, provider/model, tool, agent, DB/runtime, project mutation, network, or spend path enabled.",
+        "No DemoApp exposure in full Command Center.",
+        "No raw JSON, raw logs, raw policy dumps, raw private project IDs, executable payloads, or fake runnable enterprise GA actions exposed in primary UX.",
+        "No forbidden project or CareLoop paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P145.7 files>",
+        "git commit -m \"feat(nexus): add p1457 enterprise ga readiness final validation\"",
+        "git commit -m \"chore(nexus): stamp p1457 enterprise ga readiness final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests added/updated/removed",
+        "Checker results",
+        "Dashboard build/unit/page results",
+        "Docs/README/roadmap updates",
+        "OS phase status update",
+        "Evidence/audit/activity/cost records if applicable",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ],
-  "commit": "e9ce43a2",
-  "completedAt": "2026-05-31T18:15:00.000Z",
+  "commit": "pending-final-commit",
+  "completedAt": "2026-05-31T18:35:15.000Z",
   "checksRun": [
     "npm run check:p1451-enterprise-certification-ga-readiness",
     "npm run check:p1452-enterprise-certification-matrix",
     "npm run check:p1453-enterprise-e2e-rehearsal",
     "npm run check:p1454-enterprise-command-center-ux",
     "npm run check:p1455-enterprise-ga-readiness-tests",
-    "npm run check:p1456-enterprise-ga-readiness-docs-roadmap"
+    "npm run check:p1456-enterprise-ga-readiness-docs-roadmap",
+    "npm run check:p1457-enterprise-ga-readiness-final-validation"
   ],
   "knownLimitations": [
-    "P145.6 is docs/status/checker closure only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend. P145.7 remains planned-only final validation."
+    "P145.7 is final validation only. It closes P145 but does not enable certification issuance, attestation signing, security scan execution, finding mutation, load execution, recovery execution, restore, failover, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, network calls, deploy/release/export/package actions, or spend."
   ],
-  "osPhaseStatusUpdate": "P145 in progress; P145.1 and P145.2 complete; previous P145.1; current P145.2; next P145.3 planned-only.",
+  "osPhaseStatusUpdate": "P145 complete; P145.1-P145.7 complete; previous P145.6; current P145.7; no next phase identified in the OS roadmap.",
   "certificationMatrixShape": [
     "matrixId",
     "displayName",
@@ -1628,7 +1817,7 @@
       "costImpact": "No spend"
     }
   ],
-  "nextPhase": "P145.4",
+  "nextPhase": "",
   "commandCenterReadinessShape": [
     "readinessId",
     "displayName",
@@ -1773,5 +1962,6 @@
       "costImpact": "No spend"
     }
   ],
-  "branch": "codex/nexus-e2e-phase-validation"
+  "branch": "codex/nexus-e2e-phase-validation",
+  "commandCenterVisible": true
 }

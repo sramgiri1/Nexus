@@ -884,3 +884,157 @@ Known limitations:
   execute tools or workers, write DB/runtime state, mutate projects, call
   providers/models, use network calls, deploy/release/export/package, execute
   scans/load/recovery paths, issue certification, sign attestations, or spend.
+
+## P145.7 Final Validation
+
+Status: complete
+
+Scope classification: NEXUS_OS_CHANGE
+
+Starting branch: `codex/nexus-e2e-phase-validation`
+
+Expected base commit: `611da15b`
+
+Narrow goal: Close enterprise GA readiness final validation with prior
+evidence, safety checkers, docs/status, route coverage, and terminal P145
+status without enabling live certification, execution, mutation, network, or
+spend.
+
+Allowed files:
+- `package.json`
+- `contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json`
+- `scripts/check-p1457-enterprise-ga-readiness-final-validation.js`
+- `scripts/check-p1456-enterprise-ga-readiness-docs-roadmap.js`
+- `scripts/check-p1455-enterprise-ga-readiness-tests.js`
+- `scripts/check-p1454-enterprise-command-center-ux.js`
+- `scripts/check-p1453-enterprise-e2e-rehearsal.js`
+- `scripts/check-p1452-enterprise-certification-matrix.js`
+- `scripts/check-p1451-enterprise-certification-ga-readiness.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `scripts/check-os-phase-status.js`
+- `dashboard/tests/routes.spec.js`
+- `docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1457-enterprise-ga-readiness-final-validation-report.md`
+- P145.1-P145.6, enterprise roadmap, OS status, and phase coverage reports
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- private project roots
+- `dashboard/src/**`
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+
+Expected exports, schemas, and data shapes:
+- No runtime export, DB schema, migration, provider/tool contract, worker
+  contract, deploy/release/export/package payload, certification payload, or
+  attestation payload.
+- Generated data is markdown report output only.
+- Terminal status records use `phaseId`, `title`, `status`, `branch`,
+  `commit`, `completedAt`, `summary`, `checksRun`, `knownLimitations`,
+  explicit empty `nextPhase`, no `next` object, and `commandCenterVisible`.
+
+Command Center UX requirements:
+- OS Roadmap shows P145.7 complete/current, P145.6 previous, no next phase, and
+  P145 parent complete.
+- Enterprise Preview remains display-safe for Rehearsal Evidence and GA
+  Readiness.
+- Compliance remains display-safe for Certification Matrix.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private
+  project IDs, raw URLs, secret/token-like strings, executable payloads, or
+  fake runnable enterprise GA actions.
+- DemoApp remains absent from full Command Center.
+
+Dark/light/system theme requirements:
+- Preserve System, Dark, and Light themes.
+- Validate focused P145.7 roadmap state and route-wide theme switcher coverage
+  through Playwright.
+
+Playwright tests:
+- Add P145.7 OS Roadmap final validation coverage.
+- Preserve route-wide Command Center safety coverage.
+
+Checker updates:
+- Add `scripts/check-p1457-enterprise-ga-readiness-final-validation.js`.
+- Update P145.1-P145.6 checkers for P145.7 terminal compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P145.7 final
+  state compatibility.
+- Update `scripts/check-os-phase-status.js` for terminal P145.7 next-phase
+  handling.
+
+Docs / README / roadmap updates:
+- This plan file.
+- README.
+- NEXUS platform roadmap.
+- Enterprise readiness roadmap.
+- OS roadmap JSON.
+- OS phase status JSON.
+
+Reports to regenerate:
+- P145.7 final validation report.
+- P145.1-P145.6 reports.
+- Enterprise readiness roadmap report.
+- OS phase status report.
+- Phase validation coverage report.
+
+OS phase status update:
+- P145 is complete.
+- P145.1-P145.7 are complete.
+- Current: P145.7; previous: P145.6; next: none.
+
+Validation commands:
+- `npm run check:p1457-enterprise-ga-readiness-final-validation`
+- `npm run check:p1456-enterprise-ga-readiness-docs-roadmap`
+- `npm run check:p1455-enterprise-ga-readiness-tests`
+- `npm run check:p1454-enterprise-command-center-ux`
+- `npm run check:p1453-enterprise-e2e-rehearsal`
+- `npm run check:p1452-enterprise-certification-matrix`
+- `npm run check:p1451-enterprise-certification-ga-readiness`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P145.7"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No project, CareLoop, generated project, DB/runtime, provider, tool, worker,
+  deploy, release, export, package, or env files changed.
+- No certification issuance, attestation signing, security scan execution, load
+  execution, recovery execution, restore, failover, DB/runtime write,
+  provider/model call, tool execution, agent dispatch, project mutation, network
+  call, deploy/release/export/package action, or spend enabled.
+- No raw private IDs, raw JSON, raw logs, raw policy dumps, raw certification
+  payloads, raw attestation payloads, raw scan payloads, raw load payloads, raw
+  recovery payloads, or fake runnable GA actions in primary UX.
+
+Git add / commit / push:
+- `git add <allowed P145.7 files>`
+- `git commit -m "feat(nexus): add p1457 enterprise ga readiness final validation"`
+- Stamp commit hash after implementation.
+- `git commit -m "chore(nexus): stamp p1457 enterprise ga readiness final validation"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known limitations:
+- P145.7 is final validation only.
+- It closes P145 but does not run founder Q&A automation, generate PRDs,
+  dispatch agents, execute tools or workers, write DB/runtime state, mutate
+  projects, call providers/models, use network calls, deploy/release/export/
+  package, execute scans/load/recovery paths, issue certification, sign
+  attestations, or spend.
