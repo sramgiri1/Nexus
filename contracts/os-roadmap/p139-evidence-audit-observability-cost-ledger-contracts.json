@@ -1162,7 +1162,7 @@
       "label": "P139.7 Final Validation",
       "completedAt": "2026-05-31T00:34:21.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e59c5652",
       "checksRun": [
         "npm run check:p1397-evidence-audit-observability-cost-ledger",
         "npm run check:p1396-evidence-audit-observability-cost-ledger",
@@ -1330,7 +1330,7 @@
   ],
   "completedAt": "2026-05-31T00:34:21.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
-  "commit": "pending-final-commit",
+  "commit": "e59c5652",
   "checksRun": [
     "npm run check:p1397-evidence-audit-observability-cost-ledger",
     "npm run check:p1396-evidence-audit-observability-cost-ledger",

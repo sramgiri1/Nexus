@@ -24788,7 +24788,7 @@
       "order": 175,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e59c5652",
       "commandCenterVisible": true,
       "detail": "P139 ledger chain now has contract, read-only model, evidence preview, scoped Command Center UX, aggregate tests/checkers, docs/status closure, and report evidence while all writes and execution remain blocked.",
       "summary": "P139.7 final validation is complete; P139 is complete and P140 remains planned-only next while all ledger writes and execution remain blocked.",
@@ -26757,7 +26757,7 @@
       "label": "P139.7 Final Validation",
       "completedAt": "2026-05-31T00:34:21.000Z",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e59c5652",
       "summary": "P139.7 final validation is complete; P139 is complete and P140 remains planned-only next while all ledger writes and execution remain blocked.",
       "detail": "P139.7 completes final validation for the P139 ledger chain by verifying prior reports, checker compatibility, docs/status closure, route-wide Command Center safety, and planned-only P140 handoff.",
       "checksRun": [
@@ -28119,7 +28119,7 @@
     "label": "P139.7 Final Validation",
     "completedAt": "2026-05-31T00:34:21.000Z",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "e59c5652",
     "expectedBaseCommit": "09252040",
     "allowedFiles": [
       "package.json",
