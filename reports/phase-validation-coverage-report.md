@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-31T14:19:55.864Z
+- Generated at: 2026-05-31T14:47:18.723Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fcf87c7d
+- Validation HEAD: 97dd7d58
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -640,22 +640,29 @@
 | P143.5 validation coverage | PASS | 28 checkers, 24 reports |
 | P143.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P143.7 validation coverage | PASS | 54 checkers, 48 reports |
-| P144 validation coverage | PASS | 9 checkers, 4 reports |
+| P144 validation coverage | PASS | 10 checkers, 5 reports |
 | P144.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P144.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P144.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P144.4 validation coverage | PASS | 5 checkers, 1 reports |
-| P144.5 validation coverage | PASS | 23 checkers, 23 reports |
+| P144.5 validation coverage | PASS | 28 checkers, 24 reports |
+| P144.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P144.7 validation coverage | PASS | 48 checkers, 48 reports |
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P144.4; next=P144.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P144.5; next=P144.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
+- P144.6 Docs / Roadmap / Status
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 - P145 Enterprise Certification and GA Readiness
   - status: planned
   - checkers: 0
@@ -663,4 +670,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (634/634)
+PASS (636/636)
