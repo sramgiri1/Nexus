@@ -2761,10 +2761,10 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
 
     const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P143.4");
-    expect(roadmapBody).toContain("Command Center UX");
     expect(roadmapBody).toContain("P143.5");
     expect(roadmapBody).toContain("Tests / Checkers");
+    expect(roadmapBody).toContain("P143.6");
+    expect(roadmapBody).toContain("Docs / Roadmap / Status");
     expect(roadmapBody).toContain("P143");
     expect(roadmapBody).toContain("Release, Deploy, Export, and Package Pipeline");
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -2787,10 +2787,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P143");
     await expect(page.locator("body")).toContainText("Release, Deploy, Export, and Package Pipeline");
 
@@ -2881,10 +2881,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P143");
     await expect(page.locator("body")).toContainText("Release, Deploy, Export, and Package Pipeline");
 
@@ -2921,10 +2921,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P143");
     await expect(page.locator("body")).toContainText("Release, Deploy, Export, and Package Pipeline");
 
@@ -2962,10 +2962,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
     await expect(page.locator("body")).toContainText("P143");
     await expect(page.locator("body")).toContainText("Release, Deploy, Export, and Package Pipeline");
 
@@ -5786,10 +5786,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5822,10 +5822,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5858,10 +5858,10 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -5904,10 +5904,59 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P143.4");
-    await expect(page.locator("body")).toContainText("Command Center UX");
     await expect(page.locator("body")).toContainText("P143.5");
     await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P143.5 shipping aggregate coverage keeps shipping pages display-only", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    for (const theme of ["dark", "light", "system"]) {
+      await page.goto("/command-center/release");
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Release Control");
+      await page.getByRole("tab", { name: /Gate/i }).click();
+      await expect(page.locator("body")).toContainText("Release and package preview");
+      await expect(page.locator("body")).toContainText("Null executable payload");
+      await expect(page.locator("body")).toContainText("Executable rows");
+    }
+
+    for (const [path, title, previewLabel, disabledLabel] of [
+      ["/command-center/release", "Release Control", "Release and package preview", "Disabled action: Create release package"],
+      ["/command-center/monitoring", "Deploy Monitoring", "Deploy and rollback preview", "Disabled action: Run rollback"],
+      ["/command-center/shipping", "Project Shipping", "Export, package, and provenance preview", "Disabled action: Create package"],
+    ]) {
+      await page.goto(path);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText(title);
+      await page.getByRole("tab", { name: /Gate/i }).click();
+      await expect(page.locator("body")).toContainText(previewLabel);
+      await expect(page.locator("body")).toContainText("Execution blocked");
+      await expect(page.locator("body")).toContainText("No provider calls, deploy jobs, export jobs, package jobs, network calls, or provider spend.");
+      await page.getByRole("tab", { name: /Disabled Actions/i }).click();
+      await expect(page.getByRole("button", { name: disabledLabel })).toBeDisabled();
+
+      const routeBody = await page.locator("body").innerText();
+      expect(routeBody).not.toContain("DemoApp");
+      expect(routeBody).not.toContain("pending-final-commit");
+      expect(routeBody).not.toMatch(/P143\.5|P143\.6|project_|private_|raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+      expect(routeBody).not.toMatch(/create release now|create package now|start deploy now|deploy now|run rollback now|rollback now|run export now|export now|package now|apply patch now|run build now|run tests now|write db now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+    }
+
+    await page.goto("/command-center/roadmap");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P143.5");
+    await expect(page.locator("body")).toContainText("Tests / Checkers");
+    await expect(page.locator("body")).toContainText("P143.6");
+    await expect(page.locator("body")).toContainText("Docs / Roadmap / Status");
 
     const roadmapBody = await page.locator("body").innerText();
     expect(roadmapBody).not.toContain("pending-final-commit");

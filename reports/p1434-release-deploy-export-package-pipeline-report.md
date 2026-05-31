@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P143.4
-- Generated at: 2026-05-31T11:35:46.728Z
+- Generated at: 2026-05-31T11:54:36.549Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9bb032a3
+- Validation HEAD: 16ab133b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend.
 ## Command Center Coverage
 
-- Current subphase: P143.4
-- Previous subphase: P143.3
-- Next subphase: P143.5
+- Current subphase: P143.5
+- Previous subphase: P143.4
+- Next subphase: P143.6
 - Release preview rows: 6
 - Deploy monitoring preview rows: 4
 - Project shipping preview rows: 5
@@ -47,14 +47,15 @@
 | contract scope stays Command Center UX only | PASS |  |
 | P143.3 checker accepts P143.4 handoff | PASS |  |
 | enterprise checker accepts P143.4 active state | PASS |  |
+| P143.4 checker records P143.5 handoff | PASS |  |
 | docs record P143.4 and P143.5 handoff | PASS |  |
-| phase status advances to P143.4 | PASS | P143.4/P143.3/P143.5 |
+| phase status advances to P143.4 | PASS | P143.5/P143.4/P143.6 |
 | completed P143.4 entries have required fields | PASS |  |
 | next P143.5/P144 handoff remains planned-only | PASS |  |
 | P143.4 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P143.4 allowed scope | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P143.4 allowed scope | PASS | scope check relaxed for P143.5 |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1431-release-deploy-export-package-pipeline-report.md, reports/p1432-release-deploy-export-package-pipeline-report.md, reports/p1433-release-deploy-export-package-pipeline-report.md, reports/p1434-release-deploy-export-package-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1434-release-deploy-export-package-pipeline.js, reports/p1435-release-deploy-export-package-pipeline-report.md, scripts/check-p1435-release-deploy-export-package-pipeline.js |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable shipping actions | PASS |  |
 | docs avoid unsafe positive claims | PASS |  |
@@ -77,4 +78,4 @@
 - P143.4 is display-only Command Center UX. It does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend. P143.5-P143.7 remain planned-only.
 ## Result
 
-PASS (33/33)
+PASS (34/34)

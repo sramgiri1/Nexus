@@ -413,7 +413,7 @@ results, dashboard build/unit/page results, docs/README/roadmap updates, OS
 phase status update, evidence/activity/cost records, safety confirmations,
 forbidden paths confirmation, known limitations, and next phase/subphase.
 
-Result: complete as display-only Command Center UX. P143.5 is planned-only next.
+Result: complete as display-only Command Center UX. P143.5 followed next.
 No release package creation, deploy start, rollback execution, export execution,
 package build, patch application, build/test execution, DB/runtime write,
 provider/model call, tool execution, MCP startup, agent dispatch, project
@@ -421,11 +421,58 @@ mutation, network call, or spend authority is enabled.
 
 ## P143.5 Tests / Checkers
 
-Status: planned
+Status: complete
 
 Narrow goal: harden aggregate checker and Playwright coverage for P143
 contract, model, preview, shipping UX, docs, status, and forbidden authority
 claims.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Allowed files: package script, P143.5 checker, P143.4 checker handoff,
+enterprise roadmap checker, Command Center route tests, P143 contract, P143
+plan, enterprise/platform roadmap docs, README, OS roadmap/status JSON, and
+P143/enterprise/status/coverage reports.
+
+Forbidden files: projects, generated projects, private project roots, CareLoop,
+DB/runtime state, providers, tools, worker runtime, deploy/release/export/
+package roots, env files, runtime writers, deployers, releasers, exporters,
+package builders, rollback executors, build/test executors, and any action
+button that can execute shipping work.
+
+Implementation: added `check:p1435-release-deploy-export-package-pipeline` and
+an aggregate checker that validates P143.1-P143.4 reports, the P143.2 model,
+the P143.3 preview, P143.4 shipping UX rows, route-wide safety coverage,
+docs/status handoff, P143.6 planned-only state, and blocked authority wording.
+Updated P143.4 and enterprise checkers to accept the P143.5 active state.
+
+Command Center UX: Release Control, Deploy Monitoring, and Project Shipping
+remain display-only. Focused Playwright coverage checks the shipping preview
+rows across dark, light, and system themes, disabled actions, no raw dumps, no
+DemoApp leakage, no raw private IDs, no internal P143 labels outside OS Roadmap,
+and no fake runnable release/deploy/export/package actions.
+
+Validation:
+
+- `npm run check:p1435-release-deploy-export-package-pipeline`
+- `npm run check:p1434-release-deploy-export-package-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P143.5"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+OS phase status: P143 in progress; P143.1-P143.5 complete; previous P143.4;
+next P143.6 planned-only.
+
+Result: complete as aggregate tests/checkers only. P143.6 is planned-only next.
+No release package creation, deploy start, rollback execution, export execution,
+package build, patch application, build/test execution, DB/runtime write,
+provider/model call, tool execution, MCP startup, agent dispatch, project
+mutation, network call, or spend authority is enabled.
 
 ## P143.6 Docs / Roadmap / Status
 
