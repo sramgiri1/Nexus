@@ -35506,7 +35506,7 @@
       "order": 180,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b53e5f73",
       "commandCenterVisible": true,
       "detail": "Billing/customer operations are model-only through P144.2; P144.3 preview remains planned-only.",
       "summary": "P144 is in progress with P144.1 contract coverage and P144.2 read-only billing/meter model coverage complete while runtime authority remains blocked.",
@@ -35755,7 +35755,7 @@
             "final response checklist"
           ],
           "branch": "codex/nexus-e2e-phase-validation",
-          "commit": "pending-final-commit",
+          "commit": "b53e5f73",
           "previousPhase": "P144.1",
           "nextPhase": "P144.3",
           "checksRun": [
@@ -37720,7 +37720,7 @@
         "final response checklist"
       ],
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b53e5f73",
       "previousPhase": "P144.1",
       "nextPhase": "P144.3",
       "checksRun": [
@@ -37974,7 +37974,7 @@
       "final response checklist"
     ],
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "b53e5f73",
     "previousPhase": "P144.1",
     "nextPhase": "P144.3",
     "checksRun": [
@@ -38399,7 +38399,7 @@
   "nextSubphase": "P144.3",
   "currentSubphase": "P144.2",
   "previousSubphase": "P144.1",
-  "commit": "pending-final-commit",
+  "commit": "b53e5f73",
   "completedAt": "2026-05-31T13:40:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "label": "Billing and Meter Model"
