@@ -126,6 +126,30 @@ function activeCommandTabPanel(page) {
   return page.locator(".ccv2-command-tabs__panel:visible");
 }
 
+async function assertCurrentRoadmapSummary(page) {
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+  const body = page.locator("body");
+
+  for (const entry of [
+    NEXUS_PREVIOUS_COMPLETED_PHASE,
+    NEXUS_CURRENT_OS_PHASE,
+    NEXUS_NEXT_OS_PHASE,
+  ].filter(Boolean)) {
+    await expect(body).toContainText(entry.phase);
+    await expect(body).toContainText(entry.title);
+  }
+
+  await expect(body).toContainText("Latest completed phase");
+  await expect(body).toContainText("Next planned phase");
+
+  const roadmapBody = await body.innerText();
+  expect(roadmapBody).not.toContain("pending-final-commit");
+  expect(roadmapBody).not.toContain("DemoApp");
+  expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+  return roadmapBody;
+}
+
 test("home route renders Command Center V2 shell", async ({ page }) => {
   const errors = captureClientErrors(page);
 
@@ -2758,17 +2782,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(complianceBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P144.7");
-    expect(roadmapBody).toContain("Final Validation");
-    expect(roadmapBody).toContain("P144");
-    expect(roadmapBody).toMatch(/Latest completed phase/i);
-    expect(roadmapBody).toMatch(/Next planned phase/i);
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -2785,17 +2799,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(complianceBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -2878,17 +2882,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(settingsBody).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -2917,17 +2911,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(settingsBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -2957,17 +2941,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(settingsBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -5794,17 +5768,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -5831,17 +5795,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -5868,17 +5822,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -5915,17 +5859,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -5965,17 +5899,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -6004,17 +5928,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -6043,17 +5957,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump/i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
 
     expect(errors).toEqual([]);
   });
@@ -6063,18 +5967,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
 
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     expect(errors).toEqual([]);
@@ -6085,18 +5978,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
 
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     expect(errors).toEqual([]);
@@ -6107,18 +5989,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
 
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     expect(errors).toEqual([]);
@@ -6129,18 +6000,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
 
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     expect(errors).toEqual([]);
@@ -6197,18 +6057,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     await page.goto("/command-center/cost");
@@ -6242,18 +6091,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     await page.goto("/command-center/cost");
@@ -6287,18 +6125,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
-    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.7");
-    await expect(page.locator("body")).toContainText("Final Validation");
-    await expect(page.locator("body")).toContainText("P145");
-    await expect(page.locator("body")).toContainText("Enterprise Certification and GA Readiness");
-    await expect(page.locator("body")).toContainText("Latest completed phase");
-    await expect(page.locator("body")).toContainText("Next planned phase");
-
-    const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).not.toContain("pending-final-commit");
-    expect(roadmapBody).not.toContain("DemoApp");
-    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
     expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     await page.goto("/command-center/cost");
@@ -6324,6 +6151,35 @@ test.describe("Command Center route-wide UX", () => {
     await expect(panel).toContainText("Customer Operations Readiness");
     await pickTheme(page, "system");
     await expect(panel).toContainText("Customer Operations Readiness");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P145.1 enterprise GA readiness contract keeps roadmap current", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P145.1");
+    await expect(page.locator("body")).toContainText("Contract / Policy / Safety Boundary");
+    await expect(page.locator("body")).toContainText("P145.2");
+    await expect(page.locator("body")).toContainText("Certification Matrix");
+    await expect(page.locator("body")).toContainText("Enterprise Certification and GA Readiness");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    await pickTheme(page, "dark");
+    await expect(page.locator("body")).toContainText("P145.1");
+    await pickTheme(page, "light");
+    await expect(page.locator("body")).toContainText("P145.1");
+    await pickTheme(page, "system");
+    await expect(page.locator("body")).toContainText("P145.1");
 
     expect(errors).toEqual([]);
   });

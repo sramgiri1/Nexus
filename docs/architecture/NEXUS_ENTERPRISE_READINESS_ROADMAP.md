@@ -90,14 +90,17 @@ P144.4 is now complete as a Cost Center Customer Ops UX.
 P144.5 is now complete as aggregate tests/checkers only.
 P144.6 is now complete as docs/status closure only.
 P144.7 is now complete as final validation only.
-P145 is planned-only next. It does not enable secret
+P145.1 is now complete as contract/policy/safety-boundary only.
+P145.2 is planned-only next. It does not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
 restore execution, failover, DB writes, provider/model calls, tool execution,
 agent dispatch, project mutation, patch application, build/test execution,
 payment collection, invoice creation, usage writes, customer operations,
-rollback execution, deploy, release, export, package, network calls, or spend
+certification issuance, attestation signing, security scan execution, load
+execution, recovery execution, rollback execution, deploy, release, export,
+package, network calls, or spend
 until each phase/subphase has its own implementation-grade plan, checker
 coverage, Command Center UX when applicable, and final validation.
 
@@ -229,8 +232,9 @@ P144.4 is now complete as a Cost Center Customer Ops UX.
 P144.5 is now complete as aggregate tests/checkers only.
 P144.6 is now complete as docs/status closure only.
 P144.7 is now complete as final validation only.
-P145 is a planned-only backlog phase and must not be
-treated as complete or live.
+P145.1 is complete as contract/policy/safety-boundary work only. P145.2-P145.7
+remain planned-only backlog subphases and must not be treated as complete or
+live.
 
 ## Validation
 
