@@ -44026,25 +44026,25 @@
       "order": 181,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "77b6efa2",
-      "completedAt": "2026-05-31T17:12:07.000Z",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T17:40:42.000Z",
       "commandCenterVisible": true,
-      "detail": "P145.4 exposes display-safe enterprise readiness lanes in Command Center and keeps P145.5-P145.7 planned-only.",
-      "summary": "Added focused Enterprise Preview GA readiness UX with blockers, owners, evidence, next action, and cost posture while all execution, mutation, certification, network, and spend authority remains blocked.",
+      "detail": "P145.5 hardens aggregate enterprise GA readiness validation and keeps P145.6-P145.7 planned-only.",
+      "summary": "Added aggregate enterprise GA readiness tests and checkers over P145 contract, certification matrix, rehearsal evidence, GA readiness UX, docs/status, and route safety while all execution, mutation, network, certification, and spend authority remains blocked.",
       "previousPhase": "P144",
       "nextPhase": "",
-      "currentSubphase": "P145.4",
-      "previousSubphase": "P145.3",
-      "nextSubphase": "P145.5",
+      "currentSubphase": "P145.5",
+      "previousSubphase": "P145.4",
+      "nextSubphase": "P145.6",
       "checksRun": [
         "npm run check:p1451-enterprise-certification-ga-readiness",
         "npm run check:p1452-enterprise-certification-matrix",
         "npm run check:p1453-enterprise-e2e-rehearsal",
-        "npm run check:p1454-enterprise-command-center-ux"
+        "npm run check:p1454-enterprise-command-center-ux",
+        "npm run check:p1455-enterprise-ga-readiness-tests"
       ],
       "knownLimitations": [
-        "P145.4 is Command Center readiness UX only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend.",
-        "P145.5-P145.7 remain planned-only."
+        "P145.5 is tests/checkers hardening only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend. P145.6-P145.7 remain planned-only."
       ],
       "subphases": [
         {
@@ -44078,7 +44078,7 @@
         {
           "phaseId": "P145.5",
           "title": "Tests / Checkers",
-          "status": "planned",
+          "status": "complete",
           "narrowGoal": "Add aggregate enterprise GA readiness tests and checkers without enabling certification, execution, mutation, network, or spend.",
           "commandCenterVisible": true
         },
@@ -44279,22 +44279,24 @@
       "title": "Tests / Checkers",
       "label": "Tests / Checkers",
       "order": 181.5,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-31T17:40:42.000Z",
       "commandCenterVisible": true,
-      "detail": "P145.5 remains planned-only for tests / checkers work.",
-      "summary": "Planned-only P145.5 Tests / Checkers for enterprise certification and GA readiness.",
+      "detail": "P145.5 hardens aggregate enterprise GA readiness validation and keeps P145.6-P145.7 planned-only.",
+      "summary": "Added aggregate enterprise GA readiness tests and checkers over P145 contract, certification matrix, rehearsal evidence, GA readiness UX, docs/status, and route safety while all execution, mutation, network, certification, and spend authority remains blocked.",
       "previousPhase": "P145.4",
       "nextPhase": "P145.6",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:p1455-enterprise-ga-readiness-tests"
+      ],
       "knownLimitations": [
-        "P145.5 is planned-only and must not enable certification issuance, attestation signing, scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend."
+        "P145.5 is tests/checkers hardening only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend. P145.6-P145.7 remain planned-only."
       ],
       "narrowGoal": "Add aggregate enterprise GA readiness tests and checkers without enabling certification, execution, mutation, network, or spend.",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "expectedBaseCommit": "after-P145.4",
+      "expectedBaseCommit": "4412d7fd",
       "requiredPlanFields": [
         "narrow scope",
         "starting branch and expected base commit",
@@ -44399,11 +44401,54 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-31T17:12:07.000Z",
-  "currentPhase": "P145.4",
-  "previousPhase": "P145.3",
-  "nextPhase": "P145.5",
+  "currentPhase": "P145.5",
+  "previousPhase": "P145.4",
+  "nextPhase": "P145.6",
   "currentPhaseStatus": "complete",
   "current": {
+    "track": "NEXUS_OS",
+    "phaseId": "P145.5",
+    "title": "Tests / Checkers",
+    "label": "Tests / Checkers",
+    "order": 181.5,
+    "status": "complete",
+    "branch": "codex/nexus-e2e-phase-validation",
+    "commit": "pending-final-commit",
+    "completedAt": "2026-05-31T17:40:42.000Z",
+    "commandCenterVisible": true,
+    "detail": "P145.5 hardens aggregate enterprise GA readiness validation and keeps P145.6-P145.7 planned-only.",
+    "summary": "Added aggregate enterprise GA readiness tests and checkers over P145 contract, certification matrix, rehearsal evidence, GA readiness UX, docs/status, and route safety while all execution, mutation, network, certification, and spend authority remains blocked.",
+    "previousPhase": "P145.4",
+    "nextPhase": "P145.6",
+    "checksRun": [
+      "npm run check:p1455-enterprise-ga-readiness-tests"
+    ],
+    "knownLimitations": [
+      "P145.5 is tests/checkers hardening only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute scans/load/recovery paths, issue certification, sign attestations, or spend. P145.6-P145.7 remain planned-only."
+    ],
+    "narrowGoal": "Add aggregate enterprise GA readiness tests and checkers without enabling certification, execution, mutation, network, or spend.",
+    "scopeClassification": "NEXUS_OS_CHANGE",
+    "expectedBaseCommit": "4412d7fd",
+    "requiredPlanFields": [
+      "narrow scope",
+      "starting branch and expected base commit",
+      "allowed files",
+      "forbidden files",
+      "exact files/modules",
+      "expected exports/schemas/data shapes",
+      "Command Center UX requirements",
+      "dark/light/system theme requirements",
+      "Playwright tests",
+      "checker updates",
+      "docs/README/roadmap updates",
+      "OS phase status update",
+      "validation commands",
+      "final safety checks",
+      "git add/commit/push commands",
+      "final response checklist"
+    ]
+  },
+  "previous": {
     "track": "NEXUS_OS",
     "phaseId": "P145.4",
     "title": "Readiness Command Center UX",
@@ -44447,72 +44492,28 @@
       "final response checklist"
     ]
   },
-  "previous": {
-    "track": "NEXUS_OS",
-    "phaseId": "P145.3",
-    "title": "End-to-End Rehearsal",
-    "label": "End-to-End Rehearsal",
-    "order": 181.3,
-    "status": "complete",
-    "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "bd7d6c57",
-    "completedAt": "2026-05-31T17:06:00.000Z",
-    "commandCenterVisible": true,
-    "detail": "P145.3 defines read-only rehearsal evidence for idea intake, feasibility Q&A, PRD assembly, agent workplan, business build handoff, and GA evidence review without enabling live execution.",
-    "summary": "Added display-safe end-to-end founder workflow rehearsal evidence for Enterprise Preview while all execution, mutation, network, and spend authority remains blocked.",
-    "previousPhase": "P145.2",
-    "nextPhase": "P145.4",
-    "checksRun": [
-      "npm run check:p1453-enterprise-e2e-rehearsal"
-    ],
-    "knownLimitations": [
-      "P145.3 is read-only rehearsal evidence work only. It does not run founder Q&A automation, generate PRDs, dispatch agents, execute tools or workers, write DB/runtime state, mutate projects, call providers/models, use network calls, deploy/release/export/package, execute load/recovery paths, issue certification, sign attestations, or spend.",
-      "P145.4-P145.7 remain planned-only."
-    ],
-    "narrowGoal": "Define safe end-to-end founder workflow rehearsal evidence without live provider calls, agent dispatch, project mutation, DB writes, network calls, or spend.",
-    "scopeClassification": "NEXUS_OS_CHANGE",
-    "expectedBaseCommit": "b8bbbb1a",
-    "requiredPlanFields": [
-      "narrow scope",
-      "starting branch and expected base commit",
-      "allowed files",
-      "forbidden files",
-      "exact files/modules",
-      "expected exports/schemas/data shapes",
-      "Command Center UX requirements",
-      "dark/light/system theme requirements",
-      "Playwright tests",
-      "checker updates",
-      "docs/README/roadmap updates",
-      "OS phase status update",
-      "validation commands",
-      "final safety checks",
-      "git add/commit/push commands",
-      "final response checklist"
-    ]
-  },
   "next": {
     "track": "NEXUS_OS",
-    "phaseId": "P145.5",
-    "title": "Tests / Checkers",
-    "label": "Tests / Checkers",
-    "order": 181.5,
+    "phaseId": "P145.6",
+    "title": "Docs / Roadmap / Status",
+    "label": "Docs / Status",
+    "order": 181.6,
     "status": "planned",
     "branch": "codex/nexus-e2e-phase-validation",
     "commit": "",
     "completedAt": "",
     "commandCenterVisible": true,
-    "detail": "P145.5 remains planned-only for tests / checkers work.",
-    "summary": "Planned-only P145.5 Tests / Checkers for enterprise certification and GA readiness.",
-    "previousPhase": "P145.4",
-    "nextPhase": "P145.6",
+    "detail": "P145.6 remains planned-only for docs / roadmap / status work.",
+    "summary": "Planned-only P145.6 Docs / Roadmap / Status for enterprise certification and GA readiness.",
+    "previousPhase": "P145.5",
+    "nextPhase": "P145.7",
     "checksRun": [],
     "knownLimitations": [
-      "P145.5 is planned-only and must not enable certification issuance, attestation signing, scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend."
+      "P145.6 is planned-only and must not enable certification issuance, attestation signing, scan execution, load execution, recovery execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, deploy/release/export/package actions, network calls, or spend."
     ],
-    "narrowGoal": "Add aggregate enterprise GA readiness tests and checkers without enabling certification, execution, mutation, network, or spend.",
+    "narrowGoal": "Close P145 docs, README, roadmap, report, and status records without enabling live certification, execution, mutation, network, or spend.",
     "scopeClassification": "NEXUS_OS_CHANGE",
-    "expectedBaseCommit": "after-P145.4",
+    "expectedBaseCommit": "after-P145.5",
     "requiredPlanFields": [
       "narrow scope",
       "starting branch and expected base commit",

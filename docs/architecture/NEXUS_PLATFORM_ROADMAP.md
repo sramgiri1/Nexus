@@ -3232,7 +3232,7 @@ billing and meter model is complete. P144.3 billing preview is complete.
 P144.4 Customer Operations Command Center UX is complete. P144.5 Tests /
 Checkers is complete. P144.6 docs/status closure is complete. P144.7 final
 validation is complete. P144 is complete. P145.1 enterprise GA readiness
-contract is complete. P145.2 certification matrix is complete. P145.3 end-to-end rehearsal is complete. P145.4 readiness Command Center UX is complete. P145.5 remains
+contract is complete. P145.2 certification matrix is complete. P145.3 end-to-end rehearsal is complete. P145.4 readiness Command Center UX is complete. P145.5 aggregate tests/checkers is complete. P145.6 remains
 planned-only.
 They cover
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
@@ -3256,7 +3256,7 @@ complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
 agent work order runtime docs/status is complete. P137.7 agent work order
 runtime final validation is complete. P138.1 project workspace mutation build
 pipeline contract is complete. P138.2 project workspace mutation model is
-complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 final validation is complete. P140.1-P140.7 and P141.1-P141.7 are complete. P142.1 admin operations contract is complete. P142.2 admin operations settings model is complete. P142.3 admin operations dry run is complete. P142.4 Settings Command Center UX is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure is complete. P142.7 final validation is complete. P143.1 release pipeline contract is complete. P143.2 release model is complete. P143.3 shipping preview, P143.4 shipping Command Center UX, P143.5 aggregate tests/checkers, P143.6 docs/status closure, P143.7 final validation, P144.1 billing customer-ops contract, P144.2 billing and meter model, P144.3 billing preview, P144.4 Customer Operations Command Center UX, P144.5 Tests / Checkers, P144.6 docs/status closure, P144.7 final validation, P145.1 enterprise GA readiness contract, P145.2 certification matrix, P145.3 end-to-end rehearsal, and P145.4 readiness Command Center UX are complete; remaining P145 work does not enable secret values,
+complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 final validation is complete. P140.1-P140.7 and P141.1-P141.7 are complete. P142.1 admin operations contract is complete. P142.2 admin operations settings model is complete. P142.3 admin operations dry run is complete. P142.4 Settings Command Center UX is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure is complete. P142.7 final validation is complete. P143.1 release pipeline contract is complete. P143.2 release model is complete. P143.3 shipping preview, P143.4 shipping Command Center UX, P143.5 aggregate tests/checkers, P143.6 docs/status closure, P143.7 final validation, P144.1 billing customer-ops contract, P144.2 billing and meter model, P144.3 billing preview, P144.4 Customer Operations Command Center UX, P144.5 Tests / Checkers, P144.6 docs/status closure, P144.7 final validation, P145.1 enterprise GA readiness contract, P145.2 certification matrix, P145.3 end-to-end rehearsal, P145.4 readiness Command Center UX, and P145.5 aggregate tests/checkers are complete; remaining P145 work does not enable secret values,
 admin setting mutation, feature toggles, maintenance execution, DB/runtime
 writes, live CRUD, provider/model calls, tool execution, agent dispatch,
 project mutation, patch application, build/test execution, billing account
@@ -3703,7 +3703,7 @@ P144.2 billing and meter model is complete. P144.3 billing preview is
 complete. P144.4 Customer Operations Command Center UX is complete. P144.5
 Tests / Checkers is complete. P144.6 Docs / Roadmap / Status is complete.
 P144.7 Final Validation is complete. P145.1 enterprise GA readiness contract
-is complete. P145.2 certification matrix is complete. P145.3 end-to-end rehearsal is complete. P145.4 readiness Command Center UX is complete. P145.5 is planned-only
+is complete. P145.2 certification matrix is complete. P145.3 end-to-end rehearsal is complete. P145.4 readiness Command Center UX is complete. P145.5 aggregate tests/checkers is complete. P145.6 is planned-only
 next.
 
 Implementation follows
