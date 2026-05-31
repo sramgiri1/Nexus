@@ -2018,8 +2018,9 @@ The Command Center and local operator surface have:
   retention contract is complete. P140.2 backup and retention model is
   complete. P140.3 restore preview is complete. P140.4 Backup / DR Command
   Center UX is complete. P140.5 tests/checkers is complete. P140.6
-  docs/status closure is complete. P140.7 final validation is complete; P141
-  is planned-only next.
+  docs/status closure is complete. P140.7 final validation is complete. P141.1
+  security/privacy/compliance contract is complete; P141.2 is planned-only
+  next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2433,6 +2434,14 @@ The Command Center and local operator surface have:
   compatibility, Backup / DR Playwright coverage, route-wide Command Center
   safety, docs/status closure, and P141 planned-only handoff without enabling
   runtime authority.
+- P141.1 security/privacy/compliance contract: Started P141 with a
+  contract-only security, privacy, compliance, policy, evidence, and
+  data-handling boundary. Credential handling, raw data exposure, runtime policy
+  enforcement, compliance certification, legal attestation, audit export, raw
+  log export, compliance package creation, DB/runtime writes, provider/model
+  calls, tool execution, agent dispatch, project mutation, deploy, release,
+  export, package, network calls, and spend remain blocked. P141.2 is
+  planned-only next.
 
 ## CareLoop Project Progress
 

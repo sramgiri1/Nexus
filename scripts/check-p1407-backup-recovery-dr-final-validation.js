@@ -143,6 +143,28 @@ const p1407FinalState =
   && ["P140.1", "P140.2", "P140.3", "P140.4", "P140.5", "P140.6", "P140.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
   && statusById.get("P141")?.status === "planned"
   && roadmapById.get("P141")?.status === "planned";
+const p1411StartedState =
+  status.currentPhase === "P141.1"
+  && status.previousPhase === "P140.7"
+  && status.nextPhase === "P141.2"
+  && roadmap.currentPhase === "P141.1"
+  && roadmap.previousPhase === "P140.7"
+  && roadmap.nextPhase === "P141.2"
+  && status.current?.phaseId === "P141.1"
+  && status.previous?.phaseId === "P140.7"
+  && status.next?.phaseId === "P141.2"
+  && roadmap.current?.phaseId === "P141.1"
+  && roadmap.previous?.phaseId === "P140.7"
+  && roadmap.next?.phaseId === "P141.2"
+  && statusById.get("P140")?.status === "complete"
+  && roadmapById.get("P140")?.status === "complete"
+  && ["P140.1", "P140.2", "P140.3", "P140.4", "P140.5", "P140.6", "P140.7"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P141")?.status === "in_progress"
+  && roadmapById.get("P141")?.status === "in_progress"
+  && statusById.get("P141.1")?.status === "complete"
+  && roadmapById.get("P141.1")?.status === "complete"
+  && statusById.get("P141.2")?.status === "planned"
+  && roadmapById.get("P141.2")?.status === "planned";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1407-backup-recovery-dr-final-validation.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));
@@ -158,10 +180,10 @@ addCheck("contract scope stays final-validation-only", /Final validation only/i.
 addCheck("P140 plan records P140.7", /## P140\.7 Final Validation[\s\S]*Status:\s+complete/.test(plan) && /P141 remains planned-only next/i.test(plan));
 addCheck("README records P140.7", /P140\.7 final validation/i.test(readme) && /P141 is planned-only next/i.test(readme));
 addCheck("platform roadmap records P140.7", /P140\.7 final validation is complete/i.test(platformRoadmap));
-addCheck("enterprise roadmap records P140.7", /P140\.7 is now complete/i.test(enterpriseRoadmap) && /P141 is the next executable phase/i.test(enterpriseRoadmap));
-addCheck("phase status closes P140.7", p1407FinalState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("enterprise roadmap records P140.7", /P140\.7 is now complete/i.test(enterpriseRoadmap) && (/P141 is the next executable phase/i.test(enterpriseRoadmap) || /P141\.1 is now complete/i.test(enterpriseRoadmap)));
+addCheck("phase status closes P140.7", p1407FinalState || p1411StartedState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
 addCheck("completed P140.7 entries have required fields", [statusById.get("P140"), statusById.get("P140.7"), roadmapById.get("P140"), roadmapById.get("P140.7")].every((entry) => Boolean(entry?.phaseId) && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations)));
-addCheck("P141 remains planned-only", statusById.get("P141")?.status === "planned" && roadmapById.get("P141")?.status === "planned" && !(statusById.get("P141")?.checksRun || []).length && !(roadmapById.get("P141")?.checksRun || []).length);
+addCheck("P141 handoff remains valid", (statusById.get("P141")?.status === "planned" && roadmapById.get("P141")?.status === "planned" && !(statusById.get("P141")?.checksRun || []).length && !(roadmapById.get("P141")?.checksRun || []).length) || p1411StartedState);
 addCheck("changed files stay in P140.7 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
 addCheck("forbidden paths unchanged", !enforceCurrentDiffScope || forbiddenPathUnchanged, enforceCurrentDiffScope ? changed.join(", ") : `P140.7 forbidden path check relaxed for ${status.currentPhase}`);
 addCheck("Backup DR Playwright coverage retained", routeTests.includes("Backup DR route renders readiness without runnable recovery actions") && routeTests.includes("P140.5 Backup DR aggregate coverage remains display-only") && routeTests.includes("P140.6 Backup DR docs status closure stays display-only"));
@@ -180,7 +202,7 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Finalizes P140 with prior report verification, checker compatibility, docs/status closure, Backup / DR Playwright coverage, route-wide Command Center safety, and planned-only P141 handoff.",
+        "- Finalizes P140 with prior report verification, checker compatibility, docs/status closure, Backup / DR Playwright coverage, route-wide Command Center safety, and P141 handoff compatibility.",
         "- Confirms P140.1-P140.6 reports remain PASS and that prior P140 checkers accept the P140.7 final state.",
         "- Does not create backups, execute restores, perform failover, overwrite/delete/prune data, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.",
       ].join("\n"),
@@ -198,7 +220,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: "- P140.7 is final validation only. It does not enable backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P141 remains planned-only.",
+      body: "- P140.7 is final validation only. It does not enable backup creation, restore execution, failover, overwrite, delete, prune, DB/runtime writes, provider/model calls, tool execution, MCP startup, agent dispatch, project mutation, deploy, release, export, package, network calls, or spend. P141 may advance only through its own implementation-grade subphase contracts.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

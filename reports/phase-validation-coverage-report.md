@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-31T04:13:54.320Z
+- Generated at: 2026-05-31T04:32:48.489Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 39945494
+- Validation HEAD: 28c34a71
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -617,21 +617,38 @@
 | P140.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P140.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P140.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P141 validation coverage | PASS | dedicated_checker, validation_report |
+| P141 validation coverage | PASS | 6 checkers, 1 reports |
+| P141.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P141.2 validation coverage | PASS | 1 checkers, 1 reports |
+| P141.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P141.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P141.5 validation coverage | PASS | 23 checkers, 23 reports |
+| P141.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P141.7 validation coverage | PASS | 45 checkers, 45 reports |
 | P142 validation coverage | PASS | dedicated_checker, validation_report |
 | P143 validation coverage | PASS | dedicated_checker, validation_report |
 | P144 validation coverage | PASS | dedicated_checker, validation_report |
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P140.7; next=P141; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P141.1; next=P141.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P141 Security, Privacy, and Compliance Controls
+- P141.3 Compliance Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P141.4 Compliance Command Center UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P141.6 Docs / Roadmap / Status
   - status: planned
   - checkers: 0
   - reports: 0
@@ -658,4 +675,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (609/609)
+PASS (616/616)
