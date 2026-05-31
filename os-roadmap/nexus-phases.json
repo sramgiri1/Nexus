@@ -35506,7 +35506,7 @@
       "order": 180,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fcf87c7d",
       "commandCenterVisible": true,
       "detail": "Billing/customer operations are display-only through P144.4; P144.5 tests/checkers remains planned-only.",
       "summary": "P144 is in progress with P144.1 Contract / Policy / Safety Boundary, P144.2 Billing and Meter Model, P144.3 Billing Preview, and P144.4 Customer Operations Command Center UX complete while runtime authority remains blocked.",
@@ -38329,7 +38329,7 @@
       "label": "Customer Operations UX",
       "order": 180.4,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fcf87c7d",
       "previousPhase": "P144.3",
       "nextPhase": "P144.5",
       "checksRun": [
@@ -38527,7 +38527,7 @@
     "label": "Customer Operations UX",
     "order": 180.4,
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "fcf87c7d",
     "previousPhase": "P144.3",
     "nextPhase": "P144.5",
     "checksRun": [
@@ -38926,7 +38926,7 @@
   "nextSubphase": "P144.5",
   "currentSubphase": "P144.4",
   "previousSubphase": "P144.3",
-  "commit": "pending-final-commit",
+  "commit": "fcf87c7d",
   "completedAt": "2026-05-31T14:35:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "label": "Customer Operations UX"
