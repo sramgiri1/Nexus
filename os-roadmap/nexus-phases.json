@@ -30514,7 +30514,7 @@
         "title": "Tests / Checkers",
         "status": "planned"
       },
-      "commit": "pending-final-commit",
+      "commit": "68bf503c",
       "completedAt": "2026-05-31T09:10:00.000Z",
       "track": "NEXUS_OS",
       "label": "Security, Privacy, and Compliance Controls",
@@ -31377,7 +31377,7 @@
       "track": "NEXUS_OS",
       "label": "Tests / Checkers",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "68bf503c",
       "completedAt": "2026-05-31T09:10:00.000Z",
       "checksRun": [
         "npm run check:p1415-security-privacy-compliance-controls",
@@ -32402,7 +32402,7 @@
     "title": "Tests / Checkers",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "68bf503c",
     "completedAt": "2026-05-31T09:10:00.000Z",
     "summary": "Added aggregate tests/checkers for P141 security/privacy/compliance coverage while all runtime authority remains blocked.",
     "checksRun": [

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P141.4
-- Generated at: 2026-05-31T06:01:38.497Z
+- Generated at: 2026-05-31T06:07:37.037Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9baa0e1d
+- Validation HEAD: 68bf503c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -54,7 +54,7 @@
 | completed P141.4 entries have required fields | PASS |  |
 | next P141 subphase remains planned-only | PASS |  |
 | changed files stay in P141.4 allowed scope | PASS | scope check relaxed for P141.5 |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P141_SECURITY_PRIVACY_COMPLIANCE_CONTROLS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1407-backup-recovery-dr-final-validation-report.md, reports/p1411-security-privacy-compliance-controls-report.md, reports/p1412-security-privacy-compliance-controls-report.md, reports/p1413-security-privacy-compliance-controls-report.md, reports/p1414-security-privacy-compliance-controls-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-os-phase-status.js, scripts/check-p1407-backup-recovery-dr-final-validation.js, scripts/check-p1411-security-privacy-compliance-controls.js, scripts/check-p1412-security-privacy-compliance-controls.js, scripts/check-p1413-security-privacy-compliance-controls.js, scripts/check-p1414-security-privacy-compliance-controls.js, reports/p1415-security-privacy-compliance-controls-report.md, scripts/check-p1415-security-privacy-compliance-controls.js |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p141-security-privacy-compliance-controls-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable security actions | PASS |  |

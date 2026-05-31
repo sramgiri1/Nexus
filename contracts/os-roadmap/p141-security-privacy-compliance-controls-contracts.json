@@ -970,7 +970,7 @@
         "P141.5 is tests/checkers hardening only. It does not handle credentials, expose raw data, enforce policy at runtime, certify compliance, sign legal attestations, export audits, export logs, create compliance packages, write DB/runtime state, run live CRUD, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P141.6-P141.7 remain planned-only."
       ],
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "68bf503c",
       "completedAt": "2026-05-31T09:10:00.000Z",
       "checksRun": [
         "npm run check:p1415-security-privacy-compliance-controls",
@@ -1197,7 +1197,7 @@
     "title": "Tests / Checkers",
     "status": "complete",
     "branch": "codex/nexus-e2e-phase-validation",
-    "commit": "pending-final-commit",
+    "commit": "68bf503c",
     "completedAt": "2026-05-31T09:10:00.000Z",
     "summary": "Added aggregate tests/checkers for P141 security/privacy/compliance coverage while all runtime authority remains blocked.",
     "checksRun": [
