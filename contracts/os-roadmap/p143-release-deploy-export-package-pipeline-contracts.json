@@ -1220,7 +1220,7 @@
       "label": "Docs / Roadmap / Status",
       "order": 179.6,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "56dc6cbd",
+      "commit": "c5b4d467",
       "previousPhase": "P143.5",
       "nextPhase": "P143.7",
       "detail": "P143.6 is docs/status/checker closure for P143 release, deploy, export, and package pipeline; it updates records and reports without enabling shipping execution authority.",
@@ -1376,7 +1376,8 @@
         "Forbidden paths confirmation",
         "Known limitations",
         "Next phase/subphase"
-      ]
+      ],
+      "completedAt": "2026-05-31T12:10:30.000Z"
     },
     {
       "phaseId": "P143.7",
@@ -1432,8 +1433,8 @@
     "phaseId": "P143.5",
     "title": "Tests / Checkers"
   },
-  "commit": "d529f7b2",
-  "completedAt": "2026-05-31T19:15:00.000Z",
+  "commit": "c5b4d467",
+  "completedAt": "2026-05-31T12:10:30.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
     "npm run check:p1433-release-deploy-export-package-pipeline",

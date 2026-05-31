@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P143.5
-- Generated at: 2026-05-31T12:10:02.465Z
+- Generated at: 2026-05-31T12:12:22.192Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 56dc6cbd
+- Validation HEAD: c5b4d467
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -56,7 +56,7 @@
 | P143.7 handoff remains valid after P143.6 | PASS |  |
 | P144 remains planned-only | PASS |  |
 | changed files stay in P143.5 allowed scope | PASS | scope check relaxed for P143.6 |
-| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1435-release-deploy-export-package-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, reports/p1436-release-deploy-export-package-pipeline-docs-roadmap-report.md, scripts/check-p1436-release-deploy-export-package-pipeline-docs-roadmap.js |
+| forbidden paths unchanged | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1436-release-deploy-export-package-pipeline-docs-roadmap-report.md |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable shipping actions | PASS |  |
