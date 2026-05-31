@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-31T13:34:23.141Z
+- Generated at: 2026-05-31T13:52:04.240Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b53e5f73
+- Validation HEAD: 1fb7bb64
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Tracks P133-P145 enterprise-readiness roadmap phases after P132.
-- Allows P133-P142 to close through final validation, P143 to close through P143.7 final validation, and P144 to advance through P144.2 billing/customer-ops model work while P144.3-P145 remain planned-only.
+- Allows P133-P142 to close through final validation, P143 to close through P143.7 final validation, and P144 to advance through P144.3 billing/customer-ops preview work while P144.4-P145 remain planned-only.
 - Does not enable DB/runtime writes, live CRUD, provider/model calls, payment provider calls, agent dispatch, project mutation, patch application, build/test execution, billing/customer mutation, rollback execution, deploy, release, export, package, network calls, or spend.
 ## Enterprise Phases
 
@@ -43,7 +43,7 @@
 | P142 checker registered when active | PASS |  |
 | P143 checker registered when active | PASS |  |
 | P144 checker registered when active | PASS |  |
-| current enterprise handoff | PASS | P144.2/P144.1/P144.3 |
+| current enterprise handoff | PASS | P144.3/P144.2/P144.4 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -56,8 +56,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1442-billing-metering-customer-operations-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1442-billing-metering-customer-operations.js, reports/p1443-billing-metering-customer-operations-report.md, scripts/check-p1443-billing-metering-customer-operations.js, shared/billingMeteringCustomerOperationsPreview.js |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P144_BILLING_METERING_CUSTOMER_OPERATIONS_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1442-billing-metering-customer-operations-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, scripts/check-p1442-billing-metering-customer-operations.js, reports/p1443-billing-metering-customer-operations-report.md, scripts/check-p1443-billing-metering-customer-operations.js, shared/billingMeteringCustomerOperationsPreview.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -71,7 +71,7 @@
 - git diff --check
 ## Known Limitations
 
-- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1-P140.7, P141.1-P141.7, P142.1-P142.7, P143.1-P143.7, and P144.1-P144.2 may be complete. P144.3-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, admin setting mutation, feature toggles, maintenance execution, billing account mutation, usage writes, invoice creation, payment collection, customer operations, DB/runtime writes, provider/model calls, payment provider calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
+- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1-P140.7, P141.1-P141.7, P142.1-P142.7, P143.1-P143.7, and P144.1-P144.3 may be complete. P144.4-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, admin setting mutation, feature toggles, maintenance execution, billing account mutation, usage writes, invoice creation, payment collection, customer operations, DB/runtime writes, provider/model calls, payment provider calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
 ## Result
 
 PASS (31/31)

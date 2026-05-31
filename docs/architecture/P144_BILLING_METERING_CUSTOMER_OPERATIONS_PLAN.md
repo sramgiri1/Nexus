@@ -219,18 +219,104 @@ call, or spend authority is enabled.
 
 ## P144.3 Billing Preview
 
-Status: planned
+Status: complete
 
 Narrow goal: add non-runnable billing/customer-ops previews with disabled
 reasons, blockers, evidence refs, and null executable payloads.
 
-Scope: preview-only mapping over P144.2 model data. It must not execute
-payment, invoice, subscription, entitlement, support, customer, DB, provider,
-network, or spend operations.
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `1fb7bb64`.
 
-Validation: dedicated P144.3 checker, prior P144.2 checker, enterprise
-roadmap checker, OS phase status checker, phase validation coverage, dashboard
-build/unit checks, focused route coverage, and `git diff --check`.
+Allowed files: package script, non-runnable billing/customer-ops preview,
+P144 contract, P144.3 checker, P144.2 checker handoff, enterprise checker,
+route tests, P144 plan, README, platform roadmap, enterprise roadmap, OS
+phase status, phase index, and generated reports.
+
+Forbidden files: project files, generated project files, private project
+roots, dashboard source, DB/runtime implementation, providers, tools, worker
+runtime, deploy/release/export/package folders, env files, payment provider
+adapters, and billing/customer/support mutation paths.
+
+Expected exports and schemas:
+`BILLING_METERING_CUSTOMER_OPERATIONS_PREVIEW_PHASE`,
+`BILLING_METERING_CUSTOMER_OPERATIONS_PREVIEW_VERSION`,
+`BILLING_METERING_CUSTOMER_OPERATIONS_PREVIEW_SAFETY_FLAG_NAMES`,
+preview row builder/validator, aggregate preview builder/validator, and
+preview result-envelope builder. No DB schema, migration, payment adapter, or
+runtime writer.
+
+Expected data shape: non-runnable billing preview with preview rows for
+`billing_account`, `usage_meter`, `invoice_preview`, `entitlement`,
+`support_handoff`, and `customer_operation` source rows. Each row includes
+disabled reason, blockers, owner capability, evidence/activity refs, zero
+cost impact, redaction visibility, blocked authority flags, and null
+executable, billing, usage, invoice, payment, subscription, entitlement,
+support, customer, provider, payment-provider, tool, agent, project,
+DB/runtime, deploy/release/export/package, and network payloads.
+
+Command Center UX requirements: OS Roadmap must show P144.3 complete and
+P144.4 planned-only next. P144.3 adds no new Command Center billing/customer
+page and does not expose raw preview payloads. Primary UX must not show fake
+runnable billing/customer actions, raw dumps, private IDs, or internal phase
+labels outside OS Roadmap.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light themes;
+validate route-wide Command Center coverage through Playwright.
+
+Playwright tests: add P144.3 OS Roadmap coverage, update current-roadmap
+assertions from P144.2 to P144.3, and retain route-wide safety coverage.
+
+Checker updates: add P144.3 checker, update P144.2 checker for P144.3 handoff
+compatibility, and update enterprise checker for P144.3 active state.
+
+Docs/README/roadmap updates: README, P144 plan, platform roadmap, enterprise
+readiness roadmap, OS phase status, and phase index.
+
+Reports to regenerate: P144.3 report, P144.2 report, enterprise readiness
+report, OS phase status report, and phase validation coverage report.
+
+OS phase status update: P144 in progress; P144.1-P144.3 complete; previous
+P144.2; current P144.3; next P144.4 planned-only; P145 remains planned-only.
+
+Validation commands:
+
+- `npm run check:p1443-billing-metering-customer-operations`
+- `npm run check:p1442-billing-metering-customer-operations`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P144.3|Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks: no project files, no dashboard source, no DB/runtime
+implementation, no provider/tool/worker-runtime changes, no deploy/release/
+export/package folders, no env files, no billing/customer mutation authority,
+no payment provider calls, no raw payload exposure, no fake working actions,
+and no stale placeholder commit marker after the stamp commit.
+
+Git add, commit, and push commands:
+
+- `git add <P144.3 allowed files>`
+- `git commit -m "feat(nexus): add p1443 billing operations preview"`
+- `git add <P144.3 stamp files and refreshed reports>`
+- `git commit -m "chore(nexus): stamp p1443 billing operations preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist: branch, commit hash, files changed, implementation,
+Command Center UX preservation, tests, checker results, dashboard build/unit/
+page results, docs/README/roadmap updates, OS phase status update, evidence
+records, safety confirmations, forbidden paths confirmation, known limitations,
+and next phase/subphase.
+
+Result: complete as non-runnable billing/customer preview work only. P144.4 is
+planned-only next. No billing account mutation, usage write, invoice creation,
+payment collection, subscription mutation, entitlement grant/revoke, support
+ticket creation, customer contact, customer operation execution, DB/runtime
+write, provider/model call, payment provider call, tool execution, MCP
+startup, agent dispatch, project mutation, deploy, release, export, package,
+network call, or spend authority is enabled.
 
 ## P144.4 Customer Operations Command Center UX
 

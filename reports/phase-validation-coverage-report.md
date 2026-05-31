@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-31T13:34:40.061Z
+- Generated at: 2026-05-31T13:52:13.270Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b53e5f73
+- Validation HEAD: 1fb7bb64
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -640,21 +640,22 @@
 | P143.5 validation coverage | PASS | 28 checkers, 24 reports |
 | P143.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P143.7 validation coverage | PASS | 54 checkers, 48 reports |
-| P144 validation coverage | PASS | 7 checkers, 2 reports |
+| P144 validation coverage | PASS | 8 checkers, 3 reports |
 | P144.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P144.2 validation coverage | PASS | 5 checkers, 1 reports |
-| P144.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P144.3 validation coverage | PASS | 5 checkers, 1 reports |
+| P144.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P145 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P144.2; next=P144.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P144.3; next=P144.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P144.3 Billing Preview
+- P144.4 Customer Operations Command Center UX
   - status: planned
   - checkers: 0
   - reports: 0
@@ -666,4 +667,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (632/632)
+PASS (633/633)

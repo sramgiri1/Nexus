@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P144.2
-- Generated at: 2026-05-31T13:34:23.170Z
+- Generated at: 2026-05-31T13:52:03.991Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b53e5f73
+- Validation HEAD: 1fb7bb64
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not write billing accounts, record usage, create invoices, collect payments, mutate subscriptions or entitlements, create support tickets, contact customers, execute customer operations, write DB/runtime state, call providers/models, call payment providers, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend.
 ## Model Coverage
 
-- Current subphase: P144.2
-- Previous subphase: P144.1
-- Next subphase: P144.3
+- Current subphase: P144.3
+- Previous subphase: P144.2
+- Next subphase: P144.4
 - Model validation: PASS
 - Authority flags: blocked
 ## Checks
@@ -49,18 +49,19 @@
 | contract records expected exports | PASS |  |
 | contract records validation commands | PASS |  |
 | contract scope stays model-only | PASS |  |
+| P144.3 checker registered when handed off | PASS |  |
 | P144.1 checker accepts P144.2 handoff | PASS |  |
 | enterprise checker accepts P144.2 active state | PASS |  |
 | OS checker recognizes P144.3 handoff | PASS |  |
 | docs record P144.2 and P144.3 handoff | PASS |  |
-| phase status advances to P144.2 | PASS | P144.2/P144.1/P144.3 |
+| phase status advances to P144.2 | PASS | P144.3/P144.2/P144.4 |
 | P144 parent records active status | PASS |  |
 | completed P144.2 entries have required fields | PASS |  |
 | next P144.3/P145 handoff remains planned-only | PASS |  |
 | P144.2 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P144.2 allowed scope | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p144-billing-metering-customer-operations-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P144.2 allowed scope | PASS | scope check relaxed for P144.3 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P144.3 |
 | model and docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or payment URLs | PASS |  |
 | docs avoid fake runnable billing actions | PASS |  |
@@ -82,4 +83,4 @@
 - P144.2 is read-only model work only. It does not write billing accounts, record usage, create invoices, collect payments, mutate subscriptions or entitlements, create support tickets, contact customers, execute customer operations, write DB/runtime state, call providers/models, call payment providers, execute tools, start MCP servers, dispatch agents, mutate projects, deploy, release, export, package, use network calls, or spend. P144.3-P144.7 remain planned-only.
 ## Result
 
-PASS (42/42)
+PASS (43/43)

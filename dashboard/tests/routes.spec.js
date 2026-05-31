@@ -2761,8 +2761,8 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
 
     const roadmapBody = await page.locator("body").innerText();
-    expect(roadmapBody).toContain("P144.2");
-    expect(roadmapBody).toContain("Billing and Meter Model");
+    expect(roadmapBody).toContain("P144.3");
+    expect(roadmapBody).toContain("Billing Preview");
     expect(roadmapBody).toContain("P144");
     expect(roadmapBody).toContain("Billing, Metering, and Customer Operations");
     expect(roadmapBody).not.toContain("pending-final-commit");
@@ -2785,8 +2785,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -2877,8 +2877,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -2915,8 +2915,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -2954,8 +2954,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -5776,8 +5776,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -5812,8 +5812,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -5848,8 +5848,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -5894,8 +5894,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -5943,8 +5943,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -5981,8 +5981,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -6019,8 +6019,8 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("P144");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
@@ -6038,10 +6038,10 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
-    await expect(page.locator("body")).toContainText("P144.2");
-    await expect(page.locator("body")).toContainText("Billing and Meter Model");
+    await expect(page.locator("body")).toContainText("P144.1");
+    await expect(page.locator("body")).toContainText("Contract / Policy / Safety Boundary");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
     const roadmapBody = await page.locator("body").innerText();
@@ -6063,6 +6063,27 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Billing and Meter Model");
     await expect(page.locator("body")).toContainText("P144.3");
     await expect(page.locator("body")).toContainText("Billing Preview");
+    await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
+
+    const roadmapBody = await page.locator("body").innerText();
+    expect(roadmapBody).not.toContain("pending-final-commit");
+    expect(roadmapBody).not.toContain("DemoApp");
+    expect(roadmapBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(roadmapBody).not.toMatch(/create invoice now|collect payment now|charge now|subscribe now|cancel subscription now|grant entitlement now|revoke entitlement now|record usage now|write usage now|create ticket now|contact customer now|run customer operation now|write db now|call payment provider now|call provider now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P144.3 billing preview keeps roadmap current", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P144.3");
+    await expect(page.locator("body")).toContainText("Billing Preview");
+    await expect(page.locator("body")).toContainText("P144.4");
+    await expect(page.locator("body")).toContainText("Customer Operations Command Center UX");
     await expect(page.locator("body")).toContainText("Billing, Metering, and Customer Operations");
 
     const roadmapBody = await page.locator("body").innerText();
