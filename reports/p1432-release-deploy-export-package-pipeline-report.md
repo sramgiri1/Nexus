@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P143.2
-- Generated at: 2026-05-31T10:47:16.176Z
+- Generated at: 2026-05-31T11:08:05.438Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ec7f7958
+- Validation HEAD: 8154a4b5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -15,9 +15,9 @@
 - Does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend.
 ## Model Coverage
 
-- Current subphase: P143.2
-- Previous subphase: P143.1
-- Next subphase: P143.3
+- Current subphase: P143.3
+- Previous subphase: P143.2
+- Next subphase: P143.4
 - Model validation: PASS
 - Authority flags: blocked
 ## Checks
@@ -52,13 +52,13 @@
 | enterprise checker accepts P143.2 active state | PASS |  |
 | OS checker recognizes P143.3 handoff | PASS |  |
 | docs record P143.2 and P143.3 handoff | PASS |  |
-| phase status advances to P143.2 | PASS | P143.2/P143.1/P143.3 |
+| phase status advances to P143.2 | PASS | P143.3/P143.2/P143.4 |
 | completed P143.2 entries have required fields | PASS |  |
 | next P143.3/P144 handoff remains planned-only | PASS |  |
 | P143.2 Playwright coverage exists | PASS |  |
 | route-wide safety coverage retained | PASS |  |
-| changed files stay in P143.2 allowed scope | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json |
+| changed files stay in P143.2 allowed scope | PASS | scope check relaxed for P143.3 |
+| forbidden paths unchanged | PASS | forbidden path check relaxed for P143.3 |
 | model and docs avoid raw private IDs | PASS |  |
 | docs avoid raw storage or export URLs | PASS |  |
 | docs avoid fake runnable shipping actions | PASS |  |

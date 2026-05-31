@@ -201,7 +201,8 @@ page results, docs/README/roadmap updates, OS phase status update, evidence
 records, safety confirmations, forbidden paths confirmation, known limitations,
 and next phase/subphase.
 
-Result: complete as read-only model work only. P143.3 remains planned-only. No
+Result: complete as read-only model work only. P143.3 is now complete as a
+non-runnable shipping preview. No
 release package creation, deploy start, rollback execution, export execution,
 package build, patch application, build/test execution, DB/runtime write,
 provider/model call, tool execution, MCP startup, agent dispatch, project
@@ -209,11 +210,102 @@ mutation, network call, or spend authority is enabled.
 
 ## P143.3 Deploy / Export / Package Preview
 
-Status: planned
+Status: complete
 
 Narrow goal: add a non-runnable preview that maps release, deploy, export,
 package, provenance, and rollback candidates to blocked dry-run rows with null
 executable payloads.
+
+Starting branch and expected base commit:
+`codex/nexus-e2e-phase-validation` at `8154a4b5`.
+
+Allowed files: package script, shared P143.3 preview, shared P143.2 model reuse,
+P143.3 checker, P143.2 handoff checker, enterprise checker, route tests, P143
+contract, P143 plan, README, platform roadmap, enterprise roadmap, OS phase
+status, phase index, and generated reports.
+
+Forbidden files: project files, generated project files, private project roots,
+dashboard source, DB/runtime implementation, providers, tools, worker runtime,
+deploy/release/export/package folders, and env files.
+
+Expected data shape: a local read-only dry-run preview with display-safe rows
+for release gates, deploy targets, export/package artifacts, provenance records,
+and rollback plans. Every row has null executable payloads, blocked authority
+flags, evidence/activity refs, zero-spend cost impact, and no raw private IDs or
+raw internal payload exposure.
+
+Expected exports and schemas: `RELEASE_DEPLOY_EXPORT_PACKAGE_PREVIEW_PHASE`,
+`RELEASE_DEPLOY_EXPORT_PACKAGE_PREVIEW_VERSION`,
+`RELEASE_DEPLOY_EXPORT_PACKAGE_PREVIEW_SAFETY_FLAG_NAMES`, preview row builder
+and validator, aggregate preview builder and validator, and preview result
+envelope. No DB schema, migration, deployer, releaser, exporter, package
+builder, rollback executor, provider adapter, executable command, or payload
+writer.
+
+Command Center UX requirements: preserve current Release Control, Deploy
+Monitoring, and Project Shipping pages as non-runnable review surfaces. OS
+Roadmap must show P143.3 complete and P143.4 planned-only next. Primary UX must
+not show fake runnable shipping actions, raw dumps, private IDs, or internal
+phase labels outside OS Roadmap.
+
+Dark/light/system theme requirements: preserve System, Dark, and Light themes;
+validate route-wide Command Center coverage through Playwright.
+
+Playwright tests: add P143.3 coverage for Release Control, Deploy Monitoring,
+Project Shipping, and OS Roadmap; run focused P143.3 and route-wide safety
+coverage.
+
+Checker updates: add P143.3 checker; update P143.2 handoff checker; update
+enterprise checker for P143.3 active state.
+
+Docs/README/roadmap updates: README, P143 plan, platform roadmap, enterprise
+readiness roadmap, OS phase status, and phase index.
+
+Reports to regenerate: P143.3 report, P143.2 report, P143.1 report,
+enterprise readiness report, OS phase status report, and phase validation
+coverage report.
+
+OS phase status update: P143 in progress; P143.1-P143.3 complete; previous
+P143.2; next P143.4 planned-only; P144 and P145 remain planned-only.
+
+Validation commands:
+
+- `npm run check:p1433-release-deploy-export-package-pipeline`
+- `npm run check:p1432-release-deploy-export-package-pipeline`
+- `npm run check:p1431-release-deploy-export-package-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P143.3|Release Control|Deploy Monitoring|Project Shipping|Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks: no project files, no dashboard source, no DB/runtime
+implementation, no provider/tool/worker-runtime changes, no deploy/release/
+export/package folders, no env files, no shipping authority, no raw payload
+exposure, no fake working actions, and no stale placeholder commit marker after
+the stamp commit.
+
+Git add, commit, and push commands:
+
+- `git add <P143.3 allowed files>`
+- `git commit -m "feat(nexus): add p1433 shipping preview"`
+- `git add <P143.3 stamp files and refreshed reports>`
+- `git commit -m "chore(nexus): stamp p1433 shipping preview"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Final response checklist: branch, commit hash, files changed, implementation,
+Command Center UX preservation, tests, checker results, dashboard build/unit/
+page results, docs/README/roadmap updates, OS phase status update, evidence
+records, safety confirmations, forbidden paths confirmation, known limitations,
+and next phase/subphase.
+
+Result: complete as non-runnable preview work only. P143.4 is planned-only next.
+No release package creation, deploy start, rollback execution, export execution,
+package build, patch application, build/test execution, DB/runtime write,
+provider/model call, tool execution, MCP startup, agent dispatch, project
+mutation, network call, or spend authority is enabled.
 
 ## P143.4 Shipping Command Center UX
 

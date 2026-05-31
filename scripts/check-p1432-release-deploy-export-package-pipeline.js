@@ -27,6 +27,7 @@ const REPORT_PATH = "reports/p1432-release-deploy-export-package-pipeline-report
 const CONTRACT_PATH = "contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json";
 const PLAN_PATH = "docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md";
 const REQUIRED_SCRIPT = "check:p1432-release-deploy-export-package-pipeline";
+const NEXT_SCRIPT = "check:p1433-release-deploy-export-package-pipeline";
 const EXPECTED_BASE_COMMIT = "61f9016e";
 const EXPECTED_EXPORTS = [
   "RELEASE_DEPLOY_EXPORT_PACKAGE_MODEL_PHASE",
@@ -175,10 +176,16 @@ const p1433CurrentState =
   status.currentPhase === "P143.3"
   && status.previousPhase === "P143.2"
   && status.nextPhase === "P143.4"
+  && roadmap.currentPhase === "P143.3"
+  && roadmap.previousPhase === "P143.2"
+  && roadmap.nextPhase === "P143.4"
   && statusById.get("P143.2")?.status === "complete"
   && roadmapById.get("P143.2")?.status === "complete"
   && statusById.get("P143.3")?.status === "complete"
-  && roadmapById.get("P143.3")?.status === "complete";
+  && roadmapById.get("P143.3")?.status === "complete"
+  && statusById.get("P143.4")?.status === "planned"
+  && roadmapById.get("P143.4")?.status === "planned"
+  && packageJson.scripts?.[NEXT_SCRIPT] === "node scripts/check-p1433-release-deploy-export-package-pipeline.js";
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1432-release-deploy-export-package-pipeline.js");
 addCheck("checker reuses shared report helpers", checkerSource.includes("../shared/reportWriter.js") && checkerSource.includes("../shared/checkResultFormatter.js"));

@@ -182,6 +182,29 @@ const p1432CurrentState =
   && statusById.get("P144")?.status === "planned"
   && roadmapById.get("P144")?.status === "planned";
 
+const p1433CurrentState =
+  status.currentPhase === "P143.3"
+  && status.previousPhase === "P143.2"
+  && status.nextPhase === "P143.4"
+  && roadmap.currentPhase === "P143.3"
+  && roadmap.previousPhase === "P143.2"
+  && roadmap.nextPhase === "P143.4"
+  && status.current?.phaseId === "P143.3"
+  && status.previous?.phaseId === "P143.2"
+  && status.next?.phaseId === "P143.4"
+  && roadmap.current?.phaseId === "P143.3"
+  && roadmap.previous?.phaseId === "P143.2"
+  && roadmap.next?.phaseId === "P143.4"
+  && statusById.get("P142")?.status === "complete"
+  && roadmapById.get("P142")?.status === "complete"
+  && statusById.get("P143")?.status === "in_progress"
+  && roadmapById.get("P143")?.status === "in_progress"
+  && ["P143.1", "P143.2", "P143.3"].every((phaseId) => statusById.get(phaseId)?.status === "complete" && roadmapById.get(phaseId)?.status === "complete")
+  && statusById.get("P143.4")?.status === "planned"
+  && roadmapById.get("P143.4")?.status === "planned"
+  && statusById.get("P144")?.status === "planned"
+  && roadmapById.get("P144")?.status === "planned";
+
 const allAuthorityFlagsFalse = Object.values(contract.authorityFlags || {}).every((value) => value === false);
 
 addCheck("package script registered", packageJson.scripts?.[REQUIRED_SCRIPT] === "node scripts/check-p1431-release-deploy-export-package-pipeline.js");
@@ -190,6 +213,7 @@ addCheck("prior P142.7 report still passes", reportPassed("reports/p1427-admin-o
 addCheck("contract keeps P143.1 complete", contract.phaseId === "P143" && contract.status === "in_progress" && p1431.status === "complete" && (
   (contract.currentSubphase === "P143.1" && contract.previousSubphase === "P142.7" && contract.nextSubphase === "P143.2" && p1432.status === "planned")
   || (contract.currentSubphase === "P143.2" && contract.previousSubphase === "P143.1" && contract.nextSubphase === "P143.3" && p1432.status === "complete" && p1433.status === "planned")
+  || (contract.currentSubphase === "P143.3" && contract.previousSubphase === "P143.2" && contract.nextSubphase === "P143.4" && p1432.status === "complete" && p1433.status === "complete")
 ));
 addCheck("contract records expected base commit", p1431.expectedBaseCommit === EXPECTED_BASE_COMMIT && contract.expectedBaseCommit === EXPECTED_BASE_COMMIT);
 addCheck("contract records seven subphases", EXPECTED_SUBPHASES.every((phaseId) => subphaseById.has(phaseId)));
@@ -208,17 +232,21 @@ addCheck("rollback shape present", hasFields(contract.rollbackShape, REQUIRED_RO
 addCheck("authority flags block shipping authority", allAuthorityFlagsFalse, JSON.stringify(contract.authorityFlags || {}));
 addCheck("P143.2 handoff is safe", p1431StartedState
   ? p1432.status === "planned" && p1432.expectedBaseCommit === "after-P143.1" && p1432.commit === "" && Array.isArray(p1432.checksRun) && p1432.checksRun.length === 0
-  : p1432CurrentState && p1432.status === "complete" && p1433.status === "planned");
+  : p1432CurrentState
+    ? p1432.status === "complete" && p1433.status === "planned"
+    : p1433CurrentState && p1432.status === "complete" && p1433.status === "complete");
 addCheck("P142.7 checker accepts P143.1 handoff", p1427Checker.includes("p1431StartedState") && p1427Checker.includes('status.currentPhase === "P143.1"'));
 addCheck("enterprise checker accepts P143.1 active state", enterpriseChecker.includes("p1431StartedState") && enterpriseChecker.includes("p143ActiveState") && enterpriseChecker.includes("currentP143CheckCommand") && enterpriseChecker.includes(REQUIRED_SCRIPT));
 addCheck("OS checker recognizes P143 subphases", osStatusChecker.includes('"P143.1"') && osStatusChecker.includes('"P143.2"') && osStatusChecker.includes('"P143.7"'));
-addCheck("docs record P143.1 and P143.2 handoff", /## P143\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan) && /P143\.1\s+Release\s+Deploy\s+Export\s+Package\s+Pipeline\s+Contract\s+is\s+complete/i.test(readme) && /P143\.1\s+release\s+pipeline\s+contract\s+is\s+complete/i.test(platformRoadmap) && /P143\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && (/P143\.2 is planned-only next/i.test(enterpriseRoadmap) || (p1432CurrentState && /P143\.2 is now complete as a read-only model/i.test(enterpriseRoadmap) && /P143\.3 is planned-only next/i.test(enterpriseRoadmap))));
-addCheck("phase status starts P143.1", p1431StartedState || p1432CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
-addCheck("P143 parent records active status", [p143, p143Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && (entry.checksRun.includes("npm run check:p1431-release-deploy-export-package-pipeline") || entry.checksRun.includes("npm run check:p1432-release-deploy-export-package-pipeline")) && entry.commandCenterVisible === true));
+addCheck("docs record P143.1 and P143.2 handoff", /## P143\.1 Contract \/ Policy \/ Safety Boundary[\s\S]*Status:\s+complete/.test(plan) && /P143\.1\s+Release\s+Deploy\s+Export\s+Package\s+Pipeline\s+Contract\s+is\s+complete/i.test(readme) && /P143\.1\s+release\s+pipeline\s+contract\s+is\s+complete/i.test(platformRoadmap) && /P143\.1 is now complete as contract\/policy\/safety-boundary only/i.test(enterpriseRoadmap) && (/P143\.2 is planned-only next/i.test(enterpriseRoadmap) || (p1432CurrentState && /P143\.2 is now complete as a read-only model/i.test(enterpriseRoadmap) && /P143\.3 is planned-only next/i.test(enterpriseRoadmap)) || (p1433CurrentState && /P143\.2 is now complete as a read-only model/i.test(enterpriseRoadmap) && /P143\.3 is now complete as a non-runnable shipping preview/i.test(enterpriseRoadmap) && /P143\.4 is planned-only next/i.test(enterpriseRoadmap))));
+addCheck("phase status starts P143.1", p1431StartedState || p1432CurrentState || p1433CurrentState, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("P143 parent records active status", [p143, p143Roadmap].every((entry) => entry.status === "in_progress" && entry.commit && Array.isArray(entry.checksRun) && (entry.checksRun.includes("npm run check:p1431-release-deploy-export-package-pipeline") || entry.checksRun.includes("npm run check:p1432-release-deploy-export-package-pipeline") || entry.checksRun.includes("npm run check:p1433-release-deploy-export-package-pipeline")) && entry.commandCenterVisible === true));
 addCheck("P143.1 records required status fields", [statusById.get("P143.1"), roadmapById.get("P143.1")].every((entry) => Boolean(entry?.phaseId) && entry.track === "NEXUS_OS" && Boolean(entry.branch) && Boolean(entry.commit) && Boolean(entry.summary) && Array.isArray(entry.checksRun) && Array.isArray(entry.knownLimitations) && entry.commandCenterVisible === true));
-addCheck("next P143/P144 handoff remains safe", p1432CurrentState
-  ? [statusById.get("P143.3"), roadmapById.get("P143.3"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
-  : [statusById.get("P143.2"), roadmapById.get("P143.2"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
+addCheck("next P143/P144 handoff remains safe", p1433CurrentState
+  ? [statusById.get("P143.4"), roadmapById.get("P143.4"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+  : p1432CurrentState
+    ? [statusById.get("P143.3"), roadmapById.get("P143.3"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0)
+    : [statusById.get("P143.2"), roadmapById.get("P143.2"), statusById.get("P144"), roadmapById.get("P144")].every((entry) => entry?.status === "planned" && entry.commit === "" && Array.isArray(entry.checksRun) && entry.checksRun.length === 0));
 addCheck("P143.1 Playwright coverage exists", routeTests.includes("P143.1 release pipeline contract keeps shipping routes non-runnable") && routeTests.includes("Release Control") && routeTests.includes("Deploy Monitoring") && routeTests.includes("Project Shipping") && routeTests.includes("P143.1") && routeTests.includes("P143.2"));
 addCheck("route-wide safety coverage retained", ["full Command Center routes do not show DemoApp", "every primary route has a heading, state block, and no raw JSON dump", "theme switcher exists globally", "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"].every((text) => routeTests.includes(text)));
 addCheck("changed files stay in P143.1 allowed scope", !enforceCurrentDiffScope || changed.every((file) => allowedFiles.has(file)), enforceCurrentDiffScope ? changed.join(", ") : `scope check relaxed for ${status.currentPhase}`);
@@ -238,7 +266,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Starts P143.1 as contract/policy/safety-boundary work for release, deploy, export, package, provenance, and rollback.",
-        `- Confirms P142.7 remains complete and ${p1432CurrentState ? "P143.2 is complete with P143.3/P144 planned-only next" : "P143.2/P144 remain planned-only"}.`,
+        `- Confirms P142.7 remains complete and ${p1433CurrentState ? "P143.2/P143.3 are complete with P143.4/P144 planned-only next" : p1432CurrentState ? "P143.2 is complete with P143.3/P144 planned-only next" : "P143.2/P144 remain planned-only"}.`,
         "- Does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend.",
       ].join("\n"),
     },
@@ -255,7 +283,7 @@ writeMarkdownReport(
     { title: "Validation Commands", body: VALIDATION_COMMANDS.map((command) => `- ${command}`).join("\n") },
     {
       title: "Known Limitations",
-      body: `- P143.1 is contract/policy/safety-boundary work only. It does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend. ${p1432CurrentState ? "P143.2 is complete as read-only model work and P143.3-P143.7 remain planned-only." : "P143.2-P143.7 remain planned-only."}`,
+      body: `- P143.1 is contract/policy/safety-boundary work only. It does not create release packages, start deploys, execute rollbacks, run exports, build packages, apply patches, run build/test commands, write DB/runtime state, call providers/models, execute tools, start MCP servers, dispatch agents, mutate projects, use network calls, or spend. ${p1433CurrentState ? "P143.2 is complete as read-only model work, P143.3 is complete as non-runnable preview work, and P143.4-P143.7 remain planned-only." : p1432CurrentState ? "P143.2 is complete as read-only model work and P143.3-P143.7 remain planned-only." : "P143.2-P143.7 remain planned-only."}`,
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],

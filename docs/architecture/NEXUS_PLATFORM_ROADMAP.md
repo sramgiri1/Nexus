@@ -3224,7 +3224,7 @@ Command Center UX is complete as display-only UX work. P142.5 Tests / Checkers
 is complete as aggregate coverage hardening. P142.6 docs/status closure is
 complete. P142.7 final validation is complete. P142 is complete. P143.1
 release pipeline contract is complete. P143.2 release model is complete.
-P143.3-P145 remain planned-only.
+P143.3 shipping preview is complete. P143.4-P145 remain planned-only.
 They cover
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3683,8 +3683,8 @@ contract is complete. P142.2 admin operations settings model is complete.
 P142.3 admin operations dry run is complete. P142.4 Settings Command Center UX
 is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure
 is complete. P142.7 final validation is complete. P143.1 release pipeline
-contract is complete. P143.2 release model is complete; P143.3 is
-planned-only next.
+contract is complete. P143.2 release model is complete; P143.3 shipping preview
+is complete. P143.4 is planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).
