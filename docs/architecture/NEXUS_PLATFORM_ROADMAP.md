@@ -3226,7 +3226,7 @@ complete. P142.7 final validation is complete. P142 is complete. P143.1
 release pipeline contract is complete. P143.2 release model is complete.
 P143.3 shipping preview is complete. P143.4 shipping Command Center UX is complete.
 P143.5 Tests / Checkers is complete as aggregate shipping coverage hardening.
-P143.6-P145 remain planned-only.
+P143.6 docs/status closure is complete. P143.7-P145 remain planned-only.
 They cover
 idea-to-PRD productization, durable DB/CRUD, identity/tenant/RBAC,
 secrets/provider/tool governance, agent work orders, project workspace mutation
@@ -3249,7 +3249,7 @@ complete. P137.5 agent work order runtime tests/checkers is complete. P137.6
 agent work order runtime docs/status is complete. P137.7 agent work order
 runtime final validation is complete. P138.1 project workspace mutation build
 pipeline contract is complete. P138.2 project workspace mutation model is
-complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 final validation is complete. P140.1-P140.7 and P141.1-P141.7 are complete. P142.1 admin operations contract is complete. P142.2 admin operations settings model is complete. P142.3 admin operations dry run is complete. P142.4 Settings Command Center UX is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure is complete. P142.7 final validation is complete. P143.1 release pipeline contract is complete. P143.2 release model is complete. P143.3 shipping preview, P143.4 shipping Command Center UX, and P143.5 aggregate tests/checkers are complete; remaining P143.6-P145 work does not enable secret values,
+complete. P138.3 project patch/build preview is complete. P138.4 project build Command Center UX is complete. P138.5 aggregate tests/checkers is complete. P138.6 docs/roadmap/status closure is complete. P138.7 final validation is complete. P139.1 evidence, audit, observability, and cost ledger contract is complete. P139.2 evidence, audit, observability, and cost ledger model is complete. P139.3 evidence preview is complete. P139.4 Observability Command Center UX is complete. P139.5 tests/checkers is complete. P139.6 docs/roadmap/status closure is complete. P139.7 final validation is complete. P140.1-P140.7 and P141.1-P141.7 are complete. P142.1 admin operations contract is complete. P142.2 admin operations settings model is complete. P142.3 admin operations dry run is complete. P142.4 Settings Command Center UX is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure is complete. P142.7 final validation is complete. P143.1 release pipeline contract is complete. P143.2 release model is complete. P143.3 shipping preview, P143.4 shipping Command Center UX, P143.5 aggregate tests/checkers, and P143.6 docs/status closure are complete; remaining P143.7-P145 work does not enable secret values,
 admin setting mutation, feature toggles, maintenance execution, DB/runtime
 writes, live CRUD, provider/model calls, tool execution, agent dispatch,
 project mutation, patch application, build/test execution, rollback execution,
@@ -3687,7 +3687,8 @@ is complete. P142.5 Tests / Checkers is complete. P142.6 docs/status closure
 is complete. P142.7 final validation is complete. P143.1 release pipeline
 contract is complete. P143.2 release model is complete; P143.3 shipping preview
 is complete. P143.4 shipping Command Center UX is complete. P143.5 Tests /
-Checkers is complete. P143.6 is planned-only next.
+Checkers is complete. P143.6 docs/status closure is complete. P143.7 is
+planned-only next.
 
 Implementation follows
 [`p110-founder-live-operator-decision-ledger-persistence-contracts.json`](../../contracts/os-roadmap/p110-founder-live-operator-decision-ledger-persistence-contracts.json).

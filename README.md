@@ -2031,8 +2031,8 @@ The Command Center and local operator surface have:
   final validation is complete; P142 is complete. P143.1 Release Deploy Export
   Package Pipeline Contract is complete. P143.2 Release Model is complete and
   P143.3 Deploy / Export / Package Preview is complete. P143.4 Shipping Command
-  Center UX is complete. P143.5 Tests / Checkers is complete. P143.6 is
-  planned-only next.
+  Center UX is complete. P143.5 Tests / Checkers is complete. P143.6 Docs /
+  Roadmap / Status is complete. P143.7 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2547,8 +2547,8 @@ The Command Center and local operator surface have:
   deploy, export, package, rollback, project mutation, DB/runtime writes,
   provider/model calls, tool execution, network calls, and spend remain
   unavailable. P143.4 is complete as display-only shipping Command Center UX;
-  P143.5 is complete as aggregate tests/checkers only. P143.6 is planned-only
-  next.
+  P143.5 is complete as aggregate tests/checkers only. P143.6 is complete as
+  docs/status closure. P143.7 is planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2558,10 +2558,15 @@ The Command Center and local operator surface have:
 - P143.5 Tests / Checkers is complete: Added aggregate validation over P143.1-P143.4
   reports, the P143.2 model, P143.3 preview, P143.4 Command Center UX, focused
   shipping page Playwright coverage, route-wide safety coverage, docs/status,
-  and blocked shipping authority claims. P143.6 is planned-only next; release,
+  and blocked shipping authority claims. P143.6 followed next; release,
   deploy, rollback, export, package, build/test, DB/runtime write,
   provider/tool/agent, project mutation, network, and spend authority remain
   unavailable.
+- P143.6 Docs / Roadmap / Status is complete: Closed P143 docs, README,
+  roadmap, OS phase status, checker handoff, report freshness, and P143.7
+  planned-only final validation handoff without enabling release, deploy,
+  rollback, export, package, build/test, DB/runtime write, provider/tool/agent,
+  project mutation, network, or spend authority.
 
 ## CareLoop Project Progress
 

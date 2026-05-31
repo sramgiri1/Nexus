@@ -468,7 +468,7 @@ Validation:
 OS phase status: P143 in progress; P143.1-P143.5 complete; previous P143.4;
 next P143.6 planned-only.
 
-Result: complete as aggregate tests/checkers only. P143.6 is planned-only next.
+Result: complete as aggregate tests/checkers only. P143.6 followed next.
 No release package creation, deploy start, rollback execution, export execution,
 package build, patch application, build/test execution, DB/runtime write,
 provider/model call, tool execution, MCP startup, agent dispatch, project
@@ -476,10 +476,54 @@ mutation, network call, or spend authority is enabled.
 
 ## P143.6 Docs / Roadmap / Status
 
-Status: planned
+Status: complete
 
 Narrow goal: close P143 docs, README, roadmap, OS phase status, checker
 handoff, report freshness, and P143.7 planned-only handoff.
+
+Scope classification: NEXUS_OS_CHANGE.
+
+Allowed files: package script, P143.6 checker, enterprise roadmap checker,
+Command Center route tests, P143 contract, P143 plan, enterprise/platform
+roadmap docs, README, OS roadmap/status JSON, and P143/enterprise/status/
+coverage reports.
+
+Forbidden files: projects, generated projects, private project roots, CareLoop,
+dashboard source, DB/runtime state, providers, tools, worker runtime, deploy/
+release/export/package roots, env files, runtime writers, deployers, releasers,
+exporters, package builders, rollback executors, build/test executors, and any
+action button that can execute shipping work.
+
+Implementation: added
+`check:p1436-release-deploy-export-package-pipeline-docs-roadmap`, recorded
+P143.6 in the P143 contract, README, platform roadmap, enterprise roadmap, OS
+phase status, and phase index, and preserved P143.7 as planned-only final
+validation.
+
+Command Center UX: no new runtime control was added. Route tests keep Release
+Control, Deploy Monitoring, and Project Shipping display-only, and OS Roadmap
+shows P143.6 current with P143.7 next.
+
+Validation:
+
+- `npm run check:p1436-release-deploy-export-package-pipeline-docs-roadmap`
+- `npm run check:p1435-release-deploy-export-package-pipeline`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P143.6|Command Center route-wide UX"`
+- `git diff --check`
+
+OS phase status: P143 in progress; P143.1-P143.6 complete; previous P143.5;
+next P143.7 planned-only.
+
+Result: complete as docs/status/checker closure. P143.7 is planned-only next.
+No release package creation, deploy start, rollback execution, export execution,
+package build, patch application, build/test execution, DB/runtime write,
+provider/model call, tool execution, MCP startup, agent dispatch, project
+mutation, network call, or spend authority is enabled.
 
 ## P143.7 Final Validation
 

@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P133-P145
-- Generated at: 2026-05-31T11:56:17.098Z
+- Generated at: 2026-05-31T12:09:40.436Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 61c6f848
+- Validation HEAD: 56dc6cbd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Tracks P133-P145 enterprise-readiness roadmap phases after P132.
-- Allows P133-P142 to close through P142.7 final validation and P143 to advance through P143.5 aggregate shipping tests/checkers while later P143/P144/P145 work remains planned-only.
+- Allows P133-P142 to close through P142.7 final validation and P143 to advance through P143.6 docs/status closure while later P143/P144/P145 work remains planned-only.
 - Does not enable DB/runtime writes, live CRUD, provider/model calls, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
 ## Enterprise Phases
 
@@ -42,7 +42,7 @@
 | P141 checker registered when active | PASS |  |
 | P142 checker registered when active | PASS |  |
 | P143 checker registered when active | PASS |  |
-| current enterprise handoff | PASS | P143.5/P143.4/P143.6 |
+| current enterprise handoff | PASS | P143.6/P143.5/P143.7 |
 | P132.7 hands off to P133 | PASS |  |
 | enterprise parent phases exist | PASS |  |
 | enterprise parent phases are planned-only | PASS |  |
@@ -55,8 +55,8 @@
 | enterprise roadmap doc records required subphase contract | PASS |  |
 | README records enterprise roadmap | PASS |  |
 | platform roadmap records enterprise roadmap | PASS |  |
-| changed files stay in enterprise roadmap scope | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1434-release-deploy-export-package-pipeline-report.md |
-| forbidden paths unchanged | PASS | contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, reports/p1434-release-deploy-export-package-pipeline-report.md |
+| changed files stay in enterprise roadmap scope | PASS | README.md, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1435-release-deploy-export-package-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, reports/p1436-release-deploy-export-package-pipeline-docs-roadmap-report.md, scripts/check-p1436-release-deploy-export-package-pipeline-docs-roadmap.js |
+| forbidden paths unchanged | PASS | README.md, contracts/os-roadmap/p143-release-deploy-export-package-pipeline-contracts.json, dashboard/tests/routes.spec.js, docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md, docs/architecture/NEXUS_PLATFORM_ROADMAP.md, docs/architecture/P143_RELEASE_DEPLOY_EXPORT_PACKAGE_PIPELINE_PLAN.md, os-roadmap/nexus-phases.json, os-roadmap/phase-status.json, package.json, reports/enterprise-readiness-roadmap-report.md, reports/os-phase-status-report.md, reports/p1435-release-deploy-export-package-pipeline-report.md, reports/phase-validation-coverage-report.md, scripts/check-enterprise-readiness-roadmap.js, reports/p1436-release-deploy-export-package-pipeline-docs-roadmap-report.md, scripts/check-p1436-release-deploy-export-package-pipeline-docs-roadmap.js |
 | checker reuses report helpers | PASS |  |
 | docs avoid raw private IDs | PASS |  |
 | docs avoid fake runnable actions | PASS |  |
@@ -70,7 +70,7 @@
 - git diff --check
 ## Known Limitations
 
-- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1-P140.7, P141.1-P141.7, P142.1-P142.7, P143.1, P143.2, P143.3, P143.4, and P143.5 may be complete. P143.6-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, admin setting mutation, feature toggles, maintenance execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
+- P133.1-P133.7, P134.1-P134.7, P135.1-P135.7, P136.1-P136.7, P137.1-P137.7, P138.1-P138.7, P139.1-P139.7, P140.1-P140.7, P141.1-P141.7, P142.1-P142.7, P143.1, P143.2, P143.3, P143.4, P143.5, and P143.6 may be complete. P143.7-P145 remain planned-only. Current enterprise work does not enable secret values, full registry loading into model context, login, sessions, permission enforcement, backup creation, restore execution, failover, overwrite, delete, prune, credential handling, raw data exposure, compliance certification, legal attestation, audit export, raw log export, compliance package creation, admin setting mutation, feature toggles, maintenance execution, DB/runtime writes, provider/model calls, tool execution, agent dispatch, project mutation, patch application, build/test execution, rollback execution, deploy, release, export, package, network calls, or spend.
 ## Result
 
 PASS (30/30)
