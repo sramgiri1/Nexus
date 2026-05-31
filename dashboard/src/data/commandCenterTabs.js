@@ -161,6 +161,7 @@ export const ENTERPRISE_PREVIEW_TABS = [
   { id: "overview", label: "Overview", description: "Founder workflow state, owner, blockers, and next action", badge: "Preview" },
   { id: "prd", label: "PRD Preview", description: "Problem, audience, value, scope, and acceptance preview", badge: "Read-only" },
   { id: "workplan", label: "Agent Workplan", description: "Task lanes, gates, and self-healing readiness", badge: "Blocked" },
+  { id: "rehearsal", label: "Rehearsal Evidence", description: "End-to-end founder journey evidence and blockers", badge: "Read-only" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable founder, PRD, agent, and runtime actions", badge: "Disabled" },
 ];
 

@@ -2039,7 +2039,7 @@ The Command Center and local operator surface have:
   P144.5 Tests / Checkers is complete. P144.6 Docs / Roadmap / Status is
   complete. P144.7 Final Validation is complete; P144 is complete.
   P145.1 Enterprise Certification GA Readiness Contract is complete. P145.2
-  Certification Matrix is complete. P145.3 is planned-only next.
+  Certification Matrix is complete. P145.3 End-to-End Rehearsal is complete. P145.4 is planned-only next.
 - P133.1 founder idea-to-PRD contract: Started P133 with an
   implementation-grade founder idea-to-PRD productization contract, seven
   subphases, safety boundary, checker, docs, status handoff, and planned-only
@@ -2563,7 +2563,7 @@ The Command Center and local operator surface have:
   P144.6 is complete as docs/status closure. P144.7 is complete as final
   validation only. P145.1 is complete as enterprise GA readiness contract work.
   P145.2 is complete as a read-only enterprise certification matrix. P145.3 is
-  planned-only next.
+  complete as read-only end-to-end rehearsal evidence. P145.4 is planned-only next.
 - P143.4 Shipping Command Center UX is complete: Added display-safe shipping preview rows
   to Release Control, Deploy Monitoring, and Project Shipping. Each route now
   shows blocked current state, next action, disabled reason, owner capability,
@@ -2633,7 +2633,7 @@ The Command Center and local operator surface have:
   and customer authority claims. P144.6 Docs / Roadmap / Status is complete
   and P144.7 Final Validation is complete. P145.1 Enterprise Certification GA
   Readiness Contract is complete, P145.2 Certification Matrix is complete, and
-  P145.3 is planned-only next. Billing account
+  P145.3 End-to-End Rehearsal is complete. P145.4 is planned-only next. Billing account
   mutation, usage writes, invoice creation, payment collection, subscription
   mutation, entitlement changes, support ticket creation, customer contact,
   customer operation execution, DB/runtime writes, provider/model calls,

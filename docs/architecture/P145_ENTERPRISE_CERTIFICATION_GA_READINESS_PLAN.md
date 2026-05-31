@@ -291,3 +291,153 @@ Known limitations:
   failover, DB/runtime writes, provider/model calls, tool execution, agent
   dispatch, project mutation, deploy/release/export/package actions, network
   calls, or spend.
+
+## P145.3 End-to-End Rehearsal
+
+Status: complete
+Scope classification: NEXUS_OS_CHANGE
+Starting branch and expected base commit: `codex/nexus-e2e-phase-validation`
+at `b8bbbb1a`
+
+Narrow goal: Define safe end-to-end founder workflow rehearsal evidence without
+live provider calls, agent dispatch, project mutation, DB writes, network
+calls, or spend.
+
+Allowed files:
+- `package.json`
+- `contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json`
+- `scripts/check-p1453-enterprise-e2e-rehearsal.js`
+- `scripts/check-p1452-enterprise-certification-matrix.js`
+- `scripts/check-p1451-enterprise-certification-ga-readiness.js`
+- `scripts/check-enterprise-readiness-roadmap.js`
+- `dashboard/src/data/enterprisePreviewReadiness.js`
+- `dashboard/src/data/commandCenterTabs.js`
+- `dashboard/src/pages/CommandCenterV2.jsx`
+- `dashboard/tests/routes.spec.js`
+- `docs/architecture/P145_ENTERPRISE_CERTIFICATION_GA_READINESS_PLAN.md`
+- `docs/architecture/NEXUS_ENTERPRISE_READINESS_ROADMAP.md`
+- `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- `README.md`
+- `os-roadmap/nexus-phases.json`
+- `os-roadmap/phase-status.json`
+- `reports/p1453-enterprise-e2e-rehearsal-report.md`
+- `reports/p1452-enterprise-certification-matrix-report.md`
+- `reports/p1451-enterprise-certification-ga-readiness-report.md`
+- `reports/enterprise-readiness-roadmap-report.md`
+- `reports/os-phase-status-report.md`
+- `reports/phase-validation-coverage-report.md`
+
+Forbidden files:
+- `projects/**`
+- `careloop/**`
+- `generated-projects/**`
+- private project roots
+- `db/**`
+- `local-state/runtime/**`
+- `providers/**`
+- `tools/**`
+- `worker-runtime/**`
+- `deploy/**`
+- `release/**`
+- `exports/**`
+- `packages/**`
+- `.env*`
+- certification issuers, attestation signers, scanners, load runners, recovery
+  executors, release/deploy/export/package executors, provider/model callers,
+  tool executors, worker executors, agent dispatchers, project mutation paths,
+  network callers, or spend paths
+
+Expected exports, schemas, and data shapes:
+- No DB schema or migration.
+- No provider, tool, worker, deploy, release, export, package, certification,
+  attestation, or project exports.
+- Contract-only `e2eRehearsalShape` includes `rehearsalId`, `displayName`,
+  `stage`, `rehearsalState`, all execution authority flags, `ownerCapability`,
+  `evidenceRefs`, `blockers`, `nextAction`, `disabledReason`, and `costImpact`.
+- `e2eRehearsalRows[]` carries founder intake, feasibility Q&A, PRD assembly,
+  agent workplan, business build handoff, and enterprise GA evidence review
+  rows with all execution authority disabled.
+- Existing Enterprise Preview view model exposes `rehearsalRows` and
+  `rehearsalSummary`.
+
+Command Center UX requirements:
+- Enterprise Preview page shows a `Rehearsal Evidence` tab.
+- Rehearsal rows show current state, next action, blockers, disabled reason,
+  owner, evidence, and cost impact.
+- Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private
+  project IDs, raw URLs, secret/token-like strings, executable payloads,
+  internal phase labels, or fake runnable rehearsal actions.
+- DemoApp remains absent from full Command Center.
+
+Dark/light/system theme requirements:
+- Preserve System, Dark, and Light themes.
+- Rehearsal Evidence remains readable across all theme modes.
+
+Playwright tests:
+- Add P145.3 Enterprise Preview Rehearsal Evidence and OS Roadmap coverage.
+- Preserve route-wide Command Center safety coverage.
+
+Checker updates:
+- Add `scripts/check-p1453-enterprise-e2e-rehearsal.js`.
+- Update `scripts/check-p1452-enterprise-certification-matrix.js` for P145.3
+  handoff compatibility.
+- Update `scripts/check-p1451-enterprise-certification-ga-readiness.js` for
+  P145.3 handoff compatibility.
+- Update `scripts/check-enterprise-readiness-roadmap.js` for P145.3 active
+  state compatibility.
+
+Docs / README / roadmap updates:
+- This plan file.
+- README.
+- NEXUS platform roadmap.
+- Enterprise readiness roadmap.
+- OS roadmap JSON.
+- OS phase status JSON.
+
+OS phase status update:
+- P145 is in progress.
+- P145.1, P145.2, and P145.3 are complete.
+- P145.4 remains planned-only.
+- Current: P145.3; previous: P145.2; next: P145.4.
+
+Validation commands:
+- `npm run check:p1453-enterprise-e2e-rehearsal`
+- `npm run check:p1452-enterprise-certification-matrix`
+- `npm run check:p1451-enterprise-certification-ga-readiness`
+- `npm run check:enterprise-readiness-roadmap`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `cd dashboard && npm run build`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "P145.3"`
+- `cd dashboard && npx playwright test tests/routes.spec.js -g "Command Center route-wide UX"`
+- `git diff --check`
+
+Final safety checks:
+- No project, CareLoop, generated project, DB/runtime, provider, tool, worker,
+  deploy, release, export, package, or env files changed.
+- No founder Q&A automation, PRD generation, certification issuance,
+  attestation signing, security scan execution, finding mutation, load
+  execution, recovery execution, restore, failover, DB/runtime write,
+  provider/model call, tool execution, worker execution, agent dispatch,
+  project mutation, network call, deploy/release/export/package action, or
+  spend enabled.
+- No raw private IDs, raw JSON, raw logs, raw policy dumps, raw URLs, secret or
+  token-like strings, raw payloads, internal phase labels, or fake runnable
+  actions in primary UX.
+- No stale phase status or `pending-final-commit` markers after final stamp.
+
+Git add / commit / push:
+- `git add <allowed P145.3 files>`
+- `git commit -m "feat(nexus): add p1453 enterprise e2e rehearsal"`
+- Stamp commit hash after implementation.
+- `git commit -m "chore(nexus): stamp p1453 enterprise e2e rehearsal"`
+- `git push origin codex/nexus-e2e-phase-validation`
+
+Known limitations:
+- P145.3 is read-only rehearsal evidence work only.
+- P145.4-P145.7 remain planned-only.
+- It does not run founder Q&A automation, generate PRDs, dispatch agents,
+  execute tools or workers, write DB/runtime state, mutate projects, call
+  providers/models, use network calls, deploy/release/export/package, execute
+  load/recovery paths, issue certification, sign attestations, or spend.

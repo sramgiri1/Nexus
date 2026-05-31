@@ -1,6 +1,7 @@
 import { createFounderIntakePreview } from "../../../enterprise-preview/p78-2-placeholder.js";
 import { createPrdAssemblyPreview } from "../../../enterprise-preview/p78-3-placeholder.js";
 import { createAgentWorkplanPreview } from "../../../enterprise-preview/p78-4-placeholder.js";
+import p145EnterpriseCertificationContract from "../../../contracts/os-roadmap/p145-enterprise-certification-ga-readiness-contracts.json" with { type: "json" };
 
 const founderIntake = createFounderIntakePreview({
   nextAction: "Review founder answers before any future PRD generation is considered.",
@@ -14,12 +15,48 @@ const agentWorkplan = createAgentWorkplanPreview({
   nextAction: "Prepare validation aggregation before any runtime execution is considered.",
 });
 
+function displayText(value) {
+  return String(value || "")
+    .replace(/reports\/[^ \n]+/g, "the current enterprise rehearsal report")
+    .replace(/P\d+(?:\.\d+)?/g, "the current enterprise rehearsal")
+    .replace(/project_[A-Za-z0-9_-]+/g, "project scope")
+    .replace(/tenant_[A-Za-z0-9_-]+/g, "tenant scope")
+    .replace(/workspace_[A-Za-z0-9_-]+/g, "workspace scope");
+}
+
+function buildEnterpriseRehearsalDisplayModel() {
+  const rows = (p145EnterpriseCertificationContract.e2eRehearsalRows || []).map((row) => ({
+    rehearsalId: row.rehearsalId,
+    displayName: displayText(row.displayName),
+    stage: displayText(row.stage),
+    rehearsalState: displayText(row.rehearsalState),
+    owner: displayText(row.ownerCapability),
+    evidence: (row.evidenceRefs || []).map(displayText),
+    blockers: (row.blockers || []).map(displayText),
+    nextAction: displayText(row.nextAction),
+    disabledReason: displayText(row.disabledReason),
+    costImpact: displayText(row.costImpact || "No spend"),
+  }));
+  return {
+    rows,
+    summary: {
+      rowCount: rows.length,
+      blockedCount: rows.filter((row) => /blocked|disabled|not enabled|review/i.test(row.disabledReason)).length,
+      executionAllowedCount: (p145EnterpriseCertificationContract.e2eRehearsalRows || []).filter((row) => row.executionAllowed === true).length,
+      nextAction: "Review rehearsal evidence before enterprise readiness UX expansion.",
+      costImpact: "No spend",
+    },
+  };
+}
+
 export function buildEnterprisePreviewReadinessViewModel() {
+  const rehearsal = buildEnterpriseRehearsalDisplayModel();
+
   return {
     routeId: "enterprise-preview-readiness",
     pageTitle: "Enterprise Preview",
-    whatChanged: "Founder idea intake, feasibility Q&A, PRD preview, agent workplan, business build lanes, and self-healing readiness are visible in Command Center.",
-    currentState: "Display-only founder-to-business preview; Q&A automation, PRD generation, agent dispatch, business build execution, self-healing apply, project mutation, DB writes, runtime execution, and provider spend remain disabled.",
+    whatChanged: "Founder idea intake, feasibility Q&A, PRD preview, agent workplan, business build lanes, self-healing readiness, and end-to-end rehearsal evidence are visible in Command Center.",
+    currentState: "Display-only founder-to-business preview and rehearsal evidence; Q&A automation, PRD generation, agent dispatch, business build execution, self-healing apply, project mutation, DB writes, runtime execution, and provider spend remain disabled.",
     nextAction: agentWorkplan.nextAction,
     ownerAgent: "ORCHESTRATOR",
     ownerCapability: "NEXUS Enterprise Preview",
@@ -34,6 +71,7 @@ export function buildEnterprisePreviewReadinessViewModel() {
       { label: "PRD preview", value: "Display only", tone: "amber", detail: prdPreview.prdPreviewState },
       { label: "Agent workplan", value: "Not dispatched", tone: "amber", detail: agentWorkplan.agentWorkplanState },
       { label: "Business build", value: "Execution disabled", tone: "red", detail: "Agents are not yet allowed to build, launch, or operate the business." },
+      { label: "E2E rehearsal", value: "Evidence modeled", tone: "teal", detail: "Founder-to-business stages have read-only rehearsal evidence rows." },
       { label: "Self-healing", value: "Apply disabled", tone: "red", detail: agentWorkplan.selfHealingState },
       { label: "Cost", value: "No spend", tone: "green", detail: "No provider, model, tool, worker, DB, network, or project write cost is incurred." },
     ],
@@ -67,6 +105,8 @@ export function buildEnterprisePreviewReadinessViewModel() {
       currentState: gate.currentState,
       requiredState: gate.requiredState,
     })),
+    rehearsalRows: rehearsal.rows,
+    rehearsalSummary: rehearsal.summary,
     healingRows: agentWorkplan.healingLoops.map((loop) => ({
       label: loop.loop,
       currentState: loop.applyState,

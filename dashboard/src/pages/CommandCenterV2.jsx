@@ -10804,6 +10804,45 @@ function EnterprisePreviewPage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="rehearsal" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="End-to-end rehearsal evidence summary">
+              <div className="ccv2-section-heading">End-to-End Rehearsal Evidence</div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Rehearsal rows</span><span className="ccv2-page-summary-value">{readiness.rehearsalSummary.rowCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked rows</span><span className="ccv2-page-summary-value">{readiness.rehearsalSummary.blockedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed execution rows</span><span className="ccv2-page-summary-value">{readiness.rehearsalSummary.executionAllowedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.rehearsalSummary.nextAction}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.rehearsalSummary.costImpact}</span></div>
+              </div>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--2" style={{ marginTop: 16 }}>
+              {readiness.rehearsalRows.map((row) => (
+                <article className="ccv2-card" key={row.rehearsalId}>
+                  <div className="ccv2-section-heading">{row.displayName}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill ccv2-pill--teal">{row.stage}</span>
+                    <span className="ccv2-pill ccv2-pill--amber">{row.rehearsalState}</span>
+                    <span className="ccv2-pill ccv2-pill--green">{row.costImpact}</span>
+                  </div>
+                  <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{row.owner}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{row.nextAction}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{row.disabledReason}</span></div>
+                  </div>
+                  <div className="ccv2-section-heading" style={{ marginTop: 12 }}>Evidence</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.evidence.map((item, index) => <li key={`${row.rehearsalId}-evidence-${index}`}>{item}</li>)}
+                  </ul>
+                  <div className="ccv2-section-heading" style={{ marginTop: 12 }}>Blockers</div>
+                  <ul className="ccv2-list" style={{ marginTop: 8 }}>
+                    {row.blockers.map((blocker, index) => <li key={`${row.rehearsalId}-blocker-${index}`}>{blocker}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="disabled" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--4">
               {readiness.disabledActions.map((action) => (

@@ -6208,11 +6208,57 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/roadmap");
     const roadmapBody = await assertCurrentRoadmapSummary(page);
-    expect(roadmapBody).toContain("P145.2");
-    expect(roadmapBody).toContain("Certification Matrix");
+    expect(roadmapBody).toContain("Enterprise Certification and GA Readiness");
     expect(roadmapBody).toContain("P145.3");
     expect(roadmapBody).toContain("End-to-End Rehearsal");
+    expect(roadmapBody).toContain("P145.4");
+    expect(roadmapBody).toContain("Readiness Command Center UX");
     expect(roadmapBody).not.toMatch(/certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("P145.3 enterprise end-to-end rehearsal keeps Enterprise Preview useful", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/enterprise-preview");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Enterprise Preview");
+    await commandTab(page, "Rehearsal Evidence").click();
+    await expect(activeCommandTabPanel(page)).toContainText("End-to-End Rehearsal Evidence");
+    await expect(activeCommandTabPanel(page)).toContainText("Rehearsal rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked rows");
+    await expect(activeCommandTabPanel(page)).toContainText("Allowed execution rows");
+    await expect(activeCommandTabPanel(page)).toContainText("0");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder idea intake rehearsal");
+    await expect(activeCommandTabPanel(page)).toContainText("Feasibility Q&A rehearsal");
+    await expect(activeCommandTabPanel(page)).toContainText("PRD assembly rehearsal");
+    await expect(activeCommandTabPanel(page)).toContainText("Agent workplan rehearsal");
+    await expect(activeCommandTabPanel(page)).toContainText("Business build handoff rehearsal");
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise GA evidence rehearsal");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled reason");
+    await expect(activeCommandTabPanel(page)).toContainText("No spend");
+
+    const enterpriseBody = await page.locator("body").innerText();
+    expect(enterpriseBody).not.toContain("DemoApp");
+    expect(enterpriseBody).not.toContain("{\"");
+    expect(enterpriseBody).not.toMatch(/raw JSON|raw logs?|raw policy dump|Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(enterpriseBody).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+    expect(enterpriseBody).not.toMatch(/run rehearsal now|execute rehearsal now|generate prd now|run q&a now|ask founder now|build now|certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
+
+    await pickTheme(page, "dark");
+    await expect(activeCommandTabPanel(page)).toContainText("End-to-End Rehearsal Evidence");
+    await pickTheme(page, "light");
+    await expect(activeCommandTabPanel(page)).toContainText("End-to-End Rehearsal Evidence");
+    await pickTheme(page, "system");
+    await expect(activeCommandTabPanel(page)).toContainText("End-to-End Rehearsal Evidence");
+
+    await page.goto("/command-center/roadmap");
+    const roadmapBody = await assertCurrentRoadmapSummary(page);
+    expect(roadmapBody).toContain("P145.3");
+    expect(roadmapBody).toContain("End-to-End Rehearsal");
+    expect(roadmapBody).toContain("P145.4");
+    expect(roadmapBody).toContain("Readiness Command Center UX");
+    expect(roadmapBody).not.toMatch(/run rehearsal now|execute rehearsal now|generate prd now|run q&a now|ask founder now|build now|certify now|issue certification now|attest now|sign attestation now|run security scan now|mutate finding now|run load test now|run recovery now|restore now|failover now|release now|deploy now|export now|package now|write db now|call provider now|call model now|run tool now|dispatch agent now|mutate project now|spend now/i);
 
     expect(errors).toEqual([]);
   });
