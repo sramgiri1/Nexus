@@ -962,7 +962,7 @@
       ],
       "previousPhase": "P142.4",
       "nextPhase": "P142.6",
-      "commit": "pending-final-commit",
+      "commit": "472056a1",
       "checksRun": [
         "npm run check:p1425-admin-operations-runtime-settings",
         "npm run check:p1424-admin-operations-runtime-settings",
@@ -1252,7 +1252,7 @@
     ],
     "previousPhase": "P142.4",
     "nextPhase": "P142.6",
-    "commit": "pending-final-commit",
+    "commit": "472056a1",
     "checksRun": [
       "npm run check:p1425-admin-operations-runtime-settings",
       "npm run check:p1424-admin-operations-runtime-settings",
@@ -1645,7 +1645,7 @@
     ],
     "commandCenterVisible": true
   },
-  "commit": "pending-final-commit",
+  "commit": "472056a1",
   "completedAt": "2026-05-31T13:45:00.000Z",
   "branch": "codex/nexus-e2e-phase-validation",
   "checksRun": [
