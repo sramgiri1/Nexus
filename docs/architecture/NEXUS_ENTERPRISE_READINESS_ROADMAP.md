@@ -83,13 +83,15 @@ P143.4 is now complete as display-only shipping Command Center UX.
 P143.5 is now complete as aggregate tests/checkers only.
 P143.6 is now complete as docs/status closure only.
 P143.7 is now complete as final validation only. P143 is complete.
-P144 is planned-only next.
-P144-P145 remain planned-only. They do not enable secret
+P144.1 is now complete as contract/policy/safety-boundary only.
+P144.2 is planned-only next.
+P144.2-P145 remain planned-only. They do not enable secret
 values, credential handling, raw data exposure, compliance certification, legal
 attestation, audit export, raw log export, compliance package creation, admin
 setting mutation, feature toggles, maintenance execution, backup creation,
 restore execution, failover, DB writes, provider/model calls, tool execution,
 agent dispatch, project mutation, patch application, build/test execution,
+payment collection, invoice creation, usage writes, customer operations,
 rollback execution, deploy, release, export, package, network calls, or spend
 until each phase/subphase has its own implementation-grade plan, checker
 coverage, Command Center UX when applicable, and final validation.
@@ -215,8 +217,9 @@ P143.4 is now complete as display-only shipping Command Center UX.
 P143.5 is now complete as aggregate tests/checkers only.
 P143.6 is now complete as docs/status closure only.
 P143.7 is now complete as final validation only. P143 is complete.
-P144 is planned-only next.
-P144-P145 are planned-only backlog phases and must not be
+P144.1 is now complete as contract/policy/safety-boundary only.
+P144.2 is planned-only next.
+P144.2-P145 are planned-only backlog phases and must not be
 treated as complete or live.
 
 ## Validation
@@ -234,6 +237,7 @@ Required validation for this roadmap update:
 - `npm run check:p1435-release-deploy-export-package-pipeline`
 - `npm run check:p1436-release-deploy-export-package-pipeline-docs-roadmap`
 - `npm run check:p1437-release-deploy-export-package-pipeline-final-validation`
+- `npm run check:p1441-billing-metering-customer-operations`
 - `npm run check:p1417-security-privacy-compliance-controls-final-validation`
 - `npm run check:enterprise-readiness-roadmap`
 - `npm run check:p1384-project-workspace-mutation-build-pipeline`
