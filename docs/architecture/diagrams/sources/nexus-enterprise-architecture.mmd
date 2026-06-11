@@ -1,43 +1,173 @@
 flowchart TB
-  inputs[Users and Inputs]
-  registry[Project Registry and Trusted Context]
+  inputs[Founder and Mission Inputs]
+  context[Project Registry and Trusted Context]
   commandCenter[Command Center Control Plane]
   kernel[NEXUS Kernel]
-  agents[Agent Layer]
+  agents[Multi-Agent Intelligence Layer]
   gateway[Governed Tool Gateway]
-  runtime[Runtime and Workers]
-  delivery[Project Delivery Layer]
+  runtime[Runtime and Execution Layer]
+  delivery[Founder Product Delivery Layer]
   state[Durable State and Evidence]
-  security[Security and Governance]
+  security[Security Identity and Governance]
   reliability[Reliability and Observability]
+  human[Human in the Loop]
 
-  subgraph gatewayDetail[Governed Tool Gateway Detail]
+  subgraph inputDetail[Founder and Mission Inputs]
+    founderGoals[Founder Goals]
+    ideaValidation[Business Idea Validation]
+    prd[PRD and Scope]
+    repoState[Repo State]
+    policies[Policies and Constraints]
+    runtimeSignals[Runtime Signals]
+  end
+
+  subgraph contextDetail[Trusted Context]
+    projectRegistry[Project Registry]
+    stackProfile[Stack Profile]
+    trustedLayer[Trusted Context Layer]
+    dataSources[Data Source Registry]
+    scopedMemory[Scoped Memory]
+    contextPacket[Context Packet Builder]
+  end
+
+  subgraph commandDetail[Command Center Control Plane]
+    chat[Chat with NEXUS]
+    intake[Founder Intake]
+    businessBuild[Business Build]
+    agentFlow[Agent Flow]
+    liveReadiness[Live Readiness]
+    osRoadmap[OS Roadmap]
+    dbRuntime[DB Runtime]
+    activityEvidence[Activity and Evidence]
+    policyCostApproval[Policy Cost and Approval]
+  end
+
+  subgraph kernelDetail[NEXUS Kernel]
+    router[Router]
+    scheduler[Scheduler]
+    governor[Governor]
+    validator[Contract Validator]
+    stateMachine[State Machine]
+    capabilityEngine[Capability Engine]
+    trafficPlane[Runtime Traffic Plane]
+    budget[Budget Enforcer]
+    recovery[Retry and Recovery Logic]
+  end
+
+  subgraph agentDetail[Agent Domains]
+    strategy[Strategy Agents]
+    product[Product Agents]
+    build[Build Agents]
+    platform[Platform Agents]
+    verification[Verification Agents]
+    growth[Growth and Observability Agents]
+  end
+
+  subgraph gatewayDetail[Governed Tool Gateway]
+    skillRegistry[Skill Registry]
+    hookRegistry[Hook Registry]
     toolRegistry[Tool Registry]
     mcpRegistry[MCP Registry]
     cliAdapter[CLI Adapter]
     apiAdapter[API Adapter]
     batchAdapter[Batch Adapter]
     contractLoader[Lazy Contract Loader]
-    contractOps[Search / Get Contract / Execute]
+    searchExecute[Search / Get Contract / Execute]
     gatewayControls[Policy + Cost + Audit]
   end
 
-  inputs --> commandCenter
-  registry --> commandCenter
-  commandCenter --> kernel
+  subgraph runtimeDetail[Runtime and Execution Layer]
+    localApi[Live Local API]
+    actionBridge[Governed Action Bridge]
+    workerQueue[Worker Queue and Leases]
+    runtimeEngine[Runtime Engine]
+    controlledExecution[Controlled Local Execution]
+    providerGateway[Provider Gateway Gated]
+    gitPr[Git and PR Lifecycle]
+    testSuite[Test Suite Manager]
+    retryQueue[Retries and Dead Letter Queue]
+  end
+
+  subgraph deliveryDetail[Founder Product Delivery]
+    productPrd[Generated PRD]
+    workstreams[Governed Workstreams]
+    backend[Backend Services]
+    web[Web Apps]
+    ios[iOS Apps]
+    android[Android Apps]
+    infra[Infra and CI CD]
+    release[Release Deploy Export Package]
+  end
+
+  subgraph stateDetail[Durable State and Evidence]
+    fileState[Local File Backed State]
+    sqlite[Local SQLite Runtime]
+    taskStore[Task Store]
+    auditLog[Audit Log]
+    evidenceStore[Evidence Store]
+    artifactRegistry[Artifact Registry]
+    costLedger[Cost Ledger]
+    policyRegistry[Policy Registry]
+    activityLog[Activity Log]
+  end
+
+  subgraph securityDetail[Security Identity Governance]
+    identity[Identity Propagation]
+    rbac[RBAC]
+    secretBoundary[Secret Boundary]
+    dataClassification[Data Classification]
+    networkPolicy[Network Policy]
+    approval[Approval Workflow]
+    compliance[Compliance Audit]
+    isolation[Isolation Boundary]
+  end
+
+  subgraph reliabilityDetail[Reliability Observability]
+    telemetry[Telemetry]
+    traces[Traces]
+    logs[Centralized Logs]
+    evals[Evaluations]
+    incidents[Incidents]
+    rollback[Recovery Rollback]
+    health[Health Monitoring]
+  end
+
+  subgraph humanDetail[Human in the Loop]
+    operator[Founder Operator]
+    review[Review Approve]
+    intervene[Intervene Resume]
+    releaseDecision[Release Decision]
+  end
+
+  inputs --> context --> commandCenter --> kernel
+  commandCenter --> agents
   kernel --> agents
   kernel --> gateway
   kernel --> runtime
-  agents --> delivery
+  agents --> gateway
+  agents --> runtime
+  gateway --> runtime
   runtime --> delivery
   delivery --> state
-  agents --> state
-  gateway --> state
   runtime --> state
-  gateway --> gatewayDetail
-  gatewayDetail --> state
+  gateway --> state
   security --> kernel
   security --> gateway
+  security --> runtime
   state --> reliability
-  commandCenter --> reliability
   reliability --> commandCenter
+  human --> commandCenter
+  human --> kernel
+  human --> delivery
+  inputDetail --> inputs
+  contextDetail --> context
+  commandDetail --> commandCenter
+  kernelDetail --> kernel
+  agentDetail --> agents
+  gatewayDetail --> gateway
+  runtimeDetail --> runtime
+  deliveryDetail --> delivery
+  stateDetail --> state
+  securityDetail --> security
+  reliabilityDetail --> reliability
+  humanDetail --> human

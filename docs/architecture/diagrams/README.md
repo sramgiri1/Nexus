@@ -42,9 +42,9 @@ Missing rendered image files are valid only for entries marked
 - `fallback-svg`: deterministic public-safe SVG generated without Mermaid CLI.
 - `manual-svg`: hand-authored SVG maintained directly in the repo.
 
-The current P41.9.2 artifacts use `fallback-svg` because Mermaid CLI was not
-available without installing dependencies. These SVGs are useful documentation
-artifacts, but they are not full Mermaid renders.
+The enterprise architecture SVG is now hand-maintained as a `manual-svg`
+current-state artifact. The remaining P41.9.2 artifacts use `fallback-svg`
+when Mermaid CLI is not available without installing dependencies.
 
 ## Current Diagrams
 
@@ -59,7 +59,8 @@ artifacts, but they are not full Mermaid renders.
 
 ## Diagram Categories
 
-- Enterprise Architecture explains NEXUS system layers and boundaries.
+- Enterprise Architecture explains the current P145.7 NEXUS system layers,
+  human approval boundaries, and live-authority gating.
 - Command Center Flow explains operator navigation and governed action flow.
 - Project / OS Boundary explains separation between platform state, project
   progress, and demo-only data.

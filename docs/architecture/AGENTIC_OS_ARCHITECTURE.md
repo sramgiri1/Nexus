@@ -795,10 +795,12 @@ Command Center flow, project/OS boundary, agent governance, runtime
 self-healing, and grouped NEXUS roadmap.
 
 P41.9.2 renders public-safe SVG artifacts for those diagrams and updates README
-and diagram docs to reference existing SVG outputs only. Mermaid CLI was not
-available without installing dependencies in this environment, so P41.9.2 uses
-deterministic `fallback-svg` artifacts and records that render mode in the
-registry.
+and diagram docs to reference existing SVG outputs only. The enterprise
+architecture diagram has since been refreshed as a hand-maintained P145.7
+current-state SVG that shows founder input, Command Center, kernel governance,
+agent intelligence, governed tools, runtime, delivery, state, security,
+observability, and human approval boundaries. Other diagrams remain
+deterministic `fallback-svg` artifacts when Mermaid CLI is unavailable.
 
 The diagram registry is public-safe by default. Diagrams may describe private
 project boundaries generically, but they must not include private project names,

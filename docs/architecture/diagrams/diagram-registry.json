@@ -1,6 +1,6 @@
 {
   "registryVersion": "1.0",
-  "updatedAt": "2026-05-15T02:19:12.284Z",
+  "updatedAt": "2026-06-11T01:14:38.000Z",
   "phase": "P41.9.2",
   "purpose": "Track NEXUS architecture diagrams, Mermaid sources, rendered artifacts, and public/private safety.",
   "diagrams": [
@@ -16,16 +16,14 @@
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability.",
+      "description": "Current NEXUS OS enterprise architecture showing founder inputs, trusted context, Command Center, kernel governance, multi-agent intelligence, governed tool gateway, runtime, delivery, durable state, security, observability, and human approval boundaries.",
       "id": "nexus-enterprise-architecture",
-      "purpose": "High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability.",
+      "purpose": "Current NEXUS OS enterprise architecture showing founder inputs, trusted context, Command Center, kernel governance, multi-agent intelligence, governed tool gateway, runtime, delivery, durable state, security, observability, and human approval boundaries.",
       "renderedSvgPath": "docs/architecture/diagrams/rendered/nexus-enterprise-architecture.svg",
       "renderedPngPath": null,
-      "renderMode": "fallback-svg",
-      "lastUpdatedPhase": "P41.9.2",
-      "warnings": [
-        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
-      ]
+      "renderMode": "manual-svg",
+      "lastUpdatedPhase": "P145.7",
+      "warnings": []
     },
     {
       "title": "Command Center Flow",
@@ -141,7 +139,7 @@
     }
   ],
   "warnings": [
-    "Fallback SVG artifacts are deterministic placeholders, not full Mermaid renders."
+    "The enterprise architecture SVG is hand-maintained as a public-safe current-state artifact; remaining SVGs are deterministic fallbacks unless Mermaid CLI is available."
   ],
   "errors": []
 }

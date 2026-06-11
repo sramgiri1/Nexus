@@ -2834,17 +2834,20 @@ npm run nexus:down
 
 ## Next Steps
 
-P99.7 is next. It should run final P99 validation, stamp real commits, close
-the parent P99 phase, and prepare the next scoped handoff while preserving the
-execution admission safety boundary:
+The tracked NEXUS OS roadmap is complete through P145.7 final validation. No
+next OS phase is currently defined in the roadmap. Any move from governed
+readiness into live autonomous execution must start as a new explicit
+implementation-grade activation phase with bounded scope, operator approval,
+budget, rollback, evidence, and validation gates.
 
 - keep provider/model calls, agent dispatch, worker/tool execution, project
-  mutation, hosted DB mutation, deploy/release/export/package, and spend blocked
-  until explicitly scoped
-- keep local founder CRUD limited to allowlisted OS records and explicit
-  approval/write gates
+  mutation, hosted DB mutation, deploy/release/export/package, network calls,
+  and spend blocked until a future activation contract explicitly allows them
+- keep local founder/runtime state limited to allowlisted OS records and
+  explicit approval/write gates
 - add focused Playwright and checker coverage for every Command Center UX change
-- keep OS Roadmap status current after each subphase
+- keep OS Roadmap status current after each subphase or record that no next
+  phase is defined
 
 ## Codebase Documentation
 
@@ -2881,7 +2884,7 @@ planned; README links only existing SVG artifacts.
 
 - public/demo surfaces remain public-safe
 - local-private work stays governed and redacted
-- DB writes remain disabled by policy
+- DB writes remain disabled unless an explicit local SQLite write gate is active
 - provider calls are not enabled
 - project mutation remains governed and intentionally constrained
 
@@ -3077,7 +3080,7 @@ cd dashboard && npm run test:pages
 - [Architecture docs](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
 - [Demo contracts](demo/contracts)
 - [Demo reports](demo/reports)
-- [Architecture placeholder](docs/images/nexus-architecture.svg)
+- [Architecture overview](docs/images/nexus-architecture.svg)
 - [Dashboard placeholder](docs/images/dashboard-screenshot-placeholder.svg)
 
 ## Verification Commands

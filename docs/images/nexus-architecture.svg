@@ -1,47 +1,117 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">NEXUS Demo Architecture</title>
-  <desc id="desc">A simple public-safe diagram showing founder intent flowing through NEXUS, planning, execution, verification, evidence, and release control.</desc>
+  <title id="title">NEXUS Agentic OS Enterprise Architecture</title>
+  <desc id="desc">Public-safe NEXUS architecture overview showing founder inputs, Command Center, kernel governance, agent planning, governed tools, runtime, delivery, evidence, and human approval.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#08111f"/>
-      <stop offset="100%" stop-color="#10233f"/>
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#eef6ff"/>
     </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8"/>
+    </marker>
   </defs>
-  <rect width="1280" height="720" fill="url(#bg)"/>
-  <text x="80" y="90" fill="#eef4ff" font-size="38" font-family="Helvetica, Arial, sans-serif">NEXUS Agentic OS</text>
-  <text x="80" y="126" fill="#93a6c6" font-size="18" font-family="Helvetica, Arial, sans-serif">Public-safe DemoApp showcase flow</text>
+  <style>
+    .bg { fill: url(#bg); }
+    text { font-family: Arial, Helvetica, sans-serif; }
+    .title { fill: #0b1535; font-size: 34px; font-weight: 800; }
+    .sub { fill: #415a77; font-size: 17px; font-weight: 600; }
+    .box { fill: #ffffff; stroke: #2f5f8f; stroke-width: 2; }
+    .box2 { fill: #ffffff; stroke: #0f766e; stroke-width: 2; }
+    .box3 { fill: #ffffff; stroke: #6d28d9; stroke-width: 2; }
+    .box4 { fill: #ffffff; stroke: #ea580c; stroke-width: 2; }
+    .box5 { fill: #ffffff; stroke: #047857; stroke-width: 2; }
+    .head { fill: #0f2742; font-size: 16px; font-weight: 800; }
+    .copy { fill: #334155; font-size: 13px; font-weight: 600; }
+    .small { fill: #475569; font-size: 12px; font-weight: 600; }
+    .status { fill: #ecfdf5; stroke: #16a34a; stroke-width: 1.5; }
+    .statusText { fill: #166534; font-size: 12px; font-weight: 800; }
+    .blocked { fill: #fff7ed; stroke: #ea580c; stroke-width: 1.5; }
+    .blockedText { fill: #9a3412; font-size: 12px; font-weight: 800; }
+    .arrow { stroke: #1d4ed8; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+  </style>
 
-  <g font-family="Helvetica, Arial, sans-serif">
-    <rect x="80" y="180" width="210" height="92" rx="20" fill="#132945" stroke="#4f7fc2"/>
-    <text x="110" y="220" fill="#dce8ff" font-size="22">Founder Intent</text>
-    <text x="110" y="248" fill="#9fb5d9" font-size="16">Public-safe mission input</text>
+  <rect width="1280" height="720" class="bg"/>
+  <text x="315" y="56" class="title">NEXUS Agentic OS - Enterprise Architecture</text>
+  <text x="280" y="86" class="sub">Founder idea to PRD, governed agents, safe runtime, evidence, and delivery controls</text>
 
-    <rect x="360" y="180" width="230" height="92" rx="20" fill="#132945" stroke="#55b1ff"/>
-    <text x="392" y="220" fill="#dce8ff" font-size="22">NEXUS + SHEPHERD</text>
-    <text x="392" y="248" fill="#9fb5d9" font-size="16">Decision and planning</text>
+  <rect x="54" y="132" width="190" height="116" rx="14" class="box"/>
+  <text x="80" y="166" class="head">Founder Inputs</text>
+  <text x="80" y="194" class="copy">Goals, idea, PRD, repo</text>
+  <text x="80" y="216" class="copy">policies, runtime signals</text>
 
-    <rect x="660" y="180" width="240" height="92" rx="20" fill="#132945" stroke="#86c067"/>
-    <text x="694" y="220" fill="#dce8ff" font-size="22">Execution Agents</text>
-    <text x="694" y="248" fill="#9fb5d9" font-size="16">CORE, SWIFT, FORGE</text>
+  <rect x="284" y="132" width="210" height="116" rx="14" class="box2"/>
+  <text x="312" y="166" class="head">Trusted Context</text>
+  <text x="312" y="194" class="copy">Project registry, stack</text>
+  <text x="312" y="216" class="copy">profile, memory, packets</text>
 
-    <rect x="970" y="180" width="230" height="92" rx="20" fill="#132945" stroke="#f6b04b"/>
-    <text x="1006" y="220" fill="#dce8ff" font-size="22">Verification Gates</text>
-    <text x="1006" y="248" fill="#9fb5d9" font-size="16">AUDITOR, SENTINEL, WARDEN</text>
+  <rect x="534" y="132" width="250" height="116" rx="14" class="box3"/>
+  <text x="564" y="166" class="head">Command Center</text>
+  <text x="564" y="194" class="copy">Chat, Founder Intake,</text>
+  <text x="564" y="216" class="copy">Business Build, Agent Flow</text>
 
-    <rect x="235" y="420" width="260" height="100" rx="20" fill="#162d4a" stroke="#6cc6d8"/>
-    <text x="270" y="462" fill="#dce8ff" font-size="24">Evidence + Artifacts</text>
-    <text x="270" y="492" fill="#9fb5d9" font-size="16">Reports, logs, xcresult placeholders</text>
+  <rect x="824" y="132" width="210" height="116" rx="14" class="box4"/>
+  <text x="852" y="166" class="head">NEXUS Kernel</text>
+  <text x="852" y="194" class="copy">Router, governor, state</text>
+  <text x="852" y="216" class="copy">machine, validator, budget</text>
 
-    <rect x="720" y="420" width="285" height="100" rx="20" fill="#162d4a" stroke="#ff7b7b"/>
-    <text x="758" y="462" fill="#dce8ff" font-size="24">Release Control</text>
-    <text x="758" y="492" fill="#9fb5d9" font-size="16">NO_GO until SENTINEL evidence exists</text>
+  <rect x="1074" y="132" width="154" height="116" rx="14" class="box"/>
+  <text x="1100" y="166" class="head">Human Loop</text>
+  <text x="1100" y="194" class="copy">Review, approve,</text>
+  <text x="1100" y="216" class="copy">intervene, release</text>
 
-    <path d="M290 226H360" stroke="#87bfff" stroke-width="4"/>
-    <path d="M590 226H660" stroke="#87bfff" stroke-width="4"/>
-    <path d="M900 226H970" stroke="#87bfff" stroke-width="4"/>
-    <path d="M1085 272V350H365V420" stroke="#87bfff" stroke-width="4" fill="none"/>
-    <path d="M365 520V576H862V520" stroke="#87bfff" stroke-width="4" fill="none"/>
+  <path d="M244 190 H284" class="arrow"/>
+  <path d="M494 190 H534" class="arrow"/>
+  <path d="M784 190 H824" class="arrow"/>
+  <path d="M1034 190 H1074" class="arrow"/>
 
-    <text x="80" y="650" fill="#8da4c7" font-size="16">Zero-key. Public-safe. Deterministic. Evidence-first.</text>
-  </g>
+  <rect x="54" y="306" width="258" height="102" rx="14" class="box"/>
+  <text x="82" y="340" class="head">Multi-Agent Intelligence</text>
+  <text x="82" y="368" class="copy">Strategy, product, build, platform,</text>
+  <text x="82" y="390" class="copy">verification, growth, observability</text>
+
+  <rect x="348" y="306" width="258" height="102" rx="14" class="box5"/>
+  <text x="376" y="340" class="head">Governed Tool Gateway</text>
+  <text x="376" y="368" class="copy">Skill, hook, tool, MCP, CLI, API,</text>
+  <text x="376" y="390" class="copy">batch, contracts, policy, audit</text>
+
+  <rect x="642" y="306" width="258" height="102" rx="14" class="box2"/>
+  <text x="670" y="340" class="head">Runtime and Execution</text>
+  <text x="670" y="368" class="copy">Local API, action bridge, workers,</text>
+  <text x="670" y="390" class="copy">provider gates, Git PR, tests</text>
+
+  <rect x="936" y="306" width="292" height="102" rx="14" class="box4"/>
+  <text x="964" y="340" class="head">Founder Product Delivery</text>
+  <text x="964" y="368" class="copy">PRD, workstreams, backend, web,</text>
+  <text x="964" y="390" class="copy">iOS, Android, infra, release loop</text>
+
+  <path d="M659 248 V278 H183 V306" class="arrow"/>
+  <path d="M312 357 H348" class="arrow"/>
+  <path d="M606 357 H642" class="arrow"/>
+  <path d="M900 357 H936" class="arrow"/>
+
+  <rect x="54" y="472" width="368" height="94" rx="14" class="box"/>
+  <text x="82" y="506" class="head">Durable State and Evidence</text>
+  <text x="82" y="534" class="copy">Local files, SQLite, task store, audit, evidence,</text>
+  <text x="82" y="556" class="copy">artifact registry, cost ledger, policy, activity</text>
+
+  <rect x="456" y="472" width="368" height="94" rx="14" class="box3"/>
+  <text x="484" y="506" class="head">Security, Identity, Governance</text>
+  <text x="484" y="534" class="copy">Identity, RBAC, secrets, classification, network,</text>
+  <text x="484" y="556" class="copy">approval, compliance, isolation boundaries</text>
+
+  <rect x="858" y="472" width="370" height="94" rx="14" class="box2"/>
+  <text x="886" y="506" class="head">Reliability and Observability</text>
+  <text x="886" y="534" class="copy">Telemetry, traces, logs, evals, incidents,</text>
+  <text x="886" y="556" class="copy">recovery, rollback, health monitoring</text>
+
+  <path d="M771 408 V448 H238 V472" class="arrow"/>
+  <path d="M1082 408 V448 H640 V472" class="arrow"/>
+  <path d="M640 566 H858" class="arrow"/>
+
+  <rect x="54" y="620" width="246" height="36" rx="18" class="status"/>
+  <text x="78" y="643" class="statusText">P145.7 roadmap validation complete</text>
+  <rect x="302" y="620" width="502" height="36" rx="18" class="blocked"/>
+  <text x="326" y="643" class="blockedText">Live autonomous execution remains gated until explicit activation authority</text>
+  <text x="850" y="634" class="small">Right context. Right agent.</text>
+  <text x="850" y="652" class="small">Right tool. Right cost. Always governed.</text>
 </svg>

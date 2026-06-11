@@ -153,7 +153,8 @@ for (const diagram of diagrams) {
   check(Boolean(diagram.sourcePath), "mermaidSources", `Diagram ${id} missing sourcePath`);
   check(Boolean(diagram.renderedSvgPath), "renderedSvgs", `Diagram ${id} missing renderedSvgPath`);
   check(diagram.publicSafe === true, "publicSafety", `Diagram ${id} must be publicSafe true`);
-  check(diagram.lastUpdatedPhase === "P41.9.2", "registry", `Diagram ${id} lastUpdatedPhase must be P41.9.2`);
+  const expectedPhase = id === "nexus-enterprise-architecture" ? "P145.7" : "P41.9.2";
+  check(diagram.lastUpdatedPhase === expectedPhase, "registry", `Diagram ${id} lastUpdatedPhase must be ${expectedPhase}`);
   check(["mermaid", "fallback-svg", "manual-svg"].includes(diagram.renderMode), "registry", `Diagram ${id} renderMode invalid`);
 
   if (diagram.sourcePath) {
@@ -207,6 +208,7 @@ check(!read(DIAGRAM_README_PATH).includes(".png)"), "diagramDocsLinks", "Diagram
 
 const phaseEntries = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status must be populated");
+const p145TerminalState = phaseStatus.currentPhase === "P145.7" && phaseStatus.previousPhase === "P145.6" && !phaseStatus.nextPhase;
 const laterHandoffPhases = [
   "P44",
   "P44.1",
@@ -259,9 +261,9 @@ const laterHandoffPhases = [
   "P61.7",
   "P62",
 ];
-check(["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", ...laterHandoffPhases].includes(phaseStatus.currentPhase), "phaseStatus", "currentPhase must be P43 or later handoff phase");
-check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase), "phaseStatus", "previousPhase must be a P43 or later handoff phase");
-check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6", ...laterHandoffPhases].includes(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be a P43 or later handoff phase");
+check(p145TerminalState || ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", ...laterHandoffPhases].includes(phaseStatus.currentPhase), "phaseStatus", "currentPhase must be P43 or later handoff phase, or terminal P145.7");
+check(p145TerminalState || ["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase), "phaseStatus", "previousPhase must be a P43 or later handoff phase, or P145.6 for terminal P145.7");
+check(p145TerminalState || ["P43.2", "P43.3", "P43.4", "P43.5", "P43.6", ...laterHandoffPhases].includes(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be a P43 or later handoff phase, or empty for terminal P145.7");
 check(phaseEntries.get("P41.9.1")?.status === "complete", "phaseStatus", "P41.9.1 must be complete");
 check(phaseEntries.get("P41.9.1")?.commit === "41bb0bd", "phaseStatus", "P41.9.1 commit must be 41bb0bd");
 check(phaseEntries.get("P41.9.2")?.status === "complete", "phaseStatus", "P41.9.2 must be complete");
